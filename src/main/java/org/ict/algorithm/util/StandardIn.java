@@ -3,6 +3,7 @@ package org.ict.algorithm.util;
 import java.util.Locale;
 import java.util.Scanner;
 import org.ict.algorithm.util.CharSetNameImpl;
+import java.io.BufferedInputStream;
 
 
 public final class StandardIn implements CharSetNameImpl {
