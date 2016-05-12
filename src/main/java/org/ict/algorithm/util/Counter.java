@@ -42,7 +42,6 @@ public class Counter implements Comparable<Counter> {
    * is greater than the value of that counter.
    *
    */
-  @Override
   public int compareTo(Counter that) {
     if ( this.count > that.count) {
       return +1;
