@@ -1,9 +1,10 @@
 package org.ict.algorithm.util;
 
 import javax.xml.bind.DatatypeConverter;
-import org.ict.algorithm.util.StdOut;
+
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.StringUtils;
+
 
 public class Base64Util {
   

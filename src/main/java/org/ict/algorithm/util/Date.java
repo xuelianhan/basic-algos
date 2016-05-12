@@ -1,3 +1,5 @@
+package org.ict.algorithm.util;
+
 public class Date implements Comparable<Date> 
 {
 	private static final int[] DAYS = { 0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
@@ -92,18 +94,18 @@ public class Date implements Comparable<Date>
 		Date today = new Date(5, 5 ,2013);
 		StdOut.println(today);
 		for (int i = 0; i < 10; i++) {
-			today = today.next();
+			today = today.getNext();
 			StdOut.println(today);
 		}
 
-		StdOut.println(today.isAfter(today.next()));
+		StdOut.println(today.isAfter(today.getNext()));
 		StdOut.println(today.isAfter(today));
-		StdOut.println(today.next().isAfter(today));
+		StdOut.println(today.getNext().isAfter(today));
 
 		Date birthday = new Date(10, 16, 1971);
 		StdOut.println(birthday);
 		for (int i = 0; i < 10; i++) {
-			birthday = birthday.next();
+			birthday = birthday.getNext();
 			StdOut.println(birthday);
 		}
 	}
