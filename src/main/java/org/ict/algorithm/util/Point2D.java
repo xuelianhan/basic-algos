@@ -95,6 +95,18 @@ public final class Point2D implements Comparable<Point2D> {
         }
     }
 
+    public static double distanceTo(Point2D o) {
+        double dx = this.x - o.x;
+        double dy = this.y - o.y;
+        return Math.sqrt(dx * dx + dy * dy);
+    }
+
+    public static double distanceSquaredTo(Point2D o) {
+        double dx = this.x - o.x;
+        double dy = this.y - o.y;
+        return dx * dx + dy * dy;
+    }
+
 	public int compareTo(Point2D o) {
         if (this.y < o.y) return -1;
         if (this.y > o.y) return 1;
