@@ -95,13 +95,13 @@ public final class Point2D implements Comparable<Point2D> {
         }
     }
 
-    public static double distanceTo(Point2D o) {
+    public double distanceTo(Point2D o) {
         double dx = this.x - o.x;
         double dy = this.y - o.y;
         return Math.sqrt(dx * dx + dy * dy);
     }
 
-    public static double distanceSquaredTo(Point2D o) {
+    public double distanceSquaredTo(Point2D o) {
         double dx = this.x - o.x;
         double dy = this.y - o.y;
         return dx * dx + dy * dy;
@@ -141,7 +141,7 @@ public final class Point2D implements Comparable<Point2D> {
 
     private static class ROrder implements Comparator<Point2D> {
         public int compare(Point2D p, Point2D q) {
-            int delta = (p.x*p.x + p.y*p.y) - (q.x*q.x + q.y*q.y);
+            double delta = (p.x*p.x + p.y*p.y) - (q.x*q.x + q.y*q.y);
             if (delta < 0){
                 return -1;
             } else if (delta > 0) {
@@ -152,7 +152,7 @@ public final class Point2D implements Comparable<Point2D> {
         }
     }
 
-    private static class Atan2Order implements Comparator<Point2D> {
+    private class Atan2Order implements Comparator<Point2D> {
         public int compare(Point2D q1, Point2D q2) {
             double angle1 = angleTo(q1);
             double angle2 = angleTo(q2);
