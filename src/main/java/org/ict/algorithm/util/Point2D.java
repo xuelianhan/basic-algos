@@ -228,6 +228,11 @@ public final class Point2D implements Comparable<Point2D> {
         return hx * 31 + hy;
     }
 
-
+    public static void main(String[] args) {
+    	int x0 = Integer.parseInt(args[0]);
+    	int y0 = Integer.parseInt(args[1]);
+    	int N = Integer.parseInt("args[2");
+    	
+    }
     
 }

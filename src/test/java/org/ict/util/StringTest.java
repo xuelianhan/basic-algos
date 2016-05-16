@@ -1,10 +1,25 @@
 package org.ict.util;
 
+import org.ict.algorithm.util.StdOut;
 import org.junit.Test;
 
 public class StringTest {
+	
+	@Test
+	public void testPalindrome() {
+		String s1 = "ABA";
+		String s2 = "ABC"; 
+		StdOut.println(isPalindrome(s1));
+		StdOut.println(isPalindrome(s2));
+	}
+	
+	@Test
+	public void testSorted() {
+		String[] a = new String[]{"ab", "bc", "ca"};
+		StdOut.print(isSorted(a));
+	}
 
-    public static boolean isPalindrome(String s) {
+    public boolean isPalindrome(String s) {
         int N = s.length();
         for (int i = 0; i < N/2; i++) {
             if (s.charAt(i) != s.charAt(N - 1 - i)) {
