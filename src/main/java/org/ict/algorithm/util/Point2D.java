@@ -166,7 +166,68 @@ public final class Point2D implements Comparable<Point2D> {
         }
     }
 
+    private class PolarOrder implements Comparator<Point2D> {
+        public int compare(Point2D q1, Point2D q2) {
+            double dx1 = q1.x - x;
+            double dx2 = q2.x - x;
+            double dy1 = q1.y - y;
+            double dy2 = q2.y - y;
+            if (dy1 >= 0 && dy2 < 0) {
+                //q1 above, q2 below
+                return -1;
+            } else if (dy2 >= 0 && dy1 < 0) {
+                //q1 below, q2 above
+                return 1;
+            } else if (dy1 == 0 && dy2 == 0) {//horizontal
+                if (dx1 >= 0 && dx2 < 0) {
+                    //q1 right, q2 left 
+                    return -1;
+                } else if (dx2 >=0 && dx1 < 0) {
+                    //q2 right, q1 left
+                    return 1;
+                } else {
+                    return 0;
+                }
+            } else { //both above or below 
+                //why add negative symbol?
+                return -ccw(Point2D.this, q1, q2); 
+            }
+        }
+    }
+
+    private class DistanceToOrder implements Comparator<Point2D> {
+        public int compare(Point2D q1, Point2D q2) {
+            double dist1 = distanceSquaredTo(q1);
+            double dist2 = distanceSquaredTo(q2);
+            if (dist1 < dist2) {
+                return -1;
+            } else if (dist1 > dist2) {
+                return 1; 
+            } else {
+                return 0;
+            }
+        }
+    }
+    
+    @Override
+    public boolean equals(Object that) {
+        if (that == null) return false;
+        if (that == this) return true;
+        if (that.getClass() != this.getClass()) return false;
+        Point2D obj = (Point2D)that;
+        return (this.x == obj.x) && (this.y == obj.y);
+    }
+
+    public String toString() {
+        return "(" + x + ", " + y + ")";
+    }
+    
+    public int hashCode() {
+        int hx = ((Double)x).hashCode();
+        int hy = ((Double)y).hashCode();
+        return hx * 31 + hy;
+    }
 
 
-
+    
 }
