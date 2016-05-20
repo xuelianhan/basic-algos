@@ -4,6 +4,7 @@ package org.ict.algorithm.util;
  *  Compilation:  javac StdIn.java
  *  Execution:    java StdIn   (interactive test of basic functionality)
  *  Dependencies: none
+ *  @see http://algs4.cs.princeton.edu/code/edu/princeton/cs/algs4/StdIn.java.html
  *
  *  Reads in data of various types from standard input.
  *
