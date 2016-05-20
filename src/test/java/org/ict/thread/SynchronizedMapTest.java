@@ -8,7 +8,7 @@ import java.util.Map;
 
 /**
  *
- * @see http://stackoverflow.com/questions/567068/java-synchronized-block-vs-collections-synchronizedmap *
+ * @see http://stackoverflow.com/questions/567068/java-synchronized-block-vs-collections-synchronizedmap
  */
 public class SynchronizedMapTest {
 
@@ -48,8 +48,9 @@ public class SynchronizedMapTest {
 
 			Thread r = new Thread(t2);
 			Thread t = new Thread(t1);
-			r.start();
+			
 			t.start();
+			r.start();
 		}
 	}
 }
