@@ -4,7 +4,12 @@ package org.ict.algorithm.util;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 /**
- * 
+ * [hanxuelian@ict java]$ java org/ict/algorithm/util/ResizingArrayStack 
+ * press Enter
+ * to be or not to - be - - that - - - is
+ * press Enter
+ * to be not that or be (2left in stack)
+ * presss CTRL-D
  *
  * @see http://algs4.cs.princeton.edu/13stacks/ResizingArrayStack.java.html
  */
@@ -31,7 +36,7 @@ public class ResizingArrayStack<Item> implements Iterable<Item> {
         if (capacity < N) {
             throw new IllegalArgumentException("capacity: " + capacity + " must be greater than N:" + N);
         }
-        Item[] temp = (Item[])new Object(capacity);
+        Item[] temp = (Item[])new Object[capacity];
         for (int i = 0; i < N; i++) {
             temp[i] = a[i];
         }
@@ -47,7 +52,7 @@ public class ResizingArrayStack<Item> implements Iterable<Item> {
 
     public Item pop() {
         if (isEmpty()) {
-            throw NoSuchElementException("Stack underflow!");
+            throw new NoSuchElementException("Stack underflow!");
         }
         Item item = a[N-1];
         a[N-1] = null;
@@ -60,7 +65,7 @@ public class ResizingArrayStack<Item> implements Iterable<Item> {
 
     public Item peek() {
         if (isEmpty()) {
-            throw NoSuchElementException("Stack underflow!");
+            throw new NoSuchElementException("Stack underflow!");
         }
         return a[N-1];
     }
@@ -100,8 +105,9 @@ public class ResizingArrayStack<Item> implements Iterable<Item> {
             } else if (!stack.isEmpty()) {
                 StdOut.print(stack.pop() + " ");
             } else {
-                
+                StdOut.println("Not illegal State!");        
             }
         }
+        StdOut.println("(" + stack.size() + "left in stack)");
     }
 }
