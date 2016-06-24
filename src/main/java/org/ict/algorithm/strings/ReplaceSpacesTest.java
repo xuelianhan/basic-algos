@@ -1,4 +1,4 @@
-package orgi.cit.algorithm.strings;
+package org.ict.algorithm.strings;
 
 /**
  *
@@ -13,5 +13,13 @@ package orgi.cit.algorithm.strings;
 public class ReplaceSpacesTest {
     
     
+    
+    public static void main(String[] args) {
+        String s = "hahaha";
+        char[] a = s.toCharArray();
+        for (char x : a) {
+            System.out.println(x);
+        }
+    }
 
 }
