@@ -42,7 +42,6 @@ public class LinkedQueue<Item> implements Iterable<Item> {
           oldlast.next = last;
         }
         N++;
-
     }
 
     public Item peek() {
@@ -64,7 +63,17 @@ public class LinkedQueue<Item> implements Iterable<Item> {
     private class ListIterator implements Iterator<Item> {
         private Node current = first;
 
-        
+        boolean hasNext() {
+
+        }
+
+        Item next() {
+
+        }
+
+        void remove() {
+
+        }
 
     }
 
