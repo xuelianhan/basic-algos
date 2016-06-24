@@ -1,1 +1,7 @@
+#maven compile directory
 /target/
+
+#Use wildcards as well
+*~
+*.swap
+*.class
