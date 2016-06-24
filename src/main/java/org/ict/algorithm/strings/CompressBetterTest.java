@@ -9,6 +9,41 @@ package org.ict.algorithm.strings;
  *
  */
 public class CompressBetterTest {
+    
+    public static String compressBetterAnother(String str) {
+        int size = countCompression(str);
+        if (size >= str.length()) {
+            return str;
+        }
+
+        char[] array = new char[size];
+        char last = str.charAt(0);
+        int count = 1;
+        int index = 0;
+        for (int i = 0; i < str.length(); i++) {
+            if (last == str.charAt(i)) {
+                count++;
+            } else {
+                index = setArray(array, last, index, count); 
+                last = str.charAt(i);
+                count = 1;
+            }
+        }
+        index = setArray(array, last, index, count); 
+        return String.valueOf(array);
+    }
+
+    public static int setArray(char[] array, char c, int index, int count) {
+        array[index] = c;
+        index++;
+
+        char[] cnt = String.valueOf(count).toCharArray();
+        for (char x : cnt) {
+            array[index] = x;
+            index++;
+        }
+        return index;
+    }
 
     public static String compressBetter(String str) {
         int size = countCompression(str);
@@ -64,6 +99,7 @@ public class CompressBetterTest {
         String str = "aabbbcccc";
         //System.out.println(countCompression(str));
         System.out.println(compressBetter(str));
+        System.out.println(compressBetterAnother(str));
     }
 
 }
