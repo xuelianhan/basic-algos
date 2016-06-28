@@ -18,13 +18,14 @@ public class RotateImageTest {
             int last = N - 1 - layer;
             for (int i = first; i < last; i++) {
                 int offset = i - first;
+                int j = last - offset;
                 int top = matrix[first][i];
                 //left to top
-                matrix[first][i] = matrix[last - offset][first]; 
+                matrix[first][i] = matrix[j][first]; 
                 //bottom to left
-                matrix[last - offset][first] = matrix[last][last - offset]; 
+                matrix[j][first] = matrix[last][j]; 
                 //right to bottom
-                matrix[last][last - offset] = matrix[i][last];
+                matrix[last][j] = matrix[i][last];
                 //top to right
                 matrix[i][last] = top;
             }
