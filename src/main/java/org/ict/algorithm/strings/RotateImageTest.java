@@ -4,6 +4,7 @@ package org.ict.algorithm.strings;
  *
  * Given an image represented by an NxN matrix, where each pixel in the image is 4 bytes,
  * write a method to rotate the image by 90 degrees.Can you do this in place?
+ * @see http://stackoverflow.com/questions/25882480/rotating-a-nxn-matrix-in-java
  *
  */
 public class RotateImageTest {
@@ -18,11 +19,13 @@ public class RotateImageTest {
             for (int i = first; i < last; i++) {
                 int top = matrix[first][i];
                 //left to top
-                matrix[first][i] = matrix[last ][first]; 
+                matrix[first][i] = matrix[last - i + first ][first]; 
                 //bottom to left
-                matrix[last][i] = 
+                matrix[last - i + first][first] = matrix[][]; 
                 //right to bottom
+
                 //top to right
+                matrix[i][last] = top;
             }
         }
     }
