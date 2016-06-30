@@ -26,6 +26,35 @@ public class AnnieTestTwo {
      * Elements of input arrays can be modified.
      *
      */
+    
+    public static int solutionB(int[] A) {
+        if (A == null || A.length <= 0) {
+            return 0;
+        }
+        int[] B = new int[A.length]; 
+
+        int kthMax = 0;
+        for (int i = 0; i < A.length; i++) {
+            if (A[i] > kthMax) {
+                kthMax = A[i];
+            }
+            B[i] = kthMax;
+        }
+
+        int maxAbs = 0;
+        int nthMin = A[A.length - 1];
+        for (int j = A.length - 1; j >= 0; j--) {
+            if (A[j] < nthMin) {
+                nthMin = A[j];
+            }
+            int abs = Math.abs(B[j] - nthMin);
+            if (abs > maxAbs) {
+                maxAbs = abs;
+            }
+        }
+        return maxAbs;
+    }
+
     public static void main(String[] args) {
 
 
