@@ -1,10 +1,14 @@
 package org.ict.algorithm.strings;
 
+import java.util.Arrays;
 /**
  *
  * Given an image represented by an NxN matrix, where each pixel in the image is 4 bytes,
  * write a method to rotate the image by 90 degrees.Can you do this in place?
  * @see http://stackoverflow.com/questions/25882480/rotating-a-nxn-matrix-in-java
+ * @see http://stackoverflow.com/questions/2799755/rotate-array-clockwise
+ * @see http://www.programcreek.com/2013/01/leetcode-rotate-image-java/
+ * @see http://www.geeksforgeeks.org/rotate-matrix-elements/
  *
  */
 public class RotateImageTest {
@@ -36,13 +40,80 @@ public class RotateImageTest {
      * if MxN matrix and M != N, you need to create a new NxM matrix.
      *
      */
-    public static void rotate(int[][] matrix, int M, int N) {
+    public static int[][] rotate(int[][] matrix, int M, int N) {
+        if (M <=0 || N <= 0) {
+            return null;
+        }
+        int[][] result = new int[N][M];
+        for (int i = 0; i < M; i++) {
+            for (int j = 0; j < N; j++) {
+                result[j][M - 1 - i] = matrix[i][j];
+            }
+        }
+        return result;
+    }
 
+    public static int[][] transposeMatrix(int[][] matrix, int M, int N) {
+        if (M <=0 || N <= 0) {
+            return null;
+        }
+        if (M == N) {
+            for (int i = 0; i < M; i++) {
+                for (int j = i + 1; j < N; j++) {
+                    int temp = matrix[i][j];
+                    matrix[i][j] = matrix[j][i];
+                    matrix[j][i] = temp;
+                }
+            }
+            return matrix;
+        } else {
+            int[][] result = new int[N][M];
+            for (int j = 0; j < N; j++) {
+                for (int i = 0; i < M; i++) {
+                    result[j][i] = matrix[i][j]; 
+                }
+            }
+            return result;
+        }
     }
 
     public static void main(String[] args) {
+        System.out.println("Input matrix:\n");
+        int[][] matrix = {{1, 2, 3, 4},{5, 6, 7, 8},{9, 10, 11, 12},{13, 14, 15, 16}};
 
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+               System.out.print(matrix[i][j]+"\t"); 
+            }
+            System.out.println("");
+        }
+        rotate(matrix, 4);
+        System.out.println("After one times rotate the matrix:\n");
+        System.out.println(Arrays.deepToString(matrix));
+        for (int[] row : matrix) {
+            System.out.println(Arrays.toString(row));
+        }
 
+        System.out.println("After two times rotate the matrix:\n");
+        int[][] result = rotate(matrix, 4, 4);
+        for (int[] row : result) {
+            System.out.println(Arrays.toString(row));
+        }
+        System.out.println("Transpose the matrix:\n");
+        int[][] transposeResult = transposeMatrix(result, 4, 4);
+        for (int[] row : transposeResult) {
+            System.out.println(Arrays.toString(row));
+        }
+        System.out.println("Input an MxN matrix and M != N:");
+        int[][] MxN = {{1, 2, 3},{4, 5, 6},{7, 8, 9},{10, 11, 12}};
+        for (int[] row : MxN) {
+            System.out.println(Arrays.toString(row));
+        }
+        int[][] transposeMxN = transposeMatrix(MxN, 4, 3);
+        System.out.println("Transpose an MxN matrix and M != N:");
+        for (int[] row : transposeMxN) {
+            System.out.println(Arrays.toString(row));
+        }
     }
 
 }
