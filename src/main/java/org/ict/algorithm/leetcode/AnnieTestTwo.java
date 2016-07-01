@@ -26,7 +26,6 @@ public class AnnieTestTwo {
      * Elements of input arrays can be modified.
      *
      */
-    
     public static int solutionB(int[] A) {
         if (A == null || A.length <= 0) {
             return 0;
