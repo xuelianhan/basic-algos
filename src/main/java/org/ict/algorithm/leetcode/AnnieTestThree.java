@@ -1,5 +1,10 @@
 package org.ict.algorithm.leetcode;
 
+import java.util.Arrays;
+import java.util.Map;
+import java.util.HashMap;
+import java.math.BigInteger;
+
 public class AnnieTestThree {
 
     /**
@@ -27,7 +32,67 @@ public class AnnieTestThree {
      * Elements of input arrays can be modified.
      *
      */
-    public static void main(String[] args) {
+    public int solutionC(int[] A) {
+      if (A == null || A.length <= 0) {
+        return 0;
+      }
+      BigInteger sum = BigInteger.ZERO;
+      for (int i : A) {
+        BigInteger b =  BigInteger.valueOf(new Double(Math.pow(2, i)).intValue());
+        sum = sum.add(b);
+      }
+      BigInteger three = new BigInteger("3");
+      BigInteger result = sum.multiply(three);
+      int bitOneCnt = result.bitCount();
 
+      return bitOneCnt;
+    }
+
+    /**
+     * The above solution may exceed the limit of Integer.
+     * Take note of conditions of the problem, 3 * K can break down as
+     * (2 + 1) * K = 2 * K + K
+     * K = power2(A[0]) + power2(A[1]) + ... + power2(A[N - 1]) 
+     * e.g. K = power(1) + power(4) + power(5)
+     * We can calculate the 1's count: 3, because 1 , 4 ,5 is not duplicated 
+     * numbers, So the solution is obvious: Use HashMap to storage the power number
+     * power2(1) + power2(4) + power2(5)
+     * + 2 * power2(1) + 2 * power2(4) + 2 * power2(5)
+     * = power2(1) + power2(4) + power2(5) + power2(2) + power(5) + power(6);
+     * 1, 4, 5, 2, 5, 6 --> 1, 2, 4, 5, 5, 6
+     * 1,2,4 -->the 1's count in its binary representaion format is 3
+     * 5,5 --> 6 
+     * 6, 6 --> 7, so the final sequence of power is 1, 2, 4, 7
+     * So the final result is 4, because the sequence has 4 not duplicated power numbers.
+     */
+    public static int solutionCright(int[] A) {
+        if (A == null || A.length == 0) {
+            return 0;
+        }
+
+        Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+        for (int i = 0; i < A.length; i++) {
+            map.put(A[i], A[i]);
+        }
+        int bitOneCount = A.length; 
+        for (int i = 0; i < A.length; i++) {
+            int temp = A[i] + 1; 
+            Integer loc = map.get(temp); 
+            if (loc == null) {
+                bitOneCount++;
+            } else {
+                temp = temp + 1;
+            }
+            map.put(temp, temp);
+        }
+        return bitOneCount;
+    }
+
+    public static void main(String[] args) {
+        int x = Integer.bitCount(150);
+        System.out.println(x);
+        int[] A = {1, 4, 5};
+        int y = solutionCright(A);
+        System.out.println(y);
     }
 }
