@@ -9,9 +9,9 @@ import java.util.Iterator;
  */
 public class SingleLinkedList<Item> implements Iterable<Item> {
 
-    private Node first;
+    private transient Node first;
 
-    private int N;
+    private transient int N;
 
     public SingleLinkedList() {
         this.first = null;
@@ -37,6 +37,14 @@ public class SingleLinkedList<Item> implements Iterable<Item> {
         first.item = data;
         first.next = oldfirst;
         N++;
+    }
+
+    public void remove(Item data) {
+        if (data == null) {
+            
+        } else {
+
+        }
     }
 
     public Iterator<Item> iterator() {
