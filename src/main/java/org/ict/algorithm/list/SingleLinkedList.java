@@ -41,9 +41,24 @@ public class SingleLinkedList<Item> implements Iterable<Item> {
 
     public void remove(Item data) {
         if (data == null) {
-            
+           Node prior = null;
+           for (Node n = first; n != null;) {
+               if (n.item == null) {
+                   prior.next = n.next; 
+                   N--;
+               }
+               prior = n;
+               n = n.next;
+           }
         } else {
-
+            for (Node n = first; n != null;) {
+                if (n.item == data) {
+                    prior.next = n.next;
+                    N--;
+                }
+                prior = n;
+                n = n.next;
+            }
         }
     }
 
