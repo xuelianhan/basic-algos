@@ -5,9 +5,9 @@ import java.util.NoSuchElementException;
 
 public class LinkedQueue<Item> implements Iterable<Item> {
     
-    private Node first;
+    private Node<Item> first;
 
-    private Node last;
+    private Node<Item> last;
 
     private int N;
 
@@ -29,13 +29,13 @@ public class LinkedQueue<Item> implements Iterable<Item> {
     private class Node<Item> {
         private Item item;
 
-        private Node next;
+        private Node<Item> next;
 
     }
     
     public void enqueue(Item item) {
-        Node oldlast = last;
-        last = new Node();
+        Node<Item> oldlast = last;
+        last = new Node<Item>();
         last.item = item;
         last.next = null;
         if (isEmpty()) {
@@ -81,7 +81,7 @@ public class LinkedQueue<Item> implements Iterable<Item> {
     }
 
     private class ListIterator implements Iterator<Item> {
-        private Node current = first;
+        private Node<Item> current = first;
 
         public boolean hasNext() {
             return current != null;    
@@ -136,6 +136,14 @@ public class LinkedQueue<Item> implements Iterable<Item> {
     }
 
     public static void main(String[] args) {
+        LinkedQueue<String> queue = new LinkedQueue<String>();
+        queue.enqueue("A");
+        queue.enqueue("B");
+        queue.enqueue("C");
 
+        while (!queue.isEmpty()) {
+            StdOut.println(queue.dequeue());
+        }
+        
     }
 }
