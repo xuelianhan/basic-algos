@@ -108,6 +108,10 @@ public class SingleLinkedList<Item> implements Iterable<Item> {
 
     }
 
+    public Node getFirst() {
+        return this.first;
+    }
+
     public static void main(String[] args) {
         SingleLinkedList<String> sl = new SingleLinkedList<String>();
         sl.add("A");
