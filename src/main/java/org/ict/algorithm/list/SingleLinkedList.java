@@ -11,10 +11,16 @@ public class SingleLinkedList<Item> implements Iterable<Item> {
 
     private transient Node first;
 
+    private transient Node last;
+
+    private transient Node lastPrior;
+
     private transient int N;
 
     public SingleLinkedList() {
         this.first = null;
+        this.last = null;
+        this.lastPrior = null;
         N = 0;
     }
 
@@ -32,11 +38,17 @@ public class SingleLinkedList<Item> implements Iterable<Item> {
     }
 
     public void add(Item data) {
-        Node oldfirst = first;
-        first = new Node();
-        first.item = data;
-        first.next = oldfirst;
+        Node oldlast = last;
+        last = new Node();
+        last.item = data;
+        if (oldlast != null) {
+            oldlast.next = last;
+        }
+        lastPrior = oldlast;
         N++;
+        if (N == 1) {
+            first = last;
+        }
     }
 
     public String toString() {
@@ -49,24 +61,20 @@ public class SingleLinkedList<Item> implements Iterable<Item> {
 
     public void remove(Item data) {
         Node prior = null;
-        if (data == null) {
-           for (Node n = first; n != null;) {
-               if (n.item == null) {
-                   prior.next = n.next; 
-                   N--;
-               }
-               prior = n;
-               n = n.next;
-           }
-        } else {
-            for (Node n = first; n != null;) {
-                if (n.item == data) {
-                    prior.next = n.next;
-                    N--;
+        for (Node n = first; n != null;) {
+            Node next = n.next;
+            if (n.item == data) {
+                if (prior == null) {
+                    prior = next;
+                    first = prior;
+                } else {
+                    prior.next = next;
+                    prior = n;
                 }
-                prior = n;
-                n = n.next;
+                N--;
             }
+            prior = n;
+            n = next;
         }
     }
 
@@ -110,8 +118,9 @@ public class SingleLinkedList<Item> implements Iterable<Item> {
             String s = iter.next();
             StdOut.print(s + ",");
         }
-        sl.remove("A");
-        StdOut.println("\nAfter A has been removed, Output:" + sl + "\n");
+        String del = "D";
+        sl.remove(del);
+        StdOut.println("\nAfter " + del + " has been removed, Output:" + sl + "\n");
     }
 
 }
