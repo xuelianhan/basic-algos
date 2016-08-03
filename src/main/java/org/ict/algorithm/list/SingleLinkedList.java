@@ -86,6 +86,8 @@ public class SingleLinkedList<Item> implements Iterable<Item> {
 
         private Node cur = first; 
         
+        private Node lastReturned = first;
+        
         public boolean hasNext() {
             return cur != null;
         }
@@ -95,6 +97,7 @@ public class SingleLinkedList<Item> implements Iterable<Item> {
                 throw new IllegalArgumentException();
             }
             Item item = cur.item;
+            lastReturned = cur;
             cur = cur.next;
             return item; 
         }
