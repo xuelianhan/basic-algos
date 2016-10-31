@@ -188,6 +188,30 @@ public final class In {
      * @return the next character in this input stream
      */
     public char readChar() {
-        
+       scanner.useDelimiter(EMPTY_PATTERN);
+       String ch = scanner.next();
+       if (ch.length() != 1) {
+    	   throw new IllegalArgumentException("read Char() error!");
+       }
+       scanner.useDelimiter(WHITESPACE_PATTERN);
+       return ch.charAt(0);
     }
+
+    /**
+     * Reads and returns the remainder of this input stream, as a string.
+     *
+     * @return the remainder of this input stream, as a string
+     *
+     */
+    public String readAll() {
+        if (!scanner.hasNextLine()) {
+            return "";
+        }
+        String result = scanner.useDelimiter(EVERYTHING_PATTERN).next();
+        //not that important to reset delimeter, since now scanner is empty
+        scanner.useDelimiter(WHITESPACE_PATTERN);
+        return result;
+    }
+    
+    
 }
