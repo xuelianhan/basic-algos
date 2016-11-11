@@ -7,12 +7,10 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 import org.ict.algorithm.util.MapUtil;
 
@@ -26,11 +24,16 @@ import org.ict.algorithm.util.MapUtil;
  * U2,filter
  * U2,export
  * U3,/
+ * u3,subscribers 
+ * U3,filter
+ * U3,export
+ * U4,/
+ * U4,subscribers 
+ * U4,filter
+ * U5,/
+ * U5,subscribers 
+ * U5,filter
  * The most frequent 3 page sequence:
- * U1:/-->subscribers-->filter-->export
- * U2:/-->subscribers-->filter-->export
- * U3:/
- * 
  * results:
  * /-->subscribers-->filter
  * subscribers-->filter-->export
@@ -56,8 +59,6 @@ public class ThreeMaxPagesPath {
 		return f;
 	}
 	
-	
-
 	public static Map<String, Integer> findThreeMaxPagesPathV1(String file, String separator) {
 		Map<String, Integer> pageVisitCounts = new HashMap<String, Integer>();
 		if (file == null || "".equals(file)) {
@@ -75,7 +76,6 @@ public class ThreeMaxPagesPath {
 				if (lineArr == null || lineArr.length != 2) {
 					continue;
 				}
-				
 				String user = lineArr[0];
 				String page = lineArr[1];
 				List<String> urlLinkedList = null;
@@ -83,15 +83,20 @@ public class ThreeMaxPagesPath {
 					urlLinkedList = new LinkedList<String>();
 				} else {
 					urlLinkedList = userUrls.get(user);
+					String pages = "";
 					if (urlLinkedList.size() == 2) {
-						String pages = urlLinkedList.get(0) + "_" + urlLinkedList.get(1) + "_" + page;
-					    Integer count = (pageVisitCounts.get(pages) == null ? 0 : pageVisitCounts.get(pages))  + 1;
-						pageVisitCounts.put(pages, count);
+						pages = urlLinkedList.get(0).trim() + separator + urlLinkedList.get(1).trim() + separator + page;
 					} else if (urlLinkedList.size() > 2) {
 						urlLinkedList.remove(0);
+						pages = urlLinkedList.get(0).trim() + separator + urlLinkedList.get(1).trim() + separator + page;
+					}
+					if (!"".equals(pages) && null != pages) {
+						Integer count = (pageVisitCounts.get(pages) == null ? 0 : pageVisitCounts.get(pages))  + 1;
+					    pageVisitCounts.put(pages, count);
 					}
 				}
 				urlLinkedList.add(page);
+				System.out.println("user:" + user + ", urlLinkedList:" + urlLinkedList);
 				userUrls.put(user, urlLinkedList);
 			}
 		    bf.close();
