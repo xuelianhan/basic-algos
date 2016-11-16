@@ -46,20 +46,35 @@ public class ThreeMaxPagesPath {
 	public static File createRandomAccessLog() {
 		File f = new File("/home/hanxuelian/Desktop/test-access.log");
 		if (!f.exists()) {
+			FileWriter fw = null;
+			BufferedWriter bw = null;
 			try {
 				f.createNewFile();
-				FileWriter fw = new FileWriter(f);
-				BufferedWriter bw = new BufferedWriter(fw);
+				fw = new FileWriter(f);
+				bw = new BufferedWriter(fw);
 				
+				for (int i = 0; i < 100000; i++) {
+					
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
+			} finally {
+				try {
+					if (bw != null) {
+						bw.close();
+					}
+					if (fw != null) {
+						fw.close();
+					}
+				} catch(IOException ioe) {
+					ioe.printStackTrace();
+				}
 			}
 		}
-		
 		return f;
 	}
 	
-	public static Map<String, Integer> findThreeMaxPagesPathV1(String file, String separator) {
+	public static Map<String, Integer> findThreeMaxPagesPathV1(String file, String separator, int depth) {
 		Map<String, Integer> pageVisitCounts = new HashMap<String, Integer>();
 		if (file == null || "".equals(file)) {
 			return pageVisitCounts;
@@ -73,7 +88,7 @@ public class ThreeMaxPagesPath {
 			String currentLine = "";
 			while ((currentLine = bf.readLine()) != null) {
 				String[] lineArr = currentLine.split(separator);
-				if (lineArr == null || lineArr.length != 2) {
+				if (lineArr == null || lineArr.length != (depth - 1)) {
 					continue;
 				}
 				String user = lineArr[0];
@@ -84,9 +99,9 @@ public class ThreeMaxPagesPath {
 				} else {
 					urlLinkedList = userUrls.get(user);
 					String pages = "";
-					if (urlLinkedList.size() == 2) {
+					if (urlLinkedList.size() == (depth - 1)) {
 						pages = urlLinkedList.get(0).trim() + separator + urlLinkedList.get(1).trim() + separator + page;
-					} else if (urlLinkedList.size() > 2) {
+					} else if (urlLinkedList.size() > (depth - 1)) {
 						urlLinkedList.remove(0);
 						pages = urlLinkedList.get(0).trim() + separator + urlLinkedList.get(1).trim() + separator + page;
 					}
@@ -112,7 +127,7 @@ public class ThreeMaxPagesPath {
 	public static void main(String[] args) {
 		String file = "/home/hanxuelian/Desktop/test-access.log";
 		String separator = ",";
-		Map<String, Integer> pageVisitCounts = findThreeMaxPagesPathV1(file, separator);
+		Map<String, Integer> pageVisitCounts = findThreeMaxPagesPathV1(file, separator, 3);
 		System.out.println(pageVisitCounts.size());
 		Map<String, Integer>  result = MapUtil.sortByValueDescendOrder(pageVisitCounts);
 		System.out.println(result);
