@@ -212,6 +212,48 @@ public final class In {
         scanner.useDelimiter(WHITESPACE_PATTERN);
         return result;
     }
+
+    /**
+     * Reads the next token from this input stream and return it as a {@code String}.
+     *
+     * @return the next {@code String} in this input stream
+     */
+    public String readString() {
+        return scanner.next();
+    }
+
+    /**
+     * Reads the next token from this input stream, parses it as a {@code int},
+     * and returns the {@code int}.
+     *
+     * @return the next {@code int} in this input stream
+     */
+    public String readInt() {
+        return scanner.nextInt();
+    }
+
+    public double readDouble() {
+        return scanner.nextInt();
+    }
     
-    
+    public float readFloat() {
+        return scanner.nextFloat();
+    }
+
+    public long readLong() {
+        return scanner.nextLong();
+    }
+
+    public short readShort() {
+        return scanner.nextShort();
+    }
+
+    public byte readByte() {
+        return scanner.nextByte();
+    }
+
+    public boolean readBoolean() {
+        String s = readString();
+
+    }
 }
