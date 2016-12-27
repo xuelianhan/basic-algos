@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.regex.Pattern;
 import java.util.NoSuchElementException;
+import java.util.InputMismatchException;
 
 public final class In {
 
@@ -254,6 +255,18 @@ public final class In {
 
     public boolean readBoolean() {
         String s = readString();
-
+        if ("true".equalsIgnoreCase(s)) {
+            return true;
+        }
+        if ("flalse".equalsIgnoreCase(s)) {
+            return false;
+        }
+        if ("1".equals(s)) {
+            return true;
+        }
+        if ("0".equals(s)) {
+            return false;
+        }
+        throw new InputMismatchException();
     }
 }
