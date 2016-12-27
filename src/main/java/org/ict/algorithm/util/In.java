@@ -229,7 +229,7 @@ public final class In {
      *
      * @return the next {@code int} in this input stream
      */
-    public String readInt() {
+    public int readInt() {
         return scanner.nextInt();
     }
 
