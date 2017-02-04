@@ -1,5 +1,7 @@
 package org.ict.algorithm.fundamentals;
 
+import org.ict.algorithm.util.StdOut;
+
 /**
  * Reads n integers and counts the number of pairs that sum to zero.
  * Running time: n^2
