@@ -1,5 +1,7 @@
 package org.ict.algorithm.util;
 
+import org.ict.algorithm.fundamentals.Bag;
+
 public class Stats {
 	
     public static void main(String[] args) {
