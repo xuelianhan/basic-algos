@@ -3,6 +3,9 @@ package org.ict.algorithm.util;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 /**
+ * Compilation: javac org/ict/algorithm/util/LinkedBag.java 
+ * Execution:   java org/ict/algorithm/util/LinkedBag < ../resources/tobe.txt 
+ *
  * The {@code LinkedBag} class represents a bag (or multiset) of 
  * generic items. it supports insertion and iterating over the
  * items in arbitrary order.
