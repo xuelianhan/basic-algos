@@ -1,6 +1,6 @@
 package org.ict.algorithm.fundamentals;
 
-import org.ict.algorithm.uti.In;
+import org.ict.algorithm.util.In;
 import org.ict.algorithm.util.StdOut;
 
 /**
