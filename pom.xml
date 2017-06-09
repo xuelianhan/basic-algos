@@ -36,7 +36,16 @@
         <artifactId>slf4j-simple</artifactId>
         <version>1.7.7</version>
  	</dependency>
-  
+    <dependency>
+        <groupId>org.apache.kafka</groupId>
+        <artifactId>kafka_2.11</artifactId>
+        <version>0.10.2.1</version>      
+    </dependency>
+    <dependency>
+        <groupId>org.apache.kafka</groupId>
+        <artifactId>kafka-clients</artifactId>
+        <version>0.10.2.1</version>      
+    </dependency>
     <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
