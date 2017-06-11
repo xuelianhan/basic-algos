@@ -3,7 +3,27 @@ import org.ict.algorithm.util.In;
 import org.ict.algorithm.util.Out;
 
 /**
+ * $ javac org/ict/algorithm/fundamentals/Cat.java 
+ * $ java org/ict/algorithm/fundamentals/Cat  ../resources/whitelist.log  ../resources/out-test.log  ../resources/cat-out-test.log
  *
+ * $ Cat  ../resources/whitelist.log
+ *   1
+ *   2
+ *   3
+ *   4
+ *   5
+ * 
+ * $ cat ../resources/out-test.log 
+ *   hello
+ *   Princess
+ *
+ * $ cat ../resources/cat-out-test.log 
+ *   1
+ *   2
+ *   3
+ *   4
+ *   5
+ * 
  *
  * Reads in text files specified as the first command-line
  * arguments, concatenates them, and writes the result to 
