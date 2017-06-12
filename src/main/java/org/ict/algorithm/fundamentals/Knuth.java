@@ -19,7 +19,7 @@ import org.ict.algorithm.util.StdOut;
  * For additional documentation,
  * see <a href="http://algs4.cs.princeton.edu/11model">Section 1.1</a>
  * of <i>Algorithms, 4th Edition</i>by Rebert Sedgewick and Kevin Wayne.
- * Sedd {@link StdRandom} for versions that shuffle arrays and subarrays 
+ * See {@link StdRandom} for versions that shuffle arrays and subarrays 
  * of objects, doubles, and ints.
  *
  */
