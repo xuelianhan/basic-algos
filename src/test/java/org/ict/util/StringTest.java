@@ -4,6 +4,26 @@ import org.ict.algorithm.util.StdOut;
 import org.junit.Test;
 
 public class StringTest {
+    
+    @Test
+    public void testModulus() {
+        int t = 2001;
+        for (int i = 0; i < t % 2000; i++) {
+            System.out.println(i);
+        }
+    }
+    
+    @Test
+    public void testNullCompare() {
+        Integer delayMinutes = null; 
+        delayMinutes = (delayMinutes == null || delayMinutes < 1) ? 1 : delayMinutes;
+        System.out.println(delayMinutes);
+    }
+    
+    @Test
+    public void testShift() {
+        System.out.println(8>>1);
+    }
 	
 	@Test
 	public void testPalindrome() {

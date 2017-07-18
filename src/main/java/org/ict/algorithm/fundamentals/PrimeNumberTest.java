@@ -7,6 +7,9 @@ package org.ict.algorithm.fundamentals;
  * see <a href="https://en.wikipedia.org/wiki/Prime_number">Prime_number</a>
  * see <a href="https://www.mkyong.com/java/how-to-determine-a-prime-number-in-java/">Prime_number</a>
  * see <a href="http://world.mathigon.org/Prime_Numbers">Prime_Numbers</a>
+ * see <a href="https://github.com/kevin-wayne/algs4">algs</a>
+ * see <a href="https://en.wikipedia.org/wiki/Harmonic_number">harmonic_number</a>
+ * see <a href="http://algs4.cs.princeton.edu/home/"></a>
  * 
  *
  */
