@@ -6,6 +6,11 @@ import org.junit.Test;
 public class StringTest {
     
     @Test
+    public void testNullEquals() {
+        
+    }
+    
+    @Test
     public void testModulus() {
         int t = 2001;
         for (int i = 0; i < t % 2000; i++) {
