@@ -4,6 +4,8 @@ import org.ict.algorithm.util.In;
 import org.ict.algorithm.util.StdOut;
 
 /**
+ * Compilation:javac org/ict/algorithm/fundamentals/TwoSum.java
+ * Execution: java org/ict/algorithm/fundamentals/TwoSum  ../resources/1Kints.txt
  * Reads n integers and counts the number of pairs that sum to zero.
  * Running time: n^2
  *
@@ -26,6 +28,8 @@ public class TwoSum {
 	
 	public static void main(String[] args) {
 		In in = new In(args[0]);
-		//int[] a = args;
+		int[] a = in.readAllInts();
+        int count = countAndOutput(a);
+        StdOut.println(count);
 	}
 }
