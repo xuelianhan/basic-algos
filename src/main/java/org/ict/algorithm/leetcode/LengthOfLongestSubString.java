@@ -77,8 +77,37 @@ public class LengthOfLongestSubString {
         return result;
     }
     
+    /**
+     * The previouse implements all have no assumption on the charset of the string s.
+     * If we know that the charset is rather small, we can replace the Map with an 
+     * Integer array as direct access table.
+     * Commonly used tables are:
+     * int[26] for Letters 'a'~'z' or 'A'~'Z'
+     * int[128] for ASCII
+     * int[256] for Extended ASCII
+     * Complexity Analysis
+     * Time complexity:O(n).Index j will iterate n times.
+     * Space complexity:
+     * HashTable:O(min(m,n)).Same as the previous approach.
+     * Table:O(m), m is the size of the charset
+     * 
+     * @param s
+     * @return
+     */
     public static int lengthOfLongestSubstringV3(String s) {
-        return 0;
+        if (null == s || s.length() == 0) {
+            return 0;
+        }
+        int n = s.length();
+        int[] index = new int[128];
+        int result = 0;
+        for (int j = 0, i = 0; j < n; j++) {
+            char c = s.charAt(j);
+            i = Math.max(index[c], j - i + 1);
+            result = Math.max(result, j - i + 1);
+            index[c] = j + 1;
+        }
+        return result;
     }
     
     
