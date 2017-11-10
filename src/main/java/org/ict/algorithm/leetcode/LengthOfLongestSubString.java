@@ -56,6 +56,19 @@ public class LengthOfLongestSubString {
      * We can skip all the elements in the range [i, j'] and let i to be j'+1 directly.
      * @param s
      * @return
+     * 
+     * ***********start***********
+     * j  i  c  result   map
+     * 0  0  a   0       (,)
+     * ***********loop************
+     * 0  0  a   1       (a, 1)
+     * 1  0  b   2       (a, 1),(b, 2)
+     * 2  0  c   3       (a, 1),(b, 2),(c, 3)
+     * 3  1  a   3       (a, 4),(b, 2),(c, 3)
+     * 4  2  b   3       (a, 4),(b, 5),(c, 3)
+     * 5  3  c   3       (a, 4),(b, 5),(c, 6)
+     * ***********end*************
+     * 
      */
     public static int lengthOfLongestSubstringV2(String s) {
         if (null == s || s.length() == 0) {
