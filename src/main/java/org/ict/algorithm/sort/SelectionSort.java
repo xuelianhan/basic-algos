@@ -19,21 +19,21 @@
 package org.ict.algorithm.sort;
 import java.util.Comparator;
 
-public class SelectionSort extends AbstractSortHelper {
+public class SelectionSort {
 	
 	public static void sort(Comparable[] a) {
 		int N = a.length;
 		for (int i = 0; i < N; i++) {
 		    int min = i;
 		    for (int j = i+1; j < N; j++) {
-			    if (less(a[j],a[min])) 
+			    if (AbstractSortHelper.less(a[j],a[min])) 
 		        	min = j;		  
 		    }
 		    if (i != min)
-			    exch(a, min, i);
-		    assert isSorted(a,0,i);
+		        AbstractSortHelper.exch(a, min, i);
+		    assert AbstractSortHelper.isSorted(a,0,i);
 		}	
-		assert isSorted(a);
+		assert AbstractSortHelper.isSorted(a);
 	}
 
 	public static void sort(Object[] a, Comparator c) {
@@ -41,14 +41,14 @@ public class SelectionSort extends AbstractSortHelper {
 		for (int i = 0; i < N; i++) {
 			int min = i;
 			for (int j = i+1; j < N; j++) {
-				if (less(c,a[j],a[min]))
+				if (AbstractSortHelper.less(c,a[j],a[min]))
 					min = j;
 			}
 			if (i != min)
-				exch(a,min,i);
-			assert isSorted(a,c,0,i);
+			    AbstractSortHelper.exch(a,min,i);
+			assert AbstractSortHelper.isSorted(a,c,0,i);
 		}
-		assert isSorted(a, c);
+		assert AbstractSortHelper.isSorted(a, c);
 	}
 
 	private static void checkRange(int low, int high, int  length) {

@@ -1,15 +1,15 @@
 package org.ict.algorithm.sort;
 import org.ict.algorithm.util.UtilTools;
 
-public class InsertSort extends AbstractSortHelper {
+public class InsertSort {
 	public static void sortByBackWard(Comparable[] a) {
 		int N = a.length;
 		for (int i = 1; i < N; i++) {
-			if (less(a[i], a[i-1])) {
+			if (AbstractSortHelper.less(a[i], a[i-1])) {
 				Comparable[] temp = new Comparable[1];
 				temp[0] = a[i];
 				int j;
-				for (j = i-1; less(temp[0],a[j]); j--) {
+				for (j = i-1; AbstractSortHelper.less(temp[0],a[j]); j--) {
 					a[j+1] = a[j];
 				}	
 				a[j+1] = temp[0];
@@ -20,12 +20,12 @@ public class InsertSort extends AbstractSortHelper {
 	public static void sortByExchange(Comparable[] a) {
 		int N = a.length;
 		for (int i = 0; i < N; i++) {
-			for (int j = i; j > 0 && less(a[j], a[j-1]); j--) {
-				exch(a, j, j-1);
+			for (int j = i; j > 0 && AbstractSortHelper.less(a[j], a[j-1]); j--) {
+			    AbstractSortHelper.exch(a, j, j-1);
 			}
-			assert isSorted(a, 0, i);
+			assert AbstractSortHelper.isSorted(a, 0, i);
 		}
-		assert isSorted(a);
+		assert AbstractSortHelper.isSorted(a);
 	}	
 	
 	
