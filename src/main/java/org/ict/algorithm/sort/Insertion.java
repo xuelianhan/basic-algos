@@ -1,7 +1,7 @@
 package org.ict.algorithm.sort;
 import org.ict.algorithm.util.UtilTools;
 
-public class InsertSort {
+public class Insertion {
 	public static void sortByBackWard(Comparable[] a) {
 		int N = a.length;
 		for (int i = 1; i < N; i++) {
@@ -32,7 +32,7 @@ public class InsertSort {
 	public static void main(String[] args) {
 		String[] a = {"abigail", "matt", "sed", "apache", "tmall","dangdang","jd","suning","guomei","amazon","ebey","avon","google","apple","nutch","cloud"}; 
 	//	InsertSort.sortByBackWard(a);
-		InsertSort.sortByExchange(a);	
+		Insertion.sortByExchange(a);	
 		UtilTools.showArrayData(a);
 	}	
 }	

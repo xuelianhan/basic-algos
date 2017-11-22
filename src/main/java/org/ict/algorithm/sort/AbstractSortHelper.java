@@ -1,6 +1,12 @@
 package org.ict.algorithm.sort;
 import org.ict.algorithm.util.StdOut;
 import java.util.Comparator;
+
+/**
+ * there is no notion of static Inheritance in Java as inheritance always is in context of Object level.
+ * Only member methods (non-static) can be inherited by sub classes having appropriate access modifiers.
+ * @see https://stackoverflow.com/questions/16079745/java-generic-static-methods
+ */
 public abstract class AbstractSortHelper {
     //is v < w ? 
     public static boolean less(Comparable v, Comparable w) {
