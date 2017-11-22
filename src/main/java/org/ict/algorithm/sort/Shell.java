@@ -10,7 +10,7 @@ package org.ict.algorithm.sort;
  * @author Robert Sedgewick
  * @author Kevin Wayne
  */
-public class Shell extends AbstractSortHelper {
+public class Shell {
     
     //This class should not be instantiated.
     private Shell(){}
@@ -25,13 +25,13 @@ public class Shell extends AbstractSortHelper {
         while (h >= 1) {
             //h-sort the array
             for (int i = h; i < n; i++) {
-                for (int j = i; j >= h && less(a[j], a[j-h]); j -= h) {
-                    exch(a, j, j-h);
+                for (int j = i; j >= h && AbstractSortHelper.less(a[j], a[j-h]); j -= h) {
+                    AbstractSortHelper.exch(a, j, j-h);
                 }
             }
-            assert isHsorted(a, h);
+            assert AbstractSortHelper.isHsorted(a, h);
             h /= 3;
         }
-        assert isSorted(a);
+        assert AbstractSortHelper.isSorted(a);
     }
 }
