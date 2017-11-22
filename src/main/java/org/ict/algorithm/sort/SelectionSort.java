@@ -17,11 +17,9 @@
  *
  */
 package org.ict.algorithm.sort;
-
 import java.util.Comparator;
 
-
-public class SelectionSort {
+public class SelectionSort extends AbstractSortHelper {
 	
 	public static void sort(Comparable[] a) {
 		int N = a.length;
@@ -32,7 +30,7 @@ public class SelectionSort {
 		        	min = j;		  
 		    }
 		    if (i != min)
-			    exchange(a, min, i);
+			    exch(a, min, i);
 		    assert isSorted(a,0,i);
 		}	
 		assert isSorted(a);
@@ -47,25 +45,10 @@ public class SelectionSort {
 					min = j;
 			}
 			if (i != min)
-				exchange(a,min,i);
+				exch(a,min,i);
 			assert isSorted(a,c,0,i);
 		}
 		assert isSorted(a, c);
-
-	}
-
-	private static boolean less(Comparable v, Comparable w) {
-		return (v.compareTo(w) < 0);	
-	}
-
-	private static boolean less(Comparator c, Object v, Object w) {
-		return (c.compare(v, w) < 0);
-	}
-
-	private static void exchange(Object[] a, int i, int j) {
-		Object tmp = a[i];
-		a[i] = a[j];
-		a[j] = tmp;
 	}
 
 	private static void checkRange(int low, int high, int  length) {
@@ -75,35 +58,6 @@ public class SelectionSort {
 			throw new ArrayIndexOutOfBoundsException(low);
 		if (high < length)
 			throw new ArrayIndexOutOfBoundsException(high);
-
-	}
-
-	private static boolean isSorted(Comparable[] a) {
-		return isSorted(a, 0, a.length - 1);
-	}
-
-	private static boolean isSorted(Comparable[] a, int low, int high) {
-		checkRange(low,high,a.length);
-		for (int i = low; i < high; i++) {
-			if (less(a[i+1], a[i])) {
-				return false;
-		        }
-		}
-		return true;
-	}
-	
-	private static boolean isSorted(Object[] a, Comparator c) {
-		return isSorted(a,c,0,a.length);
-	}
-
-	private static boolean isSorted(Object[] a, Comparator c, int low, int high) {
-		checkRange(low,high,a.length);
-		for (int i = low; i < high; i++) {
-			if (less(c,a[i+1],a[i])) {
-				return false;
-			}
-	        }
-		return true;
 	}
 
 	private static void showArrayData(Comparable[] a) {
