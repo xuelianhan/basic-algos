@@ -7,7 +7,7 @@ import java.util.Comparator;
  * Only member methods (non-static) can be inherited by sub classes having appropriate access modifiers.
  * @see https://stackoverflow.com/questions/16079745/java-generic-static-methods
  */
-public abstract class AbstractSortHelper {
+public class AbstractSortHelper {
     //is v < w ? 
     public static boolean less(Comparable v, Comparable w) {
         return v.compareTo(w) < 0;
