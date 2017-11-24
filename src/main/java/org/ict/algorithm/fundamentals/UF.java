@@ -1,5 +1,8 @@
 package org.ict.algorithm.fundamentals;
 
+import org.ict.algorithm.util.StdIn;
+import org.ict.algorithm.util.StdOut;
+
 /**
  *
  * @author Robert Sedgewick
@@ -35,12 +38,31 @@ public class UF {
     }
 
 
+    //validate that p is a valid index
     private void validate(int p) {
         int n = parent.length;
         if (p < 0 || p >= n) {
             throw new IllegalArgumentException("Index " + p + "is not between 0 and " + (n-1));   
         }
     }
+    
+    /**
+     * Returns the number of components
+     * 
+     * @return the number of components (between {@code 1} and {@code n})
+     */
+    public int count() {
+        return this.count;
+    }
 
+    /**
+     * Returns the component identifier for the component containing site {@code p}.
+     * 
+     *
+     *
+     */
+    public int find(int p) {
+        validate(p);
 
+    }
 }
