@@ -22,6 +22,13 @@ public class AbstractSortHelper {
         a[i] = a[j];
         a[j] = swap;
     }
+
+    // exchange a[i] and a[j] (for indirect sort)
+    public static void exch(int[] a, int i, int j) {
+        int swap = a[i];
+        a[i] = a[j];
+        a[j] = swap;
+    }
     //is the array a[] sorted?
     public static boolean isSorted(Comparable[] a) {
         return isSorted(a, 0, a.length - 1);
