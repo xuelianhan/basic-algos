@@ -3,6 +3,46 @@ import java.util.Comparator;
 
 import org.ict.algorithm.util.StdIn;
 
+/**
+ *  $ javac org/ict/algorithm/sort/Insertion.java 
+ *  Note: ./org/ict/algorithm/sort/AbstractSortHelper.java uses unchecked or unsafe operations.
+ *  Note: Recompile with -Xlint:unchecked for details.
+ *  $ more ../resources/tiny.txt 
+ *   S O R T E X A M P L E
+ *  $ java org/ict/algorithm/sort/Insertion < ../resources/tiny.txt 
+ *   A
+ *   E
+ *   E
+ *   L
+ *   M
+ *   O
+ *   P
+ *   R
+ *   S
+ *   T
+ *   X
+ *
+ *
+ *  The {@code Insertion} class provides static methods for sorting an
+ *  array using insertion sort.
+ *  <p>
+ *  This implementation makes ~ 1/2 n^2 compares and exchanges in
+ *  the worst case, so it is not suitable for sorting large arbitrary arrays.
+ *  More precisely, the number of exchanges is exactly equal to the number
+ *  of inversions. So, for example, it sorts a partially-sorted array
+ *  in linear time.
+ *  <p>
+ *  The sorting algorithm is stable and uses O(1) extra memory.
+ *  <p>
+ *  See <a href="https://algs4.cs.princeton.edu/21elementary/InsertionPedantic.java.html">InsertionPedantic.java</a>
+ *  for a version that eliminates the compiler warning.
+ *  <p>
+ *  For additional documentation, see <a href="https://algs4.cs.princeton.edu/21elementary">Section 2.1</a> of
+ *  <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
+ *
+ *  @author Robert Sedgewick
+ *  @author Kevin Wayne
+ */
 public class Insertion {
     
     //This class should not be instantiated.
