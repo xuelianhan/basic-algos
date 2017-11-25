@@ -1,6 +1,7 @@
 package org.ict.algorithm.fundamentals;
 import org.ict.algorithm.util.StdIn;
 import org.ict.algorithm.util.StdOut;
+import java.util.Arrays;
 
 
 
@@ -21,13 +22,24 @@ import org.ict.algorithm.util.StdOut;
  * 6 7
  * $ java org/ict/algorithm/fundamentals/QuickFindUF < ../resources/tinyUF.txt 
  * 4 3
+ * [0, 1, 2, 3, 3, 5, 6, 7, 8, 9] ,9
  * 3 8
+ * [0, 1, 2, 8, 8, 5, 6, 7, 8, 9] ,8
  * 6 5
+ * [0, 1, 2, 8, 8, 5, 5, 7, 8, 9] ,7
  * 9 4
+ * [0, 1, 2, 8, 8, 5, 5, 7, 8, 8] ,6
  * 2 1
+ * [0, 1, 1, 8, 8, 5, 5, 7, 8, 8] ,5
+ * 8 9
  * 5 0
+ * [0, 1, 1, 8, 8, 0, 0, 7, 8, 8] ,4
  * 7 2
+ * [0, 1, 1, 8, 8, 0, 0, 1, 8, 8] ,3
  * 6 1
+ * [1, 1, 1, 8, 8, 1, 1, 1, 8, 8] ,2
+ * 1 0
+ * 6 7
  * 2 components
  *
  *
@@ -84,6 +96,7 @@ public class QuickFindUF {
             }
         }
         count--;
+        StdOut.println(Arrays.toString(id) + " ," + count);
     }
 
 
@@ -95,12 +108,13 @@ public class QuickFindUF {
             int p = StdIn.readInt();
             int q = StdIn.readInt();
 
+            StdOut.println(p + " " + q);
+
             if (uf.connected(p, q)) {
                 continue;
             }
         
             uf.union(p, q);
-            StdOut.println(p + " " + q);
         }
         StdOut.println(uf.count() + " components"); 
     }
