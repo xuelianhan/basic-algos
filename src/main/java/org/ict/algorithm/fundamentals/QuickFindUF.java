@@ -6,6 +6,9 @@ import java.util.Arrays;
 
 
 /**
+ * QuickFindUF.java maintains the invariant that p and q are connected if and only if id[p] is equal to id[q]. 
+ * In other words, all sites in a component must have the same value in id[].
+ *
  * $ javac org/ict/algorithm/fundamentals/QuickFindUF.java 
  * $ more ../resources/tinyUF.txt 
  * 10
@@ -41,7 +44,9 @@ import java.util.Arrays;
  * 1 0
  * 6 7
  * 2 components
- *
+ * 
+ * @author Robert Sedgewick
+ * @author Kevin Wayne
  *
  *
  */
