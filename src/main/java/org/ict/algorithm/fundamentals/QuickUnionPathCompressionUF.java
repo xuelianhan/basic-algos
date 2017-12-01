@@ -1,5 +1,5 @@
 package org.ict.algorithm.fundamentals;
-
+import java.util.Arrays;
 import org.ict.algorithm.util.StdIn;
 import org.ict.algorithm.util.StdOut;
 
@@ -10,6 +10,43 @@ import org.ict.algorithm.util.StdOut;
  *  by adding a loop to find() that links every site on the path from p to the root
  *  Give a sequence of input pairs that causes this method to produce a path of length 4
  *  Note: the amortized cost per operation for this algorithm is known to be logarithmic Solution 
+ *
+ *  $ javac org/ict/algorithm/fundamentals/QuickUnionPathCompressionUF.java 
+ *  $ more ../resources/tinyUF.txt
+ *  10
+ *  4 3
+ *  3 8
+ *  6 5
+ *  9 4
+ *  2 1
+ *  8 9
+ *  5 0
+ *  7 2
+ *  6 1
+ *  1 0
+ *  6 7
+ *  $ java org/ict/algorithm/fundamentals/QuickUnionPathCompressionUF < ../resources/tinyUF.txt 
+ *  4 3
+ *  [0, 1, 2, 3, 3, 5, 6, 7, 8, 9] ,9
+ *  3 8
+ *  [0, 1, 2, 8, 3, 5, 6, 7, 8, 9] ,8
+ *  6 5
+ *  [0, 1, 2, 8, 3, 5, 5, 7, 8, 9] ,7
+ *  9 4
+ *  [0, 1, 2, 8, 8, 5, 5, 7, 8, 8] ,6
+ *  2 1
+ *  [0, 1, 1, 8, 8, 5, 5, 7, 8, 8] ,5
+ *  8 9
+ *  5 0
+ *  [0, 1, 1, 8, 8, 0, 5, 7, 8, 8] ,4
+ *  7 2
+ *  [0, 1, 1, 8, 8, 0, 5, 1, 8, 8] ,3
+ *  6 1
+ *  [1, 1, 1, 8, 8, 0, 0, 1, 8, 8] ,2
+ *  1 0
+ *  6 7
+ *  2 components
+ *
  *
  */
 public class QuickUnionPathCompressionUF {
@@ -81,6 +118,7 @@ public class QuickUnionPathCompressionUF {
         }
         id[rootP] = rootQ;
         count--;
+        StdOut.println(Arrays.toString(id) + " ," + count);
     }
 
     public static void main(String[] args) {
@@ -89,11 +127,11 @@ public class QuickUnionPathCompressionUF {
         while (!StdIn.isEmpty()) {
             int p = StdIn.readInt();
             int q = StdIn.readInt();
+            StdOut.println(p + " " + q);
             if (uf.connected(p, q)) {
                 continue;
             }
             uf.union(p, q);
-            StdOut.println(p + " " + q);
         }
         StdOut.println(uf.count()+ " components");
     }
