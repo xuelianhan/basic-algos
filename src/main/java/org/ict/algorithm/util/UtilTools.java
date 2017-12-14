@@ -1,5 +1,8 @@
 package org.ict.algorithm.util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UtilTools {
 	public static void showArrayData(Comparable[] a) {
 		for (int i = 0; i < a.length; i++) {
@@ -10,7 +13,14 @@ public class UtilTools {
 		}
 	}
 	
+	public static void testListAddNull() {
+	    List<String> list = new ArrayList<String>();
+	    list.add(null);
+	    System.out.println(list.size());
+	}
 
-
+	public static void main(String[] args) {
+	    testListAddNull();
+	}
 
 }	
