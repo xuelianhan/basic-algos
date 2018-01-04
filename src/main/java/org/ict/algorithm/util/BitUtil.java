@@ -41,7 +41,7 @@ public class BitUtil {
      *
      *
      */
-    public static in clearBitsIthrough0(int num, int i) {
+    public static int clearBitsIthrough0(int num, int i) {
         int mask = ~(-1 >> (31 - i));
         return (mask & num);
     }
