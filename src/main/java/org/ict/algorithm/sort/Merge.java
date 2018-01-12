@@ -1,23 +1,41 @@
 package org.ict.algorithm.sort;
 
+import java.util.Arrays;
 import org.ict.algorithm.util.StdIn;
+import org.ict.algorithm.util.StdOut;
+
 
 /**
- * $ javac org/ict/algorithm/sort/Merge.java
- * $ more ../resources/tiny.txt 
- * S O R T E X A M P L E
- * $ java org/ict/algorithm/sort/Merge < ../resources/tiny.txt
- *  A
- *  E
- *  E
- *  L
- *  M
- *  O
- *  P
- *  R
- *  S
- *  T
- *  X
+ *  $ javac org/ict/algorithm/sort/Merge.java
+ *  $ more ../resources/tiny.txt 
+ *  S O R T E X A M P L E
+ *  $ java org/ict/algorithm/sort/Merge < ../resources/tiny.txt 
+ *  index before sort:[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+ *  merge(a, index, aux, 0, 0, 1), index:[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+ *  merge(a, index, aux, 0, 1, 2), index:[1, 0, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+ *  merge(a, index, aux, 3, 3, 4), index:[1, 2, 0, 3, 4, 5, 6, 7, 8, 9, 10]
+ *  merge(a, index, aux, 3, 4, 5), index:[1, 2, 0, 4, 3, 5, 6, 7, 8, 9, 10]
+ *  merge(a, index, aux, 0, 2, 5), index:[1, 2, 0, 4, 3, 5, 6, 7, 8, 9, 10]
+ *  merge(a, index, aux, 6, 6, 7), index:[4, 1, 2, 0, 3, 5, 6, 7, 8, 9, 10]
+ *  merge(a, index, aux, 6, 7, 8), index:[4, 1, 2, 0, 3, 5, 6, 7, 8, 9, 10]
+ *  merge(a, index, aux, 9, 9, 10), index:[4, 1, 2, 0, 3, 5, 6, 7, 8, 9, 10]
+ *  merge(a, index, aux, 6, 8, 10), index:[4, 1, 2, 0, 3, 5, 6, 7, 8, 10, 9]
+ *  merge(a, index, aux, 0, 5, 10), index:[4, 1, 2, 0, 3, 5, 6, 10, 9, 7, 8]
+ *  index after sort:[6, 4, 10, 9, 7, 1, 8, 2, 0, 3, 5]
+ *  ==============================
+ *  a before sort:[S, O, R, T, E, X, A, M, P, L, E]
+ *  merge(a, aux, 0, 0, 1), a:[S, O, R, T, E, X, A, M, P, L, E]
+ *  merge(a, aux, 0, 1, 2), a:[O, S, R, T, E, X, A, M, P, L, E]
+ *  merge(a, aux, 3, 3, 4), a:[O, R, S, T, E, X, A, M, P, L, E]
+ *  merge(a, aux, 3, 4, 5), a:[O, R, S, E, T, X, A, M, P, L, E]
+ *  merge(a, aux, 0, 2, 5), a:[O, R, S, E, T, X, A, M, P, L, E]
+ *  merge(a, aux, 6, 6, 7), a:[E, O, R, S, T, X, A, M, P, L, E]
+ *  merge(a, aux, 6, 7, 8), a:[E, O, R, S, T, X, A, M, P, L, E]
+ *  merge(a, aux, 9, 9, 10), a:[E, O, R, S, T, X, A, M, P, L, E]
+ *  merge(a, aux, 6, 8, 10), a:[E, O, R, S, T, X, A, M, P, E, L]
+ *  merge(a, aux, 0, 5, 10), a:[E, O, R, S, T, X, A, E, L, M, P]
+ *  a after sort:[A, E, E, L, M, O, P, R, S, T, X]
+ *
  *
  */
 
@@ -71,6 +89,7 @@ public class Merge extends AbstractSortHelper {
         int mid = lo + (hi - lo) / 2;
         sort(a, aux, lo, mid);
         sort(a, aux, mid + 1, hi);
+        StdOut.println("merge(a, aux, " + lo + ", " + mid +", "+ hi + "), a:" + Arrays.toString(a)); 
         merge(a, aux, lo, mid, hi);
     }
 
@@ -80,7 +99,9 @@ public class Merge extends AbstractSortHelper {
      */
     public static void sort(Comparable[] a) {
         Comparable[] aux = new Comparable[a.length];
+        StdOut.println("a before sort:" + Arrays.toString(a)); 
         sort(a, aux, 0, a.length - 1);
+        StdOut.println("a after sort:" + Arrays.toString(a)); 
         assert AbstractSortHelper.isSorted(a);
     }
 
@@ -122,9 +143,10 @@ public class Merge extends AbstractSortHelper {
         for (int i = 0; i < n; i++) {
             index[i] = i;
         }
-
+        StdOut.println("index before sort:" + Arrays.toString(index)); 
         int[] aux = new int[n];
         sort(a, index, aux, 0, n-1);
+        StdOut.println("index after sort:" + Arrays.toString(index)); 
         return index;
     }
 
@@ -136,6 +158,7 @@ public class Merge extends AbstractSortHelper {
         int mid = lo + (hi - lo) / 2;
         sort(a, index, aux, lo , mid);
         sort(a, index, aux, mid+1 , hi);
+        StdOut.println("merge(a, index, aux, " + lo + ", " + mid +", "+ hi + "), index:" + Arrays.toString(index)); 
         merge(a, index, aux, lo, mid, hi);
     }
 
@@ -145,7 +168,9 @@ public class Merge extends AbstractSortHelper {
      */
     public static void main(String[] args) {
         String[] a = StdIn.readAllStrings();
+        int[] index = Merge.indexSort(a);
+        StdOut.println("==============================");
         Merge.sort(a);
-        AbstractSortHelper.show(a);
+        //AbstractSortHelper.show(a);
     }
 }
