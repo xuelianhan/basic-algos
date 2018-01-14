@@ -7,6 +7,10 @@ import org.ict.algorithm.util.StdOut;
  *
  * The {@code MergeX} class provides static methods for sorting an 
  * array using an optimized version of mergesort
+ * Improvements
+ * Use insertion sort for small subarrays
+ * Test whether array is already in order
+ * Eliminate the copy to the auxiliary array
  * <p>
  * For additional documentation,
  * see <a href="https://algs4.cs.princeton.edu/22mergesort/">Section 2.2</a>
@@ -19,7 +23,48 @@ public class MergeX extends AbstractSortHelper {
 
     //This class should not be instantiated
     private MergeX() {}
+
+    private static void merge(Comparable[] src, Comparable[] dst, int lo, int mid, int hi) {
+        //precondition: src[lo .. mid] and src[mid+1 .. hi] are sorted subarrays
+        assert AbstractSortHelper.isSorted(src, lo, mid);
+        assert AbstractSortHelper.isSorted(src, mid+1, hi);
+
+        int i = lo, j = mid + 1;
+        for (int k = lo; k <= hi; k++) {
+            if (i > mid) {
+                dst[k] = src[j++];
+            } else if (j > hi) {
+                dst[k] = src[i++];
+            } else if (AbstractSortHelper.less(src[j], src[i])) {//to ensure stability
+                dst[k] = src[j++]; 
+            } else {
+                dst[k] = src[i++]; 
+            }
+        }
+
+        //postcondition:dst[lo .. hi] is sorted subarray
+        assert AbstractSortHelper.isSorted(dst, lo, hi);
+    }
+
+    private static void sort(Comparable[] src, Comparable[] dst, int lo, int hi) {
+
+    }
+
+    /**
+     * Rearranges the array in ascending order, using the natural order
+     * @param a the array to be sorted
+     *
+     */
+    public static void sort(Comparable[] a) {
+        Comparable[] aux = a.clone();
+        sort(aux, a, 0, a.length - 1);
+        assert AbstractSortHelper.isSorted(a);
+    }
     
+    private static void merge() {
+
+    }
+
 
     public static void main(String[] args) {
         
