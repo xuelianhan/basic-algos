@@ -47,6 +47,18 @@ public class MergeX extends AbstractSortHelper {
     }
 
     private static void sort(Comparable[] src, Comparable[] dst, int lo, int hi) {
+        // Compare to sort method in Merge.java
+        // if (hi <= lo) return;
+        
+        if (hi <= (lo + CUTOFF)) {
+            Insertion.sort(dst, lo, hi);
+            return;
+        }
+        
+        int mid = lo + (hi - lo) / 2;
+        sort(dst, src, lo, mid);
+        sort(dst, src, mid+1, hi);
+
 
     }
 
