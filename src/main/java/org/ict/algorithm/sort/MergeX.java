@@ -58,8 +58,14 @@ public class MergeX extends AbstractSortHelper {
         int mid = lo + (hi - lo) / 2;
         sort(dst, src, lo, mid);
         sort(dst, src, mid+1, hi);
-
-
+        
+        //using System.arraycopy() is a bit faster than the normal-for-loop
+        if (!less(src[mid+1], src[mid])) {
+            System.arraycopy(src, lo, dst, lo, hi-lo+1);
+            return;
+        }
+        
+        merge(src, dst, lo, mid, hi);
     }
 
     /**
