@@ -2,6 +2,8 @@ package org.ict.algorithm.sort;
 import java.util.Comparator;
 
 import org.ict.algorithm.util.StdIn;
+import org.ict.algorithm.util.StdOut;
+
 
 /**
  *  $ javac org/ict/algorithm/sort/Insertion.java 
@@ -72,6 +74,7 @@ public class Insertion {
 	public static void sort(Comparable[] a, int lo, int hi) {
 	    for (int i = lo; i < hi; i++) {
             for (int j = i; j > lo && AbstractSortHelper.less(a[j], a[j-1]); j--) {
+                StdOut.println("exchange a[" + j + "]:" + a[j]+ " and a[" + (j-1) +"]:" + a[j-1]);
                 AbstractSortHelper.exch(a, j, j-1);
             }
         }
@@ -86,10 +89,10 @@ public class Insertion {
     public static void sort(Object[] a, Comparator comparator) {
         int n = a.length;
         for (int i = 0; i < n; i++) {
-            for (int j = i; j > 0 && AbstractSortHelper.less(comparator, a[j], a[j-1]); j--) {
+            for (int j = i; j > 0 && AbstractSortHelper.less(a[j], a[j-1], comparator); j--) {
                 AbstractSortHelper.exch(a, j, j-1);
             }
-            assert AbstractSortHelper.isSorted(a, comparator, 0, i);
+            assert AbstractSortHelper.isSorted(a, 0, i, comparator);
         }
         assert AbstractSortHelper.isSorted(a, comparator);
     }
@@ -103,11 +106,11 @@ public class Insertion {
      */
     public static void sort(Object[] a, int lo, int hi, Comparator comparator) {
         for (int i = lo; i < hi; i++) {
-            for (int j = i; j > lo && AbstractSortHelper.less(comparator, a[j], a[j-1]); j--) {
+            for (int j = i; j > lo && AbstractSortHelper.less(a[j], a[j-1], comparator); j--) {
                 AbstractSortHelper.exch(a, j, j-1);
             }
         }
-        assert AbstractSortHelper.isSorted(a, comparator, lo, hi);
+        assert AbstractSortHelper.isSorted(a, lo, hi, comparator);
     }
 
     /**

@@ -38,19 +38,19 @@ public class Selection {
 		assert AbstractSortHelper.isSorted(a);
 	}
 
-	public static void sort(Object[] a, Comparator c) {
+	public static void sort(Object[] a, Comparator comparator) {
 		int N = a.length;
 		for (int i = 0; i < N; i++) {
 			int min = i;
 			for (int j = i+1; j < N; j++) {
-				if (AbstractSortHelper.less(c,a[j],a[min]))
+				if (AbstractSortHelper.less(a[j],a[min], comparator))
 					min = j;
 			}
 			if (i != min)
 			    AbstractSortHelper.exch(a,min,i);
-			assert AbstractSortHelper.isSorted(a,c,0,i);
+			assert AbstractSortHelper.isSorted(a, 0, i, comparator);
 		}
-		assert AbstractSortHelper.isSorted(a, c);
+		assert AbstractSortHelper.isSorted(a, comparator);
 	}
 
 	
