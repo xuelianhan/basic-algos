@@ -26,7 +26,7 @@ public class MergeX extends AbstractSortHelper {
     //This class should not be instantiated
     private MergeX() {}
 
-    private static void merge(Comparable[] src, Comparable[] dst, int lo, int mid, int hi) {
+    private static <T> void merge(Comparable<T>[] src, Comparable<T>[] dst, int lo, int mid, int hi) {
         //no copy to auxiliary array compared with merge in Merge.java
 
         //precondition: src[lo .. mid] and src[mid+1 .. hi] are sorted subarrays
@@ -51,7 +51,7 @@ public class MergeX extends AbstractSortHelper {
     }
 
     // sort from a[lo] to a[hi] using insertion sort
-    private static void insertionSort(Comparable[] a, int lo, int hi) {
+    private static <T> void insertionSort(Comparable<T>[] a, int lo, int hi) {
         for (int i = lo; i <=hi; i++) {
             for (int j = i; j > lo && AbstractSortHelper.less(a[j], a[j-1]); j--) {
                AbstractSortHelper.exch(a, j, j-1);     
@@ -59,9 +59,10 @@ public class MergeX extends AbstractSortHelper {
         }
     }
 
-    private static void sort(Comparable[] src, Comparable[] dst, int lo, int hi) {
+    private static <T> void sort(Comparable<T>[] src, Comparable<T>[] dst, int lo, int hi) {
         // Compare to sort method in Merge.java
         // if (hi <= lo) return;
+        StdOut.println("sort(src, dst, " + lo  + "," + hi+"), src:" +Arrays.toString(src)+ ", dst:" + Arrays.toString(dst));    
         
         if (hi <= (lo + CUTOFF)) {
             StdOut.println("invoke Insertion Sort before:<" + lo + ", " + hi + "> " + ", dst: " + Arrays.toString(dst));    
@@ -91,27 +92,29 @@ public class MergeX extends AbstractSortHelper {
 
     /**
      * Rearranges the array in ascending order, using the natural order
+     * @param <T>
      * @param a the array to be sorted
      *
      */
-    public static void sort(Comparable[] a) {
-        Comparable[] aux = a.clone();
+    public static <T> void sort(Comparable<T>[] a) {
+        Comparable<T>[] aux = a.clone();
         sort(aux, a, 0, a.length - 1);
         assert AbstractSortHelper.isSorted(a);
     }
 
     /**
      * Rearranges the array in ascending order, using the provided order
+     * @param <T>
      * @param a the array to be sorted
      * @param comparator the comparator that defines the total order
      */
-    public static void sort(Object[] a, Comparator comparator) {
+    public static <T> void sort(Object[] a, Comparator<T> comparator) {
         Object[] aux = a.clone();
         sort(aux, a, 0, a.length-1, comparator);
         assert AbstractSortHelper.isSorted(a, comparator);
     }
     
-    private static void merge(Object[] src, Object[] dst, int lo, int mid, int hi, Comparator comparator) {
+    private static <T> void merge(Object[] src, Object[] dst, int lo, int mid, int hi, Comparator<T> comparator) {
         //no copy to auxiliary array compared with merge in Merge.java
 
         //precondition: src[lo .. mid] and src[mid+1 .. hi] are sorted subarrays
@@ -135,7 +138,7 @@ public class MergeX extends AbstractSortHelper {
         assert AbstractSortHelper.isSorted(dst, lo, hi, comparator);
     }
 
-    private static void sort(Object[] src, Object[] dst, int lo, int hi, Comparator comparator) {
+    private static <T> void sort(Object[] src, Object[] dst, int lo, int hi, Comparator<T> comparator) {
         // Compare to sort method in Merge.java
         // if (hi <= lo) return;
         
@@ -161,7 +164,7 @@ public class MergeX extends AbstractSortHelper {
     }
 
     //sort from a[lo] to a[hi] using insertion sort
-    private static void insertionSort(Object[] a, int lo, int hi, Comparator comparator) {
+    private static <T> void insertionSort(Object[] a, int lo, int hi, Comparator<T> comparator) {
         for (int i = lo; i <= hi; i++) {
             for (int j = i; j > lo && AbstractSortHelper.less(a[j], a[j-1], comparator); j--) {
                 AbstractSortHelper.exch(a, j, j-1);
