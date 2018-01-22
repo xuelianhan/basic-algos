@@ -65,8 +65,9 @@ public class MergeX extends AbstractSortHelper {
         
         if (hi <= (lo + CUTOFF)) {
             StdOut.println("invoke Insertion Sort before:<" + lo + ", " + hi + "> " + ", dst: " + Arrays.toString(dst));    
-            //Don't use Insertion sort method, because the upper bound is not included
+            //Don't use Insertion sort method, because the upper bound is not included due out of array size
             //Insertion.sort(dst, lo, hi);
+            insertionSort(dst, lo, hi);
             StdOut.println("invoke Insertion Sort after: <" + lo + ", " + hi + "> " + ", dst: " + Arrays.toString(dst));    
             return;
         }
@@ -139,7 +140,9 @@ public class MergeX extends AbstractSortHelper {
         // if (hi <= lo) return;
         
         if (hi <= (lo + CUTOFF)) {
-            Insertion.sort(dst, lo, hi, comparator);
+            //Don't use Insertion sort method, because the upper bound is not included due to out of array size
+            //Insertion.sort(dst, lo, hi, comparator);
+            insertionSort(dst, lo, hi, comparator);
             return;
         }
         
@@ -155,6 +158,15 @@ public class MergeX extends AbstractSortHelper {
         }
         StdOut.println("merge(src, dst, " + lo  + "," + mid + "," + hi+"), src:" +Arrays.toString(src)+ ", dst:" + Arrays.toString(dst));    
         merge(src, dst, lo, mid, hi, comparator);
+    }
+
+    //sort from a[lo] to a[hi] using insertion sort
+    private static void insertionSort(Object[] a, int lo, int hi, Comparator comparator) {
+        for (int i = lo; i <= hi; i++) {
+            for (int j = i; j > lo && AbstractSortHelper.less(a[j], a[j-1], comparator); j--) {
+                AbstractSortHelper.exch(a, j, j-1);
+            }
+        }
     }
 
     public static void main(String[] args) {
