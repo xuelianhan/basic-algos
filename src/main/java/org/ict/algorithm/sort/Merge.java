@@ -83,6 +83,7 @@ public class Merge extends AbstractSortHelper {
 
     //mergesort a[lo .. hi] using auxiliary array aux[lo .. hi]
     private static void sort(Comparable[] a, Comparable[] aux, int lo, int hi) {
+        //recursive exit condition
         if (hi <= lo) {
             return;
         }
