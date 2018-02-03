@@ -6,6 +6,7 @@ import org.ict.algorithm.util.StdIn;
 import org.ict.algorithm.util.StdOut;
 
 /**
+ *  $ javac org/ict/algorithm/sort/MergeX.java
  *  $ more ../resources/tiny.txt 
  *  S O R T E X A M P L E
  *  $ java org/ict/algorithm/sort/MergeX  < ../resources/tiny.txt 
@@ -18,22 +19,22 @@ import org.ict.algorithm.util.StdOut;
  *  invoke Insertion Sort before:<6, 10> , dst: [E, O, R, S, T, X, A, M, P, L, E]
  *  invoke Insertion Sort after: <6, 10> , dst: [E, O, R, S, T, X, A, E, L, M, P]
  *  src[6]:A, src[5]:X
- *  merge(src, dst, 0,5,10), src:[E, O, R, S, T, X, A, E, L, M, P], dst:[A, E, E, L, M, O, P, R, S, T, X]
+ *  before merge(src, dst, 0,5,10), src:[E, O, R, S, T, X, A, E, L, M, P], dst:[S, O, R, T, E, X, A, M, P, L, E]
+ *  after merge(src, dst, 0,5,10), src:[E, O, R, S, T, X, A, E, L, M, P], dst:[A, E, E, L, M, O, P, R, S, T, X]
  *  a after sort: [A, E, E, L, M, O, P, R, S, T, X]
  *
- *
- * The {@code MergeX} class provides static methods for sorting an 
- * array using an optimized version of mergesort
- * Improvements
- * Use insertion sort for small subarrays
- * Test whether array is already in order
- * Eliminate the copy to the auxiliary array
- * <p>
- * For additional documentation,
- * see <a href="https://algs4.cs.princeton.edu/22mergesort/">Section 2.2</a>
- * <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne
- * @author Robert Sedgewick
- * @author Kevin Wayne
+ *  The {@code MergeX} class provides static methods for sorting an 
+ *  array using an optimized version of mergesort
+ *  Improvements
+ *  Use insertion sort for small subarrays
+ *  Test whether array is already in order
+ *  Eliminate the copy to the auxiliary array
+ *  <p>
+ *  For additional documentation,
+ *  see <a href="https://algs4.cs.princeton.edu/22mergesort/">Section 2.2</a>
+ *  <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne
+ *  @author Robert Sedgewick
+ *  @author Kevin Wayne
  */
 public class MergeX extends AbstractSortHelper {
     private static final int CUTOFF = 7;
@@ -43,6 +44,7 @@ public class MergeX extends AbstractSortHelper {
 
     private static <T> void merge(Comparable<T>[] src, Comparable<T>[] dst, int lo, int mid, int hi) {
         //no copy to auxiliary array compared with merge in Merge.java
+        StdOut.println("before merge(src, dst, " + lo  + "," + mid + "," + hi+"), src:" +Arrays.toString(src)+ ", dst:" + Arrays.toString(dst));    
 
         //precondition: src[lo .. mid] and src[mid+1 .. hi] are sorted subarrays
         assert AbstractSortHelper.isSorted(src, lo, mid);
@@ -60,6 +62,7 @@ public class MergeX extends AbstractSortHelper {
                 dst[k] = src[i++]; 
             }
         }
+        StdOut.println("after merge(src, dst, " + lo  + "," + mid + "," + hi+"), src:" +Arrays.toString(src)+ ", dst:" + Arrays.toString(dst));    
 
         //postcondition:dst[lo .. hi] is sorted subarray
         assert AbstractSortHelper.isSorted(dst, lo, hi);
@@ -102,7 +105,6 @@ public class MergeX extends AbstractSortHelper {
             return;
         }
         merge(src, dst, lo, mid, hi);
-        StdOut.println("merge(src, dst, " + lo  + "," + mid + "," + hi+"), src:" +Arrays.toString(src)+ ", dst:" + Arrays.toString(dst));    
     }
 
     /**
