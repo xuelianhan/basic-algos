@@ -6,6 +6,21 @@ import org.ict.algorithm.util.StdIn;
 import org.ict.algorithm.util.StdOut;
 
 /**
+ *  $ more ../resources/tiny.txt 
+ *  S O R T E X A M P L E
+ *  $ java org/ict/algorithm/sort/MergeX  < ../resources/tiny.txt 
+ *  a before sort:[S, O, R, T, E, X, A, M, P, L, E]
+ *  sort(src, dst, 0,10), src:[S, O, R, T, E, X, A, M, P, L, E], dst:[S, O, R, T, E, X, A, M, P, L, E]
+ *  sort(src, dst, 0,5), src:[S, O, R, T, E, X, A, M, P, L, E], dst:[S, O, R, T, E, X, A, M, P, L, E]
+ *  invoke Insertion Sort before:<0, 5> , dst: [S, O, R, T, E, X, A, M, P, L, E]
+ *  invoke Insertion Sort after: <0, 5> , dst: [E, O, R, S, T, X, A, M, P, L, E]
+ *  sort(src, dst, 6,10), src:[S, O, R, T, E, X, A, M, P, L, E], dst:[E, O, R, S, T, X, A, M, P, L, E]
+ *  invoke Insertion Sort before:<6, 10> , dst: [E, O, R, S, T, X, A, M, P, L, E]
+ *  invoke Insertion Sort after: <6, 10> , dst: [E, O, R, S, T, X, A, E, L, M, P]
+ *  src[6]:A, src[5]:X
+ *  merge(src, dst, 0,5,10), src:[E, O, R, S, T, X, A, E, L, M, P], dst:[A, E, E, L, M, O, P, R, S, T, X]
+ *  a after sort: [A, E, E, L, M, O, P, R, S, T, X]
+ *
  *
  * The {@code MergeX} class provides static methods for sorting an 
  * array using an optimized version of mergesort
@@ -74,7 +89,7 @@ public class MergeX extends AbstractSortHelper {
         }
         
         int mid = lo + (hi - lo) / 2;
-        //exchange param sequence
+        //exchange param sequence, so that src can keep order with dst
         sort(dst, src, lo, mid);
         sort(dst, src, mid+1, hi);
         
