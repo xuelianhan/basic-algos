@@ -77,6 +77,28 @@ public class MergeX extends AbstractSortHelper {
         }
     }
 
+    /**
+     *  Improvements. We can cut the running time of mergesort sustantially with some carefully considered 
+     *  modifications to the implementation.
+     *  Use insertion sort for small subarrays.We can improve most recursive algorithms by handing small 
+     *  cases differently.Switching to insertion sort for small subarrays will improve the running time of a
+     *  typical mergesort implementation by 10 to 15 percent.
+     *
+     *  Test whether array is already in order. We can reduce the running time to be linear for arrays that 
+     *  are already in order by adding a test to skip call to merge() if a[mid] is less than or equal to 
+     *  a[mid+1]. With this change, we still do all the recursive calls,but the running time for any sorted
+     *  subarray is linear.
+     *
+     *  Eliminate the copy to the auxiliary array.It is possible to eliminate the time(but not the spaces)
+     *  taken to copy to the auxiliary array used for merging. To do so,we use two invocations of the sort
+     *  method,one that takes its input from the given array and puts the sorted output in the auxliary
+     *  array;the other takes its input from the auxiliary array  and puts the sorted output in the given
+     *  array.With this approach,in a bit of mindbending recursive trikery, we can arrange the recursive 
+     *  calls such that the computation switches the roles of the input array and the auiliary array at
+     *  each level.
+     *
+     *
+     */
     private static <T> void sort(Comparable<T>[] src, Comparable<T>[] dst, int lo, int hi) {
         // Compare to sort method in Merge.java
         // if (hi <= lo) return;
