@@ -27,6 +27,7 @@ public class MergeBU extends AbstractSortHelper {
         }
 
         //merge back to a[]
+        int i = lo, j = mid + 1;
         for (int k = lo; k <= hi; k++) {
             if (i > mid) {
                 a[k] = aux[j++];
