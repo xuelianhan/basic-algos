@@ -6,6 +6,23 @@ import org.ict.algorithm.util.StdOut;
 
 
 /**
+ *  $ javac org/ict/algorithm/sort/MergeBU.java 
+ *  $ more ../resources/tiny.txt 
+ *   S O R T E X A M P L E
+ *  $ java org/ict/algorithm/sort/MergeBU < ../resources/tiny.txt 
+ *   a before sort: [S, O, R, T, E, X, A, M, P, L, E]
+ *   len:1, size: 2, merge(a, aux, 0, 0, 1)  a:[O, S, R, T, E, X, A, M, P, L, E]
+ *   len:1, size: 2, merge(a, aux, 2, 2, 3)  a:[O, S, R, T, E, X, A, M, P, L, E]
+ *   len:1, size: 2, merge(a, aux, 4, 4, 5)  a:[O, S, R, T, E, X, A, M, P, L, E]
+ *   len:1, size: 2, merge(a, aux, 6, 6, 7)  a:[O, S, R, T, E, X, A, M, P, L, E]
+ *   len:1, size: 2, merge(a, aux, 8, 8, 9)  a:[O, S, R, T, E, X, A, M, L, P, E]
+ *   len:2, size: 4, merge(a, aux, 0, 1, 3)  a:[O, R, S, T, E, X, A, M, L, P, E]
+ *   len:2, size: 4, merge(a, aux, 4, 5, 7)  a:[O, R, S, T, A, E, M, X, L, P, E]
+ *   len:2, size: 4, merge(a, aux, 8, 9, 10)  a:[O, R, S, T, A, E, M, X, E, L, P]
+ *   len:4, size: 8, merge(a, aux, 0, 3, 7)  a:[A, E, M, O, R, S, T, X, E, L, P]
+ *   len:8, size: 16, merge(a, aux, 0, 7, 10)  a:[A, E, E, L, M, O, P, R, S, T, X]
+ *   a after sort: [A, E, E, L, M, O, P, R, S, T, X]
+ *
  *  The {@code MergeBU} class provides static methods for sorting an 
  *  array using bottom-up mergesort.
  *
@@ -55,6 +72,7 @@ public class MergeBU extends AbstractSortHelper {
                 int mid = lo + len - 1;
                 int hi = Math.min(lo + len + len - 1, n - 1);
                 merge(a, aux, lo, mid, hi);
+                StdOut.println("len:" + len + ", size: " + (2*len)+ ", merge(a, aux, " + lo + ", " + mid + ", " + hi + ")  a:" + Arrays.toString(a));
             }
         }
         assert AbstractSortHelper.isSorted(a);
