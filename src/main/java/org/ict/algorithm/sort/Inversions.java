@@ -35,11 +35,12 @@ public class Inversions {
         int i = lo, j = mid + 1;
         for (int k = lo; k <= hi; k++) {
             if (i > mid) {
-
+                a[k] = aux[j++];
             } else if (j > hi) {
-
+                a[k] = aux[i++];
             } else if (less(aux[j], aux[i])) {
                 a[k] = aux[j++];
+                //before invoking merge, the left half is sorte, j=mid+1, so j-i is the inversions
                 inversions += (mid - i + 1);
             } else {
                 a[k] = aux[i++];
@@ -56,7 +57,37 @@ public class Inversions {
             return 0;
         }
         int mid = lo +  (hi - lo) / 2;
+        inversions += count(a, b, aux, lo, mid);
+        inversions += count(a, b, aux, mid+1, hi);
+        //why use b in merge? because a is the original array, it should not be modified and it is prepared 
+        //to use in brute method which not modify the input array.
+        inversions += merge(b, aux, lo, mid, hi);
 
+        //check inversions get by merge is equal to brute method for validating the correctness
+        assert inversions == brute(a, lo, hi);
+        return inversions;
     }
+
+    /**
+     *  Returns the number of inversions in the integer array
+     *  The argument array is not modified
+     *  @param a the array
+     *  @return the number of inversions in the array.
+     *          An inversion is a pair of indicies {@code i} 
+     *          and {@code j} such that {@code i < j} 
+     *          and {@code a[i] >  a[j]}
+     *
+     */
+    public static long count(int[] a) {
+        int[] b = new int[a.length];
+        int[] aux = new int[a.length];
+        for (int i = 0; i < a.length; i++) {
+            b[i] = a[i];
+        }
+        long inversions = count(a, b, aux, 0, a.length - 1);
+        return inversions;
+    }
+
+    //count number of inversions in a[lo..hi] via brute force (for debugging only)
 
 }
