@@ -38,7 +38,7 @@ public class Inversions {
                 a[k] = aux[j++];
             } else if (j > hi) {
                 a[k] = aux[i++];
-            } else if (less(aux[j], aux[i])) {
+            } else if (AbstractSortHelper.less(aux[j], aux[i])) {
                 a[k] = aux[j++];
                 //before invoking merge, the left half is sorte, j=mid+1, so j-i is the inversions
                 inversions += (mid - i + 1);
@@ -89,5 +89,28 @@ public class Inversions {
     }
 
     //count number of inversions in a[lo..hi] via brute force (for debugging only)
+    private static long brute(int[] a, int lo, int hi) {
+        long inversions = 0;
+        for (int i = lo; i <= hi; i++) {
+            for (int j = i + 1; j <= hi; j++) {
+                if (a[j] > a[i]) {
+                    inversions++;
+                }
+            }
+        }
+        return inversions;
+    }
 
+    /**
+     *  merge and count(Comparable version)
+     *  @see https://stackoverflow.com/questions/21544716/implementing-comparable-with-a-generic-class
+     *  @see https://docs.oracle.com/javase/tutorial/java/generics/boundedTypeParams.html
+     *  @see https://docs.oracle.com/javase/tutorial/java/generics/inheritance.html
+     *  @see https://docs.oracle.com/javase/tutorial/java/generics/subtyping.html
+     *  @see https://docs.oracle.com/javase/tutorial/java/generics/upperBounded.html
+     *  @see 
+     */
+    private static <Key extends Comparable<Key>> long merge() {
+        return 0l;   
+    }
 }
