@@ -35,6 +35,11 @@ public class KeyWordsCountDemo {
     /**
      * @see https://stackoverflow.com/questions/3903302/regex-matching-with-line-breaks
      * @see http://www.tutorialspoint.com/java/java_regular_expressions.htm
+     * @see https://coderanch.com/t/326540/java/counting-specific-words-text-file
+     * @see https://stackoverflow.com/questions/13979317/how-to-count-the-number-of-occurrences-of-words-in-a-text
+     * @see https://stackoverflow.com/questions/31288274/java-hashmap-word-count-from-a-text-file
+     * @see https://stackoverflow.com/questions/8102754/java-word-count-program
+     * @see https://stackoverflow.com/questions/275944/java-how-do-i-count-the-number-of-occurrences-of-a-char-in-a-string
      * @param path
      * @param keyWord
      * @return
