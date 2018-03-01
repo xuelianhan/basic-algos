@@ -24,7 +24,11 @@ import org.apache.commons.lang3.StringUtils;
  * hahahhahah 
  *
  * expect result: 5
- * actual result: 3
+ * actual result: 5
+ * 
+ * Solutions:
+ * Use regex match and Remove line breaks and spaces before match the keyword.
+ * This way is recommended.
  */
 public class KeyWordsCountDemo {
     
@@ -35,11 +39,7 @@ public class KeyWordsCountDemo {
     /**
      * @see https://stackoverflow.com/questions/3903302/regex-matching-with-line-breaks
      * @see http://www.tutorialspoint.com/java/java_regular_expressions.htm
-     * @see https://coderanch.com/t/326540/java/counting-specific-words-text-file
      * @see https://stackoverflow.com/questions/13979317/how-to-count-the-number-of-occurrences-of-words-in-a-text
-     * @see https://stackoverflow.com/questions/31288274/java-hashmap-word-count-from-a-text-file
-     * @see https://stackoverflow.com/questions/8102754/java-word-count-program
-     * @see https://stackoverflow.com/questions/275944/java-how-do-i-count-the-number-of-occurrences-of-a-char-in-a-string
      * @param path
      * @param keyWord
      * @return
@@ -54,13 +54,15 @@ public class KeyWordsCountDemo {
         List<String> matches = new LinkedList<String>();
         InputStream is = null;
         try {
+            //read file into a string
             is = new FileInputStream(f);
             byte[] data = new byte[is.available()];
             is.read(data);
             String text = new String(data);
-            System.out.println(text);
-            Pattern p = Pattern.compile("/"+keyWord);
-            Matcher m = p.matcher(text);
+            
+            Pattern p = Pattern.compile(keyWord);
+            //remove all whitespace(including line). Equivalent to [\t\n\r\f].
+            Matcher m = p.matcher(text.replaceAll("\\s+", ""));
             while (m.find()) {
                 matches.add(m.group());
                 count++;
