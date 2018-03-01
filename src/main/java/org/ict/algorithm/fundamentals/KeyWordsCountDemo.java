@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -42,9 +43,43 @@ public class KeyWordsCountDemo {
         int count = countKeyWord(input, keyWord);
         System.out.println(count);
         
+        
+        count = countKeyWordV2(input, keyWord);
+        System.out.println(count);
+        
         String content = "2018-02-24     17:58:00 2018-02-2418:00:00 2018-02-24 19:00:00";
         String result = testReplaceBack(content);
         System.out.println(result);
+    }
+    
+    /**
+     * 
+     * @param filePath
+     * @param keyWord
+     * @return
+     */
+    public static int countKeyWordV2(String filePath, String keyWord) {
+        List<String> matches = new LinkedList<String>();
+        try {
+            //read file into a string variable called text
+            //Since Java7, online will solve all problem.No external dependencies needed.
+            byte[] data = Files.readAllBytes(new File(filePath).toPath());
+            String text = new String(data);
+            
+            //create a pattern with keyword
+            Pattern p = Pattern.compile(keyWord);
+            
+            //remove all whitespace(including line breaks) equivalent to [\t\n\r\f]
+            //and use matcher to find all keywords shown in the string variable
+            Matcher m = p.matcher(text.replaceAll("\\s+", ""));
+            while (m.find()) {
+                matches.add(m.group());
+            }
+            System.out.println(matches);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return matches.size();
     }
 
     /**
@@ -54,6 +89,9 @@ public class KeyWordsCountDemo {
      * @see https://stackoverflow.com/questions/13979317/how-to-count-the-number-of-occurrences-of-words-in-a-text
      * @see https://stackoverflow.com/questions/858980/file-to-byte-in-java
      * @see https://stackoverflow.com/questions/9046820/fastest-way-to-incrementally-read-a-large-file
+     * @see https://howtodoinjava.com/java-7/nio/3-ways-to-read-files-using-java-nio/
+     * @see https://howtodoinjava.com/core-java/io/how-java-io-works-internally-at-lower-level/
+     * 
      * @param path
      * @param keyWord
      * @return
@@ -68,11 +106,25 @@ public class KeyWordsCountDemo {
         List<String> matches = new LinkedList<String>();
         InputStream is = null;
         try {
-            //read file into a string
+            //read file into FileInputStream and not use BufferedReader's readLine(), because readLine() method
+            //exists the case that the keyword break line at the end of line.
             is = new FileInputStream(f);
             
-            String text = readFromFileV1(is);
+            //InputStream's available method is not correct.Don't depend this value returned.
+            /*byte[] data = new byte[is.available()];*/
+            byte[] data = new byte[1024];
+            int offset = 0;
+            int bytesRead = 0;
+            while ((offset < data.length) 
+                    && (bytesRead = is.read(data, offset, data.length - offset)) != -1) {
+                offset += bytesRead;
+            }
+            if (offset < data.length) {
+                throw new IOException("Could not completely read file " + filePath);
+            }
             
+            String text = new String(data);
+           
             Pattern p = Pattern.compile(keyWord);
             //remove all whitespace(including line breaks) equivalent to [\t\n\r\f].
             Matcher m = p.matcher(text.replaceAll("\\s+", ""));
@@ -96,20 +148,6 @@ public class KeyWordsCountDemo {
         }
         
         return count;
-    }
-    
-    private static String readFromFileV1(InputStream is) throws IOException {
-        //InputStream's available method is not correct.Don't depend this value returned.
-        /*byte[] data = new byte[is.available()];*/
-        byte[] data = new byte[1024];
-        int offset = 0;
-        int bytesRead = 0;
-        while ((offset < data.length) 
-                && (bytesRead = is.read(data, offset, data.length - offset)) != -1) {
-            offset += bytesRead;
-        }
-        String text = new String(data);
-        return text;
     }
     
     public static String testReplaceBack(String content) {
