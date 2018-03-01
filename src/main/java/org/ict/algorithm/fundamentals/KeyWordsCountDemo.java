@@ -35,18 +35,32 @@ public class KeyWordsCountDemo {
     private static Pattern time_pattern = Pattern.compile("\\d{4}-\\d{2}-\\d{2}\\s+\\d{2}:\\d{2}:\\d{2}");
 
     private static String replaceBackRegex = "\\d{4}-\\d{2}-\\d{2}\\d{2}:\\d{2}:\\d{2}";
+    
+    public static void main(String[] args) {
+        String input =  "/home/hanxuelian/Desktop/keyword.log";
+        String keyWord = "keyword";
+        int count = countKeyWord(input, keyWord);
+        System.out.println(count);
+        
+        String content = "2018-02-24     17:58:00 2018-02-2418:00:00 2018-02-24 19:00:00";
+        String result = testReplaceBack(content);
+        System.out.println(result);
+    }
 
     /**
+     * Regex and InputStream
      * @see https://stackoverflow.com/questions/3903302/regex-matching-with-line-breaks
      * @see http://www.tutorialspoint.com/java/java_regular_expressions.htm
      * @see https://stackoverflow.com/questions/13979317/how-to-count-the-number-of-occurrences-of-words-in-a-text
+     * @see https://stackoverflow.com/questions/858980/file-to-byte-in-java
+     * @see https://stackoverflow.com/questions/9046820/fastest-way-to-incrementally-read-a-large-file
      * @param path
      * @param keyWord
      * @return
      */
-    public static int countKeyWord(String path, String keyWord) {
+    public static int countKeyWord(String filePath, String keyWord) {
         int count = 0;
-        File f = new File(path);
+        File f = new File(filePath);
         if (!f.exists()) {
             return count;
         }
@@ -56,12 +70,11 @@ public class KeyWordsCountDemo {
         try {
             //read file into a string
             is = new FileInputStream(f);
-            byte[] data = new byte[is.available()];
-            is.read(data);
-            String text = new String(data);
+            
+            String text = readFromFileV1(is);
             
             Pattern p = Pattern.compile(keyWord);
-            //remove all whitespace(including line). Equivalent to [\t\n\r\f].
+            //remove all whitespace(including line breaks) equivalent to [\t\n\r\f].
             Matcher m = p.matcher(text.replaceAll("\\s+", ""));
             while (m.find()) {
                 matches.add(m.group());
@@ -85,15 +98,18 @@ public class KeyWordsCountDemo {
         return count;
     }
     
-    public static void main(String[] args) {
-        String input =  "/home/hanxuelian/Desktop/keyword.log";
-        String keyWord = "keyword";
-        int count = countKeyWord(input, keyWord);
-        System.out.println(count);
-        
-        String content = "2018-02-24     17:58:00 2018-02-2418:00:00 2018-02-24 19:00:00";
-        String result = testReplaceBack(content);
-        System.out.println(result);
+    private static String readFromFileV1(InputStream is) throws IOException {
+        //InputStream's available method is not correct.Don't depend this value returned.
+        /*byte[] data = new byte[is.available()];*/
+        byte[] data = new byte[1024];
+        int offset = 0;
+        int bytesRead = 0;
+        while ((offset < data.length) 
+                && (bytesRead = is.read(data, offset, data.length - offset)) != -1) {
+            offset += bytesRead;
+        }
+        String text = new String(data);
+        return text;
     }
     
     public static String testReplaceBack(String content) {
