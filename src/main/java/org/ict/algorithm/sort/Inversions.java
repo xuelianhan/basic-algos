@@ -110,7 +110,32 @@ public class Inversions {
      *  @see https://docs.oracle.com/javase/tutorial/java/generics/upperBounded.html
      *  @see 
      */
-    private static <Key extends Comparable<Key>> long merge() {
-        return 0l;   
+    private static <Key extends Comparable<Key>> long merge(Key[] a, key[] aux, int lo, int mid, int hi) {
+        long inversions = 0; 
+
+        //copy to aux[]
+        for (int k = lo; k <= hi; k++) {
+            aux[k] = a[k];
+        }
+
+        //merge back to a[]
+        int i = lo, j = mid+1;
+        for (int k = lo; k <= hi; k++) {
+            if (i > mid) {
+
+            } else if (j > hi) {
+
+            } else if () {
+
+            } else {
+
+            }
+        }
+        return inversions;   
+    }
+
+    // is v < w ?
+    private static <Key extends Comparable<Key>> boolean less(Key v, Key w) {
+        
     }
 }

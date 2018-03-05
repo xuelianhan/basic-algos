@@ -8,6 +8,7 @@ import java.util.Comparator;
  * @see https://stackoverflow.com/questions/16079745/java-generic-static-methods
  */
 public class AbstractSortHelper {
+    
     //is v < w ? 
     public static boolean less(Comparable v, Comparable w) {
         return v.compareTo(w) < 0;
