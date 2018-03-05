@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -50,6 +51,26 @@ public class KeyWordsCountDemo {
         String content = "2018-02-24     17:58:00 2018-02-2418:00:00 2018-02-24 19:00:00";
         String result = testReplaceBack(content);
         System.out.println(result);
+        
+        
+        String order_nos = "3452,388,aaii3,101459316432";
+        order_nos = order_nos.replaceAll("\\s+", "");
+        String[] order_ids = order_nos.split(",");
+        if (order_ids.length <= 0) {
+            return;
+        }
+        List<String> errorOrderIds = new ArrayList<String>();
+        List<Long> queryOrderIds = new ArrayList<Long>();
+        for (String orderNo : order_ids) {
+            orderNo = orderNo.trim();
+            try {
+                queryOrderIds.add(Long.valueOf(orderNo));
+            } catch (Exception e) {
+                errorOrderIds.add(orderNo);
+            }
+        }
+        System.out.println("queryOrderIds:" + queryOrderIds);
+        System.out.println("errorOrderIds:" + errorOrderIds);
     }
     
     /**
@@ -119,7 +140,7 @@ public class KeyWordsCountDemo {
                     && (bytesRead = is.read(data, offset, data.length - offset)) != -1) {
                 offset += bytesRead;
             }
-            if (offset < data.length) {
+            if (offset > data.length) {
                 throw new IOException("Could not completely read file " + filePath);
             }
             
