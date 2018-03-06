@@ -6,7 +6,27 @@ import org.ict.algorithm.util.StdOut;
 import org.ict.algorithm.util.StdRandom;
 
 
-
+/**
+ *
+ *  $ javac org/ict/algorithm/sort/Quick.java 
+ *  $ more ../resources/tiny.txt 
+ *  S O R T E X A M P L E
+ *  $ java org/ict/algorithm/sort/Quick < ../resources/tiny.txt
+ *  [A, E, E, L, M, O, P, R, S, T, X]
+ *
+ *  the 0th value is: A
+ *  the 1th value is: E
+ *  the 2th value is: E
+ *  the 3th value is: L
+ *  the 4th value is: M
+ *  the 5th value is: O
+ *  the 6th value is: P
+ *  the 7th value is: R
+ *  the 8th value is: S
+ *  the 9th value is: T
+ *  the 10th value is: X
+ *
+ */
 public class Quick extends AbstractSortHelper {
     
     private Quick() {}
@@ -101,7 +121,7 @@ public class Quick extends AbstractSortHelper {
         StdOut.println();
         for (int i = 0; i < a.length; i++) {
             String ith = (String)Quick.select(a, i);
-            StdOut.println(ith);
+            StdOut.println("the " + i + "th value is: " + ith);
         }
     }
 }
