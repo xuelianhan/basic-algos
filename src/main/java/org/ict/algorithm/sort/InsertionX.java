@@ -1,5 +1,8 @@
 package org.ict.algorithm.sort;
+
+import java.util.Arrays;
 import org.ict.algorithm.util.StdIn;
+import org.ict.algorithm.util.StdOut;
 
 /**
  *
@@ -10,7 +13,7 @@ import org.ict.algorithm.util.StdIn;
  * @author Robert Sedgewick
  * @author Kevin Wayne
  */
-public class InsertionX {
+public class InsertionX extends AbstractSortHelper {
 
     //This class should not be instantiated.
     private InsertionX(){}
@@ -21,8 +24,8 @@ public class InsertionX {
         //put smallest element in position to serve as sentinel
         int exchanges = 0;
         for (int i = n - 1; i > 0; i--) {
-            if (AbstractSortHelper.less(a[i], a[i-1])) {
-                AbstractSortHelper.exch(a, i, i-1);
+            if (less(a[i], a[i-1])) {
+                exch(a, i, i-1);
                 exchanges++;
             }
         }
@@ -38,20 +41,19 @@ public class InsertionX {
             //while (AbstractSortHelper.less(a[j], a[j-1])) {
             //wrong code
             
-            while (AbstractSortHelper.less(v, a[j-1])) {
+            while (less(v, a[j-1])) {
                 a[j] = a[j-1];
                 j--;
             }
             a[j] = v;
         }
-        assert AbstractSortHelper.isSorted(a);
+        assert isSorted(a);
     }
 
     public static void main(String[] args) {
         String[] a = StdIn.readAllStrings();
         InsertionX.sort(a);
-        AbstractSortHelper.show(a);
-
+        StdOut.println(Arrays.toString(a));
     }
 
 }
