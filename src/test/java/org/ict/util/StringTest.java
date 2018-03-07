@@ -6,6 +6,21 @@ import org.junit.Test;
 public class StringTest {
     
     @Test
+    public void testCharAt() {
+        String s = "abcdefg";
+        for (int i = 0; i < s.length(); i++) {
+            System.out.println("i=" + i + ", charAt(" + i + ")=" + charAt(s, i));
+        }
+    }
+    
+    // return the dth character of s, -1 if d = length of s
+    private int charAt(String s, int d) { 
+        assert d >= 0 && d <= s.length();
+        if (d == s.length()) return -1;
+        return s.charAt(d);
+    }
+    
+    @Test
     public void testNullEquals() {
         
     }

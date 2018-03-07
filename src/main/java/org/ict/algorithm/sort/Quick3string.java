@@ -68,7 +68,7 @@ public class Quick3string {
         // a[lo..lt-1] < v = a[lt..gt] < a[gt+1..hi].
         sort(a, lo, lt - 1, d);
 
-        //????
+        //ASCII-table code from 0 to 127
         if (v >= 0) {
             sort(a, lt, gt, d+1);
         }
@@ -105,9 +105,41 @@ public class Quick3string {
     // is v less than w, starting at character d
     private static boolean less(String v, String w, int d) {
         assert v.substring(0, d).equals(w.substring(0, d));
-        for () {
+        for (int i = d; i < Math.min(v.length(), w.length()); i++) {
+            if (v.charAt(i) < w.charAt(i)) {
+                return true;
+            }
+            if (v.charAt(i) > w.charAt(i)) {
+                return false;
+            }
+        }    
+        return v.length() < w.length();
+    }
 
+
+    // is the array sorted
+    private static boolean isSorted(String[] a) {
+        for (int i = 1; i < a.length; i++) {
+            if (a[i].compareTo(a[i-1]) < 0) {
+                return false;
+            }
         }
+        return true;
+    }
+
+
+    public static void main(String[] args) {
+        //read in the strings from standard input
+        String[] a = StdIn.readAllStrings();
+        int n = a.length;
+
+        //sort the strings
+        StdOut.println("a before sort: " + Arrays.toString(a));
+        sort(a);
+
+        //print the results
+        StdOut.println(Arrays.toString(a));
+        StdOut.println("a after sort: " + Arrays.toString(a));
     }
 }
 
