@@ -8,6 +8,8 @@ import org.ict.algorithm.util.StdRandom;
 
 
 /**
+ * quicksort with 3-way partitioning
+ *
  * $ more ../resources/tiny.txt 
  *  S O R T E X A M P L E
  * $ javac org/ict/algorithm/sort/Quick3way.java 
