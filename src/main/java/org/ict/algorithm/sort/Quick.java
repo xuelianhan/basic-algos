@@ -7,6 +7,7 @@ import org.ict.algorithm.util.StdRandom;
 
 
 /**
+ *  quicksort
  *
  *  $ javac org/ict/algorithm/sort/Quick.java 
  *  $ more ../resources/tiny.txt 

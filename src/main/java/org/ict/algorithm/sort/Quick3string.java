@@ -29,7 +29,9 @@ public class Quick3string {
      * @param a the array to be sorted
      */
     public static void sort(String[] a) {
+        //the running result is different as running every time
         StdRandom.shuffle(a);
+        StdOut.println("sort input: " + Arrays.toString(a));
         sort(a, 0, a.length - 1, 0);
         assert isSorted(a);
     }
@@ -59,6 +61,7 @@ public class Quick3string {
 
         while (i <= gt) {
             int t = charAt(a[i], d);
+            StdOut.println("<lt, i, gt, d, t, v>=" + "<" +lt + ", " + i + ", " + gt + ", " + d + ", " + (char)t + "," + (char)v + ">, a[" + i + "]=" + a[i] +  ", a[" + lo + "]=" + a[lo] + ", a:" + Arrays.toString(a));
             if (t < v) {
                 exch(a, lt++, i++);
             } else if (t > v) {
@@ -66,7 +69,7 @@ public class Quick3string {
             } else {
                 i++;
             }
-            StdOut.println("<lt, i, gt, d, t, v>=" + "<" +lt + ", " + i + ", " + gt + ", " + d + ", " + t + "," + v + ">, a:" + Arrays.toString(a));
+            StdOut.println("<lt, i, gt, d, t, v>=" + "<" +lt + ", " + i + ", " + gt + ", " + d + ", " + (char)t + "," + (char)v + ">, a[" + i + "]=" + a[i] +  ", a[" + lo + "]=" + a[lo] + ", a:" + Arrays.toString(a));
         }
 
         // a[lo..lt-1] < v = a[lt..gt] < a[gt+1..hi].
@@ -135,7 +138,6 @@ public class Quick3string {
         sort(a);
 
         //print the results
-        StdOut.println(Arrays.toString(a));
         StdOut.println("a after sort: " + Arrays.toString(a));
     }
 }
