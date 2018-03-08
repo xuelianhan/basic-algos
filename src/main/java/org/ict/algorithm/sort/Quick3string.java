@@ -4,6 +4,7 @@ package org.ict.algorithm.sort;
 import java.util.Arrays;
 import org.ict.algorithm.util.StdIn;
 import org.ict.algorithm.util.StdOut;
+import org.ict.algorithm.util.StdRandom;
 
 
 /**
@@ -46,7 +47,9 @@ public class Quick3string {
     private static void sort(String[] a, int lo, int hi, int d) {
         //cutoff to insertion sort for small subarrays
         if (hi <= lo + CUTOFF) {
+           StdOut.println("invoke Insertion Sort before <lo, hi, d>:<" + lo + ", " + hi + ", " + d + ">, a:"+ Arrays.toString(a));
            insertion(a, lo, hi, d); 
+           StdOut.println("invoke Insertion Sort after: <lo, hi, d>:<" + lo + ", " + hi + ", " + d + ">, a:"+ Arrays.toString(a));
            return;
         }
 
@@ -63,26 +66,20 @@ public class Quick3string {
             } else {
                 i++;
             }
+            StdOut.println("<lt, i, gt, d, t, v>=" + "<" +lt + ", " + i + ", " + gt + ", " + d + ", " + t + "," + v + ">, a:" + Arrays.toString(a));
         }
 
         // a[lo..lt-1] < v = a[lt..gt] < a[gt+1..hi].
         sort(a, lo, lt - 1, d);
 
-        //ASCII-table code from 0 to 127
+        //ASCII-table code from 0 to 127, when the d-bit equals, go to next round d+1
         if (v >= 0) {
+            StdOut.println("v:" + v + ", a[" + i + "]:" + a[i] + ", d:" + d);
             sort(a, lt, gt, d+1);
         }
 
         //
         sort(a, gt + 1, hi, d);
-    }
-
-    private static void insertion(String[] a, int lo, int hi, int d) {
-        for (int i = lo; i <= hi; i++) {
-            for (int j = i; j > lo && less(a[j], a[j-1], d); j--) {
-                exch(a, j, j-1);
-            }
-        }
     }
 
 
