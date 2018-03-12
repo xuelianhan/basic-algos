@@ -14,6 +14,7 @@ package org.ict.algorithm.sort;
 import org.ict.algorithm.util.StdIn;
 import org.ict.algorithm.util.StdOut;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.NoSuchElementException;
 
 /**
@@ -122,7 +123,86 @@ public class MaxPQ {
         return n;
     }
 
+    /**
+     * Returns a largest key on this priority queue.
+     * 
+     * @return a largest key on this priority queue
+     * @throws NoSuchElementException if this priority queue is empty
+     */
+    public Key max() {
+        if (isEmpty()) {
+            throw new NoSuchElementException("Priority queue underflow");
+        }
+        return pq[1];
+    }
+
+    //helper function to double the size of the heap array 
+    private void resize(int capacity) {
+        assert capacity > n;
+        Key[] temp = (Key[]) new Object[capacity];
+        for (int i = 1; i <=n; i++) {
+            temp[i] = pq[i];
+        }
+        pq = temp;
+    }
+
+    /**
+     * Helper functions to restore the heap invariant.
+     *
+     */
+    private void swim(int k) {
+        while (k > 1 && less(k/2, k)) {
+            exch(k, k/2);
+            k = k/2;
+        }
+    }
+
+    private void sink(int k) {
+        while (2*k <= n) {
+            int j = 2*k;
+            if (j < n && less(j, j+1)) {
+                j++;
+            }
+            if (!less(k, j)) {
+                break;
+            }
+            exch(k, j);
+            k = j;
+        }
+    }
+
+    /**
+     * Helper functions for compares and swaps.
+     */
+    private boolean less(int i, int j) {
+       if (comparator == null) {
+            return pq[i].compareTo(pq[j]) < 0;
+       } else {
+            return comparator.compare(pq[i], pq[j]) < 0;
+       }
+    }
     
+    private void exch(int i, int j) {
+        Key swap = pq[i];
+        pq[i] = pq[j];
+        pq[j] = swap;
+    }
 
+    // is pq[1..N] a max heap?
+    private boolean isMaxHeap() {
+        return isMaxHeap(1);
+    }
 
+    //is subtree of pq[1..n] rooted at k a max heap?
+    private boolean isMaxHeap(int k) {
+        //see the parameter k assigned  with 1 in isMaxHeap() method,
+        //this mean that when k = 1, if 1 > n satisfied, n must be zero,
+        //There is only one element in the priority queue, so it is max heap.
+        if (k > n) {
+           return true; 
+        }
+        int left = 2*k;
+        int reght = 2*k + 1;
+         
+    }
 }
