@@ -9,12 +9,25 @@ package org.ict.algorithm.sort;
  * Can be optimized by replacing full exchanges with half exchanges
  * (ala insertion sort).
  *
+ *
+ * $ javac org/ict/algorithm/sort/MaxPQ.java 
+ * Note: org/ict/algorithm/sort/MaxPQ.java uses unchecked or unsafe operations.
+ * Note: Recompile with -Xlint:unchecked for details.
+ * $ more ../resources/tinyPQ.txt 
+ * P Q E - X A M - P L E -
+ * $ java org/ict/algorithm/sort/MaxPQ < ../resources/tinyPQ.txt 
+ * Q 
+ * X 
+ * P 
+ * (6 left on pq
+ *
+ *
  */
 
 import org.ict.algorithm.util.StdIn;
 import org.ict.algorithm.util.StdOut;
-import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
@@ -36,7 +49,7 @@ import java.util.NoSuchElementException;
  * @author Kevin Wayne
  *
  */
-public class MaxPQ {
+public class MaxPQ<Key> implements Iterable<Key> {
     // store items at indices 1 to n
     private Key[] pq;
 
@@ -147,6 +160,44 @@ public class MaxPQ {
     }
 
     /**
+     * Adds a new key to this priority queue.
+     * @param x the new key to add to this priority queue
+     */
+    public void insert(Key x) {
+        //double size of array if necessary
+        if (n == (pq.length - 1)) {
+            resize(2 * pq.length);
+        }
+
+        // add x, and percolate it up to maintain heap invariant
+        pq[++n] = x;
+        swim(n);
+        assert isMaxHeap();
+    }
+
+    /**
+     * Removes and returns a largest key on this priority queue.
+     * @return a largest key on this priority queue
+     * @throws NoSuchElementException if this priority queue is empty
+     */
+    public Key delMax() {
+        if (isEmpty()) {
+            throw new NoSuchElementException("Priority queue underflow");
+        }
+        Key max = pq[1];
+        exch(1, n--);
+        sink(1);
+        //at this time, n = length - 1, n+1 = length means the last element
+        //to avoid loiter and help with garbage collection
+        pq[n+1] = null;
+        if ((n > 0) && (n == (pq.length - 1) / 4)) {
+            resize(pq.length / 2);
+        }
+        assert isMaxHeap();
+        return max;
+    }
+
+    /**
      * Helper functions to restore the heap invariant.
      *
      */
@@ -176,7 +227,7 @@ public class MaxPQ {
      */
     private boolean less(int i, int j) {
        if (comparator == null) {
-            return pq[i].compareTo(pq[j]) < 0;
+            return ((Comparable<Key>)pq[i]).compareTo(pq[j]) < 0;
        } else {
             return comparator.compare(pq[i], pq[j]) < 0;
        }
@@ -202,7 +253,72 @@ public class MaxPQ {
            return true; 
         }
         int left = 2*k;
-        int reght = 2*k + 1;
-         
+        int right = 2*k + 1;
+        if (left <= n && less(k, left)) {
+            return false;
+        }
+        if (right <= n && less(k, right)) {
+            return false;
+        }
+        return isMaxHeap(left) && isMaxHeap(right); 
+    }
+
+    /**
+     * Returns an iterator that iterates over the keys on this priority queue
+     * in descending order.
+     * The iterator doesn't implement {@code remove()} since it's optional.
+     * @return an iterator that iterates over the keys in descending order
+     */
+    public Iterator<Key> iterator() {
+        return new HeapIterator();
+    }
+
+    private class HeapIterator implements Iterator<Key> {
+        //create a new pq
+        private MaxPQ<Key> copy;
+        
+        // add all items to copy of heap
+        //  takes linear time since already in heap order so no keys move
+        public HeapIterator() {
+            if (comparator == null) {
+                copy = new MaxPQ<Key>(size());
+            } else {
+                copy = new MaxPQ<Key>(size(), comparator);
+            }
+            for (int i = 1; i <= n; i++) {
+                copy.insert(pq[i]);
+            }
+        }
+
+        @Override
+        public boolean hasNext() {
+            return !copy.isEmpty();
+        }
+
+        @Override
+        public Key next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            return copy.delMax();
+        }
+
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
+    }
+
+    public static void main(String[] args) {
+        MaxPQ<String> pq = new MaxPQ<String>();
+        while (!StdIn.isEmpty()) {
+            String item = StdIn.readString();
+            if (!"-".equals(item)) {
+                pq.insert(item);
+            } else if (!pq.isEmpty()) {
+                StdOut.println(pq.delMax() + " ");
+            }
+        }
+        StdOut.println("(" + pq.size() + " left on pq");
     }
 }
