@@ -22,7 +22,7 @@ import com.google.common.util.concurrent.ListenableFutureTask;
 /**
  * 
  * @see https://www.tutorialspoint.com/guava/guava_caching_utilities.htm
- * 
+ * @see https://www.concretepage.com/google-api/google-guava-cache-example-using-loadingcache-cachebuilder-and-cacheloader
  */
 public class GuavaCacheTester {
     
@@ -30,8 +30,9 @@ public class GuavaCacheTester {
     
     //create a cache for employees based on their employee id
     private static LoadingCache<String, Employee> employeeCache = CacheBuilder.newBuilder()
+            .refreshAfterWrite(1, TimeUnit.MINUTES)
             .maximumSize(100)                             // maximum 100 records can be cached
-            .expireAfterAccess(1, TimeUnit.MINUTES)      // cache will expire after 1 minutes of access
+            //.expireAfterAccess(1, TimeUnit.MINUTES)      // cache will expire after 1 minutes of access
             .build(new CacheLoader<String, Employee>() {  // build the cacheloader
           
                   @Override
