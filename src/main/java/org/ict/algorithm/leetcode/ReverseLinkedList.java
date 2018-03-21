@@ -5,7 +5,6 @@ package org.ict.algorithm.leetcode;
  * 92.reverse-linked-list-ii
  * @see https://leetcode.com/problems/reverse-linked-list/discuss/58125/In-place-iterative-and-recursive-Java-solution
  * @see https://leetcode.com/problems/reverse-linked-list-ii/description/
- * https://leetcode.com/problems/merge-two-sorted-lists/description/
  *
  */
 public class ReverseLinkedList {
