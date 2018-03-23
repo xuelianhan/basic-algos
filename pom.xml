@@ -64,6 +64,19 @@
 	    <artifactId>guava</artifactId>
 	    <version>24.0-jre</version>
 	</dependency>
+	<!-- https://mvnrepository.com/artifact/org.elasticsearch/elasticsearch -->
+	<dependency>
+	    <groupId>org.elasticsearch</groupId>
+	    <artifactId>elasticsearch</artifactId>
+	    <version>6.2.2</version>
+	</dependency>
+	<!-- https://mvnrepository.com/artifact/org.elasticsearch.client/elasticsearch-rest-client -->
+	<dependency>
+	    <groupId>org.elasticsearch.client</groupId>
+	    <artifactId>elasticsearch-rest-client</artifactId>
+	    <version>6.2.2</version>
+	</dependency>
+	
     <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
