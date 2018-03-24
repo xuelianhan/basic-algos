@@ -39,10 +39,6 @@ import org.ict.algorithm.util.StdRandom;
  * Uses Hoare's 2-way partitioning algorithm, median-of-3 to 
  * choose the partitioning element,
  * and cuts off to insertion sort.
- * 
- * Reference: Engineering a Sort Function by Jon L. Bentley
- * and M. Douglas McIlroy. Softwae-Practice and Experience,
- * Vol. 23 (11), 1249-1265 (November 1993).
  *
  * @author Robert Sedgewick
  * @author Kevin Wayne
