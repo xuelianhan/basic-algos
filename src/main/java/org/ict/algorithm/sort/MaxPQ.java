@@ -246,9 +246,9 @@ public class MaxPQ<Key> implements Iterable<Key> {
 
     //is subtree of pq[1..n] rooted at k a max heap?
     private boolean isMaxHeap(int k) {
-        //see the parameter k assigned  with 1 in isMaxHeap() method,
-        //this mean that when k = 1, if 1 > n satisfied, n must be zero,
-        //There is only one element in the priority queue, so it is max heap.
+        // because if k > n, due to recursion invoke, it must be skip 
+        // the return false condition, means that it has only one choice:
+        // it is a max Heap. otherwise, it returns false in early steps.
         if (k > n) {
            return true; 
         }
