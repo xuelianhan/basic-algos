@@ -56,7 +56,7 @@ public class MinPQ<Key> implements Iterable<Key> {
     }
 
     public MinPQ(int initCapacity, Comparator<Key> comparator) {
-        this comparator = comparator;
+        this.comparator = comparator;
         pq = (Key[]) new Object[initCapacity];
         n = 0;
     }
@@ -187,7 +187,7 @@ public class MinPQ<Key> implements Iterable<Key> {
         if (comparator == null) {
             return ((Comparable<Key>) pq[i]).compareTo(pq[j]) > 0;
         } else {
-            comparator.compare(pq[i], pq[j]) > 0; 
+            return comparator.compare(pq[i], pq[j]) > 0; 
         }
     }
 
@@ -217,6 +217,12 @@ public class MinPQ<Key> implements Iterable<Key> {
             return false;
         }
         return isMinHeap(left) && isMinHeap(right);
+    }
+
+    @Override
+    public Iterator<Key> iterator() {
+        // TODO Auto-generated method stub
+        return null;
     }
 
     /**
