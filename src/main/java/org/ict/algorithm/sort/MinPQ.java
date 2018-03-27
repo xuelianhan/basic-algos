@@ -3,7 +3,22 @@ package org.ict.algorithm.sort;
 import java.util.Iterator;
 import java.util.Comparator;
 import java.util.NoSuchElementException;
+import org.ict.algorithm.util.StdIn;
+import org.ict.algorithm.util.StdOut;
 /**
+ * $ cat ../resources/tinyPQ.txt 
+ * P Q E - X A M - P L E -
+ * $ javac org/ict/algorithm/sort/MinPQ.java 
+ * Note: org/ict/algorithm/sort/MinPQ.java uses unchecked or unsafe operations.
+ * Note: Recompile with -Xlint:unchecked for details.
+ * $ java org/ict/algorithm/sort/MinPQ < ../resources/tinyPQ.txt 
+ * E 
+ * A 
+ * E 
+ * (6 left on 
+ *
+ *
+ *
  * Generic min priority queue implementation with a binary heap
  * Can be used with a comparator instead of the natural order.
  *
@@ -219,16 +234,64 @@ public class MinPQ<Key> implements Iterable<Key> {
         return isMinHeap(left) && isMinHeap(right);
     }
 
+    /**
+     * Returns an iterator that iterates over the keys on this priority queue
+     * in ascending order.
+     * <p>
+     * The iterator doesn't implement {@code remove()} since it's optional.
+     *
+     * @return an iterator that iterates over the keys in ascending order
+     */
     @Override
     public Iterator<Key> iterator() {
-        // TODO Auto-generated method stub
-        return null;
+        return new HeapIterator();
+    }
+
+    private class HeapIterator implements Iterator<Key> {
+        // create a new pq
+        private MinPQ<Key> copy;
+
+        // add all items to copy of heap
+        // takes linear time since already in heap order so no keys move
+        public HeapIterator() {
+            if (comparator == null) {
+                copy = new MinPQ<Key>(size());
+            } else {
+                copy = new MinPQ<Key>(size(), comparator);
+            }
+            for (int i = 1; i <= n; i++) {
+                copy.insert(pq[i]);
+            }
+        }
+
+        @Override
+        public boolean hasNext() {
+            return !copy.isEmpty();
+        }
+
+        @Override
+        public Key next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            return copy.delMin();
+        }
     }
 
     /**
-     *
-     *
-     *
+     * Unit tests the {@code MinPQ} data type.
      *
      */
+    public static void main(String[] args) {
+        MinPQ<String> pq = new MinPQ<String>();
+        while (!StdIn.isEmpty()) {
+            String item = StdIn.readString();
+            if (!"-".equals(item)) {
+                pq.insert(item);
+            } else if (!pq.isEmpty()) {
+                StdOut.println(pq.delMin() + " ");
+            }
+        }
+        StdOut.println("(" + pq.size() + " left on pq)");
+    }
 }
