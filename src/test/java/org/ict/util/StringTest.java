@@ -5,6 +5,19 @@ import org.junit.Test;
 
 public class StringTest {
     
+    public void testCharToChinese(String input) {
+        String nums[] = {"零", "一", "二", "三", "四", "五", "六", "七", "八", "九", "十"};
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < input.length(); i++) {
+            char c = input.charAt(i);
+            if (Character.isDigit(c)) {
+                sb.append(nums[Integer.parseInt(Character.valueOf(c).toString())]);
+            } else {
+                sb.append(Character.valueOf(c));
+            }
+        }
+    }
+    
     @Test
     public void testCharAt() {
         String s = "abcdefg";
