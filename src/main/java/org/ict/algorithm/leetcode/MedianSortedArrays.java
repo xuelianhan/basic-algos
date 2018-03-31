@@ -1,8 +1,16 @@
 package org.ict.algorithm.leetcode;
 
+import java.util.Arrays;
 
 /**
  * p4
+ *
+ *
+ * $ javac org/ict/algorithm/leetcode/MedianSortedArrays.java 
+ * $ java org/ict/algorithm/leetcode/MedianSortedArrays
+ * nums1:[1, 2], nums2:[3, 4]
+ * median:2.5
+ *
  * To solve this problem, we need to understand “What is the use of median” 
  * In statistics, the median is used for dividing a set into two equal length subsets, 
  * that one subset is always greater than the other
@@ -26,9 +34,9 @@ package org.ict.algorithm.leetcode;
  * A[0], A[1], ..., A[i-1]  |  A[i], A[i+1], ..., A[m-1]
  * B[0], B[1], ..., B[j-1]  |  B[j], B[j+1], ..., B[n-1]
  * If we can ensure:
- 
- 1) len(left_part) == len(right_part)
- 2) max(left_part) <= min(right_part)
+ * 
+ * 1) len(left_part) == len(right_part)
+ * 2) max(left_part) <= min(right_part)
  * then we divide all elements in {A, B} into two parts with equal length, and one part is always greater than the other
  * Then median = (max(left_part) + min(right_part))/2.
  * 
@@ -113,11 +121,60 @@ package org.ict.algorithm.leetcode;
 public class MedianSortedArrays {
 
     public static double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        int m = nums1.length, n = nums2.length;
+        if (m > n) {
+            return findMedianSortedArrays(nums2, nums1);
+        }
+        if (n == 0) {
+            throw new IllegalArgumentException("nums2 must not be empty!");
+        }
+        int i = 0, j = 0, imin = 0, imax = m, halfLen = (m + n + 1)/2;
+        double maxOfLeft = 0.0d;
+        double minOfRight = 0.0d;
+        
+        while (imin <= imax) {
+            i = (imin + imax) / 2;    
+            j = halfLen - i;
+            if ((j > 0) && (i < m) && (nums2[j-1] > nums1[i])) {
+                // Notice: i is too small, must increase it
+                imin = i + 1;
+            } else if ((i > 0) && (j < n) && (nums1[i-1] > nums2[j])) {
+                // Notice: i is too big, must decrease it
+                imax = i - 1;
+            } else {
+                // i is perfect
+                if (i == 0) {
+                    maxOfLeft = nums2[j-1];    
+                } else if (j == 0) {
+                    maxOfLeft = nums1[i-1];
+                } else {
+                    maxOfLeft = Math.max(nums1[i-1], nums2[j-1]);
+                }
+                // find the i, should break here
+                break;
+            }
+        }//end while-loop
 
+        if ((m + n) % 2 == 1) {
+            return maxOfLeft;
+        }
+
+        if (i == m) {
+            minOfRight = nums2[j];
+        } else if (j == n) {
+            minOfRight = nums1[i];
+        } else {
+            minOfRight = Math.min(nums1[i], nums2[j]);
+        }
+        return (maxOfLeft + minOfRight) / 2.0d;
     }
 
     public static void main(String[] args) {
-
+        int[] nums1 = {1, 2};
+        int[] nums2 = {3, 4};
+        System.out.println("nums1:" + Arrays.toString(nums1) + ", nums2:" + Arrays.toString(nums2));
+        double median = findMedianSortedArrays(nums1, nums2); 
+        System.out.println("median:" + median);
     }
 }
 
