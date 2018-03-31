@@ -1,7 +1,7 @@
-package org.ict.algorithm.leetcode;
+package org.ict.algorithm.leetcode.linkedlist;
 
 /**
- * 206. Reverse Linked List
+ * p206. Reverse Linked List
  * 92.reverse-linked-list-ii
  * @see https://leetcode.com/problems/reverse-linked-list/discuss/58125/In-place-iterative-and-recursive-Java-solution
  * @see https://leetcode.com/problems/reverse-linked-list-ii/description/

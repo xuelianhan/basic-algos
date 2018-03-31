@@ -1,4 +1,4 @@
-package org.ict.algorithm.leetcode;
+package org.ict.algorithm.leetcode.string;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -7,6 +7,7 @@ import java.util.Set;
 
 /**
  * p3
+ * tag: string
  * Given a string, find the length of the longest substring without repeating characters.
  * Examples:
  * abcabcbb --> abc, length is 3

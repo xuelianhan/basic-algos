@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 /**
  * p4
- *
+ * tag: array
  *
  * $ javac org/ict/algorithm/leetcode/MedianSortedArrays.java 
  * $ java org/ict/algorithm/leetcode/MedianSortedArrays
