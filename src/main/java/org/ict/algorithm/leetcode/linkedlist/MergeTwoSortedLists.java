@@ -1,4 +1,4 @@
-package org.ict.algorithm.leetcode;
+package org.ict.algorithm.leetcode.linkedlist;
 
 public class MergeTwoSortedLists {
 
