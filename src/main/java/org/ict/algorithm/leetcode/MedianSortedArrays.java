@@ -137,9 +137,11 @@ public class MedianSortedArrays {
             j = halfLen - i;
             if ((j > 0) && (i < m) && (nums2[j-1] > nums1[i])) {
                 // Notice: i is too small, must increase it
+                // Don't write as imax
                 imin = i + 1;
             } else if ((i > 0) && (j < n) && (nums1[i-1] > nums2[j])) {
                 // Notice: i is too big, must decrease it
+                // Don't write as imin
                 imax = i - 1;
             } else {
                 // i is perfect
@@ -151,6 +153,7 @@ public class MedianSortedArrays {
                     maxOfLeft = Math.max(nums1[i-1], nums2[j-1]);
                 }
                 // find the i, should break here
+                // Don't forget this break!
                 break;
             }
         }//end while-loop
