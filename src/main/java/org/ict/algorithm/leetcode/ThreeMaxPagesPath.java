@@ -15,6 +15,11 @@ import java.util.Map;
 import org.ict.algorithm.util.MapUtil;
 
 /**
+ * Amazon written test
+ *
+ */
+
+/**
  * U1,/
  * U1,subscribers
  * U2,/
