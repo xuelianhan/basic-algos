@@ -6,6 +6,9 @@ import org.ict.algorithm.util.StdIn;
 import org.ict.algorithm.util.StdOut;
 
 /**
+ * $ javac org/ict/algorithm/fundamentals/Queue.java 
+ * $ java org/ict/algorithm/fundamentals/Queue < ../resources/tobe.txt 
+ * to be or not to be (2 left in queue)
  *
  *
  * @see http://algs4.cs.princeton.edu/13stacks/Queue.java.html
@@ -81,19 +84,27 @@ public class Queue<Item> implements Iterable<Item> {
     }
 
     public Iterator<Item> iterator() {
-        return new ListIterator();
+        // must pass first node to iterator
+        return new ListIterator<Item>(first);
     }
    
-    private class ListIterator implements Iterator<Item> {
+    private class ListIterator<Item> implements Iterator<Item> {
         
           private Node<Item> current;
 
-          public ListIterator() {
-              this.current = first;
+          public ListIterator(Node<Item> first) {
+              current = first;
           }
 
+          /**
+           * Pay attention to implementation of this method
+           * which is easily to make mistakes here.
+           */
           public boolean hasNext() {
-              return current.next == null;
+              //Notice here! 
+              //First, don't write != as ==
+              //Secondly, check current node is first or not before using current.next() != null
+              return current != null;
           }
 
           public Item next() {

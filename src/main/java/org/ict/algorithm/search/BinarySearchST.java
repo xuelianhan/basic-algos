@@ -1,10 +1,65 @@
 package org.ict.algorithm.search;
 
+import java.util.Arrays;
 import java.util.NoSuchElementException;
 import org.ict.algorithm.fundamentals.Queue;
 import org.ict.algorithm.util.StdIn;
 import org.ict.algorithm.util.StdOut;
 /**
+ *
+ * $ javac org/ict/algorithm/search/BinarySearchST.java 
+ * Note: org/ict/algorithm/search/BinarySearchST.java uses unchecked or unsafe operations.
+ * Note: Recompile with -Xlint:unchecked for details.
+ * $ java org/ict/algorithm/search/BinarySearchST < ../resources/tinyST.txt 
+ * st.put: key:S, i:0
+ * keys[]:[S, null], vals[]:[0, null]
+ * st.put: key:E, i:1
+ * keys[]:[E, S], vals[]:[1, 0]
+ * st.put: key:A, i:2
+ * keys[]:[A, E, S, null], vals[]:[2, 1, 0, null]
+ * st.put: key:R, i:3
+ * keys[]:[A, E, R, S], vals[]:[2, 1, 3, 0]
+ * st.put: key:C, i:4
+ * keys[]:[A, C, E, R, S, null, null, null], vals[]:[2, 4, 1, 3, 0, null, null, null]
+ * st.put: key:H, i:5
+ * keys[]:[A, C, E, H, R, S, null, null], vals[]:[2, 4, 1, 5, 3, 0, null, null]
+ * st.put: key:E, i:6
+ * keys[]:[A, C, E, H, R, S, null, null], vals[]:[2, 4, 6, 5, 3, 0, null, null]
+ * st.put: key:X, i:7
+ * keys[]:[A, C, E, H, R, S, X, null], vals[]:[2, 4, 6, 5, 3, 0, 7, null]
+ * st.put: key:A, i:8
+ * keys[]:[A, C, E, H, R, S, X, null], vals[]:[8, 4, 6, 5, 3, 0, 7, null]
+ * st.put: key:M, i:9
+ * keys[]:[A, C, E, H, M, R, S, X], vals[]:[8, 4, 6, 5, 9, 3, 0, 7]
+ * st.put: key:P, i:10
+ * keys[]:[A, C, E, H, M, P, R, S, X, null, null, null, null, null, null, null], vals[]:[8, 4, 6, 5, 9, 10, 3, 0, 7, null, null, null, null, null, null, null]
+ * st.put: key:L, i:11
+ * keys[]:[A, C, E, H, L, M, P, R, S, X, null, null, null, null, null, null], vals[]:[8, 4, 6, 5, 11, 9, 10, 3, 0, 7, null, null, null, null, null, null]
+ * st.put: key:E, i:12
+ * keys[]:[A, C, E, H, L, M, P, R, S, X, null, null, null, null, null, null], vals[]:[8, 4, 12, 5, 11, 9, 10, 3, 0, 7, null, null, null, null, null, null]
+ * st.size():10
+ * keys(), lo:A, hi:X
+ * enqueue: i:0, keys[i]:A
+ * enqueue: i:1, keys[i]:C
+ * enqueue: i:2, keys[i]:E
+ * enqueue: i:3, keys[i]:H
+ * enqueue: i:4, keys[i]:L
+ * enqueue: i:5, keys[i]:M
+ * enqueue: i:6, keys[i]:P
+ * enqueue: i:7, keys[i]:R
+ * enqueue: i:8, keys[i]:S
+ * keys(), queue size:10
+ * A 8
+ * C 4
+ * E 12
+ * H 5
+ * L 11
+ * M 9
+ * P 10
+ * R 3
+ * S 0
+ * X 7
+ *
  * The {@code BST} class represents an ordered symbol table of generic
  * key-value pairs.
  * It supports the usual <em>put</em>, <em>get</em>,<em>contains</em>,
@@ -181,11 +236,12 @@ public class BinarySearchST<Key extends Comparable<Key>, Value> {
         //key is already in table
         if (i < n && keys[i].compareTo(key) == 0) {
             vals[i] = val;
+            StdOut.println("keys[]:" + Arrays.toString(keys) + ", vals[]:" + Arrays.toString(vals));
             return;
         }
 
         // insert new key-value pair
-        if (n = keys.length) {
+        if (n == keys.length) {
             resize(2 * keys.length);
         }
 
@@ -196,6 +252,7 @@ public class BinarySearchST<Key extends Comparable<Key>, Value> {
         keys[i] = key;
         vals[i] = val;
         n++;
+        StdOut.println("keys[]:" + Arrays.toString(keys) + ", vals[]:" + Arrays.toString(vals));
         assert check();
     }
 
@@ -360,7 +417,7 @@ public class BinarySearchST<Key extends Comparable<Key>, Value> {
             return 0;
         }
         if (contains(hi)) {
-            rank(hi) - rank(lo) + 1;
+            return rank(hi) - rank(lo) + 1;
         } else {
             return rank(hi) - rank(lo);
         }
@@ -389,6 +446,7 @@ public class BinarySearchST<Key extends Comparable<Key>, Value> {
      * {@code hi} is {@code null}
      */
     public Iterable<Key> keys(Key lo, Key hi) {
+        StdOut.println("keys(), lo:" + lo + ", hi:" + hi);
         if (lo == null || hi == null) {
             throw new IllegalArgumentException("key to keys() is null");
         }
@@ -397,11 +455,13 @@ public class BinarySearchST<Key extends Comparable<Key>, Value> {
             return queue;
         }
         for (int i = rank(lo); i < rank(hi); i++) {
+            StdOut.println("enqueue: i:" + i + ", keys[i]:" + keys[i]); 
             queue.enqueue(keys[i]);
         }
         if (contains(hi)) {
             queue.enqueue(keys[rank(hi)]);
         }
+        StdOut.println("keys(), queue size:" + queue.size());
         return queue;
     }
 
@@ -414,7 +474,7 @@ public class BinarySearchST<Key extends Comparable<Key>, Value> {
 
     private boolean isSorted() {
         for (int i = 1; i < size(); i++) {
-            if (keys[i].compareTo(keys[i-1) < 0) {
+            if (keys[i].compareTo(keys[i-1]) < 0) {
                 return false;
             }
         }
@@ -444,8 +504,10 @@ public class BinarySearchST<Key extends Comparable<Key>, Value> {
         BinarySearchST<String, Integer> st = new BinarySearchST<String, Integer>();
         for (int i = 0; !StdIn.isEmpty(); i++) {
             String key = StdIn.readString();
+            StdOut.println("st.put: key:"+ key + ", i:" + i);
             st.put(key, i);
         }
+        StdOut.println("st.size():" + st.size());
         for (String s : st.keys()) {
             StdOut.println(s + " " + st.get(s));
         }
