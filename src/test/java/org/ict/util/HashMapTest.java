@@ -1,12 +1,14 @@
 package org.ict.util;
 
+import java.math.BigDecimal;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.junit.Test;
-
 import com.google.common.collect.Lists;
 
 public class HashMapTest {
@@ -19,16 +21,24 @@ public class HashMapTest {
             if (i % 2 == 0) {
                 user.setType("Even");
                 user.setName("user"+ i);
+                user.setMoney(new BigDecimal(20+i));
             } else {
                 user.setType("Odd");
                 user.setName("user"+ i);
+                user.setMoney(new BigDecimal(30+i));
             }
             users.add(user);
         }
         
         Map<String, List<User>> g = users.stream().collect(Collectors.groupingBy(User::getType));
         g.forEach((k,v)->{
-            System.out.println("type: " + k + "User : " + v);
+            System.out.println("type: " + k + "User size : " + v.size());
+            BigDecimal sum = v
+                    .stream()
+                    .map(User::getMoney)
+                    .filter(b -> (b != BigDecimal.ZERO))
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+            System.out.println("type: " + k + "sum : " + sum);
         });
     }
     
@@ -36,6 +46,8 @@ public class HashMapTest {
         private String type;
         
         private String name;
+        
+        private BigDecimal money;
 
         public String getType() {
             return type;
@@ -53,9 +65,17 @@ public class HashMapTest {
             this.name = name;
         }
 
+        public BigDecimal getMoney() {
+            return money;
+        }
+
+        public void setMoney(BigDecimal money) {
+            this.money = money;
+        }
+        
         @Override
         public String toString() {
-            return "User [type=" + type + ", name=" + name + "]";
+            return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
         }
         
         
