@@ -123,20 +123,20 @@ public class BST<Key extends Comparable<Key>, Value> {
         return get(root, key);
     }
 
-    private Value get(Node node, Key key) {
+    private Value get(Node x, Key key) {
         if (key == null) {
             throw new IllegalArgumentException("key to get(Node, Key) is null");        
         }
-        if (node == null) {
+        if (x == null) {
             return null;
         }
-        int cmp = key.compareTo(node.key);
+        int cmp = key.compareTo(x.key);
         if (cmp < 0) {
-           return get(node.left, key); 
+           return get(x.left, key); 
         } else if (cmp > 0) {
-           return get(node.right, key); 
+           return get(x.right, key); 
         } else {
-            return node.val;
+            return x.val;
         }
     }
 
@@ -162,20 +162,20 @@ public class BST<Key extends Comparable<Key>, Value> {
         assert check();
     }
 
-    private Node put(Node node, Key key, Value val) {
-        if (node == null) {
+    private Node put(Node x, Key key, Value val) {
+        if (x == null) {
             return new Node(key, val, 1);
         }
-        int cmp = key.compareTo(node.key);
+        int cmp = key.compareTo(x.key);
         if (cmp < 0) {
-            node.left = put(node.left, key, val);
+            x.left = put(x.left, key, val);
         } else if (cmp > 0) {
-            node.right = put(node.right, key, val);
+            x.right = put(x.right, key, val);
         } else {
-            node.val = val;
+            x.val = val;
         }
-        node.size = 1 + size(node.left) + size(node.right); 
-        return node;
+        x.size = 1 + size(x.left) + size(x.right); 
+        return x;
     }
 
     /**
@@ -190,13 +190,13 @@ public class BST<Key extends Comparable<Key>, Value> {
         assert check();
     }
 
-    private Node deleteMin(Node node) {
-        if (node.left == null) {
-            return node.right;
+    private Node deleteMin(Node x) {
+        if (x.left == null) {
+            return x.right;
         }
-        node.left = deleteMin(node.left);
-        node.size = size(node.left) + size(node.right) + 1;
-        return node;
+        x.left = deleteMin(x.left);
+        x.size = size(x.left) + size(x.right) + 1;
+        return x;
     }
 
     /**
@@ -204,6 +204,111 @@ public class BST<Key extends Comparable<Key>, Value> {
      * @throws NoSuchElementException if the symbol table is empty
      */
     public void deleteMax() {
-        
+       if (isEmpty()) {
+            throw new NoSuchElementException("Symbol table underflow");
+       }
+       root = deleteMax(root);
+       assert check();
+    }
+
+    private Node deleteMax(Node x) {
+        if (x.right == null) {
+            return x.left;
+        }
+        x.right = deleteMax(x.right);
+        x.size = size(x.left) + size(x.right) + 1;
+        return x;
+    }
+
+    /**
+     * Removes the specified key and its associated value from this symbol table
+     * (if the key is in this symbol table).
+     *
+     * @param key the key
+     * @throws IllegalArgumentException if {@code key} is {@code null}
+     */
+    public void delete(Key key) {
+        if (key == null) {
+           throw new IllegalArgumentException("key to delete(Key) is null"); 
+        }
+        root = delete(root, key);
+        assert check();
+    }
+
+    private Node delete(Node x, Key key) {
+        if (x == null) {
+            return null;
+        }
+        int cmp = key.compareTo(x.key);
+        if (cmp < 0) {
+            x.left = delete(x.left, key);
+        } else if (cmp > 0) {
+            x.right = delete(x.right, key);
+        } else {
+            if (x.right == null) {
+                return x.left;
+            }
+            if (x.left == null) {
+                return x.right;
+            }
+            Node t = x;
+            x = min(t.right);
+            x.right = deleteMin(t.right);
+            x.left = t.left;
+        }
+        x.size = size(x.left) + size(x.right) + 1;
+        return x;
+    }
+
+    /**
+     * Returns the smallest key in the symbol table
+     * @return the smallest key int the symbol table
+     * @throws NoSuchElementException if the symbol table is empty
+     */
+    public Key min() {
+        if (isEmpty()) {
+            throw new NoSuchElementException("calls min() with empty symbol table");
+        }
+        return min(root).key;
+    }
+
+    private Node min(Node x) {
+        if (x.left == null) {
+            return x;
+        } else {
+            return min(x.left);
+        }
+    }
+
+    /**
+     * Returns the largest key int the symbol table
+     * 
+     * @return the largest key in the symbol table
+     * @throws NoSuchElementException if the symbol table is empty
+     */
+    public Key max() {
+        if (isEmpty()) {
+            throw new NoSuchElementException("calls max() with empty symbol table");
+        }
+        return max(root).key;
+    }
+
+    private Node max(node x) {
+        if (x.right == null) {
+            return x;
+        } else {
+            return max(x.right);
+        }
+    }
+
+    /**
+     * Returns the largest key in the symbol table less than or equal to {@code key}
+     * @param key the key
+     * @return the largest key in the symbol table less than or equal to {@code key}
+     * @throws NoSuchElementException if there is no such key
+     * @throws IllegalArgumentException if {@code key} is {@code null}
+     */
+    public Key floor(Key key) {
+
     }
 }
