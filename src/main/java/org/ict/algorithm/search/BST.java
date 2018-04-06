@@ -389,6 +389,60 @@ public class BST<Key extends Comparable<Key>, Value> {
     /**
      * Return the key in the symbol table whose rank is {@code k}.
      * This is the (k+1)st smallest key in the symbol table.
-     *
+     * @param k the order statistic
+     * @return the key in the symbol table of rank{@code k}
+     * @throws IllegalArgumentException unless {@code k} is between 0 and 
+     *         <em>n-1</em>
      */
+    public Key select(int k) {
+       if (k < 0 || k >= size()) {
+            throw new IlegalArgumentException("argument to select() is invalid:" + k);
+       }
+       Node x = select(root, k);
+       return x.key;
+    }
+
+    // Return key of rank k.
+    private Node select(Node x, int k) {
+        if (x == null) {
+            return null; 
+        }
+        int t = size(x.left);
+        if ( t > k) {
+            return select(x.left, k);
+        } else if ( t < k) {
+            return select(x.right, k - t - 1);
+        } else {
+            return x;
+        }
+    }
+
+    /**
+     * Return the number of keys in the symbol table strictly less than {@code key}.
+     * 
+     * @param key the key
+     * @return the number of keys in the symbol table strictly less than{@code key}
+     * @throws IllegalArgumentException if {@code key} is {@code null}
+     */
+    public int rank(Key key) {
+        if (key == null) {
+            throw new IllegalArgumentException("key is null for rank(key)");
+        }
+        return rank(key, root);
+    }
+
+    // Number of keys in the subtree less than key.
+    private int rank(Key key, Node x) {
+        if (x == null) {
+            return 0; 
+        }
+        int cmp = key.compareTo(x.key);
+        if (cmp < 0) {
+            return rank(key, x.left);
+        } else if (cmp > 0) {
+            return 1 + size(x.left) + rank(key, x.right);
+        } else {
+            return size(x.left);
+        }
+    }
 }
