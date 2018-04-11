@@ -447,6 +447,135 @@ public class BST<Key extends Comparable<Key>, Value> {
     }
 
     /**
-     *
+     * Returns all keys in the symbol table as an {@code Iterable}.
+     * To iterate over all of the keys in the symbol table named {@code st},
+     * use the foreach notation: {@code for(Key key : st.keys())}.
+     * 
+     * @return all keys in the symbol table
      */
+    public Iterable<Key> keys() {
+        if (isEmpty()) {
+            return new Queue<Key>();
+        }
+        return keys(min(), max());
+    }
+
+    /**
+     * Returns all keys in the symbol table in the given range,
+     * as an {@code Iterable}.
+     *
+     * @param lo minimum endpoint
+     * @param hi maximum endpoint
+     * @return all keys in the symbol table between {@code lo}
+     *         (inclusive) and {@code hi} (inclusive)
+     * @throws IllegalArgumentException if either {@code lo} or {@code hi}
+     *         is {@code null}
+     */
+    public Iterable<Key> keys(Key lo, Key hi) {
+        if (lo == null) {
+            throw new IllegalArgumentException("first argument to keys() is null");
+        }
+        if (hi == null) {
+            throw new IllegalArgumentException("second argument to keys() is null");
+        }
+        Queue<Key> queue = new Queue<Key>();
+        keys(root, queue, lo, hi);
+        return queue;
+    }
+
+    private void keys(Node x, Queue<Key> queue, Key lo, Key hi) {
+        if (x == null) {
+            return;
+        }
+        int cmplo = lo.compareTo(x.key);
+        int cmphi = hi.compareTo(x.key);
+        if (cmplo < 0) {
+            keys(x.left, queue, lo, hi);
+        }
+        if (cmplo <= 0 && cmphi >= 0) {
+            queue.enqueue(x.key);
+        }
+        if (cmphi > 0) {
+            keys(x.right, queue, lo, hi);
+        }
+    }
+
+    /**
+     * Returns the number of keys in the symbol table in the given range.
+     * @param lo minimum endpoint
+     * @param hi maximum endpoint
+     * @return the number of keys in the symbol table between {@code lo}
+     *         (inclusive) and {@code hi} (inclusive)
+     * @throws IllegalArgumentException if either {@code lo} or {@code hi}
+     *         is {@code null}
+     */
+    public int size(Key lo, Key hi) {
+        if (lo == null) {
+            throw new IllegalArgumentException("first argument to size() is null");
+        }
+        if (hi == null) {
+            throw new IllegalArgumentException("second argument to size() is null");
+        }
+        if (lo.compareTo(hi) > 0) {
+            return 0;
+        }
+        // 1 2 3 4 5 6 7 9
+        // rank(3) = 2, rank(7) = 6, rank(7) - rank(3) = 4
+        if (contains(hi)) {
+            // +1 means the key of hi node
+            return rank(hi) - rank(lo) + 1;
+        } else {
+            return rank(hi)  -rank(lo);
+        }
+    }
+    
+    /**
+     * Returns the height of the BST(for debugging).
+     * @return the height of the BST( a 1-node tree has height 0)
+     */
+    public int height() {
+        return height(root);
+    }
+
+    private int height(Node x) {
+        if (x == null) {
+            return -1;
+        }
+        return 1 + Math.max(height(x.left), height(x.right));
+    }
+
+    /**
+     * Returns the keys in the BST in level order(for debugging).
+     * 
+     * @return the keys in the BST in level order traversal
+     */
+    public Iterable<Key> levelOrder() {
+        Queue<Key> keys = new Queue<Key>();
+        Queue<Node> queue = new Queue<Node>();
+        queue.enqueue(root);
+        while (!queue.isEmpty()) {
+            Node x = queue.dequeue();
+            if (x == null) {
+                continue;
+            }
+            keys.enqueue(x.key);
+            queue.enqueue(x.left);
+            queue.enqueue(x.right);
+        }
+        return keys;
+    }
+    
+    /**
+     * Check integrity of BST data structure.
+     */
+
+    private boolean check() {
+        if (!isBST()) {
+            StdOut.println("Not in symmetric order");
+        }
+        if (!isSizeConsistent()) {
+            StdOut.println("Subtree counts not consistent");
+        }
+
+    }
 }
