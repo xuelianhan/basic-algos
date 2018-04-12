@@ -117,11 +117,7 @@ public class BST<Key extends Comparable<Key>, Value> {
 
     // return number of key-value pairs in BST rooted at x    
     private int size(Node x) {
-        if (x == null) {
-            return 0;
-        } else {
-            return x.size;
-        }
+        return (x == null ? 0 : x.size);
     }
 
     /**
@@ -164,7 +160,7 @@ public class BST<Key extends Comparable<Key>, Value> {
         } else if (cmp > 0) {
            return get(x.right, key); 
         } else {
-            return x.val;
+           return x.val;
         }
     }
 
@@ -301,11 +297,7 @@ public class BST<Key extends Comparable<Key>, Value> {
     }
 
     private Node min(Node x) {
-        if (x.left == null) {
-            return x;
-        } else {
-            return min(x.left);
-        }
+        return (x.left == null ? x : min(x.left));
     }
 
     /**
@@ -322,11 +314,7 @@ public class BST<Key extends Comparable<Key>, Value> {
     }
 
     private Node max(Node x) {
-        if (x.right == null) {
-            return x;
-        } else {
-            return max(x.right);
-        }
+        return (x.right == null ? x : max(x.right));
     }
 
     /**
