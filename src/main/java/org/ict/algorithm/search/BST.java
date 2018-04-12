@@ -7,6 +7,32 @@ import org.ict.algorithm.util.StdOut;
 
 
 /**
+ * $ javac org/ict/algorithm/search/BST.java 
+ * $ more ../resources/tinyST.txt 
+ * S E A R C H E X A M P L E
+ * $ java org/ict/algorithm/search/BST < ../resources/tinyST.txt 
+ * S 0
+ * E 12
+ * X 7
+ * A 8
+ * R 3
+ * C 4
+ * H 5
+ * M 9
+ * L 11
+ * P 10
+ *
+ * A 8
+ * C 4
+ * E 12
+ * H 5
+ * L 11
+ * M 9
+ * P 10
+ * R 3
+ * S 0
+ * X 7
+ *
  * The {@code BST} class represents an ordered symbol table of generic
  * key-value pairs
  * It supports the usual <em>put</em>, <em>get</em>, <em>contains</em>,  
@@ -293,7 +319,7 @@ public class BST<Key extends Comparable<Key>, Value> {
         return max(root).key;
     }
 
-    private Node max(node x) {
+    private Node max(Node x) {
         if (x.right == null) {
             return x;
         } else {
@@ -383,7 +409,7 @@ public class BST<Key extends Comparable<Key>, Value> {
             Node t = ceiling(x.left, key);
             return (t == null ? x : t);
         }
-        return ceiling(r.right, key);
+        return ceiling(x.right, key);
     }
 
     /**
@@ -396,7 +422,7 @@ public class BST<Key extends Comparable<Key>, Value> {
      */
     public Key select(int k) {
        if (k < 0 || k >= size()) {
-            throw new IlegalArgumentException("argument to select() is invalid:" + k);
+            throw new IllegalArgumentException("argument to select() is invalid:" + k);
        }
        Node x = select(root, k);
        return x.key;
@@ -648,7 +674,7 @@ public class BST<Key extends Comparable<Key>, Value> {
             StdOut.println(s + " " + st.get(s));
         }
         StdOut.println();
-        for (String s : keys()) {
+        for (String s : st.keys()) {
             StdOut.println(s + " " + st.get(s));
         }
     }
