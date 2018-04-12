@@ -640,7 +640,16 @@ public class BST<Key extends Comparable<Key>, Value> {
     public static void main(String[] args) {
         BST<String, Integer> st = new BST<String, Integer>();
         for (int i = 0; !StdIn.isEmpty(); i++) {
-            
+            String key = StdIn.readString();
+            st.put(key, i);
+        }
+
+        for (String s : st.levelOrder()) {
+            StdOut.println(s + " " + st.get(s));
+        }
+        StdOut.println();
+        for (String s : keys()) {
+            StdOut.println(s + " " + st.get(s));
         }
     }
 }
