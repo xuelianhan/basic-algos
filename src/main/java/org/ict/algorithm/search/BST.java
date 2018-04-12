@@ -11,6 +11,7 @@ import org.ict.algorithm.util.StdOut;
  * $ more ../resources/tinyST.txt 
  * S E A R C H E X A M P L E
  * $ java org/ict/algorithm/search/BST < ../resources/tinyST.txt 
+ * st level order:
  * S 0
  * E 12
  * X 7
@@ -22,6 +23,7 @@ import org.ict.algorithm.util.StdOut;
  * L 11
  * P 10
  *
+ * st keys():
  * A 8
  * C 4
  * E 12
@@ -670,10 +672,11 @@ public class BST<Key extends Comparable<Key>, Value> {
             st.put(key, i);
         }
 
+        StdOut.println("st level order: ");
         for (String s : st.levelOrder()) {
             StdOut.println(s + " " + st.get(s));
         }
-        StdOut.println();
+        StdOut.println("\n" + "st keys():");
         for (String s : st.keys()) {
             StdOut.println(s + " " + st.get(s));
         }
