@@ -415,7 +415,7 @@ public class BST<Key extends Comparable<Key>, Value> {
             throw new IllegalArgumentException("argument to select() is invalid:" + k);
        }
        Node x = select(root, k);
-       return x.key;
+       return (x == null ? null : x.key);
     }
 
     // Return key of rank k.
