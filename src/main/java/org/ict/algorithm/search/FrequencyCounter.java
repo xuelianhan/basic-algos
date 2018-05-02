@@ -35,7 +35,7 @@ public class FrequencyCounter {
         //compute frequency counts
         while(!StdIn.isEmpty()) {
             String key = StdIn.readString();
-            if (key.length < minlen) {
+            if (key.length() < minlen) {
                 continue;
             }
             words++;

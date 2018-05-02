@@ -3,11 +3,35 @@ package org.ict.util;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 
 import org.joda.time.DateTime;
 
+import com.google.common.base.Predicate;
+import com.google.common.collect.Collections2;
+import com.google.common.collect.Sets;
+
 public class CalendarTest {
+    
+  
+  public static void testGuavaFilter() {
+      Set<String> types = Sets.newHashSet();
+      for (int i = 0; i < 5; i++) {
+          types.add(""+i);
+      }
+      Collection<String> filtered = Collections2.filter(types, new Predicate<String>() {
+          @Override
+          public boolean apply(String input) {
+               if (Integer.parseInt(input) > 2) {
+                   return false;
+               }
+              return true;
+          }
+      });
+      System.out.println(filtered);
+  }
     
   
    
@@ -77,7 +101,8 @@ public class CalendarTest {
 
   public static void main(String[] args) {
       try {
-          testFour(); 
+          //testFour(); 
+          testGuavaFilter();
       } catch (Exception e) {
           e.printStackTrace();
       }
