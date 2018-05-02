@@ -34,7 +34,73 @@ public class NonrecursiveBST<Key extends Comparable<Key>, Value> {
         }
         Node parent = null, x = root;
         while (x != null) {
-            
+            parent = x;
+            int cmp = key.compareTo(x.key);
+            if (cmp < 0) {
+                x = x.left;
+            } else if (cmp > 0) {
+                x = x.right; 
+            } else {
+                x.val = val;
+                return;
+            }
+        }
+        int cmp = key.compareTo(parent.key);
+        if (cmp < 0) {
+            parent.left = z;
+        } else {
+            parent.right = z;
+        }
+    }
+
+    /**
+     * Search BST for given key, nonrecursive version.
+     */
+    Value get(Key key) {
+        Node x = root;
+        while (x != null) {
+            int cmp = key.compareTo(x.key);
+            if (cmp < 0) {
+                x = x.left;
+            } else if (cmp > 0) {
+                x = x.right;
+            } else {
+                return x.val;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Inorder traversal.
+     * left-root-right order
+     */
+    public Iterable<Key> keys() {
+        Stack<Node> stack = new Stack<Node>();
+        Queue<Key> queue = new Queue<Key>();
+        Node x = root;
+        while (x != null || !stack.isEmpty()) {
+            if (x != null) {
+                stack.push(x);
+                x = x.left;
+            } else {
+                x = stack.pop();
+                queue.enqueue(x.key);
+                x = x.right;
+            }
+        }
+        return queue;
+    }
+
+    public static void main(String[] args) {
+        String[] a = StdIn.readAllStrings();
+        int n = a.length;
+        NonrecursiveBST<String, Integer> st = new NorecursiveBST<String, Integer>();
+        for (int i = 0; i < n; i++) {
+            st.put(a[i], i);
+        }
+        for (String s : st.keys()) {
+            StdOut.println(s + " " + st.get(s));
         }
     }
 }
