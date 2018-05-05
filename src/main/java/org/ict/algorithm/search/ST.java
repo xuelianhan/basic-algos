@@ -1,8 +1,27 @@
+/**
+ * $ javac org/ict/algorithm/search/ST.java 
+ * $ more ../resources/tinyST.txt 
+ * S E A R C H E X A M P L E
+ * $ java org/ict/algorithm/search/ST < ../resources/tinyST.txt 
+ * A 8
+ * C 4
+ * E 12
+ * H 5
+ * L 11
+ * M 9
+ * P 10
+ * R 3
+ * S 0
+ * X 7
+ *
+ */
 package org.ict.algorithm.search;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.TreeMap;
+import org.ict.algorithm.util.StdIn;
+import org.ict.algorithm.util.StdOut;
 
 /**
  * The {@code ST} class represents an ordered symbol table of generic 
@@ -164,4 +183,67 @@ public class ST<Key extends Comparable<Key>, Value> implements Iterable<Key> {
         return st.firstKey();
     }
 
+    /**
+     * Returns the largest key in this symbol table.
+     *
+     * @return the largest key in this symbol table
+     * @throws NoSuchElementException if this symbol table is empty
+     */
+    public Key max() {
+        if (isEmpty()) {
+            throw new NoSuchElementException("calls max() with empty symbol table");
+        }
+        return st.lastKey();
+    }
+
+    /**
+     * Returns the smallest key in this symbol table greater than or equal to {@code key}.
+     * @param key the key
+     * @return the smallest key in this symbol table greater than or equal to {@code key}
+     * @throws NoSuchElementException if there is no such key
+     * @throws IllegalArgumentException if {@code key} is {@code null}
+     */
+    public Key ceiling(Key key) {
+        if (key == null) {
+            throw new IllegalArgumentException("argument to ceiling() is null");
+        }
+        Key k = st.ceilingKey(key);
+        if (k == null) {
+            throw new NoSuchElementException("all keys are less than " + key);
+        }
+        return k;
+    }
+
+    /**
+     * Returns the largest key in this symbol table less than or equal to {@code key}.
+     *
+     * @param key the key
+     * @return the largest key in this symbol table less than or equal to {@code key}
+     * @throws NoSuchElementException if there is no such key
+     * @throws IllegalArgumentException if {@code key} is {@code null}
+     */
+    public Key floor(Key key) {
+        if (key == null) {
+            throw new IllegalArgumentException("argument to floor() is null");
+        }
+        Key k = st.floorKey(key);
+        if (k == null) {
+            throw new NoSuchElementException("all keys are greater " + key);
+        }
+        return k;
+    }
+
+    /**
+     * Unit tests the {@code ST} data type.
+     */
+    public static void main(String[] args) {
+        ST<String, Integer> st = new ST<String, Integer>();
+        for (int i = 0; !StdIn.isEmpty();i++) {
+            String key = StdIn.readString();
+            st.put(key, i);
+        }
+        for (String s : st.keys()) {
+            StdOut.println(s + " " + st.get(s));
+        }
+    }
 }
