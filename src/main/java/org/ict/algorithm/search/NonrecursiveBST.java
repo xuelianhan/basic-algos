@@ -1,5 +1,10 @@
 package org.ict.algorithm.search;
 
+import org.ict.algorithm.fundamentals.Queue;
+import org.ict.algorithm.fundamentals.Stack;
+import org.ict.algorithm.util.StdIn;
+import org.ict.algorithm.util.StdOut;
+
 /**
  * A symbol table implemented with a binary search tree using 
  * iteration instead of recursion for put(), get(), and keys().
@@ -95,7 +100,7 @@ public class NonrecursiveBST<Key extends Comparable<Key>, Value> {
     public static void main(String[] args) {
         String[] a = StdIn.readAllStrings();
         int n = a.length;
-        NonrecursiveBST<String, Integer> st = new NorecursiveBST<String, Integer>();
+        NonrecursiveBST<String, Integer> st = new NonrecursiveBST<String, Integer>();
         for (int i = 0; i < n; i++) {
             st.put(a[i], i);
         }
