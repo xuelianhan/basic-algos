@@ -182,6 +182,7 @@ public class BST<Key extends Comparable<Key>, Value> {
             delete(key);
             return;
         }
+        //every insert, the root may be changed, so return value to assign root again.
         root = put(root, key, val);
         assert check();
     }
