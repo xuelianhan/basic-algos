@@ -506,12 +506,16 @@ public class BST<Key extends Comparable<Key>, Value> {
         }
         int cmplo = lo.compareTo(x.key);
         int cmphi = hi.compareTo(x.key);
+        // Why not consider cmphi < 0 ?
+        // because if cmphi < 0, cmplo always < 0( due to lo < hi) 
         if (cmplo < 0) {
             keys(x.left, queue, lo, hi);
         }
         if (cmplo <= 0 && cmphi >= 0) {
             queue.enqueue(x.key);
         }
+        // why not consider cmplo > 0 ?
+        // because if cmplo > 0, cmphi always > 0( due to hi > lo) 
         if (cmphi > 0) {
             keys(x.right, queue, lo, hi);
         }
