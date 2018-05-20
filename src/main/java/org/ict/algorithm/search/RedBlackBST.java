@@ -37,5 +37,40 @@ import java.util.NoSuchElementException;
  */
 public class RedBlackBST<Key extends Comparable<Key>, Value> {
 
+    private static final boolean RED = true;
 
+    private static final boolean BLACK = false; 
+
+    // root of the BST
+    private Node root;
+
+    // BST helper node data type
+    private class Node {
+        // key
+        private Key key;
+        // associated data
+        private Value val;
+        // links to left and right subtrees
+        private Node left, right;
+        // color of parent link
+        private boolean color;
+        // subtree count
+        private int size;
+
+        public Node() {
+           this.key = key;
+           this.val = val;
+           this.color = color;
+           this.size = size;
+        }
+    }
+
+    /**
+     * Initializes an empty symbol table.
+     */
+    public RedBlackBST() {}
+
+    /**
+     * Node helper methods.
+     */
 }
