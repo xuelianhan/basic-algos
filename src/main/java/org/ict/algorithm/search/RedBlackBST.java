@@ -106,4 +106,40 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
     public boolean isEmpty() {
         return root == null;
     }
+
+    /**
+     * Standard BST search.
+     */
+    /**
+     * Returns the value associated with the given key.
+     * @param key the key
+     * @return the value associated with the given key if the key is in 
+     * the symbol table and {@code null} if the key is not in the symbol
+     * table 
+     * @throws IllegalArgumentException if {@code key} is {@code null}
+     */
+    public Value get(Key key) {
+        if (key == null) {
+            throw new IllegalArgumentException("key to get() is null");
+        }
+        return get(root, key);
+    } 
+
+    // value associated with the given key in subtree rooted at x; 
+    // null if no such key
+    private Value get(Node x, Key key) {
+        while (x != null) {
+            int cmp = key.compareTo(x.key);
+            if (cmp < 0) {
+                x = x.left;
+            } else if (cmp > 0) {
+                x = x.right;
+            } else {
+                return x.val;
+            }
+        }
+        return null;
+    }
+
+    
 }
