@@ -151,4 +151,50 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
      public boolean contains(Key key) {
         return get(key) != null;
      }
+
+     /**
+      * Red-black tree insertion.
+      */
+     /**
+      * Inserts the specified key-value pair into the symbol table,
+      * overwriting the old value with the new value if the symbol 
+      * table already contains the specified key
+      * Deletes the specified key (and its associated value) from 
+      * this symbol table if the specified value is {@code null}
+      *
+      * @param key the key
+      * @param val the value
+      * @throws IllegalArgumentException if {@code key} is {@code null}
+      */
+     public void put(Key key, Value val) {
+        if (key == null) {
+            throw new IllegalArgumentException("first argument to put() is null");
+        }
+        if (val == null) {
+            delete(key);
+            return;
+        }
+        root = put(root, key, val);
+        root.color = BLACK;
+     }
+
+     // insert the key-value pair in the subtree rooted at h
+     private Node put(Node h, Key key, Value val) {
+        if (h == null) {
+            return new Node(key, val, RED, 1);
+        }
+        int cmp = key.compareTo(h.key);
+        if (cmp < 0) {
+            h.left = put(h.left, key, val);
+        } else if (cmp > 0) {
+            h.right = put(h.right, key, val);
+        } else {
+            h.val = val;
+        }
+
+        //fix-up any right-leaning links
+        // todo
+        //
+        return h;
+     }
 }
