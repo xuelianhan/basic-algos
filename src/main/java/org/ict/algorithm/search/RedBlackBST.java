@@ -193,8 +193,37 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         }
 
         //fix-up any right-leaning links
-        
+         
 
         return h;
+     }
+
+     /**
+      * Red-black tree helper functions
+      */
+     // make a right-leaning link lean to the left 
+     private Node rotateLeft(Node h) {
+        Node x = h.right;
+        h.right = x.left;
+        x.left = h;
+        // means x.color = h.color
+        x.color = x.left.color;
+        //means h.color = RED
+        x.left.color = RED;
+        x.size = h.size;
+        h.size = size(h.left) + size(h.right) + 1;
+        return x;
+     }
+
+     // make a left-leaning link to the right
+     private Node rotateRight(Node h) {
+        Node x = h.left;
+        h.left = x.right;
+        x.right = h;
+        x.color = x.right.color;
+        x.right.color = RED;
+        x.size = h.size;
+        h.size = size(h.left) + size(h.right) + 1;
+        return x;
      }
 }
