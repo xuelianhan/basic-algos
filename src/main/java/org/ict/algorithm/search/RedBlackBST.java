@@ -220,10 +220,20 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         Node x = h.left;
         h.left = x.right;
         x.right = h;
+        // means x.color = h.color
         x.color = x.right.color;
+        // means h.color = RED
         x.right.color = RED;
         x.size = h.size;
         h.size = size(h.left) + size(h.right) + 1;
         return x;
+     }
+
+     // flip the colors of a node and its two children
+     private void flipColors(Node h) {
+        // h must have opposite color of its two children
+        h.color = !h.color;
+        h.left.color = !h.left.color;
+        h.right.color = !h.right.color;
      }
 }
