@@ -193,14 +193,35 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         }
 
         //fix-up any right-leaning links
-         
+        if (isRed(h.right) && !isRed(h.left)) {
+            h = rotateLeft(h);    
+        }
+        if (isRed(h.left) && isRed(h.left.left)) {
+            h = rotateRight(h);
+        }
+        if (isRed(h.left) && isRed(h.right)) {
+           flipColors(h); 
+        }
+        h.size = size(h.left) + size(h.right) + 1;
 
         return h;
      }
+     
 
      /**
       * Red-black tree helper functions
       */
+     /**
+      * Removes the smallest key and associated value from the symbol table.
+      * @throws NoSuchElementException if the symbol table is empty
+      */
+     public void deleteMin() {
+        if (isEmpty()) {
+            throw new NoSuchElementException("BST underflow");
+        }
+
+     }
+
      // make a right-leaning link lean to the left 
      private Node rotateLeft(Node h) {
         Node x = h.right;
@@ -232,8 +253,11 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
      // flip the colors of a node and its two children
      private void flipColors(Node h) {
         // h must have opposite color of its two children
+        // means h.color = RED
         h.color = !h.color;
+        // means h.left.color = BLACK
         h.left.color = !h.left.color;
+        // means h.right.color = BLACK;
         h.right.color = !h.right.color;
      }
 }
