@@ -219,6 +219,21 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         if (isEmpty()) {
             throw new NoSuchElementException("BST underflow");
         }
+        // if both children of root are black, set root to red
+        if (!isRed(root.left) && !isRed(root.right)) {
+            root.color = RED;
+        }
+        root = deleteMin(root);
+        if (!isEmpty()) {
+            root.color = BLACK;
+        }
+     }
+
+     //delete the key-value pair with the minimum key rooted at h
+     private Node deleteMin(Node h) {
+        if (h.left == null) {
+            return null;
+        }
 
      }
 
@@ -259,5 +274,28 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         h.left.color = !h.left.color;
         // means h.right.color = BLACK;
         h.right.color = !h.right.color;
+     }
+
+     // Assuming that h is red and both h.left and h.left.left
+     // are black, make h.left or one of its children red.
+     private Node moveRedLeft(Node h) {
+        flipColors(h);
+        if (isRed(h.right.left)) {
+            h.right = rotateRight(h.right);
+            h = rotateLeft(h);
+            flipColors(h);
+        }
+        return h;
+     }
+     
+     // Assuming that h is red and both h.right and h.right.left
+     // are black, make h.right or one of its children red.
+     private Node moveRedRight(Node h) {
+        flipColors(h);
+        if (isRed(h.left.left)) {
+            h = rotateRight(h);
+            flipColors(h);
+        }
+        return h;
      }
 }
