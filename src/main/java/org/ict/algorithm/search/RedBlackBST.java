@@ -58,10 +58,10 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         private int size;
 
         public Node() {
-           this.key = key;
-           this.val = val;
-           this.color = color;
-           this.size = size;
+            this.key = key;
+            this.val = val;
+            this.color = color;
+            this.size = size;
         }
     }
 
@@ -149,7 +149,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
      * @throws IllegalArgumentException if {@code key} is {@code null}
      */
      public boolean contains(Key key) {
-        return get(key) != null;
+         return get(key) != null;
      }
 
      /**
@@ -167,44 +167,44 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
       * @throws IllegalArgumentException if {@code key} is {@code null}
       */
      public void put(Key key, Value val) {
-        if (key == null) {
-            throw new IllegalArgumentException("first argument to put() is null");
-        }
-        if (val == null) {
-            delete(key);
-            return;
-        }
-        root = put(root, key, val);
-        root.color = BLACK;
+         if (key == null) {
+             throw new IllegalArgumentException("first argument to put() is null");
+         }
+         if (val == null) {
+             delete(key);
+             return;
+         }
+         root = put(root, key, val);
+         root.color = BLACK;
      }
 
      // insert the key-value pair in the subtree rooted at h
      private Node put(Node h, Key key, Value val) {
-        if (h == null) {
-            return new Node(key, val, RED, 1);
-        }
-        int cmp = key.compareTo(h.key);
-        if (cmp < 0) {
-            h.left = put(h.left, key, val);
-        } else if (cmp > 0) {
-            h.right = put(h.right, key, val);
-        } else {
-            h.val = val;
-        }
+         if (h == null) {
+             return new Node(key, val, RED, 1);
+         }
+         int cmp = key.compareTo(h.key);
+         if (cmp < 0) {
+             h.left = put(h.left, key, val);
+         } else if (cmp > 0) {
+             h.right = put(h.right, key, val);
+         } else {
+             h.val = val;
+         }
 
-        //fix-up any right-leaning links
-        if (isRed(h.right) && !isRed(h.left)) {
-            h = rotateLeft(h);    
-        }
-        if (isRed(h.left) && isRed(h.left.left)) {
-            h = rotateRight(h);
-        }
-        if (isRed(h.left) && isRed(h.right)) {
-           flipColors(h); 
-        }
-        h.size = size(h.left) + size(h.right) + 1;
+         //fix-up any right-leaning links
+         if (isRed(h.right) && !isRed(h.left)) {
+             h = rotateLeft(h);    
+         }
+         if (isRed(h.left) && isRed(h.left.left)) {
+             h = rotateRight(h);
+         }
+         if (isRed(h.left) && isRed(h.right)) {
+            flipColors(h); 
+         }
+         h.size = size(h.left) + size(h.right) + 1;
 
-        return h;
+         return h;
      }
      
 
@@ -216,76 +216,166 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
       * @throws NoSuchElementException if the symbol table is empty
       */
      public void deleteMin() {
-        if (isEmpty()) {
-            throw new NoSuchElementException("BST underflow");
-        }
-        // if both children of root are black, set root to red
-        if (!isRed(root.left) && !isRed(root.right)) {
-            root.color = RED;
-        }
-        root = deleteMin(root);
-        if (!isEmpty()) {
-            root.color = BLACK;
-        }
+         if (isEmpty()) {
+             throw new NoSuchElementException("BST underflow");
+         }
+         // if both children of root are black, set root to red
+         if (!isRed(root.left) && !isRed(root.right)) {
+             root.color = RED;
+         }
+         root = deleteMin(root);
+         if (!isEmpty()) {
+             root.color = BLACK;
+         }
      }
 
      //delete the key-value pair with the minimum key rooted at h
      private Node deleteMin(Node h) {
-        if (h.left == null) {
-            return null;
-        }
+         if (h.left == null) {
+             return null;
+         }
 
+         if (!isRed(h.left) && !isRed(h.left.left)) {
+             moveRedLeft(h);
+         }
+
+         h.left = deleteMin(h.left);
+
+         return balance(h);
+     }
+
+     /**
+      * Removes the largest key and associated value from the symbol table.
+      * @throws NoSuchElementException if the symbol table is empty.
+      */
+     public void deleteMax() {
+         if (isRed(h.left)) {
+            h = rotateRight(h);
+         }
+
+         if (h.right == null) {
+            return null;
+         }
+
+         if (!isRed(h.right) && !isRed(h.right.left)) {
+            h = moveRedRight(h);
+         }
+
+         h.right = deleteMax(h.right);
+
+         return balance(h);
+     }
+
+     /**
+      * Removes the specified key and its associated value from this symbol table
+      * (if the key is in this symbol table)
+      * @param key the key
+      * @throws IllegalArgumentException if {@code key} is {@code null}
+      */
+     public void delete(Key key) {
+         if (key == null) {
+             throw new IllegalArgumentException("argument to delete() is null");
+         }
+         if (!contains(key)) {
+             return;
+         }
+
+         // if both children of root are black, set root to red
+         if (!isRed(root.left) && !isRed(root.right)) {
+             root.color = RED;
+         }
+
+         root = delete(root, key);
+         if (!isEmpty()) {
+             root.color = BLACK;
+         }
+         // assert check();
+     }
+
+     // delete the key-value pair with the given key rooted at h
+     private Node delete(Node h, Key key) {
+         // assert get(h, key) != null   
+         if (key.compareTo(h.key) < 0) {
+             //
+             if (!isRed(h.left) && !isRed(h.left.left)) {
+                 h = moveRedLeft(h);
+             }
+
+             h.left = delete(h.left, key);
+         } else {
+             if (isRed(h.left)) {
+                 h = rotateRight(h);
+             }
+
+             if (key.compareTo(h.key) == 0 && (h.right == null)) {
+                 return null;
+             }
+
+             if (!isRed(h.right) && !isRed(h.right.left)) {
+                 h = moveRedRight(h);
+             }
+
+             if (key.compareTo(h.key) == 0) {
+                 Node x = min(h.right);
+                 
+             }
+              
+         }
+         return balance(h);
      }
 
      // make a right-leaning link lean to the left 
      private Node rotateLeft(Node h) {
-        Node x = h.right;
-        h.right = x.left;
-        x.left = h;
-        // means x.color = h.color
-        x.color = x.left.color;
-        //means h.color = RED
-        x.left.color = RED;
-        x.size = h.size;
-        h.size = size(h.left) + size(h.right) + 1;
-        return x;
+         Node x = h.right;
+         h.right = x.left;
+         x.left = h;
+         // means x.color = h.color
+         x.color = x.left.color;
+         //means h.color = RED
+         x.left.color = RED;
+         x.size = h.size;
+         h.size = size(h.left) + size(h.right) + 1;
+         return x;
      }
 
      // make a left-leaning link to the right
      private Node rotateRight(Node h) {
-        Node x = h.left;
-        h.left = x.right;
-        x.right = h;
-        // means x.color = h.color
-        x.color = x.right.color;
-        // means h.color = RED
-        x.right.color = RED;
-        x.size = h.size;
-        h.size = size(h.left) + size(h.right) + 1;
-        return x;
+         Node x = h.left;
+         h.left = x.right;
+         x.right = h;
+         // means x.color = h.color
+         x.color = x.right.color;
+         // means h.color = RED
+         x.right.color = RED;
+         x.size = h.size;
+         h.size = size(h.left) + size(h.right) + 1;
+         return x;
      }
 
      // flip the colors of a node and its two children
      private void flipColors(Node h) {
-        // h must have opposite color of its two children
-        // means h.color = RED
-        h.color = !h.color;
-        // means h.left.color = BLACK
-        h.left.color = !h.left.color;
-        // means h.right.color = BLACK;
-        h.right.color = !h.right.color;
+         // h must have opposite color of its two children
+         // means h.color = RED
+         h.color = !h.color;
+         // means h.left.color = BLACK
+         h.left.color = !h.left.color;
+         // means h.right.color = BLACK;
+         h.right.color = !h.right.color;
      }
 
      // Assuming that h is red and both h.left and h.left.left
      // are black, make h.left or one of its children red.
      private Node moveRedLeft(Node h) {
-        flipColors(h);
-        if (isRed(h.right.left)) {
-            h.right = rotateRight(h.right);
-            h = rotateLeft(h);
-            flipColors(h);
-        }
-        return h;
+         // assert (h != null);
+         // assert isRed(h) && !isRed(h.left) && !isRed(h.left.left);
+         
+         flipColors(h);
+         if (isRed(h.right.left)) {
+             h.right = rotateRight(h.right);
+             h = rotateLeft(h);
+             flipColors(h);
+         }
+         return h;
      }
      
      // Assuming that h is red and both h.right and h.right.left
@@ -298,4 +388,21 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         }
         return h;
      }
+
+     // restore red-black tree invariant
+     private Node balance(Node h) {
+        if (isRed(h.right)) {
+            h = rotateLeft(h);
+        }
+        if (isRed(h.left) && isRed(h.left.left)) {
+            h = rotateRight(h);
+        }
+        if (isRed(h.left) && isRed(h.right)) {
+            flipColors(h);
+        }
+        h.size = size(h.left) + size(h.right) + 1; 
+        return h;
+     }
+
+     
 }
