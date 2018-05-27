@@ -206,11 +206,11 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
 
          return h;
      }
-     
+    
+     /*********************************************
+      * Red-black tree deletion.
+      ********************************************/
 
-     /**
-      * Red-black tree helper functions
-      */
      /**
       * Removes the smallest key and associated value from the symbol table.
       * @throws NoSuchElementException if the symbol table is empty
@@ -317,12 +317,19 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
 
              if (key.compareTo(h.key) == 0) {
                  Node x = min(h.right);
-                 
+                 h.key = x.key;
+                 h.val = x.val;
+                 h.right = deleteMin(h.right);
+             } else {
+                 h.right = delete(h.right, key);
              }
-              
          }
          return balance(h);
      }
+
+     /**********************************************
+      * Red-black tree helper functions
+      *********************************************/
 
      // make a right-leaning link lean to the left 
      private Node rotateLeft(Node h) {
@@ -381,28 +388,48 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
      // Assuming that h is red and both h.right and h.right.left
      // are black, make h.right or one of its children red.
      private Node moveRedRight(Node h) {
-        flipColors(h);
-        if (isRed(h.left.left)) {
-            h = rotateRight(h);
-            flipColors(h);
-        }
-        return h;
+         flipColors(h);
+         if (isRed(h.left.left)) {
+             h = rotateRight(h);
+             flipColors(h);
+         }
+         return h;
      }
 
      // restore red-black tree invariant
      private Node balance(Node h) {
-        if (isRed(h.right)) {
-            h = rotateLeft(h);
-        }
-        if (isRed(h.left) && isRed(h.left.left)) {
-            h = rotateRight(h);
-        }
-        if (isRed(h.left) && isRed(h.right)) {
-            flipColors(h);
-        }
-        h.size = size(h.left) + size(h.right) + 1; 
-        return h;
+         if (isRed(h.right)) {
+             h = rotateLeft(h);
+         }
+         if (isRed(h.left) && isRed(h.left.left)) {
+             h = rotateRight(h);
+         }
+         if (isRed(h.left) && isRed(h.right)) {
+             flipColors(h);
+         }
+         h.size = size(h.left) + size(h.right) + 1; 
+         return h;
+     }
+        
+     /******************************************************
+      * Utility functions
+      *****************************************************/
+     /**
+      * Returns the height of the BST (a 1-node tree has height 0) 
+      */
+     public int height() {
+         return height(root);
      }
 
+     private int height(Node x) {
+         if (x == null) {
+             return -1;
+         }
+         return 1 + Math.max(height(x.left), height(x.right));
+     }
+     
+     /******************************************************
+      * Ordered symbol table methods
+      *****************************************************/
      
 }
