@@ -431,5 +431,26 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
      /******************************************************
       * Ordered symbol table methods
       *****************************************************/
-     
+
+     /**
+      * Returns the smallest key in the symbol table.
+      * @return the smallest key in the symbol table
+      * @throws NoSuchElementException if the symbol table is empty
+      */
+     public Key min() {
+         if (isEmpty()) {
+             throw new NoSuchElementException("calls min() with empty symble table");    
+         }
+         return min(root).key;
+     }
+
+     // the smallest key in subtree rooted at x; null if no such key
+     private Node min(Node x) {
+         // assert x != null;
+         if (x.left == null) {
+             return null;
+         } else {
+             return min(x.left);
+         }
+     }
 }
