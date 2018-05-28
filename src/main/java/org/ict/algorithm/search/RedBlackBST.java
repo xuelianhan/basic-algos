@@ -477,5 +477,49 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
              return max(x.right);
          }
      }
+
+     /**
+      * Returns the largest key in the symbol table less than or equal to {@code key}.
+      * @param key the key
+      * @return the larget key in the symbol table less than or equal to {@code key}
+      * @throws NoSuchElementException if there is no such key
+      * @throws IllegalArgumentException if {@code key} is {@code null}
+      */
+     public key floor(Key key) {
+         if (key == null) {
+             throw new IllegalArgumentException("argument to floor() is null");
+         }
+         if (isEmpty()) {
+             throw new NoSuchElementException("calls floor() with empty symbol table");
+         }
+         Node x = floor(root, key);
+         if (x == null) {
+             return null; 
+         } else {
+             return x.key;
+         } 
+     }
+
+     // the largest key in the subtree rooted at x less than or equal to the given key
+     private Node floor(Node x, Key key) {
+         if (x == null) {
+             return null;
+         }
+         int cmp = key.compareTo(x.key);
+         if (cmp == 0) {
+             return x;
+         }
+         if (cmp < 0) {
+             return floor(x.left, key);
+         } 
+         Node t = floor(x.right, key);         
+         if (t != null) {
+             return t;
+         } else {
+             return x;
+         }
+     }
+
+
      
 }
