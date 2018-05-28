@@ -57,7 +57,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         // subtree count
         private int size;
 
-        public Node() {
+        public Node(Key key, Value val, boolean color, int size) {
             this.key = key;
             this.val = val;
             this.color = color;
@@ -249,6 +249,22 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
       * @throws NoSuchElementException if the symbol table is empty.
       */
      public void deleteMax() {
+         if (isEmpty()) {
+             throw new NoSuchElementException("BST underflow");
+         }
+         
+         //if both children of root are black, set root to red
+         if (!isRed(root.left) && !isRed(root.right)) {
+             root.color = RED;
+         }
+         root = deleteMax(root);
+         if (!isEmpty()) {
+             root.color = BLACK;
+         }
+     }
+
+     // delete the key-value pair with the maximum key rooted at h
+     private Node deleteMax(Node h) {
          if (isRed(h.left)) {
             h = rotateRight(h);
          }
@@ -469,7 +485,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
      }
 
      // the largest key in the subtree rooted at x, null if no such key
-     private Node max() {
+     private Node max(Node x) {
          // assert x != null;
          if (x.right == null) {
              return null;
@@ -485,7 +501,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
       * @throws NoSuchElementException if there is no such key
       * @throws IllegalArgumentException if {@code key} is {@code null}
       */
-     public key floor(Key key) {
+     public Key floor(Key key) {
          if (key == null) {
              throw new IllegalArgumentException("argument to floor() is null");
          }
@@ -547,3 +563,14 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
 
          return (t == null ? x : t);
      }
+
+     /**
+      * Return the key in the symbol table whose rank is {@code k}.
+      * This is the (k+1)st smallest key in the symbol table.
+      * 
+      * @param k the order statistic
+      * @return the key in the symbol table of rank {@code k}
+      *
+      */
+
+}
