@@ -570,7 +570,30 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
       * 
       * @param k the order statistic
       * @return the key in the symbol table of rank {@code k}
-      *
+      * @throws IllegalArgumentException unless {@code k} is between 0 and 
+      * <em>n-1</em>
       */
+     public Key select(int k) {
+         if (k < 0 || k >= size()) {
+             throw new IllegalArgumentException("argument to select() is invalid:" + k);
+         }
+         Node x = select(root, k);
+         return x.key;
+     }
+
+     // the key of rank k in the subtree rooted at x
+     private Node select(Node x, int k) {
+         // assert x != null;
+         // assert k > 0 && k < size(x);
+         int t = size(x.left);
+         if (t > k) {
+             return select(x.left, k);
+         } else if (t < k) {
+             return select(x.right, k-t-1);
+         } else {
+             return x;
+         }
+     }
+    
 
 }
