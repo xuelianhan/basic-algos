@@ -594,6 +594,34 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
              return x;
          }
      }
+
+     /**
+      * Return the number of keys in the symbol table strictly less than {@code key}.
+      * @param key the key
+      * @return the number of keys in the symbol table strictly less than {@code key}
+      * @throws IllegalArgumentException if {@code key} is {@code null}
+      */
+     public int rank(Key key) {
+         if (key == null) {
+             throw new IllegalArgumentException("argument to rank() is null");
+         }
+         return rank(key, root);
+     }
+
+     // number of keys less than key in the subtree rooted at x
+     private int rank(Key key, Node x) {
+         if (x == null) {
+             return 0;
+         }
+         int cmp = key.compareTo(x.key);
+         if (cmp < 0) {
+             return rank(key, x.left);
+         } else if (cmp > 0) {
+             return 1 + size(x.left) + rank(key, x.right);
+         } else {
+             return size(x.left);
+         }
+     }
     
 
 }
