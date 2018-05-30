@@ -1,6 +1,8 @@
 package org.ict.algorithm.search;
 
 import java.util.NoSuchElementException;
+import org.ict.algorithm.fundamentals.Queue;
+
 /**
  * The {@code BST} class represents an ordered symbol table of generic
  * key-value pairs
@@ -622,6 +624,93 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
              return size(x.left);
          }
      }
+
+     /*********************************************************
+      * Range count and range search.
+      */
+
+     /**
+      * Returns all keys in the symbol table as an {@code Iterable}.
+      * To iterate over all of the keys in the symbol table named {@code st},
+      * use the foreach notation: {@code for (Key key : st.keys())}.
+      * @return all keys in the symbol table as an {@code Iterable}
+      */
+     public Iterable<Key> keys() {
+         if (isEmpty()) {
+             return new Queue<Key>();
+         }
+         return keys(min(), max());
+     }
+     
+     /**
+      * Returns all keys in the symbol table in the given range,
+      * as an {@code Iterable}
+      * @param lo minimum endpoint
+      * @param hi maximum endpoint
+      * @return all keys in the symbol table between {@code lo}
+      *   (inclusive) and {@code hi} (inclusive) as an {@code Iterable}
+      * @throws IllegalArgumentException if either {@code lo} or {@code hi}
+      *   is {@code null}
+      */
+     public Iterable<Key> keys(Key lo, Key hi) {
+         if (lo == null) {
+             throw new IllegalArgumentException("first argument to keys() is null");
+         }
+         if (hi == null) {
+             throw new IllegalArgumentException("second argument to keys() is null");
+         }
+         Queue<Key> queue = new Queue<Key>();
+         // if (isEmpty() || lo.compareTo(hi) > 0) return queue; 
+         keys(root, queue, lo, hi);
+         return queue;
+     }
+
+     // add the keys between lo and hi in the substree rooted at x to the queue
+     private void keys(Node x, Queue<Key> queue, Key lo, Key hi) {
+         if (x == null) {
+             return;
+         }
+         int cmplo = lo.compareTo(x.key);
+         int cmphi = hi.compareTo(x.key);
+         if (cmplo < 0) {
+             keys(x.left, queue, lo, hi);
+         }
+         if (cmplo <= 0 && cmphi >= 0) {
+             queue.enqueue(x.key);
+         }
+         if (cmphi > 0) {
+             keys(x.right, queue, lo ,hi);
+         }
+     }
+      
+     /**
+      * Returns the number of keys in the symbol table in the given range.
+      * 
+      * @param lo minimum endpoint
+      * @param hi maximum endpoint
+      * @return the number of keys in the symbol table between {@code lo}
+      *   (inclusive) and {@code hi} (inclusive)
+      * @throws IllegalArgumentException if either {@code lo} or {@code hi}
+      *   is {@code null}
+      */
+      public int size(Key lo, Key hi) {
+          if (lo == null) {
+              throw new IllegalArgumentException("first argument to size() is null");
+          }
+          if (hi == null) {
+              throw new IllegalArgumentException("second argument to size() is null");
+          }
+          if (lo.compareTo(hi)) {
+              return 0;
+          }
+          if (contains(hi)) {
+              return rank(hi) - rank(lo) + 1;
+          } else {
+              return rank(hi) - rank(lo);
+          }
+      }
+
+
     
 
 }
