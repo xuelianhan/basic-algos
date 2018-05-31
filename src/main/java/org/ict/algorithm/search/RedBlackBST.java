@@ -718,6 +718,28 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
          return false;
       }
 
+      // Does this binary tree satisfy symmetric order?
+      // Note: this test also ensures that data structure is a binary tree since order is strict
+      private boolean isBST() {
+         return isBST(root, null, null);
+      }
+
+      // Is the tree rooted at x a BST with all keys strictly between min and max
+      // (if min or max is null, treat as empty constraint)
+      // Credit: Bob Dondero's elegant solution
+      private boolean isBST(Node x, Key min, Key max) {
+         if (x == null) {
+             return true;
+         }
+         if (min != null && x.key.compareTo(min) <= 0) {
+             return false;
+         }
+         if (max != null && x.key.compareTo(max) >= 0) {
+             return false;
+         }
+         return isBST(x.left, min, x.key) && isBST(x.right, x.key, max);
+      }
+
 
 
     
