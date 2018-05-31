@@ -709,6 +709,15 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
               return rank(hi) - rank(lo);
           }
       }
+      
+      /**
+       * Check integrity of red-black tree data structure.
+       */
+      private boolean check() {
+         //
+         return false;
+      }
+
 
 
     
