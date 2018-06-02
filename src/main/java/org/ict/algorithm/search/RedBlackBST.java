@@ -2,6 +2,8 @@ package org.ict.algorithm.search;
 
 import java.util.NoSuchElementException;
 import org.ict.algorithm.fundamentals.Queue;
+import org.ict.algorithm.util.StdIn;
+import org.ict.algorithm.util.StdOut;
 
 /**
  * The {@code BST} class represents an ordered symbol table of generic
@@ -468,7 +470,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
      private Node min(Node x) {
          // assert x != null;
          if (x.left == null) {
-             return null;
+             return x;
          } else {
              return min(x.left);
          }
@@ -490,7 +492,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
      private Node max(Node x) {
          // assert x != null;
          if (x.right == null) {
-             return null;
+             return x;
          } else {
              return max(x.right);
          }
@@ -700,7 +702,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
           if (hi == null) {
               throw new IllegalArgumentException("second argument to size() is null");
           }
-          if (lo.compareTo(hi)) {
+          if (lo.compareTo(hi) > 0) {
               return 0;
           }
           if (contains(hi)) {
