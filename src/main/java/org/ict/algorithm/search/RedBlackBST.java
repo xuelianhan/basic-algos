@@ -755,6 +755,64 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
          return isSizeConsistent(x.left) && isSizeConsistent(x.right);
       }
 
+      // check that ranks are consistent
+      private boolean isRankConsistent() {
+         for (int i = 0; i < size(); i++) {
+             if (i != rank(select(i))) {
+                 return false;
+             }
+         }
+         for (Key key : keys()) {
+             if (key.compareTo(select(rank(key))) != 0) {
+                 return false;
+             }
+         }
+         return true;
+      }
+
+      // Does the tree have no red right links, and at most one(left)
+      // red links in a row on any path?
+      private boolean is23() {
+         return is23(root);
+      }
+
+      private boolean is23(Node x) {
+         if (x == null) {
+             return true;
+         }
+         if (isRed(x.right)) {
+             return false;
+         }
+         if (x != root && isRed(x) && isRed(x.left)) {
+             return false;
+         }
+         return is23(x.left) && is23(x.right);
+      }
+
+      // Do all paths from root to leaf have same number of black edges?
+      private boolean isBalanced() {
+          // number of black links on path from root to min
+          int black = 0;
+          Node x = root;
+          while (x != null) {
+              if (!isRed(x)) {
+                  black++;
+              }
+              x = x.left;
+          }
+          return isBalanced(root, black);
+      }
+
+      // Does every path from the root to a leaf have the given number of black links?
+      private boolean isBalanced(Node x, int black) {
+          if (x == null) {
+              return black == 0;
+          }
+          if (!isRed(x)) {
+              black--;
+          }
+          return isBalanced(x.left, black) && isBalanced(x.right, black);
+      }
     
 
 }
