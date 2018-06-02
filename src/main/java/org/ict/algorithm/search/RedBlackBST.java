@@ -6,6 +6,22 @@ import org.ict.algorithm.util.StdIn;
 import org.ict.algorithm.util.StdOut;
 
 /**
+ *
+ * $ more ../resources/tinyST.txt 
+ * S E A R C H E X A M P L E
+ * $ javac org/ict/algorithm/search/RedBlackBST.java 
+ * $ java org/ict/algorithm/search/RedBlackBST < ../resources/tinyST.txt 
+ * A 8
+ * C 4
+ * E 12
+ * H 5
+ * L 11
+ * M 9
+ * P 10
+ * R 3
+ * S 0
+ * X 7
+ *
  * The {@code BST} class represents an ordered symbol table of generic
  * key-value pairs
  * It supports the usual 
