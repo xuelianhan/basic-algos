@@ -1,5 +1,7 @@
 package org.ict.algorithm.search;
 
+import org.ict.algorithm.fundamentals.Queue;
+
 /**
  * The {@code SequentialSearchST} class represent an (unordered)
  * symbol table of generic key-value pairs.
