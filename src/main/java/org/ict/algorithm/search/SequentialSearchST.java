@@ -42,6 +42,11 @@ public class SequentialSearchST<Key, Value> {
         private Value val;
         private Node next;
 
+        public Node(Key key, Value val, Node next) {
+            this.key = key;
+            this.val = val;
+            this.next = next;
+        }
     }
 
     /**
@@ -94,7 +99,7 @@ public class SequentialSearchST<Key, Value> {
         }
         for (Node x = first; x != null; x = x.next) {
             if (key.equals(x.key)) {
-                return x.value;
+                return x.val;
             }
         }
         return null;
@@ -168,6 +173,25 @@ public class SequentialSearchST<Key, Value> {
      */
     public Iterable<Key> keys() {
         Queue<Key> queue = new Queue<Key>();
+        for (Node x = first; x != null; x = x.next) {
+            queue.enqueue(x.key);
+        }
+        return queue;
+    }
+
+    /**
+     * Unit tests the {@code SequentialSearchST} data type.
+     * @param args the command-line arguments
+     */
+    public static void main(String[] args) {
+        SequentialSearchST<String, Integer> st = new SequentialSearchST<String, Integer>();
+        for (int i = 0; !StdIn.isEmpty(); i++) {
+            String key = StdIn.readString();
+            st.put(i, key);
+        }
+        for (String s : keys()) {
+            StdOut.println(s + " " + st.get(s));
+        }
     }
 
 }
