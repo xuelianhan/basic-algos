@@ -1,6 +1,8 @@
 package org.ict.algorithm.search;
 
 import org.ict.algorithm.fundamentals.Queue;
+import org.ict.algorithm.util.StdIn;
+import org.ict.algorithm.util.StdOut;
 
 /**
  * The {@code SequentialSearchST} class represent an (unordered)
@@ -187,9 +189,9 @@ public class SequentialSearchST<Key, Value> {
         SequentialSearchST<String, Integer> st = new SequentialSearchST<String, Integer>();
         for (int i = 0; !StdIn.isEmpty(); i++) {
             String key = StdIn.readString();
-            st.put(i, key);
+            st.put(key, i);
         }
-        for (String s : keys()) {
+        for (String s : st.keys()) {
             StdOut.println(s + " " + st.get(s));
         }
     }
