@@ -5,6 +5,21 @@ import org.ict.algorithm.util.StdIn;
 import org.ict.algorithm.util.StdOut;
 
 /**
+ * $ cat ../resources/tinyST.txt 
+ * S E A R C H E X A M P L E
+ * $ javac org/ict/algorithm/search/SequentialSearchST.java 
+ * $ java org/ict/algorithm/search/SequentialSearchST < ../resources/tinyST.txt 
+ * L 11
+ * P 10
+ * M 9
+ * X 7
+ * H 5
+ * C 4
+ * R 3
+ * A 8
+ * E 12
+ * S 0
+ *
  * The {@code SequentialSearchST} class represent an (unordered)
  * symbol table of generic key-value pairs.
  * It supports the usual <em>put</em>, <em>get</em>, <em>contains</em>,
