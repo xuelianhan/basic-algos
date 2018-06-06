@@ -123,7 +123,41 @@ public class SeparateChainingHashST<Key, Value> {
         return st[i].get(key);
     }
 
+    /**
+     * Inserts the specified key-value pair into the symbol table, overwriting the old
+     * value with the new value if the symbol table already contains the specified key.
+     * Deletes the specified key (and its associated value) from this symbol table if
+     * the specified value is {@code null}.
+     *
+     * @param key the key
+     * @param val the value
+     * @throws IllegalArgumentException if {@code key} is {@code null}
+     */
+    public void put(Key key, Value val) {
+        if (key == null) {
+            throw new IllegalArgumentException("first argument to put() is null");
+        }
+        if (val == null) {
+            delete(key);
+            return;
+        }
+        
+        // double table size if average length of list >= 10
+        if (n >= 10*m) {
+            resize(2*m);
+        }
 
+        int i = hash(key);
+        if (!st[i].contains(key)) {
+            n++;
+        }
+        st[i].put(key, val);
+    }
+
+    /**
+     * 
+     *
+     */
 
 
 }
