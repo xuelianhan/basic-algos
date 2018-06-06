@@ -1,8 +1,8 @@
 package org.ict.algorithm.search;
 
 import org.ict.algorithm.fundamentals.Queue;
-import org.ict.algorithm.StdIn;
-import org.ict.algorithm.StdOut;
+import org.ict.algorithm.util.StdIn;
+import org.ict.algorithm.util.StdOut;
 /**
  * The {@code SeparateChainingHashST} class represents a symbol table of generic
  * key-value pairs.
