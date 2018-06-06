@@ -155,9 +155,30 @@ public class SeparateChainingHashST<Key, Value> {
     }
 
     /**
+     * Removes the specified key and its associated value from this symbol table
+     * (if the key is in the symbol table).
      * 
-     *
+     * @param key the key
+     * @throws IllegalArgumentException if {@code key} is {@code null}
      */
+    public void delete(Key key) {
+        if (key == null) {
+            throw new IllegalArgumentException("argument to delete() is null");
+        }
+
+        int i = hash(key);
+        if (st[i].contains(key)) {
+            n--;
+        }
+        st[i].delete(key);
+
+        // halve table size if average length of list <= 2
+        if (m > INIT_CAPACITY && n <= 2*m) {
+            resize(m/2);
+        }
+    }
+
+    // return keys
 
 
 }
