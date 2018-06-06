@@ -1,5 +1,8 @@
 package org.ict.algorithm.search;
 
+import org.ict.algorithm.fundamentals.Queue;
+import org.ict.algorithm.StdIn;
+import org.ict.algorithm.StdOut;
 /**
  * The {@code SeparateChainingHashST} class represents a symbol table of generic
  * key-value pairs.
@@ -178,7 +181,32 @@ public class SeparateChainingHashST<Key, Value> {
         }
     }
 
-    // return keys
+    // return keys in symbol table as an Iterable
+    public Iterable<Key> keys() {
+        Queue<Key> queue = new Queue<Key>();
+        for (int i = 0; i < m; i++) {
+            for (Key key : st[i].keys()) {
+                queue.enqueue(key);
+            }
+        }
+        return queue;
+    }
 
+    /**
+     * Unit test the {@code SeparateChainingHashST} data type.
+     *
+     * @param args the command-line arguments
+     */
+    public void main(String[] args) {
+        SeparateChainingHashST<String, Integer> st = new SeparateChainingHashST<String, Integer>();
+        for (int i = 0; !StdIn.isEmpty(); i++) {
+            String key = StdIn.readString();
+            st.put(key, i);
+        } 
+
+        for (String s : st.keys()) {
+            StdOut.println(s + " " + st.get(s));
+        }
+    }
 
 }
