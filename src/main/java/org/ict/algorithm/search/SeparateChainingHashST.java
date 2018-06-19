@@ -4,6 +4,24 @@ import org.ict.algorithm.fundamentals.Queue;
 import org.ict.algorithm.util.StdIn;
 import org.ict.algorithm.util.StdOut;
 /**
+ * $ more ../resources/tinyST.txt 
+ * S E A R C H E X A M P L E
+ * $ javac org/ict/algorithm/search/SeparateChainingHashST.java 
+ * Note: org/ict/algorithm/search/SeparateChainingHashST.java uses unchecked or unsafe operations.
+ * Note: Recompile with -Xlint:unchecked for details.
+ * $ java org/ict/algorithm/search/SeparateChainingHashST < ../resources/tinyST.txt 
+ * L 11
+ * P 10
+ * X 7
+ * H 5
+ * M 9
+ * A 8
+ * E 12
+ * R 3
+ * C 4
+ * S 0
+ *
+ *
  * The {@code SeparateChainingHashST} class represents a symbol table of generic
  * key-value pairs.
  * It supports the usual <em>put</em>, <em>get</em>, <em>contains</em>,<em>delete</em>,
@@ -197,7 +215,7 @@ public class SeparateChainingHashST<Key, Value> {
      *
      * @param args the command-line arguments
      */
-    public void main(String[] args) {
+    public static void main(String[] args) {
         SeparateChainingHashST<String, Integer> st = new SeparateChainingHashST<String, Integer>();
         for (int i = 0; !StdIn.isEmpty(); i++) {
             String key = StdIn.readString();
