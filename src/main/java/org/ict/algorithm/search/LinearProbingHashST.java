@@ -30,5 +30,16 @@ package org.ict.algorithm.search;
  *
  */
 public class LinearProbingHashST<Key, Value> {
-    
+    private static final int INIT_CAPACITY = 4;
+
+    // number of key-value pairs in the symbol table
+    private int n; 
+    // size of linear probing table
+    private int m;
+    // the keys
+    private Key[] keys;
+    // the values
+    private Value[] vals;
+
+
 }
