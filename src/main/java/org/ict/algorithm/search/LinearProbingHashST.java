@@ -40,6 +40,75 @@ public class LinearProbingHashST<Key, Value> {
     private Key[] keys;
     // the values
     private Value[] vals;
+    
+    /**
+     * Initializes an empty symbol tables.
+     */
+    public LinearProbingHashST() {
+        this(INIT_CAPACITY);
+    }
 
+    /**
+     * Initializes an empty symbol table with the specified initial capacity.
+     *
+     * @param capacity the initial capacity
+     */
+    public LinearProbingHashST(int capacity) {
+        m = capacity;
+        n = 0;
+        keys = (Key[])new Object[m];
+        vals = (Value[])new Object[m]; 
+    }
 
+    /**
+     * Returns the number of key-value pairs in this symbol table
+     *
+     * @return the number of key-value pairs in this symbol table
+     */
+    public int size() {
+        return n;
+    }
+
+    /**
+     * Returns true if this symbol table is empty
+     *
+     * @return {@code true} if this symbol table is empty;
+     *         {@code false} otherwise
+     */
+    public boolean isEmpty() {
+        return size() == 0;
+    }
+
+    /**
+     * Returns true if this symbol table contains the specified key.
+     *
+     * @param key the key
+     * @return {@code true} if this symbol table contains {@code key};
+     *         {@code false} otherwise
+     * @throws IllegalArgumentException if {@code key} is {@code null}
+     */
+    public boolean contains(Key key) {
+        if (key == null) {
+            throw new IllegalArgumentException("argument to contains() is null");
+        }
+        return get(key) != null;
+    }
+    
+    // hash function for keys, returns value between 0 and M-1
+    private int hash(Key key) {
+        return (key.hashCode() & 0x7fffffff) % m;
+    }
+
+    // resizes the hash table to the given capacity by rehashing all of the keys
+    private void resize(int capacity) {
+        LinearProbingHashST<Key, Value> temp = new LinearProbingHashST<Key, Value>(capacity);
+        for (int i = 0; i < m; i++) {
+            if (keys[i] != null) {
+                temp.put(keys[i], vals[i]);
+            }
+        }
+        keys = temp.keys;
+        vals = temp.vals;
+        m = temp.m;
+    }
 }
