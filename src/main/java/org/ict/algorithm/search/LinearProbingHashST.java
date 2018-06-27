@@ -111,4 +111,47 @@ public class LinearProbingHashST<Key, Value> {
         vals = temp.vals;
         m = temp.m;
     }
+
+    /**
+     * Inserts the specified key-value pair into the symbol table, overwriting the old
+     * value with the new value if the symbol table already contains the specified key
+     * Deletes the specified key (and its associated value) from this symbol table 
+     * if the specified value is {@code null}
+     *
+     * @param key the key
+     * @param val the value
+     * @throws IllegalArgumentException if {@code key} is {@code null}
+     */
+    public void put(Key key, Value val) {
+        if (key == null) {
+            throw new IllegalArgumentException("key to put() is null");
+        }
+        if (val == null) {
+            delete(key);
+            return;
+        }
+
+        // double table size if 50% full
+        if (n >= m/2) {
+            resize(2*m);
+        }
+
+        int i;
+        for (i = hash(key); keys[i] != null; i = (i + 1) % m) {
+           // keys[i] != null means the collision has happened, so i will skip to 
+           // the next position (i + 1) % m
+           if (keys[i].equals(key)) {
+                vals[i] = val;
+                return;
+           }
+        }
+
+        // if keys[i] == null, means no collision, put entry directly.
+        keys[i] = key;
+        vals[i] = val;
+        n++;
+    }
+
+
+
 }
