@@ -152,6 +152,68 @@ public class LinearProbingHashST<Key, Value> {
         n++;
     }
 
+    /**
+     * Returns the value associated with the specified key.
+     * @param key the key
+     * @return the value associated with {@code key};
+     *         {@code null} if no such value
+     * @throws IllegalArgumentException if {@code key} is {@code null}
+     */
+    public Value get(Key key) {
+        if (key == null) {
+            throw new IllegalArgumentException("key to get() is null");
+        }
+        for (int i = hash(key); keys[i] != null; i = (i + 1) % m) {
+            if (keys[i].equals(key)) {
+                return vals[i];
+            }
+        }
+        return null;
+    }
 
+    /**
+     * Removes the specified key ant its associated value from this symbol table
+     * (if the key is in this symbol table)
+     *
+     * @param key the key
+     * @param IllegalArgumentException if {@code key} is {@code null}
+     */
+    public delete(Key key) {
+        if (key == null) {
+            throw new IllegalArgumentException("key to delete() is null");
+        }
+        if (!contains(key)) {
+            return; 
+        }
+
+        // find position i of key
+        int i = hash(key);
+        while (!key.equals(keys[i])) {
+            i = (i + 1) % m; 
+        }
+
+        // delete key and associated value
+        keys[i] = null;
+        vals[i] = null;
+
+        // rehash all keys in same cluster
+        i = (i + 1) % m;
+        while (keys[i] != null) {
+            Key   keyToRehash = keys[i];
+            Value valtoRehash = vals[i];
+            keys[i] = null;
+            vals[i] = null;
+            n--;
+            put(keyToRehash, valToRehash);
+            i = (i + 1) % m;
+        }
+        n--;
+
+        // halves size of array if it's 12.5% full or less
+        if (n > 0 && n <= m/8) {
+            resize(m/2);
+        }
+        assert check();
+    }
 
 }
