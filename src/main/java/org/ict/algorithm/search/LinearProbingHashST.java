@@ -1,5 +1,9 @@
 package org.ict.algorithm.search;
 
+import org.ict.algorithm.fundamentals.Queue;
+import org.ict.algorithm.util.StdIn;
+import org.ict.algorithm.util.StdOut;
+
 /**
  * The {@code LinearProbingHashST} class represents a symbol table of generic
  * key-value pairs.
@@ -216,4 +220,22 @@ public class LinearProbingHashST<Key, Value> {
         assert check();
     }
 
+    /**
+     * Returns all keys in this symbol table as an {@code Iterable}.
+     * To iterate over all of the keys in the symble table named {@code st},
+     * use the foreach notation: {@code for (Key key : st.keys())}
+     *
+     * @return all keys in this symbol table
+     */
+    public Iterable<Key> keys() {
+        Queue<Key> queue = new Queue<Key>();
+        for (int i = 0; i < m; i++) {
+            if (keys[i] != null) {
+                queue.enqueue(keys[i]);
+            }
+        }
+        return queue;
+    }
+    
+    // in
 }
