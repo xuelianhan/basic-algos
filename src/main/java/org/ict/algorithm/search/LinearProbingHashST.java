@@ -182,7 +182,7 @@ public class LinearProbingHashST<Key, Value> {
      * @param key the key
      * @param IllegalArgumentException if {@code key} is {@code null}
      */
-    public delete(Key key) {
+    public void delete(Key key) {
         if (key == null) {
             throw new IllegalArgumentException("key to delete() is null");
         }
@@ -204,7 +204,7 @@ public class LinearProbingHashST<Key, Value> {
         i = (i + 1) % m;
         while (keys[i] != null) {
             Key   keyToRehash = keys[i];
-            Value valtoRehash = vals[i];
+            Value valToRehash = vals[i];
             keys[i] = null;
             vals[i] = null;
             n--;
