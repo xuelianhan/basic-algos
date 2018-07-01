@@ -5,6 +5,25 @@ import org.ict.algorithm.util.StdIn;
 import org.ict.algorithm.util.StdOut;
 
 /**
+ * $ javac org/ict/algorithm/search/LinearProbingHashST.java 
+ * Note: org/ict/algorithm/search/LinearProbingHashST.java uses unchecked or unsafe operations.
+ * Note: Recompile with -Xlint:unchecked for details.
+ *
+ * $ java org/ict/algorithm/search/LinearProbingHashST < ../resources/tinyST.txt 
+ * A 8
+ * C 4
+ * E 12
+ * H 5
+ * L 11
+ * M 9
+ * P 10
+ * R 3
+ * S 0
+ * X 7
+ *
+ * $ more ../resources/tinyST.txt 
+ * S E A R C H E X A M P L E
+ *
  * The {@code LinearProbingHashST} class represents a symbol table of generic
  * key-value pairs.
  *
@@ -237,5 +256,41 @@ public class LinearProbingHashST<Key, Value> {
         return queue;
     }
     
-    // in
+    // integrity check -don't check after each put() because
+    // integrity not maintained during a delete()
+    private boolean check() {
+        // check that hash table is at most 50% full
+        if (m < 2*n) {
+            System.err.println("Hash table size m =" + m + "; array size n = " + n);
+            return false;
+        }
+
+        // check that each key in table can be found by get()
+        for (int i = 0; i < m; i++) {
+           if (keys[i] == null) {
+               continue;
+           } else if (get(keys[i]) != vals[i]) {
+               System.err.println("get[" + keys[i] + "] = " + get(keys[i]) + "; vals[i] = " + vals[i]); 
+               return false;
+           }
+        }
+        return true;
+    }
+
+    /**
+     * Unit tests the {@code LinearProbingHashST} data type.
+     * @param args the command-line arguments
+     */
+    public static void main(String[] args) {
+        LinearProbingHashST<String, Integer> st = new LinearProbingHashST<String, Integer>();
+        for (int i = 0; !StdIn.isEmpty(); i++) {
+            String key = StdIn.readString();
+            st.put(key, i);
+        }
+
+        // print keys
+        for (String s : st.keys()) {
+            StdOut.println(s  + " " + st.get(s));
+        }
+    }
 }
