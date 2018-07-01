@@ -9,5 +9,10 @@ package org.ict.algorithm.search;
  * @author Kevin Wayne
  */
 public class FileIndex {
+    // Do not instantiate
+    private FileIndex() {}
 
+    public static void main(String[] args) {
+        
+    }
 }
