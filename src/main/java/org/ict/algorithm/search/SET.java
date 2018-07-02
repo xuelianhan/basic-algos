@@ -207,7 +207,7 @@ public class SET<Key extends Comparable<Key>> implements Iterable<Key> {
             throw new IllegalArgumentException("called intersects method with a null argument");
        }
        SET<Key> c = new SET<Key>();
-       if (this.size  < that.size()) {
+       if (this.size() < that.size()) {
             for (Key x : this) {
                 if (that.contains(x)) {
                     c.add(x);
@@ -270,7 +270,7 @@ public class SET<Key extends Comparable<Key>> implements Iterable<Key> {
     @Override
     public String toString() {
         String s = set.toString();
-        return "{" + s.substring(1, s.length - 1) + "}";
+        return "{" + s.substring(1, s.length() - 1) + "}";
     }
     
     /**
