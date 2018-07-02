@@ -2,6 +2,42 @@
  * Set implementation using Java's TreeSet library
  * Does not allow duplicates
  *
+ * $ javac org/ict/algorithm/search/SET.java 
+ * $ java org/ict/algorithm/search/SET
+ * set = {}
+ * true
+ * true
+ * true
+ *
+ * celing(www.simpsonr.com)=www.simpsons.com
+ * celing(www.simpsons.com)=www.simpsons.com
+ * celing(www.simpsont.com)=www.slashdot.com
+ * floor(www.simpsonr.com)=www.princeton.edu
+ * floor(www.simpsons.com)=www.simpsons.com
+ * floor(www.simpsont.com)=www.simpsons.com
+ *
+ * set = {www.amazon.com, www.apple.com, www.cnn.com, www.cs.princeton.edu, www.espn.com, www.google.com, www.ibm.com, www.iitb.ac.in, www.math.princeton.edu, www.movies.com, www.princeton.edu, www.simpsons.com, www.slashdot.com, www.snopes.com, www.standord.edu, www.whitehouse.gov, www.yale.edu}
+ *
+ * www.amazon.com
+ * www.apple.com
+ * www.cnn.com
+ * www.cs.princeton.edu
+ * www.espn.com
+ * www.google.com
+ * www.ibm.com
+ * www.iitb.ac.in
+ * www.math.princeton.edu
+ * www.movies.com
+ * www.princeton.edu
+ * www.simpsons.com
+ * www.slashdot.com
+ * www.snopes.com
+ * www.standord.edu
+ * www.whitehouse.gov
+ * www.yale.edu
+ *
+ * true
+ *
  *
  */
 package org.ict.algorithm.search;
@@ -17,10 +53,24 @@ import org.ict.algorithm.util.StdOut;
  * The {@code SET} class represents an ordered set of comparable keys
  * It supports the usual <em>add</em>, <em>contains</em>, and <em>delete</em>
  * methods.It also provides ordered methods for finding the <em>minimum</em>,
- * <em>maxmium</em>,<em>floor</em>,<em>ceiling</em>,
- * <em>add</em>,<em>add</em>,<em>add</em>,<em>add</em>,
- * <em>add</em>,<em>add</em>,<em>add</em>,<em>add</em>,
- * <em>add</em>,<em>add</em>,<em>add</em>,<em>add</em>,
+ * <em>maxmium</em>, <em>floor</em>, and <em>ceiling</em> and set methods
+ * for <em>union</em>, <em>intersection</em>, and <em>equality</em>.
+ * <p>
+ * Even though this implementation include the method {@code equals()}, it 
+ * does not support the method {@code hashCode()} because sets are mutable.
+ * <p>
+ * This implementation uses a balanced binary search tree. It requires that
+ * the key type implements the {@code Comparable} interface and calls the 
+ * {@code compareTo()} and method to compare two keys. It does not call either
+ * {@code equals()} or {@code hashCode()}.
+ * The <em>add</em>, <em>contains</em>, <em>delete</em>, <em>minimum</em>,
+ * <em>maximum</em>, <em>ceiling</em>, and <em>floor</em> methods take logarithmic
+ * time in the worst case.
+ * The <em>size</em>, and <em>is-empty</em>, operations take constant time.
+ * Construction takes constant time.
+ *
+ * @author Robert Sedgewick
+ * @author Kevin Wayne
  */
 public class SET<Key extends Comparable<Key>> implements Iterable<Key> {
 
@@ -310,11 +360,11 @@ public class SET<Key extends Comparable<Key>> implements Iterable<Key> {
         StdOut.println();
 
         StdOut.println("celing(www.simpsonr.com)=" + set.ceiling("www.simpsonr.com"));
-        StdOut.println("celing(www.simpsons.com)=" + set.ceiling("www.simpsons.com")));
-        StdOut.println("celing(www.simpsont.com)=" + set.ceiling("www.simpsont.com")));
+        StdOut.println("celing(www.simpsons.com)=" + set.ceiling("www.simpsons.com"));
+        StdOut.println("celing(www.simpsont.com)=" + set.ceiling("www.simpsont.com"));
         StdOut.println("floor(www.simpsonr.com)=" + set.floor("www.simpsonr.com"));
-        StdOut.println("floor(www.simpsons.com)=" + set.floor("www.simpsons.com")));
-        StdOut.println("floor(www.simpsont.com)=" + set.floor("www.simpsont.com")));
+        StdOut.println("floor(www.simpsons.com)=" + set.floor("www.simpsons.com"));
+        StdOut.println("floor(www.simpsont.com)=" + set.floor("www.simpsont.com"));
         StdOut.println();
 
         StdOut.println("set = " + set);
