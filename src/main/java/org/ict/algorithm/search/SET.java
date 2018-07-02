@@ -9,6 +9,8 @@ package org.ict.algorithm.search;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.TreeSet;
+import org.ict.algorithm.util.StdIn;
+import org.ict.algorithm.util.StdOut;
 
 
 /**
@@ -279,7 +281,53 @@ public class SET<Key extends Comparable<Key>> implements Iterable<Key> {
      * @param args the command-line arguments
      */
     public static void main(String[] args) {
-        
+        SET<String> set = new SET<String>();
+        StdOut.println("set = " + set);
+
+        // insert some keys
+        set.add("www.cs.princeton.edu");
+        set.add("www.cs.princeton.edu");
+        set.add("www.princeton.edu");
+        set.add("www.math.princeton.edu");
+        set.add("www.yale.edu");
+        set.add("www.amazon.com");
+        set.add("www.simpsons.com");
+        set.add("www.standord.edu");
+        set.add("www.google.com");
+        set.add("www.ibm.com");
+        set.add("www.apple.com");
+        set.add("www.slashdot.com");
+        set.add("www.whitehouse.gov");
+        set.add("www.espn.com");
+        set.add("www.snopes.com");
+        set.add("www.movies.com");
+        set.add("www.cnn.com");
+        set.add("www.iitb.ac.in");
+
+        StdOut.println(set.contains("www.cs.princeton.edu"));
+        StdOut.println(!set.contains("www.harvardsucks.com"));
+        StdOut.println(set.contains("www.simpsons.com"));
+        StdOut.println();
+
+        StdOut.println("celing(www.simpsonr.com)=" + set.ceiling("www.simpsonr.com"));
+        StdOut.println("celing(www.simpsons.com)=" + set.ceiling("www.simpsons.com")));
+        StdOut.println("celing(www.simpsont.com)=" + set.ceiling("www.simpsont.com")));
+        StdOut.println("floor(www.simpsonr.com)=" + set.floor("www.simpsonr.com"));
+        StdOut.println("floor(www.simpsons.com)=" + set.floor("www.simpsons.com")));
+        StdOut.println("floor(www.simpsont.com)=" + set.floor("www.simpsont.com")));
+        StdOut.println();
+
+        StdOut.println("set = " + set);
+        StdOut.println();
+
+        // print  out all keys in this set in lexicographic order
+        for (String s : set) {
+             StdOut.println(s);
+        }
+
+        StdOut.println();
+        SET<String> set2 = new SET<String>(set);
+        StdOut.println(set.equals(set2));
     }
 
 }
