@@ -5,6 +5,30 @@ import org.ict.algorithm.util.In;
 import org.ict.algorithm.util.StdIn;
 import org.ict.algorithm.util.StdOut;
 /**
+ * $ javac org/ict/algorithm/search/FileIndex.java 
+ * $ java org/ict/algorithm/search/FileIndex ex*.txt
+ * $ java org/ict/algorithm/search/FileIndex ../resources/ex*.txt
+ * indexing files
+ * ../resources/ex1.txt
+ * ../resources/ex2.txt
+ * ../resources/ex3.txt
+ * ../resources/ex4.txt
+ * age
+ *  ex3.txt
+ *  ex4.txt
+ * best
+ *  ex1.txt
+ * was
+ *  ex1.txt
+ *  ex2.txt
+ *  ex3.txt
+ *  ex4.txt
+ * it
+ *  ex1.txt
+ *  ex2.txt
+ *  ex3.txt
+ *  ex4.txt
+ *
  * The {@code FileIndex} class provides a client for indexing a set of files,
  * sepecified as command-line arguments. It takes queries from standard input
  * and prints each file that contains the given query.
