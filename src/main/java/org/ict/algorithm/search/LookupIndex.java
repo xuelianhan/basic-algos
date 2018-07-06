@@ -7,6 +7,48 @@ import org.ict.algorithm.util.StdIn;
 import org.ict.algorithm.util.StdOut;
 
 /**
+ * $ javac org/ict/algorithm/search/LookupIndex.java 
+ * $ java org/ict/algorithm/search/LookupIndex ../resources/aminoI.csv  ","
+ *  Done indexing
+ * Serine
+ * TCT
+ * TCA
+ * TCG
+ * AGT
+ * AGC
+ * TCG
+ * Serine
+ * $ java org/ict/algorithm/search/LookupIndex ../resources/movies.txt "/"
+ *   Done indexing
+ * Bacon, Kevin
+ * Animal House (1978)
+ * Apollo 13 (1995)
+ * Beauty Shop (2005)
+ * Diner (1982)
+ * Few Good Men, A (1992)
+ * Flatliners (1990)
+ * Footloose (1984)
+ * Friday the 13th (1980)
+ * He Said, She Said (1991)
+ * Hollow Man (2000)
+ * In the Cut (2003)
+ * JFK (1991)
+ * Murder in the First (1995)
+ * My Dog Skip (2000)
+ * Mystic River (2003)
+ * Novocaine (2001)
+ * Picture Perfect (1997)
+ * Planes, Trains & Automobiles (1987)
+ * River Wild, The (1994)
+ * She's Having a Baby (1988)
+ * Sleepers (1996)
+ * Stir of Echoes (1999)
+ * Trapped (2002)
+ * Tremors (1990)
+ * Where the Truth Lies (2005)
+ * Wild Things (1998)
+ * Woodsman, The (2004)
+
  * The {@code LookupIndex} class provides a data-driven client for reading in a 
  * key-value pairs from a file; then, printing the values corresponding to the
  * keys found on standard input. Keys are strings; values are lists of strings.
@@ -57,7 +99,7 @@ public class LookupIndex {
                 }
             }
             if (ts.contains(query)) {
-                for (String keys.ts.get(query)) {
+                for (String keys : ts.get(query)) {
                     StdOut.println(" " + keys);
                 }
             }
