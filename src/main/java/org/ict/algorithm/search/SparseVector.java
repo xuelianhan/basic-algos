@@ -8,6 +8,8 @@ import org.ict.algorithm.util.StdOut;
  * It includes methods for addition, subtraction, dot product, scalar product, unit vector
  * and Euclidean norm.
  * <p>
+ *
+ * <p>
  * See also {@link Vector} for an immutable (dense) vector data type. 
  *
  * @author Robert Sedgewick
