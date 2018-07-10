@@ -8,7 +8,9 @@ import org.ict.algorithm.util.StdOut;
  * It includes methods for addition, subtraction, dot product, scalar product, unit vector
  * and Euclidean norm.
  * <p>
- *
+ * The implementation is a symbol table of indices and values for which the vector
+ * coordinates are nonzero. This makes it efficient when most of the vector coordinates
+ * are zero.
  * <p>
  * See also {@link Vector} for an immutable (dense) vector data type. 
  *
@@ -65,5 +67,33 @@ public class SparseVector {
         } else {
             return zero;
         }
+    }
+
+    /**
+     * Returns the number of nonzero entries in this vector
+     * @return the number of nonzero entries in this vector
+     */
+    public int nnz() {
+        return st.size();
+    }
+
+    /**
+     * Returns the dimension of this vector.
+     * 
+     * @return the dimension of this vector
+     */
+    public int dimension() {
+        return d;
+    }
+
+    /**
+     * Returns the linear product of this vector with the specified vector.
+     *
+     * @param that the other vector
+     * @return the dot product between this vector and that vector
+     * @throws IllegalArgumentException if the lengths of the two vectors are not equal
+     */
+    public double dot(SparseVector that) {
+
     }
 }
