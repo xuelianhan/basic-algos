@@ -142,7 +142,10 @@ public class SparseVector {
     }
 
     /**
-     * Returns 
+     * Returns the scalar-vector product of this vector with the specified scalar. 
+     *
+     * @param alpha scalar
+     * @return the scalar-vector product of this vector with the specified scalar
      */
 
 }
