@@ -87,13 +87,62 @@ public class SparseVector {
     }
 
     /**
-     * Returns the linear product of this vector with the specified vector.
+     * Returns the inner product of this vector with the specified vector.
      *
      * @param that the other vector
      * @return the dot product between this vector and that vector
      * @throws IllegalArgumentException if the lengths of the two vectors are not equal
      */
     public double dot(SparseVector that) {
+        if (this.d != that.d) {
+            throw new IllegalArgumentException("Vector lengths disagree");
+        }
+        double sum = 0.0;
 
+        // iterate over the vector with the fewest nonzeros
+        if (this.st.size() <= that.st.size()) {
+            for (int i : this.st.keys()) {
+                if (that.st.contains(i)) {
+                    sum += this.get(i) * that.get(i);
+                }
+            }
+        } else {
+            for (int i : that.st.keys()) {
+                if (this.st.contains(i)) {
+                    sum += this.get(i) * that.get(i);
+                }
+            }
+        }
+        return sum;
     }
+    
+    /**
+     * Returns the inner product of this vector with the specified array.
+     *
+     * @param  that the array
+     * @return the dot product between this vector and that array
+     * @throws IllegalArgumentException if the dimensions of the vector and the array are not equal
+     */
+    public double dot(double[] that) {
+        double sum = 0.0;
+        for (int i : st.keys()) {
+            sum += that[i] * this.get(i);
+        }
+        return sum;
+    }
+
+    /**
+     * Returns the magnitude of this vector.
+     * This is also known as the L2 norm or the Euclidean norm.
+     *
+     * @return the magnitude of this vector
+     */
+    public double magnitude() {
+        return Math.sqrt(this.dot(this));
+    }
+
+    /**
+     * Returns 
+     */
+
 }
