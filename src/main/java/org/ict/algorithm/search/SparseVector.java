@@ -3,6 +3,13 @@ package org.ict.algorithm.search;
 import org.ict.algorithm.util.StdOut;
 
 /**
+ * $ javac org/ict/algorithm/search/SparseVector.java 
+ * $ java org/ict/algorithm/search/SparseVector
+ * a = (3, 0.5)(9, 0.75)
+ * b = (3, 0.6)(4, 0.9)
+ * a dot b = 0.3
+ * a + b   = (3, 1.1)(4, 0.9)(9, 0.75)
+ *
  * The {@code SparseVector} class represents a <em>d</em>-dimensional mathematical vector.
  * Vectors are mutable: their values can be changed after they are created.
  * It includes methods for addition, subtraction, dot product, scalar product, unit vector
@@ -147,5 +154,63 @@ public class SparseVector {
      * @param alpha scalar
      * @return the scalar-vector product of this vector with the specified scalar
      */
+    public SparseVector scale(double alpha) {
+        SparseVector c = new SparseVector(d);
+        for (int i : this.st.keys()) {
+            c.put(i, alpha * this.get(i));
+        }
+        return c;
+    }
 
+    /**
+     * Returns the sum of this vector and the specified vector.
+     *
+     * @param that the vector to add to this vector
+     * @return the sum of this vector and that vector
+     * @throws IllegalArgumentException if the dimensions of the two vectors are not equal
+     */
+    public SparseVector plus(SparseVector that) {
+        if (this.d != that.d) {
+            throw new IllegalArgumentException("Vector lengths disagree");
+        }
+        SparseVector c = new SparseVector(d);
+        // c = this
+        for (int i : this.st.keys()) {
+            c.put(i, this.get(i));
+        }
+        // c = c + that
+        for (int i : that.st.keys()) {
+            c.put(i, that.get(i) + c.get(i));
+        }
+        return c;
+    }
+
+    /**
+     * Returns a string representation of this vector
+     *
+     * @return a string representation of this vector, which consist of the vector
+     * entries, separates by commas, enclosed in parentheses
+     */
+    public String toString() {
+        StringBuilder s = new StringBuilder();
+        for (int i : st.keys()) {
+            s.append("(" + i + ", " + st.get(i) + ")");
+        }
+        return s.toString();
+    }
+
+    public static void main(String[] args) {
+        SparseVector a = new SparseVector(10);
+        SparseVector b = new SparseVector(10);
+        a.put(3, 0.50); 
+        a.put(9, 0.75); 
+        a.put(6, 0.11); 
+        a.put(6, 0.00); 
+        b.put(3, 0.60); 
+        b.put(4, 0.90); 
+        StdOut.println("a = " + a);
+        StdOut.println("b = " + b);
+        StdOut.println("a dot b = " + a.dot(b));
+        StdOut.println("a + b   = " + a.plus(b));
+    }
 }
