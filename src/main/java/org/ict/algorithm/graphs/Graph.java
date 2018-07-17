@@ -84,10 +84,48 @@ public class Graph {
                 throw new IllegalArgumentException("Number of edges in a Graph must be nonnegative");
             }
             for (int i = 0; i < E; i++) {
-
+                int v = in.readInt();
+                int w = in.readInt();
+                validateVertex(v);
+                validateVertex(w);
+                addEdge(v, w);
             }
         } catch(NoSuchElementException e) {
             throw new IllegalArgumentException("Invalid input format in Graph constructor", e);
         }
     }
+
+    /**
+     * Initializes a new graph that is a deep copy of {@code G}.
+     *
+     * @param G the graph to copy
+     */
+    public Graph(Graph G) {
+        this(G.V());
+        this.E = G.E();
+        for (int v = 0; v < G.V(); v++) {
+            // reverse so that adjacency list is in same order as original
+            // because Bag's add method use the headfirst-insert in implementation of add.
+            // e.g. 
+            // origin order    : A B C
+            // into stack order: A B C
+            // out stack order : C B A
+            // bag insert order: C B A
+            // bag final order : A B C
+            Stack<Integer> reverse = new Stack<Integer>();
+            for (int w : G.adj[v]) {
+                reverse.push(w);
+            }
+            for (int w : reverse) {
+                adj[v].add(w);
+            }
+        }
+    }
+
+    /**
+     * Returns the number of vertices in this graph.
+     *
+     * @return the number of vertices in this graph
+     */
+
 }
