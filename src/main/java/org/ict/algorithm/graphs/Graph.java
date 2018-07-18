@@ -172,5 +172,14 @@ public class Graph {
         return adj[v];
     }
 
+    /**
+     * Returns the degree of vertex {@code v}
+     *
+     * @param v the vertex
+     * @return the degree of vertex {@code v}
+     * @throws IllegalArgumentException unless {@code 0 <= v < V}
+     */
+    public int degree(int v) {
 
+    }
 }
