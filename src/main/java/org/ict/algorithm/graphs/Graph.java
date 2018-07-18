@@ -180,6 +180,22 @@ public class Graph {
      * @throws IllegalArgumentException unless {@code 0 <= v < V}
      */
     public int degree(int v) {
+       validateVertex(v); 
+       return adj[v].size();
+    }
 
+    /**
+     * Returns  a string representation of this graph.
+     *
+     * @return the number of vertices 
+     * <em>V</em>, followed by the number of edges
+     * <em>E</em>, followed by the
+     * <em>V</em> adjacency lists
+     */
+    public String toString() {
+        StringBuilder s = new StringBuilder();
+        s.append(V +" vertices, " + E + " edges " + NEWLINE);
+        //
+        return s.toString();
     }
 }
