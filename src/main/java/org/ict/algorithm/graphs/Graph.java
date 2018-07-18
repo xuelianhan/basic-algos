@@ -127,5 +127,50 @@ public class Graph {
      *
      * @return the number of vertices in this graph
      */
+    public int V() {
+        return V;
+    }
+
+    /**
+     * Returns the number of edges in this graph
+     *
+     * @return the number of edges in this graph
+     */
+    public int E() {
+        return E;
+    }
+
+    private void validateVertex(int v) {
+        if (v < 0 || v >= V) {
+            throw new IllegalArgumentException("vertex " + v + " is not between 0 and " + (V-1));
+        }
+    }
+
+    /**
+     * Adds the undirected edge v-w to this graph
+     * @param v one vertex in the edge
+     * @param w the other vertex in the edge
+     * @throws IllegalArgumentException unless both {@code 0 <= v < V} and {@code 0 <= w < V}
+     */
+    public void addEdge(int v, int w) {
+       validateVertex(v); 
+       validateVertex(w); 
+       E++;
+       adj[v].add(w);
+       adj[w].add(v);
+    }
+
+    /**
+     * Returns the vertices adjacent to vertex {@code v}
+     *
+     * @param v the vertex
+     * @return the vertices adjacent to vertex {@code v}, as an iterable
+     * @throws IllegalArgumentException unless {@code  0 <= v < V}
+     */
+    public Iterable<Integer> adj(int v) {
+        validateVertex(v);
+        return adj[v];
+    }
+
 
 }
