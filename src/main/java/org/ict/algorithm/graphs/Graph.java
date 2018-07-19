@@ -195,7 +195,23 @@ public class Graph {
     public String toString() {
         StringBuilder s = new StringBuilder();
         s.append(V +" vertices, " + E + " edges " + NEWLINE);
-        //
+        for (int v = 0; v < V; v++) {
+            s.append(v + ": ");
+            for (int w : adj[v]) {
+                s.append(w + " ");
+            }
+            s.append(NEWLINE);
+        }
         return s.toString();
     }
+
+    /**
+     * Unit tests the {@code Graph} data type.
+     */
+    public static void main(String[] args) {
+        In in = new In(args[0]);
+        Graph G = new Graph(in);
+        StdOut.println(G);
+    }
+
 }
