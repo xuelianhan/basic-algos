@@ -8,6 +8,42 @@ import org.ict.algorithm.util.In;
 import org.ict.algorithm.util.StdOut;
 
 /**
+ * $ more ../resources/tinyG.txt 
+ * 13
+ * 13
+ * 0 5
+ * 4 3
+ * 0 1
+ * 9 12
+ * 6 4
+ * 5 4
+ * 0 2
+ * 11 12
+ * 9 10
+ * 0 6
+ * 7 8
+ * 9 11
+ * 5 3
+ * $ javac org/ict/algorithm/graphs/Graph.java 
+ * Note: org/ict/algorithm/graphs/Graph.java uses unchecked or unsafe operations.
+ * Note: Recompile with -Xlint:unchecked for details.
+ *
+ * $ java org/ict/algorithm/graphs/Graph ../resources/tinyG.txt 
+ * 13 vertices, 13 edges 
+ * 0: 6 2 1 5 
+ * 1: 0 
+ * 2: 0 
+ * 3: 5 4 
+ * 4: 5 6 3 
+ * 5: 3 4 0 
+ * 6: 0 4 
+ * 7: 8 
+ * 8: 7 
+ * 9: 11 10 12 
+ * 10: 9 
+ * 11: 9 12 
+ * 12: 11 9 
+ *
  * A graph, implemented using an array of sets.
  * Parallel edges and self-loops allowed.
  * The {@code Graph} class represents an undirected graph of vertices
@@ -37,7 +73,7 @@ public class Graph {
 
     private int E;
 
-    private Bag<Integer> adj;
+    private Bag<Integer>[] adj;
 
     /**
      * Initializes an empty graph with {@code V} vertices and 0 edges.
@@ -46,7 +82,7 @@ public class Graph {
      * @param V number of vertices
      * @throws IllegalArgumentException if {@code V < 0}
      */
-    public Graph(int v) {
+    public Graph(int V) {
         if (V < 0) {
             throw new IllegalArgumentException("Number of vertices must be nonnegative");
         }
