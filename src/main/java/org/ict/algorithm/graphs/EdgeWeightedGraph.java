@@ -62,7 +62,28 @@ public class EdgeWeightedGraph {
         }
     }
 
-    // throw 
+    // throw an IllegalArgumentException unless {@code 0 <= v < V}
+    private void validateVertex(int v) {
+        if (v < 0 || v > V) {
+            throw new IllegalArgumentException("vertex " + " is not between 0 and " + (V-1));
+        }
+    }
+
+    /**
+     * Adds the undirected edge {@code e} to this edge-weighted graph.
+     *
+     * @param e the edge
+     * @throws IllegalArgumentException unless both endpoints are between {@code 0} and {@code V-1}
+     */
+    public void addEdge(Edge e) {
+        int v = e.either();
+        int w = e.other(v);
+        validateVertex(v);
+        validateVertex(w);
+        adj[v].add(e);
+        adj[w].add(e);
+        E++;
+    }
 
 
     
