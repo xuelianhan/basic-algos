@@ -1,5 +1,7 @@
 package org.ict.algorithm.graph;
 
+import org.ict.algorithm.fundamentals.Bag;
+
 
 /**
  * The {@code EdgeWeightedGraph} class represents an edge-weighted
@@ -19,6 +21,43 @@ public class EdgeWeightedGraph {
     private Bag<Edge>[] adj;
 
     /**
+     * Initializes an empty edge-weighted graph with {@code V} vertices and 0 edges.
      *
+     * @param V the number of vertices
+     * @throws IllegalArgumentException if {@code V < 0}
      */
+    public EdgeWeightedGraph(int V) {
+        if (V < 0) {
+            throw new IllegalArgumentException("Number of vertices must be nonnegative");
+        }
+        this.V = V;
+        this.E = 0;
+        adj = (Bag<Edge>[]) new Bag[V];
+        for (int v = 0; v < V; v++) {
+            adj[v] = new Bag<Edge>();
+        }
+    }
+
+    /**
+     * Initializes a random edge-weighted graph with {@code V} vertices and <em>E</em> edges.
+     *
+     * @param V the number of vertices
+     * @param E the number of edges
+     * @throws IllegalArgumentException if {@code V < 0}
+     * @throws IllegalArgumentException if {@code E < 0}
+     */
+    public EdgeWeightedGraph(int V, int E) {
+        this(V);
+        if (E < 0) {
+            throw new IllegalArgumentException("Number of edges must be nonnegative");
+        }
+        for (int i = 0; i < E; i++) {
+            int v = StdRandom.uniform(V);
+            int w = StdRandom.uniform(V);
+            double weight = Math.round(100 * StdRandom.uniform()) / 100.0;
+            Edge e = new Edge(v, w, weight);
+            addEdge(e);
+        }
+    }
+    
 }
