@@ -1,6 +1,7 @@
 package org.ict.algorithm.graph;
 
 import org.ict.algorithm.fundamentals.Bag;
+import org.ict.algorithm.util.StdRandom;
 
 
 /**
@@ -52,6 +53,7 @@ public class EdgeWeightedGraph {
             throw new IllegalArgumentException("Number of edges must be nonnegative");
         }
         for (int i = 0; i < E; i++) {
+            // generate an integer between 0(included) and V(excluded).
             int v = StdRandom.uniform(V);
             int w = StdRandom.uniform(V);
             double weight = Math.round(100 * StdRandom.uniform()) / 100.0;
@@ -59,5 +61,9 @@ public class EdgeWeightedGraph {
             addEdge(e);
         }
     }
+
+    // throw 
+
+
     
 }
