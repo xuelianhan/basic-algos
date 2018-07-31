@@ -1,4 +1,4 @@
-package org.ict.algorithm.graph;
+package org.ict.algorithm.graphs;
 
 import org.ict.algorithm.fundamentals.Bag;
 import org.ict.algorithm.util.StdRandom;
@@ -85,6 +85,43 @@ public class EdgeWeightedGraph {
         E++;
     }
 
+    /**
+     * Returns the edges incident on vertex {@code v}.
+     *
+     * @param v the vertex
+     * @return the edges incident on vertex {@code v} as an Iterable
+     * @throws IllegalArgumentException unless {@code 0 <= v < V}
+     */
+    public Iterable<Edge> adj(int v) {
+        validateVertex(v);
+        return adj[v];
+    }
+
+    /**
+     * Returns the degree of vertex {@code v}.
+     *
+     * @param v the vertex
+     * @return the degree of vertex {@code v}
+     * @throws IllegalArgumentException unless {@code 0 <= v < V}
+     */
+    public int degree(int v) {
+        valiateVertex(v);
+        return adj[v].size();
+    }
+
+    /**
+     * Returns all edges in this edge-weighted graph.
+     * To iterate over the edges in this edge-weighted graph, use foreach notation:
+     * {@code for (Edge e : G.edges())}.
+     * @return all edges in this edge-weighted graph, as an iterable
+     */
+    public Iterable<Edge> edges() {
+        Bag<Edge> list = new Bag<Edge>();
+        for (int v = 0; v < V; v++) {
+            
+        }
+        return list;
+    }
 
     
 }
