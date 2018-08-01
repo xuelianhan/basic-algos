@@ -1,5 +1,9 @@
 package org.ict.rpc;
 
+import java.util.concurrent.ExecutionException;
+
+import org.ict.thread.QueryProcessHandler;
+import org.ict.thread.RequestQuery;
 import org.ict.thread.SettableFuture;
 import org.ict.thread.ThreadGod;
 
@@ -24,6 +28,14 @@ public class RpcContextTest {
         
         SettableFuture<String> f3 = SettableFuture.create();
         RpcContext.getContext().setFuture(f3);
+        
+        RequestQuery query = new RequestQuery();
+        QueryProcessHandler handler = new QueryProcessHandler(f1, query);
+        try {
+            handler.handle(f1, query);
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
     }
 }
  
