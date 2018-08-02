@@ -4,7 +4,9 @@ public interface ProcessHandler {
     
     public void onError(Throwable t);
 
-    public void onSuccess(String httpContent);
+    public void onSuccessContext(String httpContent);
+    
+    public void onSuccessFuture(String httpContent);
 
     public void onFullQueue();
     

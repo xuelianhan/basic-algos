@@ -105,7 +105,7 @@ public class EdgeWeightedGraph {
      * @throws IllegalArgumentException unless {@code 0 <= v < V}
      */
     public int degree(int v) {
-        valiateVertex(v);
+        validateVertex(v);
         return adj[v].size();
     }
 
