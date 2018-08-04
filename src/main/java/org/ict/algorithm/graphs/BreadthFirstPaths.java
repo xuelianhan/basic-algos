@@ -21,7 +21,7 @@ package org.ict.algorithm.graphs;
  */
 public class BreadthFirstPaths {
 
-    private static final int INFINITY = Integer.MAX_VALUE:
+    private static final int INFINITY = Integer.MAX_VALUE;
     // marked[v] = is there an s-v path
     private boolean[] marked;
 
