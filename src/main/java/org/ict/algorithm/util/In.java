@@ -15,20 +15,56 @@ import java.util.regex.Pattern;
 import java.util.NoSuchElementException;
 import java.util.InputMismatchException;
 
+/**
+ * <i>Input</i>. This class provides methods for reading strings
+ * and numbers from standard input, file input, URLs, and sockets.
+ * <p>
+ * The Locale used is:language = English, country = US. This is 
+ * consistent with the formatting conventions with Java floating-point
+ * lierals, command-line arguments (via {@link Double#parseDouble(String)})
+ * and standard output.
+ *
+ * <p>
+ * Like {@link Scanner}, reading a token also consumes preceding Java
+ * whitespace, reading a full line consumes the following end-of-line
+ * delimeter, while reading a character consumes nothing extra.
+ * <p>
+ * Whitespace is defined in {@link Character#isWhitespace(char)}.Newlines
+ * consist of \n, \r, \r\n, and unicode hex code points 0x2028, 0x2029, 0x0085;
+ * (NB: Java 6u23 and earlier uses only \r, \r, \r\n).
+ *
+ * @author David Pritchard
+ * @author Robert Sedgewick
+ * @author Kevin Wayne
+ *
+ */
 public final class In {
 
+    //// begin: section(1 of 2) of code duplicated from In to StdIn.
+
+    // assume Unicode UTF-8 encoding
     private static final String CHARSET_NAME = "UTF-8";
 
+    // assume language = English, country = US for consistency with System.out.
     private static final Locale LOCALE = Locale.US;
 
+    // the default token separator; we maintain the invariant that this value 
+    // is held by the scanner's delimiter between calls
     private static final Pattern WHITESPACE_PATTERN = Pattern.compile("\\p{javaWhitespace}+");
 
+    // makes whitespace characters significant
     private static final Pattern EMPTY_PATTERN = Pattern.compile("");
 
+    // used to read the entire input. 
     private static final Pattern EVERYTHING_PATTERN = Pattern.compile("\\A");
+
+    //// end: section(1 of 2) of code duplicated from In to StdIn.
 
     private Scanner scanner;
 
+    /**
+     * Initializes an input stream from standard input.
+     */
     public In() {
         scanner = new Scanner(new BufferedInputStream(System.in), CHARSET_NAME);
         scanner.useLocale(LOCALE);
@@ -36,8 +72,10 @@ public final class In {
 
     /**
      * Initializes an input stream from a socket.
-     *
-     *
+     * 
+     * @param socket the socket
+     * @throws IllegalArgumentException if cannot open {@code socket}
+     * @throws IllegalArgumentException if {@code socket} is {@code null}
      */
     public In(Socket socket) {
         if (socket == null) {
@@ -48,13 +86,16 @@ public final class In {
             scanner = new Scanner(new BufferedInputStream(is), CHARSET_NAME);
             scanner.useLocale(LOCALE); 
         } catch(IOException e) {
-            throw new IllegalArgumentException("Could not open " + socket);
+            throw new IllegalArgumentException("Could not open " + socket, e);
         }
     }
 
     /**
      * Initializes an input stream from a URL.
-     *
+     * 
+     * @param url the URL
+     * @throws IllegalArgumentException if cannot open {@code url}
+     * @throws IllegalArgumentException if {@code url} is {@code null}
      */
     public In(URL url) {
         if (url == null) {
@@ -62,17 +103,19 @@ public final class In {
         }
         try {
             URLConnection urlConn = url.openConnection();
-            InputStream is = urlConn.getInputStream();
-            scanner = new Scanner(new BufferedInputStream(is), CHARSET_NAME);
+            InputStream is        = urlConn.getInputStream();
+            scanner               = new Scanner(new BufferedInputStream(is), CHARSET_NAME);
             scanner.useLocale(LOCALE); 
         } catch(IOException e) {
-            throw new IllegalArgumentException("Could not open " + url); 
+            throw new IllegalArgumentException("Could not open " + url, e); 
         }
     }
 
     /**
      * Initializes an input stream from a file.
-     *
+     * @param file the file
+     * @throws IllegalArgumentException if cannot open {@code file}
+     * @throws IllegalArgumentException if {@code file} is {@code null}
      */
     public In(File file) {
         if (file == null) {
@@ -86,7 +129,7 @@ public final class In {
             scanner = new Scanner(new BufferedInputStream(fis), CHARSET_NAME);
             scanner.useLocale(LOCALE);
         } catch (IOException e) {
-            throw new IllegalArgumentException("Could not open " + file);
+            throw new IllegalArgumentException("Could not open " + file, e);
         }
     }
 
@@ -129,7 +172,7 @@ public final class In {
             scanner = new Scanner(new BufferedInputStream(is), CHARSET_NAME);
             scanner.useLocale(LOCALE);
         } catch (IOException ioe) {
-            throw new IllegalArgumentException("Could not open " + name);
+            throw new IllegalArgumentException("Could not open " + name, ioe);
         }
     }
 
@@ -159,14 +202,42 @@ public final class In {
         return scanner != null;
     }
 
+    /**
+     * Returns true if input stream is empty (Except possibly whitespace).
+     * Use this to know whether the next call to {@link #readString()},
+     * {@link #readDouble()}, etc will succeed.
+     *
+     * @return {@code true} if this input stream is empty (except possibly whitespace);
+     *         {@code false} otherwise
+     */
     public boolean isEmpty() {
         return !scanner.hasNext();
     }
 
+    /**
+     * Returns true if this input stream has a next line.
+     *
+     * Use this method to know whether the next call to
+     * {@link #readLine()} will succeed.
+     * This method is functionally equivalent to {@link #hasNextChar()}.
+     *
+     * @return {@code true} if this input stream has more input (including whitespace);
+     *         {@code false} otherwise
+     */
     public boolean hasNextLine() {
         return scanner.hasNextLine();
     }
 
+    /**
+     * Returns true if this input stream has more input (including whitespace).
+     *
+     * Use this method to know whether the next call to
+     * {@link #readChar()} will succeed.
+     * This method is functionally equivalent to {@link #hasNextLine()}.
+     *
+     * @return {@code true} if this input stream has more input (including whitespace);
+     *         {@code false} otherwise
+     */
     public boolean hasNextChar() {
         scanner.useDelimiter(EMPTY_PATTERN);
         boolean result = scanner.hasNext();
@@ -174,6 +245,11 @@ public final class In {
         return result;
     }
 
+    /**
+     * Reads and returns the next line in this input stream.
+     *
+     * @return the next line in this input stream;{@code null} if no such line
+     */
     public String readLine() {
         String line;
         try {
@@ -191,12 +267,17 @@ public final class In {
      */
     public char readChar() {
        scanner.useDelimiter(EMPTY_PATTERN);
-       String ch = scanner.next();
-       if (ch.length() != 1) {
-    	   throw new IllegalArgumentException("read Char() error!");
+       try {
+           String ch = scanner.next();
+           if (ch.length() != 1) {
+               throw new IllegalArgumentException("read Char() error!");
+           }
+           scanner.useDelimiter(WHITESPACE_PATTERN);
+           return ch.charAt(0);
+       } catch (NoSuchElementException e) {
+            throw new NoSuchElementException("attempts to read a 'char' value from the input stream," 
+                    + "but no more tokens are avialable");
        }
-       scanner.useDelimiter(WHITESPACE_PATTERN);
-       return ch.charAt(0);
     }
 
     /**
@@ -235,7 +316,7 @@ public final class In {
     }
 
     public double readDouble() {
-        return scanner.nextInt();
+        return scanner.nextDouble();
     }
     
     public float readFloat() {

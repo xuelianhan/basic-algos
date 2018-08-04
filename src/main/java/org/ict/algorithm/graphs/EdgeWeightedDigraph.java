@@ -1,4 +1,4 @@
-package org.ict.algorithm.graph;
+package org.ict.algorithm.graphs;
 
 import org.ict.algorithm.fundamentals.Bag;
 import org.ict.algorithm.util.In;
