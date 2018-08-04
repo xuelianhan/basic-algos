@@ -1,5 +1,9 @@
 package org.ict.algorithm.graphs;
 
+import org.ict.algorithm.fundamentals.Stack;
+import org.ict.algorithm.util.In;
+import org.ict.algorithm.util.StdOut;
+
 
 /**
  * The {@code BreadthFirstPaths} class represents a data type for finding
@@ -78,10 +82,12 @@ public class BreadthFirstPaths {
         }
 
         Stack<Integer> path = new Stack<Integer>();
-        for (int x = v; x != s; x = edgeTo[x]) {
+        int x;
+
+        for (x = v; distTo[x] != 0; x = edgeTo[x]) {
             path.push(x);
         }
-        path.push(s);
+        path.push(x);
 
         return path;
     }
