@@ -29,7 +29,7 @@ import com.google.common.collect.Lists;
  * @see https://stackoverflow.com/questions/36368235/java-get-valueof-for-generic-subclass-of-java-lang-number-or-primitive
  * @see https://ideone.com/WtNDN2
  */
-public class ParseApplyInOne {
+public class ParseApplyUtil {
     
     private static HashMap<Class<?>, Function<String,?>> parser = new HashMap<>();
     
@@ -74,7 +74,7 @@ public class ParseApplyInOne {
         throw new UnsupportedOperationException("Cannot parse string to " + param.getName());
     }
     
-    public static List<Object> mapList(List<String> input, Class param) {
+    public static List<Object> mapList(List<String> input, Class<?> param) {
         List<Object> result = Lists.newArrayList();
         if (CollectionUtils.isNotEmpty(input)) {
             result = input
