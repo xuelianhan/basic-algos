@@ -166,7 +166,7 @@ public class EdgeWeightedGraph {
 
     // throw an IllegalArgumentException unless {@code 0 <= v < V}
     private void validateVertex(int v) {
-        if (v < 0 || v > V) {
+        if (v < 0 || v >= V) {
             throw new IllegalArgumentException("vertex " + " is not between 0 and " + (V-1));
         }
     }
