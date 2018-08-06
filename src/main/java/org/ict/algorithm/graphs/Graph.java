@@ -111,13 +111,14 @@ public class Graph {
             if (V < 0) {
                 throw new IllegalArgumentException("Number of vertices in a Graph must be nonnegative");
             }
-            adj = (Bag<Integer>[]) new Bag[V];
-            for (int v = 0; v < V; v++) {
-                adj[v] = new Bag<Integer>();
-            }
             int E = in.readInt();
             if (E < 0) {
                 throw new IllegalArgumentException("Number of edges in a Graph must be nonnegative");
+            }
+            // V and E check pass, now initialize the adj array
+            adj = (Bag<Integer>[]) new Bag[V];
+            for (int v = 0; v < V; v++) {
+                adj[v] = new Bag<Integer>();
             }
             for (int i = 0; i < E; i++) {
                 int v = in.readInt();
