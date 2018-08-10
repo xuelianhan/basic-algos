@@ -81,6 +81,8 @@ public class Cycle {
             for (int w : G.adj(v)) {
                 if (v == w) {
                     cycle = new Stack<Integer>();
+                    // start and end are the same vertex, this is a cycle
+                    // So push v twice here
                     cycle.push(v);
                     cycle.push(v);
                     return true;
@@ -104,7 +106,7 @@ public class Cycle {
                 // So the marked[w] must be true if v-w is parallel.
                 // marked[w] is true means the vertex w has been visited via vertex v
                 // At the second time meeting w, this edge is paralled with the 
-                // edge firstly visit via v.
+                // edge firstly visited via v.
                 if (marked[w]) {
                     cycle = new Stack<Integer>();
                     cycle.push(v);
