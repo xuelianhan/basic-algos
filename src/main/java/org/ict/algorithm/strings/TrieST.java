@@ -181,4 +181,88 @@ public class TrieST<Value> {
             prefix.deleteCharAt(prefix.length() - 1);
         }
     }
+
+    /**
+     *
+     */
+
+    /**
+     * Removes the key from the set if the key is present.
+     *
+     * @param key the key
+     * @throws IllegalArgumentException if {@code key} is {@code null}
+     */
+    public void delete(String key) {
+        if (key == null) {
+            throw new IllegalArgumentException("argument to delete() is null");
+        }
+        root = delete(root, key, 0);
+    }
+
+    private Node delete(Node x, String key, int d) {
+        if (x == null) {
+            return null;
+        }
+        if (d == key.length()) {
+            if (x.val !=null) {
+                n--;
+            }
+            x.val = null;
+        } else {
+            char c = key.charAt(d);
+            x.next[c] = delete(x.next[c], key, d+1);
+        }
+        // return the last node has value on the path
+        if (x.val != null) {
+            return x;
+        }
+        // if go into this step, means x.val == null, so 
+        // remove subtrie rooted at x if it is completely empty
+        for (int c = 0; c < R; c++) {
+            if (x.next[c] != null) {
+                return x;
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * Unit tests the {@code TrieST} data type.
+     */
+    public static void main(String[] args) {
+        // build symbol table from standard input
+        TrieST<Integer> st = new TrieST<Integer>();
+        for (int i = 0; !StdIn.isEmpty(); i++) {
+            String key = StdIn.readString();
+            st.put(key, i);
+        }
+
+        // print results
+        if (st.size() < 100) {
+            StdOut.println("keys(\"\"):");
+            for (String key : st.keys()) {
+                StdOut.println(key + " " + st.get(key));
+            }
+            StdOut.println();
+        }
+
+        StdOut.println("longestPrefixOf(\"shellsort\"):");
+        StdOut.println(st.longestPrefixOf("shellsort"));
+        StdOut.println();
+
+        StdOut.println("longestPrefixOf(\"quicksort\"):");
+        StdOut.println(st.longestPrefixOf("quicksort"));
+        StdOut.println();
+
+        StdOut.println("keysWithPrefix(\"shor\"):");
+        for (String s : st.keysWithPrefix("shor")) {
+            StdOut.println(s);
+        }
+        StdOut.println();
+
+        StdOut.println("keysThatMatch(\".he.l.\"):");
+        for (String s : st.keysThatMatch(".he.l.")) {
+            StdOut.println(s);
+        }
+    }
 }
