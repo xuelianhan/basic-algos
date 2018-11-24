@@ -8,12 +8,30 @@ import java.util.Date;
 import java.util.Set;
 
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+import org.junit.Test;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Sets;
 
 public class CalendarTest {
+    
+  private static final DateTimeFormatter format_one = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+    
+  private static final DateTimeFormatter format_two = DateTimeFormat.forPattern("yyyy-MM-dd");
+  
+  @Test
+  public static void testDateTime() {
+      DateTime currentDate = DateTime.now();
+      DateTime start = currentDate.withHourOfDay(10).withMinuteOfHour(30).withSecondOfMinute(0);
+      String startTime = format_one.print(start);
+      DateTime end = currentDate.withHourOfDay(19).withMinuteOfHour(30).withSecondOfMinute(0);
+      String endTime = format_one.print(end);
+      DateTime orderDate = DateTime.now();
+      String orderDateTime = format_two.print(orderDate);
+  }
     
   
   public static void testGuavaFilter() {
