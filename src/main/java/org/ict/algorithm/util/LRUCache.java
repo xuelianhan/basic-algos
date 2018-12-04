@@ -9,7 +9,9 @@ import java.util.Map;
  * http://www.programcreek.com/2013/03/leetcode-lru-cache-java/
  * @param <K>
  * @param <V>
- * @see org.ict.rpc.common.utils.LRUCache for thread-safe implementation version
+ * @see org.ict.rpc.common.utils.LRUCache for another thread-safe implementation version
+ * @see org.ict.algorithm.util.LRUCacheWithMap
+ * @see http://www.source-code.biz/snippets/java/6.htm
  */
 public class LRUCache<K, V> extends LinkedHashMap<K,V> {
 
@@ -17,7 +19,8 @@ public class LRUCache<K, V> extends LinkedHashMap<K,V> {
 	
 	private int cacheSize;
 	
-	public LRUCache(int cacheSize) {
+	
+    public LRUCache(int cacheSize) {
 		super(16, 0.75f, true);
 		this.cacheSize = cacheSize;
 	}
@@ -26,6 +29,29 @@ public class LRUCache<K, V> extends LinkedHashMap<K,V> {
 	protected boolean removeEldestEntry(Map.Entry<K, V> eldest) {
 		return size() >= cacheSize;
 	}
+	
+	@Override
+	public synchronized V get(Object key) {
+	    return super.get(key);
+	}
+	
+	@Override
+	public synchronized V put(K key, V value) {
+	    return super.put(key, value);
+	}
+	
+	@Override
+	public synchronized void clear() {
+	    super.clear();
+	}
+	
+	public synchronized int size() {
+	    return super.size();
+	}
+	
+	public int getCacheSize() {
+        return cacheSize;
+    }
 
 	public static void main(String[] args) {
 		LRUCache<String, String> cache = new LRUCache<String, String>(5);
