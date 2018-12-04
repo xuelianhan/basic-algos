@@ -5,6 +5,7 @@ package org.ict.algorithm.leetcode.linkedlist;
  * 92.reverse-linked-list-ii
  * @see https://leetcode.com/problems/reverse-linked-list/discuss/58125/In-place-iterative-and-recursive-Java-solution
  * @see https://leetcode.com/problems/reverse-linked-list-ii/description/
+ * @see https://www.geeksforgeeks.org/reverse-a-linked-list/
  *
  */
 public class ReverseLinkedList {
@@ -85,6 +86,20 @@ public class ReverseLinkedList {
         return newHead;
     }
     
+    public static Node reverse2(Node node) {
+        Node prev = null;
+        Node current = node;
+        Node next = null;
+        while (current != null) {
+            next = current.next;
+            current.next = prev;
+            prev = current;
+            current = next;
+        }
+        node = prev;
+        return node;
+    }
+    
     /**
      * recursive solution
      * @param head
@@ -134,6 +149,9 @@ public class ReverseLinkedList {
         /* iterative solution */
         Node newHead = reverse(head);
         printList(newHead);
+        
+        Node newHeadTwo = reverse2(head);
+        printList(newHeadTwo);
         
         /* recursive solution */
         Node newHead2 = reverse(newHead, null);

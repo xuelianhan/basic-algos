@@ -9,6 +9,7 @@ import java.util.Map;
  * http://www.programcreek.com/2013/03/leetcode-lru-cache-java/
  * @param <K>
  * @param <V>
+ * @see org.ict.rpc.common.utils.LRUCache for thread-safe implementation version
  */
 public class LRUCache<K, V> extends LinkedHashMap<K,V> {
 
