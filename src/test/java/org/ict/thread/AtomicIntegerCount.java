@@ -22,17 +22,15 @@ public class AtomicIntegerCount {
 
 class ProcessingThread implements Runnable {
     
-    private static final int diff = 10;
-    
-    private static final int base_step = 20;
+    private static final int base_step = 3;
     
     private AtomicInteger count = new AtomicInteger(0);
     
     @Override
     public void run() {
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < base_step; i++) {
             processSomething(i);
-            System.out.println("Thread" + Thread.currentThread().getName() + ": now - " + diff + " <= pay + " + base_step + " * " + count.incrementAndGet() + " <= now");
+            System.out.println("Thread-" + Thread.currentThread().getName() + " output "+ count.incrementAndGet());
         }
     }
     

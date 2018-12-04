@@ -40,6 +40,13 @@ import org.ict.algorithm.util.StdOut;
  */
 
 /**
+ * Like QuickSort, Merge Sort is a Divide and Conquer algorithm. 
+ * It divides input array in two halves, calls itself for the two halves and then merges the two sorted halves. 
+ * The merge() function is used for merging two halves. 
+ * The merge(arr, lo, mid, hi) is key process that 
+ * assumes that arr[lo..mid] and arr[mid+1..hi] are sorted 
+ * and merges the two sorted sub-arrays into one.
+ * 
  * The {@code Merge} class provides static methods for sorting an array using mergesort.
  * <p>
  * For additional documentation, see <a href="https://algs4.cs.princeton.edu/22mergesort">Section 2.2</a>
