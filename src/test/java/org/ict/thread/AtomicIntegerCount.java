@@ -30,7 +30,7 @@ class ProcessingThread implements Runnable {
     public void run() {
         for (int i = 0; i < base_step; i++) {
             processSomething(i);
-            System.out.println("Thread-" + Thread.currentThread().getName() + " output "+ count.incrementAndGet());
+            printCount();
         }
     }
     
@@ -41,6 +41,10 @@ class ProcessingThread implements Runnable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+    
+    private void printCount() {
+        System.out.println("Thread-" + Thread.currentThread().getName() + " output "+ count.incrementAndGet());
     }
     
     public int getCount() {
