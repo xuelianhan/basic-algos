@@ -73,6 +73,7 @@ public class ReverseLinkedList {
     
     /**
      * iterative solution
+     * use 3 pointer:newHead,next,head
      * @param head
      */
     public static Node reverse(Node head) {
@@ -86,6 +87,12 @@ public class ReverseLinkedList {
         return newHead;
     }
     
+    /**
+     * iterative solution
+     * user 3 pointer:prev,current,next
+     * @param node
+     * @return
+     */
     public static Node reverse2(Node node) {
         Node prev = null;
         Node current = node;
@@ -133,6 +140,9 @@ public class ReverseLinkedList {
      * 
      * 0-->1-->2-->3-->4-->5-->null
      * 5-->4-->3-->2-->1-->0-->null
+     * 0-->1-->2-->3-->4-->5-->null
+     * 5-->4-->3-->2-->1-->0-->null
+     * 5-->0-->1-->2-->3-->4-->null
      * 
      */
     public static void main(String[] args) {
@@ -150,11 +160,11 @@ public class ReverseLinkedList {
         Node newHead = reverse(head);
         printList(newHead);
         
-        Node newHeadTwo = reverse2(head);
-        printList(newHeadTwo);
+        Node newHead1 = reverse2(newHead);
+        printList(newHead1);
         
         /* recursive solution */
-        Node newHead2 = reverse(newHead, null);
+        Node newHead2 = reverse(newHead1, null);
         printList(newHead2);
         
         Node newHead3 = reverseBetween(newHead2, 2, 6);
