@@ -3,7 +3,8 @@ package org.ict.algorithm.thread;
 /**
  * 
  * @see Java36-series by xiaofeng.yang 
- *  *[hanxuelian@ict workspace]$ jstack 12734
+ * 
+ * $ jstack 12734
  * 2018-12-07 11:00:29
  * Full thread dump Java HotSpot(TM) 64-Bit Server VM (25.131-b11 mixed mode):
  * 
