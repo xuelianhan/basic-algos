@@ -5,7 +5,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * @see https://en.wikipedia.org/wiki/Compare-and-swap
  * @see https://dzone.com/articles/how-cas-compare-and-swap-java
- *
+ * @see https://stackoverflow.com/questions/2664172/java-concurrency-cas-vs-locking
+ * @see http://www.cs.rochester.edu/research/synchronization/pseudocode/queues.html
+ * @see https://stackoverflow.com/questions/4183202/java-compare-and-swap-semantics-and-performance
+ * @see http://tutorials.jenkov.com/java-concurrency/compare-and-swap.html
+ * @see http://www.docjar.com/html/api/sun/misc/Unsafe.java.html
  */
 public class CASTest {
     // volatile only guarantee visibility, it can not guarantee atomicity
