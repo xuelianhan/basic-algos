@@ -1,5 +1,7 @@
 package org.ict.algorithm.leetcode.array;
 
+import java.util.Map;
+import java.util.HashMap;
 
 /**
  * p1
@@ -17,6 +19,24 @@ package org.ict.algorithm.leetcode.array;
  *
  */
 public class TwoSum {
+  
+  /**
+   * O(n);
+   *
+   */
+  public static int[] twoSum(int[] nums, int target) {
+    if (nums.length == 0) {
+        throw new IllegalArgumentException("input nums must not be empty");
+    }
+    Map<Integer, Integer> map = new HashMap<Integer, Integer>();           
+    for (int i = 0; i < nums.length; i++) {
+        int complement = target - nums[i];
+        if (map.containsKey(complement) && map.get(complement) != i) {
+            return new int[]{i, map.get(complement)};
+        }
+        map.put(num[i], i);
+    }
+  }
 
   public static int[] caculateTwoSumIndex(int[] array, int target) {
     int[] indexs;
@@ -24,6 +44,9 @@ public class TwoSum {
     return indexs;
   }
 
+  /**
+   * O(n^2)
+   */
   private static int[] caculate1(int[] array, int target) {
     int[] indexs = {0, 0};
     int len = array.length;
