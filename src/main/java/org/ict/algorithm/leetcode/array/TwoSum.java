@@ -36,6 +36,7 @@ public class TwoSum {
         }
         map.put(num[i], i);
     }
+    return new int[]{0};
   }
 
   public static int[] caculateTwoSumIndex(int[] array, int target) {
