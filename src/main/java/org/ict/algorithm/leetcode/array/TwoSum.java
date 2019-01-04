@@ -34,7 +34,7 @@ public class TwoSum {
         if (map.containsKey(complement) && map.get(complement) != i) {
             return new int[]{i, map.get(complement)};
         }
-        map.put(num[i], i);
+        map.put(nums[i], i);
     }
     return new int[]{0};
   }
