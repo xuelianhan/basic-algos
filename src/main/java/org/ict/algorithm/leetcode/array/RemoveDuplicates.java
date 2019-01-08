@@ -35,9 +35,9 @@ import java.util.Arrays;
 public class RemoveDuplicates {
 	
 	public static void main(String[] args) {
-		int[] A = {0, 1, 1, 2};
-		//System.out.println(removeDuplicatesV1(A));
-		System.out.println(removeDuplicatesV2(A));
+		int[] A = {0, 0, 1, 2};
+		System.out.println(removeDuplicatesV1(A));
+		//System.out.println(removeDuplicatesV2(A));
 
 	}
 	
