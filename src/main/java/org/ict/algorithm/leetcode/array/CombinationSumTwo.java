@@ -54,7 +54,6 @@ public class CombinationSumTwo {
 	    	//We start from i=cur, now it is i> cur, which means we already tried the elements between cur to i-1 (i-1>=cur).
 	    	//Now we are in candidate[i] and candidate[i]==candidate[i-1]. Now need to try another time.
 	        if (i > cur && candidates[i] == candidates[i-1]) {
-	        	
 	        	continue;
 	        }
 	        path.add(path.size(), candidates[i]);
