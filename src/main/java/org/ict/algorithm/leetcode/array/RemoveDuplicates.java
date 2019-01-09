@@ -31,6 +31,7 @@ import java.util.Arrays;
  *   print(nums[i]);
  * }
  *
+ * LC26
  */
 public class RemoveDuplicates {
 	
