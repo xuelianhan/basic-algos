@@ -49,7 +49,14 @@ public class CombinationSumTwo {
 	    }
 	    if (target < 0) return;
 	    for (int i = cur; i < candidates.length; i++){
-	        if (i > cur && candidates[i] == candidates[i-1]) continue;
+	    	//This can avoid the duplicates.
+	    	//Our path array contains some element which picked from cand[0...cur-1].
+	    	//We start from i=cur, now it is i> cur, which means we already tried the elements between cur to i-1 (i-1>=cur).
+	    	//Now we are in candidate[i] and candidate[i]==candidate[i-1]. Now need to try another time.
+	        if (i > cur && candidates[i] == candidates[i-1]) {
+	        	
+	        	continue;
+	        }
 	        path.add(path.size(), candidates[i]);
 	        dfsCombination(candidates, i+1, target - candidates[i], path, res);
 	        path.remove(path.size()-1);
