@@ -1,6 +1,7 @@
 package org.ict.util;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,8 +13,19 @@ import org.junit.Test;
 import com.google.common.collect.Lists;
 
 public class HashMapTest {
-    
-    @Test
+	
+	public static void main(String[] args) {
+		Map<Long, BigDecimal> map = new HashMap<>();
+		for (int i = 0 ; i < 10; i++) {
+			new SaveString("Thread-"+(i+1), map).start();
+		}
+	}
+	
+	public void testShiftLeft() {
+		System.out.println(1<<30);
+	}
+	
+    @Test 
     public void testGroupBy() {
         List<User> users = Lists.newArrayList();
         for(int i = 0; i < 5; i++) {
@@ -99,9 +111,7 @@ public class HashMapTest {
         map.get(null);
     }
     
-	public static void main(String[] args) {
-		System.out.println(1<<30);
-	}
+	
 }
 
 
