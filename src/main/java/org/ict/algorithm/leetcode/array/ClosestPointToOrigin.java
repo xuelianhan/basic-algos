@@ -78,6 +78,12 @@ public class ClosestPointToOrigin {
 		return points;
 	}
 
+	/**
+	 * Find top k maximum in points.
+	 * @param points
+	 * @param k
+	 * @return
+	 */
 	public List<Point> closestPoints(List<Point> points, int k) {
 		List<Point> result = new ArrayList<>();
 		PriorityQueue<Point> maxHeap = new PriorityQueue<>(k, new Comparator<Point>() {
