@@ -72,4 +72,14 @@ public class AbstractSortHelper {
             StdOut.println(a[i]);
         }
     }
+    
+    //reverse array
+    public static void reverse(int[] a) {
+    	for (int i = 0, j = a.length -1; i < a.length/2; i++, j--) {
+    		if (i >= j) {
+    			break;
+    		}
+    		exch(a, i, j);
+    	}
+    }
 }

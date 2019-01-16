@@ -8,6 +8,8 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
 
+import org.ict.algorithm.sort.AbstractSortHelper;
+
 
 /**
  * You are given an n x n 2D matrix representing an image.
@@ -51,5 +53,33 @@ import java.util.TreeMap;
  */
 public class RotateImage {
 
+	public static void main(String[] args) {
+		
+	}
+	
+	/**
+	 * clockwise rotate
+	 * first reverse up to down, then swap the symmetry
+	 * 1 2 3     7 8 9     7 4 1
+     * 4 5 6  => 4 5 6  => 8 5 2
+     * 7 8 9     1 2 3     9 6 3
+	 */
+	public static void rotateV1(int[][] matrix) {
+		for (int col = 0; col < matrix[0].length; col++) {
+			AbstractSortHelper.reverse(matrix[][col]);
+		}
+	}
+	
+	/**
+	 * anti-clockwise rotate
+	 * first reverse left to right, then swap the symmetry
+	 * 1 2 3     3 2 1     3 6 9
+     * 4 5 6  => 6 5 4  => 2 5 8
+     * 7 8 9     9 8 7     1 4 7
+	 * @param matrix
+	 */
+	public static void antiRotateV1(int[][] matrix) {
+		
+	}
 	
 }
