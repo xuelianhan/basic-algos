@@ -43,14 +43,15 @@ import org.ict.algorithm.sort.AbstractSortHelper;
  *    [16, 7,10,11]
  *  ]
  *
- *
+ * @see https://stackoverflow.com/questions/30426909/get-columns-from-two-dimensional-array-in-java
  */
 public class RotateImage {
 
 	public static void main(String[] args) {
 		int[][] matrix = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
 		System.out.println("before rotate: " + Arrays.deepToString(matrix));
-		rotateV1(matrix);
+		//rotateV1(matrix);
+		antiRotateV1(matrix);
 		System.out.println("after rotate: " + Arrays.deepToString(matrix));
 	}
 	
@@ -102,7 +103,18 @@ public class RotateImage {
 	 * @param matrix
 	 */
 	public static void antiRotateV1(int[][] matrix) {
-		
+		// Reverse left to right
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = 0; j < matrix[0].length/2; j++) {
+				AbstractSortHelper.swapMatrix(matrix, i, j, i, matrix[0].length - 1 - i);
+			}
+		}
+		// Swap the symmetry
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = i + 1; j< matrix[i].length - 1; j++) {
+				AbstractSortHelper.swapMatrix(matrix, i, j, j, i);
+			}
+		}
 	}
 	
 }
