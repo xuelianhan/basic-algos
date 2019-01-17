@@ -82,4 +82,18 @@ public class AbstractSortHelper {
     		exch(a, i, j);
     	}
     }
+    
+    /**
+     * swap matrix[i][j] with matrix[r][c]
+     * @param matrix
+     * @param i
+     * @param j
+     * @param r
+     * @param c
+     */
+    public static void swapMatrix(int[][] matrix, int i, int j, int r, int c) {
+	    int temp = matrix[i][j];
+	    matrix[i][j] = matrix[r][c];
+	    matrix[r][c] = temp;
+    }
 }
