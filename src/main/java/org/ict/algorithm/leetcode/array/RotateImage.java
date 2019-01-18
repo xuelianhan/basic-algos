@@ -51,13 +51,44 @@ public class RotateImage {
 		int[][] matrix = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
 		System.out.println("before rotate: " + Arrays.deepToString(matrix));
 		//rotateV1(matrix);
+		//rotateV2(matrix);
 		antiRotateV1(matrix);
+		
 		System.out.println("after rotate: " + Arrays.deepToString(matrix));
 	}
 	
 	/**
+	 * first transpose the matrix, then reverse from left to right
+	 * 1 2 3     1 4 7    7 4 1
+	 * 4 5 6  => 2 5 8 => 8 5 2
+	 * 7 8 9     3 6 9    9 6 3
+	 * @param matrix
+	 */
+	public static void rotateV2(int[][] matrix) {
+		if (matrix == null || matrix.length == 0) {
+			return;
+		}
+		// first transpose
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = i + 1; j < matrix[i].length; j++) {
+				AbstractSortHelper.swapMatrix(matrix, i, j, j, i);
+			}
+		}
+		System.out.println("after transpose: " + Arrays.deepToString(matrix));
+		// then reverse from left to right by swapping (i, j ) with (i , matrix[i].length - i - j)
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = 0; j < matrix[i].length/2; j++) {
+				System.out.println( " swap (" + i + ", " + j + ") with " + "(" + i + ", " +  (matrix[i].length - 1 - j) +")");
+				AbstractSortHelper.swapMatrix(matrix, i, j, i, matrix[i].length - 1 - j);
+			}
+		}
+	}
+	
+	
+	
+	/**
 	 * clockwise rotate
-	 * first reverse up to down, then swap the symmetry.
+	 * first reverse up to down, then swap the symmetry(transpose).
 	 * But reverse by column is not friendly to Java
 	 * 1 2 3     7 8 9     7 4 1
      * 4 5 6  => 4 5 6  => 8 5 2
@@ -79,8 +110,8 @@ public class RotateImage {
 				 */
 			}
 		}
-		
-		//Swap the symmetry
+		System.out.println("after up to down: " + Arrays.deepToString(matrix));
+		//Swap the symmetry(transpose)
 		for (int i = 0; i < matrix.length; i++) {
 			for (int j = i + 1; j < matrix[i].length; j++) {
 				AbstractSortHelper.swapMatrix(matrix, i, j, j, i);
@@ -96,7 +127,7 @@ public class RotateImage {
 	
 	/**
 	 * anti-clockwise rotate
-	 * first reverse left to right, then swap the symmetry
+	 * first reverse left to right, then swap the symmetry(transpose)
 	 * 1 2 3     3 2 1     3 6 9
      * 4 5 6  => 6 5 4  => 2 5 8
      * 7 8 9     9 8 7     1 4 7
@@ -105,13 +136,14 @@ public class RotateImage {
 	public static void antiRotateV1(int[][] matrix) {
 		// Reverse left to right
 		for (int i = 0; i < matrix.length; i++) {
-			for (int j = 0; j < matrix[0].length/2; j++) {
-				AbstractSortHelper.swapMatrix(matrix, i, j, i, matrix[0].length - 1 - i);
+			for (int j = 0; j < matrix[i].length/2; j++) {
+				AbstractSortHelper.swapMatrix(matrix, i, j, i, matrix[i].length - 1 - j);
 			}
 		}
-		// Swap the symmetry
+		System.out.println("after left to right: " + Arrays.deepToString(matrix));
+		// Swap the symmetry(transpose)
 		for (int i = 0; i < matrix.length; i++) {
-			for (int j = i + 1; j< matrix[i].length - 1; j++) {
+			for (int j = i + 1; j < matrix[i].length; j++) {
 				AbstractSortHelper.swapMatrix(matrix, i, j, j, i);
 			}
 		}
