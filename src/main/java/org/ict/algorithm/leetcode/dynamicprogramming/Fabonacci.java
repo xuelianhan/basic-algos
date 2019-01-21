@@ -20,6 +20,8 @@ public class Fabonacci {
 	 * by storing the previous two numbers only 
 	 * because that is all we need to get the next Fibonacci number in series.
 	 * 
+	 * Time Complexity:O(n)
+	 * Extra Space: O(1)
 	 * @param n
 	 * @return
 	 */
