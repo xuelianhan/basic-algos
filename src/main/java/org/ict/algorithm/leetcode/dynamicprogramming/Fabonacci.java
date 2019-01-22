@@ -14,6 +14,29 @@ package org.ict.algorithm.leetcode.dynamicprogramming;
  */
 public class Fabonacci {
 	
+	public static void main(String[] args) {
+		
+	}
+	
+	/**
+	 * Using formula
+	 * In this method we directly implement the formula for nth term in the fibonacci series.
+	 * Fn = {[(√5 + 1)/2] ^ n} / √5
+	 * 
+	 * phi = (√5 + 1)/2
+	 * F(n) = round( Phi^n / √5 ) provided n ≥ 0
+	 * Reference: http://www.maths.surrey.ac.uk/hosted-sites/R.Knott/Fibonacci/fibFormula.html
+	 * Time Complexity: O(1)
+	 * Space Complexity: O(1)
+	 * @param n
+	 * @return
+	 */
+	public static int fibV4(int n) {
+		double phi = (Math.sqrt(5) + 1) / 2;
+		long midRes = Math.round(Math.pow(phi, n) / Math.sqrt(5));
+		return (int)midRes;
+	}
+	
 	/**
 	 * Space Optimized Method base fibV2
 	 * We can optimize the space used in method 2 
@@ -42,6 +65,8 @@ public class Fabonacci {
 	 * Use Dynamic Programming 
 	 * We can avoid the repeated work done is the method 1 by storing the Fibonacci numbers calculated so far.
 	 * 
+	 * Time Complexity:O(1)
+	 * Extra Space: O(n)
 	 * @param n
 	 * @return
 	 */
