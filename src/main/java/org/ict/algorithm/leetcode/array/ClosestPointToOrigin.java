@@ -9,6 +9,7 @@ import java.util.PriorityQueue;
  * Find the TopM max, use the min-heap
  * Find the TopM min, use the max-heap
  * 
+ * Please referer the Algorithms 4th Edition by Robert Sedgewick
  * @see https://leetcode.com/discuss/interview-question/124642/k-closest-points-to-a-starting-point-in-cartesian-plane
  * @see http://www.zrzahid.com/k-closest-points/
  */
