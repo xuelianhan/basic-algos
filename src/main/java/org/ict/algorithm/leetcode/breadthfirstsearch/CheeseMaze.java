@@ -8,6 +8,7 @@ import java.util.Queue;
 import java.util.stream.Collectors;
 
 /**
+ * @see https://www.geeksforgeeks.org/count-possible-paths-top-left-bottom-right-nxm-matrix/
  * @see https://www.geeksforgeeks.org/shortest-path-in-a-binary-maze/
  * @see https://codereview.stackexchange.com/questions/127665/shortest-path-in-maze
  * 
@@ -45,10 +46,16 @@ public class CheeseMaze {
 		
 		int numRows = 3;
 		int numColumns = 3;
-		int result = maze.minimumDistanceV1(numRows, numColumns, area);
-		System.out.println(result);
+		int result1 = maze.minimumDistanceV1(numRows, numColumns, area);
+		System.out.println(result1);
+		
+		int result2 = maze.minimumDistanceV1(numRows, numColumns, area);
+		System.out.println(result2);
 	}
 	
+	private final static int[] dx = {-1, 0, 0, 1};
+    private final static int[] dy = {0, 1, -1, 0};
+    
 	public int minimumDistanceV2(int numRows, int numColumns, List<List<Integer>> area) {
 		if (numRows < 1 || numRows > 1000) {
 			return -1;
@@ -63,6 +70,8 @@ public class CheeseMaze {
 			return 1;
 		}
 		
+		// BFS
+		int distance = 0;
 		int m = area.size();
 		int n = area.get(0).size();
 		Queue<int[]> queue = new LinkedList<>();
@@ -71,10 +80,19 @@ public class CheeseMaze {
 		while (!queue.isEmpty()) {
 			int[] cur = queue.poll();
 			for (int i = 0; i < 4; i++) {
-				
+				int[] next = {cur[0] + dx[i], cur[1] + dy[i]};
+				if (next[0] >= 0 && next[0] < m && next[1] >= 0 && next[1] < n) {
+                    if (area.get(next[0]).get(next[1]) == 9) {
+                    	distance++;
+                    	break;
+                    } else if (area.get(next[0]).get(next[1]) == 0) {
+                        queue.offer(next);
+                        area.get(next[0]).set(next[1], 1);
+                    }
+                }
 			}
 		}
-		return -1;
+		return distance;
 	}
 	
 
@@ -94,17 +112,22 @@ public class CheeseMaze {
             	// current point has not been visited, set to visited status 1.
                 used[currentRow][currentColumn] = 1;
                 distance++;
+                
                 if (currentRow - 1 >= 0 && area.get(currentRow - 1).get(currentColumn) != 0
                         && used[currentRow - 1][currentColumn] == 0) {
+                	// go to last row
                     currentRow = currentRow - 1;
                 } else if (currentRow + 1 < numRows && area.get(currentRow + 1).get(currentColumn) != 0
                         && used[currentRow + 1][currentColumn] == 0) {
+                	// got to next row
                     currentRow = currentRow + 1;
                 } else if (currentColumn - 1 >= 0 && area.get(currentRow).get(currentColumn - 1) != 0
                         && used[currentRow][currentColumn - 1] == 0) {
+                	// go to last column
                     currentColumn = currentColumn - 1;
                 } else if (currentColumn + 1 < numColumns && area.get(currentRow).get(currentColumn + 1) != 0
                         && used[currentRow][currentColumn + 1] == 0) {
+                	// go to next column
                     currentColumn = currentColumn + 1;
                 }
             } else {
