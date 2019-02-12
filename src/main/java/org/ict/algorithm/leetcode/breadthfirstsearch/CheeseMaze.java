@@ -54,27 +54,33 @@ import java.util.stream.Collectors;
  */
 public class CheeseMaze {
 
+	/**
+	 * Unit Test 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		CheeseMaze maze = new CheeseMaze();
 		List<List<Integer>> area = new ArrayList<>();
 		// Test case
-		int[] row1 = new int[] {1, 0, 0};
-		int[] row2 = new int[] {1, 0, 0};
+		/**
+		int[] row1 = new int[] {1, 0, 0}; 
+		int[] row2 = new int[] {1, 0, 0}; 
 		int[] row3 = new int[] {1, 1, 1};
+		*/
 		
 		// Test case
 		/**
-		 * int[] row1 = new int[] {1, 0, 0}; 
-		 * int[] row2 = new int[] {1, 0, 0}; 
-		 * int[] row3 = new int[] {1, 9, 1};
-		 */
+		int[] row1 = new int[] {1, 0, 0}; 
+		int[] row2 = new int[] {1, 0, 0}; 
+		int[] row3 = new int[] {1, 9, 1};
+		*/
 		
 		// Test case
-		/**
-		 * int[] row1 = new int[] {0, 0, 0}; 
-		 * int[] row2 = new int[] {1, 0, 0}; 
-		 * int[] row3 = new int[] {1, 9, 1};
-		 */
+		
+		int[] row1 = new int[] {0, 0, 0}; 
+		int[] row2 = new int[] {1, 0, 0}; 
+		int[] row3 = new int[] {1, 9, 1};
+		
 		
 		//see https://www.techiedelight.com/convert-int-array-list-integer/
 		List<Integer> r1 = Arrays.stream(row1).boxed().collect(Collectors.toList());
@@ -87,27 +93,26 @@ public class CheeseMaze {
 		int numRows = 3;
 		int numColumns = 3;
 		
+		int result4 = maze.minimumDistanceV4(numRows, numColumns, area);
+		System.out.println("result4:" + result4);
+		System.out.println("=========================");
+		
+		int result2 = maze.minimumDistanceV2(numRows, numColumns, area);
+		System.out.println("result2:" + result2);
+		System.out.println("=========================");
+		
+		
+		int result1 = maze.minimumDistanceV1(numRows, numColumns, area);
+		System.out.println("result1:" + result1);
+		System.out.println("=========================");
+		
 		/**
 		 * Notice:
-		 * The following method can only run one at a time due to the original 
-		 * area will be changed in each method.
+		 * The following method v3 will change the original input array named area.
+		 * So it's put at the last line of main test.
 		 */
-		
-		/*
-		 * int result3 = maze.minimumDistanceV3(numRows, numColumns, area);
-		 * System.out.println("result3:" + result3);
-		 */
-		 
-		
-		/*
-		 * int result2 = maze.minimumDistanceV2(numRows, numColumns, area);
-		 * System.out.println("result2:" + result2);
-		 */
-		
-		
-		  int result1 = maze.minimumDistanceV1(numRows, numColumns, area);
-		  System.out.println("result1:" + result1);
-		 
+		int result3 = maze.minimumDistanceV3(numRows, numColumns, area);
+		System.out.println("result3:" + result3);
 	}
 	
 	// The exit gate flag
@@ -119,25 +124,14 @@ public class CheeseMaze {
 	// Indicate the cell has been visited, it's value can be any number different with accessible, inaccessible and exitPointValue.
 	private static final int visitedFlag = -1;
 	
-	public int minimumDistanceV3(int numRows, int numColumns, List<List<Integer>> area) {
-		if (numRows < 1 || numRows > 1000) {
-			return -1;
-		}
-		if (numColumns < 1 || numColumns > 1000) {
-			return -1;
-		}
-		if (area == null || area.size() == 0 || area.get(0).size() == 0 || area.get(0).get(0) == inaccessible) {
-			return -1;
-		}
-		if (area.get(0).get(0) == exitPointValue) {
-			return 1;
-		}
-		Queue<Point> queue = new LinkedList<Point>();
-		queue.add(new Point(0, 0, null));
-		Point p = pathBFS(queue, area);
-		return getDistance(p);
-	}
-	
+	// See from top to down view.
+	// dx=-1, dy=0 means move left
+	// dx=0, dy=1 means move up
+	// dx=0, dy=-1 means move down
+	// dx=1, dy=0 means move right
+	private final static int[] dx = {-1, 0, 0, 1};
+    private final static int[] dy = {0, 1, -1, 0};
+    
 	private static class Point {
 		private int x;
 		private int y;
@@ -187,15 +181,124 @@ public class CheeseMaze {
 				return false;
 			return true;
 		}
-
 	}
 	
-	public Point pathBFS(Queue<Point> queue, List<List<Integer>> area) {
+	/**
+	 * Nonrecursive Depth-First-Search method with an explicit stack instead of recursion.
+	 * This method will not change the original input array area via introducing an auxiliary hash map space named marked.
+	 * @param numRows
+	 * @param numColumns
+	 * @param area
+	 * @return
+	 */
+	public int minimumDistanceV4(int numRows, int numColumns, List<List<Integer>> area) {
+		if (numRows < 1 || numRows > 1000) {
+			return -1;
+		}
+		if (numColumns < 1 || numColumns > 1000) {
+			return -1;
+		}
+		if (area == null || area.size() == 0 || area.get(0).size() == 0 || area.get(0).get(0) == inaccessible) {
+			return -1;
+		}
+		if (area.get(0).get(0) == exitPointValue) {
+			return 1;
+		}
+		
+		// use DFS to find the distance from start point(0, 0) to destination point with value of exitPointValue
+		// use dy.length is ok too.
+		int directionSize = dx.length;
+		
+		// Key in distTo is a point, value in distTo is a distance to start point(0, 0).
+		Map<Point, Integer> distTo = new LinkedHashMap<>();
+		// marked.get(currentPoint) = is there a startPoint-currentPoint path?
+		Map<Point, Boolean> marked = new LinkedHashMap<>();
+		// Initialize all points with false mark.
+		for (int i = 0; i < area.size(); i++) {
+			for (int j = 0; j < area.get(i).size(); j++) {
+				marked.put(new Point(i, j, null), Boolean.FALSE);
+			}
+		}
+		// Initialize a queue and put start point into this queue.
+		Stack<Point> stack = new Stack<>();
+		Point startPoint = new Point(0, 0, null);
+		stack.push(startPoint);
+		
+		// set Point (0, 0) value with true to indicate it has been visited.
+		marked.put(startPoint, true);
+		// Point (0, 0) to itself's distance is 0.
+		distTo.put(startPoint, 0);
+
+		boolean hasExit = false;
+		while (!stack.isEmpty()) {
+			Point cur = stack.pop();
+			System.out.println("cur is " + cur);
+			if (area.get(cur.x).get(cur.y) == exitPointValue) {
+				System.out.println("Exit is reached!");
+				hasExit = true;
+				break;
+			}
+			for (int i = 0; i < directionSize; i++) {
+				Point next = new Point(cur.x + dx[i], cur.y + dy[i], null);
+				if (isFree(next, area) && !marked.get(next)) {
+					// Set flag with -1 to indicate this cell has been visited.
+					marked.put(next, true);
+					// Put Point next to queue.
+                    stack.push(next);
+                    int distance = (distTo.get(cur) == null ? 0 : distTo.get(cur) + 1);
+                    distTo.put(next, distance);
+                }
+			}
+		}
+		System.out.println(distTo);
+		return (hasExit ? distTo.size() - 1 : -1);
+	}
+	
+	/**
+	 * Use Breath-First-Search method to calculate the distance to exit cell.
+	 * Notice: This method will change the original input array area.
+	 * @param numRows
+	 * @param numColumns
+	 * @param area
+	 * @return
+	 */
+	public int minimumDistanceV3(int numRows, int numColumns, List<List<Integer>> area) {
+		if (numRows < 1 || numRows > 1000) {
+			return -1;
+		}
+		if (numColumns < 1 || numColumns > 1000) {
+			return -1;
+		}
+		if (area == null || area.size() == 0 || area.get(0).size() == 0 || area.get(0).get(0) == inaccessible) {
+			return -1;
+		}
+		if (area.get(0).get(0) == exitPointValue) {
+			return 1;
+		}
+		Queue<Point> queue = new LinkedList<Point>();
+		// Initialize the start cell (0, 0).
+		queue.add(new Point(0, 0, null));
+		boolean[] hasExit = new boolean[] {false};
+		Point p = pathBFS(queue, area, hasExit);
+		System.out.println("hasExit:" + hasExit[0]);
+		return getDistance(p, hasExit);
+	}
+	
+	/**
+	 * Use Breath-First-Search method to calculate the distance to exit cell.
+	 * Notice: This method will change the original input array area.
+	 * @param queue
+	 * @param area
+	 * @return
+	 */
+	public Point pathBFS(Queue<Point> queue, List<List<Integer>> area, boolean[] hasExit) {
 		while (!queue.isEmpty()) {
 			Point p = queue.poll();
 			System.out.println("current point is: " + p);
 			if (area.get(p.x).get(p.y) == exitPointValue) {
 				System.out.println("Exit is reached!");
+				hasExit[0] = true;
+				System.out.println("hasExit:" + hasExit[0]);
                 return p;
 			}
 			
@@ -230,6 +333,16 @@ public class CheeseMaze {
 		return null;
 	}
 	
+	public int getDistance(Point p, boolean[] hasExit) {
+		int distance = 0;
+		while (p != null && p.getParent() != null) {
+			System.out.println(p);
+			distance++;
+			p = p.getParent();
+		}
+		return (hasExit[0] ? distance : -1);
+	}
+	
 	public boolean isFree(int x, int y, List<List<Integer>> area) {
 		if ((x >=0 && x < area.size()) && 
 		    (y >=0 && y < area.get(x).size()) &&
@@ -239,24 +352,25 @@ public class CheeseMaze {
 		return false;
 	}
 	
-	public int getDistance(Point p) {
-		int distance = 0;
-		while (p != null && p.getParent() != null) {
-			System.out.println(p);
-			distance++;
-			p = p.getParent();
+	private boolean isFree(Point next, List<List<Integer>> area) {
+		if ((next.x >= 0 && next.x < area.size()) && 
+				(next.y >= 0 && next.y < area.get(0).size()) && 
+				(area.get(next.x).get(next.y) == accessible || area.get(next.x).get(next.y) == exitPointValue)) {
+			return true;
 		}
-		return distance;
+		return false;
 	}
 	
-	// See from top to down view.
-	// dx=-1, dy=0 means move left
-	// dx=0, dy=1 means move up
-	// dx=0, dy=-1 means move down
-	// dx=1, dy=0 means move right
-	private final static int[] dx = {-1, 0, 0, 1};
-    private final static int[] dy = {0, 1, -1, 0};
+	
     
+    /**
+     * Use Breath-First-Search method to calculate the distance to exit cell.
+     * This method will not change the original input array area.
+     * @param numRows
+     * @param numColumns
+     * @param area
+     * @return
+     */
 	public int minimumDistanceV2(int numRows, int numColumns, List<List<Integer>> area) {
 		if (numRows < 1 || numRows > 1000) {
 			return -1;
@@ -272,56 +386,80 @@ public class CheeseMaze {
 		}
 		
 		// use BFS to find the distance from start point(0, 0) to destination point with value of exitPointValue
-		int m = area.size();
-		int n = area.get(0).size();
 		// use dy.length is ok too.
 		int directionSize = dx.length;
 		
 		// Key in distTo is a point, value in distTo is a distance to start point(0, 0).
 		Map<Point, Integer> distTo = new LinkedHashMap<>();
+		// marked.get(currentPoint) = is there a startPoint-currentPoint path?
+		Map<Point, Boolean> marked = new LinkedHashMap<>();
+		// Initialize all points with false mark.
+		for (int i = 0; i < area.size(); i++) {
+			for (int j = 0; j < area.get(i).size(); j++) {
+				marked.put(new Point(i, j, null), Boolean.FALSE);
+			}
+		}
 		// Initialize a queue and put start point into this queue.
 		Queue<Point> queue = new LinkedList<>();
-		queue.offer(new Point(0, 0, null));
+		Point startPoint = new Point(0, 0, null);
+		queue.offer(startPoint);
 		
 		// set Point (0, 0) value with -1 to indicate it has been visited.
-		area.get(0).set(0, visitedFlag);
+		//area.get(0).set(0, visitedFlag);
+		marked.put(startPoint, true);
 		// Point (0, 0) to itself's distance is 0.
-		distTo.put(new Point(0, 0, null), 0);
-		
-		
+		distTo.put(startPoint, 0);
+
+		boolean hasExit = false;
 		while (!queue.isEmpty()) {
 			Point cur = queue.poll();
 			System.out.println("cur is " + cur);
 			if (area.get(cur.x).get(cur.y) == exitPointValue) {
 				System.out.println("Exit is reached!");
+				hasExit = true;
 				break;
 			}
 			for (int i = 0; i < directionSize; i++) {
 				Point next = new Point(cur.x + dx[i], cur.y + dy[i], null);
-				if ((next.x >= 0 && next.x < m) && 
-					(next.y >= 0 && next.y < n) && 
-					(area.get(next.x).get(next.y) == accessible || area.get(next.x).get(next.y) == exitPointValue)) {
-						// Set flag with -1 to indicate this cell has been visited.
-						area.get(cur.x).set(cur.y, visitedFlag);
-						// Put Point next to queue.
-                        queue.offer(next);
-                        int distance = (distTo.get(cur) == null ? 0 : distTo.get(cur) + 1);
-                        distTo.put(next, distance);
+				if (isFree(next, area) && !marked.get(next)) {
+					// Set flag with -1 to indicate this cell has been visited.
+					//area.get(cur.x).set(cur.y, visitedFlag);
+					marked.put(next, true);
+					
+					// Put Point next to queue.
+                    queue.offer(next);
+                    int distance = (distTo.get(cur) == null ? 0 : distTo.get(cur) + 1);
+                    distTo.put(next, distance);
                 }
 			}
 		}
 		System.out.println(distTo);
-		return distTo.size() - 1;
+		return (hasExit ? distTo.size() - 1 : -1);
 	}
+	
+	
 	
 	/**
 	 * Use DFS to find the path to exit point.
+	 * This method will not change the original input array area via introducing an auxiliary 2-dimention array space with name of used.
 	 * @param numRows
 	 * @param numColumns
 	 * @param area
 	 * @return
 	 */
 	public int minimumDistanceV1(int numRows, int numColumns, List<List<Integer>> area) {
+		if (numRows < 1 || numRows > 1000) {
+			return -1;
+		}
+		if (numColumns < 1 || numColumns > 1000) {
+			return -1;
+		}
+		if (area == null || area.size() == 0 || area.get(0).size() == 0 || area.get(0).get(0) == inaccessible) {
+			return -1;
+		}
+		if (area.get(0).get(0) == exitPointValue) {
+			return 1;
+		}
 		int distance = 0;
 		int[][] used = new int[numRows][numColumns];
 
@@ -346,56 +484,58 @@ public class CheeseMaze {
 	}
 	
 	/**
-	 * Backtrack solution
+	 * Recursive Depth-First-Search method with an explicit stack.
 	 * @param numRows
 	 * @param numColumns
 	 * @param currentRow
 	 * @param currentColumn
-	 * @param area
-	 * @param used
+	 * @param area 
+	 * @param used   An 2-dimention array to indicate whether the current cell has been visited or not.
 	 * @param routes
-	 * @return
+	 * @return       The boolean flag to indicate whether has path to exit from current cell (currentRow, currentColumn).
 	 */
 	boolean traversal(int numRows, int numColumns, int currentRow, int currentColumn, List<List<Integer>> area,
 			int[][] used, Stack<List<Integer>> routes) {
 		if (used[currentRow][currentColumn] == 0) {
+			// If current cell has not been visited, set it's flag with 1 to mark it has been accessed.
 			used[currentRow][currentColumn] = 1;
 			List<Integer> route = new ArrayList<>();
 			route.add(currentRow);
 			route.add(currentColumn);
+			// Push current cell to the Stack.
 			routes.push(route);
-			if (area.get(currentRow).get(currentColumn) == 9) {
+			if (area.get(currentRow).get(currentColumn) == exitPointValue) {
 				return true;
 			}
 
-			if (currentRow - 1 >= 0 && area.get(currentRow - 1).get(currentColumn) != 0) {
+			if (currentRow - 1 >= 0 && area.get(currentRow - 1).get(currentColumn) != inaccessible) {
 				boolean found = traversal(numRows, numColumns, currentRow - 1, currentColumn, area, used, routes);
 				if (found) {
 					return true;
 				}
 			}
 
-			if (currentRow + 1 < numRows && area.get(currentRow + 1).get(currentColumn) != 0) {
+			if (currentRow + 1 < numRows && area.get(currentRow + 1).get(currentColumn) != inaccessible) {
 				boolean found = traversal(numRows, numColumns, currentRow + 1, currentColumn, area, used, routes);
 				if (found) {
 					return true;
 				}
 			}
 
-			if (currentColumn - 1 >= 0 && area.get(currentRow).get(currentColumn - 1) != 0) {
+			if (currentColumn - 1 >= 0 && area.get(currentRow).get(currentColumn - 1) != inaccessible) {
 				boolean found = traversal(numRows, numColumns, currentRow, currentColumn - 1, area, used, routes);
 				if (found) {
 					return true;
 				}
 			}
 
-			if (currentColumn + 1 < numColumns && area.get(currentRow).get(currentColumn + 1) != 0) {
+			if (currentColumn + 1 < numColumns && area.get(currentRow).get(currentColumn + 1) != inaccessible) {
 				boolean found = traversal(numRows, numColumns, currentRow, currentColumn + 1, area, used, routes);
 				if (found) {
 					return true;
 				}
 			}
-
+			// If no route start with the current cell, pop this cell out from stack route and reset visit flag back to zero.
 			routes.pop();
 			used[currentRow][currentColumn] = 0;
 		}
