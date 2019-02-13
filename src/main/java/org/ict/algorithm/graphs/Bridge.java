@@ -9,10 +9,18 @@ import org.ict.algorithm.util.StdOut;
  * 
  * Identifies bridge edges and prints them out.
  * This decomposes a directed graph into two-edge connected components.
+ * Runs in O(V + E) time.
+ * 
+ * Key quantity: 
+ * low[v] = minimum DFS preorder number of v
+ * and the set of vertices w for which there is a back edge (x, w)
+ * with x a descendant of v and w an ancestor of v.
+ * 
+ * Note: code assumes no parallel edges, e.g., two parallel edges
+ * would be (incorrectly) identified as bridges.
  *  
  * @author Robert Sedgewick 
  * @author Kevin Wayne
- *
  */
 public class Bridge {
 	
