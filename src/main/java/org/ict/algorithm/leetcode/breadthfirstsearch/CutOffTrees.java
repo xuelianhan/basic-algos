@@ -88,7 +88,7 @@ public class CutOffTrees {
 		int[] row1 = new int[] {8, 10, 12}; 
 		int[] row2 = new int[] {16, 9, 11}; 
 		int[] row3 = new int[] {15, 14, 13};
-		
+		 
 		
 		/**
         int[] row1 = new int[] {54581641,64080174,24346381,69107959};
@@ -96,7 +96,7 @@ public class CutOffTrees {
         int[] row3 = new int[] {668150,92178815,89819108,94701471};
         int[] row4 = new int[] {83920491,22724204,46281641,47531096};
         int[] row5 = new int[] {89078499,18904913,25462145,60813308};
-        */
+		 */
 		//see https://www.techiedelight.com/convert-int-array-list-integer/
 		List<Integer> r1 = Arrays.stream(row1).boxed().collect(Collectors.toList());
 		forest.add(r1);
@@ -104,10 +104,12 @@ public class CutOffTrees {
 		forest.add(r2);
 		List<Integer> r3 = Arrays.stream(row3).boxed().collect(Collectors.toList());
 		forest.add(r3);
-		/*List<Integer> r4 = Arrays.stream(row4).boxed().collect(Collectors.toList());
+		/**
+		List<Integer> r4 = Arrays.stream(row4).boxed().collect(Collectors.toList());
 		forest.add(r4);
 		List<Integer> r5 = Arrays.stream(row5).boxed().collect(Collectors.toList());
-		forest.add(r5);*/
+		forest.add(r5);
+		 */
 		
 		int result1 = maze.cutOffTree(forest);
 		System.out.println("result1:" + result1);
@@ -158,7 +160,7 @@ public class CutOffTrees {
 			Point des = queue.poll();
 			Point p = bfs(forest, src, des);
 			int distance = getDistance(p);
-			System.out.println("go to des " + des + " from " + src + ", distance:" + distance + ", lastPoint:" + p);
+			System.out.println("go to des " + des.weight + " from " + src.weight + ", distance:" + distance + ", lastPoint:" + p);
 			src = des;
 		}
         return -1;
@@ -176,16 +178,17 @@ public class CutOffTrees {
 		// Initialize the start cell (0, 0).
 		queue.add(src);
 		marked.put(src, true);
-		
+		int steps = 0;
 		Point lastPoint = null;
 		while (!queue.isEmpty()) {
-			for (int j = 0; j < queue.size(); j++) {
+			//for (int j = 0; j < queue.size(); j++) {
 				Point cur = queue.poll();
 				cur.setParent(lastPoint);
 				lastPoint = cur;
 				
 				forest.get(cur.x).set(cur.y, grassFlag);
 				if (cur.equals(des)) {
+					distTo.put(des, steps);
 					return lastPoint;
 				}
 				for (int i = 0; i < dx.length; i++) {
@@ -197,10 +200,11 @@ public class CutOffTrees {
 						}
 					}
 				}
-			}
-			//System.out.println("queue: " + queue);
+			//}
+			steps++;
+			System.out.println("queue: " + queue);
 		}
-		return lastPoint;
+		return null;
 	}
 	
 	private boolean isFree(int x, int y, List<List<Integer>> forest) {
