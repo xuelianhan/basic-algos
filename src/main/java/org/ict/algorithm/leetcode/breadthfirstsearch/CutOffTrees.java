@@ -164,6 +164,13 @@ public class CutOffTrees {
         return -1;
 	}
 	
+	/**
+	 * compute steps from src to des in forest with BFS search.
+	 * @param forest
+	 * @param src
+	 * @param des
+	 * @return
+	 */
 	private Point bfs(List<List<Integer>> forest, Point src, Point des) {
 		Queue<Point> queue = new LinkedList<>();
 		// Initialize the start cell (0, 0).
