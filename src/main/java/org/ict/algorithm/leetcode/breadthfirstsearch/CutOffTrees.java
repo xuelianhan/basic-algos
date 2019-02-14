@@ -3,13 +3,12 @@ package org.ict.algorithm.leetcode.breadthfirstsearch;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Queue;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 
@@ -125,6 +124,8 @@ public class CutOffTrees {
     // check Point whether has been added into queue or not.
     private static final Map<Point, Boolean> marked = new LinkedHashMap<>();
     
+    private static final Map<Point, Integer> distTo = new LinkedHashMap<>();
+    
 	public int cutOffTree(List<List<Integer>> forest) {
         if (forest == null || forest.size() == 0 || forest.get(0).size() == 0) {
             return -1;
@@ -145,36 +146,48 @@ public class CutOffTrees {
             }
         });
         
-		// Collect all tree nodes of forest into priority queue.
+		// Collect all tree nodes of forest into priority queue and sorted by weight.
 		collectTrees(forest, queue);
 		if (queue.isEmpty()) {
 			return -1;
 		}
 		
 		// Initialize the start cell (0, 0).
-		Point startPoint = new Point(0, 0, forest.get(0).get(0), null);
-		queue.add(startPoint);
-		marked.put(startPoint, true);
-		Point p = bfs(queue, forest);
-		System.out.println("last point is : " + p);
-        return getDistance(p);
+		Point src = new Point(0, 0, forest.get(0).get(0), null);
+		while (!queue.isEmpty()) {
+			Point des = queue.poll();
+			Point p = bfs(forest, src, des);
+			int distance = getDistance(p);
+			System.out.println("go to des " + des + " from " + src + ", distance:" + distance + ", lastPoint:" + p);
+			src = des;
+		}
+        return -1;
 	}
 	
-	private Point bfs(Queue<Point> queue, List<List<Integer>> forest) {
+	private Point bfs(List<List<Integer>> forest, Point src, Point des) {
+		Queue<Point> queue = new LinkedList<>();
+		// Initialize the start cell (0, 0).
+		queue.add(src);
+		marked.put(src, true);
+		
 		Point lastPoint = null;
 		while (!queue.isEmpty()) {
-			Point cur = queue.poll();
-			cur.setParent(lastPoint);
-			lastPoint = cur;
-			System.out.println("visit " + cur);
-			forest.get(cur.x).set(cur.y, grassFlag);
-			
-			for (int i = 0; i < dx.length; i++) {
-				if (isFree(cur.x + dx[i], cur.y + dy[i], forest)) {
-					Point next = new Point(cur.x + dx[i], cur.y + dy[i], forest.get(cur.x + dx[i]).get(cur.y + dy[i]), null);
-					if (marked.get(next) == Boolean.FALSE) { 
-						marked.put(next, true); 
-					  queue.add(next); 
+			for (int j = 0; j < queue.size(); j++) {
+				Point cur = queue.poll();
+				cur.setParent(lastPoint);
+				lastPoint = cur;
+				
+				forest.get(cur.x).set(cur.y, grassFlag);
+				if (cur.equals(des)) {
+					return lastPoint;
+				}
+				for (int i = 0; i < dx.length; i++) {
+					if (isFree(cur.x + dx[i], cur.y + dy[i], forest)) {
+						Point next = new Point(cur.x + dx[i], cur.y + dy[i], forest.get(cur.x + dx[i]).get(cur.y + dy[i]), null);
+						if (marked.get(next) == Boolean.FALSE) { 
+							marked.put(next, true); 
+							queue.add(next); 
+						}
 					}
 				}
 			}
