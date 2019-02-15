@@ -84,19 +84,19 @@ public class CutOffTrees {
 		int[] row3 = new int[] {8, 1, 1};
 		*/
 		
-		
+		/**
 		int[] row1 = new int[] {8, 10, 12}; 
 		int[] row2 = new int[] {16, 9, 11}; 
 		int[] row3 = new int[] {15, 14, 13};
-		 
+		*/
 		
-		/**
+		
         int[] row1 = new int[] {54581641,64080174,24346381,69107959};
         int[] row2 = new int[] {86374198,61363882,68783324,79706116};
         int[] row3 = new int[] {668150,92178815,89819108,94701471};
         int[] row4 = new int[] {83920491,22724204,46281641,47531096};
         int[] row5 = new int[] {89078499,18904913,25462145,60813308};
-		 */
+		 
 		//see https://www.techiedelight.com/convert-int-array-list-integer/
 		List<Integer> r1 = Arrays.stream(row1).boxed().collect(Collectors.toList());
 		forest.add(r1);
@@ -104,12 +104,12 @@ public class CutOffTrees {
 		forest.add(r2);
 		List<Integer> r3 = Arrays.stream(row3).boxed().collect(Collectors.toList());
 		forest.add(r3);
-		/**
+		/** */
 		List<Integer> r4 = Arrays.stream(row4).boxed().collect(Collectors.toList());
 		forest.add(r4);
 		List<Integer> r5 = Arrays.stream(row5).boxed().collect(Collectors.toList());
 		forest.add(r5);
-		 */
+		
 		
 		int result1 = maze.cutOffTree(forest);
 		System.out.println("result1:" + result1);
@@ -123,8 +123,6 @@ public class CutOffTrees {
 	
 	private final static int[] dx = {-1, 0, 0, 1};
     private final static int[] dy = {0, 1, -1, 0};
-    // check Point whether has been added into queue or not.
-    private static final Map<Point, Boolean> marked = new LinkedHashMap<>();
     
     private static final Map<Point, Integer> distTo = new LinkedHashMap<>();
     
@@ -175,13 +173,14 @@ public class CutOffTrees {
 	 */
 	private Point bfs(List<List<Integer>> forest, Point src, Point des) {
 		Queue<Point> queue = new LinkedList<>();
+		Map<Point, Boolean> marked = new LinkedHashMap<>();
 		// Initialize the start cell (0, 0).
 		queue.add(src);
 		marked.put(src, true);
 		int steps = 0;
 		Point lastPoint = null;
 		while (!queue.isEmpty()) {
-			//for (int j = 0; j < queue.size(); j++) {
+			for (int j = 0; j < queue.size(); j++) {
 				Point cur = queue.poll();
 				cur.setParent(lastPoint);
 				lastPoint = cur;
@@ -194,15 +193,16 @@ public class CutOffTrees {
 				for (int i = 0; i < dx.length; i++) {
 					if (isFree(cur.x + dx[i], cur.y + dy[i], forest)) {
 						Point next = new Point(cur.x + dx[i], cur.y + dy[i], forest.get(cur.x + dx[i]).get(cur.y + dy[i]), null);
-						if (marked.get(next) == Boolean.FALSE) { 
+						if (marked.get(next) != Boolean.TRUE) { 
 							marked.put(next, true); 
 							queue.add(next); 
 						}
 					}
 				}
-			//}
+				System.out.println("queue: " + queue);
+			}
 			steps++;
-			System.out.println("queue: " + queue);
+			
 		}
 		return null;
 	}
@@ -229,7 +229,7 @@ public class CutOffTrees {
 		for (int i = 0; i < forest.size(); i++) {
 			for (int j = 0; j < forest.get(i).size(); j++) {
 				Point p = new Point(i, j, forest.get(i).get(j), null);
-				marked.put(p, false);
+				distTo.put(p, -1);
 				if (forest.get(i).get(j) > grassFlag) {
 					queue.add(p);
 				}
@@ -288,7 +288,7 @@ public class CutOffTrees {
 		}
 		
 		public String toString() {
-			return "x = " + x + ", y = " + y + ", weight = " + weight;
+			return "(" + x + ", " + y + ", " + weight +")";
 		}
 	}
 }
