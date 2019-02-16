@@ -72,4 +72,28 @@ public class AbstractSortHelper {
             StdOut.println(a[i]);
         }
     }
+    
+    //reverse array
+    public static void reverse(int[] a) {
+    	for (int i = 0, j = a.length -1; i < a.length/2; i++, j--) {
+    		if (i >= j) {
+    			break;
+    		}
+    		exch(a, i, j);
+    	}
+    }
+    
+    /**
+     * swap matrix[i][j] with matrix[r][c]
+     * @param matrix
+     * @param i
+     * @param j
+     * @param r
+     * @param c
+     */
+    public static void swapMatrix(int[][] matrix, int i, int j, int r, int c) {
+	    int temp = matrix[i][j];
+	    matrix[i][j] = matrix[r][c];
+	    matrix[r][c] = temp;
+    }
 }

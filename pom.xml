@@ -100,6 +100,13 @@
 	    <artifactId>javassist</artifactId>
 	    <version>3.12.1.GA</version>
 	</dependency>
+	<!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
+	<dependency>
+	    <groupId>org.apache.httpcomponents</groupId>
+	    <artifactId>httpclient</artifactId>
+	    <version>4.5.6</version>
+	</dependency>
+	
     <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
@@ -109,6 +116,7 @@
   </dependencies>
 
   <build>
+  <pluginManagement>
     <plugins>
 	<plugin>
 	<!-- Build an executable JAR -->
@@ -149,6 +157,34 @@
             <encoding>UTF-8</encoding>
         </configuration>
       </plugin>
+      <!--This plugin's configuration is used to store Eclipse 
+                m2e settings only. It has no influence on the Maven build itself. -->
+      <plugin>
+          <groupId>org.eclipse.m2e</groupId>
+          <artifactId>lifecycle-mapping</artifactId>
+          <version>1.0.0</version>
+          <configuration>
+              <lifecycleMappingMetadata>
+                  <pluginExecutions>
+                      <pluginExecution>
+                          <pluginExecutionFilter>
+                              <groupId>org.codehaus.mojo</groupId>
+                              <artifactId>aspectj-maven-plugin</artifactId>
+                              <versionRange>[1.0,)</versionRange>
+                              <goals>
+                                  <goal>test-compile</goal>
+                                  <goal>compile</goal>
+                              </goals>
+                          </pluginExecutionFilter>
+                          <action>
+                              <execute />
+                          </action>
+                      </pluginExecution>
+                  </pluginExecutions>
+              </lifecycleMappingMetadata>
+          </configuration>
+      </plugin>
     </plugins>
+    </pluginManagement>
   </build>
 </project>

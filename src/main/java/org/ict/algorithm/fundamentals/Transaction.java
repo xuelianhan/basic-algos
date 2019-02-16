@@ -4,12 +4,24 @@ import org.apache.commons.lang3.StringUtils;
 
 public class Transaction implements Comparable<Transaction> {
 	
+	/** customer */
 	private String who;
-	
+	/** date */
 	private Date when;
-	
+	/** amount */
 	private double amount;
 	
+	/**
+	 *  Initializes a new transaction from the given arguments
+	 * 
+	 * @param who the person involved in this transaction
+	 * @param when the date of this transaction
+	 * @param amount the amount of this transaction
+	 * @throws IllegalArgumentException if {@code amount}
+	 *         is {@code Double.NaN}, {@code Double.POSITIVE_INFINITY},
+	 *         or {@code Double.NEGATIVE_INFINITY}
+	 * 
+	 */
 	public Transaction(String who, Date when, double amount) {
 		if (Double.isNaN(amount) || Double.isInfinite(amount)) {
 			throw new IllegalArgumentException("Amount cannot be NaN or infinite");
@@ -23,6 +35,26 @@ public class Transaction implements Comparable<Transaction> {
 		this.who = who;
 		this.when = when;
 		this.amount = amount;
+	}
+	
+	/**
+	 * Initializes a new transaction by parsing  a string of the
+	 * form NAME DATE AMOUNT.
+	 * 
+	 * @param transaction the string to parse
+	 * @throws IllegalArgumentException if {@code amount}
+	 *         is {@code Double.NaN}, {@code Double.POSITIVE_INFINITY},
+	 *         or {@code Double.NEGATIVE_INFINITY}
+	 * 
+	 */
+	public Transaction(String transaction) {
+		String[] a = transaction.split("\\s+");
+		who    = a[0];
+		when   = new Date(a[1]);
+		amount = Double.parseDouble(a[2]);
+		if (Double.isNaN(amount) || Double.isInfinite(amount)) {
+			throw new IllegalArgumentException("Amount cannot be NaN or infinite");
+		}
 	}
 
 	public int compareTo(Transaction o) {
