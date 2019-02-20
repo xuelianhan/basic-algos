@@ -158,7 +158,7 @@ public class CutOffTrees {
 			Point p = bfs(forest, src, des);
 			int distance = getDistance(p);
 			totalSteps += distance;
-			System.out.println("go to des " + des.weight + " from " + src.weight + ", distance:" + distance + ", lastPoint:" + p);
+			System.out.println("end go to des " + des.weight + " from " + src.weight + ", distance:" + distance + ", lastPoint:" + p);
 			src = des;
 		}
 		/**
@@ -179,7 +179,7 @@ public class CutOffTrees {
 	private Point bfs(List<List<Integer>> forest, Point src, Point des) {
 		Queue<Point> queue = new LinkedList<>();
 		Map<Point, Boolean> marked = new LinkedHashMap<>();
-		// Initialize the start cell (0, 0).
+		// Initialize the queue with start cell src.
 		queue.add(src);
 		marked.put(src, true);
 		int steps = 0;
@@ -187,11 +187,13 @@ public class CutOffTrees {
 		while (!queue.isEmpty()) {
 			for (int j = 0; j < queue.size(); j++) {
 				Point cur = queue.poll();
+				System.out.println("visit: " + cur);
 				cur.setParent(lastPoint);
 				lastPoint = cur;
 				
-				forest.get(cur.x).set(cur.y, grassFlag);
+				//forest.get(cur.x).set(cur.y, grassFlag);
 				if (cur.equals(des)) {
+					System.out.println("reached at des" + des +", will return:" + lastPoint);
 					distTo.put(des, steps);
 					return lastPoint;
 				}
@@ -201,6 +203,8 @@ public class CutOffTrees {
 						if (marked.get(next) != Boolean.TRUE) { 
 							marked.put(next, true); 
 							queue.add(next); 
+						} else {
+							System.out.println(next + " has been visited");
 						}
 					}
 				}
