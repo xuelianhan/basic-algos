@@ -177,17 +177,17 @@ public class CutOffTrees {
 	 * @return
 	 */
 	private Point bfs(List<List<Integer>> forest, Point src, Point des) {
-		Queue<Point> queue = new LinkedList<>();
+		Queue<Point> bfsQueue = new LinkedList<>();
 		Map<Point, Boolean> marked = new LinkedHashMap<>();
 		// Initialize the queue with start cell src.
-		queue.add(src);
+		bfsQueue.add(src);
 		marked.put(src, true);
 		int steps = 0;
 		Point lastPoint = null;
-		while (!queue.isEmpty()) {
-			for (int j = 0; j < queue.size(); j++) {
-				Point cur = queue.poll();
-				System.out.println("visit: " + cur);
+		while (!bfsQueue.isEmpty()) {
+			for (int j = 0; j < bfsQueue.size(); j++) {
+				Point cur = bfsQueue.poll();
+				System.out.println("visit: " + cur +" from " + src + " to " + des);
 				cur.setParent(lastPoint);
 				lastPoint = cur;
 				
@@ -200,15 +200,16 @@ public class CutOffTrees {
 				for (int i = 0; i < dx.length; i++) {
 					if (isFree(cur.x + dx[i], cur.y + dy[i], forest)) {
 						Point next = new Point(cur.x + dx[i], cur.y + dy[i], forest.get(cur.x + dx[i]).get(cur.y + dy[i]), null);
+						System.out.println("marked:" + marked);
 						if (marked.get(next) != Boolean.TRUE) { 
 							marked.put(next, true); 
-							queue.add(next); 
+							bfsQueue.add(next); 
 						} else {
 							System.out.println(next + " has been visited");
 						}
 					}
 				}
-				System.out.println("queue: " + queue);
+				System.out.println("queue: " + bfsQueue);
 			}
 			steps++;
 		}
