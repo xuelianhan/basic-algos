@@ -3,12 +3,14 @@ package org.ict.algorithm.leetcode.breadthfirstsearch;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Queue;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 
@@ -78,16 +80,16 @@ public class CutOffTrees {
 		*/
 		
 		// Test case
-		/**
+		
 		int[] row1 = new int[] {1, 1, 1}; 
 		int[] row2 = new int[] {0, 0, 1}; 
 		int[] row3 = new int[] {8, 1, 1};
-		*/
 		
+		/**
 		int[] row1 = new int[] {8, 9, 10}; 
 		int[] row2 = new int[] {13, 12, 11}; 
-		int[] row3 = new int[] {16, 15, 14};
-		
+		int[] row3 = new int[] {14, 15, 18};
+		*/
 		/**
         int[] row1 = new int[] {54581641,64080174,24346381,69107959};
         int[] row2 = new int[] {86374198,61363882,68783324,79706116};
@@ -118,11 +120,6 @@ public class CutOffTrees {
 	private static final int grassFlag = 1;
 	// The inaccessible flag
 	private static final int inaccessible = 0;
-	
-	private final static int[] dx = {-1, 0, 0, 1};
-    private final static int[] dy = {0, 1, -1, 0};
-    
-    private static final Map<Point, Integer> distTo = new LinkedHashMap<>();
     
 	public int cutOffTree(List<List<Integer>> forest) {
         if (forest == null || forest.size() == 0 || forest.get(0).size() == 0) {
@@ -153,19 +150,16 @@ public class CutOffTrees {
 		// Initialize the start cell (0, 0).
 		Point src = new Point(0, 0, forest.get(0).get(0), null);
 		int totalSteps = 0;
+		Point des = null;
 		while (!queue.isEmpty()) {
-			Point des = queue.poll();
-			Point p = bfs(forest, src, des);
-			int distance = getDistance(p);
-			totalSteps += distance;
-			System.out.println("end go to des " + des.weight + " from " + src.weight + ", distance:" + distance + ", lastPoint:" + p);
+			des = queue.poll();
+			int steps = bfs(forest, src, des);
+			if (steps == -1) {
+				return -1;
+			}
+			totalSteps += steps;
 			src = des;
 		}
-		/**
-		for (Integer v: distTo.values()) {
-			totalSteps += v;
-		}
-		*/
         return totalSteps;
 	}
 	
@@ -176,44 +170,37 @@ public class CutOffTrees {
 	 * @param des
 	 * @return
 	 */
-	private Point bfs(List<List<Integer>> forest, Point src, Point des) {
+	private int bfs(List<List<Integer>> forest, Point src, Point des) {
+		int[][] dir = new int[][]{{0,1},{1,0},{-1,0},{0,-1}};
 		Queue<Point> bfsQueue = new LinkedList<>();
-		Map<Point, Boolean> marked = new LinkedHashMap<>();
+		Set<Point> visited = new HashSet<>();
 		// Initialize the queue with start cell src.
 		bfsQueue.add(src);
-		marked.put(src, true);
 		int steps = 0;
-		Point lastPoint = null;
 		while (!bfsQueue.isEmpty()) {
-			for (int j = 0; j < bfsQueue.size(); j++) {
+			int size = bfsQueue.size();
+			for (int j = 0; j < size; j++) {
 				Point cur = bfsQueue.poll();
-				System.out.println("visit: " + cur +" from " + src + " to " + des);
-				cur.setParent(lastPoint);
-				lastPoint = cur;
-				
-				//forest.get(cur.x).set(cur.y, grassFlag);
+				forest.get(cur.x).set(cur.y, grassFlag);
 				if (cur.equals(des)) {
-					System.out.println("reached at des" + des +", will return:" + lastPoint);
-					distTo.put(des, steps);
-					return lastPoint;
+					System.out.println("reached at des: " + des + ", steps:" + steps);
+					return steps;
 				}
-				for (int i = 0; i < dx.length; i++) {
-					if (isFree(cur.x + dx[i], cur.y + dy[i], forest)) {
-						Point next = new Point(cur.x + dx[i], cur.y + dy[i], forest.get(cur.x + dx[i]).get(cur.y + dy[i]), null);
-						System.out.println("marked:" + marked);
-						if (marked.get(next) != Boolean.TRUE) { 
-							marked.put(next, true); 
-							bfsQueue.add(next); 
-						} else {
-							System.out.println(next + " has been visited");
-						}
+				for (int i = 0; i < dir.length; i++) {
+					if (!isFree(cur.x + dir[i][0], cur.y + dir[i][1], forest)) {
+						continue;
+					}
+					Point next = new Point(cur.x + dir[i][0], cur.y + dir[i][1], forest.get(cur.x + dir[i][0]).get(cur.y + dir[i][1]), null);
+					if (!visited.contains(next)) { 
+						visited.add(next); 
+						bfsQueue.add(next); 
 					}
 				}
-				System.out.println("queue: " + bfsQueue);
 			}
+			System.out.println("queue: " + bfsQueue);
 			steps++;
 		}
-		return null;
+		return -1;
 	}
 	
 	private boolean isFree(int x, int y, List<List<Integer>> forest) {
@@ -238,7 +225,6 @@ public class CutOffTrees {
 		for (int i = 0; i < forest.size(); i++) {
 			for (int j = 0; j < forest.get(i).size(); j++) {
 				Point p = new Point(i, j, forest.get(i).get(j), null);
-				distTo.put(p, -1);
 				if (forest.get(i).get(j) > grassFlag) {
 					queue.add(p);
 				}
