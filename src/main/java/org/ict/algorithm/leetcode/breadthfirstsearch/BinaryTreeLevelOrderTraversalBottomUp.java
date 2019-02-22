@@ -43,10 +43,10 @@ public class BinaryTreeLevelOrderTraversalBottomUp {
 
 	public static List<List<Integer>> levelOrderBottom(TreeNode root) {
 		List<List<Integer>> result =  new ArrayList<>();
-		Queue<TreeNode> queue = new LinkedList<>();
 		if (root == null) {
 			return result;
 		}
+		Queue<TreeNode> queue = new LinkedList<>();
 		queue.add(root);
 		while (!queue.isEmpty()) {
 			/* queue size indicates number of nodes at each level */
