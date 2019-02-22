@@ -113,7 +113,6 @@ public class SymmetricTree {
 
 	/**
 	 * Definition for a binary tree node.
-	 * }
 	 */
 	 public static class TreeNode {
 	    int val;
