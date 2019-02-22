@@ -43,11 +43,44 @@ public class BinaryTreeZigzagLevelOrderTraversal {
 		root.left = new TreeNode(2);
 		root.right = new TreeNode(3);
 		root.left.left = new TreeNode(4);
-		root.left.right = new TreeNode(6);
-		root.right.left = new TreeNode(7);
+		//root.left.right = new TreeNode(6);
+		//root.right.left = new TreeNode(7);
 		root.right.right = new TreeNode(5);
-		List<List<Integer>> result = zigzagLevelOrder(root);
+		List<List<Integer>> result = zigzagLevelOrderV2(root);
 		System.out.println(result);
+	}
+	
+	public static List<List<Integer>> zigzagLevelOrderV2(TreeNode root) {
+		List<List<Integer>> result = new ArrayList<>();
+		if (root == null) {
+			return result;
+		}
+		Queue<TreeNode> queue = new LinkedList<>();
+		queue.add(root);
+		/* The level of binary tree */
+		int level = 1;
+		while (!queue.isEmpty()) {
+			/* queue size indicates number of nodes at each level */
+			int size = queue.size();
+			List<Integer> temp = new ArrayList<>();
+			for (int i = 0; i < size; i++) {
+				TreeNode cur = queue.poll();
+				if (level % 2 == 0) {
+					temp.add(0, cur.val);
+				} else {
+					temp.add(cur.val);
+				}
+				if (cur.left != null) {
+					queue.add(cur.left);
+				}
+				if (cur.right != null) {
+					queue.add(cur.right);
+				}
+			}
+			level++;
+			result.add(temp);
+		}
+		return result;
 	}
 	
 	public static List<List<Integer>> zigzagLevelOrder(TreeNode root) {
