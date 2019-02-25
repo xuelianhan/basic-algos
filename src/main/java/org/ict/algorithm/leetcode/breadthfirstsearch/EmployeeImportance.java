@@ -35,7 +35,7 @@ import java.util.Queue;
  * Note:
  * One employee has at most one direct leader and may have several subordinates.
  * The maximum number of employees won't exceed 2000.
- *
+ * [[1,5,[2,3]],[2,3,[]],[3,3,[]]],1 expected 11
  */
 public class EmployeeImportance {
 	
@@ -45,23 +45,23 @@ public class EmployeeImportance {
 		List<Integer> e1Sub = new ArrayList<Integer>();
 		e1Sub.add(2);
 		e1Sub.add(3);
-		Employee e1 = instance.new Employee(1, 5, e1Sub);
+		Employee e1 = new Employee(1, 5, e1Sub);
 		
 		List<Integer> e2Sub = new ArrayList<Integer>();
 		//e2Sub.add(2);
 		//e2Sub.add(3);
-		Employee e2 = instance.new Employee(2, 3, e2Sub);
+		Employee e2 = new Employee(2, 3, e2Sub);
 		
 		List<Integer> e3Sub = new ArrayList<Integer>();
 		//e3Sub.add(2);
 		//e3Sub.add(3);
-		Employee e3 = instance.new Employee(3, 3, e3Sub);
+		Employee e3 = new Employee(3, 3, e3Sub);
 		
 		employees.add(e1);
 		employees.add(e2);
 		employees.add(e3);
 		
-		int result = instance.getImportance(employees, 1);
+		int result = instance.getImportance(employees, 2);
 		System.out.println(result);
 	}
 	
@@ -94,19 +94,21 @@ public class EmployeeImportance {
 		int result = 0;
 		Queue<Employee> queue = new LinkedList<>();
 		Employee key = new Employee();
-		key.setId(id);
+		key.id = id;
 		int loc = Arrays.binarySearch(a, key, comparator);
 		if (loc < 0) {
 			return 0;
 		}
-		Employee first = a[0];
+		Employee first = a[loc];
+		System.out.println("first:" + first);
 		if (first.subordinates == null || first.subordinates.size() == 0) {
-			return 0;
+			return first.importance;
 		}
 		queue.add(first);
 		Map<Integer, Boolean> visited = new HashMap<>();
 		visited.put(first.id, true);
 		while (!queue.isEmpty()) {
+			System.out.println("queue:" + queue);
 			int size = queue.size();
 			for (int i = 0; i < size; i++) {
 				Employee cur = queue.poll();
@@ -116,7 +118,8 @@ public class EmployeeImportance {
 				}
 				for (Integer sub : cur.subordinates) {
 					if (visited.get(sub) == null) {
-						Employee subE = new Employee(sub);
+						Employee subE = new Employee();
+						subE.id = sub;
 						int idx =  Arrays.binarySearch(a, subE, comparator);
 						if (idx < 0) {
 							continue;
@@ -126,13 +129,12 @@ public class EmployeeImportance {
 					}
 				}
 			}
-			
 		}
 		return result;
 	}
 
 	// Employee info
-	class Employee {
+	static class Employee {
 	    // It's the unique id of each node;
 	    // unique id of this employee
 	    public int id;
@@ -153,32 +155,6 @@ public class EmployeeImportance {
 	    	this.subordinates = subordinates;
 	    }
 	    
-	    
-	    
-	    public int getId() {
-			return id;
-		}
-
-		public void setId(int id) {
-			this.id = id;
-		}
-
-		public int getImportance() {
-			return importance;
-		}
-
-		public void setImportance(int importance) {
-			this.importance = importance;
-		}
-
-		public List<Integer> getSubordinates() {
-			return subordinates;
-		}
-
-		public void setSubordinates(List<Integer> subordinates) {
-			this.subordinates = subordinates;
-		}
-
 		@Override
 		public int hashCode() {
 			final int prime = 31;
