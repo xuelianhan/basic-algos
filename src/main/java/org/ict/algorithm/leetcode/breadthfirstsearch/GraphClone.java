@@ -1,11 +1,12 @@
 package org.ict.algorithm.leetcode.breadthfirstsearch;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
-import java.util.Vector;
 
 /**
  * Given a reference of a node in a connected undirected graph, return a deep copy (clone) of the graph.
@@ -26,12 +27,74 @@ import java.util.Vector;
  * You must return the copy of the given node as a reference to the cloned graph.
  * 
  * @see https://www.geeksforgeeks.org/clone-an-undirected-graph/
+ * @see https://www.journaldev.com/378/java-util-concurrentmodificationexception
  */
 public class GraphClone {
 	
 	public static void main(String[] args) {
-		
+		GraphClone graph = new GraphClone(); 
+        Node source = graph.buildGraph(); 
+        System.out.println("BFS traversal of a graph before cloning"); 
+        graph.bfsCheck(source); 
+        Node newSource = graph.cloneGraph(source); 
+        System.out.println("BFS traversal of a graph after cloning"); 
+        graph.bfsCheck(newSource); 
 	}
+	
+	public Node buildGraph() {
+		 /* 
+        Note : All the edges are Undirected 
+        Given Graph: 
+        1--2 
+        |  | 
+        4--3 */
+		Node node1 = new Node(1, null); 
+        Node node2 = new Node(2, null); 
+        Node node3 = new Node(3, null); 
+        Node node4 = new Node(4, null); 
+        List<Node> v = new ArrayList<Node>(); 
+        v.add(node2); 
+        v.add(node4); 
+        node1.neighbors = v; 
+        v = new ArrayList<Node>(); 
+        v.add(node1); 
+        v.add(node3); 
+        node2.neighbors = v; 
+        v = new ArrayList<Node>(); 
+        v.add(node2); 
+        v.add(node4); 
+        node3.neighbors = v; 
+        v = new ArrayList<Node>(); 
+        v.add(node3); 
+        v.add(node1); 
+        node4.neighbors = v; 
+        return node1; 
+	}
+	
+	 // BFS traversal of a graph to 
+    // check if the cloned graph is correct 
+    public void bfsCheck(Node source) { 
+        Queue<Node> q = new LinkedList<Node>(); 
+        q.add(source); 
+        HashMap<Node,Boolean> visit = new HashMap<Node,Boolean>(); 
+        visit.put(source,true); 
+        while (!q.isEmpty()) { 
+            Node u = q.poll(); 
+            System.out.println("Value of Node " + u.val ); 
+            System.out.println("Address of Node " + u); 
+            if (u.neighbors != null) { 
+                List<Node> v = u.neighbors; 
+                for (Node g : v) { 
+                    if (visit.get(g) == null) { 
+                        q.add(g); 
+                        visit.put(g,true); 
+                    } 
+                } 
+            } 
+        } 
+        System.out.println(); 
+    } 
+ 
 	
 	public Node cloneGraph(Node node) {
 		if (node == null) {
@@ -44,27 +107,31 @@ public class GraphClone {
 		Queue<Node> queue = new LinkedList<>();
 		queue.add(src);
 		Map<Node, Node> visited = new HashMap<>();
-		visited.put(src, new Node(src.val, src.neighbors));
+		//Copy src
+		List<Node> newNeighbors = new ArrayList<>();
+		//newNeighbors.addAll(src.neighbors);
+		Node newHead = new Node(src.val, newNeighbors);
+		visited.put(src, newHead);
 		
 		while (!queue.isEmpty()) {
 			Node cur = queue.poll();
-			Node clonedCur = visited.get(cur);
-			if (cur.neighbors == null) {
-				continue;
-			}
-			List<Node> neighbors = cur.neighbors;
-			for (Node neighbor : neighbors) {
+			Node curCloned = visited.get(cur);
+			Iterator<Node> iter = cur.neighbors.iterator();
+			while (iter.hasNext()) {
+				Node neighbor = iter.next();
 				Node copy = visited.get(neighbor);
 				// neighbor not visited
 				if (copy == null) {
-					queue.add(neighbor);
-					copy = new Node(neighbor.val, neighbor.neighbors);
+					List<Node> temp = new ArrayList<>();
+					//temp.addAll(neighbor.neighbors);
+					copy = new Node(neighbor.val, temp);
 					visited.put(neighbor, copy);
+					queue.add(neighbor);
 				}
-				clonedCur.neighbors.add(copy);
+				curCloned.neighbors.add(copy);
 			}
 		}
-		return visited.get(src);
+		return newHead;
 	}
 
 	class Node {
