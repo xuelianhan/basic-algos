@@ -45,6 +45,10 @@ public class GraphClone {
         graph.bfsCheck(newSource); 
 	}
 	
+	public void deepClone(Node node) {
+		
+	}
+	
 	public Node buildGraph() {
 		 /* 
         Note : All the edges are Undirected 
