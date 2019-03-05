@@ -7,15 +7,26 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+import java.util.Stack;
 
 /**
  * Given a reference of a node in a connected undirected graph, return a deep copy (clone) of the graph.
  * Each node in the graph contains a val (int) and a list (List[Node]) of its neighbors.
  * Input:
  * {"$id":"1","neighbors":[{"$id":"2","neighbors":[{"$ref":"1"},
- *                                                 {"$id":"3","neighbors":[{"$ref":"2"},
- *                         {"$id":"4","neighbors":[{"$ref":"3"},
- *                                                 {"$ref":"1"}],"val":4}],"val":3}],"val":2},{"$ref":"4"}],
+ *                                                 {"$id":"3","neighbors":[
+ *                                                                         {"$ref":"2"},
+ *                                                                         {"$id":"4","neighbors":[
+ *                                                                                                 {"$ref":"3"},
+ *                                                                                                 {"$ref":"1"}
+ *                                                                                                ],
+ *                                                                          "val":4}
+ *                                                                        ],
+ *                                                   "val":3}
+ *                                                ],
+ *                          "val":2},
+ *                          {"$ref":"4"}
+ *                        ],
  *  "val":1}
  * 1-------2
  * |       |
@@ -47,8 +58,37 @@ public class GraphClone {
         graph.bfsCheck(newSource); 
 	}
 	
-	public void deepClone(Node node) {
-		
+	public Node deepClone(Node node) {
+		if (node == null) {
+			return null;
+		}
+		Stack<Node> stack = new Stack<>();
+		stack.add(node);
+		Map<Node, Node> visited = new HashMap<>();
+		//Copy src
+		List<Node> newNeighbors = new ArrayList<>();
+		//newNeighbors.addAll(src.neighbors);
+		Node newHead = new Node(node.val, newNeighbors);
+		visited.put(node, newHead);
+		while (!stack.isEmpty()) {
+			Node cur = stack.pop();
+			Node curCloned = visited.get(cur);
+			Iterator<Node> iter = cur.neighbors.iterator();
+			while (iter.hasNext()) {
+				Node neighbor = iter.next();
+				Node copy = visited.get(neighbor);
+				// neighbor not visited
+				if (copy == null) {
+					List<Node> temp = new ArrayList<>();
+					//temp.addAll(neighbor.neighbors);
+					copy = new Node(neighbor.val, temp);
+					visited.put(neighbor, copy);
+					stack.add(neighbor);
+				}
+				curCloned.neighbors.add(copy);
+			}
+		}
+		return newHead;
 	}
 	
 	public Node buildGraph() {
