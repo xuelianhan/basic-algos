@@ -9,6 +9,8 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Stack;
 
+import com.alibaba.fastjson.JSON;
+
 /**
  * Given a reference of a node in a connected undirected graph, return a deep copy (clone) of the graph.
  * Each node in the graph contains a val (int) and a list (List[Node]) of its neighbors.
@@ -53,7 +55,8 @@ public class GraphClone {
         Node source = graph.buildGraph(); 
         System.out.println("BFS traversal of a graph before cloning"); 
         graph.bfsCheck(source); 
-        Node newSource = graph.cloneGraph(source); 
+        //Node newSource = graph.cloneGraph(source); 
+        Node newSource = graph.deepClone(source); 
         System.out.println("BFS traversal of a graph after cloning"); 
         graph.bfsCheck(newSource); 
 	}
@@ -84,6 +87,8 @@ public class GraphClone {
 					copy = new Node(neighbor.val, temp);
 					visited.put(neighbor, copy);
 					stack.add(neighbor);
+				} else {
+					
 				}
 				curCloned.neighbors.add(copy);
 			}
@@ -193,6 +198,11 @@ public class GraphClone {
 	    public Node(int _val,List<Node> _neighbors) {
 	        val = _val;
 	        neighbors = _neighbors;
+	    }
+	    
+	    public String toString() {
+	    	String s = JSON.toJSONString(this);
+	    	return s;
 	    }
 	}
 }
