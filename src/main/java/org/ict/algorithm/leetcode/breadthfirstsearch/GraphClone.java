@@ -54,11 +54,13 @@ public class GraphClone {
 		GraphClone graph = new GraphClone(); 
         Node source = graph.buildGraph(); 
         System.out.println("BFS traversal of a graph before cloning"); 
-        graph.bfsCheck(source); 
+        //graph.bfsCheck(source); 
+        System.out.println(source);
         Node newSource = graph.cloneGraph(source); 
         //Node newSource = graph.deepClone(source); 
         System.out.println("BFS traversal of a graph after cloning"); 
-        graph.bfsCheck(newSource); 
+        System.out.println(newSource);
+        //graph.bfsCheck(newSource); 
 	}
 	
 	public Node deepClone(Node node) {
