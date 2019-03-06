@@ -55,8 +55,8 @@ public class GraphClone {
         Node source = graph.buildGraph(); 
         System.out.println("BFS traversal of a graph before cloning"); 
         graph.bfsCheck(source); 
-        //Node newSource = graph.cloneGraph(source); 
-        Node newSource = graph.deepClone(source); 
+        Node newSource = graph.cloneGraph(source); 
+        //Node newSource = graph.deepClone(source); 
         System.out.println("BFS traversal of a graph after cloning"); 
         graph.bfsCheck(newSource); 
 	}
@@ -169,21 +169,24 @@ public class GraphClone {
 		visited.put(src, newHead);
 		
 		while (!queue.isEmpty()) {
-			Node cur = queue.poll();
-			Node curCloned = visited.get(cur);
-			Iterator<Node> iter = cur.neighbors.iterator();
-			while (iter.hasNext()) {
-				Node neighbor = iter.next();
-				Node copy = visited.get(neighbor);
-				// neighbor not visited
-				if (copy == null) {
-					List<Node> temp = new ArrayList<>();
-					//temp.addAll(neighbor.neighbors);
-					copy = new Node(neighbor.val, temp);
-					visited.put(neighbor, copy);
-					queue.add(neighbor);
+			int size = queue.size();
+			for (int i = 0; i < size; i++) {
+				Node cur = queue.poll();
+				Node curCloned = visited.get(cur);
+				Iterator<Node> iter = cur.neighbors.iterator();
+				while (iter.hasNext()) {
+					Node neighbor = iter.next();
+					Node copy = visited.get(neighbor);
+					// neighbor not visited
+					if (copy == null) {
+						List<Node> temp = new ArrayList<>();
+						//temp.addAll(neighbor.neighbors);
+						copy = new Node(neighbor.val, temp);
+						visited.put(neighbor, copy);
+						queue.add(neighbor);
+					}
+					curCloned.neighbors.add(copy);
 				}
-				curCloned.neighbors.add(copy);
 			}
 		}
 		return newHead;
