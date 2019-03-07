@@ -1,5 +1,9 @@
 package org.ict.algorithm.leetcode.breadthfirstsearch;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 /**
  * Given two words (beginWord and endWord), and a dictionary's word list, 
  * find the length of shortest transformation sequence from beginWord to endWord, such that:
@@ -34,8 +38,46 @@ package org.ict.algorithm.leetcode.breadthfirstsearch;
  * 
  * Explanation: The endWord "cog" is not in wordList, therefore no possible transformation.
  *
+ * LC127
  *
  */
 public class WordLadder {
 
+	public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+		if (wordList == null || wordList.size() == 0) {
+			return 0;
+		}
+		if (beginWord == null || endWord == null) {
+			return 0;
+		}
+		if (beginWord.length() != endWord.length()) {
+			return 0;
+		}
+		Set<String> words = new HashSet<String>();
+		words.addAll(wordList);
+		if (!words.contains(endWord)) {
+			return 0;
+		}
+		
+        return 0;
+    }
+	
+	public static boolean isNeighbor(String a, String b) {
+		if (a == null || b == null) {
+			return false;
+		}
+		if (a.length() != b.length()) {
+			return false;
+		}
+		int differ = 0; 
+		for (int i = 0; i < a.length(); i++) {
+			if (a.charAt(i) != b.charAt(i)) {
+				differ++;
+			}
+			if (differ > 1) {
+				return false;
+			}
+		}
+		return true;
+	}
 }
