@@ -1,7 +1,12 @@
 package org.ict.algorithm.leetcode.breadthfirstsearch;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 
 /**
@@ -58,7 +63,15 @@ public class WordLadder {
 		if (!words.contains(endWord)) {
 			return 0;
 		}
-		
+		Queue<String> queue = new LinkedList<>();
+		Map<String, Boolean> map = new HashMap<>();
+		Iterator<String> iter = words.iterator();
+		String first = iter.next();
+		queue.add(first);
+		while (!queue.isEmpty()) {
+			String cur = queue.poll();
+			
+		}
         return 0;
     }
 	

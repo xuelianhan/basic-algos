@@ -1,9 +1,19 @@
 package org.ict.util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.ict.algorithm.util.StdOut;
 import org.junit.Test;
 
 public class StringTest {
+	
+	@Test
+	public void testList() {
+		List<String> list = new ArrayList<String>();
+		String s = list.get(0);
+		System.out.println(s);
+	}
     
     public void testCharToChinese(String input) {
         String nums[] = {"零", "一", "二", "三", "四", "五", "六", "七", "八", "九", "十"};
