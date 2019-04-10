@@ -20,15 +20,29 @@ import net.jpountz.lz4.LZ4FastDecompressor;
  * @see https://github.com/lz4/lz4/blob/master/doc/lz4_Block_format.md
  * @see https://github.com/lz4/lz4/blob/master/doc/lz4_Frame_format.md
  * @see https://commons.apache.org/proper/commons-compress/examples.html
+ * @see https://stackoverflow.com/questions/9655181/how-to-convert-a-byte-array-to-a-hex-string-in-java
+ * @see https://www.baeldung.com/java-byte-arrays-hex-strings
  *
  */
 public class LZ4Util {
+	private final static char[] hexArray = "0123456789ABCDEF".toCharArray();
+	
+	public static void bytesToHex(byte[] bytes) {
+	    char[] hexChars = new char[bytes.length * 2];
+	    for ( int j = 0; j < bytes.length; j++ ) {
+	        int v = bytes[j] & 0xFF;
+	        hexChars[j * 2] = hexArray[v >>> 4];
+	        hexChars[j * 2 + 1] = hexArray[v & 0x0F];
+	    }
+	    String str = new String(hexChars);
+	    System.out.println("hex:" + str);
+	}
 	
 	public static void main(String[] args) {
 		String fileFrom = "D:\\workspace\\imagebase.zip";
 		String fileTo = "D:\\workspace\\imagebase.zip.lz4";
 		try {
-			//compress(fileFrom, fileTo);
+			compress(fileFrom, fileTo);
 			String lzFileFrom = fileTo;
 			String unlzFileTo = "D:\\workspace\\imagebase-unzip-test.zip";
 			unCompress(lzFileFrom,  unlzFileTo);
