@@ -2,20 +2,19 @@ package org.ict.algorithm.util;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
 
-import org.apache.commons.compress.compressors.CompressorException;
-import org.apache.commons.compress.compressors.CompressorInputStream;
-import org.apache.commons.compress.compressors.CompressorStreamFactory;
 import org.apache.commons.compress.compressors.lz4.FramedLZ4CompressorInputStream;
 import org.apache.commons.compress.compressors.lz4.FramedLZ4CompressorOutputStream;
+
+import net.jpountz.lz4.LZ4Compressor;
+import net.jpountz.lz4.LZ4Factory;
+import net.jpountz.lz4.LZ4FastDecompressor;
 
 /**
  * @see https://github.com/lz4/lz4/blob/master/doc/lz4_Block_format.md
@@ -24,6 +23,54 @@ import org.apache.commons.compress.compressors.lz4.FramedLZ4CompressorOutputStre
  *
  */
 public class LZ4Util {
+	
+	public static void main(String[] args) {
+		String fileFrom = "D:\\workspace\\imagebase.zip";
+		String fileTo = "D:\\workspace\\imagebase.zip.lz4";
+		try {
+			//compress(fileFrom, fileTo);
+			String lzFileFrom = fileTo;
+			String unlzFileTo = "D:\\workspace\\imagebase-unzip-test.zip";
+			unCompress(lzFileFrom,  unlzFileTo);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}	
+        byte[] data = new byte[] {'a','b','c','d',' ',' ',' ',' ',' ',' ','a','b','c','d','e','f','g','h','i','j'};
+        System.out.println("raw:"+Arrays.toString(data));
+        byte[] arr = null;
+		try {
+			arr = compress(data);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        System.out.println("compressed:" + Arrays.toString(arr));
+        byte[] result = null;
+		try {
+			result = unCompress(arr, data.length);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        System.out.println("uncompressed:" + Arrays.toString(result));
+    }
+	
+	public static byte[] compress(final byte[] original) throws IOException {
+		LZ4Factory factory = LZ4Factory.fastestInstance();
+		LZ4Compressor compressor = factory.fastCompressor();
+		int maxCompressedLength = compressor.maxCompressedLength(original.length);
+		byte[] compressed = new byte[maxCompressedLength];
+		int compressedLength = compressor.compress(original, 0, original.length, compressed, 0, maxCompressedLength);
+		return Arrays.copyOf(compressed, compressedLength);
+	}
+	
+	public static byte[] unCompress(final byte[] compressed, int lengthOforiginal) throws IOException {
+		LZ4Factory factory = LZ4Factory.fastestInstance();
+		LZ4FastDecompressor decompressor = factory.fastDecompressor();
+		byte[] restored = new byte[lengthOforiginal];
+		decompressor.decompress(compressed, 0, restored, 0, lengthOforiginal);
+		return restored;
+	}
 	
 	public static void compress(String fileFrom, String fileTo) throws IOException {
 		InputStream in = Files.newInputStream(Paths.get(fileFrom));
@@ -51,30 +98,5 @@ public class LZ4Util {
 		}
 		out.close();
 		zIn.close();
-	}
-
-	public static void main(String[] args) {
-		String fileFrom = "D:\\workspace\\imagebase.zip";
-		String fileTo = "D:\\workspace\\imagebase.zip.lz4";
-		try {
-			//compress(fileFrom, fileTo);
-			String lzFileFrom = fileTo;
-			String unlzFileTo = "D:\\workspace\\imagebase-unzip-test.zip";
-			unCompress(lzFileFrom,  unlzFileTo);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}	
-		/*
-		InputStream originalInput;
-		try {
-			originalInput = new FileInputStream(new File("D:\\workspace\\basic-algos"));
-			CompressorInputStream input = new CompressorStreamFactory().createCompressorInputStream(originalInput);
-			
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (CompressorException e) {
-			e.printStackTrace();
-		}*/
-		
 	}
 }
