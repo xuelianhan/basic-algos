@@ -24,10 +24,25 @@ import net.jpountz.lz4.LZ4FastDecompressor;
  * @see https://commons.apache.org/proper/commons-compress/examples.html
  * @see https://stackoverflow.com/questions/9655181/how-to-convert-a-byte-array-to-a-hex-string-in-java
  * @see https://www.baeldung.com/java-byte-arrays-hex-strings
+ * @see https://github.com/lz4/lz4/issues/276
  *
  */
 public class LZ4Util {
 	private final static char[] hexArray = "0123456789ABCDEF".toCharArray();
+	
+	private static final int[] LZ4_FRAME_FORMAT_MAGIC_NUMBER = {0x04, 0x22, 0x4d, 0x18};
+	
+	public static boolean isLZ4Stream(byte[] bytes) {
+		if ((bytes == null) || (bytes.length < 4)) {
+             return false;
+        }
+        return ((bytes[0] == (byte) LZ4_FRAME_FORMAT_MAGIC_NUMBER[0]) && 
+        	    (bytes[1] == (byte) LZ4_FRAME_FORMAT_MAGIC_NUMBER[1]) &&
+        	    (bytes[2] == (byte) LZ4_FRAME_FORMAT_MAGIC_NUMBER[2]) &&
+        	    (bytes[3] == (byte) LZ4_FRAME_FORMAT_MAGIC_NUMBER[3])
+        	   );
+	}
+	
 	
 	public static void bytesToHex(byte[] bytes) {
 	    char[] hexChars = new char[bytes.length * 2];
@@ -110,6 +125,27 @@ public class LZ4Util {
 			e.printStackTrace();
 		}
         System.out.println("uncompressed:" + Arrays.toString(result));
+        
+        byte[] original = new byte[] {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};	
+        System.out.println("raw:"+Arrays.toString(original));
+        System.out.println("raw length:" + original.length);
+        byte[] compressed = null;
+		try {
+			compressed = compressWithFrameFormat(original);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		System.out.println("compressed:" + Arrays.toString(compressed));
+		System.out.println("compressed length:" + compressed.length);
+        byte[] uncompressed = null;
+		try {
+			uncompressed = unCompressWithFrameFormat(compressed);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+        System.out.println("uncompressed:" + Arrays.toString(uncompressed));
+        System.out.println("uncompressed length:" + uncompressed.length);
     }
 	
 	public static byte[] compress(final byte[] original) throws IOException {
