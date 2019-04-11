@@ -2,6 +2,8 @@ package org.ict.algorithm.util;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -38,6 +40,45 @@ public class LZ4Util {
 	    System.out.println("hex:" + str);
 	}
 	
+	public static byte[] compressWithFrameFormat(byte[] original) throws IOException {
+		InputStream in = new ByteArrayInputStream(original);
+		ByteArrayOutputStream byteOutputStream = new ByteArrayOutputStream();
+		FramedLZ4CompressorOutputStream lzOut = new FramedLZ4CompressorOutputStream(byteOutputStream);
+		final byte[] buffer = new byte[1024];
+		int n = 0;
+		while (-1 != (n = in.read(buffer))) {
+		    lzOut.write(buffer, 0, n);
+		}
+		lzOut.flush();
+		lzOut.close();
+		byteOutputStream.flush();
+		byte[] result = byteOutputStream.toByteArray();
+		bytesToHex(result);
+		
+		byteOutputStream.close();
+		in.close();
+		return result;
+	}
+	/**
+	 * Decompress data with LZ4 frame format
+	 * @param compressed
+	 * @return
+	 * @throws IOException
+	 */
+	public static byte[] unCompressWithFrameFormat(byte[] compressed) throws IOException {
+		InputStream in = new ByteArrayInputStream(compressed);
+		FramedLZ4CompressorInputStream zIn = new FramedLZ4CompressorInputStream(in);
+		ByteArrayOutputStream byteOutputStream = new ByteArrayOutputStream();
+		final byte[] buffer = new byte[1024];
+		int n = 0;
+		while (-1 != (n = zIn.read(buffer))) {
+		    byteOutputStream.write(buffer, 0, n);
+		}
+		byte[] result = byteOutputStream.toByteArray();
+		byteOutputStream.close();
+		zIn.close();
+		return result;
+	}
 	public static void main(String[] args) {
 		String fileFrom = "D:\\workspace\\imagebase.zip";
 		String fileTo = "D:\\workspace\\imagebase.zip.lz4";
