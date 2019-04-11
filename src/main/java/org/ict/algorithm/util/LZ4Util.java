@@ -50,6 +50,8 @@ public class LZ4Util {
 		    lzOut.write(buffer, 0, n);
 		}
 		lzOut.flush();
+		//lzOut should be closed before byteOutputStream to invoke toByteArray method
+		//Otherwise the compressed data may be not integrated.
 		lzOut.close();
 		byteOutputStream.flush();
 		byte[] result = byteOutputStream.toByteArray();
