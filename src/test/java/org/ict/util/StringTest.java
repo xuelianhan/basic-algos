@@ -8,6 +8,37 @@ import org.junit.Test;
 
 public class StringTest {
 	
+	/**
+	 * @see https://stackoverflow.com/questions/12925988/how-to-generate-strings-that-share-the-same-hashcode-in-java
+	 * @see https://stackoverflow.com/questions/30163368/two-string-instances-seems-same-but-their-hashcode-are-different
+	 * 
+	 */
+	@Test
+	public void testHashCode() {
+		String s = "c265afb8a126d4d9ace17bc951c321ec7e8ce89b85bc64c24ca8f42b00ffd5c3";
+		for (int i = 0; i < s.length(); i++) {
+			int x = (int)s.charAt(i);
+			System.out.print(x);
+		}
+		System.out.println();
+		int hashcode = s.hashCode();
+		int mod = hashcode % 45;
+		System.out.println("hashcode:" + hashcode);
+		System.out.println("mod:" + mod);
+		String m = "c265afb8a126d4d9ace17bc951c321ec7e8ce89b85bc64c24ca8f42b00ffd5c3";
+	    String n = "c265afb8a126d4d9ace17bc951c321ec7e8ce89b85bc64c24ca8f42b00ffd5c3";
+
+	    System.out.println(m.hashCode());
+	    System.out.println(n.hashCode());
+	    
+	    String a = "success"; 
+	    String b = "U+FEFFsuccess"; 
+	    System.out.println(a.hashCode()); 
+	    System.out.println(b.hashCode());
+	    System.out.println(System.identityHashCode(a)); 
+	    System.out.println(System.identityHashCode(b));
+	}
+	
 	@Test
 	public void testList() {
 		List<String> list = new ArrayList<String>();
@@ -45,7 +76,8 @@ public class StringTest {
     
     @Test
     public void testNullEquals() {
-        
+        String s = null;
+        s.equals(null);
     }
     
     @Test
