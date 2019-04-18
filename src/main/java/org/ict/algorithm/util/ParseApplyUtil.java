@@ -28,6 +28,7 @@ import com.google.common.collect.Lists;
 /**
  * @see https://stackoverflow.com/questions/36368235/java-get-valueof-for-generic-subclass-of-java-lang-number-or-primitive
  * @see https://ideone.com/WtNDN2
+ * @see https://codereview.stackexchange.com/questions/38145/parse-strings-and-convert-the-value-to-java-types
  */
 public class ParseApplyUtil {
     
