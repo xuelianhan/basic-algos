@@ -9,6 +9,7 @@ import java.util.function.Consumer;
 /**
  * @see https://howtocodetutorial.wordpress.com/generic-builder-pattern-in-java-8/
  * @see https://stackoverflow.com/questions/3204623/java-generics-builder-pattern
+ * @see https://www.sayem.org/generic-builder-pattern/
  * @author
  *
  * @param <T>
