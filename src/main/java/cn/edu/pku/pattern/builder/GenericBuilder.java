@@ -9,6 +9,11 @@ import java.util.function.Supplier;
 /**
  * 
  * @see https://www.sayem.org/generic-builder-pattern/
+ * @see https://github.com/davidmoten/java-builder-pattern-tricks
+ * @see https://www.codejava.net/java-core/collections/how-to-write-generic-classes-and-methods-in-java
+ * @see https://docs.oracle.com/javase/tutorial/java/generics/types.html
+ * @see https://stackoverflow.com/questions/5416577/chaining-tasks-using-generics
+ * @see https://www.baeldung.com/guava-functions-predicates
  * 
  * @param <T>
  */
