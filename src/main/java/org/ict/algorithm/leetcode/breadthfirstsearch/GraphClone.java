@@ -9,7 +9,8 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Stack;
 
-import com.alibaba.fastjson.JSON;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
  * Given a reference of a node in a connected undirected graph, return a deep copy (clone) of the graph.
@@ -206,8 +207,7 @@ public class GraphClone {
 	    }
 	    
 	    public String toString() {
-	    	String s = JSON.toJSONString(this);
-	    	return s;
+	    	return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
 	    }
 	}
 }

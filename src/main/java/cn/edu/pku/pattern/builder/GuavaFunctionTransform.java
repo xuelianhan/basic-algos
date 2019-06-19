@@ -22,6 +22,7 @@ import com.google.common.collect.Sets;
 
 /**
  * @see https://www.baeldung.com/guava-functions-predicates
+ * @see https://github.com/google/guava/wiki/FunctionalExplained
  * @author hanxuelian001
  *
  */

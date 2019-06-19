@@ -16,12 +16,6 @@
  */
 package org.ict.rpc.common.utils;
 
-import org.ict.rpc.common.Constants;
-import org.ict.rpc.common.io.UnsafeStringWriter;
-import com.alibaba.fastjson.JSON;
-import org.ict.rpc.common.logger.Logger;
-import org.ict.rpc.common.logger.LoggerFactory;
-
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -31,6 +25,13 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+import org.ict.rpc.common.Constants;
+import org.ict.rpc.common.io.UnsafeStringWriter;
+import org.ict.rpc.common.logger.Logger;
+import org.ict.rpc.common.logger.LoggerFactory;
 
 /**
  * StringUtils
@@ -418,7 +419,7 @@ public final class StringUtils {
                 buf.append(arg);
             } else {
                 try {
-                    buf.append(JSON.toJSONString(arg));
+                    buf.append(ToStringBuilder.reflectionToString(arg, ToStringStyle.JSON_STYLE));
                 } catch (Exception e) {
                     logger.warn(e.getMessage(), e);
                     buf.append(arg);

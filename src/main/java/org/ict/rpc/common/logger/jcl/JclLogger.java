@@ -16,8 +16,9 @@
  */
 package org.ict.rpc.common.logger.jcl;
 
-import org.ict.rpc.common.logger.Logger;
 import org.apache.commons.logging.Log;
+import org.ict.rpc.common.logger.Logger;
+
 
 import java.io.Serializable;
 
@@ -31,8 +32,8 @@ public class JclLogger implements Logger, Serializable {
 
     private final Log logger;
 
-    public JclLogger(Log logger) {
-        this.logger = logger;
+    public JclLogger(Log log) {
+        this.logger = log;
     }
 
     public void trace(String msg) {

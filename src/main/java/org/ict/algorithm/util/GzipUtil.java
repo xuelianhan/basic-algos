@@ -5,7 +5,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
-import org.apache.commons.io.IOUtils;
+
+import org.apache.commons.compress.utils.IOUtils;
+
 
 public class GzipUtil {
 	/**

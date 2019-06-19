@@ -1,6 +1,5 @@
 package org.ict.algorithm.util;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Base64;
 
 import javax.xml.bind.DatatypeConverter;
