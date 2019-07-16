@@ -11,6 +11,7 @@ import java.util.Stack;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.ict.algorithm.leetcode.depthfirstsearch.Node;
 
 /**
  * Given a reference of a node in a connected undirected graph, return a deep copy (clone) of the graph.
@@ -193,22 +194,6 @@ public class GraphClone {
 			}
 		}
 		return newHead;
-	}
-
-	class Node {
-	    public int val;
-	    public List<Node> neighbors;
-
-	    public Node() {}
-
-	    public Node(int _val,List<Node> _neighbors) {
-	        val = _val;
-	        neighbors = _neighbors;
-	    }
-	    
-	    public String toString() {
-	    	return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
-	    }
 	}
 }
 
