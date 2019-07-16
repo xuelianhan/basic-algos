@@ -163,14 +163,17 @@ public class GraphClone {
 		return bfs(node);
     }
 	
+	/**
+	 * Accepted solution
+	 * @param src
+	 * @return
+	 */
 	private Node bfs(Node src) {
 		Queue<Node> queue = new LinkedList<>();
 		queue.add(src);
 		
 		Map<Integer, Node> visited = new HashMap<>();
-		//Copy src
 		List<Node> newNeighbors = new ArrayList<>();
-		//newNeighbors.addAll(src.neighbors);
 		Node newHead = new Node(src.val, newNeighbors);
 		visited.put(src.val, newHead);
 		
