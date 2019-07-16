@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Stack;
 
+import org.apache.commons.compress.utils.Lists;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.ict.algorithm.leetcode.depthfirstsearch.Node;
@@ -165,33 +166,43 @@ public class GraphClone {
 	private Node bfs(Node src) {
 		Queue<Node> queue = new LinkedList<>();
 		queue.add(src);
-		Map<Node, Node> visited = new HashMap<>();
+		
+		Map<Integer, Node> visited = new HashMap<>();
 		//Copy src
 		List<Node> newNeighbors = new ArrayList<>();
 		//newNeighbors.addAll(src.neighbors);
 		Node newHead = new Node(src.val, newNeighbors);
-		visited.put(src, newHead);
+		visited.put(src.val, newHead);
 		
 		while (!queue.isEmpty()) {
+			Node cur = queue.poll();
+			for (Node neighbor : cur.neighbors) {
+				if (!visited.containsKey(neighbor.val)) {
+					Node copy = new Node(neighbor.val, new ArrayList<>());
+					visited.put(neighbor.val, copy);
+					queue.add(neighbor);
+				}
+				visited.get(cur.val).neighbors.add(visited.get(neighbor.val));
+			}
+			/*
 			int size = queue.size();
 			for (int i = 0; i < size; i++) {
-				Node cur = queue.poll();
-				Node curCloned = visited.get(cur);
+				Node curCloned = visited.get(cur.val);
 				Iterator<Node> iter = cur.neighbors.iterator();
 				while (iter.hasNext()) {
 					Node neighbor = iter.next();
-					Node copy = visited.get(neighbor);
+					Node copy = visited.get(neighbor.val);
 					// neighbor not visited
 					if (copy == null) {
 						List<Node> temp = new ArrayList<>();
 						//temp.addAll(neighbor.neighbors);
 						copy = new Node(neighbor.val, temp);
-						visited.put(neighbor, copy);
+						visited.put(neighbor.val, copy);
 						queue.add(neighbor);
 					}
 					curCloned.neighbors.add(copy);
 				}
-			}
+			}*/
 		}
 		return newHead;
 	}
