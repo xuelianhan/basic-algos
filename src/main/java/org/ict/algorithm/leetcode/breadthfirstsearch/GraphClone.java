@@ -75,7 +75,6 @@ public class GraphClone {
 		Map<Node, Node> visited = new HashMap<>();
 		//Copy src
 		List<Node> newNeighbors = new ArrayList<>();
-		//newNeighbors.addAll(src.neighbors);
 		Node newHead = new Node(node.val, newNeighbors);
 		visited.put(node, newHead);
 		while (!stack.isEmpty()) {
@@ -92,8 +91,6 @@ public class GraphClone {
 					copy = new Node(neighbor.val, temp);
 					visited.put(neighbor, copy);
 					stack.add(neighbor);
-				} else {
-					
 				}
 				curCloned.neighbors.add(copy);
 			}
@@ -187,25 +184,6 @@ public class GraphClone {
 				}
 				visited.get(cur.val).neighbors.add(visited.get(neighbor.val));
 			}
-			/*
-			int size = queue.size();
-			for (int i = 0; i < size; i++) {
-				Node curCloned = visited.get(cur.val);
-				Iterator<Node> iter = cur.neighbors.iterator();
-				while (iter.hasNext()) {
-					Node neighbor = iter.next();
-					Node copy = visited.get(neighbor.val);
-					// neighbor not visited
-					if (copy == null) {
-						List<Node> temp = new ArrayList<>();
-						//temp.addAll(neighbor.neighbors);
-						copy = new Node(neighbor.val, temp);
-						visited.put(neighbor.val, copy);
-						queue.add(neighbor);
-					}
-					curCloned.neighbors.add(copy);
-				}
-			}*/
 		}
 		return newHead;
 	}

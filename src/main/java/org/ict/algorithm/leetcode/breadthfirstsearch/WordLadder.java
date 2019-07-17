@@ -42,6 +42,18 @@ import java.util.Set;
  * Output: 0
  * 
  * Explanation: The endWord "cog" is not in wordList, therefore no possible transformation.
+ * 
+ * Solution:
+ * The idea is to use BFS. 
+ * We start from the given start word, 
+ * traverse all words that adjacent (differ by one character) to it 
+ * and keep doing so until we find the target word or we have traversed all words.
+ * 
+ * @see https://algs4.cs.princeton.edu/41graph/WordLadder.java.html
+ * @see https://bradfieldcs.com/algos/graphs/word-ladder/
+ * @see https://www.geeksforgeeks.org/word-ladder-length-of-shortest-chain-to-reach-a-target-word/
+ * @see https://www.cs.cmu.edu/~adamchik/15-121/labs/HW-4%20Word%20Ladder/lab.html
+ * @see https://www.cs.cmu.edu/~adamchik/15-121/
  *
  * LC127
  *
@@ -91,6 +103,9 @@ public class WordLadder {
 				return false;
 			}
 		}
-		return true;
+		// If we assume no duplicates in the word list, then we can return true directly.
+		// The following return statement is equivalent on above assumption.
+		//return true
+		return (differ== 1 ? true : false);
 	}
 }
