@@ -32,7 +32,7 @@ public class CPM {
         }
 
         // compute longest path
-        AcylicLP lp = nw AcylicLP(G, source);
+        AcylicLP lp = new AcylicLP(G, source);
 
         // print results
         StdOut.println(" job start finish");

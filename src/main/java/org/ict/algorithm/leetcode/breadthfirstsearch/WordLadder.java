@@ -1,8 +1,8 @@
 package org.ict.algorithm.leetcode.breadthfirstsearch;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -59,7 +59,31 @@ import java.util.Set;
  *
  */
 public class WordLadder {
+	
+	public static void main(String[] args) {
+		List<String> wordList = new ArrayList<>();
+		wordList.add("poon"); 
+	    wordList.add("plee"); 
+	    wordList.add("same"); 
+	    wordList.add("poie"); 
+	    wordList.add("plie"); 
+	    wordList.add("poin"); 
+	    wordList.add("plea"); 
+	    String beginWord = "toon"; 
+	    String endWord = "plea";
+	    WordLadder ladder = new WordLadder();
+	    int length = ladder.ladderLength(beginWord, endWord, wordList);
+	    System.out.println(length);
+	}
 
+	/**
+	 * Returns length of shortest chain to reach 'target' from 'start' 
+	 * using minimum number of adjacent moves. 
+	 * @param beginWord
+	 * @param endWord
+	 * @param wordList
+	 * @return
+	 */
 	public int ladderLength(String beginWord, String endWord, List<String> wordList) {
 		if (wordList == null || wordList.size() == 0) {
 			return 0;
@@ -75,18 +99,46 @@ public class WordLadder {
 		if (!words.contains(endWord)) {
 			return 0;
 		}
+		
+		//Create a queue for BFS and insert begin word as source vertex 
 		Queue<String> queue = new LinkedList<>();
-		Map<String, Boolean> map = new HashMap<>();
-		Iterator<String> iter = words.iterator();
-		String first = iter.next();
-		queue.add(first);
+		queue.add(beginWord);
+		
+		Map<String, Integer> countMap = new HashMap<>();
+		// Chain length for begin word is 1 
+		countMap.put(beginWord, 1);
+		
+		Map<String, Boolean> visited = new HashMap<>();
+		visited.put(beginWord, true);
+		
 		while (!queue.isEmpty()) {
 			String cur = queue.poll();
-			
+			System.out.println("cur:" + cur);
+			for (String word : words) {
+				System.out.println("word:" + word);
+				// Process a dictionary word if it is adjacent to current word (or vertex) of BFS 
+				if (isNeighbor(cur, word) && (visited.get(word) == null || visited.get(word) == Boolean.FALSE)) {
+					int count = (countMap.get(cur) == null ? 0 : countMap.get(cur));
+					countMap.put(word, count + 1);
+					queue.add(word);
+					// Mark the word visited, so it will not be processed again.
+					visited.put(word, true);
+					// If the endWord is found, return current chain length directly.
+					if (word.equalsIgnoreCase(endWord)) {
+						return countMap.get(word);
+					}
+				}
+			}
 		}
         return 0;
     }
 	
+	/**
+	 * To check if two strings differ by exactly one character.
+	 * @param a
+	 * @param b
+	 * @return
+	 */
 	public static boolean isNeighbor(String a, String b) {
 		if (a == null || b == null) {
 			return false;
@@ -94,6 +146,7 @@ public class WordLadder {
 		if (a.length() != b.length()) {
 			return false;
 		}
+		// to store count of differences 
 		int differ = 0; 
 		for (int i = 0; i < a.length(); i++) {
 			if (a.charAt(i) != b.charAt(i)) {
