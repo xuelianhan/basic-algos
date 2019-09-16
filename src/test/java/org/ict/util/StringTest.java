@@ -8,6 +8,8 @@ import org.junit.Test;
 
 public class StringTest {
 	
+	
+	
 	/**
 	 * @see https://stackoverflow.com/questions/12925988/how-to-generate-strings-that-share-the-same-hashcode-in-java
 	 * @see https://stackoverflow.com/questions/30163368/two-string-instances-seems-same-but-their-hashcode-are-different

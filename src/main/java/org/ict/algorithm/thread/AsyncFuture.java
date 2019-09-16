@@ -8,7 +8,6 @@ import java.util.concurrent.Executors;
 public class AsyncFuture {
     
     public static void main(String[] args) {
-        
         ExecutorService service = Executors.newFixedThreadPool(5);
         FutureExecutor executor = new FutureExecutor(service);
         ListenableFuture<Integer> future = executor.submit(new DelayedRandomNumber(1000));
