@@ -1,6 +1,7 @@
 package org.ict.algorithm.thread;
 
 import java.io.IOException;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.http.HttpEntity;
@@ -17,6 +18,8 @@ public class TestHttpGetThread implements Runnable {
 	
 	private SettableFuture<String> future;
 	
+	private CompletableFuture<String> completeFuture;
+	
 	private CloseableHttpClient client;
 	
 	public TestHttpGetThread(String name, CloseableHttpClient client, SettableFuture<String> future) {
@@ -24,10 +27,24 @@ public class TestHttpGetThread implements Runnable {
 		this.client = client;
 		this.future = future;
 	}
+	
+	public TestHttpGetThread(String name, CloseableHttpClient client, CompletableFuture<String> completeFuture) {
+		this.name = name;
+		this.client = client;
+		this.completeFuture = completeFuture;
+	}
+	
+	public static void main(String[] args) {
+		SettableFuture<String> childFuture = SettableFuture.create();
+		TestHttpGetThread sender = new TestHttpGetThread("test", HttpClientUtilTest.client, childFuture);
+		Thread t = new Thread(sender);
+		t.start();
+	}
+	
 	@Override
 	public void run() {
 		Stopwatch watcher = Stopwatch.createStarted();
-		String url = "https://www.bing.com";
+		String url = "http://www.bing.com";
 		HttpGet request = new HttpGet(url);
 		//this how tiny it might seems, is actually absoluty needed. otherwise http client lags for 2sec.
 		request.setProtocolVersion(HttpVersion.HTTP_1_1);

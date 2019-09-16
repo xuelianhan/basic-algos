@@ -1,6 +1,8 @@
 package org.ict.algorithm.thread;
 
 import org.apache.http.client.config.RequestConfig;
+import org.apache.http.config.Registry;
+import org.apache.http.config.RegistryBuilder;
 import org.apache.http.config.SocketConfig;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -15,12 +17,12 @@ public class HttpClientUtilTest {
 			.setSocketTimeout(2000)
 			.build();
 	
-	private static SocketConfig socketConfig = SocketConfig.custom().setTcpNoDelay(true).build();
+	private static SocketConfig socketConfig = SocketConfig.custom().setTcpNoDelay(true).setSoKeepAlive(true).build();
 	
 	private static PoolingHttpClientConnectionManager connManager = new PoolingHttpClientConnectionManager();
 	 
 	static {
-		connManager.setMaxTotal(200);
+		connManager.setMaxTotal(100);
 	    connManager.setDefaultMaxPerRoute(50);
 	}
 	
@@ -28,17 +30,19 @@ public class HttpClientUtilTest {
 			.setConnectionManager(connManager)
 			.setDefaultSocketConfig(socketConfig)
 			.setDefaultRequestConfig(requestConfig)
-			.setMaxConnTotal(200)
-			.setMaxConnPerRoute(50)
+			//.setMaxConnTotal(100)
+			//.setMaxConnPerRoute(50)
+			.setUserAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36")
 			.build();
 	
 	public static void main(String[] args) {
-		  for(int i = 0; i < 20; i++) { 
-			  SettableFuture<String> childFuture = SettableFuture.create();
-			  Runnable r = new TestHttpGetThread("test"+ i, client,childFuture); 
-			  Thread t = new Thread(r); 
-			  t.start(); 
-		  }
+		// Registry schemeRegistry = RegistryBuilder.create().register("", "").build();
+	    for(int i = 0; i < 10; i++) { 
+		  SettableFuture<String> childFuture = SettableFuture.create();
+		  Runnable r = new TestHttpGetThread("test"+ i, client,childFuture); 
+		  Thread t = new Thread(r); 
+		  t.start(); 
+	    }
 		 
 	}
 	
