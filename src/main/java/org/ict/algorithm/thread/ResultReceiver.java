@@ -24,7 +24,7 @@ private CountDownLatch latch;
 	
 	@Override
 	public void run() {
-		Stopwatch receiveWatcher = Stopwatch.createStarted();
+		//Stopwatch receiveWatcher = Stopwatch.createStarted();
 		try {
 			String rs = future.get();
             if (rs != null) {
@@ -35,7 +35,7 @@ private CountDownLatch latch;
         	future.setV(null);
             e.printStackTrace();
         }
-		receiveWatcher.stop();
-		System.err.println("receiver " + " cost:" + receiveWatcher.elapsed(TimeUnit.MILLISECONDS));
+		//receiveWatcher.stop();
+		//System.err.println("receiver " + " cost:" + receiveWatcher.elapsed(TimeUnit.MILLISECONDS));
 	}
 }

@@ -1,15 +1,18 @@
 package org.ict.algorithm.thread;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpVersion;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.ict.algorithm.util.JsonUtil;
 
 import com.google.common.base.Stopwatch;
 public class TestHttpGetThread implements Runnable {
@@ -48,6 +51,7 @@ public class TestHttpGetThread implements Runnable {
 		HttpGet request = new HttpGet(url);
 		//this how tiny it might seems, is actually absoluty needed. otherwise http client lags for 2sec.
 		request.setProtocolVersion(HttpVersion.HTTP_1_1);
+		//request.setConfig(HttpClientUtilTest.requestConfig);
 		//request.setParams(params);
 		String result = sendHttpGet(request);
 		watcher.stop();
@@ -55,9 +59,11 @@ public class TestHttpGetThread implements Runnable {
 	}
 	
 	public String sendHttpGet(HttpGet request) {
+		Stopwatch watcher = Stopwatch.createStarted();
 		String result = "";
 		CloseableHttpResponse response = null;
         try {
+        	//System.out.println("headers:" + Arrays.toString(request.getAllHeaders()));
         	response = client.execute(request);
         	int statusCode = response.getStatusLine().getStatusCode();
             if (statusCode != 200) {
@@ -79,6 +85,8 @@ public class TestHttpGetThread implements Runnable {
 				}
 			}
 		}
+        watcher.stop();
+		System.err.println(name + " http get and set time cost:" + watcher.elapsed(TimeUnit.MILLISECONDS));
         return result;
 	}
 	

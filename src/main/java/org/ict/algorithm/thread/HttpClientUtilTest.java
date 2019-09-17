@@ -1,25 +1,49 @@
 package org.ict.algorithm.thread;
 
+import org.apache.http.HeaderElement;
+import org.apache.http.HeaderElementIterator;
+import org.apache.http.HttpResponse;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.config.Registry;
 import org.apache.http.config.RegistryBuilder;
 import org.apache.http.config.SocketConfig;
+import org.apache.http.conn.ConnectionKeepAliveStrategy;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
+import org.apache.http.message.BasicHeaderElementIterator;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.protocol.HttpContext;
 
 public class HttpClientUtilTest {
 
-	private static RequestConfig requestConfig = RequestConfig.custom()
+	public static RequestConfig requestConfig = RequestConfig.custom()
 			.setContentCompressionEnabled(false)
 			.setConnectTimeout(100)
 			.setConnectionRequestTimeout(500)
 			.setSocketTimeout(2000)
 			.build();
 	
-	private static SocketConfig socketConfig = SocketConfig.custom().setTcpNoDelay(true).setSoKeepAlive(true).build();
+	public static SocketConfig socketConfig = SocketConfig.custom().setTcpNoDelay(true).setSoKeepAlive(true).build();
 	
-	private static PoolingHttpClientConnectionManager connManager = new PoolingHttpClientConnectionManager();
+	public static PoolingHttpClientConnectionManager connManager = new PoolingHttpClientConnectionManager();
+	
+	public static ConnectionKeepAliveStrategy keepAliveStrategy = new ConnectionKeepAliveStrategy() {
+	    @Override
+	    public long getKeepAliveDuration(HttpResponse response, HttpContext context) {
+	        HeaderElementIterator it = new BasicHeaderElementIterator(response.headerIterator(HTTP.CONN_KEEP_ALIVE));
+	        while (it.hasNext()) {
+	            HeaderElement he = it.nextElement();
+	            String param = he.getName();
+	            String value = he.getValue();
+	            if (value != null && param.equalsIgnoreCase
+	               ("timeout")) {
+	                return Long.parseLong(value) * 1000;
+	            }
+	        }
+	        return 5 * 1000;
+	    }
+	};
 	 
 	static {
 		connManager.setMaxTotal(100);
@@ -27,6 +51,7 @@ public class HttpClientUtilTest {
 	}
 	
 	public static final CloseableHttpClient client = HttpClientBuilder.create()
+			.setKeepAliveStrategy(keepAliveStrategy)
 			.setConnectionManager(connManager)
 			.setDefaultSocketConfig(socketConfig)
 			.setDefaultRequestConfig(requestConfig)

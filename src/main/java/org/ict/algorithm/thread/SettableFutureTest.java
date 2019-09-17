@@ -2,7 +2,6 @@ package org.ict.algorithm.thread;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
@@ -28,7 +27,6 @@ public class SettableFutureTest {
 	    Stopwatch watcher = Stopwatch.createStarted();
 		list.forEach(item -> {
 			SettableFuture<String> childFuture = SettableFuture.create();
-			//CompletableFuture<String> childFuture = CompletableFuture.supplyAsync(svc::work);
 			TestHttpGetThread sender = new TestHttpGetThread("test"+item, HttpClientUtilTest.client, childFuture);
 			executor.submit(sender, childFuture);
 			Stopwatch childWatcher = Stopwatch.createStarted();
