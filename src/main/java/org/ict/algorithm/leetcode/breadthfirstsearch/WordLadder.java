@@ -86,10 +86,65 @@ public class WordLadder {
 	    String endWord = "plea";*/
 	    long startTime = System.currentTimeMillis();
 	    WordLadder ladder = new WordLadder();
-	    int length = ladder.ladderLength(beginWord, endWord, wordList);
+	    int length = ladder.ladderLengthV3(beginWord, endWord, wordList);
 	    long duration = System.currentTimeMillis() - startTime;
 	    System.out.println(length + ", time cost:" + duration);
 	}
+	
+	public int ladderLengthV3(String beginWord, String endWord, List<String> wordList) {
+		if (wordList == null || wordList.size() == 0) {
+			return 0;
+		}
+		if (beginWord == null || endWord == null) {
+			return 0;
+		}
+		if (beginWord.length() != endWord.length()) {
+			return 0;
+		}
+		Set<String> words = new HashSet<String>();
+		words.addAll(wordList);
+		if (!words.contains(endWord)) {
+			return 0;
+		}
+		Set<String> beginSet = new HashSet<>();
+		Set<String> endSet = new HashSet<>();
+		Set<String> visited = new HashSet<>();
+		beginSet.add(beginWord);
+		endSet.add(endWord);
+		int len = 1;
+		while(!beginSet.isEmpty() && !endSet.isEmpty()) {
+			if (beginSet.size() > endSet.size()) {
+				Set<String> temp = beginSet;
+				beginSet = endSet;
+				endSet = temp;
+			}
+			Set<String> middle = new HashSet<>();
+			for (String word : beginSet) {
+				char[] chr = word.toCharArray();
+				for (int i = 0; i < chr.length; i++) {
+					for (char c = 'a'; c <= 'z'; c++) {
+						char old = chr[i];
+						chr[i] = c;
+						String target = String.valueOf(chr);
+						if (endSet.contains(target)) {
+							return len + 1;
+						}
+						if (!visited.contains(target) && words.contains(target)) {
+							middle.add(target);
+							visited.add(target);
+							//for save memory
+							words.remove(target);
+						}
+						chr[i] = old;
+					}
+				}
+			}//one-level end
+			beginSet = middle;
+			len++;//search tree depth increment
+		}
+		return 0;
+	}
+	
 
 	/**
 	 * This version is very slow when input huge data.
