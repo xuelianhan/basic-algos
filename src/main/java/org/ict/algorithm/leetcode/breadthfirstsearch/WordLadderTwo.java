@@ -92,8 +92,7 @@ public class WordLadderTwo {
 				 char[] chr = curWord.toCharArray();
 				 for (int i = 0; i < chr.length; i++) {
 					 char old = chr[i];
-					 for (char c = 'a'; c <= 'z'; c++) {
-						 
+					 for (char c = 'a'; c <= 'z'; c++) {	 
 						 chr[i] = c;
 						 String target = String.valueOf(chr);
 						 if (!wordDict.contains(target)) {
