@@ -124,6 +124,9 @@ public class WordLadder {
 				for (int i = 0; i < chr.length; i++) {
 					char old = chr[i];
 					for (char c = 'a'; c <= 'z'; c++) {
+						if (chr[i] == c) {
+							continue;
+						}
 						chr[i] = c;
 						String target = String.valueOf(chr);
 						if (endSet.contains(target)) {
