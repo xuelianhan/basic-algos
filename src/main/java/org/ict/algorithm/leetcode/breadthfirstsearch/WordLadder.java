@@ -91,6 +91,10 @@ public class WordLadder {
 	    System.out.println(length + ", time cost:" + duration);
 	}
 
+	public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+
+	}
+
 	/**
 	 * This version is very slow when input huge data.
 	 * Returns length of shortest chain to reach 'target' from 'start' 
@@ -100,58 +104,58 @@ public class WordLadder {
 	 * @param wordList
 	 * @return
 	 */
-	public int ladderLength(String beginWord, String endWord, List<String> wordList) {
-		if (wordList == null || wordList.size() == 0) {
-			return 0;
-		}
-		if (beginWord == null || endWord == null) {
-			return 0;
-		}
-		if (beginWord.length() != endWord.length()) {
-			return 0;
-		}
-		Set<String> words = new HashSet<String>();
-		words.addAll(wordList);
-		if (!words.contains(endWord)) {
-			return 0;
-		}
-		
-		//Create a queue for BFS and insert begin word as source vertex 
-		Queue<String> queue = new LinkedList<>();
-		queue.add(beginWord);
-		
-		Map<String, Boolean> visited = new HashMap<>();
-		Map<String, Integer> countMap = new HashMap<>();
-		visited.put(beginWord, true);
-		// Chain length for begin word is 1 
-		countMap.put(beginWord, 1);
-		
-		for(String word : words) {
-			if (!beginWord.equalsIgnoreCase(word)) {
-				visited.put(word, false);
-				countMap.put(word, 0);
-			}
-		}
-		
-		while (!queue.isEmpty()) {
-			String cur = queue.poll();
-			System.out.println("cur:" + cur);
-			for (String word : words) {
-				System.out.println("word:" + word);
-				// Process a dictionary word if it is adjacent to current word (or vertex) of BFS 
-				if (isNeighbor(cur, word) && (visited.get(word) == Boolean.FALSE)) {
-					int count = countMap.get(cur);//(countMap.get(cur) == null ? 0 : countMap.get(cur));
-					countMap.put(word, count + 1);
-					queue.add(word);
-					// Mark the word visited, so it will not be processed again.
-					visited.put(word, true);
-					// If the endWord is found, return current chain length directly.
-					if (word.equalsIgnoreCase(endWord)) {
-						return countMap.get(word);
-					}
-				}
-			}
-		}
+    public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+        if (wordList == null || wordList.size() == 0) {
+	        return 0;
+	    }
+        if (beginWord == null || endWord == null) {
+            return 0;
+        }
+        if (beginWord.length() != endWord.length()) {
+            return 0;
+        }
+        Set<String> words = new HashSet<String>();
+        words.addAll(wordList);
+        if (!words.contains(endWord)) {
+            return 0;
+        }
+
+        //Create a queue for BFS and insert begin word as source vertex 
+        Queue<String> queue = new LinkedList<>();
+        queue.add(beginWord);
+
+        Map<String, Boolean> visited = new HashMap<>();
+        Map<String, Integer> countMap = new HashMap<>();
+        visited.put(beginWord, true);
+        // Chain length for begin word is 1 
+        countMap.put(beginWord, 1);
+
+        for(String word : words) {
+            if (!beginWord.equalsIgnoreCase(word)) {
+                visited.put(word, false);
+                countMap.put(word, 0);
+            }
+        }
+
+        while (!queue.isEmpty()) {
+            String cur = queue.poll();
+            System.out.println("cur:" + cur);
+            for (String word : words) {
+                System.out.println("word:" + word);
+                // Process a dictionary word if it is adjacent to current word (or vertex) of BFS 
+                if (isNeighbor(cur, word) && (visited.get(word) == Boolean.FALSE)) {
+                    int count = countMap.get(cur);//(countMap.get(cur) == null ? 0 : countMap.get(cur));
+                    countMap.put(word, count + 1);
+                    queue.add(word);
+                    // Mark the word visited, so it will not be processed again.
+                    visited.put(word, true);
+                    // If the endWord is found, return current chain length directly.
+                    if (word.equalsIgnoreCase(endWord)) {
+                        return countMap.get(word);
+                    }
+                }
+            }
+        }
         return 0;
     }
 	
