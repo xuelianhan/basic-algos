@@ -40,7 +40,22 @@ public class CousinsInBinaryTree {
 			 /* queue size indicates number of nodes at each level */
 			 int size = queue.size();
 			 for (int i = 0; i < size; i++) {
-				 
+				 TreeNode cur = queue.poll();
+				 //level-order traversal
+				 if (cur.left != null && cur.right != null) {
+					 if (cur.left.val == x && cur.right.val == y) {
+						 return false;
+					 }
+					 if (cur.left.val == y && cur.right.val == x) {
+						 return false;
+					 }
+				 }
+				 if (cur.left != null) {
+					 queue.offer(cur.left);
+				 }
+				 if (cur.right != null) {
+					 queue.offer(cur.right);
+				 }
 			 }
 		 }
 	     return false; 
