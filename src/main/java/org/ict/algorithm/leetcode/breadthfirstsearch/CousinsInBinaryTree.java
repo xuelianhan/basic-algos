@@ -28,6 +28,7 @@ import java.util.Queue;
  * Each node has a unique integer value from 1 to 100.
  * LC993
  *
+ * @author Frimish
  */
 public class CousinsInBinaryTree {
 	 public boolean isCousins(TreeNode root, int x, int y) {
@@ -39,8 +40,12 @@ public class CousinsInBinaryTree {
 		 while(!queue.isEmpty()) {
 			 /* queue size indicates number of nodes at each level */
 			 int size = queue.size();
+			 boolean xExist = false;
+			 boolean yExist = false;
 			 for (int i = 0; i < size; i++) {
 				 TreeNode cur = queue.poll();
+				 if (cur.val == x) xExist = true;
+				 if (cur.val == y) yExist = true;
 				 //level-order traversal
 				 if (cur.left != null && cur.right != null) {
 					 if (cur.left.val == x && cur.right.val == y) {
@@ -56,6 +61,9 @@ public class CousinsInBinaryTree {
 				 if (cur.right != null) {
 					 queue.offer(cur.right);
 				 }
+			 }
+			 if(xExist && yExist) {
+				 return true;
 			 }
 		 }
 	     return false; 
