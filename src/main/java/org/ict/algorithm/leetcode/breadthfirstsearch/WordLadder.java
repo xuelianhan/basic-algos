@@ -1,6 +1,5 @@
 package org.ict.algorithm.leetcode.breadthfirstsearch;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -148,11 +147,6 @@ public class WordLadder {
 		return 0;
 	}
 	
-
-	public int ladderLength(String beginWord, String endWord, List<String> wordList) {
-
-	}
-
 	/**
 	 * This version is very slow when input huge data.
 	 * Returns length of shortest chain to reach 'target' from 'start' 
