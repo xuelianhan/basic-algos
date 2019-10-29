@@ -31,42 +31,58 @@ import java.util.Queue;
  * @author Frimish
  */
 public class CousinsInBinaryTree {
-	 public boolean isCousins(TreeNode root, int x, int y) {
-		 if (root == null) {
+	
+	/**
+	 * The level-order traversal is the most time-efficient solution for this problem since we only go as deep as the first potential cousin. 
+	 * The memory complexity is O(n/2) to accommodate the longest level, 
+	 * vs. O(h) for recursive solutions, where h is the height of the tree (could be n in the worst case).
+	 * We use queue q to iterate through the current level nodes and populate their children into q1. 
+	 * We also insert nullptr into q1 after inserting each node's children (to separate siblings froum cousins).
+	 * If we find a node with value x or y, we have one potential cousin. 
+	 * If we find another potential cousin, we return true if they are not siblings (nullptr sets siblings to false). 
+	 * If we finished the level with just one potential cousin, we stop and return false.
+	 * 
+	 * @param root
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	public boolean isCousins(TreeNode root, int x, int y) {
+		if (root == null) {
 			 return false;
-		 }
-		 Queue<TreeNode> queue = new LinkedList<>();
-		 queue.offer(root);
-		 while(!queue.isEmpty()) {
-			 /* queue size indicates number of nodes at each level */
-			 int size = queue.size();
-			 boolean xExist = false;
-			 boolean yExist = false;
-			 for (int i = 0; i < size; i++) {
-				 TreeNode cur = queue.poll();
-				 if (cur.val == x) xExist = true;
-				 if (cur.val == y) yExist = true;
-				 //level-order traversal
-				 if (cur.left != null && cur.right != null) {
-					 if (cur.left.val == x && cur.right.val == y) {
-						 return false;
-					 }
-					 if (cur.left.val == y && cur.right.val == x) {
-						 return false;
-					 }
-				 }
-				 if (cur.left != null) {
-					 queue.offer(cur.left);
-				 }
-				 if (cur.right != null) {
-					 queue.offer(cur.right);
-				 }
-			 }
-			 if(xExist && yExist) {
-				 return true;
-			 }
-		 }
-	     return false; 
+		}
+		Queue<TreeNode> queue = new LinkedList<>();
+		queue.offer(root);
+		while(!queue.isEmpty()) {
+			/* queue size indicates number of nodes at each level */
+		    int size = queue.size();
+		    boolean xExist = false;
+		    boolean yExist = false;
+		    for (int i = 0; i < size; i++) {// for-loop used to control the search breadth.
+		    	TreeNode cur = queue.poll();
+		   	    if (cur.val == x) xExist = true;
+		   	    if (cur.val == y) yExist = true;
+		   	    //level-order traversal
+		   	    if (cur.left != null && cur.right != null) {
+		   	   	    if (cur.left.val == x && cur.right.val == y) {
+		   	   	   	   return false;
+		   	   	    }
+		   	   	    if (cur.left.val == y && cur.right.val == x) {
+		   	   	   	   return false;
+		   	   	    }
+		   	    }
+		   	    if (cur.left != null) {
+		   	    	queue.offer(cur.left);
+		   	    }
+		   	    if (cur.right != null) {
+		   	    	queue.offer(cur.right);
+		   	    }
+		    }
+		    if(xExist && yExist) {
+		    	return true;
+		    }
+		}
+	    return false; 
 	 }
 	 
 	 
@@ -90,7 +106,7 @@ public class CousinsInBinaryTree {
 			 yDepth = depth;
 		 }
 		 dfs(root.left, x, y, depth + 1, root);
-		 dfs(root.right,x, y, depth + 1, root);
+		 dfs(root.right, x, y, depth + 1, root);
 	 }
 	 
 	 public class TreeNode {

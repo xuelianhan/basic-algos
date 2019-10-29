@@ -7,6 +7,7 @@ public class ReetrantLockTest {
 	private final ReentrantLock lock = new ReentrantLock();
 	
 	public static void main(String[] args) {
-		
+		Integer i = 10;
+		i.toString();
 	}
 }
