@@ -69,6 +69,30 @@ public class CousinsInBinaryTree {
 	     return false; 
 	 }
 	 
+	 
+	 TreeNode xParent = null;
+	 TreeNode yParent = null;
+	 int xDepth = -1, yDepth = -1;
+	 public boolean isCousinsV2(TreeNode root, int x, int y) {
+		 dfs(root, x, y, 0, null);
+		 return (xDepth == yDepth && xParent != yParent) ? true : false;
+	 }
+	 
+	 private void dfs(TreeNode root, int x, int y, int depth, TreeNode parent) {
+		 if (root == null) {
+			 return;
+		 }
+		 if (root.val == x) {
+			 xParent = parent;
+			 xDepth = depth;
+		 } else if(root.val == y) {
+			 yParent = parent;
+			 yDepth = depth;
+		 }
+		 dfs(root.left, x, y, depth + 1, root);
+		 dfs(root.right,x, y, depth + 1, root);
+	 }
+	 
 	 public class TreeNode {
 		 int val;
 		 TreeNode left;
