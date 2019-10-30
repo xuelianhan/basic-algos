@@ -49,7 +49,7 @@ public class CousinsInBinaryTree {
 	 */
 	public boolean isCousins(TreeNode root, int x, int y) {
 		if (root == null) {
-			 return false;
+		    return false;
 		}
 		Queue<TreeNode> queue = new LinkedList<>();
 		queue.offer(root);
@@ -58,7 +58,7 @@ public class CousinsInBinaryTree {
 		    int size = queue.size();
 		    boolean xExist = false;
 		    boolean yExist = false;
-		    for (int i = 0; i < size; i++) {// for-loop used to control the search breadth.
+		    for(int i = 0; i < size; i++) {// for-loop used to control the search breadth.
 		    	TreeNode cur = queue.poll();
 		   	    if (cur.val == x) xExist = true;
 		   	    if (cur.val == y) yExist = true;
@@ -78,18 +78,53 @@ public class CousinsInBinaryTree {
 		   	    	queue.offer(cur.right);
 		   	    }
 		    }
-		    if(xExist && yExist) {
+		    if (xExist && yExist) {
 		    	return true;
 		    }
 		}
 	    return false; 
 	 }
+	
+	public boolean isCousinsV2(TreeNode root, int x, int y) {
+		if (root == null) {
+		    return false;
+		}
+		Queue<TreeNode> queue = new LinkedList<>();
+		queue.offer(root);
+		int treeDepth = 0, xDepth = -1, yDepth = -2;
+		while(!queue.isEmpty()) {
+			/* queue size indicates number of nodes at each level */
+		    int size = queue.size();
+		    for (int i = 0; i < size; i++) {// for-loop used to control the search breadth.
+		    	TreeNode cur = queue.poll();
+		   	    if (cur.val == x) xDepth = treeDepth;
+		   	    if (cur.val == y) yDepth = treeDepth;
+		   	    //level-order traversal
+		   	    if (cur.left != null && cur.right != null) {
+		   	   	    if (cur.left.val == x && cur.right.val == y) {
+		   	   	   	   return false;
+		   	   	    }
+		   	   	    if (cur.left.val == y && cur.right.val == x) {
+		   	   	   	   return false;
+		   	   	    }
+		   	    }
+		   	    if (cur.left != null) {
+		   	    	queue.offer(cur.left);
+		   	    }
+		   	    if (cur.right != null) {
+		   	    	queue.offer(cur.right);
+		   	    }
+		    }
+		    treeDepth++;
+		}
+		return (xDepth == yDepth);
+	}
 	 
 	 
 	 TreeNode xParent = null;
 	 TreeNode yParent = null;
 	 int xDepth = -1, yDepth = -1;
-	 public boolean isCousinsV2(TreeNode root, int x, int y) {
+	 public boolean isCousinsV3(TreeNode root, int x, int y) {
 		 dfs(root, x, y, 0, null);
 		 return (xDepth == yDepth && xParent != yParent) ? true : false;
 	 }
