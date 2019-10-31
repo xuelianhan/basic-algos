@@ -2,9 +2,11 @@ package org.ict.algorithm.leetcode.breadthfirstsearch;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
+import java.util.Set;
 
 /**
  * Given a 2D board containing 'X' and 'O' (the letter O), capture all regions surrounded by 'X'.
@@ -25,28 +27,58 @@ import java.util.Queue;
  * which means that any 'O' on the border of the board are not flipped to 'X'.
  * Any 'O' that is not on the border and it is not connected to an 'O' on the border will be flipped to 'X'. 
  * Two cells are connected if they are adjacent cells connected horizontally or vertically.
+ * 
+ * e.g:
+ * X X X X
+ * X O X X
+ * X O X X
+ * X O X X
+ * 
+ * After flipping the board:
+ * X X X X
+ * X X X X
+ * X O X X
+ * X O X X
+ * 
+ * Before flipping:
+ * [
+ * ["O","X","X","O","X"],
+ * ["X","O","O","X","O"],
+ * ["X","O","X","O","X"],
+ * ["O","X","O","O","O"],
+ * ["X","X","O","X","O"]]
+ * 
+ * After flipping:
+ * Program:
+ * [
+ * ["O","X","X","O","X"],
+ * ["X","X","X","X","O"],
+ * ["X","X","X","X","X"],
+ * ["O","X","O","O","O"],
+ * ["X","X","O","X","O"]]
+ * 
+ * Standard:
+ * [
+ * ["O","X","X","O","X"],
+ * ["X","X","X","X","O"],
+ * ["X","X","X","O","X"],
+ * ["O","X","O","O","O"],
+ * ["X","X","O","X","O"]]
  *
  * LC130
  */
 public class SurroundedRegions {
 	
 	public static void main(String[] args) {
-		char[][] board = {{'X', 'X', 'X'},
-				          {'X', 'O', 'X'},
-				          {'X', 'X', 'X'}
+		char[][] board = {{'O', 'O', 'O'},
+				          {'O', 'O', 'O'},
+				          {'O', 'X', 'O'}
 				         };
 		//char[][] board = {{'O'}};
 		//char[][] board = {};
 		SurroundedRegions sr = new SurroundedRegions();
 		sr.solutionV1(board);
-		System.out.println(Arrays.deepToString(board));
 	}
-	
-	private static Map<String, Boolean> visited = new HashMap<>();
-	
-	private static final char FIPPING_CHAR = 'O';
-	
-	private static final char TARGET_CHAR = 'X';
 	
 	public void solutionV1(char[][] board) {
 		if (board == null || board.length == 0 || board[0] == null || board[0].length == 0) {
@@ -54,31 +86,61 @@ public class SurroundedRegions {
 		}
 		int[] dx = {-1, 0, 0, 1};
 	    int[] dy = {0, 1, -1, 0};
+	    char FIPPING_CHAR = 'O';
+	    char TARGET_CHAR = 'X';
 		
+	    Map<String, Boolean> visited = new HashMap<>();
 		Queue<String> queue = new LinkedList<>();
 		queue.offer("00");
 		visited.put("00", true);
+		System.out.println("input:" + Arrays.deepToString(board));
+		Set<String> waitFlipSet = new HashSet<>();
 		while(!queue.isEmpty()) {
 			String curPoint = queue.poll();
-			for (int i = 0; i < dx.length; i++) {
-				int x = (curPoint.charAt(0) - '0') + dx[i];
-				int y = (curPoint.charAt(1) - '0') + dy[i];
+			boolean hasNeighborX = false;
+			boolean hasBoarderO = false;
+			int curX = (curPoint.charAt(0) - '0');
+			int curY = (curPoint.charAt(1) - '0');
+			for (int j = 0; j < dx.length; j++) {
+				int x = curX + dx[j];
+				int y = curY + dy[j];
+				if (!inRegion(x, y, board)) {
+					continue;
+				}
 				String nextPoint = x + "" + y;
-				if (inRegion(x, y, board) && !isVisited(nextPoint)) {
+				System.out.println("curPoint: (" + curX + ", " + curY + ")" + ", has nextPoint:" + "(" + x + ", " + y + ")" );
+				if (board[x][y] == TARGET_CHAR) {
+					hasNeighborX = true;
+					System.out.println("(" + curX + ", " + curY + ")" + " has NeighborX:" + "(" + x + ", " + y + ")" );
+				}
+				
+				if ((x == 0 || y == 0 || (x == (board.length - 1)) || (y == (board[0].length - 1))) && (board[x][y] == FIPPING_CHAR)) {
+					hasBoarderO = true;
+					System.out.println("(" + curX + ", " + curY + ")" + " has BoarderO:" + "(" + x + ", " + y + ")" );
+				}
+				if (isVisited(nextPoint, visited)) {
+					continue;
+				} else {
 					visited.put(nextPoint, true);
 					queue.offer(nextPoint);
-					if(insideRegion(x, y, board) && matchflipChar(x, y, board)) {
-						board[x][y] = TARGET_CHAR;
-					}
+				}
+				
+				if(insideRegion(curX, curY, board) && (board[curX][curY] == FIPPING_CHAR) && hasNeighborX && (!hasBoarderO)) {
+					waitFlipSet.add(curX + "" + curY);
+					
 				}
 			}
+		}//end-while-loop
+		if (!waitFlipSet.isEmpty()) {
+			for (String point : waitFlipSet) {
+				int curX = (point.charAt(0) - '0');
+				int curY = (point.charAt(1) - '0');
+				board[curX][curY] = TARGET_CHAR;
+			}
 		}
+		System.out.println("output:" + Arrays.deepToString(board));
 	}
-	
-	private boolean matchflipChar(int x, int y, char[][] board) {
-		return (board[x][y] == FIPPING_CHAR);
-	}
-	
+ 	
 	private boolean insideRegion(int x, int y, char[][] board) {
 		if (x >0 && x < (board.length -1) && y >0 && y < (board[0].length - 1)) {
 			return true;
@@ -93,7 +155,7 @@ public class SurroundedRegions {
 		return false;
 	}
 	
-	private boolean isVisited(String point) {
+	private boolean isVisited(String point, Map<String, Boolean> visited) {
 		if (point == null || point.length() == 0) {
 			return true;
 		}
