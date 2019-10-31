@@ -41,20 +41,20 @@ import java.util.Set;
  * X O X X
  * 
  * Before flipping:
- * [
- * ["O","X","X","O","X"],
- * ["X","O","O","X","O"],
- * ["X","O","X","O","X"],
- * ["O","X","O","O","O"],
- * ["X","X","O","X","O"]]
+ * [   0   1   2   3   4
+ * 0 ["O","X","X","O","X"],
+ * 1 ["X","O","O","X","O"],
+ * 2 ["X","O","X","O","X"],
+ * 3 ["O","X","O","O","O"],
+ * 4 ["X","X","O","X","O"]]
  * 
  * After flipping:
- * [
- * ["O","X","X","O","X"],
- * ["X","X","X","X","O"],
- * ["X","X","X","O","X"],
- * ["O","X","O","O","O"],
- * ["X","X","O","X","O"]]
+ * [   0   1   2   3   4
+ * 0 ["O","X","X","O","X"],
+ * 1 ["X","X","X","X","O"],
+ * 2 ["X","X","X","O","X"],
+ * 3 ["O","X","O","O","O"],
+ * 4 ["X","X","O","X","O"]]
  *
  * LC130
  */
@@ -83,7 +83,6 @@ public class SurroundedRegions {
 		int[] dx = {-1, 0, 0, 1};
 	    int[] dy = {0, 1, -1, 0};
 	    Map<String, Boolean> visited = new HashMap<>();
-	    Map<String, Boolean> pathToBoarder = new HashMap<>();
 		Queue<String> queue = new LinkedList<>();
 		queue.offer("00");
 		visited.put("00", true);
@@ -92,6 +91,7 @@ public class SurroundedRegions {
 		while(!queue.isEmpty()) {
 			String curPoint = queue.poll();
 			boolean hasNeighborX = false;
+			boolean hasBoarderO = false;
 			int curX = (curPoint.charAt(0) - '0');
 			int curY = (curPoint.charAt(1) - '0');
 			for (int j = 0; j < dx.length; j++) {
@@ -106,10 +106,10 @@ public class SurroundedRegions {
 					hasNeighborX = true;
 					System.out.println("(" + curX + ", " + curY + ")" + " has NeighborX:" + "(" + x + ", " + y + ")" );
 				}
-				if (isFlipChar(x, y, board) && onBoarder(x, y, board) ) {
-					//pathToBoarder.put(curX + "" + curY, true);
-					pathToBoarder.put(x + "" + y, true);
-					System.out.println("(" + curX + ", " + curY + ")" + " has BoarderO:" + "(" + x + ", " + y + ")" );
+				
+				if (isFlipChar(curX, curY, board)&& onBoarder(curX, curY, board)) {
+					hasBoarderO = true;
+					System.out.println("(" + curX + ", " + curY + ")" + " is on BoarderO:" );
 				}
 				if (isVisited(nextPoint, visited)) {
 					continue;
@@ -117,8 +117,10 @@ public class SurroundedRegions {
 					visited.put(nextPoint, true);
 					queue.offer(nextPoint);
 				}
-				
-				if(insideRegion(curX, curY, board) && (board[curX][curY] == FIPPING_CHAR) && hasNeighborX && (pathToBoarder.get(curX + "" + curY) == true)) {
+				if(insideRegion(curX, curY, board) 
+						&& (board[curX][curY] == FIPPING_CHAR) 
+						&& hasNeighborX 
+						&& !hasBoarderO) {
 					waitFlipSet.add(curX + "" + curY);
 				}
 			}
