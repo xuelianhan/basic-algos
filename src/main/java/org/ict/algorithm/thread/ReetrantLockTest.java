@@ -29,18 +29,18 @@ public class ReetrantLockTest {
 		@Override
 		public void run() {
 			if(lock.tryLock()) {
-				System.out.println(tname + " obtains the lock:" + lock);
+				System.out.println(tname + " obtains the lock");
 				executeJob();
-				System.out.println("thread " + tname + ", count of locks held is:" + lock.getHoldCount());
+				System.out.println("After unlock, " + tname + ", count of locks held is:" + lock.getHoldCount());
 			} else {
-				System.out.println(tname + " not obtains the lock:" + lock);
+				System.out.println(tname + " not obtains the lock");
 			}
 		}
 		
 		public void executeJob() {
 			lock.lock();
 			try {
-				System.out.println("thread " + tname + ", count of locks held is:" + lock.getHoldCount());
+				System.out.println("After lock, " + tname + ", count of locks held is:" + lock.getHoldCount());
 			} finally {
 				lock.unlock();
 			}
