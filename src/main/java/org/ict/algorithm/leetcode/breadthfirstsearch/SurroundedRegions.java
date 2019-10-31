@@ -49,15 +49,6 @@ import java.util.Set;
  * ["X","X","O","X","O"]]
  * 
  * After flipping:
- * Program:
- * [
- * ["O","X","X","O","X"],
- * ["X","X","X","X","O"],
- * ["X","X","X","X","X"],
- * ["O","X","O","O","O"],
- * ["X","X","O","X","O"]]
- * 
- * Standard:
  * [
  * ["O","X","X","O","X"],
  * ["X","X","X","X","O"],
@@ -70,9 +61,11 @@ import java.util.Set;
 public class SurroundedRegions {
 	
 	public static void main(String[] args) {
-		char[][] board = {{'O', 'O', 'O'},
-				          {'O', 'O', 'O'},
-				          {'O', 'X', 'O'}
+		char[][] board = {{'O','X','X','O','X'},
+				          {'X','O','O','X','O'},
+				          {'X','O','X','O','X'},
+				          {'O','X','O','O','O'},
+				          {'X','X','O','X','O'}
 				         };
 		//char[][] board = {{'O'}};
 		//char[][] board = {};
@@ -80,16 +73,17 @@ public class SurroundedRegions {
 		sr.solutionV1(board);
 	}
 	
+	public static final char FIPPING_CHAR = 'O';
+	public static final char TARGET_CHAR = 'X';
+	
 	public void solutionV1(char[][] board) {
 		if (board == null || board.length == 0 || board[0] == null || board[0].length == 0) {
 			return;
 		}
 		int[] dx = {-1, 0, 0, 1};
 	    int[] dy = {0, 1, -1, 0};
-	    char FIPPING_CHAR = 'O';
-	    char TARGET_CHAR = 'X';
-		
 	    Map<String, Boolean> visited = new HashMap<>();
+	    Map<String, Boolean> pathToBoarder = new HashMap<>();
 		Queue<String> queue = new LinkedList<>();
 		queue.offer("00");
 		visited.put("00", true);
@@ -98,7 +92,6 @@ public class SurroundedRegions {
 		while(!queue.isEmpty()) {
 			String curPoint = queue.poll();
 			boolean hasNeighborX = false;
-			boolean hasBoarderO = false;
 			int curX = (curPoint.charAt(0) - '0');
 			int curY = (curPoint.charAt(1) - '0');
 			for (int j = 0; j < dx.length; j++) {
@@ -113,9 +106,9 @@ public class SurroundedRegions {
 					hasNeighborX = true;
 					System.out.println("(" + curX + ", " + curY + ")" + " has NeighborX:" + "(" + x + ", " + y + ")" );
 				}
-				
-				if ((x == 0 || y == 0 || (x == (board.length - 1)) || (y == (board[0].length - 1))) && (board[x][y] == FIPPING_CHAR)) {
-					hasBoarderO = true;
+				if (isFlipChar(x, y, board) && onBoarder(x, y, board) ) {
+					//pathToBoarder.put(curX + "" + curY, true);
+					pathToBoarder.put(x + "" + y, true);
 					System.out.println("(" + curX + ", " + curY + ")" + " has BoarderO:" + "(" + x + ", " + y + ")" );
 				}
 				if (isVisited(nextPoint, visited)) {
@@ -125,9 +118,8 @@ public class SurroundedRegions {
 					queue.offer(nextPoint);
 				}
 				
-				if(insideRegion(curX, curY, board) && (board[curX][curY] == FIPPING_CHAR) && hasNeighborX && (!hasBoarderO)) {
+				if(insideRegion(curX, curY, board) && (board[curX][curY] == FIPPING_CHAR) && hasNeighborX && (pathToBoarder.get(curX + "" + curY) == true)) {
 					waitFlipSet.add(curX + "" + curY);
-					
 				}
 			}
 		}//end-while-loop
@@ -139,6 +131,20 @@ public class SurroundedRegions {
 			}
 		}
 		System.out.println("output:" + Arrays.deepToString(board));
+	}
+	
+	private boolean onBoarder(int x, int y, char[][] board) {
+		if (x == 0 || y == 0 || (x == (board.length - 1)) || (y == (board[0].length - 1))) {
+			return true;
+		}
+		return false;
+	}
+	
+	private boolean isFlipChar(int x, int y, char[][] board) {
+		if (board[x][y] == FIPPING_CHAR) {
+			return true;
+		}
+		return false;
 	}
  	
 	private boolean insideRegion(int x, int y, char[][] board) {
