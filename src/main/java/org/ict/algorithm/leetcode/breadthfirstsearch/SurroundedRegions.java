@@ -2,11 +2,9 @@ package org.ict.algorithm.leetcode.breadthfirstsearch;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
-import java.util.Set;
 
 /**
  * Given a 2D board containing 'X' and 'O' (the letter O), capture all regions surrounded by 'X'.
@@ -167,17 +165,63 @@ public class SurroundedRegions {
 	
 	private static class Point {
 		private int x;
+		
 		private int y;
 		
 		private String val;
 		
+		private boolean visited;
+		
+		private boolean hasExit;
+		
 		public Point(int x, int y, String val) {
 			this.x = x;
 			this.y = y;
+			this.val = val;
 		}
 		
 		public String toString() {
-			return "x = " + x + ", y = " + y + ", val = " + val;
+			return "{\"x\":" + x + ",\"y\":" + y + ",\"val\":" + val + ",\"visited\":" + visited + ",\"hasExit\":" + hasExit + "}";
+		}
+
+		public int getX() {
+			return x;
+		}
+
+		public void setX(int x) {
+			this.x = x;
+		}
+
+		public int getY() {
+			return y;
+		}
+
+		public void setY(int y) {
+			this.y = y;
+		}
+
+		public String getVal() {
+			return val;
+		}
+
+		public void setVal(String val) {
+			this.val = val;
+		}
+
+		public boolean isVisited() {
+			return visited;
+		}
+
+		public void setVisited(boolean visited) {
+			this.visited = visited;
+		}
+
+		public boolean isHasExit() {
+			return hasExit;
+		}
+
+		public void setHasExit(boolean hasExit) {
+			this.hasExit = hasExit;
 		}
 	}
 }
