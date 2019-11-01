@@ -87,7 +87,6 @@ public class SurroundedRegions {
 		queue.offer("00");
 		visited.put("00", true);
 		System.out.println("input:" + Arrays.deepToString(board));
-		Set<String> waitFlipSet = new HashSet<>();
 		while(!queue.isEmpty()) {
 			String curPoint = queue.poll();
 			boolean hasNeighborX = false;
@@ -107,9 +106,9 @@ public class SurroundedRegions {
 					System.out.println("(" + curX + ", " + curY + ")" + " has NeighborX:" + "(" + x + ", " + y + ")" );
 				}
 				
-				if (isFlipChar(curX, curY, board)&& onBoarder(curX, curY, board)) {
+				if (isFlipChar(x, y, board)&& onBoarder(x, y, board)) {
 					hasBoarderO = true;
-					System.out.println("(" + curX + ", " + curY + ")" + " is on BoarderO:" );
+					System.out.println("(" + x + ", " + y + ")" + " is on BoarderO:" );
 				}
 				if (isVisited(nextPoint, visited)) {
 					continue;
@@ -121,15 +120,8 @@ public class SurroundedRegions {
 						&& (board[curX][curY] == FIPPING_CHAR) 
 						&& hasNeighborX 
 						&& !hasBoarderO) {
-					waitFlipSet.add(curX + "" + curY);
+					board[curX][curY] = TARGET_CHAR;
 				}
-			}
-		}//end-while-loop
-		if (!waitFlipSet.isEmpty()) {
-			for (String point : waitFlipSet) {
-				int curX = (point.charAt(0) - '0');
-				int curY = (point.charAt(1) - '0');
-				board[curX][curY] = TARGET_CHAR;
 			}
 		}
 		System.out.println("output:" + Arrays.deepToString(board));

@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Compilation: 
@@ -26,7 +27,7 @@ import java.util.concurrent.ConcurrentSkipListSet;
  * Dependencies:none
  * 
  * This class create a new server that can accept connections from new clients.
- * It also contains an embedded class whitch extends the Thread base class to
+ * It also contains an embedded class which extends the Thread base class to
  * handle multiple clients concurrently.Server can interact with clients in
  * broadcast mode. Server has following features: 1.Listen for new connections
  * from clients. 2.Handle connections from clients. 3.Respond to clients
@@ -43,7 +44,7 @@ public class Server implements Runnable {
 	
 	private Thread thread = null;
 	
-	private int handlerCount = 0;
+	private AtomicInteger handlerCount = new AtomicInteger(0);
 
 	private ServerSocket server = null;
 
@@ -101,18 +102,18 @@ public class Server implements Runnable {
 	 * @param socket
 	 */
 	private void addServerHandler(Socket socket) {
-		if (handlerCount >= handlers.length) {
+		if (handlerCount.get() >= handlers.length) {
 			System.out.println("Server handlers number is overflow!" + handlers.length + "is allowed at max.");
 		} 
 		System.out.println("Server Accepted client: " + socket);
-		handlers[handlerCount] = new ServerHandler(this, socket);
+		handlers[handlerCount.get()] = new ServerHandler(this, socket);
 		try {
-			handlers[handlerCount].open();
-			handlers[handlerCount].start();
-			handlerCount++;
-			if (handlers[handlerCount] != null) {
-				if (handlers[handlerCount].getClientName() == null || "".equals(handlers[handlerCount].getClientName())) {
-					handleMessage(handlers[handlerCount].getHandlerId(), "need_select_client_name");
+			handlers[handlerCount.get()].open();
+			handlers[handlerCount.get()].start();
+			handlerCount.getAndIncrement();
+			if (handlers[handlerCount.get()] != null) {
+				if (handlers[handlerCount.get()].getClientName() == null || "".equals(handlers[handlerCount.get()].getClientName())) {
+					handleMessage(handlers[handlerCount.get()].getHandlerId(), "need_select_client_name");
 				}
 			}
 		} catch (IOException e) {
@@ -126,7 +127,7 @@ public class Server implements Runnable {
 	 * @return
 	 */
 	private int findHandler(int handlerId) {
-		for (int i = 0; i < handlerCount; i++) {
+		for (int i = 0; i < handlerCount.get(); i++) {
 			if (handlers[i].getHandlerId() == handlerId) {
 				return i;
 			}
@@ -146,7 +147,7 @@ public class Server implements Runnable {
 		if ("bye".equals(message)){
 			System.out.println("bye message");
 			if (index >= 0) {
-				for (int i = 0; i < handlerCount; i++) {
+				for (int i = 0; i < handlerCount.get(); i++) {
 					if (i != index) {
 						System.out.println("server start to notice client " + id + " offline message to group members.");
 						handlers[i].send("Command:" + CommandType.command_separator.getDesc()+"Notice:client" + id + " offline by sending command " + CommandType.bye.getDesc()+ LINE_SEPARATOR);
@@ -183,7 +184,7 @@ public class Server implements Runnable {
 			System.out.println("server received empty message!");
 		} else {
 			System.out.println("group_chat,handlerCount:"+handlerCount+",message:"+message);
-			for (int i = 0; i < handlerCount; i++) {
+			for (int i = 0; i < handlerCount.get(); i++) {
 				if (i != index) {
 					handlers[i].send("Command:" + CommandType.command_separator.getDesc() + message + LINE_SEPARATOR);
 				}
@@ -201,8 +202,8 @@ public class Server implements Runnable {
 			ServerHandler handler = handlers[index];
 			
 			System.out.println("Start to remove handler of id:" + id + " at position: " + index);
-			if (index < (handlerCount - 1)) {
-				for (int i = (index + 1); i < handlerCount; i++) {
+			if (index < (handlerCount.get() - 1)) {
+				for (int i = (index + 1); i < handlerCount.get(); i++) {
 					handlers[i - 1] = handlers[i];
 				}
 			}
@@ -210,7 +211,7 @@ public class Server implements Runnable {
 			clientNames.remove(handler.getClientName());
 			clientNameHandlerId.remove(handler.getClientName());
 			System.out.println("handlerCount before:" + handlerCount);
-			handlerCount--;
+			handlerCount.getAndDecrement();
 			System.out.println("handlerCount after:" + handlerCount);
 			try {
 				handler.close();
