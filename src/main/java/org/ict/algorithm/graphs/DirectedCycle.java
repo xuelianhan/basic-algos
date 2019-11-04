@@ -2,6 +2,12 @@ package org.ict.algorithm.graphs;
 
 import org.ict.algorithm.fundamentals.Stack;
 
+/**
+ * 
+ * @author Robert Sedgewick
+ * @author Kevin wayne
+ *
+ */
 public class DirectedCycle {
 
 	// marked[v] = has vertex v been marked?
