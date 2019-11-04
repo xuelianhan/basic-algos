@@ -68,12 +68,104 @@ public class SurroundedRegions {
 		//char[][] board = {{'O'}};
 		//char[][] board = {};
 		SurroundedRegions sr = new SurroundedRegions();
-		sr.solutionV1(board);
+		sr.solutionV2(board);
 	}
 	
 	public static final char FIPPING_CHAR = 'O';
 	public static final char TARGET_CHAR = 'X';
+	public static final char TEMP_CHAR = 'N';
+	public static final int[] dx = {-1, 0, 0, 1};
+    public static final int[] dy = {0, 1, -1, 0};
 	
+	public void solutionV2(char[][] board) {
+		System.out.println("input:" + Arrays.deepToString(board));
+		if (board == null || board.length == 0 || board[0] == null || board[0].length == 0) {
+			return;
+		}
+		Queue<Integer> queue = new LinkedList<>();
+		int m = board.length, n = board[0].length;
+		// top row
+		for (int i = 0; i < n; i++) {
+			if (board[0][i] == FIPPING_CHAR) {
+				bfs(board, 0, i, queue);
+			}
+		}
+		System.out.println("top:" + Arrays.deepToString(board));
+		// bottom row
+		for (int i = 0; i < n; i++) {
+			if (board[m-1][i] == FIPPING_CHAR) {
+				bfs(board, m - 1, i, queue);
+			}
+		}
+		System.out.println("bottom:" + Arrays.deepToString(board));
+		// left column
+		for (int i = 0; i < m; i++) {
+			if (board[i][0] == FIPPING_CHAR) {
+				bfs(board, i, 0, queue);
+			}
+		}
+		System.out.println("left:" + Arrays.deepToString(board));
+		// right column
+		for (int i = 0; i < m; i++) {
+			if(board[i][n-1] == FIPPING_CHAR) {
+				bfs(board, i, n-1, queue);
+			}
+		}
+		System.out.println("all:" + Arrays.deepToString(board));
+		for (int i = 0; i < m; i++) {
+			for (int j = 0; j < n; j++) {
+				if (board[i][j] == FIPPING_CHAR) {
+					board[i][j] = TARGET_CHAR;
+				}
+				if (board[i][j] == TEMP_CHAR) {
+					board[i][j] = FIPPING_CHAR;
+				}
+			}
+		}
+		System.out.println("output:" + Arrays.deepToString(board));
+	}
+	
+	/**
+	 * position = row * colNum + col;
+	 * row = position / colNum;
+	 * col = position % colNum;
+	 * 
+	 * @param board
+	 * @param row
+	 * @param col
+	 * @param queue
+	 */
+	private void bfs(char[][] board, int row, int col, Queue<Integer> queue) {
+		queue.clear();
+		int colNum = board[0].length;
+		queue.add(row * colNum + col);
+		board[row][col] = TEMP_CHAR;
+		System.out.println("row:" + row + ", col:" + col + " into the queue:" + queue);
+		while (!queue.isEmpty()) {
+			int position = queue.poll();
+			int r = position / colNum;
+			int c = position % colNum;
+			System.out.println("position:" + position + ", r:" +  r + ", c:" + c + " out of the queue:" + queue);
+			for (int j = 0; j < dx.length; j++) {
+				int x = r + dx[j];
+				int y = c + dy[j];
+				if (!inRegion(x, y, board)) {
+					continue;
+				}
+				if (board[x][y] == FIPPING_CHAR) {//is flipping char means it has been not visited.
+					queue.add(x * colNum + y);//here not write to x * colNum + r, otherwise is wrong.
+					board[x][y] = TEMP_CHAR;// marked to temp_char as it has been visited.
+					System.out.println("(" + x + ", " + y + ") into the queue: " + queue +" and changed to " + TEMP_CHAR);
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Wrong solution because the connected 'O' can not visited at the same layer.
+	 * @deprecated
+	 * @param board
+	 */
 	public void solutionV1(char[][] board) {
 		if (board == null || board.length == 0 || board[0] == null || board[0].length == 0) {
 			return;
@@ -161,67 +253,5 @@ public class SurroundedRegions {
 			return false;
 		}
 		return true;
-	}
-	
-	private static class Point {
-		private int x;
-		
-		private int y;
-		
-		private String val;
-		
-		private boolean visited;
-		
-		private boolean hasExit;
-		
-		public Point(int x, int y, String val) {
-			this.x = x;
-			this.y = y;
-			this.val = val;
-		}
-		
-		public String toString() {
-			return "{\"x\":" + x + ",\"y\":" + y + ",\"val\":" + val + ",\"visited\":" + visited + ",\"hasExit\":" + hasExit + "}";
-		}
-
-		public int getX() {
-			return x;
-		}
-
-		public void setX(int x) {
-			this.x = x;
-		}
-
-		public int getY() {
-			return y;
-		}
-
-		public void setY(int y) {
-			this.y = y;
-		}
-
-		public String getVal() {
-			return val;
-		}
-
-		public void setVal(String val) {
-			this.val = val;
-		}
-
-		public boolean isVisited() {
-			return visited;
-		}
-
-		public void setVisited(boolean visited) {
-			this.visited = visited;
-		}
-
-		public boolean isHasExit() {
-			return hasExit;
-		}
-
-		public void setHasExit(boolean hasExit) {
-			this.hasExit = hasExit;
-		}
 	}
 }
