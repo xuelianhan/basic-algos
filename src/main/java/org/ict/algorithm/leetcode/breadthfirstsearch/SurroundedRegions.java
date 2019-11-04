@@ -138,13 +138,13 @@ public class SurroundedRegions {
 	private void bfs(char[][] board, int row, int col, Queue<Integer> queue) {
 		queue.clear();
 		int colNum = board[0].length;
-		queue.add(row * colNum + col);
+		queue.add(row * colNum + col);//Skills here
 		board[row][col] = TEMP_CHAR;
 		System.out.println("row:" + row + ", col:" + col + " into the queue:" + queue);
 		while (!queue.isEmpty()) {
 			int position = queue.poll();
-			int r = position / colNum;
-			int c = position % colNum;
+			int r = position / colNum;//Skills here
+			int c = position % colNum;//Skills here
 			System.out.println("position:" + position + ", r:" +  r + ", c:" + c + " out of the queue:" + queue);
 			for (int j = 0; j < dx.length; j++) {
 				int x = r + dx[j];
@@ -154,7 +154,7 @@ public class SurroundedRegions {
 				}
 				if (board[x][y] == FIPPING_CHAR) {//is flipping char means it has been not visited.
 					queue.add(x * colNum + y);//here not write to x * colNum + r, otherwise is wrong.
-					board[x][y] = TEMP_CHAR;// marked to temp_char as it has been visited.
+					board[x][y] = TEMP_CHAR;// marked to temp_char as it has been visited when into the queue
 					System.out.println("(" + x + ", " + y + ") into the queue: " + queue +" and changed to " + TEMP_CHAR);
 				}
 			}
