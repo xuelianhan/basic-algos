@@ -2,6 +2,7 @@ package org.ict.algorithm.graphs;
 
 import org.ict.algorithm.fundamentals.Queue;
 import org.ict.algorithm.fundamentals.Stack;
+import org.ict.algorithm.util.In;
 import org.ict.algorithm.util.StdOut;
 
 /**
@@ -30,9 +31,9 @@ public class DepthFirstOrder {
 	private int[] pre;
 	// post[v] = postorder number of v
 	private int[] post;
-	// vertices in preorder
+	// vertices in preorder(put vertex on a queue before the recursive calls)
 	private Queue<Integer> preorder;
-	// vertices in postorder
+	// vertices in postorder(put vertex on a queue after the recursive calls)
 	private Queue<Integer> postorder;
 	// counter for preorder numbering
 	private int preCounter;
@@ -54,7 +55,7 @@ public class DepthFirstOrder {
 				dfs(G, v);
 			}
 		}
-		//assert check();
+		assert check();
 	}
 	
 	/**
@@ -111,7 +112,7 @@ public class DepthFirstOrder {
 	 * @throws IllegalArgumentException unless {@code 0 <= v < V}
 	 */
 	public int pre(int v) {
-		//validateVertex(v);
+		validateVertex(v);
 		return pre[v];
 	}
 	
@@ -122,7 +123,7 @@ public class DepthFirstOrder {
 	 * @throws IllegalArgumentException unless {@code 0 <= v < V}
 	 */
 	public int post(int v) {
-		//validateVertex(v);
+		validateVertex(v);
 		return post[v];
 	}
 	
@@ -160,10 +161,56 @@ public class DepthFirstOrder {
 		int r = 0;
 		for (int v : post()) {
 			if (post(v) != r) {
-				StdOut.println("");
+				StdOut.println("post(v) and post() inconsistent");
 				return false;
 			}
+			r++;
+		}
+		// check that pre(v) is consistent with pre()
+		r = 0;
+		for (int v : pre()) {
+			if (pre(v) != r) {
+				StdOut.println("pre(v) and pre() inconsistent");
+				return false;
+			}
+			r++;
 		}
 		return true;
+	}
+	
+	// throw an IllegalArgumentException unless {@code 0 <= v < V}
+	private void validateVertex(int v) {
+		int V = marked.length;
+		if (v < 0 || v > V) {
+			throw new IllegalArgumentException("vertex is not between 0 and " + (V-1));
+		}
+	}
+	
+	public static void main(String[] args) {
+		In in = new In(args[0]);
+		Digraph G = new Digraph(in);
+		DepthFirstOrder dfs = new DepthFirstOrder(G);
+		StdOut.println(" v pre post");
+		StdOut.println("------------");
+		for (int v = 0; v< G.V(); v++) {
+			StdOut.printf("%4d %4d %4d\n", v, dfs.pre(v), dfs.post(v));
+		}
+		
+		StdOut.print("Preorder:");
+		for (int v : dfs.pre()) {
+			StdOut.print(v + " ");
+		}
+		StdOut.println();
+		
+		StdOut.print("Postorder:");
+		for (int v : dfs.post()) {
+			StdOut.print(v + " ");
+		}
+		StdOut.println();
+		
+		StdOut.print("Reverse Postorder:");
+		for (int v : dfs.reversePost()) {
+			StdOut.print(v + " ");
+		}
 	}
 }
