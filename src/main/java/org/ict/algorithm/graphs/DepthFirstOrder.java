@@ -144,6 +144,7 @@ public class DepthFirstOrder {
 	}
 	
 	/**
+	 * A reverse postorder in a DAG provides a topological order.
 	 * Returns the vertices in reverse postorder.
 	 * @return the vertices in reverse postorder, as an iterable of vertices
 	 */
