@@ -10,6 +10,8 @@ package org.ict.algorithm.thread;
  * all the ThreadLocal objects created will persist in heap and the heap 
  * is eaten up with more and more requests created and finally you will 
  * get the OutOfMemoryError.
+ * 
+ * @see https://www.cnblogs.com/micrari/p/6790229.html
  */
 public class ThreadLocalTest {
     public static void main(String[] args){

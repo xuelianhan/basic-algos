@@ -1,7 +1,7 @@
 package org.ict.algorithm.thread;
 
 public class WorkerThread implements Runnable {
-    private ThreadLocal local = new ThreadLocal<Byte[]>();
+    private ThreadLocal<Byte[]> local = new ThreadLocal<Byte[]>();
     private volatile boolean isStopped = false;
      
     public void run(){
@@ -18,7 +18,7 @@ public class WorkerThread implements Runnable {
         }
     }
      
-    public void setList(byte[] bytes){
+    public void setList(Byte[] bytes){
         local.set(bytes);
     }
      

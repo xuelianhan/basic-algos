@@ -8,6 +8,15 @@ import org.junit.Test;
 
 public class StringTest {
 	
+	@Test
+	public void testAndMod()  {
+		int len = 16;
+		for (int i = 0; i < 20; i++) {
+			System.out.println(i % (len));
+			System.out.println(i & (len - 1));// (i & (len - 1)) equal with (i % (len))
+		}
+	}
+	
 	
 	
 	/**

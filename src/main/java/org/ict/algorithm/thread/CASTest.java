@@ -3,6 +3,7 @@ package org.ict.algorithm.thread;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
+ * CAS implementation is CMPXCHG instructions provided by CPU
  * @see https://en.wikipedia.org/wiki/Compare-and-swap
  * @see https://dzone.com/articles/how-cas-compare-and-swap-java
  * @see https://stackoverflow.com/questions/2664172/java-concurrency-cas-vs-locking
