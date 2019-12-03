@@ -2,9 +2,11 @@ package org.ict.algorithm.leetcode.breadthfirstsearch;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
+import java.util.Set;
 
 /**
  * Given a 2D board containing 'X' and 'O' (the letter O), capture all regions surrounded by 'X'.
@@ -68,17 +70,24 @@ public class SurroundedRegions {
 		//char[][] board = {{'O'}};
 		//char[][] board = {};
 		SurroundedRegions sr = new SurroundedRegions();
-		sr.solutionV2(board);
+		sr.solutionV1(board);
 	}
 	
 	public static final char FIPPING_CHAR = 'O';
+    
 	public static final char TARGET_CHAR = 'X';
-	public static final char TEMP_CHAR = 'N';
+
+    public static final char TEMP_CHAR = 'N';
+
 	public static final int[] dx = {-1, 0, 0, 1};
+    
     public static final int[] dy = {0, 1, -1, 0};
-	
-	public void solutionV2(char[][] board) {
-		System.out.println("input:" + Arrays.deepToString(board));
+
+    /**
+     * Right Solution
+     *
+     */
+    public void solve(char[][] board) {
 		if (board == null || board.length == 0 || board[0] == null || board[0].length == 0) {
 			return;
 		}
@@ -90,28 +99,24 @@ public class SurroundedRegions {
 				bfs(board, 0, i, queue);
 			}
 		}
-		System.out.println("top:" + Arrays.deepToString(board));
 		// bottom row
 		for (int i = 0; i < n; i++) {
 			if (board[m-1][i] == FIPPING_CHAR) {
 				bfs(board, m - 1, i, queue);
 			}
 		}
-		System.out.println("bottom:" + Arrays.deepToString(board));
 		// left column
 		for (int i = 0; i < m; i++) {
 			if (board[i][0] == FIPPING_CHAR) {
 				bfs(board, i, 0, queue);
 			}
 		}
-		System.out.println("left:" + Arrays.deepToString(board));
 		// right column
 		for (int i = 0; i < m; i++) {
 			if(board[i][n-1] == FIPPING_CHAR) {
 				bfs(board, i, n-1, queue);
 			}
 		}
-		System.out.println("all:" + Arrays.deepToString(board));
 		for (int i = 0; i < m; i++) {
 			for (int j = 0; j < n; j++) {
 				if (board[i][j] == FIPPING_CHAR) {
@@ -122,10 +127,9 @@ public class SurroundedRegions {
 				}
 			}
 		}
-		System.out.println("output:" + Arrays.deepToString(board));
 	}
-	
-	/**
+
+    /**
 	 * position = row * colNum + col;
 	 * row = position / colNum;
 	 * col = position % colNum;
@@ -138,14 +142,12 @@ public class SurroundedRegions {
 	private void bfs(char[][] board, int row, int col, Queue<Integer> queue) {
 		queue.clear();
 		int colNum = board[0].length;
-		queue.add(row * colNum + col);//Skills here
+		queue.add(row * colNum + col);
 		board[row][col] = TEMP_CHAR;
-		System.out.println("row:" + row + ", col:" + col + " into the queue:" + queue);
 		while (!queue.isEmpty()) {
 			int position = queue.poll();
-			int r = position / colNum;//Skills here
-			int c = position % colNum;//Skills here
-			System.out.println("position:" + position + ", r:" +  r + ", c:" + c + " out of the queue:" + queue);
+			int r = position / colNum;
+			int c = position % colNum;
 			for (int j = 0; j < dx.length; j++) {
 				int x = r + dx[j];
 				int y = c + dy[j];
@@ -154,18 +156,16 @@ public class SurroundedRegions {
 				}
 				if (board[x][y] == FIPPING_CHAR) {//is flipping char means it has been not visited.
 					queue.add(x * colNum + y);//here not write to x * colNum + r, otherwise is wrong.
-					board[x][y] = TEMP_CHAR;// marked to temp_char as it has been visited when into the queue
-					System.out.println("(" + x + ", " + y + ") into the queue: " + queue +" and changed to " + TEMP_CHAR);
+					board[x][y] = TEMP_CHAR;// marked to temp_char as it has been visited.
 				}
 			}
 		}
 	}
-	
-	/**
-	 * Wrong solution because the connected 'O' can not visited at the same layer.
-	 * @deprecated
-	 * @param board
-	 */
+
+    /**
+     * Wrong solution
+     *
+     */
 	public void solutionV1(char[][] board) {
 		if (board == null || board.length == 0 || board[0] == null || board[0].length == 0) {
 			return;
@@ -177,6 +177,7 @@ public class SurroundedRegions {
 		queue.offer("00");
 		visited.put("00", true);
 		System.out.println("input:" + Arrays.deepToString(board));
+		Set<String> waitFlipSet = new HashSet<>();
 		while(!queue.isEmpty()) {
 			String curPoint = queue.poll();
 			boolean hasNeighborX = false;
@@ -196,9 +197,9 @@ public class SurroundedRegions {
 					System.out.println("(" + curX + ", " + curY + ")" + " has NeighborX:" + "(" + x + ", " + y + ")" );
 				}
 				
-				if (isFlipChar(x, y, board)&& onBoarder(x, y, board)) {
+				if (isFlipChar(curX, curY, board)&& onBoarder(curX, curY, board)) {
 					hasBoarderO = true;
-					System.out.println("(" + x + ", " + y + ")" + " is on BoarderO:" );
+					System.out.println("(" + curX + ", " + curY + ")" + " is on BoarderO:" );
 				}
 				if (isVisited(nextPoint, visited)) {
 					continue;
@@ -210,8 +211,15 @@ public class SurroundedRegions {
 						&& (board[curX][curY] == FIPPING_CHAR) 
 						&& hasNeighborX 
 						&& !hasBoarderO) {
-					board[curX][curY] = TARGET_CHAR;
+					waitFlipSet.add(curX + "" + curY);
 				}
+			}
+		}//end-while-loop
+		if (!waitFlipSet.isEmpty()) {
+			for (String point : waitFlipSet) {
+				int curX = (point.charAt(0) - '0');
+				int curY = (point.charAt(1) - '0');
+				board[curX][curY] = TARGET_CHAR;
 			}
 		}
 		System.out.println("output:" + Arrays.deepToString(board));
@@ -253,5 +261,21 @@ public class SurroundedRegions {
 			return false;
 		}
 		return true;
+	}
+	
+	private static class Point {
+		private int x;
+		private int y;
+		
+		private String val;
+		
+		public Point(int x, int y, String val) {
+			this.x = x;
+			this.y = y;
+		}
+		
+		public String toString() {
+			return "x = " + x + ", y = " + y + ", val = " + val;
+		}
 	}
 }
