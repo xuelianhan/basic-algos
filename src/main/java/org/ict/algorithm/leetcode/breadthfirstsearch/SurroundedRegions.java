@@ -71,6 +71,7 @@ public class SurroundedRegions {
 		//char[][] board = {};
 		SurroundedRegions sr = new SurroundedRegions();
 		sr.solutionV1(board);
+		//sr.solutionV2(board);
 	}
 	
 	public static final char FIPPING_CHAR = 'O';
@@ -85,9 +86,13 @@ public class SurroundedRegions {
 
     /**
      * Right Solution
+     * 1.First replace all connected O to temp char N;
+     * 2.Second replace reserved O to target char X;
+     * 3.Third replace the temp char N back to O;
      *
      */
-    public void solve(char[][] board) {
+    public void solutionV2(char[][] board) {
+    	System.out.println("input:" + Arrays.deepToString(board));
 		if (board == null || board.length == 0 || board[0] == null || board[0].length == 0) {
 			return;
 		}
@@ -127,6 +132,7 @@ public class SurroundedRegions {
 				}
 			}
 		}
+		System.out.println("output:" + Arrays.deepToString(board));
 	}
 
     /**
