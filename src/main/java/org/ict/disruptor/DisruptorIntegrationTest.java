@@ -23,6 +23,9 @@ import com.lmax.disruptor.util.DaemonThreadFactory;
  * 5.Waiting strategy – Defines how we would like to handle slow subscriber who doesn't keep up with producer's pace
  * 
  * @see https://www.baeldung.com/lmax-disruptor-concurrency
+ * @see https://lmax-exchange.github.io/disruptor/
+ * @see https://github.com/LMAX-Exchange/disruptor
+ * @see https://www.codeproject.com/Tips/1225874/Java-Flow-API-vs-LMAX-Disruptor
  *
  */
 public class DisruptorIntegrationTest {

@@ -1,8 +1,13 @@
 package org.ict.disruptor;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.lmax.disruptor.EventHandler;
 
 public class MultiEventPrintConsumer implements EventConsumer {
+	
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Override
 	public EventHandler<ValueEvent>[] getEventHandler() {
@@ -13,6 +18,7 @@ public class MultiEventPrintConsumer implements EventConsumer {
 	
 	private void print(final int id, final long sequenceId) {
         System.out.println("Id is " + id + " sequence id that was used is " + sequenceId);
+        logger.info("Id is " + id + " sequence id that was used is " + sequenceId);
     }
 
 }
