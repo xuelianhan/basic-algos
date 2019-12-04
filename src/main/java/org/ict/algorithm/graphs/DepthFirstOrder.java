@@ -19,6 +19,7 @@ import org.ict.algorithm.util.StdOut;
  * where <em>V</em> is the number of vertices and <em>E</em> is the number of edges.
  * Afterwards, the <em>preorder</em>, <em>postorder</em>, and<em>reverse postorder</em>
  * operation take time proportional to <em>V</em>.
+ * Remarkably, a reverse postorder in a DAG provides a topological order
  * 
  * @author Robert Sedgewick
  * @author Kevin Wayne
