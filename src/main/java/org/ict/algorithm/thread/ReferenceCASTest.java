@@ -2,6 +2,11 @@ package org.ict.algorithm.thread;
 
 import java.util.concurrent.atomic.AtomicReference;
 
+/**
+ * @see https://stackoverflow.com/questions/23480346/compare-and-swap
+ * @see http://tutorials.jenkov.com/java-concurrency/compare-and-swap.html
+ *
+ */
 public class ReferenceCASTest {
 
 	private AtomicReference<Node> ref = new AtomicReference<>();
