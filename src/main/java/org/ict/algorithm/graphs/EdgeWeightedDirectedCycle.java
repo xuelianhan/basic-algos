@@ -71,7 +71,8 @@ public class EdgeWeightedDirectedCycle {
 					cycle.push(f);
 					f = edgeTo[f.from()];
 				}
-				cycle.push(f);// why push f again?
+				cycle.push(f);// why push f again? It's constructing a cycle for purpose.
+				// Like: f e1 e2 e3 ... f
 				return;
 			}
 		}
