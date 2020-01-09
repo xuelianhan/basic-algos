@@ -103,6 +103,11 @@
 		    <scope>provided</scope>
 		</dependency>
 		<dependency>
+	       <groupId>com.baqend</groupId>
+	       <artifactId>bloom-filter</artifactId>
+	       <version>1.0.7</version>
+	   </dependency>
+		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>3.8.1</version>
