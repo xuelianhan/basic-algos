@@ -1,6 +1,8 @@
 package org.ict.algorithm.graphs;
 
 import org.ict.algorithm.fundamentals.Stack;
+import org.ict.algorithm.util.StdOut;
+import org.ict.algorithm.util.StdRandom;
 
 /**
  * The {@code EdgeWeightedDirectedCycle} class represents a data type
@@ -144,9 +146,9 @@ public class EdgeWeightedDirectedCycle {
             do {
                 v = StdRandom.uniform(V);
                 w = StdRandom.uniform(V);
-            } while(v >= W);
+            } while(v >= w);
             double weight = StdRandom.uniform();
-            G.addEdge(new DirectedEdge(v, w, weight);
+            G.addEdge(new DirectedEdge(v, w, weight));
         }
 
         // add F extra edges
@@ -154,7 +156,7 @@ public class EdgeWeightedDirectedCycle {
             int v = StdRandom.uniform(V);
             int w = StdRandom.uniform(V);
             double weight = StdRandom.uniform(0.0, 1.0);
-            G.addEdge(new DirectedEdge(v, W, weight);
+            G.addEdge(new DirectedEdge(v, w, weight));
         }
 
         StdOut.println(G);
@@ -168,9 +170,6 @@ public class EdgeWeightedDirectedCycle {
             }
         } else {
             StdOut.println("No directed cycle");
-        }
-    }
-
         }
     }
 }
