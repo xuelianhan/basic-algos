@@ -79,7 +79,51 @@ public class EdgeWeightedDirectedCycle {
 		onStack[v] = false;
 	}
 	
+	/**
+	 * Does the edge-weighted digraph have a directed cycle?
+	 * @return {@code true} if the edge-weighted digraph has a directed cycle.
+	 *         {@code false} otherwise
+	 */
+	public boolean hasCycle() {
+		return cycle != null;
+	}
+	
+	/**
+	 * Returns a directed cycle if the edge-weighted digraph has a directed cycle,
+	 * and {@code null} otherwise.
+	 * @return
+	 */
+	public Iterable<DirectedEdge> cycle() {
+		return cycle;
+	}
+	
+	/**
+	 * Certify that digraph is either acyclic or has a directed cycle.
+	 * @return
+	 */
 	private boolean check() {
-		return false;
+		// edge-weighted digraph is cyclic
+		if (hasCycle()) {
+			// verify cycle
+			DirectedEdge first = null, last = null;
+			for (DirectedEdge e :cycle()) {
+				if (first == null) {
+					first = e;
+				}
+				if (last != null) {
+					if (last.to() != first.from()) {
+						System.err.printf("cycle edge %s and %s not incident\n", last, e);
+						return false;
+					}
+				}
+				last = e;
+			}//end-for-loop
+			
+			if (last.to() != first.from()) {
+				System.err.printf("cycle edge %s and %s not incident\n", last, first);
+				return false;
+			}
+		}
+		return true;
 	}
 }
