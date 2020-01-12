@@ -1,5 +1,7 @@
 package org.ict.algorithm.graphs;
 
+import org.ict.algorithm.util.StdOut;
+
 /**
  * Compute topological ordering of a DAG or edge-weighted DAG.
  * Runs in O(V+E) time
@@ -123,7 +125,7 @@ public class Topological {
     public static void main(String[] args) {
         String filename = args[0];
         String delimiter = args[1];
-        SymboDigraph sg = new SymbolDigraph(filename, delimiter);
+        SymbolDigraph sg = new SymbolDigraph(filename, delimiter);
         Topological topological = new Topological(sg.digraph());
         for (int v : topological.order()) {
             StdOut.println(sg.nameOf(v));
