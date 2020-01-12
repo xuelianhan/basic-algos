@@ -4,6 +4,9 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.TreeMap;
 
+import org.ict.algorithm.util.StdIn;
+import org.ict.algorithm.util.StdOut;
+
 /**
  * The {@code ST} class represents an ordered symbol table of generic key-value pairs.
  * It supports the usual <em>put</em>, <em>get</em>, <em>contains</em>,
@@ -84,7 +87,7 @@ public class ST<Key extends Comparable<Key>, Value> implements Iterable<Key> {
         if (key == null) {
             throw new IllegalArgumentException("calls contains() with null key");
         }
-        return st.contains(key);
+        return st.containsKey(key);
     }
 
     public int size() {
@@ -98,6 +101,11 @@ public class ST<Key extends Comparable<Key>, Value> implements Iterable<Key> {
     public Iterable<Key> keys() {
         return st.keySet();
     }
+    
+    @Override
+	public Iterator<Key> iterator() {
+		return st.keySet().iterator();
+	}
 
     public Key min() {
         if (isEmpty()) {
@@ -145,4 +153,6 @@ public class ST<Key extends Comparable<Key>, Value> implements Iterable<Key> {
             StdOut.println(s + " " + st.get(s));
         }
     }
+
+	
 }
