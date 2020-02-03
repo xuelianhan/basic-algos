@@ -87,4 +87,8 @@ public class DirectedCycle {
 		}
 		return true;
 	}
+	
+	public static void main(String[] args) {
+		
+	}
 }

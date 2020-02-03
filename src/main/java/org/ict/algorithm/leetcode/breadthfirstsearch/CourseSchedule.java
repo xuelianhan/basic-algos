@@ -23,7 +23,8 @@ package org.ict.algorithm.leetcode.breadthfirstsearch;
  *
  */
 public class CourseSchedule {
-	public boolean canFinish(int numCourses, int[][] prerequisites) {
+	
+	public boolean canFinishV1(int numCourses, int[][] prerequisites) {
 		return false;
     }
 }
