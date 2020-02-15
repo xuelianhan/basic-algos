@@ -7,8 +7,8 @@ import org.ict.algorithm.util.StdOut;
  * Runs in O(V+E) time
  * 
  * The {@code Topological} class represents a data type for
- * determining a topological  order of a directed acyclic graph(DAG).
- * Recall, a digrap has a topological order if and only if it is DAG.
+ * determining a topological  order of a <em>directed acyclic graph</em> (DAG).
+ * A digraph has a topological order if and only if it is DAG.
  * The <em>hasOrder</em> operation determines whether the digraph has
  * a topological order, and if so, the <em>order</em> operation returns
  * one.
