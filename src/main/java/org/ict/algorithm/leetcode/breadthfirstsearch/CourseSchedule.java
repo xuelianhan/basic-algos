@@ -20,7 +20,24 @@ package org.ict.algorithm.leetcode.breadthfirstsearch;
  * The input prerequisites is a graph represented by a list of edges, not adjacency matrices. Read more about how a graph is represented.
  * You may assume that there are no duplicate edges in the input prerequisites.
  * LC207
+ * 
+ * According to the wiki about what Topological sorting:
+ * @see https://en.wikipedia.org/wiki/Topological_sorting
+ * and the Kahn's algorithm as shown below:
  *
+ * L: Emply list that will contain the sorted elements
+ * S: Set of all nodes with no incoming edges
+ * while S is non-empty do
+ *     remove a node n from S
+ *     add n to tail of L
+ *     for each node m with an edge e from n to m do
+ *         remove edge e from the graph
+ *         if m has no other incoming edges then
+ *             insert m into S
+ * if grpah has edges then
+ *     return error(graph has at least one cycle)
+ * else 
+ *     return L(a topologically sorted order)
  */
 public class CourseSchedule {
 	
