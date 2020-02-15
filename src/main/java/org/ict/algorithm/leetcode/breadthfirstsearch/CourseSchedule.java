@@ -1,5 +1,6 @@
 package org.ict.algorithm.leetcode.breadthfirstsearch;
 
+import java.util.List;
 import java.util.Queue;
 import java.util.LinkedList;
 
@@ -106,7 +107,7 @@ public class CourseSchedule {
 
         // Initializes the Set of nodes with no incoming edges.
         Queue<Integer> queue = new LinkedList<>();
-        for (int i = 0 i < incomingEdges.length; i++) {
+        for (int i = 0; i < incomingEdges.length; i++) {
             if (incomingEdges[i] == 0) {
                 queue.offer(i);
             }
