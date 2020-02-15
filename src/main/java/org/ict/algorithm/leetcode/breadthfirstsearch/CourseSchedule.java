@@ -37,7 +37,7 @@ import java.util.LinkedList;
  *         remove edge e from the graph
  *         if m has no other incoming edges then
  *             insert m into S
- * if grpah has edges then
+ * if graph has edges then
  *     return error(graph has at least one cycle)
  * else 
  *     return L(a topologically sorted order)
@@ -46,22 +46,26 @@ public class CourseSchedule {
 	
     /**
      * Uses Adjacent Matrix to represent the graph.
+     * @author justjiayu
      *
      */
 	public boolean canFinishV1(int numCourses, int[][] prerequisites) {
-		int[][] matrix = new int[numCourses][numCourses];  // i -> j means i is dependent on j
+		int[][] matrix = new int[numCourses][numCourses];  
 		int[] indegree = new int[numCourses];
 
 	    // Initializes the indegree array and adjacent matrix graph	
 		for (int i = 0; i < prerequisites.length; i++) {
 		    int ready = prerequisites[i][0];
-            int pre = prerequisites[i][1]; //ready -> pre means ready is dependent on pre
-            if (matrix[pre][ready] == 0) { //[pre][ready] == 0 means pre not point to ready.
-                indegree[ready]++;
+            int pre = prerequisites[i][1]; //pre -> ready means ready is dependent on pre
+            // Why indegree increase of vertex ready should be placed in the condition of matrix[pre][ready] == 0?
+            // Consider the graph has cycle. The indegree count of vertex ready will be duplicated if lacking of this condition(matrix[pre][ready] == 0)
+            if (matrix[pre][ready] == 0) { //[pre][ready] == 0 means pre not point to ready at this moment due to the initialized zero value.
+                indegree[ready]++;// this step must be put before changing the matrix[pre][ready] from 0 to 1.
             }    
-            matrix[pre][ready] = 1;
+            matrix[pre][ready] = 1;// mark the value to 1 means pre -> ready.
 		}
 
+        // Initializes the S set of nodes with no incoming edges.
         int count = 0;
         Queue<Integer> queue = new LinkedList<>();// queue is set of all nodes with no incoming edges
         for (int i = 0; i < indegree.length; i++) {
@@ -74,9 +78,9 @@ public class CourseSchedule {
             int course = queue.poll();
             count++;
             for (int i = 0; i < numCourses; i++) {
-                if (matrix[course][i] != 0) {
-                    if (--indegree[i] == 0) {
-                        queue.offer(i);
+                if (matrix[course][i] != 0) { // vertex course has path to i if matrix[course][i] not equals to 0. course -> i for short.
+                    if (--indegree[i] == 0) { // --indegree[i] means removing the edge of course -> i in graph. So the indegree of i should be decreased one.
+                        queue.offer(i); // if the i has no other incoming edges, then put i into queue( S to represent).
                     }
                 }
             }
