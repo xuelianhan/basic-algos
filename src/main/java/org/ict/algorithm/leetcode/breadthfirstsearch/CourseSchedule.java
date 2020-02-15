@@ -116,8 +116,8 @@ public class CourseSchedule {
         int edgeCnt = prerequisites.length;
         while (!queue.isEmpty()) {
             int from  = queue.poll();
-            for (int to : goCourses[v]) {
-                edgeCnt--;
+            for (int to : goCourses[from]) {
+                edgeCnt--;// remove edge from -> to of the graph.
                 if (--incomingEdges[to] == 0) {
                     queue.offer(to);
                 } 
