@@ -25,6 +25,12 @@ package org.ict.algorithm.leetcode.breadthfirstsearch;
 public class CourseSchedule {
 	
 	public boolean canFinishV1(int numCourses, int[][] prerequisites) {
+		int[][] matrix = new int[numCourses][numCourses];
+		int[] indegree = new int[numCourses];
+		
+		for (int i = 0; i < prerequisites.length; i++) {
+			
+		}
 		return false;
     }
 }
