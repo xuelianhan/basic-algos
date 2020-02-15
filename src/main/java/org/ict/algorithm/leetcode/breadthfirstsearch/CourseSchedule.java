@@ -94,7 +94,7 @@ public class CourseSchedule {
      */
     public boolean canFinishV2(int numCourses, int[][] prerequisites) {
         int[] incomingEdges = new int[numCourses];
-        List<Integer>[] goCourses  = new List<>[numCourses];
+        List<Integer>[] goCourses  = new List[numCourses];
         for (int i = 0; i < numCourses; i++) {
             goCourses[i] = new LinkedList<Integer>();
         }
