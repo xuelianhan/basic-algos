@@ -1,5 +1,8 @@
 package org.ict.algorithm.leetcode.breadthfirstsearch;
 
+import java.util.Queue;
+import java.util.LinkedList;
+
 /**
  * here are a total of n courses you have to take, labeled from 0 to n-1.
  * Some courses may have prerequisites, for example to take course 0 you have to first take course 1, which is expressed as a pair: [0,1]
@@ -41,13 +44,43 @@ package org.ict.algorithm.leetcode.breadthfirstsearch;
  */
 public class CourseSchedule {
 	
+    /**
+     * Uses Adjacent Matrix to represent the graph.
+     *
+     */
 	public boolean canFinishV1(int numCourses, int[][] prerequisites) {
-		int[][] matrix = new int[numCourses][numCourses];
+		int[][] matrix = new int[numCourses][numCourses];  // i -> j means i is dependent on j
 		int[] indegree = new int[numCourses];
-		
+
+	    // Initializes the indegree array and adjacent matrix graph	
 		for (int i = 0; i < prerequisites.length; i++) {
-			
+		    int ready = prerequisites[i][0];
+            int pre = prerequisites[i][1]; //ready -> pre means ready is dependent on pre
+            if (matrix[pre][ready] == 0) { //[pre][ready] == 0 means pre not point to ready.
+                indegree[ready]++;
+            }    
+            matrix[pre][ready] = 1;
 		}
-		return false;
+
+        int count = 0;
+        Queue<Integer> queue = new LinkedList<>();// queue is set of all nodes with no incoming edges
+        for (int i = 0; i < indegree.length; i++) {
+            if (indegree[i] == 0) {
+                queue.offer(i);
+            }
+        }
+
+        while (!queue.isEmpty()) {
+            int course = queue.poll();
+            count++;
+            for (int i = 0; i < numCourses; i++) {
+                if (matrix[course][i] != 0) {
+                    if (--indegree[i] == 0) {
+                        queue.offer(i);
+                    }
+                }
+            }
+        }
+		return count == numCourses;
     }
 }
