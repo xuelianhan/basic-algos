@@ -1,5 +1,8 @@
 package org.ict.algorithm.leetcode.breadthfirstsearch;
 
+import java.util.Queue;
+import java.util.LinkedList;
+
 /**
  * There are a total of n courses you have to take, labeled from 0 to n-1.
  * Some courses may have prerequisites, for example to take course 0 you have to first take
@@ -25,12 +28,66 @@ package org.ict.algorithm.leetcode.breadthfirstsearch;
  * 1. The input prerequisites is a graph represented by a list of edges, not adjacency
  * matrices. Read more about how a graph is represented.
  * 2. You may assume that there are no duplicate edges in the input prerequisites.
+ *
+ * According to the wiki about what Topological sorting:
+ * @see https://en.wikipedia.org/wiki/Topological_sorting
+ * and the Kahn's algorithm as shown below:
+ *
+ * L: Emply list that will contain the sorted elements
+ * S: Set of all nodes with no incoming edges
+ * while S is non-empty do
+ *     remove a node n from S
+ *     add n to tail of L
+ *     for each node m with an edge e from n to m do
+ *         remove edge e from the graph
+ *         if m has no other incoming edges then
+ *             insert m into S
+ * if graph has edges then
+ *     return error(graph has at least one cycle)
+ * else 
+ *     return L(a topologically sorted order)
  */
 
 
 public class CourseScheduleTwo {
 
     public int[] findOrder(int numCourses, int[][] prerequisites) {
+        int[] incomingEdges = new int[numCourses];
+        List<Integer>[] goCourses  = new List[numCourses];
+        for (int i = 0; i < numCourses; i++) {
+            goCourses[i] = new LinkedList<Integer>();
+        }
+
+        // Initializes the graph
+        int edges = prerequisites[0].length;
+        for (int[] pair : prerequisites) {
+            incomingEdges[pair[0]]++;
+            goCourses[pair[1]].add(pair[0]);
+        }
+
+        // Initializes the Set of nodes with no incoming edges.
+        Queue<Integer> order = new LinkedList<>();
+        Queue<Integer> queue = new LinkedList<>();
+        for (int i = 0; i < incomingEdges.length; i++) {
+            if (incomingEdges[i] == 0) {
+                queue.offer(i);
+            }
+        }
+
+        // the core steps of this algorithm as following
+        int edgeCnt = prerequisites.length;
+        while (!queue.isEmpty()) {
+            int from  = queue.poll();
+            order.offer(from);
+            for (int to : goCourses[from]) {
+                edgeCnt--;// remove edge from -> to of the graph.
+                if (--incomingEdges[to] == 0) {
+                    queue.offer(to);
+                } 
+            } 
+        } 
+
+        return edgeCnt == 0;
 
     }
 }
