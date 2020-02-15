@@ -87,4 +87,43 @@ public class CourseSchedule {
         }
 		return count == numCourses;
     }
+
+    /**
+     * Uses Adjacent List to represent the graph.
+     */
+    public boolean canFinishV2(int numCourses, int[][] prerequisites) {
+        int[] incomingEdges = new int[numCourses];
+        List<Integer>[] goCourses  = new List<>[numCourses];
+        for (int i = 0; i < numCourses; i++) {
+            goCourses[i] = new LinkedList<Integer>();
+        }
+
+        // Initializes the graph
+        for (int[] pair : prerequisites) {
+            incomingEdges[pair[0]]++;
+            goCourses[pair[1]].add(pair[0]);
+        }
+
+        // Initializes the Set of nodes with no incoming edges.
+        Queue<Integer> queue = new LinkedList<>();
+        for (int i = 0 i < incomingEdges.length; i++) {
+            if (incomingEdges[i] == 0) {
+                queue.offer(i);
+            }
+        }
+
+        // the core steps of this algorithm as following
+        int edgeCnt = prerequisites.length;
+        while (!queue.isEmpty()) {
+            int from  = queue.poll();
+            for (int to : goCourses[v]) {
+                edgeCnt--;
+                if (--incomingEdges[to] == 0) {
+                    queue.offer(to);
+                } 
+            } 
+        } 
+
+        return edgeCnt == 0;
+    }
 }
