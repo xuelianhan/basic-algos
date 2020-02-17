@@ -80,14 +80,31 @@ public class CourseScheduleTwo {
             int from  = queue.poll();
             order.offer(from);
             for (int to : goCourses[from]) {
-                edgeCnt--;// remove edge from -> to of the graph.
+                // remove edge from -> to of the graph.
+                deleteEdge(goCourses, from, to);
+                edgeCnt--;
                 if (--incomingEdges[to] == 0) {
                     queue.offer(to);
                 } 
             } 
         } 
+        
+        if (edgeCnt != 0) {
+            return new int[0];
+        } 
+        Integer[] result = new Integer[order.size()];
+        return order.toArray(result);
 
-        return edgeCnt == 0;
+    }
 
+    private void deleteEdge(List<Integer>[] adj, int from, int to) {
+        List<Integer> list = adj[from];
+        Iterator<Integer> iter = list.iterator();
+        while (iter.hasNext()) {
+            Integer next = iter.next();
+            if (next == to) {
+                iter.remove();
+            }
+        }
     }
 }
