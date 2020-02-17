@@ -61,14 +61,12 @@ public class CourseScheduleTwo {
         }
 
         // Initializes the graph
-        int edges = prerequisites[0].length;
         for (int[] pair : prerequisites) {
             incomingEdges[pair[0]]++;
             goCourses[pair[1]].add(pair[0]);
         }
 
         // Initializes the Set of nodes with no incoming edges.
-        Queue<Integer> order = new LinkedList<>();
         Queue<Integer> queue = new LinkedList<>();
         for (int i = 0; i < incomingEdges.length; i++) {
             if (incomingEdges[i] == 0) {
@@ -78,6 +76,7 @@ public class CourseScheduleTwo {
 
         // the core steps of this algorithm as following
         int edgeCnt = prerequisites.length;
+        Queue<Integer> order = new LinkedList<>();
         while (!queue.isEmpty()) {
             int from  = queue.poll();
             order.offer(from);
