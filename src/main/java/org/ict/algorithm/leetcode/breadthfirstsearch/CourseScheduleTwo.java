@@ -94,8 +94,7 @@ public class CourseScheduleTwo {
         if (edgeCnt != 0) {
             return new int[0];
         } 
-        Integer[] result = new Integer[order.size()];
-        return order.toArray(result);
+        return order.stream().mapToInt(i->i).toArray();
 
     }
 
