@@ -54,22 +54,25 @@ import java.util.LinkedList;
 public class CourseScheduleTwo {
 
     public int[] findOrder(int numCourses, int[][] prerequisites) {
-        int[] incomingEdges = new int[numCourses];
-        List<Integer>[] goCourses  = new List[numCourses];
+        // numCourses is the vertices of graph
+        // prerequisites is the edges of graph
+        // Allocate memory for this graph
+        int[] indegree = new int[numCourses];
+        List<Integer>[] adj  = new List[numCourses];
         for (int i = 0; i < numCourses; i++) {
-            goCourses[i] = new LinkedList<Integer>();
+            adj[i] = new LinkedList<Integer>();
         }
 
         // Initializes the graph
         for (int[] pair : prerequisites) {
-            incomingEdges[pair[0]]++;
-            goCourses[pair[1]].add(pair[0]);
+            indegree[pair[0]]++;
+            adj[pair[1]].add(pair[0]);
         }
 
         // Initializes the Set of nodes with no incoming edges.
         Queue<Integer> queue = new LinkedList<>();
-        for (int i = 0; i < incomingEdges.length; i++) {
-            if (incomingEdges[i] == 0) {
+        for (int i = 0; i < indegree.length; i++) {
+            if (indegree[i] == 0) {
                 queue.offer(i);
             }
         }
@@ -80,11 +83,11 @@ public class CourseScheduleTwo {
         while (!queue.isEmpty()) {
             int from  = queue.poll();
             order.offer(from);
-            for (int to : goCourses[from]) {
+            for (int to : adj[from]) {
                 // remove edge from -> to of the graph.
-                deleteEdge(goCourses, from, to);
+                deleteEdge(adj, from, to);
                 edgeCnt--;
-                if (--incomingEdges[to] == 0) {
+                if (--indegree[to] == 0) {
                     queue.offer(to);
                 } 
             } 
