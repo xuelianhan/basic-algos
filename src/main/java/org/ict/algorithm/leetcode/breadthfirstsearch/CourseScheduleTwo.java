@@ -64,10 +64,7 @@ public class CourseScheduleTwo {
         }
 
         // Initializes the graph
-        for (int[] pair : prerequisites) {
-            indegree[pair[0]]++;
-            adj[pair[1]].add(pair[0]);
-        }
+        addEdge(prerequisites, adj);
 
         // Initializes the Set of nodes with no incoming edges.
         Queue<Integer> queue = new LinkedList<>();
@@ -98,6 +95,13 @@ public class CourseScheduleTwo {
         } 
         return order.stream().mapToInt(i->i).toArray();
 
+    }
+
+    private void addEdge(int[][] prerequisites, List<Integer>[] adj) {
+        for (int[] pair : prerequisites) {
+            adj[pair[1]].add(pair[0]);
+            indegree[pair[0]]++;
+        }
     }
 
     private void deleteEdge(List<Integer>[] adj, int from, int to) {
