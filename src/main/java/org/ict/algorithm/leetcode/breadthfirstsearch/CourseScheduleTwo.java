@@ -64,7 +64,7 @@ public class CourseScheduleTwo {
         }
 
         // Initializes the graph
-        addEdge(prerequisites, adj);
+        addEdge(prerequisites, adj, indegree);
 
         // Initializes the Set of nodes with no incoming edges.
         Queue<Integer> queue = new LinkedList<>();
@@ -97,7 +97,7 @@ public class CourseScheduleTwo {
 
     }
 
-    private void addEdge(int[][] prerequisites, List<Integer>[] adj) {
+    private void addEdge(int[][] prerequisites, List<Integer>[] adj, int[] indegree) {
         for (int[] pair : prerequisites) {
             adj[pair[1]].add(pair[0]);
             indegree[pair[0]]++;
