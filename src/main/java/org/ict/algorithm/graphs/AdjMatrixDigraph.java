@@ -36,7 +36,7 @@ public class AdjMatrixDigraph {
             throw new RuntimeException("Number of edges must be nonnegative");
         }
         if (E > V*V) {
-            throw new RuntimeExcetpion("Too many edges");
+            throw new RuntimeException("Too many edges");
         }
         // can be inefficient
         while (this.E != E) {
@@ -90,7 +90,7 @@ public class AdjMatrixDigraph {
         }
 
         public Integer next() {
-            if (hasNext() {
+            if (hasNext()) {
                 return w++;
             } else {
                 throw new NoSuchElementException();    
