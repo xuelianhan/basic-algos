@@ -14,6 +14,7 @@ import org.ict.algorithm.util.StdRandom;
 
 
 public class AdjMatrixDigraph {
+    private static final String NEWLINE = System.getProperty("line.seperator");
     private int V;
     private int E;
     private boolean[][] adj;
@@ -69,7 +70,57 @@ public class AdjMatrixDigraph {
 
     // support iteration over graph vertices
     private class AdjIterator implements Iterator<Integer>, Iterable<Integer> {
+        private int v;    
+        private int w = 0;
+
+        AdjIterator(int v) {
+            this.v = v;
+        }
+
+        public Iterator<Integer> iterator() {
+            return this;
+        }
         
+        public boolean hasNext() {
+            while (w < V) {
+                if (adj[v][w]) return true;
+                w++;
+            }
+            return false;
+        }
+
+        public Integer next() {
+            if (hasNext() {
+                return w++;
+            } else {
+                throw new NoSuchElementException();    
+            }
+        }
+
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
+    }
+
+    // string representation of Graph - takes quadratic time
+    public String toString() {
+        StringBuilder s = new StringBuilder();
+        s.append(V + " " + E + NEWLINE);        
+        for (int v = 0; v < V; v++) {
+            s.append(v + ": ");
+            for (int w : adj(v)) {
+                s.append(w + " ");
+            }
+            s.append(NEWLINE);
+        }
+        return s.toString();
+    }
+
+    public static void main(String[] args) {
+        int V = Integer.parseInt(args[0]);
+        int E = Integer.parseInt(args[1]);
+        AdjMatrixDigraph G = new AdjMatrixDigraph(V, E);
+        StdOut.println(G);
     }
 }
 
