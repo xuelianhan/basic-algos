@@ -49,8 +49,6 @@ import java.util.LinkedList;
  * else 
  *     return L(a topologically sorted order)
  */
-
-
 public class CourseScheduleTwo {
 
     public int[] findOrder(int numCourses, int[][] prerequisites) {
@@ -63,7 +61,7 @@ public class CourseScheduleTwo {
             adj[i] = new LinkedList<Integer>();
         }
 
-        // Initializes the graph
+        // Initializes the graph, including adj and indegree
         addEdge(prerequisites, adj, indegree);
 
         // Initializes the Set of nodes with no incoming edges.
