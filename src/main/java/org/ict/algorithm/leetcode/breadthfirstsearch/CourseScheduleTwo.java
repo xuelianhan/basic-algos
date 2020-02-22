@@ -51,6 +51,13 @@ import java.util.LinkedList;
  */
 public class CourseScheduleTwo {
 
+    public static void main(String[] args) {
+        CourseScheduleTwo obj = new CourseScheduleTwo();
+        int numbCourses = 4;
+        int[][] prerequisites = {{1,0}, {2,0}, {3,1}, {3,2}};
+        obj.findOrder(4, prerequisites);
+    }
+
     public int[] findOrder(int numCourses, int[][] prerequisites) {
         // numCourses is the vertices of graph
         // prerequisites is the edges of graph
