@@ -2,7 +2,8 @@ package org.ict.algorithm.graphs;
 
 
 /**
- *
+ * A digraph, implemented using an adjacency matrix.
+ * Parallel edges are disallowed; self-loops are allowed.
  *
  */
 
