@@ -117,6 +117,7 @@ public class CourseSchedule {
         int edgeCnt = prerequisites.length;
         while (!queue.isEmpty()) {
             int from  = queue.poll();
+            //iteration here hide a pitfall. Removing ele should be replaced with iterator 
             for (int to : goCourses[from]) {
                 edgeCnt--;// remove edge from -> to of the graph.
                 if (--incomingEdges[to] == 0) {

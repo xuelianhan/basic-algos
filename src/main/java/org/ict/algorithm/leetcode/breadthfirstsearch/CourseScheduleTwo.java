@@ -1,8 +1,12 @@
 package org.ict.algorithm.leetcode.breadthfirstsearch;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Queue;
+
+import com.google.common.collect.Lists;
+
 import java.util.LinkedList;
 
 /**
@@ -55,7 +59,8 @@ public class CourseScheduleTwo {
         CourseScheduleTwo obj = new CourseScheduleTwo();
         int numbCourses = 4;
         int[][] prerequisites = {{1,0}, {2,0}, {3,1}, {3,2}};
-        obj.findOrder(4, prerequisites);
+        int[] order = obj.findOrder(numbCourses, prerequisites);
+        System.out.println(Arrays.toString(order));
     }
 
     public int[] findOrder(int numCourses, int[][] prerequisites) {
@@ -83,18 +88,25 @@ public class CourseScheduleTwo {
         int edgeCnt = prerequisites.length;
         Queue<Integer> order = new LinkedList<>();
         while (!queue.isEmpty()) {
+        	// dequeue the node from
             int from  = queue.poll();
+            // enqueue from into order
             order.offer(from);
-            for (int to : adj[from]) {
-                // remove edge from -> to of the graph.
-                deleteEdge(adj, from, to);
-                edgeCnt--;
-                if (--indegree[to] == 0) {
-                    queue.offer(to);
-                } 
-            } 
-        } 
-        
+            List<Integer> list = adj[from];
+            //Removing ele should be replaced with iterator, not list-for-loop
+            //for-loop iteration with iterator delete in it will cause 
+            Iterator<Integer> iter = list.iterator();
+            while (iter.hasNext()) {
+            	  Integer to = iter.next();
+            	  // remove edge from -> to of the graph.
+            	  iter.remove();
+                  edgeCnt--;
+                  indegree[to]--;
+                  if (indegree[to] == 0) {
+                      queue.offer(to);
+                  } 
+            }
+        }
         if (edgeCnt != 0) {
             return new int[0];
         } 
@@ -106,17 +118,6 @@ public class CourseScheduleTwo {
         for (int[] pair : prerequisites) {
             adj[pair[1]].add(pair[0]);
             indegree[pair[0]]++;
-        }
-    }
-
-    private void deleteEdge(List<Integer>[] adj, int from, int to) {
-        List<Integer> list = adj[from];
-        Iterator<Integer> iter = list.iterator();
-        while (iter.hasNext()) {
-            Integer next = iter.next();
-            if (next == to) {
-                iter.remove();
-            }
         }
     }
 }
