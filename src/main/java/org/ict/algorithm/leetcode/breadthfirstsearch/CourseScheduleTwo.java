@@ -91,7 +91,7 @@ public class CourseScheduleTwo {
             order.offer(from);
             List<Integer> list = adj[from];
             //Removing operation should be replaced with iterator, not list-for-loop
-            //for-loop iteration with iterator delete in it will cause 
+            //for-loop iteration with iterator delete in it will cause problems 
             Iterator<Integer> iter = list.iterator();
             while (iter.hasNext()) {
             	  Integer to = iter.next();
