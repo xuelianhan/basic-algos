@@ -93,7 +93,7 @@ public class CourseScheduleTwo {
             // enqueue from into order
             order.offer(from);
             List<Integer> list = adj[from];
-            //Removing ele should be replaced with iterator, not list-for-loop
+            //Removing operation should be replaced with iterator, not list-for-loop
             //for-loop iteration with iterator delete in it will cause 
             Iterator<Integer> iter = list.iterator();
             while (iter.hasNext()) {
