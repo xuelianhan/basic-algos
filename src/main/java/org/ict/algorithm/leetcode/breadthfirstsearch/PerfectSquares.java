@@ -26,6 +26,30 @@ public class PerfectSquares {
     }
 
     /**
+     * Lagrange's four-square theorem, also known as Bachet's conjecture.
+     * Joseph Louis Lagrange proved in 1770 that every positive integer 
+     * (natural number) can be represented as the sum of four (or fewer) integer squares.
+     * For example, 31 can be written as 31=5^2 + 2^2 + 1^2 + 1^2
+     *
+     * This theorem was proved by Joseph Louis Lagrange in 1770. 
+     * Adrien-Marie Legendre completed the theorem in 1797–8 with his three-square theorem, by 
+     * proving that a positive integer can be expressed as the sum of three squares if and 
+     * only if it is not of the form 4^k(8m+7) for integers k and m.
+     *
+     * This basically tells us that any number can be broken into maximum of 4 squares. 
+     * So, by default this is our answer. we need to check if we have a solution with 3 or 2 or 1 squares. 
+     * There can be a 3-square solution if and only if we can’t write n in the form 4^k(8m+7) for integers k and m. 
+     * If a number itself is a perfect square number then numbers of square is 1. 
+     * Otherwise we can try break the number into 2 squares i and j such that n=i*i+j*j, for any i, 1≤i≤√n. 
+     * So, for any natural positive number there are only 4 possible results: 1, 2, 3, 4.
+     *
+     * Below is a O(√n) time solution using the above math based solution.
+     */
+    public int numSquaresLagrange(int n) {
+
+    }
+
+    /**
      * How many ways we can find n by summing up perfect squares less than n?
      * Note that, maximum perfect square less than n will be sqrt of n.
      * So, we can check for each numbers in j=1 to sqrt of n whether we can
