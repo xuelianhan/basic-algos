@@ -46,7 +46,32 @@ public class PerfectSquares {
      * Below is a O(√n) time solution using the above math based solution.
      */
     public int numSquaresLagrange(int n) {
+        // if n is a perfect square, return 1.
+        if (square(n)) {
+            return 1;
+        } 
 
+        // The result is 4 if n can be written in the form of 4^k*(8*m + 7).
+        while ((n & 3) == 0) { // n%4 == 0
+            n >>=2;
+        }
+        if ((n & 7) == 7) {
+            return 4;
+        }
+
+        // Check whether 2 is the result.
+        int sqrt = (int)(Math.sqrt(n));
+        for (int i = 1; i <= sqrt; i++) {
+            if (square(n - i*i)) {
+                return 2;
+            }   
+        }
+        return 3;
+    }
+
+    private int boolean square(int n) {
+        int sqrt = (int)(Math.sqrt(n));
+        return (sqrt*sqrt == n);
     }
 
     /**
