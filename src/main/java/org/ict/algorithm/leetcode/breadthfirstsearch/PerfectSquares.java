@@ -60,18 +60,18 @@ public class PerfectSquares {
         if (n <= 0) {
             return 0;
         } 
-        int[] dp = new int[n+1];
+        int[] dp = new int[n+1];// we start at index-0, so the length is n+1(dp[0]~dp[n])
         Arrays.fill(dp, Integer.MAX_VAlUE);
         dp[0] = 0;
         dp[1] = 1;
-
+        // dp[i] = the least number of perfect square numbers
         // to compute least perfect for n we compute top down for each possible
         // value sum from 2 to n
         for (int i = 2; i <= n; i++) {
             // for a particular value i we can break it as sum of perfect square j*j 
             // and all perfect squares from solution of the remainder (i - j*j)
             for (int j = 1; j*j <= i; j++) {
-                dp[i] = Math.min(dp[i], 1 + dp[i - j*j]);
+                dp[i] = Math.min(dp[i], 1 + dp[i - j*j]);//1 means j*j this one case.
             }
         }
         return dp[n];
