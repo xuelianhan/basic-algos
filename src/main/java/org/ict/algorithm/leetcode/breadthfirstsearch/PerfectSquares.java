@@ -53,9 +53,9 @@ public class PerfectSquares {
 
         // The result is 4 if n can be written in the form of 4^k*(8*m + 7).
         while ((n & 3) == 0) { // n%4 == 0
-            n >>=2;
+            n >>=2; //Division by 4=2^2
         }
-        if ((n & 7) == 7) {
+        if ((n & 7) == 7) { // n%8 == 7
             return 4;
         }
 
