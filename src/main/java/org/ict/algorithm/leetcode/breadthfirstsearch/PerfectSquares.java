@@ -69,7 +69,7 @@ public class PerfectSquares {
         return 3;
     }
 
-    private int boolean square(int n) {
+    private boolean square(int n) {
         int sqrt = (int)(Math.sqrt(n));
         return (sqrt*sqrt == n);
     }
@@ -110,7 +110,7 @@ public class PerfectSquares {
             return 0;
         } 
         int[] dp = new int[n+1];// we start at index-0, so the length is n+1(dp[0]~dp[n])
-        Arrays.fill(dp, Integer.MAX_VAlUE);
+        Arrays.fill(dp, Integer.MAX_VALUE);
         dp[0] = 0;
         dp[1] = 1;
         // dp[i] = the least number of perfect square numbers
