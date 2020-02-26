@@ -17,9 +17,23 @@ import java.util.Arrays;
  * Input: n = 13
  * Output: 2
  * Explanation: 13 = 4 + 9.
+ * 
+ * 
+ * Legendre's Three-square Theorem
+ * In mathematics, Legendre's three-square theorem states that a natural number 
+ * can be represented as the sum of three squares of integers n=x²+y²+z² if and only if 
+ * n is not of the form n=4ᵃ(8b+7) for nonnegative integers a and b. 
+ * The first numbers that cannot be expressed as the sum of three squares 
+ * (i.e. numbers that can be expressed as n=4ᵃ(8b+7)) 
+ * are 7, 15, 23, 28, 31, 39, 47, 55, 60, 63, 71... 
+ * (sequence A004215 in the OEIS).
  *
  */
 public class PerfectSquares {
+	
+	public static void main(String[] args) {
+		testMod();
+	}
 
     public int numSquares(int n) {
         return numSquaresDP(n);        
@@ -34,16 +48,19 @@ public class PerfectSquares {
      * This theorem was proved by Joseph Louis Lagrange in 1770. 
      * Adrien-Marie Legendre completed the theorem in 1797–8 with his three-square theorem, by 
      * proving that a positive integer can be expressed as the sum of three squares if and 
-     * only if it is not of the form 4^k(8m+7) for integers k and m.
+     * only if it is not of the form (4^k)(8m+7) for integers k and m.
      *
      * This basically tells us that any number can be broken into maximum of 4 squares. 
      * So, by default this is our answer. we need to check if we have a solution with 3 or 2 or 1 squares. 
-     * There can be a 3-square solution if and only if we can’t write n in the form 4^k(8m+7) for integers k and m. 
+     * There can be a 3-square solution if and only if we can’t write n in the form (4^k)(8m+7) for integers k and m. 
      * If a number itself is a perfect square number then numbers of square is 1. 
      * Otherwise we can try break the number into 2 squares i and j such that n=i*i+j*j, for any i, 1≤i≤√n. 
      * So, for any natural positive number there are only 4 possible results: 1, 2, 3, 4.
      *
      * Below is a O(√n) time solution using the above math based solution.
+     * 
+     * @see https://planetmath.org/ProofOfLagrangesFourSquareTheorem
+     * @see http://www.zrzahid.com/least-number-of-perfect-squares-that-sums-to-n/
      */
     public int numSquaresLagrange(int n) {
         // if n is a perfect square, return 1.
@@ -52,6 +69,7 @@ public class PerfectSquares {
         } 
 
         // The result is 4 if n can be written in the form of 4^k*(8*m + 7).
+        // 4^k*(8*m + 7) = (4^k)*(4^(8*m + 7))
         while ((n & 3) == 0) { // n%4 == 0
             n >>=2; //Division by 4=2^2
         }
@@ -67,6 +85,17 @@ public class PerfectSquares {
             }   
         }
         return 3;
+    }
+    
+    private static void testMod() {
+    	//4^k*(8*m + 7)
+    	//4^2*(8*3 + 7)
+    	long n = (long)Math.pow(4, 1)*(8*1 + 7);
+    	System.out.println(n);
+    	while ((n & 3) == 0) { // n%4 == 0, this loop will erase the 4^k and remain (8*m + 7)
+    		n >>=2; //Division by 4=2^2
+        }
+    	System.out.println(n);
     }
 
     private boolean square(int n) {
