@@ -69,7 +69,7 @@ public class PerfectSquares {
         } 
 
         // The result is 4 if n can be written in the form of 4^k*(8*m + 7).
-        // 4^k*(8*m + 7) = (4^k)*(4^(8*m + 7))
+        // 4^k*(8*m + 7) = (4^k)*(8*m + 7)
         while ((n & 3) == 0) { // n%4 == 0
             n >>=2; //Division by 4=2^2
         }
