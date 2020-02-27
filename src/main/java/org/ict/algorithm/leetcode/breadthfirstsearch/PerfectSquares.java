@@ -38,6 +38,10 @@ public class PerfectSquares {
     public int numSquares(int n) {
         return numSquaresDP(n);        
     }
+    
+    public int numSquaresBFS(int n) {
+    	return 0;
+    }
 
     /**
      * Lagrange's four-square theorem, also known as Bachet's conjecture.
