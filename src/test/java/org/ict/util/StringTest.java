@@ -3,10 +3,27 @@ package org.ict.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.ict.algorithm.util.StdOut;
 import org.junit.Test;
 
 public class StringTest {
+	private static final String PHONE_REGEX = "(\\d{3})\\d{4}(\\d{4})";
+	private static final String PHONE_FORMAT = "$1****$2";
+	private String formatPhone(String phone) {
+    	if (StringUtils.isBlank(phone)) {
+    		return "";
+    	}
+    	return phone.replaceAll(PHONE_REGEX , PHONE_FORMAT);
+	}
+	
+	@Test
+	public void testPhones() {
+		String phone = "15901486954";
+	    String phoneNumber = phone.replaceAll("(\\d{3})\\d{4}(\\d{4})","$1****$2");
+	    System.out.println(phoneNumber);
+	    System.out.println(formatPhone("15901486954"));
+	}
 	
 	@Test
 	public void testAndMod()  {
