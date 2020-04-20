@@ -77,6 +77,7 @@ public class PerfectSquares {
         while ((n & 3) == 0) { // n%4 == 0
             n >>=2; //Division by 4=2^2
         }
+        // So here only left the tail of (8*m + 7), the 4^k is removed by the while-loop.
         if ((n & 7) == 7) { // n%8 == 7
             return 4;
         }
