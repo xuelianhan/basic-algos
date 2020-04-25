@@ -72,7 +72,7 @@ public class PerfectSquares {
             return 1;
         } 
         
-        // Check whether 2 is the result.
+        // Check whether 2 is the result.This code segment can put after 4'case.It's OK.
         int sqrt = (int)(Math.sqrt(n));
         for (int i = 1; i <= sqrt; i++) {
             if (square(n - i*i)) {
