@@ -71,6 +71,14 @@ public class PerfectSquares {
         if (square(n)) {
             return 1;
         } 
+        
+        // Check whether 2 is the result.
+        int sqrt = (int)(Math.sqrt(n));
+        for (int i = 1; i <= sqrt; i++) {
+            if (square(n - i*i)) {
+                return 2;
+            }   
+        }
 
         // The result is 4 if n can be written in the form of 4^k*(8*m + 7).
         // 4^k*(8*m + 7) = (4^k)*(8*m + 7)
@@ -80,14 +88,6 @@ public class PerfectSquares {
         // So here only left the tail of (8*m + 7), the 4^k is removed by the while-loop.
         if ((n & 7) == 7) { // n%8 == 7
             return 4;
-        }
-
-        // Check whether 2 is the result.
-        int sqrt = (int)(Math.sqrt(n));
-        for (int i = 1; i <= sqrt; i++) {
-            if (square(n - i*i)) {
-                return 2;
-            }   
         }
         return 3;
     }
