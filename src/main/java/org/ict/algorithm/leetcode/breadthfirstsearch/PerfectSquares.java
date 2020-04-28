@@ -1,5 +1,9 @@
 package org.ict.algorithm.leetcode.breadthfirstsearch;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 
 /**
  * LC279
@@ -32,18 +36,77 @@ import java.util.Arrays;
 public class PerfectSquares {
 	
 	public static void main(String[] args) {
-		testMod();
+		int result = bfsV1(13);
+		System.out.println(result);
 	}
 
     public int numSquares(int n) {
         return numSquaresDP(n);        
     }
     
-    public int numSquaresBFS(int n) {
+    /**
+     * 40MB memory, 33ms
+     * @param n
+     * @return
+     */
+    private static int bfsV1(int n) {
+    	if (n <= 0) {
+    		return 0;
+    	}
+    	// perfectSquares contain all perfect square numbers which 
+        // are smaller than or equal to n.
+    	List<Integer> perfectSquares = new LinkedList<>();
+    	// cntPerfectSquares[i - 1] = the least number of perfect 
+        // square numbers which sum to i.
+    	int[] cntPerfectSquares = new int[n];
+    	// Get all the perfect square numbers which are smaller than 
+        // or equal to n.
+    	for (int i = 1; i * i <= n; i++) {
+    		perfectSquares.add(i*i);
+    		cntPerfectSquares[i*i - 1] = 1;
+    	}
+    	// If n is a perfect square number, return 1 immediately.
+    	if (perfectSquares.get(perfectSquares.size() - 1) == n) {
+    		return 1;
+    	}
+    	// Consider a graph which consists of number 0, 1,...,n as
+        // its nodes. Node j is connected to node i via an edge if  
+        // and only if either j = i + (a perfect square number) or 
+        // i = j + (a perfect square number). Starting from node 0, 
+        // do the breadth-first search. If we reach node n at step 
+        // m, then the least number of perfect square numbers which 
+        // sum to n is m. Here since we have already obtained the 
+        // perfect square numbers, we have actually finished the 
+        // search at step 1.
+    	Queue<Integer> queue = new LinkedList<>();
+    	perfectSquares.forEach(item ->{
+    		queue.offer(item);
+    	});
+    	
+    	int currentCntPerfectSquares = 1;
+    	while (!queue.isEmpty()) {
+    		currentCntPerfectSquares++;
+    		int size = queue.size();
+    		for (int i = 0; i < size; i++) {
+    			Integer cur = queue.poll();
+    			for (Integer perfect : perfectSquares) {
+    				if (cur + perfect == n) {
+    					System.out.println("cur:" + cur + ", perfect:" + perfect);
+    					return currentCntPerfectSquares;
+    				} else if ((cur + perfect < n) && (cntPerfectSquares[cur + perfect - 1] == 0)) {
+    					cntPerfectSquares[cur + perfect - 1] = 1;
+    					queue.offer(cur + perfect);
+    				} else if(cur + perfect > n){
+    					break;
+    				}
+    			}
+    		}
+    	}
     	return 0;
     }
 
     /**
+     * 36.4MB memory, 1ms
      * Lagrange's four-square theorem, also known as Bachet's conjecture.
      * Joseph Louis Lagrange proved in 1770 that every positive integer 
      * (natural number) can be represented as the sum of four (or fewer) integer squares.
@@ -67,6 +130,9 @@ public class PerfectSquares {
      * @see http://www.zrzahid.com/least-number-of-perfect-squares-that-sums-to-n/
      */
     public int numSquaresLagrange(int n) {
+    	if (n < 0) {// negative number has no perfect squares.
+    		return 0;
+    	}
         // if n is a perfect square, return 1.
         if (square(n)) {
             return 1;
