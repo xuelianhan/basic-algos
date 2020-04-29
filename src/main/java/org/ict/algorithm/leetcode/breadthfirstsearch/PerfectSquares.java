@@ -43,6 +43,40 @@ public class PerfectSquares {
     public int numSquares(int n) {
         return numSquaresDP(n);        
     }
+
+    /**
+     * Start from node 0 in queue, and keep pushing in perfect square number + current value,
+     * once we reach number n, we found the solution.
+     *
+     */
+    private static int bfsV2(int n) {
+        Queue<Integer> queue = new LinkedList<>();
+        Set<Integer> visited = new HashSet<>();
+        queue.offer(0);
+        visited.add(0);
+        int depth = 0;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            depth++;
+            while (size--) {
+                int cur = queue.poll();
+                for (int i = 1; i*i <= n; i++) {
+                    int target = cur + i*i;
+                    if (target == n) {
+                        return depth;
+                    }
+                    if (target > n) {
+                        break;
+                    }
+                    if (!visited.contains(target)) {
+                        queue.offer(target);
+                        visited.add(target);
+                    }
+                }
+            }
+        }
+        return depth;
+    }
     
     /**
      * 40MB memory, 33ms
