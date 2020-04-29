@@ -58,7 +58,7 @@ public class PerfectSquares {
         while (!queue.isEmpty()) {
             int size = queue.size();
             depth++;
-            while (size--) {
+            while (size-- > 0) {
                 int cur = queue.poll();
                 for (int i = 1; i*i <= n; i++) {
                     int target = cur + i*i;
