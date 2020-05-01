@@ -1,9 +1,10 @@
 package org.ict.algorithm.leetcode.breadthfirstsearch;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.Set;
 
 /**
  * LC279
@@ -36,12 +37,52 @@ import java.util.Queue;
 public class PerfectSquares {
 	
 	public static void main(String[] args) {
-		int result = bfsV1(13);
+		//int result = bfsV1(13);
+		//int result = bfsV2(13);
+		int result = bfsV3(13);
 		System.out.println(result);
 	}
 
     public int numSquares(int n) {
         return numSquaresDP(n);        
+    }
+    
+    /**
+     * Start from node n in queue, and keep pushing in (current - perfect square),
+     * once we reach number 0, we found the solution.
+     *
+     */
+    private static int bfsV3(int n) {
+    	if (n <= 0) {
+    		return 0;
+    	}
+        Queue<Integer> queue = new LinkedList<>();
+        Set<Integer> visited = new HashSet<>();
+        queue.offer(n);
+        visited.add(n);
+        int depth = 0;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            depth++;
+            while (size-- > 0) {
+                int cur = queue.poll();
+                for (int i = 1; n - i*i >= 0; i++) {
+                    int target = cur - i*i;
+                    System.out.println("cur:" + cur + ", target:" + target + ",queue:" + queue);
+                    if (target == 0) {
+                        return depth;
+                    }
+                    if (target < 0) {
+                        break;
+                    }
+                    if (!visited.contains(target)) {
+                        queue.offer(target);
+                        visited.add(target);
+                    }
+                }
+            }
+        }
+        return depth;
     }
 
     /**
@@ -50,6 +91,9 @@ public class PerfectSquares {
      *
      */
     private static int bfsV2(int n) {
+    	if (n <= 0) {
+    		return 0;
+    	}
         Queue<Integer> queue = new LinkedList<>();
         Set<Integer> visited = new HashSet<>();
         queue.offer(0);
