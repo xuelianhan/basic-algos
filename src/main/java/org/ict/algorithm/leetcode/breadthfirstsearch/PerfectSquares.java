@@ -37,9 +37,9 @@ import java.util.Set;
 public class PerfectSquares {
 	
 	public static void main(String[] args) {
-		//int result = bfsV1(13);
-		//int result = bfsV2(13);
-		int result = bfsV3(13);
+		int result = bfsV1(13);
+		result = bfsV2(13);
+		result = bfsV3(13);
 		System.out.println(result);
 	}
 
