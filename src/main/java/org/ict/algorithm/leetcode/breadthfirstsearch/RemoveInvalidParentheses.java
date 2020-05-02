@@ -33,7 +33,12 @@ public class RemoveInvalidParentheses {
 		testOperatorSequence();
 	}
 	
+	public List<String> removeInvalidParentheses(String s) {
+		return bfsV1(s);
+	}
+	
 	/**
+	 * 52 ms	40.1 MB
 	 * The idea is straightforward, with the input string s, 
 	 * we generate all possible states by removing one ( or ), 
 	 * check if they are valid, if found valid ones on the current level, 
@@ -60,7 +65,7 @@ public class RemoveInvalidParentheses {
 	 * @param s
 	 * @return
 	 */
-	public List<String> removeInvalidParentheses(String s) {
+	public List<String> bfsV1(String s) {
 		List<String> result = new ArrayList<>();
 		if (s == null || s == "") {
 			return result;
@@ -91,6 +96,7 @@ public class RemoveInvalidParentheses {
 				if (c != '(' && c != ')') {
 					continue;
 				}
+				// cur.substring(i + 1) will not out of bound, see substring method implementation
 				String sub = cur.substring(0, i) + cur.substring(i + 1);
 				if (!visited.contains(sub)) {
 					visited.add(sub);
@@ -100,6 +106,8 @@ public class RemoveInvalidParentheses {
 		}
         return result;
     }
+	
+	
 	
 	private boolean isValid(String s) {
 		int count = 0;
@@ -133,6 +141,8 @@ public class RemoveInvalidParentheses {
 	 * count before decrement:0
 	 * flag after count decrement:true
 	 * count after decrement:-1
+	 * s1:ab
+	 * s2:c
 	 */
 	private static void testOperatorSequence() {
 		int count = 0;
@@ -140,5 +150,11 @@ public class RemoveInvalidParentheses {
 		boolean flag = (count-- == 0);
 		System.out.println("flag after count decrement:" + flag);
 		System.out.println("count after decrement:" + count);
+		String s = "abc";
+		int i = s.length() - 1;
+		String s1 = s.substring(0, i);
+		String s2 = s.substring(i);
+		System.out.println("s1:" + s1);
+		System.out.println("s2:" + s2);
 	}
 }
