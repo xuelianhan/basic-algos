@@ -67,6 +67,11 @@ public class RemoveInvalidParentheses {
 	 * @return
 	 */
 	public List<String> bfsV2(String s) {
+		List<String> result = new ArrayList<>();
+		return result;
+	}
+	
+	private void recursiveDFS(String s, List<String> result, int last) {
 		
 	}
 	
@@ -177,6 +182,7 @@ public class RemoveInvalidParentheses {
 	 * count after decrement:-1
 	 * s1:ab
 	 * s2:c
+	 * reversed:)(((
 	 */
 	private static void testOperatorSequence() {
 		int count = 0;
@@ -190,5 +196,8 @@ public class RemoveInvalidParentheses {
 		String s2 = s.substring(i);
 		System.out.println("s1:" + s1);
 		System.out.println("s2:" + s2);
+		String paren = "((()";
+		String sb = new StringBuilder(paren).reverse().toString();
+		System.out.println("reversed:" + sb);
 	}
 }
