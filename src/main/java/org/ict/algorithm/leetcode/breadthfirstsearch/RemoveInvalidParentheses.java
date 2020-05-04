@@ -68,11 +68,19 @@ public class RemoveInvalidParentheses {
 	 */
 	public List<String> bfsV2(String s) {
 		List<String> result = new ArrayList<>();
+		recursiveDFS(s, result, 0, 0, '(', ')');
 		return result;
 	}
 	
-	private void recursiveDFS(String s, List<String> result, int last) {
-		
+	private void recursiveDFS(String s, List<String> result, int last_i, int last_j, char openParen, char closedParen) {
+		for (int stack = 0, i = last_i; i < s.length(); i++) {
+			if (s.charAt(i) == openParen) stack++;
+			if (s.charAt(i) == closedParen) stack--;
+			if (stack >= 0) continue;//no need to cut off
+			for (int j = last_j; j <= i; j++) {
+				if (s.charAt(j) == closedParen && ())
+			}
+		}
 	}
 	
 	
