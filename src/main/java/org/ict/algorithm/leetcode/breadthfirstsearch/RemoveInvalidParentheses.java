@@ -78,8 +78,17 @@ public class RemoveInvalidParentheses {
 			if (s.charAt(i) == closedParen) stack--;
 			if (stack >= 0) continue;//no need to cut off
 			for (int j = last_j; j <= i; j++) {
-				if (s.charAt(j) == closedParen && ())
+				if (s.charAt(j) == closedParen && (j == last_j || s.charAt(j - 1) != closedParen)) {
+					recursiveDFS(s.substring(0, j) + s.substring(j + 1, s.length()), result, i, j, openParen, closedParen);
+				}
 			}
+			return;
+		}
+		String reversed = new StringBuilder(s).reverse().toString();
+		if (openParen == '(') {
+			recursiveDFS(reversed, result, 0, 0, ')', '(');
+		} else {
+			result.add(reversed);
 		}
 	}
 	
