@@ -76,14 +76,17 @@ public class RemoveInvalidParentheses {
 		for (int stack = 0, i = last_i; i < s.length(); i++) {
 			if (s.charAt(i) == openParen) stack++;
 			if (s.charAt(i) == closedParen) stack--;
-			if (stack >= 0) continue;//no need to cut off
+			if (stack >= 0) continue;// No need to cut off, because there is no extra closed paren.
 			for (int j = last_j; j <= i; j++) {
+				// s.charAt(j) == closeParen and s.charAt(j - 1) != closedParen with the limit 
+				// we restrict ourself to remove the first ) in a series of concecutive )s
 				if (s.charAt(j) == closedParen && (j == last_j || s.charAt(j - 1) != closedParen)) {
 					recursiveDFS(s.substring(0, j) + s.substring(j + 1, s.length()), result, i, j, openParen, closedParen);
 				}
 			}
-			return;
+			return;// Stop here. The recursive calls handle the rest of the string.
 		}
+		// No invalid closed parenthesis detected. Now check opposite direction, or reverse back to original direction.
 		String reversed = new StringBuilder(s).reverse().toString();
 		if (openParen == '(') {
 			recursiveDFS(reversed, result, 0, 0, ')', '(');
@@ -199,7 +202,8 @@ public class RemoveInvalidParentheses {
 	 * count after decrement:-1
 	 * s1:ab
 	 * s2:c
-	 * reversed:)(((
+	 * original:(()(()
+	 * reversed:)(()((
 	 */
 	private static void testOperatorSequence() {
 		int count = 0;
@@ -213,7 +217,8 @@ public class RemoveInvalidParentheses {
 		String s2 = s.substring(i);
 		System.out.println("s1:" + s1);
 		System.out.println("s2:" + s2);
-		String paren = "((()";
+		String paren = "(()(()";
+		System.out.println("original:" + paren);
 		String sb = new StringBuilder(paren).reverse().toString();
 		System.out.println("reversed:" + sb);
 	}
