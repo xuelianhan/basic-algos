@@ -61,6 +61,16 @@ public class RemoveInvalidParentheses {
 	 * However a cleverer idea is: reverse the string and reuse the code!
 	 * Here is the final implement in Java.
 	 * 
+	 * The program only generates valid answers. Every path in the search generates one valid answer. 
+	 * The whole search space is a tree with k leaves. 
+	 * The number of nodes in the tree is roughly O(k). 
+	 * But this is not always true, for example a degenerated tree.
+	 * To generate one node it requires O(n) time from the string concatenation among other things. 
+	 * So roughly O(nk). Accurately O(nm) where m is the total "number of recursive calls" or "nodes in the search tree". 
+	 * Then you need to relate m to n in the worst case.
+	 * I wouldn't worry too much about the accurate complexity analysis of this problem. 
+	 * It would require more mathematics than an interview cares.
+	 * 
 	 * @author dietpepsi
 	 * @see https://leetcode.com/problems/remove-invalid-parentheses/discuss/75027/Easy-Short-Concise-and-Fast-Java-DFS-3-ms-solution
 	 * @param s
@@ -72,14 +82,29 @@ public class RemoveInvalidParentheses {
 		return result;
 	}
 	
+	/**
+	 * It's very complicate and hard to understand.
+	 * 2020-05-06
+	 * @param s
+	 * @param result
+	 * @param last_i
+	 * @param last_j
+	 * @param openParen
+	 * @param closedParen
+	 */
 	private void recursiveDFS(String s, List<String> result, int last_i, int last_j, char openParen, char closedParen) {
 		for (int stack = 0, i = last_i; i < s.length(); i++) {
 			if (s.charAt(i) == openParen) stack++;
 			if (s.charAt(i) == closedParen) stack--;
-			if (stack >= 0) continue;// No need to cut off, because there is no extra closed paren.
+			// No need to cut off when stack >= 0, because there is no extra closed paren.
+			if (stack >= 0) continue;
+			
+			//If it gets here, it means stack < 0. Obviously.
+			//That means from last_i to i (inclusive), there is an extra closedParen.
 			for (int j = last_j; j <= i; j++) {
 				// s.charAt(j) == closeParen and s.charAt(j - 1) != closedParen with the limit 
 				// we restrict ourself to remove the first ) in a series of concecutive )s
+				// In this way, we can avoid duplicates in the results.
 				if (s.charAt(j) == closedParen && (j == last_j || s.charAt(j - 1) != closedParen)) {
 					recursiveDFS(s.substring(0, j) + s.substring(j + 1, s.length()), result, i, j, openParen, closedParen);
 				}
