@@ -50,19 +50,19 @@ public class PacificAtlanticWaterFlow {
 			return result;
 		}
 		
-		int m = matrix.length;
-		int n = matrix[0].length;
+		int m = matrix.length;// rows
+		int n = matrix[0].length;// columns
 		boolean[][] pac = new boolean[m][n];
 		boolean[][] atl = new boolean[m][n];
 		int[][] dir = {{-1, 0}, {1, 0}, {0, 1}, {0, -1}};
 		
-		// Vertical border
+		// Vertical border(row changes but column not change)
 		for (int i = 0; i < m; i++) {
 			dfsV1(matrix, dir, pac, i, 0);
 			dfsV1(matrix, dir, atl, i, n-1);
 		}
 		
-		// Horizontal border
+		// Horizontal border(column changes but row not change)
 		for (int i = 0; i < n; i++) {
 			dfsV1(matrix, dir, pac, 0, i);
 			dfsV1(matrix, dir, atl, m-1, i);
@@ -82,7 +82,17 @@ public class PacificAtlanticWaterFlow {
 	}
 	
 	public void dfsV1(int[][] matrix, int[][] dir, boolean[][] visited, int i, int j) {
-		
+		visited[i][j] = true;
+		int m = matrix.length;
+		int n = matrix[0].length;
+		for (int[] d : dir) {
+			int x = i + d[0];
+			int y = j = d[1];
+			if (x < 0 || y < 0 || x >= m || x >= n || matrix[x][y] < matrix[i][j]) {
+				continue;
+			}
+			dfsV1(matrix, dir, visited, x, y);
+		}
 	}
 	
 	
