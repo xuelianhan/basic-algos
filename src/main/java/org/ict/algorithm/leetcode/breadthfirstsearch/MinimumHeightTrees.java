@@ -1,7 +1,10 @@
 package org.ict.algorithm.leetcode.breadthfirstsearch;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 
@@ -48,6 +51,13 @@ import java.util.List;
  * LC310
  */
 public class MinimumHeightTrees {
+	
+	public static void main(String[] args) {
+		int n = 6;
+		int[][] edges = {{0, 3}, {1, 3}, {2, 3}, {4, 3}, {5, 4}};
+		List<Integer> result = findMinHeightTreesV2(n, edges);
+		System.out.println(result);
+	}
 	/**
 	 * Basically, the idea is to eat up all the leaves at the same time, until one/two leaves are left.
 	 * 
@@ -82,9 +92,149 @@ public class MinimumHeightTrees {
 	 * @param edges
 	 * @return
 	 */
-	public List<Integer> findMinHeightTrees(int n, int[][] edges) {
+	public static List<Integer> findMinHeightTreesV2(int n, int[][] edges) {
+		if (n <= 0) {
+			return new ArrayList<>();
+		}
+		// 1.corner case, only one vertex, so answer is [0]
 		if (n == 1) {
 			return Collections.singletonList(0);
+		}
+		// 2.Initialize the adj of graph with vertex number n
+		Graph graph = new Graph(n);
+		
+		// 3.Add edges in graph
+		for (int[] edge : edges) {
+			graph.addEdge(edge[0], edge[1]);
+		}
+		
+		// 4.Count leaves of graph
+		List<Integer> leavesList = graph.leaves();
+		while (n > 2) {// We need to remain two leaves node at least.
+			List<Integer> newLeavesList = graph.removeLeaves(leavesList);
+			n -= leavesList.size();
+			// new leaves list has done, so we change the reference to replace old one
+			leavesList = newLeavesList;
+		}
+		return leavesList;
+	}
+	
+	public List<Integer> findMinHeightTreesV1(int n, int[][] edges) {
+		if (n <= 0) {
+			return new ArrayList<>();
+		}
+		// 1.corner case, only one vertex, so answer is [0]
+		if (n == 1) {
+			return Collections.singletonList(0);
+		}
+		// 2.Initialize the adj of graph with vertex number n
+		List<Set<Integer>> adj = new ArrayList<>(n);
+		for (int i = 0; i < n; i++) {
+			adj.add(new HashSet<>());
+		}
+		
+		// 3.Add edges in graph
+		for (int[] edge : edges) {
+			adj.get(edge[0]).add(edge[1]);
+			adj.get(edge[1]).add(edge[0]);
+		}
+		
+		// 4.Count leaves of graph
+		List<Integer> leavesList = new ArrayList<>();
+		for (int i = 0; i < n; i++) {
+			if (adj.get(i).size() == 1) {
+				leavesList.add(i);
+			}
+		}
+		
+		while (n > 2) {// We need to remain two leaves node at least.
+			n -= leavesList.size();
+			List<Integer> newLeavesList = new ArrayList<>();
+			for (int i : leavesList) {
+				// Find the adjacent vertex j of the current leaf i
+				int j = adj.get(i).iterator().next();
+				// Remove the current leaf i from  vertex j's adjacency list
+				adj.get(j).remove(i);
+				
+				// If current vertex j to become a leaf due to the remove action above,
+				// we need to add it to the new leaves list.
+				if (adj.get(j).size() == 1) {
+					newLeavesList.add(j);
+				}
+			}
+			// new leaves list has done, so we change the reference to replace old one
+			leavesList = newLeavesList;
+		}
+		return leavesList;
+	}
+	
+	
+	public static class Graph {
+		private final int V;
+		private int E;
+		private List<Set<Integer>> adj;
+		
+		public Graph (int V) {
+			this.V = V;
+			this.E = 0;
+			adj = new ArrayList<>(V);
+			for (int v = 0; v < V; v++) {
+				adj.add(new HashSet<>());
+			}
+		}
+		
+		public void addEdge(int v, int w) {
+			adj.get(v).add(w);
+			adj.get(w).add(v);
+			E++;
+		}
+
+		public Set<Integer> adj(int v) {
+			return adj.get(v);
+		}
+
+		public int degree(int v) {
+			return adj.get(v).size();
+		}
+		
+		public void remove(int v, int w) {
+			adj.get(v).remove(w);
+			adj.get(w).remove(v);
+			E--;
+		}
+
+		public List<Integer> leaves() {
+			List<Integer> leavesList = new ArrayList<>();
+			for (int i = 0; i < V; i++) {
+				if (adj.get(i).size() == 1) {
+					leavesList.add(i);
+				}
+			}
+			return leavesList;
+		}
+		
+		public List<Integer> removeLeaves(List<Integer> oldLeavesList) {
+			List<Integer> newLeavesList = new ArrayList<>();
+			for (int leaf : oldLeavesList) {
+				// Find the adjacent vertex j of the current leaf i
+				int neighbor = adj(leaf).iterator().next();
+				// Remove the current leaf i from  vertex j's adjacency list
+				remove(leaf, neighbor);
+				// If current vertex j to become a leaf due to the remove action above,
+				// we need to add it to the new leaves list.
+				if (degree(neighbor) == 1) {
+					newLeavesList.add(neighbor);
+				}
+			}
+			return newLeavesList;
+		}
+
+		public int V() {
+			return V;
+		}
+
+		public int E() {
+			return E;
 		}
 	}
 }
