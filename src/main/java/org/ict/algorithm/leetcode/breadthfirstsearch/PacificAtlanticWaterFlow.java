@@ -56,7 +56,28 @@ public class PacificAtlanticWaterFlow {
 		boolean[][] atl = new boolean[m][n];
 		int[][] dir = {{-1, 0}, {1, 0}, {0, 1}, {0, -1}};
 		
+		// Vertical border
+		for (int i = 0; i < m; i++) {
+			dfsV1(matrix, dir, pac, i, 0);
+			dfsV1(matrix, dir, atl, i, n-1);
+		}
 		
+		// Horizontal border
+		for (int i = 0; i < n; i++) {
+			dfsV1(matrix, dir, pac, 0, i);
+			dfsV1(matrix, dir, atl, m-1, i);
+		}
+		
+		for (int i = 0; i < m; i++) {
+			for (int j = 0; j < n; j++) {
+				if (pac[i][j] && atl[i][j]) {
+					List<Integer> coordinate = new ArrayList<>();
+					coordinate.add(i);
+					coordinate.add(j);
+					result.add(coordinate);
+				}
+			}
+		}
 		return result;
 	}
 	
