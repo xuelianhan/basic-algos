@@ -1,5 +1,6 @@
 package org.ict.algorithm.leetcode.breadthfirstsearch;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,4 +38,31 @@ public class PacificAtlanticWaterFlow {
 	public List<List<Integer>> pacificAtlantic(int[][] matrix) {
         return null;
     }
+	
+	/**
+	 * Start dfs from each boundary, then find common visited nodes.That's the answer.
+	 * @param matrix
+	 * @return
+	 */
+	public List<List<Integer>> pacificAtlanticV1(int[][] matrix) {
+		List<List<Integer>> result = new ArrayList<>();
+		if (matrix == null || matrix.length <= 0 || matrix[0].length <= 0) {
+			return result;
+		}
+		
+		int m = matrix.length;
+		int n = matrix[0].length;
+		boolean[][] pac = new boolean[m][n];
+		boolean[][] atl = new boolean[m][n];
+		int[][] dir = {{-1, 0}, {1, 0}, {0, 1}, {0, -1}};
+		
+		
+		return result;
+	}
+	
+	public void dfsV1(int[][] matrix, int[][] dir, boolean[][] visited, int i, int j) {
+		
+	}
+	
+	
 }
