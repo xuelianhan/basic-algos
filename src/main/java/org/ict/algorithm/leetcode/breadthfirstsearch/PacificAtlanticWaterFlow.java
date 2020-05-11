@@ -58,20 +58,30 @@ public class PacificAtlanticWaterFlow {
 		int n = matrix[0].length;// columns
 		boolean[][] pac = new boolean[m][n];
 		boolean[][] atl = new boolean[m][n];
-		Queue<List<Integer>> pQueue = new LinkedList<>();
-		Queue<List<Integer>> aQueue = new LinkedList<>();
+		Queue<int[]> pQueue = new LinkedList<>();
+		Queue<int[]> aQueue = new LinkedList<>();
 		
 		// Vertical border(row changes but column not change)
 		for (int i = 0; i < m; i++) {
-			
+			pQueue.offer(new int[] {i, 0});
+			aQueue.offer(new int[] {i, n-1});
+			pac[i][0] = true;
+			atl[i][n-1] = true;
 		}
 		
 		// Horizontal border(column changes but row not change)
 		for (int i = 0; i < n; i++) {
-			
+			pQueue.offer(new int[] {0, i});
+			aQueue.offer(new int[] {m-1, i});
+			pac[0][i] = true;
+			atl[m-1][i] = true;
 		}
 		
 		//bfs
+		bfs(matrix, pQueue, pac);
+		bfs(matrix, aQueue, atl);
+		
+		// Add the cell visited by two queue to the result
 		for (int i = 0; i < m; i++) {
 			for (int j = 0; j < n; j++) {
 				if (pac[i][j] && atl[i][j]) {
@@ -85,22 +95,20 @@ public class PacificAtlanticWaterFlow {
 		return result;
     }
 	
-	public void bfs(int[][] matrix, Queue<List<Integer>> queue, boolean[][] visited) {
+	public void bfs(int[][] matrix, Queue<int[]> queue, boolean[][] visited) {
 		int m = matrix.length;// rows
 		int n = matrix[0].length;// columns
 		while (!queue.isEmpty()) {
-			List<Integer> cur = queue.poll();
+			int[] cur = queue.poll();
 			for (int[] d : dir) {
-				int x = cur.get(0) + d[0];
-				int y = cur.get(1) + d[1];
-				if (x < 0 || x >= m || y < 0 || y >= n || visited[x][y] || matrix[x][y] < matrix[cur.get(0)][cur.get(1)]) {
+				int x = cur[0] + d[0];
+				int y = cur[1] + d[1];
+				if (x < 0 || x >= m || y < 0 || y >= n || visited[x][y] || matrix[x][y] < matrix[cur[0]][cur[1]]) {
 					continue;
 				}
 				visited[x][y] = true;
-				List<Integer> coordinate = new ArrayList<>(2);
-				coordinate.add(x);
-				coordinate.add(y);
-				queue.offer(coordinate);
+				
+				queue.offer(new int[]{x, y});
 			}
 		}
 	}
