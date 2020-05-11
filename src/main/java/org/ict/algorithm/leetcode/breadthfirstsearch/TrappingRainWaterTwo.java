@@ -1,5 +1,8 @@
 package org.ict.algorithm.leetcode.breadthfirstsearch;
 
+import java.util.Comparator;
+import java.util.PriorityQueue;
+
 /**
  * 
  * Given an m x n matrix of positive integers representing the height of each unit cell in a 2D elevation map, 
@@ -23,6 +26,33 @@ package org.ict.algorithm.leetcode.breadthfirstsearch;
 public class TrappingRainWaterTwo {
 
 	public int trapRainWater(int[][] heightMap) {
+		if (heightMap == null || heightMap.length == 0 || heightMap[0].length == 0) {
+			return 0;
+		}
+		PriorityQueue<Cell> queue = new PriorityQueue<>(1, new Comparator<Cell>() {
+			@Override
+			public int compare(Cell o1, Cell o2) {
+				return o1.height = o2.height;
+			}
+			
+		});
+		
+		int m = heightMap.length;
+		int n = heightMap[0].length;
+		boolean[][] visited = new boolean[m][n];
+		
         return 0;
     }
+	
+	public class Cell {
+		int row; 
+		int col;
+		int height;
+		
+		public Cell(int row, int col, int height) {
+			this.row = row;
+			this.col = col;
+			this.height = height;
+		}
+	}
 }
