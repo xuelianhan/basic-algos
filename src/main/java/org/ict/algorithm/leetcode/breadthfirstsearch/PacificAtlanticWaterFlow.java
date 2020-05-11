@@ -46,6 +46,8 @@ public class PacificAtlanticWaterFlow {
 	 * Since water can only flow from high/equal cell to low cell, 
 	 * add the neighboor cell with height larger or equal to current cell to the queue and mark as visited.
 	 * 
+	 * Another trick skill is using [] array to indicate the coordinate, but using List to indicate coordinate 
+	 * when output the result.
 	 * @param matrix
 	 * @return
 	 */
