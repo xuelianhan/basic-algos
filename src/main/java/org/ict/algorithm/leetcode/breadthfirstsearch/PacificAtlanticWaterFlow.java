@@ -1,7 +1,9 @@
 package org.ict.algorithm.leetcode.breadthfirstsearch;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 /**
  * 
@@ -34,13 +36,80 @@ import java.util.List;
  *
  */
 public class PacificAtlanticWaterFlow {
+	
+	private int[][] dir = {{-1, 0}, {1, 0}, {0, 1}, {0, -1}};
 
-	public List<List<Integer>> pacificAtlantic(int[][] matrix) {
-        return null;
+	/**
+	 * Two Queue and add all the Pacific border to one queue; Atlantic border to another queue.
+	 * Keep a visited matrix for each queue. In the end, add the cell visited by two queue to the result.
+	 * BFS: Water flood from ocean to the cell. 
+	 * Since water can only flow from high/equal cell to low cell, 
+	 * add the neighboor cell with height larger or equal to current cell to the queue and mark as visited.
+	 * 
+	 * @param matrix
+	 * @return
+	 */
+	public List<List<Integer>> pacificAtlanticV2(int[][] matrix) {
+		List<List<Integer>> result = new ArrayList<>();
+		if (matrix == null || matrix.length <= 0 || matrix[0].length <= 0) {
+			return result;
+		}
+		int m = matrix.length;// rows
+		int n = matrix[0].length;// columns
+		boolean[][] pac = new boolean[m][n];
+		boolean[][] atl = new boolean[m][n];
+		Queue<List<Integer>> pQueue = new LinkedList<>();
+		Queue<List<Integer>> aQueue = new LinkedList<>();
+		
+		// Vertical border(row changes but column not change)
+		for (int i = 0; i < m; i++) {
+			
+		}
+		
+		// Horizontal border(column changes but row not change)
+		for (int i = 0; i < n; i++) {
+			
+		}
+		
+		//bfs
+		for (int i = 0; i < m; i++) {
+			for (int j = 0; j < n; j++) {
+				if (pac[i][j] && atl[i][j]) {
+					List<Integer> coordinate = new ArrayList<>(2);
+					coordinate.add(i);
+					coordinate.add(j);
+					result.add(coordinate);
+				}
+			}
+		}
+		return result;
     }
+	
+	public void bfs(int[][] matrix, Queue<List<Integer>> queue, boolean[][] visited) {
+		int m = matrix.length;// rows
+		int n = matrix[0].length;// columns
+		while (!queue.isEmpty()) {
+			List<Integer> cur = queue.poll();
+			for (int[] d : dir) {
+				int x = cur.get(0) + d[0];
+				int y = cur.get(1) + d[1];
+				if (x < 0 || x >= m || y < 0 || y >= n || visited[x][y] || matrix[x][y] < matrix[cur.get(0)][cur.get(1)]) {
+					continue;
+				}
+				visited[x][y] = true;
+				List<Integer> coordinate = new ArrayList<>(2);
+				coordinate.add(x);
+				coordinate.add(y);
+				queue.offer(coordinate);
+			}
+		}
+	}
+	
+	
 	
 	/**
 	 * Start dfs from each boundary, then find common visited nodes.That's the answer.
+	 * This method cause stackoverflow error
 	 * @param matrix
 	 * @return
 	 */
@@ -54,18 +123,18 @@ public class PacificAtlanticWaterFlow {
 		int n = matrix[0].length;// columns
 		boolean[][] pac = new boolean[m][n];
 		boolean[][] atl = new boolean[m][n];
-		int[][] dir = {{-1, 0}, {1, 0}, {0, 1}, {0, -1}};
+		
 		
 		// Vertical border(row changes but column not change)
 		for (int i = 0; i < m; i++) {
-			dfsV1(matrix, dir, pac, i, 0, Integer.MIN_VALUE);
-			dfsV1(matrix, dir, atl, i, n-1, Integer.MIN_VALUE);
+			dfsV1(matrix, pac, i, 0, Integer.MIN_VALUE);
+			dfsV1(matrix, atl, i, n-1, Integer.MIN_VALUE);
 		}
 		
 		// Horizontal border(column changes but row not change)
 		for (int i = 0; i < n; i++) {
-			dfsV1(matrix, dir, pac, 0, i, Integer.MIN_VALUE);
-			dfsV1(matrix, dir, atl, m-1, i, Integer.MIN_VALUE);
+			dfsV1(matrix, pac, 0, i, Integer.MIN_VALUE);
+			dfsV1(matrix, atl, m-1, i, Integer.MIN_VALUE);
 		}
 		
 		for (int i = 0; i < m; i++) {
@@ -81,16 +150,15 @@ public class PacificAtlanticWaterFlow {
 		return result;
 	}
 	
-	public void dfsV1(int[][] matrix, int[][] dir, boolean[][] visited, int x, int y, int height) {
+	public void dfsV1(int[][] matrix, boolean[][] visited, int x, int y, int height) {
 		int m = matrix.length;
 		int n = matrix[0].length;
-		
 		if (x < 0 || y < 0 || x >= m || x >= n || matrix[x][y] < height) {
 			return;
 		}
 		visited[x][y] = true;
 		for (int[] d : dir) {
-			dfsV1(matrix, dir, visited, x + d[0], y + d[1], matrix[x][y]);
+			dfsV1(matrix, visited, x + d[0], y + d[1], matrix[x][y]);
 		}
 	}
 	
