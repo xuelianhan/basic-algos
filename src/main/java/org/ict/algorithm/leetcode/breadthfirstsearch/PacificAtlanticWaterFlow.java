@@ -95,6 +95,14 @@ public class PacificAtlanticWaterFlow {
 		return result;
     }
 	
+	/**
+	 * Water flood from ocean to the cell.
+	 * Since water can only flow from high/equal cell to low cell, 
+	 * add the neighboor cell with height larger or equal to current cell to the queue and mark as visited.
+	 * @param matrix
+	 * @param queue
+	 * @param visited
+	 */
 	public void bfs(int[][] matrix, Queue<int[]> queue, boolean[][] visited) {
 		int m = matrix.length;// rows
 		int n = matrix[0].length;// columns
@@ -117,7 +125,7 @@ public class PacificAtlanticWaterFlow {
 	
 	/**
 	 * Start dfs from each boundary, then find common visited nodes.That's the answer.
-	 * This method cause stackoverflow error
+	 * This method will cause stackoverflow error, Reason is not found.
 	 * @param matrix
 	 * @return
 	 */
