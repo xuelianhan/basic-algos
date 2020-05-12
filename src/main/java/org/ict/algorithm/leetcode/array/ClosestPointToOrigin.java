@@ -6,8 +6,14 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 /**
- * Find the TopM max, use the min-heap
- * Find the TopM min, use the max-heap
+ * Given a set of points in a cartesian plane, and a start point , find the k closest points to the starting point.
+ * Points = [(1,2),(2,3),(4,6),(7,9)]
+ * Start Point = (2,2)
+ * Find 2 closest points to start point.
+ * 
+ * Find the TopM max, use the min-heap, construct min-heap with M value, adjust heap if new value is bigger than the root, at last we get the M max value in the min-heap
+ * 
+ * Find the TopM min, use the max-heap, construct max-heap with M value, adjust heap if new value is smaller than the root, at last we get the M min value in the max-heap
  * 
  * Please referer the Algorithms 4th Edition by Robert Sedgewick
  * @see https://leetcode.com/discuss/interview-question/124642/k-closest-points-to-a-starting-point-in-cartesian-plane
@@ -60,7 +66,7 @@ public class ClosestPointToOrigin {
         PriorityQueue<Point> pq = new PriorityQueue<Point> (k, new Comparator<Point> () {
             @Override
             public int compare(Point a, Point b) {
-                return (int) (getDistance(a, origin) - getDistance(b, origin));
+                return (int) (getDistance(a, origin) - getDistance(b, origin));//Find top k minimum in points max-heap
             }
         });
         
@@ -117,7 +123,7 @@ public class ClosestPointToOrigin {
 		PriorityQueue<Point> maxHeap = new PriorityQueue<>(k, new Comparator<Point>() {
 
 			@Override
-			public int compare(Point p1, Point p2) {
+			public int compare(Point p1, Point p2) {// Find top k maximum in points, use min-heap
 				double d1 = getDistance(p1);
 				double d2 = getDistance(p2);
 				
