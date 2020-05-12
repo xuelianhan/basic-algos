@@ -32,7 +32,7 @@ public class TrappingRainWaterTwo {
 		PriorityQueue<Cell> queue = new PriorityQueue<>(1, new Comparator<Cell>() {
 			@Override
 			public int compare(Cell o1, Cell o2) {
-				return o1.height = o2.height;
+				return o1.height - o2.height;
 			}
 			
 		});
@@ -41,7 +41,32 @@ public class TrappingRainWaterTwo {
 		int n = heightMap[0].length;
 		boolean[][] visited = new boolean[m][n];
 		
-        return 0;
+		// Initially, add all the Cells which are on borders to the queue.
+		// Vertical border(row changes but column not change)
+		for (int i = 0; i < m; i++) {
+			visited[i][0] = true;
+			visited[i][n-1] = true;
+			queue.offer(new Cell(i, 0, heightMap[i][0]));
+			queue.offer(new Cell(i, n-1, heightMap[i][n-1]));
+		}
+		
+		// Horizontal border(column changes but row not change)
+		for (int i = 0; i < n; i++) {
+			visited[0][i] = true;
+			visited[m-1][i] = true;
+			queue.offer(new Cell(0, i, heightMap[0][i]));
+			queue.offer(new Cell(m-1, i, heightMap[m-1][i]));
+		}
+		
+		// Pick the shortest cell visited from the borders and check its neighbors,
+		// if the neighbor is shorter than current cell, then we need to collect the water
+		// it can trap, and update with its height as current height plus with water trapped.
+		int[][] dir = {{-1, 0}, {1, 0}, {0, 1}, {0, -1}};
+		int res = 0;
+		while (!queue.isEmpty()) {
+			
+		}
+        return res;
     }
 	
 	public class Cell {
