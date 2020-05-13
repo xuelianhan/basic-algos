@@ -32,7 +32,9 @@ public class TrappingRainWaterTwo {
 		PriorityQueue<Cell> queue = new PriorityQueue<>(1, new Comparator<Cell>() {
 			@Override
 			public int compare(Cell o1, Cell o2) {
-				return o1.height - o2.height;// min-heap
+				// min-heap the store the minimum height of the 4-borders.
+				// why use min-heap? Wooden barrel principle
+				return o1.height - o2.height;
 			}
 			
 		});
