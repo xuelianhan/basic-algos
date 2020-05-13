@@ -67,12 +67,11 @@ public class ClosestPointToOrigin {
 	
 	
 	public Point[] closestPoints(Point[] array, Point origin, int k) {
-        Point[] rvalue = new Point[k];
-        int index = 0;
+        // Find top k minimum in points using max-heap
         PriorityQueue<Point> pq = new PriorityQueue<Point> (k, new Comparator<Point> () {
             @Override
             public int compare(Point a, Point b) {
-                return (int) (getDistance(a, origin) - getDistance(b, origin));// Find top k minimum in points using max-heap
+                return (int) (getDistance(a, origin) - getDistance(b, origin));
             }
         });
         
@@ -81,6 +80,9 @@ public class ClosestPointToOrigin {
             if (pq.size() > k)
                 pq.poll();
         }
+        
+        int index = 0;
+        Point[] rvalue = new Point[k];
         while (!pq.isEmpty())
             rvalue[index++] = pq.poll();
         return rvalue;
@@ -128,8 +130,9 @@ public class ClosestPointToOrigin {
 		List<Point> result = new ArrayList<>();
 		PriorityQueue<Point> maxHeap = new PriorityQueue<>(k, new Comparator<Point>() {
 
+			// Find top k maximum in points using min-heap
 			@Override
-			public int compare(Point p1, Point p2) {// Find top k maximum in points using min-heap
+			public int compare(Point p1, Point p2) {
 				double d1 = getDistance(p1);
 				double d2 = getDistance(p2);
 				
