@@ -66,7 +66,7 @@ public class ClosestPointToOrigin {
         PriorityQueue<Point> pq = new PriorityQueue<Point> (k, new Comparator<Point> () {
             @Override
             public int compare(Point a, Point b) {
-                return (int) (getDistance(a, origin) - getDistance(b, origin));//Find top k minimum in points max-heap
+                return (int) (getDistance(a, origin) - getDistance(b, origin));// Find top k minimum in points using max-heap
             }
         });
         
@@ -123,7 +123,7 @@ public class ClosestPointToOrigin {
 		PriorityQueue<Point> maxHeap = new PriorityQueue<>(k, new Comparator<Point>() {
 
 			@Override
-			public int compare(Point p1, Point p2) {// Find top k maximum in points, use min-heap
+			public int compare(Point p1, Point p2) {// Find top k maximum in points using min-heap
 				double d1 = getDistance(p1);
 				double d2 = getDistance(p2);
 				
