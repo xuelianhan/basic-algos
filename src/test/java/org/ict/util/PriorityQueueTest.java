@@ -19,6 +19,9 @@ public class PriorityQueueTest {
 		
 	}
 	
+	/*
+	 * The queue will remain the least k elements in it
+	 */
 	public static void testQueueWithDescendComparator(int k) {
 		List<Integer> list = new ArrayList<>();
 		for (int i = 1; i < 11; i++) {
@@ -28,7 +31,7 @@ public class PriorityQueueTest {
 		System.out.println("list:" + list);
 		
 		// Creates a PriorityQueue with the specified initial capacity that orders its elements according to their descend ordering.
-		// queue is a min-heap with least k elements in it.
+		// queue is a max-heap with least k elements in it.
 		PriorityQueue<Integer> queue = new PriorityQueue<>(k, new Comparator<Integer>() {
 			@Override
 			public int compare(Integer o1, Integer o2) {
@@ -50,6 +53,10 @@ public class PriorityQueueTest {
 		}
 	}
 	
+	/**
+	 * The queue will remain the largest k elements in it
+	 * @param k
+	 */
 	public static void testQueueWithAscendComparator(int k) {
 		List<Integer> list = new ArrayList<>();
 		for (int i = 1; i < 11; i++) {
@@ -59,7 +66,7 @@ public class PriorityQueueTest {
 		System.out.println("list:" + list);
 		
 		// Creates a PriorityQueue with the specified initial capacity that orders its elements according to their natural ordering.
-		// queue is a max-heap with largest k elements in it.
+		// queue is a min-heap with largest k elements in it.
 		PriorityQueue<Integer> queue = new PriorityQueue<>(k, new Comparator<Integer>() {
 			@Override
 			public int compare(Integer o1, Integer o2) {
