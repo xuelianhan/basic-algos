@@ -7,12 +7,30 @@ import java.util.PriorityQueue;
 import org.ict.algorithm.util.RandomGenUtil;
 
 
+/**
+ * Min-Heap Queue, the head is the smallest, if we only keep 3 elements in the queue,
+ * we need to poll surplus ele from the queue. At last the largest 3 elements are in the queue
+ * 
+ * 
+ * Max-Heap Queue, the head is the largest, if we only keep 3 elements in the queue,
+ * We need to poll surplus ele from the queue. At last the smallest 3 elements are in the queue.
+ * 
+ * Both two cases above, you can imagine that the elements are forced out one by by.
+ * 
+ * ---------------
+ * 321413524892
+ * ---------------
+ * 
+ * 
+ * @author hanxuelian001
+ *
+ */
 public class PriorityQueueTest {
 
 	public static void main(String[] args) {
-		testQueueWithDescendComparator(3);
+		//testQueueWithDescendComparator(3);
 		//testQueueWithAscendComparator(3);
-		//testQueueWithDefaultComparator();
+		testQueueWithDefaultComparator();
 		
 	}
 	
@@ -85,6 +103,10 @@ public class PriorityQueueTest {
 		}
 	}
 	
+	/**
+	 * Queue size is increasing when elements are offered one by one.
+	 * Queue poll sequence is increasing order
+	 */
 	public static void testQueueWithDefaultComparator() {
 		List<Integer> list = new ArrayList<>();
 		for (int i = 1; i < 11; i++) {
