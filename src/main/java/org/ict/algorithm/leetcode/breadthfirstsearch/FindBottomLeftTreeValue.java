@@ -33,10 +33,24 @@ Note: You may assume the tree (i.e., the given root node) is not NULL.
  *
  */
 /**
- * Definition for a binary tree node. public class TreeNode { int val; TreeNode
- * left; TreeNode right; TreeNode() {} TreeNode(int val) { this.val = val; }
- * TreeNode(int val, TreeNode left, TreeNode right) { this.val = val; this.left
- * = left; this.right = right; } }
+ * Definition for a binary tree node. 
+ * public class TreeNode { 
+ * 	  int val; 
+ * 	  TreeNode left;
+ *    TreeNode right;
+ *    TreeNode() {} 
+ *    TreeNode(int val) { 
+ *       this.val = val;
+ *    }
+ *    
+ *    TreeNode(int val, TreeNode left, TreeNode right) { 
+ *       this.val = val;
+ *       this.left = left;
+ *       this.right = right; 
+ *    }
+ * }
+ * 
+ * LC513
  */
 public class FindBottomLeftTreeValue {
 
