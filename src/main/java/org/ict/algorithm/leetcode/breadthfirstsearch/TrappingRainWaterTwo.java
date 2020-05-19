@@ -68,6 +68,7 @@ public class TrappingRainWaterTwo {
 		while (!queue.isEmpty()) {
 			Cell cell = queue.poll();
 			for (int[] dir : dirs) {
+				// neighbor's coordinate
 				int row = cell.row + dir[0];
 				int col = cell.col + dir[1];
 				if (row < 0 || row >= m || col < 0 || col >= n || visited[row][col]) {
@@ -76,13 +77,14 @@ public class TrappingRainWaterTwo {
 				// cell not visited, we collect water
 				visited[row][col] = true;
 				res += Math.max(0, cell.height - heightMap[row][col]);
+				// You can imagine that the neighbor with water filled is the new gate of border.
 				queue.offer(new Cell(row, col, Math.max(cell.height, heightMap[row][col])));
 			}
 		}
         return res;
     }
 	
-	public class Cell {
+	public class Cell/* implements Comparable<Cell> */ {
 		int row; 
 		int col;
 		int height;
@@ -92,5 +94,9 @@ public class TrappingRainWaterTwo {
 			this.col = col;
 			this.height = height;
 		}
+
+		/*
+		 * @Override public int compareTo(Cell o) { return this.height - o.height; }
+		 */
 	}
 }
