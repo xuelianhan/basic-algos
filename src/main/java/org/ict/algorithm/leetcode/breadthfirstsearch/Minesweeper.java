@@ -87,6 +87,12 @@ public class Minesweeper {
 		 return null; 
 	 }
 	 
+	 /**
+	  * 2 ms 39.7 MB
+	  * @param board
+	  * @param click
+	  * @return
+	  */
 	 public char[][] bfs(char[][] board, int[] click) {
 		 int m = board.length, n = board[0].length;
 		 Queue<int[]> queue = new LinkedList<>();
@@ -127,11 +133,49 @@ public class Minesweeper {
 						 continue;
 					 }
 					 if (board[x][y] == 'E') {
-						 queue.add(new int[] {x, y});
 						 board[x][y] = 'B';// used as a visit flag
+						 queue.add(new int[] {x, y});
 					 }
 				 }
 				 
+			 }
+		 }
+		 return board;
+	 }
+	 
+	 public char[][] dfs(char[][] board, int[] click) {
+		 int m = board.length, n = board[0].length;
+		 int row = click[0], col = click[1];
+		 if (board[row][col] == 'M') {
+			 board[row][col] = 'X';
+			 return board;
+		 }
+		 
+		 int[][] dirs = {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
+		 int mineCount = 0;
+		 for (int[] dir : dirs) {
+			 int x = row + dir[0], y = col + dir[1];
+			 if (x < 0 || x >= m || y < 0 || y >= n) {
+				 continue;
+			 }
+			 if (board[x][y] == 'M') {
+				 mineCount++;
+			 }
+		 }
+		 
+		 if (mineCount > 0) {
+			 // if current cell has a adjacent mine, change its value to mineCount
+			 board[row][col] = (char)(mineCount + '0');
+		 } else {
+			 board[row][col] = 'B';
+			 for (int[] dir : dirs) {
+				 int x = row + dir[0], y = col + dir[1];
+				 if (x < 0 || x >= m || y < 0 || y >= n) {
+					 continue;
+				 }
+				 if (board[x][y] == 'E') {
+					 dfs(board, new int[] {x, y}); 
+				 }
 			 }
 		 }
 		 return board;
