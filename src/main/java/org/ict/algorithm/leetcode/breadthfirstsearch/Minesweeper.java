@@ -1,5 +1,8 @@
 package org.ict.algorithm.leetcode.breadthfirstsearch;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 /**
  * 
  * Let's play the minesweeper game (Wikipedia, online game)!
@@ -82,5 +85,37 @@ public class Minesweeper {
 	 public char[][] updateBoard(char[][] board, int[] click) {
 		 
 		 return null; 
+	 }
+	 
+	 public char[][] bfs(char[][] board, int[] click) {
+		 int m = board.length, n = board[0].length;
+		 Queue<int[]> queue = new LinkedList<>();
+		 queue.add(click);
+		 
+		 int[][] dirs = {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
+		 while (!queue.isEmpty()) {
+			 int[] cell = queue.poll();
+			 int row = cell[0], col = cell[1];
+			 if (board[row][col] == 'M') {
+				 board[row][col] = 'X';
+				 return board;
+			 }
+			 
+			 int mineCount = 0;
+			 for (int[] dir : dirs) {
+				 int x = row + dir[0], y = col + dir[1];
+				 if (x < 0 || x >= m || y < 0 || y >= n) {
+					 continue;
+				 }
+				 if (board[x][y] == 'M') {
+					 mineCount++;
+				 }
+			 }
+			 
+			 if (mineCount > 0) {
+				 board[row][col] = (char)(mineCount + '0');
+			 }
+		 }
+		 return null;
 	 }
 }
