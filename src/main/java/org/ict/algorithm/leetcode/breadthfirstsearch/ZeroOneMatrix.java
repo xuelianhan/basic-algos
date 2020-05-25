@@ -73,7 +73,7 @@ public class ZeroOneMatrix {
 	}
 
 	/**
-	 * 1.At beginning, set cell value to Integer.MAX_VALUE(to mark unreached cells) if it is not 0;
+	 * 1.At beginning, set cell value to Integer.MAX_VALUE(to mark unvisited cells) if it is not 0;
 	 * 2.If newly calculated distance >= current distance, then we don't need to explore that cell again.
 	 *   Beacause we need to find the nearest distance to 0-cell 
 	 * 
