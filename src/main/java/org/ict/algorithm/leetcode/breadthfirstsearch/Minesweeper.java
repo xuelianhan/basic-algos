@@ -92,15 +92,18 @@ public class Minesweeper {
 		 Queue<int[]> queue = new LinkedList<>();
 		 queue.add(click);
 		 
+		 // Total 8 directions coordinate.
 		 int[][] dirs = {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
 		 while (!queue.isEmpty()) {
 			 int[] cell = queue.poll();
 			 int row = cell[0], col = cell[1];
+			 // If touch a mine, game over
 			 if (board[row][col] == 'M') {
 				 board[row][col] = 'X';
 				 return board;
 			 }
 			 
+			 // Count the adjacent mines
 			 int mineCount = 0;
 			 for (int[] dir : dirs) {
 				 int x = row + dir[0], y = col + dir[1];
@@ -113,8 +116,10 @@ public class Minesweeper {
 			 }
 			 
 			 if (mineCount > 0) {
+				 // if current cell has a adjacent mine, change its value to mineCount
 				 board[row][col] = (char)(mineCount + '0');
 			 } else {
+				 // if current cell has no adjacent mine, change its value to 'B', and add it's neighbors(at most 8 directions) to the queue. 
 				 board[row][col] = 'B';
 				 for (int[] dir : dirs) {
 					 int x = row + dir[0], y = col + dir[1];
@@ -123,7 +128,7 @@ public class Minesweeper {
 					 }
 					 if (board[x][y] == 'E') {
 						 queue.add(new int[] {x, y});
-						 board[x][y] = 'B';
+						 board[x][y] = 'B';// used as a visit flag
 					 }
 				 }
 				 
