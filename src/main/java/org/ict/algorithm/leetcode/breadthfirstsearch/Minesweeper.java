@@ -114,8 +114,21 @@ public class Minesweeper {
 			 
 			 if (mineCount > 0) {
 				 board[row][col] = (char)(mineCount + '0');
+			 } else {
+				 board[row][col] = 'B';
+				 for (int[] dir : dirs) {
+					 int x = row + dir[0], y = col + dir[1];
+					 if (x < 0 || x >= m || y < 0 || y >= n) {
+						 continue;
+					 }
+					 if (board[x][y] == 'E') {
+						 queue.add(new int[] {x, y});
+						 board[x][y] = 'B';
+					 }
+				 }
+				 
 			 }
 		 }
-		 return null;
+		 return board;
 	 }
 }
