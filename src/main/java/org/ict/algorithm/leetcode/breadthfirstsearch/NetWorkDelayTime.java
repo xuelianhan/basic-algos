@@ -30,8 +30,24 @@ K will be in the range [1, N].
 The length of times will be in the range [1, 6000].
 All edges times[i] = (u, v, w) will have 1 <= u, v <= N and 0 <= w <= 100.
  * 
+ * LC743
  *
  */
 public class NetWorkDelayTime {
 
+	public int networkDelayTime(int[][] times, int N, int K) {
+		return -1;
+	}
+	
+	public int bellmanFordAlgo(int[][] times, int N, int K) {
+		return -1;
+	}
+	
+	public int dijkstraAlgo(int[][] times, int N, int K) {
+		return -1;
+	}
+	
+	public int floydWarshallAlgo(int[][] times, int N, int K) {
+		return -1;
+	}
 }
