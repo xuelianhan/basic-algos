@@ -39,15 +39,39 @@ public class NetWorkDelayTime {
 		return -1;
 	}
 	
+	/**
+	 * Time complexity: O(N*E), Space complexity: O(N)
+	 * @param times
+	 * @param N
+	 * @param K
+	 * @return
+	 */
 	public int bellmanFordAlgo(int[][] times, int N, int K) {
 		return -1;
 	}
 	
+	/**
+	 * Time complexity: O(Nlog(N) + E), Space complexity: O(N + E)
+	 * @param times
+	 * @param N
+	 * @param K
+	 * @return
+	 */
 	public int dijkstraAlgo(int[][] times, int N, int K) {
 		return -1;
 	}
 	
+	/**
+	 * Time complexity: O(N^3), Space complexity: O(N^2)
+	 * @param times
+	 * @param N
+	 * @param K
+	 * @return
+	 */
 	public int floydWarshallAlgo(int[][] times, int N, int K) {
+		if (times == null || times.length == 0 || times[0].length == 0) {
+			return -1;
+		}
 		return -1;
 	}
 }
