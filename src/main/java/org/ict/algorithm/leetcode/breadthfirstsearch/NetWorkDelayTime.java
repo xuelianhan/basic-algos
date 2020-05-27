@@ -1,6 +1,8 @@
 package org.ict.algorithm.leetcode.breadthfirstsearch;
 
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * There are N network nodes, labelled 1 to N.
@@ -40,6 +42,45 @@ public class NetWorkDelayTime {
 		int N = 4, K = 2;
 		int result = bellmanFordAlgoV1(times, N, K);
 		System.out.println(result);
+	}
+	
+	public static int bellmanFordAlgoV2(int[][] times, int N, int K) {
+		if (times == null || times.length == 0 || times[0].length == 0) {
+			return -1;
+		}
+		double[] distTo = new double[N];// max index is N - 1, because index start from 0.
+		Arrays.fill(distTo, Double.POSITIVE_INFINITY);
+		distTo[K - 1] = 0;// K - 1 represent the K-th Node's index
+		Queue<Integer> queue = new LinkedList<>();
+		boolean[] onQueue = new boolean[N];
+		
+		queue.offer(K);
+		onQueue[K-1] = true;
+		while (!queue.isEmpty() ) {
+			int u = queue.poll();
+			onQueue[u-1] = false;
+			for(int[] edge : times) {
+				if (edge[0] - 1 != u) {
+					continue;
+				}
+				// edge: u-->v
+				int v = edge[1] - 1;
+				int w = edge[2];
+				if (distTo[v] > distTo[u] + w) {
+					distTo[v] = distTo[u] + w;
+					if (!onQueue[v - 1]) {
+						queue.offer(v);
+						onQueue[v-1] = true;
+					}
+				}
+			}
+		}
+		
+		double res = Double.MIN_VALUE;
+		for (double cost : distTo) {
+			res = Math.max(cost, res);
+		}
+		return res == Double.POSITIVE_INFINITY ? -1 :  (int)res;
 	}
 	
 	/**
