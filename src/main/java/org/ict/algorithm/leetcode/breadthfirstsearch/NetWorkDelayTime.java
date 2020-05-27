@@ -1,5 +1,7 @@
 package org.ict.algorithm.leetcode.breadthfirstsearch;
 
+import java.util.Arrays;
+
 /**
  * There are N network nodes, labelled 1 to N.
  * Given times, a list of travel times as directed edges times[i] = (u, v, w),
@@ -38,6 +40,8 @@ public class NetWorkDelayTime {
 	}
 	
 	/**
+	 * Start from node K, find the minimum weight of reach all nodes from K.
+	 * 
 	 * Time complexity: O(N*E), Space complexity: O(N)
 	 * @param times
 	 * @param N
@@ -45,6 +49,12 @@ public class NetWorkDelayTime {
 	 * @return
 	 */
 	public int bellmanFordAlgo(int[][] times, int N, int K) {
+		if (times == null || times.length == 0 || times[0].length == 0) {
+			return -1;
+		}
+		double[] distTo = new double[N];
+		Arrays.fill(distTo, Double.POSITIVE_INFINITY);
+		
 		return -1;
 	}
 	
@@ -56,6 +66,9 @@ public class NetWorkDelayTime {
 	 * @return
 	 */
 	public int dijkstraAlgo(int[][] times, int N, int K) {
+		if (times == null || times.length == 0 || times[0].length == 0) {
+			return -1;
+		}
 		return -1;
 	}
 	
