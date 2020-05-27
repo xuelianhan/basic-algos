@@ -44,6 +44,14 @@ public class NetWorkDelayTime {
 		System.out.println(result);
 	}
 	
+	/**
+	 * Runtime: 28 ms, faster than 42.42% of Java online submissions for Network Delay Time.
+	 * Memory Usage: 42.6 MB, less than 97.62% of Java online submissions for Network Delay Time.
+	 * @param times
+	 * @param N
+	 * @param K
+	 * @return
+	 */
 	public static int bellmanFordAlgoV2(int[][] times, int N, int K) {
 		if (times == null || times.length == 0 || times[0].length == 0) {
 			return -1;
