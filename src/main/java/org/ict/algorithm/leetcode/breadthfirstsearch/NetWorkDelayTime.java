@@ -40,7 +40,7 @@ public class NetWorkDelayTime {
 	public static void main(String[] args) {
 		int[][] times = {{2,1,1}, {2,3,1}, {3,4,1}};
 		int N = 4, K = 2;
-		int result = bellmanFordAlgoV1(times, N, K);
+		int result = bellmanFordAlgoV2(times, N, K);
 		System.out.println(result);
 	}
 	
@@ -60,14 +60,14 @@ public class NetWorkDelayTime {
 			int u = queue.poll();
 			onQueue[u-1] = false;
 			for(int[] edge : times) {
-				if (edge[0] - 1 != u) {
+				if (edge[0] != u) {
 					continue;
 				}
 				// edge: u-->v
-				int v = edge[1] - 1;
+				int v = edge[1];
 				int w = edge[2];
-				if (distTo[v] > distTo[u] + w) {
-					distTo[v] = distTo[u] + w;
+				if (distTo[v-1] > distTo[u-1] + w) {
+					distTo[v-1] = distTo[u-1] + w;
 					if (!onQueue[v - 1]) {
 						queue.offer(v);
 						onQueue[v-1] = true;
