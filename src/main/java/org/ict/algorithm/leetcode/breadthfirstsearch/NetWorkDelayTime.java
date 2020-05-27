@@ -58,7 +58,8 @@ public class NetWorkDelayTime {
 		}
 		double[] distTo = new double[N];// max index is N - 1, because index start from 0.
 		Arrays.fill(distTo, Double.POSITIVE_INFINITY);
-		distTo[K - 1] = 0;// K - 1 represent the K-th Node's index 
+		distTo[K - 1] = 0;// K - 1 represent the K-th Node's index
+		
 		return -1;
 	}
 	
