@@ -42,19 +42,23 @@ public class NetWorkDelayTime {
 	/**
 	 * Start from node K, find the minimum weight of reach all nodes from K.
 	 * 
+	 * Initialize distTo[s] to 0 and all other distTo[] values to infinity. 
+	 * Then, considering the digraph's edges in any order, and relax all edges. Make V such passes.
+	 * We do not consider this version in detail because it always relaxes V E edges.
+	 * 
 	 * Time complexity: O(N*E), Space complexity: O(N)
 	 * @param times
 	 * @param N
 	 * @param K
 	 * @return
 	 */
-	public int bellmanFordAlgo(int[][] times, int N, int K) {
+	public int bellmanFordAlgoV1(int[][] times, int N, int K) {
 		if (times == null || times.length == 0 || times[0].length == 0) {
 			return -1;
 		}
-		double[] distTo = new double[N];
+		double[] distTo = new double[N];// max index is N - 1, because index start from 0.
 		Arrays.fill(distTo, Double.POSITIVE_INFINITY);
-		
+		distTo[K - 1] = 0;// K - 1 represent the K-th Node's index 
 		return -1;
 	}
 	
@@ -65,7 +69,7 @@ public class NetWorkDelayTime {
 	 * @param K
 	 * @return
 	 */
-	public int dijkstraAlgo(int[][] times, int N, int K) {
+	public int dijkstraAlgoV1(int[][] times, int N, int K) {
 		if (times == null || times.length == 0 || times[0].length == 0) {
 			return -1;
 		}
@@ -79,7 +83,7 @@ public class NetWorkDelayTime {
 	 * @param K
 	 * @return
 	 */
-	public int floydWarshallAlgo(int[][] times, int N, int K) {
+	public int floydWarshallAlgoV1(int[][] times, int N, int K) {
 		if (times == null || times.length == 0 || times[0].length == 0) {
 			return -1;
 		}
