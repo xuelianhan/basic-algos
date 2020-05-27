@@ -35,8 +35,11 @@ import java.util.Arrays;
  */
 public class NetWorkDelayTime {
 
-	public int networkDelayTime(int[][] times, int N, int K) {
-		return -1;
+	public static void main(String[] args) {
+		int[][] times = {{2,1,1}, {2,3,1}, {3,4,1}};
+		int N = 4, K = 2;
+		int result = bellmanFordAlgoV1(times, N, K);
+		System.out.println(result);
 	}
 	
 	/**
@@ -52,7 +55,7 @@ public class NetWorkDelayTime {
 	 * @param K
 	 * @return
 	 */
-	public int bellmanFordAlgoV1(int[][] times, int N, int K) {
+	public static int bellmanFordAlgoV1(int[][] times, int N, int K) {
 		if (times == null || times.length == 0 || times[0].length == 0) {
 			return -1;
 		}
