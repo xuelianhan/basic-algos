@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
- *
+ * The{@code IndexMinPQ} class represents an indexed priority queue of 
  *
  */
 public class IndexMinPQ<Key extends Comparable<Key>> implements Iterable<Integer> {
