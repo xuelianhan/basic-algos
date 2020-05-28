@@ -51,6 +51,11 @@ public class NetWorkDelayTime {
 	 * @param N
 	 * @param K
 	 * @return
+	 * @see https://github.com/kevin-wayne/algs4/blob/master/src/main/java/edu/princeton/cs/algs4/BellmanFordSP.java
+	 * The Bellman-Ford algorithm solves the single-source shortest-paths problem from a given source s
+	 * (or finds a negative cycle reachable from s)
+	 * for any edge-weighted digraph with V vertices and E edges, 
+	 * in time proportional to E V and extra space proportional to V, in the worst case.
 	 */
 	public static int bellmanFordAlgoV2(int[][] times, int N, int K) {
 		if (times == null || times.length == 0 || times[0].length == 0) {
@@ -99,6 +104,10 @@ public class NetWorkDelayTime {
 	 * We do not consider this version in detail because it always relaxes V E edges.
 	 * 
 	 * Time complexity: O(N*E), Space complexity: O(N)
+	 * 
+	 * Runtime: 44 ms, faster than 22.88% of Java online submissions for Network Delay Time.
+	 * Memory Usage: 43 MB, less than 90.48% of Java online submissions for Network Delay Time.
+	 * 
 	 * @param times
 	 * @param N
 	 * @param K
