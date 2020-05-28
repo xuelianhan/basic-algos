@@ -65,6 +65,8 @@ import java.util.Set;
  * 
  * 1 2 3
  * 4 5 0 --> 0 can go to index of {2, 4}
+ * 
+ * LC773
  *
  */
 public class SlidingPuzzle {
