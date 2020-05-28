@@ -23,12 +23,18 @@ package org.ict.algorithm.leetcode.breadthfirstsearch;
  * Output: 5
  * Explanation: 5 is the smallest number of moves that solves the board.
  * An example path:
- * After move 0: [[4,1,2],[5,0,3]]
- * After move 1: [[4,1,2],[0,5,3]]
- * After move 2: [[0,1,2],[4,5,3]]
- * After move 3: [[1,0,2],[4,5,3]]
- * After move 4: [[1,2,0],[4,5,3]]
- * After move 5: [[1,2,3],[4,5,0]]
+ * After move 0: [[4,1,2],
+ *                [5,0,3]]
+ * After move 1: [[4,1,2],
+ *                [0,5,3]]
+ * After move 2: [[0,1,2],
+ *                [4,5,3]]
+ * After move 3: [[1,0,2],
+ *                [4,5,3]]
+ * After move 4: [[1,2,0],
+ *                [4,5,3]]
+ * After move 5: [[1,2,3],
+ *                [4,5,0]]
  * 
  * Input: board = [[3,2,4],[1,5,0]]
  * Output: 14
@@ -36,7 +42,24 @@ package org.ict.algorithm.leetcode.breadthfirstsearch;
  * 
  * board will be a 2 x 3 array as described above.
  * board[i][j] will be a permutation of [0, 1, 2, 3, 4, 5].
-
+ *
+ * 0 1 2
+ * 3 4 5 --> 0 can go to index of {1, 3}
+ * 
+ * 1 0 2
+ * 3 4 5 --> 0 can go to index of {0,2,4}
+ * 
+ * 1 2 0
+ * 3 4 5 --> 0 can go to index of {1, 5}
+ * 
+ * 1 2 3
+ * 0 4 5 --> 0 can go to index of {0,4}
+ * 
+ * 1 2 3
+ * 4 0 5 --> 0 can go to index of {1, 3, 5}
+ * 
+ * 1 2 3
+ * 4 5 0 --> 0 can go to index of {2, 4}
  *
  */
 public class SlidingPuzzle {
