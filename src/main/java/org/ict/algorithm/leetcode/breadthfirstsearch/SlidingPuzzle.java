@@ -97,7 +97,7 @@ public class SlidingPuzzle {
         	int size = queue.size();
         	// level control is necessary, can't remove.
         	// If remove level control, the res will count all variable situations.
-        	// we want traversal graph level by level and stop when we meet the target.
+        	// we want traversal graph level by level(also known as level order traversal) and stop at the level when we meet the target.
         	// we can see the movement as a tree from top view:
         	// 1. start from 412503, it's a root of the tree
         	// 2. we get 402513, 412053 at second level
