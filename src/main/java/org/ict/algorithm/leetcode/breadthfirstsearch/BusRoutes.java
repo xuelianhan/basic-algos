@@ -35,6 +35,7 @@ import java.util.Set;
  * 0 <= routes[i][j] < 10 ^ 6.
  * LC815
  * 
+ * the number of bus station is greater than amount of buses
  *
  */
 public class BusRoutes {
@@ -87,7 +88,6 @@ public class BusRoutes {
 				List<Integer> busList = graph.get(curStation);
 				for (Integer bus : busList) {
 					// if the bus is visited, skip this bus, 
-					
 					if (visitedBus.contains(bus)) {
 						continue;
 					}
