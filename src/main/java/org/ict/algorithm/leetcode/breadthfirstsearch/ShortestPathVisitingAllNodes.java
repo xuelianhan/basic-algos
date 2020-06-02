@@ -35,6 +35,7 @@ import java.util.Set;
  * 0 <= graph[i].length < graph.length
  * 
  * LC847
+ * High Frequency:https://ac.nowcoder.com/discuss/292850
  *
  */
 public class ShortestPathVisitingAllNodes {
@@ -72,29 +73,27 @@ public class ShortestPathVisitingAllNodes {
         Set<Tuple> set = new HashSet<>();
 
         for(int i = 0; i < length; i++){
-            int tmp = (1 << i);
-            set.add(new Tuple(tmp, i, 0));
-            queue.add(new Tuple(tmp, i, 1));
+            int bitMask = (1 << i);
+            set.add(new Tuple(bitMask, i, 0));
+            queue.add(new Tuple(bitMask, i, 1));
         }
         
         while(!queue.isEmpty()){
             Tuple curr = queue.remove();
-    
             if(curr.bitMask == (1 << length) - 1){
                 return curr.cost - 1;
-            } else {
-                int[] neighbors = graph[curr.curr];
+            }
+            
+            int[] neighbors = graph[curr.curr];
+            for(int v : neighbors){
+                int bitMask = curr.bitMask;
+                bitMask = bitMask | (1 << v);
                 
-                for(int v : neighbors){
-                    int bitMask = curr.bitMask;
-                    bitMask = bitMask | (1 << v);
-                    
-                    Tuple t = new Tuple(bitMask, v, 0);
-                    if(!set.contains(t)){
-                        queue.add(new Tuple(bitMask, v, curr.cost + 1));
-                        set.add(t);
-                    }         
-                }
+                Tuple t = new Tuple(bitMask, v, 0);
+                if(!set.contains(t)){
+                    queue.add(new Tuple(bitMask, v, curr.cost + 1));
+                    set.add(t);
+                }         
             }
         }
         return -1;
