@@ -64,6 +64,7 @@ public class ShortestPathVisitingAllNodes {
 	 * In order to prevent duplicate paths from being visited, we use a Set<Tuple> to store the Set<Path> that we have visited before. 
 	 * Since we don't really need the cost here, I set cost to 0 for elements stored in Set.
 	 * You could also set the actual cost value here, it wouldn't make a difference
+	 * 
 	 * @param graph
 	 * @return
 	 */
@@ -72,7 +73,7 @@ public class ShortestPathVisitingAllNodes {
         Queue<Tuple> queue = new LinkedList<>();
         Set<Tuple> set = new HashSet<>();
 
-        for(int i = 0; i < length; i++){
+        for (int i = 0; i < length; i++) {
             int bitMask = (1 << i);
             set.add(new Tuple(bitMask, i, 0));
             queue.add(new Tuple(bitMask, i, 1));
@@ -80,17 +81,17 @@ public class ShortestPathVisitingAllNodes {
         
         while(!queue.isEmpty()){
             Tuple curr = queue.remove();
-            if(curr.bitMask == (1 << length) - 1){
+            if (curr.bitMask == (1 << length) - 1) {
                 return curr.cost - 1;
             }
             
             int[] neighbors = graph[curr.curr];
-            for(int v : neighbors){
+            for (int v : neighbors) {
                 int bitMask = curr.bitMask;
                 bitMask = bitMask | (1 << v);
                 
                 Tuple t = new Tuple(bitMask, v, 0);
-                if(!set.contains(t)){
+                if (!set.contains(t)) {
                     queue.add(new Tuple(bitMask, v, curr.cost + 1));
                     set.add(t);
                 }         
@@ -104,13 +105,16 @@ public class ShortestPathVisitingAllNodes {
 	    int curr;
 	    int cost;
 	    
-	    public Tuple(int bit, int n, int c){
+	    public Tuple(int bit, int n, int c) {
 	        bitMask = bit;
 	        curr = n;
 	        cost = c;
 	    }
 	    
-	    public boolean equals(Object o){
+	    public boolean equals(Object o) {
+	    	if (!(o instanceof Tuple)) {
+	    		return false;
+	    	}
 	        Tuple p = (Tuple) o;
 	        return bitMask == p.bitMask && curr == p.curr && cost == p.cost;
 	    }
