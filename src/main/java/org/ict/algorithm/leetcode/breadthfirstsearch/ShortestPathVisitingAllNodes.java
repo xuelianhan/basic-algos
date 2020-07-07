@@ -39,6 +39,10 @@ import java.util.Set;
  *
  */
 public class ShortestPathVisitingAllNodes {
+	
+	public static void main(String[] args) {
+		bitMaskTest();
+	}
 	/**
 	 * Idea is to use BFS to traverse the graph.
 	 * Since all edges are weighted 1, we can use a Queue (instead of a PriorityQueue sorted by cost). 
@@ -65,6 +69,7 @@ public class ShortestPathVisitingAllNodes {
 	 * Since we don't really need the cost here, I set cost to 0 for elements stored in Set.
 	 * You could also set the actual cost value here, it wouldn't make a difference
 	 * 
+	 * @author simonzhu91
 	 * @param graph
 	 * @return
 	 */
@@ -122,5 +127,12 @@ public class ShortestPathVisitingAllNodes {
 	    public int hashCode(){
 	        return 1331 * bitMask + 7193 * curr + 727 * cost;
 	    }
+	}
+	
+	private static void bitMaskTest() {
+		for (int i = 0; i < 5; i++) {
+            int bitMask = (1 << i);
+            System.out.println("i:" + i + ", bitMask:" + bitMask);
+		}
 	}
 }
