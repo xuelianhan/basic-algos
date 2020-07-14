@@ -19,10 +19,10 @@ public class JsonParseLeafNode {
 		String s = "{\"A\":[{\"B\":{\"C\":[{\"D\":[{\"F\":[\"GRE\"]}],\"E\":[{\"H\":[\"IVR\"]}]}]}}],\"J\":[\"AMZ\"],\"Hulu\":[],\"A10001\":{\"Apple\":[],\"A15094\":[\"Google\",\"Facebook\"]}}";
 		// String s =
 		// "{\"A10001\":{\"A15100\":[],\"A15094\":[\"A131178\",\"A131473\"]}}";
+		//String s = "{\"B00001\":{},\"ZLTJ8888\":{},\"TJBK8888\":{}}";
 		List<String> operand = testParseLeafNode(s);
 		System.out.println(operand);
-		List<String> result = testParseLeafNodeV3(s);
-		System.out.println(result);
+		testParseLeafNodeV2(s);
 	}
 
 	public static List<String> testParseLeafNodeV3(String s) {
@@ -156,9 +156,7 @@ public class JsonParseLeafNode {
 
 	private static void printNode(JsonNode node, String keyName, int level) {
 		if (traversable(node)) {
-			System.out.printf("%" + (level * 4 - 3) + "s|-- %s=%s type=%s%n", "", keyName, node.toString(),
-					node.getNodeType());
-
+			System.out.printf("traversable node size "+ node.size() + "%" + (level * 4 - 3) + "s|-- %s=%s type=%s%n", "", keyName, node.toString(), node.getNodeType());
 		} else {
 			Object value = null;
 			if (node.isTextual()) {
@@ -166,7 +164,7 @@ public class JsonParseLeafNode {
 			} else if (node.isNumber()) {
 				value = node.numberValue();
 			} // todo add more types
-			System.out.printf("%" + (level * 4 - 3) + "s|-- %s=%s type=%s%n", "", keyName, value, node.getNodeType());
+			System.out.printf("Not traversable node textValue "+ node.textValue() + "%" + (level * 4 - 3) + "s|-- %s=%s type=%s%n", "", keyName, value, node.getNodeType());
 		}
 	}
 

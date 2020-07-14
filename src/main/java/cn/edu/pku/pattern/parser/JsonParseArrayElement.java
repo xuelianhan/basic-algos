@@ -13,7 +13,8 @@ import com.fasterxml.jackson.databind.node.JsonNodeType;
 public class JsonParseArrayElement {
 	
 	public static void main(String[] args) {
-		String s = "{\"A\":[{\"B\":{\"C\":[{\"D\":[{\"F\":[\"GRE\"]}],\"E\":[{\"H\":[\"IVR\"]}]}]}}],\"J\":[\"AMZ\"],\"Hulu\":[],\"A10001\":{\"Apple\":[],\"A15094\":[\"Google\",\"Facebook\"]}}";
+		//String s = "{\"A\":[{\"B\":{\"C\":[{\"D\":[{\"F\":[\"GRE\"]}],\"E\":[{\"H\":[\"IVR\"]}]}]}}],\"J\":[\"AMZ\"],\"Hulu\":[],\"A10001\":{\"Apple\":[],\"A15094\":[\"Google\",\"Facebook\"]}}";
+		String s = "{\"B00001\":{},\"ZLTJ8888\":{},\"TJBK8888\":{}}";
 		List<String> result = testParseLeafNodeV3(s);
 		System.out.println(result);
 	}
@@ -50,10 +51,6 @@ public class JsonParseArrayElement {
 	private static void traverseObjectV3(JsonNode node, int level, List<String> res) {
 		node.fieldNames().forEachRemaining((String fieldName) -> {
 			JsonNode childNode = node.get(fieldName);
-			if (childNode.getNodeType() == JsonNodeType.ARRAY && childNode.get(0) == null) {
-				System.out.println("node filedName:" + fieldName + ", child node is:" + childNode.get(0));
-				res.add(fieldName);
- 			}
 			printNodeV3(childNode, fieldName, level, res);
 			// for nested object or arrays
 			if (traversableV3(childNode)) {
@@ -76,6 +73,14 @@ public class JsonParseArrayElement {
 	}
 
 	private static void printNodeV3(JsonNode node, String keyName, int level, List<String> res) {
+		if (node.getNodeType() == JsonNodeType.ARRAY && node.get(0) == null) {
+			System.out.println("node filedName:" + keyName + ", child node is:" + node.get(0));
+			res.add(keyName);
+			}
+		if (node.getNodeType() == JsonNodeType.OBJECT && node.size() == 0) {
+			System.out.println("node filedName:" + keyName + ", node size is zero");
+			res.add(keyName);
+		}
 		if (traversableV3(node)) {
 			System.out.printf("%" + (level * 4 - 3) + "s|-- %s=%s type=%s%n", "", keyName, node.toString(), node.getNodeType());
 		} else {
