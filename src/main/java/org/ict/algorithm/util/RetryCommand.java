@@ -31,7 +31,7 @@ public class RetryCommand<T> {
 		}
 	}
 	
-	private T retry(Supplier<T> function) {
+	private T retry(Supplier<T> function) throws RuntimeException {
 		System.out.println("FAILED - Command failed, will be retried " + maxRetries + " times.");
         retryCounter = 0;
         while (retryCounter < maxRetries) {
