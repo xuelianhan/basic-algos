@@ -1,24 +1,13 @@
 package cn.edu.pku.pattern.builder;
 
-import static org.junit.Assert.assertTrue;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import com.google.common.base.Function;
 import com.google.common.base.Functions;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
-import com.google.common.collect.Collections2;
-import com.google.common.collect.FluentIterable;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import com.google.common.collect.Ordering;
-import com.google.common.collect.Sets;
+import com.google.common.collect.*;
+
+import java.util.*;
+
 
 /**
  * @see https://www.baeldung.com/guava-functions-predicates
@@ -57,7 +46,7 @@ public class GuavaFunctionTransform {
 		List<String> withNulls = Lists.newArrayList("a", "bc", null, "def");
 		Iterable<String> withoutNuls = Iterables.filter(withNulls, Predicates.notNull());
 		System.out.println(withoutNuls);
-		assertTrue(Iterables.all(withoutNuls, Predicates.notNull()));
+		boolean flag = (Iterables.all(withoutNuls, Predicates.notNull()));
 		
 	}
 	
@@ -73,7 +62,6 @@ public class GuavaFunctionTransform {
 		    }
 		};
 		System.out.println(evenNumbers);
-		assertTrue(Iterables.all(evenNumbers, acceptEven));
 	}
 	
 	/**
@@ -87,7 +75,6 @@ public class GuavaFunctionTransform {
 		        return (number % 2) != 0;
 		    }
 		};
-		assertTrue(Iterables.all(evenNumbers, Predicates.not(acceptOdd)));
 	}
 	
 	/**

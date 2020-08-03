@@ -2,9 +2,6 @@ package org.ict.disruptor;
 
 import java.util.concurrent.ThreadFactory;
 
-import org.junit.Before;
-import org.junit.Test;
-
 import com.lmax.disruptor.BusySpinWaitStrategy;
 import com.lmax.disruptor.RingBuffer;
 import com.lmax.disruptor.WaitStrategy;
@@ -34,7 +31,6 @@ public class DisruptorIntegrationTest {
 	
     private WaitStrategy waitStrategy;
 
-    @Before
     public void setUp() throws Exception {
         waitStrategy = new BusySpinWaitStrategy();
     }
@@ -52,7 +48,6 @@ public class DisruptorIntegrationTest {
         eventProducer.startProducing(ringBuffer, count);
     }
 
-    @Test
     public void whenMultipleProducerSingleConsumer_thenOutputInFifoOrder() {
         final EventConsumer eventConsumer = new SingleEventPrintConsumer();
         final EventProducer eventProducer = new DelayedMultiEventProducer();
@@ -66,7 +61,6 @@ public class DisruptorIntegrationTest {
         disruptor.shutdown();
     }
 
-    @Test
     public void whenSingleProducerSingleConsumer_thenOutputInFifoOrder() {
         final EventConsumer eventConsumer = new SingleEventConsumer();
         final EventProducer eventProducer = new SingleEventProducer();
@@ -80,7 +74,6 @@ public class DisruptorIntegrationTest {
         disruptor.shutdown();
     }
 
-    @Test
     public void whenSingleProducerMultipleConsumer_thenOutputInFifoOrder() {
         final EventConsumer eventConsumer = new MultiEventConsumer();
         final EventProducer eventProducer = new SingleEventProducer();
@@ -94,7 +87,6 @@ public class DisruptorIntegrationTest {
         disruptor.shutdown();
     }
 
-    @Test
     public void whenMultipleProducerMultipleConsumer_thenOutputInFifoOrder() {
         final EventConsumer eventConsumer = new MultiEventPrintConsumer();
         final EventProducer eventProducer = new DelayedMultiEventProducer();

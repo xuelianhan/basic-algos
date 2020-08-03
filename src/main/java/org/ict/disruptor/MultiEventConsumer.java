@@ -1,6 +1,5 @@
 package org.ict.disruptor;
 
-import static org.junit.Assert.assertEquals;
 
 import com.lmax.disruptor.EventHandler;
 
@@ -18,10 +17,12 @@ public class MultiEventConsumer implements EventConsumer {
     }
 
     private void assertExpectedValue(final int id) {
-        assertEquals(++expectedValue, id);
+        ++expectedValue;
+        System.out.println(expectedValue == id);
     }
 
     private void assertOtherExpectedValue(final int id) {
-        assertEquals(++otherExpectedValue, id);
+        ++otherExpectedValue;
+        System.out.println(expectedValue == id);
     }
 }

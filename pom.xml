@@ -16,6 +16,7 @@
 	</properties>
 
 	<dependencies>
+		<!-- https://mvnrepository.com/artifact/com.corundumstudio.socketio/netty-socketio -->
 		<dependency>
 			<groupId>com.corundumstudio.socketio</groupId>
 			<artifactId>netty-socketio</artifactId>
@@ -102,12 +103,13 @@
 		    <version>1.18.10</version>
 		    <scope>provided</scope>
 		</dependency>
-		<dependency>
-	       <groupId>com.baqend</groupId>
-	       <artifactId>bloom-filter</artifactId>
-	       <version>1.0.7</version>
-	   </dependency>
-	   <!-- https://mvnrepository.com/artifact/net.sourceforge.tess4j/tess4j -->
+		<!-- https://mvnrepository.com/artifact/com.baqend/bloom-filter -->
+		<!--<dependency>
+			<groupId>com.baqend</groupId>
+			<artifactId>bloom-filter</artifactId>
+			<version>2.0.0</version>
+		</dependency>-->
+		<!-- https://mvnrepository.com/artifact/net.sourceforge.tess4j/tess4j -->
 		<dependency>
 		    <groupId>net.sourceforge.tess4j</groupId>
 		    <artifactId>tess4j</artifactId>
@@ -156,9 +158,9 @@
 							</goals>
 						</execution>
 					</executions>
-					<configuration>
+					<!--<configuration>
 						<mainClass>${main.class}</mainClass>
-					</configuration>
+					</configuration>-->
 				</plugin>
 				<plugin>
 					<artifactId>maven-compiler-plugin</artifactId>
