@@ -15,6 +15,7 @@ package org.ict.algorithm.graphs;
  *
  */
 public class AcylicLP {
+    // distTo[v]
     private double[] distTo;
-    private
+    private DirectedEdge[] edgeTo;
 }
