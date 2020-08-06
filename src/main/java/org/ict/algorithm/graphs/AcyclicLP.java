@@ -43,6 +43,8 @@ public class AcyclicLP {
         if (!topological.hasOrder()) {
             throw new IllegalArgumentException("Digraph is not acyclic");
         }
+        // topological order resolve the node execution dependency.
+        // relax operation select the longest path in all the adjacent edges of current node v.
         for (int v : topological.order()) {
             for (DirectedEdge e : G.adj(v)) {
                 relax(e);
