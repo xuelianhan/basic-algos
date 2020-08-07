@@ -182,6 +182,37 @@ public class TrieST<Value> {
         }
     }
 
+    public Iterable<String> keysThatMatch(String pattern) {
+        Queue<String> results = new Queue<>();
+        collect(root, new StringBuilder(), pattern, results);
+        return results;
+    }
+
+    private void collect(Node x, StringBuilder prefix, String pattern ,Queue<String> results) {
+        if (x == null) {
+            return;
+        }
+        int d = prefix.length();
+        if (d == pattern.length() && x.val != null) {
+            results.enqueue(prefix.toString());
+        }
+        if (d == pattern.length()) {
+            return;
+        }
+        char c = pattern.charAt(d);
+        if (c == '.') {
+            for (char ch = 0; ch < R; ch++) {
+                prefix.append(ch);
+                collect(x.next[ch], prefix, pattern, results);
+                prefix.deleteCharAt(prefix.length() - 1);
+            }
+        } else {
+            prefix.append(c);
+            collect(x.next[c], prefix, pattern, results);
+            prefix.deleteCharAt(prefix.length() - 1);
+        }
+    }
+
     /**
      *
      */
