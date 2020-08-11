@@ -214,8 +214,39 @@ public class TrieST<Value> {
     }
 
     /**
-     *
+     * Returns the string in the symbol table that is the longest prefix of {@code query},
+     * or {@code null}, if no such string.
+     * @param query the query string
+     * @return the string in the symbol table that is the longest prefix of {@code query},
+     * or {@code null} if no such string
+     * @throws IllegalArgumentException if {@code query} is {@code null}
      */
+    public String longestPrefixOf(String query) {
+        if (query == null) {
+            throw new IllegalArgumentException("argument to longestPrefixOf() is null");
+        }
+        int length = longestPrefixOf(root, query, 0, -1);
+        if (length == -1) {
+            return null;
+        } else {
+            return query.substring(0, length);
+        }
+    }
+
+    private int longestPrefixOf(Node x, String query, int d, int length) {
+        if (x == null) {
+            return length;
+        }
+        if (x.val != null) {
+            length = d;
+        }
+        if (d == query.length()) {
+            return length;
+        }
+        char c = query.charAt(d);
+        return longestPrefixOf(x.next[c], query, d + 1, length);
+    }
+
 
     /**
      * Removes the key from the set if the key is present.

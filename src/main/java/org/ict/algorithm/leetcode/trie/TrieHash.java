@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @see https://www.programcreek.com/2014/05/leetcode-implement-trie-prefix-tree-java/
+ * @see <a href="https://www.programcreek.com/2014/05/leetcode-implement-trie-prefix-tree-java/></a>
  */
 public class TrieHash {
 
