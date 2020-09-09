@@ -79,13 +79,14 @@ public class ShortestPathVisitingAllNodes {
         Set<Tuple> set = new HashSet<>();
 
         for (int i = 0; i < length; i++) {
-            int bitMask = (1 << i);
-            set.add(new Tuple(bitMask, i, 0));
+            int bitMask = (1 << i);//2^i
+            set.add(new Tuple(bitMask, i, 1));
             queue.add(new Tuple(bitMask, i, 1));
         }
         
         while(!queue.isEmpty()){
             Tuple curr = queue.remove();
+            // (1 << length) - 1) means all 1 in bits, such as 1,3,7,15,31,63....(2^n -1)
             if (curr.bitMask == (1 << length) - 1) {
                 return curr.cost - 1;
             }
@@ -110,10 +111,10 @@ public class ShortestPathVisitingAllNodes {
 	    int curr;// current node
 	    int cost;// the total cost in the path
 	    
-	    public Tuple(int bit, int n, int c) {
+	    public Tuple(int bit, int node, int cost) {
 	        bitMask = bit;
-	        curr = n;
-	        cost = c;
+	        curr = node;
+	        cost = cost;
 	    }
 	    
 	    public boolean equals(Object o) {

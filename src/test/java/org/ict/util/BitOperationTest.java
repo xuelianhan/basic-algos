@@ -3,9 +3,30 @@ package org.ict.util;
 public class BitOperationTest {
 
 	public static void main(String[] args) {
-		testAndAndRightShift();
+		testShift();
+		//testAndAndRightShift();
 	}
 
+	/**
+	 * bitMask0, 1
+	 * bitMask1, 2
+	 * bitMask2, 4
+	 * bitMask3, 8
+	 * bitMask4, 16
+	 * bitMask5, 32
+	 * bitMask6, 64
+	 * bitMask7, 128
+	 * bitMask8, 256
+	 * bitMask9, 512
+	 * bitMask10, 1024
+	 * bitMask11, 2048
+	 */
+	public static void testShift() {
+		for (int i = 0; i < 12; i++) {
+			int bitMask = (1 << i);//2^i
+			System.out.println("bitMask" + i + ", " + bitMask);
+		}
+	}
 	public static void testAndAndRightShift() {
 		int x1 = (16 % 4);
 		int x2 = (16 & 3);
