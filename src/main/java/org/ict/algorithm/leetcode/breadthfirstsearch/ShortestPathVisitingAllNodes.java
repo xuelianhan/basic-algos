@@ -106,9 +106,9 @@ public class ShortestPathVisitingAllNodes {
     }
 	
 	class Tuple{
-	    int bitMask;
-	    int curr;
-	    int cost;
+	    int bitMask;//mask of all the nodes we visited so far: 0 -> not visited, 1 -> visited
+	    int curr;// current node
+	    int cost;// the total cost in the path
 	    
 	    public Tuple(int bit, int n, int c) {
 	        bitMask = bit;

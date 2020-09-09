@@ -3,7 +3,6 @@ package org.ict.util;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Test;
 
 /**
  * @see https://stackoverflow.com/questions/27703119/convert-from-string-to-a-java-enum-with-large-amount-of-values/27703839#27703839
@@ -58,8 +57,7 @@ public class EnumTypeTest {
             return Holder.CODE_MAP.get(code);
         }
     }
-    
-	@Test
+
 	public void testIntRange() {
 		int x = 10000;
 		System.out.println(x);

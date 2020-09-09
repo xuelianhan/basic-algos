@@ -9,7 +9,6 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import org.junit.Test;
 import com.google.common.collect.Lists;
 
 public class HashMapTest {
@@ -24,8 +23,7 @@ public class HashMapTest {
 	public void testShiftLeft() {
 		System.out.println(1<<30);
 	}
-	
-    @Test 
+
     public void testGroupBy() {
         List<User> users = Lists.newArrayList();
         for(int i = 0; i < 5; i++) {
@@ -105,7 +103,6 @@ public class HashMapTest {
         .orElse(null);
     }
 
-    @Test
     public void testGetNull() {
         Map<Long, Long> map = new LinkedHashMap<Long, Long>();
         map.get(null);

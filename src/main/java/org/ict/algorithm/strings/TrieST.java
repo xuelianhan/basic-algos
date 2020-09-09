@@ -116,7 +116,7 @@ public class TrieST<Value> {
             x = new Node();
        }
        if (d == key.length()) {
-            if (x.val == null) {
+            if (x.val == null) {// why?
                 n++;
             }
             x.val = val;

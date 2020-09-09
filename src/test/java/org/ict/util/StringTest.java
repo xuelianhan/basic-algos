@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.ict.algorithm.util.StdOut;
-import org.junit.Test;
 
 public class StringTest {
 	private static final String PHONE_REGEX = "(\\d{3})\\d{4}(\\d{4})";
@@ -16,16 +15,14 @@ public class StringTest {
     	}
     	return phone.replaceAll(PHONE_REGEX , PHONE_FORMAT);
 	}
-	
-	@Test
+
 	public void testPhones() {
 		String phone = "15901486954";
 	    String phoneNumber = phone.replaceAll("(\\d{3})\\d{4}(\\d{4})","$1****$2");
 	    System.out.println(phoneNumber);
 	    System.out.println(formatPhone("15901486954"));
 	}
-	
-	@Test
+
 	public void testAndMod()  {
 		int len = 16;
 		for (int i = 0; i < 20; i++) {
@@ -41,7 +38,6 @@ public class StringTest {
 	 * @see https://stackoverflow.com/questions/30163368/two-string-instances-seems-same-but-their-hashcode-are-different
 	 * 
 	 */
-	@Test
 	public void testHashCode() {
 		String s = "c265afb8a126d4d9ace17bc951c321ec7e8ce89b85bc64c24ca8f42b00ffd5c3";
 		for (int i = 0; i < s.length(); i++) {
@@ -66,8 +62,7 @@ public class StringTest {
 	    System.out.println(System.identityHashCode(a)); 
 	    System.out.println(System.identityHashCode(b));
 	}
-	
-	@Test
+
 	public void testList() {
 		List<String> list = new ArrayList<String>();
 		String s = list.get(0);
@@ -86,8 +81,7 @@ public class StringTest {
             }
         }
     }
-    
-    @Test
+
     public void testCharAt() {
         String s = "abcdefg";
         for (int i = 0; i < s.length(); i++) {
@@ -101,42 +95,36 @@ public class StringTest {
         if (d == s.length()) return -1;
         return s.charAt(d);
     }
-    
-    @Test
+
     public void testNullEquals() {
         String s = null;
         s.equals(null);
     }
-    
-    @Test
+
     public void testModulus() {
         int t = 2001;
         for (int i = 0; i < t % 2000; i++) {
             System.out.println(i);
         }
     }
-    
-    @Test
+
     public void testNullCompare() {
         Integer delayMinutes = null; 
         delayMinutes = (delayMinutes == null || delayMinutes < 1) ? 1 : delayMinutes;
         System.out.println(delayMinutes);
     }
-    
-    @Test
+
     public void testShift() {
         System.out.println(8>>1);
     }
-	
-	@Test
+
 	public void testPalindrome() {
 		String s1 = "ABA";
 		String s2 = "ABC"; 
 		StdOut.println(isPalindrome(s1));
 		StdOut.println(isPalindrome(s2));
 	}
-	
-	@Test
+
 	public void testSorted() {
 		String[] a = new String[]{"ab", "bc", "ca"};
 		StdOut.print(isSorted(a));
@@ -160,8 +148,7 @@ public class StringTest {
         }
         return true;
     }
-      
-	@Test
+
 	public void testStrMutate() {
 		String s1 = "hello";
 		String s2 = s1;
@@ -170,8 +157,7 @@ public class StringTest {
 		System.out.println(s1);
 		System.out.println(s2);
 	}
-	
-	@Test
+
 	public void testStrCircularRotation() {
 		String s = "ABCDDAB";
 		String t = "CDDABAB";

@@ -2,13 +2,11 @@ package org.ict.util;
 
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Test;
 
 import com.google.common.base.Stopwatch;
 
 public class StopwatchTest {
 
-	@Test
 	public void testStopwatch() {
 		Stopwatch watch = Stopwatch.createStarted();
 		try {
