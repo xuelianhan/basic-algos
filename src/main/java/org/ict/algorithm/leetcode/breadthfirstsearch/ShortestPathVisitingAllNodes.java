@@ -86,6 +86,7 @@ public class ShortestPathVisitingAllNodes {
         
         while(!queue.isEmpty()){
             Tuple curr = queue.remove();
+			// (1 << length) means 2^length
             // (1 << length) - 1) means all 1 in bits, such as 1,3,7,15,31,63....(2^n -1)
             if (curr.bitMask == (1 << length) - 1) {
                 return curr.cost - 1;
