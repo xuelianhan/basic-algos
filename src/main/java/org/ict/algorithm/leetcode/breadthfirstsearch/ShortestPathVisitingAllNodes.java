@@ -79,6 +79,7 @@ public class ShortestPathVisitingAllNodes {
         Set<Tuple> set = new HashSet<>();
 
         for (int i = 0; i < length; i++) {
+        	// bitMask range in (1, 2, 4, 8, 16, 32...2^n)
             int bitMask = (1 << i);//2^i
             set.add(new Tuple(bitMask, i, 1));
             queue.add(new Tuple(bitMask, i, 1));
@@ -87,7 +88,7 @@ public class ShortestPathVisitingAllNodes {
         while(!queue.isEmpty()){
             Tuple curr = queue.remove();
 			// (1 << length) means 2^length
-            // (1 << length) - 1) means all 1 in bits, such as 1,3,7,15,31,63....(2^n -1)
+            // (1 << length) - 1) means all bits are 1, such as 1,3,7,15,31,63....(2^n -1)
             if (curr.bitMask == (1 << length) - 1) {
                 return curr.cost - 1;
             }
@@ -95,6 +96,7 @@ public class ShortestPathVisitingAllNodes {
             int[] neighbors = graph[curr.curr];
             for (int v : neighbors) {
                 int bitMask = curr.bitMask;
+                // (1 << v) means 2^v
                 bitMask = bitMask | (1 << v);
                 
                 Tuple t = new Tuple(bitMask, v, 0);
