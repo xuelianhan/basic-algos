@@ -41,7 +41,11 @@ import java.util.Set;
 public class ShortestPathVisitingAllNodes {
 	
 	public static void main(String[] args) {
-		bitMaskTest();
+		int[][] graph = {{1, 2, 3}, {0}, {0}, {0}};
+		ShortestPathVisitingAllNodes instance = new ShortestPathVisitingAllNodes();
+		int result = instance.shortestPathLength(graph);
+		System.out.println(result);
+		//bitMaskTest();
 	}
 	/**
 	 * Idea is to use BFS to traverse the graph.
@@ -74,11 +78,10 @@ public class ShortestPathVisitingAllNodes {
 	 * @return
 	 */
 	public int shortestPathLength(int[][] graph) {
-		int length = graph.length;
+		int N = graph.length;
         Queue<Tuple> queue = new LinkedList<>();
         Set<Tuple> set = new HashSet<>();
-
-        for (int i = 0; i < length; i++) {
+        for(int i = 0; i < N; i++) {
         	// bitMask range in (1, 2, 4, 8, 16, 32...2^n)
             int bitMask = (1 << i);//2^i
             set.add(new Tuple(bitMask, i, 1));
@@ -87,24 +90,27 @@ public class ShortestPathVisitingAllNodes {
         
         while(!queue.isEmpty()){
             Tuple curr = queue.remove();
+            System.out.println("curr node is:" + curr + ", N:" + N + ", (1 << N) - 1:" + ((1 << N) - 1));
 			// (1 << length) means 2^length
             // (1 << length) - 1) means all bits are 1, such as 1,3,7,15,31,63....(2^n -1)
-            if (curr.bitMask == (1 << length) - 1) {
+			// all the nodes have been visited
+            if (curr.bitMask == (1 << N) - 1) {
+            	System.out.println("return cost:" + (curr.cost - 1));
                 return curr.cost - 1;
             }
-            
-            int[] neighbors = graph[curr.curr];
-            for (int v : neighbors) {
-                int bitMask = curr.bitMask;
-                // (1 << v) means 2^v
-                bitMask = bitMask | (1 << v);
-                
-                Tuple t = new Tuple(bitMask, v, 0);
-                if (!set.contains(t)) {
-                    queue.add(new Tuple(bitMask, v, curr.cost + 1));
-                    set.add(t);
-                }         
-            }
+			int[] neighbors = graph[curr.curr];
+			for (int v : neighbors) {
+				int bitMask = curr.bitMask;
+				// (1 << v) means 2^v
+				// bitMask | (1 << v) means the node v is marked as visited
+				bitMask = bitMask | (1 << v);
+
+				Tuple t = new Tuple(bitMask, v, 1);
+				if (!set.contains(t)) {
+					queue.add(new Tuple(bitMask, v, curr.cost + 1));
+					set.add(t);
+				}
+			}
         }
         return -1;
     }
@@ -121,9 +127,6 @@ public class ShortestPathVisitingAllNodes {
 	    }
 	    
 	    public boolean equals(Object o) {
-	    	if (!(o instanceof Tuple)) {
-	    		return false;
-	    	}
 	        Tuple p = (Tuple) o;
 	        return bitMask == p.bitMask && curr == p.curr && cost == p.cost;
 	    }
@@ -131,6 +134,11 @@ public class ShortestPathVisitingAllNodes {
 	    public int hashCode(){
 	        return 1331 * bitMask + 7193 * curr + 727 * cost;
 	    }
+
+	    @Override
+	    public String toString() {
+	    	return "bitMask:" + bitMask + ", curr:" + curr + ", cost:" + cost;
+		}
 	}
 	
 	private static void bitMaskTest() {
