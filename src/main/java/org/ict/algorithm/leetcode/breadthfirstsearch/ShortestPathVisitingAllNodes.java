@@ -43,7 +43,7 @@ public class ShortestPathVisitingAllNodes {
 	public static void main(String[] args) {
 		int[][] graph = {{1, 2, 3}, {0}, {0}, {0}};
 		ShortestPathVisitingAllNodes instance = new ShortestPathVisitingAllNodes();
-		int result = instance.shortestPathLength(graph);
+		int result = instance.shortestPathLengthV1(graph);
 		System.out.println(result);
 		//bitMaskTest();
 	}
@@ -77,7 +77,7 @@ public class ShortestPathVisitingAllNodes {
 	 * @param graph
 	 * @return
 	 */
-	public int shortestPathLength(int[][] graph) {
+	public int shortestPathLengthV1(int[][] graph) {
 		int N = graph.length;
         Queue<Tuple> queue = new LinkedList<>();
         Set<Tuple> set = new HashSet<>();
