@@ -6,6 +6,8 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /***
  * 
@@ -13,6 +15,21 @@ import java.util.Map;
  *
  */
 public class MapUtil {
+
+	/**
+	 * Returns a map where each entry is an item of {@code list} mapped by the
+	 * key produced by applying {@code mapper} to the item.
+	 *
+	 * @param list the list to map
+	 * @param mapper the function to produce the key from a list item
+	 * @return the resulting map
+	 * @throws IllegalStateException on duplicate key
+	 */
+	public static <K, T> Map<K, T> toMapBy(List<T> list,
+										   Function<? super T, ? extends K> mapper) {
+		return list.stream().collect(Collectors.toMap(mapper, Function.identity()));
+	}
+
 	public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map) {
 		List<Map.Entry<K, V>> list = new LinkedList<Map.Entry<K, V>>(map.entrySet());
 		Collections.sort(list, new Comparator<Map.Entry<K, V>>() {
