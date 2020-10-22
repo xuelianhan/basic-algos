@@ -58,7 +58,7 @@ public class MapUtil {
 	}
 
 	/**
-	 * @see https://stackoverflow.com/questions/40772997/how-to-convert-listv-into-mapk-listv-with-java-8-streams-and-custom-list
+	 * @see <a href="https://stackoverflow.com/questions/40772997/how-to-convert-listv-into-mapk-listv-with-java-8-streams-and-custom-list"></a>
 	 * @param list
 	 * @param classifier
 	 * @param mapSupplier
