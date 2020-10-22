@@ -1,12 +1,8 @@
 package org.ict.algorithm.util;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 /***
@@ -24,6 +20,7 @@ public class MapUtil {
 	 * @param mapper the function to produce the key from a list item
 	 * @return the resulting map
 	 * @throws IllegalStateException on duplicate key
+	 * @see <a href="https://stackoverflow.com/questions/4138364/java-how-to-convert-list-to-map"></a>
 	 */
 	public static <K, T> Map<K, T> toMapBy(List<T> list,
 										   Function<? super T, ? extends K> mapper) {
@@ -58,5 +55,23 @@ public class MapUtil {
 			result.put(entry.getKey(), entry.getValue());
 		}
 		return result;
+	}
+
+	/**
+	 * @see https://stackoverflow.com/questions/40772997/how-to-convert-listv-into-mapk-listv-with-java-8-streams-and-custom-list
+	 * @param list
+	 * @param classifier
+	 * @param mapSupplier
+	 * @param collectionSupplier
+	 * @param <K>
+	 * @param <V>
+	 * @param <C>
+	 * @param <M>
+	 * @return
+	 */
+	public static <K, V, C extends Collection<V>, M extends Map<K, C>> M getMap(List<V> list, Function<? super V, ? extends K> classifier, Supplier<M> mapSupplier, Supplier<C> collectionSupplier) {
+		return list.stream().collect(
+				Collectors.groupingBy(classifier, mapSupplier, Collectors.toCollection(collectionSupplier))
+		);
 	}
 }
