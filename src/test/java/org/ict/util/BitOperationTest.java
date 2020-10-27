@@ -17,6 +17,12 @@ public class BitOperationTest {
 		//testAndAndRightShift();
 	}
 
+	/**
+	 * @see <a href="https://github.com/AobingJava/JavaFamily"></a>
+	 * @see <a href="https://mp.weixin.qq.com/s/ktre8-C-cP_2HZxVW5fomQ"></a>
+	 * @param cap
+	 * @return
+	 */
 	public static int tableSizeFor(int cap) {
 		int n = cap - 1;// cap=5, cap - 1 = 4;
 		System.out.println("n=" + n + ", n >>> 1 = " + (n >>> 1));
