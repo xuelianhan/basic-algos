@@ -1,10 +1,33 @@
 package org.ict.util;
 
+/**
+ * X % 2^n = X & (2^n – 1)
+ */
 public class BitOperationTest {
 
+	static final int MAXIMUM_CAPACITY = 1 << 30;
+
 	public static void main(String[] args) {
-		testShift();
+		int x = tableSizeFor(5);
+		System.out.println(x);
+		//testShift();
 		//testAndAndRightShift();
+	}
+
+	public static int tableSizeFor(int cap) {
+		int n = cap - 1;
+		System.out.println("n=" + n + ", n >>> 1 = " + (n >>> 1));
+		n |= n >>> 1;
+		System.out.println("n=" + n + ", n >>> 1 = " + (n >>> 2));
+		n |= n >>> 2;
+		System.out.println("n=" + n + ", n >>> 1 = " + (n >>> 4));
+		n |= n >>> 4;
+		System.out.println("n=" + n + ", n >>> 1 = " + (n >>> 8));
+		n |= n >>> 8;
+		System.out.println("n=" + n + ", n >>> 1 = " + (n >>> 16));
+		n |= n >>> 16;
+		System.out.println("n=" + n);
+		return (n < 0) ? 1 : (n >= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + 1;
 	}
 
 	/**
