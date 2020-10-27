@@ -2,10 +2,13 @@ package org.ict.util;
 
 /**
  * X % 2^n = X & (2^n – 1)
+ *
+ * (n >>> 1) = (n / 2)
+ * (n >>> 2) = (n / 4)
  */
 public class BitOperationTest {
 
-	static final int MAXIMUM_CAPACITY = 1 << 30;
+	static final int MAXIMUM_CAPACITY = 1 << 30;//2^30
 
 	public static void main(String[] args) {
 		int x = tableSizeFor(5);
@@ -15,16 +18,16 @@ public class BitOperationTest {
 	}
 
 	public static int tableSizeFor(int cap) {
-		int n = cap - 1;
+		int n = cap - 1;// cap=5, cap - 1 = 4;
 		System.out.println("n=" + n + ", n >>> 1 = " + (n >>> 1));
-		n |= n >>> 1;
-		System.out.println("n=" + n + ", n >>> 1 = " + (n >>> 2));
+		n |= n >>> 1;// 4 >>> 1 = 2, 4 | 2 = (0100 | 0010) = (0110) = 6
+		System.out.println("n=" + n + ", n >>> 2 = " + (n >>> 2));
 		n |= n >>> 2;
-		System.out.println("n=" + n + ", n >>> 1 = " + (n >>> 4));
+		System.out.println("n=" + n + ", n >>> 4 = " + (n >>> 4));
 		n |= n >>> 4;
-		System.out.println("n=" + n + ", n >>> 1 = " + (n >>> 8));
+		System.out.println("n=" + n + ", n >>> 8 = " + (n >>> 8));
 		n |= n >>> 8;
-		System.out.println("n=" + n + ", n >>> 1 = " + (n >>> 16));
+		System.out.println("n=" + n + ", n >>> 16 = " + (n >>> 16));
 		n |= n >>> 16;
 		System.out.println("n=" + n);
 		return (n < 0) ? 1 : (n >= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + 1;
