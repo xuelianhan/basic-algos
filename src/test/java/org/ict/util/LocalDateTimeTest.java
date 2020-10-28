@@ -35,6 +35,7 @@ public class LocalDateTimeTest {
 		sets.add(1l);
 		sets.add(2l);
 		sets.add(3l);
+		System.out.println(sets);
 		Set<String>strSets = sets.stream().map(s -> String.valueOf(s)).collect(Collectors.toSet());
 		String s = String.join(",", strSets);
 		System.out.println(s);
