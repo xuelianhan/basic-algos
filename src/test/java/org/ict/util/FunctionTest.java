@@ -8,7 +8,7 @@ public class FunctionTest {
         Function<Integer, Integer> doubledFunction = e -> e * 2;
         Function<Integer, Integer> squareFunction = e -> e * e;
 
-        // execute 
+        // execute
         int value = doubledFunction.andThen(squareFunction).apply(3);
         System.out.println("andThen value=" + value);
 
