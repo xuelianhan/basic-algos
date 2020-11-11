@@ -7,6 +7,7 @@ import java.util.stream.Stream;
 
 /**
  * @see <a href="https://mkyong.com/java8/java-8-stream-read-a-file-line-by-line/"></a>
+ * @see <a href="https://howtodoinjava.com/java8/read-file-line-by-line//"></a>
  */
 public class FileReadTest {
 
