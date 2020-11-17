@@ -54,8 +54,8 @@ public class RSAUtil {
         System.out.println("private key:" + privateKeySpec.toString());
 
         // Saving the Key to the file
-        String pubKeyFile = "D:\\workspace\\20200722-bridge\\newh-magpie-bridge-start\\src\\main\\resources\\public.key";
-        String priKeyFile = "D:\\workspace\\20200722-bridge\\newh-magpie-bridge-start\\src\\main\\resources\\private.key";
+        String pubKeyFile = "D:\\workspace\\xxx\\src\\main\\resources\\public.key";
+        String priKeyFile = "D:\\workspace\\xxx\\src\\main\\resources\\private.key";
         try {
             saveKeyToFile(pubKeyFile, publicKeySpec.getModulus(), publicKeySpec.getPublicExponent());
             saveKeyToFile(priKeyFile, privateKeySpec.getModulus(), privateKeySpec.getPrivateExponent());
