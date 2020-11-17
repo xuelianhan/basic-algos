@@ -8,6 +8,8 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * http://stackoverflow.com/questions/12191029/running-two-independent-tasks-simultaneously-using-threads
+ * https://stackoverflow.com/questions/6113746/naming-threads-and-thread-pools-of-executorservice
+ * https://www.programcreek.com/2011/03/java-write-to-a-file-code-example/
  * @author MadProgrammer
  *
  */
