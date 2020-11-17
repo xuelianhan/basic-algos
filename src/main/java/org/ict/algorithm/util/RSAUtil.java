@@ -39,6 +39,10 @@ public class RSAUtil {
     }
 
     public static void main(String[] args) {
+        testEncryptDecrypt();
+    }
+
+    private static void testEncryptDecrypt() {
         String filePath = "D:\\workspace\\20200731-basic-algos\\src\\main\\resources\\";
         /*
 
@@ -55,6 +59,44 @@ public class RSAUtil {
         System.out.println("encrypt content:" + encryptStr);
         String decryptStr = decrypt(privateKey, encryptStr);
         System.out.println("decrypt content:" + decryptStr);
+    }
+
+    public static Map<String, String> generateSignKeyPair() throws Exception {
+        KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
+        keyGen.initialize(512);
+        KeyPair keys;
+        keys = keyGen.genKeyPair();
+        byte[] publicKey = keys.getPublic().getEncoded();
+        byte[] b64pubkey = Base64.getEncoder().encode(publicKey);
+
+        byte[] privateKey = keys.getPrivate().getEncoded();
+        byte[] b64prikey = Base64.getEncoder().encode(privateKey);
+        Map<String, String> map = Maps.newHashMap();
+        map.put("publicKey", new String(b64pubkey));
+        map.put("privateKey", new String(b64prikey));
+        return map;
+    }
+
+    public static String signSHA256RSA(String input, String privateKeyStr) throws Exception {
+        return signRSA(input, privateKeyStr, "SHA256withRSA");
+    }
+    
+    public static String signRSA(String input, String privateKeyStr, String signAlgorithm) throws Exception {
+        //decode the private key from base64
+        byte[] b1 = Base64.getDecoder().decode(privateKeyStr);
+        //get PrivateKey Object from byte[]
+        PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(b1);
+        KeyFactory kf = KeyFactory.getInstance("RSA");
+        PrivateKey privateKey = kf.generatePrivate(spec);
+        //generate signature with choosing algorithm
+        Signature signature = Signature.getInstance(signAlgorithm);
+        //init the private key
+        signature.initSign(privateKey);
+        //update the data which is going to be signed
+        signature.update(input.getBytes());
+        //sign the data
+        byte[] s = signature.sign();
+        return Base64.getEncoder().encodeToString(s);
     }
 
     public static String getKeyString(Key key) throws Exception {
