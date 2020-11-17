@@ -23,6 +23,20 @@ import java.util.Map;
  * @see <a href="https://stackoverflow.com/questions/43840827/how-to-sign-and-validate-rsa-pkcs1-v2-0-signatures-in-java"></a>
  * https://www.javainterviewpoint.com/rsa-encryption-and-decryption/
  * https://crypto.stackexchange.com/questions/29354/why-not-use-oaep-for-signatures#:~:text=One%20good%20reason%20not%20to%20use%20RSAES-OAEP%20for,some%20RSAES-OAEP%20black%20box%20into%20a%20signing%20machine.
+ * https://github.com/Pretius/java-rsa-signature/blob/master/src/pretius/rsasignature/RSASignature.java
+ *
+ * RSA Signature Algorithms
+ * RSASSA-PSS
+ * SHA1WithRSA/PSS
+ * SHA224WithRSA/PSS
+ * SHA384WithRSA/PSS
+ * SHA1withRSAandMGF1
+ * SHA256withRSA
+ * sha1WithRSA
+ * sha384WithRSA
+ * sha512WithRSA
+ * md2WithRSA
+ * md5WithRSA
  */
 public class RSAUtil {
 
