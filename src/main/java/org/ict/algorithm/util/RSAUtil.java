@@ -9,14 +9,18 @@ import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import java.io.*;
-import java.math.BigInteger;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.*;
-import java.security.spec.*;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 import java.util.Map;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
  * @see <a href="http://www.ruanyifeng.com/blog/2013/06/rsa_algorithm_part_one.html"></a>
@@ -24,6 +28,7 @@ import java.util.Map;
  * https://www.javainterviewpoint.com/rsa-encryption-and-decryption/
  * https://crypto.stackexchange.com/questions/29354/why-not-use-oaep-for-signatures#:~:text=One%20good%20reason%20not%20to%20use%20RSAES-OAEP%20for,some%20RSAES-OAEP%20black%20box%20into%20a%20signing%20machine.
  * https://github.com/Pretius/java-rsa-signature/blob/master/src/pretius/rsasignature/RSASignature.java
+ * https://github.com/andrewli315/Digital-Signature-with-RSA
  *
  * RSA Signature Algorithms
  * RSASSA-PSS
@@ -42,6 +47,10 @@ public class RSAUtil {
 
     private static Cipher cipher;
 
+    private static final String KEY_TAG_PATTERN = "-----[A-Z ]+-----";
+    private static final String RSA_ALGORITHM = "RSA";
+    private static final String SHA1_WITH_RSA_ALGORITHM = "SHA1withRSA";
+
     static{
         try {
             cipher = Cipher.getInstance("RSA");
@@ -53,7 +62,101 @@ public class RSAUtil {
     }
 
     public static void main(String[] args) {
-        testEncryptDecrypt();
+        //testEncryptDecrypt();
+        testSign();
+    }
+
+    private static void testSign() {
+        try {
+            /*
+            Map<String, String> map = generateSignKeyPair(1024);
+            String publicKey = map.get("publicKey");
+            String privateKey = map.get("privateKey");
+            */
+            String publicKey = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDSqS+t56pRD7QStaEjk35DoUhNVor1Y30BSAEE1yjiGgOSxRVb5HYctH4nn4+IhJHNESV5J/8lSiH0wLfhG2KYDnHpl9ZX97sUjWxhXgYj0k6kWzbbQXlEpg4mXgk9FBqXQB0795wY/NLDJqXDT9ynOglY20if7ih2qGYH38H6xQIDAQAB";
+            String privateKey = "MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBANKpL63nqlEPtBK1oSOTfkOhSE1WivVjfQFIAQTXKOIaA5LFFVvkdhy0fiefj4iEkc0RJXkn/yVKIfTAt+EbYpgOcemX1lf3uxSNbGFeBiPSTqRbNttBeUSmDiZeCT0UGpdAHTv3nBj80sMmpcNP3Kc6CVjbSJ/uKHaoZgffwfrFAgMBAAECgYAo1eMIMwAw9npRpiO2YcD4GyuI0l3dc4un0+1eotap/aDzsoCRb5f1uIc75xJLxGb++XPqKHatI9GxQCpk2Ioj1XEBhqELB9zGJ6dBofoOAL9AlvYGWl01WevZvOoKxy4dyi6CxsC0E14wTHrOqy04CY51o8E3w/ErtBH+n18AAQJBAPefYSBba+8cK079jWnvZy/NWzY2+P7LW9SxqR5787BqzsLOtH7ZLlPVBY8IaJSgvdepurMtRDeT6wAFGu81wAECQQDZya/4ZUlbAKTNUPp1JJnrGrrVOp447122QQKNgDwlR91HiZfPGW3NYPizw39d0M3XmlBoxlSEGlswfEbd5TrFAkAXRGSN88kqiI0ROQXmpFYfyb3+VCAFYPpZ+++WK7N0KjUPXPjcym9t9SA2lmWtQYVVFF+0olY8mquELvae74ABAkAcSVXRrVYZu7ur7xiYnmhfYNljWHm0a2KAiXELb9xf+zWCVRyiiWr5gd7LeljQlo4lsqU+9oODpOizI3EQ4PUBAkEA3AMIYQak31vBRsepMVVHI24bETbL37h8ICHuGb6zAJqsGQdD3qo4HWhKNQt66tMJ8TKOixQuzAVCq8/FINZgwQ==";
+
+            System.out.println("publicKey:" + publicKey);
+            System.out.println("privateKey:" + privateKey);
+
+            String content = "hello world";
+            String signature = sign(content, privateKey);
+            boolean isVerified = verify(content, signature, publicKey);
+
+            System.out.println("Content   : " + content);
+            System.out.println("Signature : " + signature);
+            System.out.println("Verified  : " + isVerified);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static String sign(String content, String privateKeyStr) throws GeneralSecurityException, UnsupportedEncodingException {
+        PrivateKey privateKey = getPrivateKey(privateKeyStr);
+
+        Signature signer = Signature.getInstance(SHA1_WITH_RSA_ALGORITHM);
+        signer.initSign(privateKey);
+        signer.update(content.getBytes(UTF_8));
+
+        // get the signature bytes
+        byte[] signatureBytes = signer.sign();
+
+        // encode the byte array into a String
+        String signature = Base64.getEncoder().encodeToString(signatureBytes);
+
+        // encode URL characters
+        signature = URLEncoder.encode(signature, UTF_8.name());
+        return signature;
+    }
+
+    /**
+     * Verifies content signature with the public key
+     */
+    public static boolean verify(String content, String signature, String publicKeyStr) throws GeneralSecurityException, UnsupportedEncodingException {
+        PublicKey publicKey = getPublicKey(publicKeyStr);
+
+        Signature verifier = Signature.getInstance(SHA1_WITH_RSA_ALGORITHM);
+        verifier.initVerify(publicKey);
+        verifier.update(content.getBytes(UTF_8));
+
+        // decode URL characters
+        signature = URLDecoder.decode(signature, UTF_8.name());
+
+        // decode the the String into a byte array
+        byte[] signatureBytes = Base64.getDecoder().decode(signature);
+        return verifier.verify(signatureBytes);
+    }
+
+    /**
+     * Returns {@link PrivateKey} based on the specified private key string
+     */
+    public static PrivateKey getPrivateKey(String privateKeyStr) throws GeneralSecurityException {
+        byte[] privateKeyBytes = keyStringToBytes(privateKeyStr);
+        PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(privateKeyBytes);
+        KeyFactory kf = KeyFactory.getInstance(RSA_ALGORITHM);
+        PrivateKey privateKey = kf.generatePrivate(keySpec);
+        return privateKey;
+    }
+
+    /**
+     * Returns {@link PublicKey} based on the specified public key string
+     */
+    public static PublicKey getPublicKey(String publicKeyStr) throws GeneralSecurityException {
+        byte[] publicKeyBytes = keyStringToBytes(publicKeyStr);
+        X509EncodedKeySpec keySpec = new X509EncodedKeySpec(publicKeyBytes);
+        KeyFactory kf = KeyFactory.getInstance(RSA_ALGORITHM);
+        PublicKey publicKey = kf.generatePublic(keySpec);
+        return publicKey;
+    }
+
+    private static byte[] keyStringToBytes(String keyString) {
+        // remove unnecessary characters
+        keyString = keyString
+                .replaceAll(KEY_TAG_PATTERN, "")
+                .replaceAll("\\s+", "");
+
+        // decode string to base64 byte array
+        return Base64.getDecoder().decode(keyString);
     }
 
     private static void testEncryptDecrypt() {
@@ -91,7 +194,7 @@ public class RSAUtil {
         KeyFactory kf = KeyFactory.getInstance( "RSA" );
         PublicKey pubKey = kf.generatePublic( spec );
         //verify the Signature
-        Signature signature = Signature.getInstance( "SHA256withRSA" );
+        Signature signature = Signature.getInstance("SHA256withRSA");
         signature.initVerify( pubKey );
         signature.update( data.getBytes() );
         boolean ret = signature.verify( sig );
@@ -99,9 +202,9 @@ public class RSAUtil {
         return;
     }
 
-    public static Map<String, String> generateSignKeyPair() throws Exception {
+    public static Map<String, String> generateSignKeyPair(int size) throws Exception {
         KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
-        keyGen.initialize(512);
+        keyGen.initialize(size);
         KeyPair keys;
         keys = keyGen.genKeyPair();
         byte[] publicKey = keys.getPublic().getEncoded();
@@ -192,6 +295,7 @@ public class RSAUtil {
         return s;
     }
 
+    /*
     public static PublicKey getPublicKey(String key) throws Exception {
         byte[] keyBytes;
         keyBytes = (new BASE64Decoder()).decodeBuffer(key);
@@ -208,7 +312,7 @@ public class RSAUtil {
         KeyFactory keyFactory = KeyFactory.getInstance("RSA");
         PrivateKey privateKey = keyFactory.generatePrivate(keySpec);
         return privateKey;
-    }
+    }*/
 
     public static String encrypt(PublicKey publicKey, String plainText){
         try {
