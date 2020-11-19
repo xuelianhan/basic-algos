@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * https://stackoverflow.com/questions/22635945/adding-up-bigdecimals-using-streams
  * https://stackoverflow.com/questions/28821715/java-lang-classcastexception-java-util-linkedhashmap-cannot-be-cast-to-com-test
  * https://stackoverflow.com/questions/32884195/filter-values-only-if-not-null-using-lambda-in-java8
+ * https://stackoverflow.com/questions/26744885/jackson-objectmapper-upper-lower-case-issues
  * @author hanxuelian
  *
  */
