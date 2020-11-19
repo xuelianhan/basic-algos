@@ -29,6 +29,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
  * https://crypto.stackexchange.com/questions/29354/why-not-use-oaep-for-signatures#:~:text=One%20good%20reason%20not%20to%20use%20RSAES-OAEP%20for,some%20RSAES-OAEP%20black%20box%20into%20a%20signing%20machine.
  * https://github.com/Pretius/java-rsa-signature/blob/master/src/pretius/rsasignature/RSASignature.java
  * https://github.com/andrewli315/Digital-Signature-with-RSA
+ * https://stackoverflow.com/questions/43840827/how-to-sign-and-validate-rsa-pkcs1-v2-0-signatures-in-java
  *
  * RSA Signature Algorithms
  * RSASSA-PSS
@@ -105,7 +106,7 @@ public class RSAUtil {
         String signature = Base64.getEncoder().encodeToString(signatureBytes);
 
         // encode URL characters
-        signature = URLEncoder.encode(signature, UTF_8.name());
+        //signature = URLEncoder.encode(signature, UTF_8.name());
         return signature;
     }
 
@@ -120,7 +121,7 @@ public class RSAUtil {
         verifier.update(content.getBytes(UTF_8));
 
         // decode URL characters
-        signature = URLDecoder.decode(signature, UTF_8.name());
+        //signature = URLDecoder.decode(signature, UTF_8.name());
 
         // decode the the String into a byte array
         byte[] signatureBytes = Base64.getDecoder().decode(signature);
