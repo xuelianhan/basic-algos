@@ -308,7 +308,7 @@ public enum TLState implements StateEventListener {
 	
 	private static final Logger LOG = LoggerFactory.getLogger(TLState.class);
 	
-	private TLState(int first, int second) {
+	TLState(int first, int second) {
 		this.first = first;
 		this.second = second;
 	}
