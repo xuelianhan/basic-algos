@@ -11,15 +11,38 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.google.common.collect.Lists;
 
+
 public class HashMapTest {
 	
 	public static void main(String[] args) {
-		Map<Long, BigDecimal> map = new HashMap<>();
-		for (int i = 0 ; i < 10; i++) {
-			new SaveString("Thread-"+(i+1), map).start();
-		}
+        //testNullValue();
+        testCollectorToMap();
 	}
-	
+
+    /**
+     * https://www.onlinetutorialspoint.com/java8/resolve-nullpointerexception-in-collectors-tomap.html
+     * @see <a href="https://stackoverflow.com/questions/24630963/java-8-nullpointerexception-in-collectors-tomap"></a>
+     */
+	public static void testCollectorToMap() {
+        List<String> list = Lists.newArrayList();
+        // null value will throws NullPointerException
+        list.stream().collect(Collectors.toMap(item -> item, null));
+    }
+
+
+
+	public static void testNullValue() {
+        Map<String, String> map = new HashMap<>();
+        map.put("1", null);
+    }
+
+    public static void testThreadSave() {
+        Map<Long, BigDecimal> map = new HashMap<>();
+        for (int i = 0 ; i < 10; i++) {
+            new SaveString("Thread-"+(i+1), map).start();
+        }
+    }
+
 	public void testShiftLeft() {
 		System.out.println(1<<30);
 	}
@@ -39,7 +62,7 @@ public class HashMapTest {
             }
             users.add(user);
         }
-        
+
         Map<String, List<User>> g = users.stream().collect(Collectors.groupingBy(User::getType));
         g.forEach((k,v)->{
             System.out.println("type: " + k + "User size : " + v.size());
@@ -51,12 +74,12 @@ public class HashMapTest {
             System.out.println("type: " + k + "sum : " + sum);
         });
     }
-    
+
     class User {
         private String type;
-        
+
         private String name;
-        
+
         private BigDecimal money;
 
         public String getType() {
@@ -82,15 +105,15 @@ public class HashMapTest {
         public void setMoney(BigDecimal money) {
             this.money = money;
         }
-        
+
         @Override
         public String toString() {
             return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
         }
-        
-        
+
+
     }
-    
+
     public void testMap() {
         Map<String, String> names = new LinkedHashMap<>();
         names.put("John", "Doe");
@@ -107,7 +130,7 @@ public class HashMapTest {
         Map<Long, Long> map = new LinkedHashMap<Long, Long>();
         map.get(null);
     }
-    
+
 	
 }
 
