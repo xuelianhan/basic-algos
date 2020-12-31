@@ -45,7 +45,10 @@ public class ShortestPathVisitingAllNodes {
 		ShortestPathVisitingAllNodes instance = new ShortestPathVisitingAllNodes();
 		int result = instance.shortestPathLengthV1(graph);
 		System.out.println(result);
-		//bitMaskTest();
+		/**
+		 * 
+		 * bitMaskTest();
+		 */
 	}
 	/**
 	 * Idea is to use BFS to traverse the graph.

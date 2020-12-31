@@ -1,2 +1,4 @@
-package cn.edu.pku.pattern.visitor;public interface Visitable {
+package cn.edu.pku.pattern.visitor;
+public interface Visitable {
+	
 }
