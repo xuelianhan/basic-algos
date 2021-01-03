@@ -2,6 +2,7 @@ package org.ict.algorithm.leetcode.tree;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 /**
  * Given the root of a binary tree, 
@@ -29,7 +30,21 @@ public class BinaryTreeInorderTraversal {
 		 if (node.right != null) {
 			 helper(node.right, list);
 		 }
-		 
+	 }
+
+	 public void inorderTraversalV2(TreeNode root) {
+	 	List<Integer> list = new ArrayList<>();
+	 	Stack<TreeNode> stack = new Stack<>();
+	 	TreeNode cur = root;
+	 	while (cur != null || !stack.isEmpty()) {
+	 		while(cur != null) {
+	 			stack.push(cur);
+	 			cur = cur.left;
+			}
+	 		cur = stack.pop();
+	 		list.add(cur.val);
+	 		cur = cur.right;
+		}
 	 }
 
 

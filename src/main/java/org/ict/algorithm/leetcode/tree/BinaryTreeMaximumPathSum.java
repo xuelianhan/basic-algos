@@ -1,5 +1,11 @@
 package org.ict.algorithm.leetcode.tree;
 
+/**
+ * LC124
+ * For this problem, a path is defined as any node sequence from some starting node to any node in the tree along the parent-child connections.
+ * The path must contain at least one node and does not need to go through the root.
+ *
+ */
 public class BinaryTreeMaximumPathSum {
 
     private int ans;
