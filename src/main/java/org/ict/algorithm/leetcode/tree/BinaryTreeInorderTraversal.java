@@ -32,7 +32,7 @@ public class BinaryTreeInorderTraversal {
 		 }
 	 }
 
-	 public void inorderTraversalV2(TreeNode root) {
+	 public List<Integer> inorderTraversalV2(TreeNode root) {
 	 	List<Integer> list = new ArrayList<>();
 	 	Stack<TreeNode> stack = new Stack<>();
 	 	TreeNode cur = root;
@@ -45,6 +45,7 @@ public class BinaryTreeInorderTraversal {
 	 		list.add(cur.val);//middle
 	 		cur = cur.right;//right
 		}
+	 	return list;
 	 }
 
 
