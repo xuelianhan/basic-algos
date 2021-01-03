@@ -39,11 +39,11 @@ public class BinaryTreeInorderTraversal {
 	 	while (cur != null || !stack.isEmpty()) {
 	 		while(cur != null) {
 	 			stack.push(cur);
-	 			cur = cur.left;
+	 			cur = cur.left;//left
 			}
-	 		cur = stack.pop();
-	 		list.add(cur.val);
-	 		cur = cur.right;
+	 		cur = stack.pop();//middle
+	 		list.add(cur.val);//middle
+	 		cur = cur.right;//right
 		}
 	 }
 
