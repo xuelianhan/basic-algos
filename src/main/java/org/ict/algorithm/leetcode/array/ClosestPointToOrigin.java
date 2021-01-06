@@ -24,6 +24,8 @@ import java.util.PriorityQueue;
  * Please referer the Algorithms 4th Edition by Robert Sedgewick
  * @see https://leetcode.com/discuss/interview-question/124642/k-closest-points-to-a-starting-point-in-cartesian-plane
  * @see http://www.zrzahid.com/k-closest-points/
+ *
+ * This problem is one kind of amz oa
  */
 public class ClosestPointToOrigin {
 	

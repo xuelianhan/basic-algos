@@ -46,7 +46,7 @@ public class BinaryTreeAllOrderTraversal {
             if(cur != null) {
                 stack.push(cur);
                 result.addFirst(cur.val);  // Reverse the process of preorder
-                cur = cur.right;             // Reverse the process of preorder
+                cur = cur.right;           // Reverse the process of preorder
             } else {
                 TreeNode node = stack.pop();
                 cur = node.left;           // Reverse the process of preorder

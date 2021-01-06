@@ -50,6 +50,8 @@ import java.util.stream.Collectors;
  * {0,0,0,0,0,0,1,0,0},
  * {0,0,0,0,0,0,1,1,1},
  * {0,0,0,0,0,0,0,0,9},
+ *
+ * This problem is one kind of amz oa
  * 
  */
 public class CheeseMaze {

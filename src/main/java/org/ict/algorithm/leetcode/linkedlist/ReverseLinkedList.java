@@ -8,7 +8,8 @@ package org.ict.algorithm.leetcode.linkedlist;
  * @see https://www.geeksforgeeks.org/reverse-a-linked-list/
  *
  */
-public class ReverseLinkedList {
+public class
+ReverseLinkedList {
     
     /**
      * Definition for singly-linked list.
