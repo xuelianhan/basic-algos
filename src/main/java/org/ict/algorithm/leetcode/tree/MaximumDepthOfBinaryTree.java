@@ -3,6 +3,9 @@ package org.ict.algorithm.leetcode.tree;
 import java.util.LinkedList;
 import java.util.Queue;
 
+/**
+ * LC104
+ */
 public class MaximumDepthOfBinaryTree {
 
     public int maxDepth(TreeNode root) {
