@@ -22,8 +22,36 @@ package org.ict.algorithm.leetcode.string;
  * Note:
  *
  * The input string length won't exceed 1000.
+ *
+ * @see <a href="https://www.geeksforgeeks.org/count-palindrome-sub-strings-string/></a>
+ *
  * LC647
  */
 public class PalindromicSubstring {
 
+    public int countSubstringsV1(String s) {
+        if (null == s || s.length() == 0) {
+            return 0;
+        }
+        int total = 0;
+        for (int i = 0; i < s.length(); i++) {
+            // notice j start with i not 0.
+            for (int j = i; j < s.length(); j++) {
+                total += (isPalindrome(s, i, j) ? 1 : 0);
+            }
+        }
+        return total;
+    }
+
+    private boolean isPalindrome(String s, int lo, int hi) {
+        while (lo < hi) {
+            if (s.charAt(lo) != s.charAt(hi)) {
+                return false;
+            } else {
+                lo++;
+                hi--;
+            }
+        }
+        return true;
+    }
 }
