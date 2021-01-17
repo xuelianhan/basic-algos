@@ -29,6 +29,27 @@ package org.ict.algorithm.leetcode.string;
  */
 public class PalindromicSubstring {
 
+    public int countSubstringsV2(String s) {
+        if(s.length()==0)
+            return 0;
+        int total = 0;
+        for(int i = 0; i < s.length(); i++){
+            total += checkPalindrome(s, i, i);     //To check the palindrome of odd length palindromic sub-string
+            total += checkPalindrome(s, i, i+1);   //To check the palindrome of even length palindromic sub-string
+        }
+        return total;
+    }
+
+    private int checkPalindrome(String s, int i, int j) {
+        int total = 0;
+        while(i>= 0 && j< s.length() && s.charAt(i)==s.charAt(j)) {    //Check for the palindrome string
+            total++;    //Increment the count if palindromin substring found
+            i--;    //To trace string in left direction
+            j++;    //To trace string in right direction
+        }
+        return total;
+    }
+
     public int countSubstringsV1(String s) {
         if (null == s || s.length() == 0) {
             return 0;
