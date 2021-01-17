@@ -29,6 +29,36 @@ package org.ict.algorithm.leetcode.string;
  */
 public class PalindromicSubstring {
 
+    public int countSubStrings(String s) {
+        int total = 0;
+        if (null == s || s.length() == 0) {
+            return total;
+        }
+
+        int n = s.length();
+        boolean[][] dp = new boolean[n][n];
+
+        // one letter
+        for (int i = 0; i < n; i++, total++) {
+            dp[i][i] = true;
+        }
+
+        // two letters
+        for (int i = 0; i < n - 1; i++) {
+            dp[i][i+1] = (s.charAt(i) == s.charAt(i+1) ? true : false);
+            total += (dp[i][i+1] ? 1 : 0);
+        }
+
+        //three letters and above
+        for (int gap = 3; gap <= n; gap++) {//notice: gap can be up to n
+            for (int i = 0, j = i + gap - 1; j < n; i++, j++) {
+                dp[i][j] = ((dp[i+1][j-1]) && (s.charAt(i) == s.charAt(j)));
+                total += (dp[i][j] ? 1 : 0);
+            }
+        }
+        return total;
+    }
+
     public int countSubstringsV2(String s) {
         if(s.length()==0)
             return 0;
