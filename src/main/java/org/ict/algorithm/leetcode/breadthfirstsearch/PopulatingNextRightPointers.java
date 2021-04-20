@@ -47,11 +47,11 @@ public class PopulatingNextRightPointers {
             Node prev = null;
             for (int i = 0; i < size; i++) {
                 Node cur = queue.poll();
-                if (i == size  - 1) {
+                if (i == size - 1) {
                     cur.next = null;
                     prev = null;
                 } else if (i == 0) {
-                    prev = null;
+                    prev = cur;
                 } else {
                     if (prev != null) {
                         prev.next = cur;
