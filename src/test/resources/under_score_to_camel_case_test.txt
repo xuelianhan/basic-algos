@@ -1,0 +1,32 @@
+You can use this plugin to convert underscore case between camel case.
+Select your target words, and press shift + alt + U.
+e.g. anExampleWord -> an_example_word, an_example_word -> anExampleWord.
+
+enrollment_plan_sequence_name
+mix_class_type_math
+area_name
+package_grade
+current_inclass_cnt
+annual_rate
+download_rate
+annual_convert_rate
+non_annual_convert_rate
+total_convert_rate
+download_convert_rate
+annual_gmv_rate
+high_attend_user_cnt_rate
+high_finish_user_cnt_rate
+high_attend_user_cnt_convert_rate
+high_finish_user_cnt_convert_rate
+unit1_attend_rate
+unit2_attend_rate
+unit3_attend_rate
+unit4_attend_rate
+unit5_attend_rate
+unit6_attend_rate
+unit1_finish_rate
+unit2_finish_rate
+unit3_finish_rate
+unit4_finish_rate
+unit5_finish_rate
+unit6_finish_rate

@@ -9,9 +9,6 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Stack;
 
-import org.apache.commons.compress.utils.Lists;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import org.ict.algorithm.leetcode.depthfirstsearch.Node;
 
 /**
@@ -48,8 +45,9 @@ import org.ict.algorithm.leetcode.depthfirstsearch.Node;
  * Since the graph is undirected, if node p has node q as neighbor, then node q must have node p as neighbor too.
  * You must return the copy of the given node as a reference to the cloned graph.
  * 
- * @see https://www.geeksforgeeks.org/clone-an-undirected-graph/
- * @see https://www.journaldev.com/378/java-util-concurrentmodificationexception
+ * @see <a href="https://www.geeksforgeeks.org/clone-an-undirected-graph/"></a>
+ * @see <a href=https://www.journaldev.com/378/java-util-concurrentmodificationexception"></a>
+ * @author sniper
  */
 public class GraphClone {
 	
