@@ -1,7 +1,5 @@
 package org.ict.algorithm.fsm;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 /**
@@ -9,7 +7,10 @@ import org.slf4j.LoggerFactory;
  *
  */
 public enum TLState implements StateEventListener {
-	
+
+	/**
+	 *
+	 */
 	NegativeOneZero(-1, 0) {
 		@Override
 		public TLState onEventT(TLEvents t, ReplyEvent r) {
@@ -155,7 +156,6 @@ public enum TLState implements StateEventListener {
 			if (t == null) {
 				throw new IllegalArgumentException("parameter can not be null!");
 			}
-			LOG.info("t={}, r={}", t, r);
 			if (t == TLEvents.T && r == ReplyEvent.N) {
 				state = TLState.OneOne;
 			} else if (t == TLEvents.TR && r == ReplyEvent.N) {
@@ -202,7 +202,6 @@ public enum TLState implements StateEventListener {
 			if (t == null) {
 				throw new IllegalArgumentException("parameter can not be null!");
 			}
-			LOG.info("t={}, r={}", t, r);
 			if (t == TLEvents.T && r == ReplyEvent.N) {
 				state = TLState.TwoZero;
 			} else if (t == TLEvents.TR && r == ReplyEvent.N) {
@@ -249,7 +248,6 @@ public enum TLState implements StateEventListener {
 			if (t == null) {
 				throw new IllegalArgumentException("parameter can not be null!");
 			}
-			LOG.info("t={}, r={}", t, r);
 			if (t == TLEvents.T && r == ReplyEvent.N) {
 				state = TLState.TwoOne;
 			} else if (t == TLEvents.TR && r == ReplyEvent.N) {
@@ -290,14 +288,17 @@ public enum TLState implements StateEventListener {
 		}
 	};
 
+	@Override
 	public TLState onEventT(TLEvents t, ReplyEvent r) {
 		return TLState.ZeroZero;
 	}
 
+	@Override
 	public TLState onEventL(TLEvents l) {
 		return TLState.ZeroZero;
 	}
-	
+
+	@Override
 	public TLState onEventY(ReplyEvent r) {
 		return TLState.ZeroZero;
 	}
@@ -305,8 +306,7 @@ public enum TLState implements StateEventListener {
 	private final int first;
 	
 	private final int second;
-	
-	private static final Logger LOG = LoggerFactory.getLogger(TLState.class);
+
 	
 	TLState(int first, int second) {
 		this.first = first;

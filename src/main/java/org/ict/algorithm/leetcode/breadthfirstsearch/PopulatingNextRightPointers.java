@@ -36,7 +36,33 @@ import java.util.Queue;
  */
 public class PopulatingNextRightPointers {
 
-    public Node connect(Node root) {
+    public static void main(String[] args) {
+        Node four = new Node(4, null, null, null);
+        Node five = new Node(5, null, null, null);
+        Node six  = new Node(6, null, null, null);
+        Node seven = new Node(7, null, null, null);
+        Node two = new Node(2, four, five, null);
+        Node three = new Node(3, six, seven, null);
+        Node root = new Node(1, two, three, null);
+        connect(root);
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                Node cur = queue.poll();
+                System.out.println(cur);
+                if (cur.left != null) {
+                    queue.offer(cur.left);
+                }
+                if (cur.right != null) {
+                    queue.offer(cur.right);
+                }
+            }
+        }
+    }
+
+    public static Node connect(Node root) {
         Queue<Node> queue = new LinkedList<>();
         if (root == null) {
             return null;
@@ -48,11 +74,14 @@ public class PopulatingNextRightPointers {
             for (int i = 0; i < size; i++) {
                 Node cur = queue.poll();
                 if (i == size - 1) {
+                    //The last node of layer
                     cur.next = null;
+                    if (prev != null) {
+                        prev.next = cur;
+                    }
                     prev = null;
-                } else if (i == 0) {
-                    prev = cur;
                 } else {
+                    //not the last node of layer
                     if (prev != null) {
                         prev.next = cur;
                     }
@@ -69,7 +98,7 @@ public class PopulatingNextRightPointers {
         return root;
     }
 
-    class Node {
+    static class Node {
         public int val;
         public Node left;
         public Node right;
@@ -85,6 +114,11 @@ public class PopulatingNextRightPointers {
             left = _left;
             right = _right;
             next = _next;
+        }
+
+        @Override
+        public String toString() {
+            return "val:" + val + ",next:" + (next == null ? null : next.val);
         }
     }
 }
