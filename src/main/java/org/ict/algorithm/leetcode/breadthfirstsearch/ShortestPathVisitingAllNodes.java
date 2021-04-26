@@ -128,12 +128,13 @@ public class ShortestPathVisitingAllNodes {
 	        curr = node;
 	        cost = cost;
 	    }
-	    
+
+		@Override
 	    public boolean equals(Object o) {
 	        Tuple p = (Tuple) o;
 	        return bitMask == p.bitMask && curr == p.curr && cost == p.cost;
 	    }
-	    
+		@Override
 	    public int hashCode(){
 	        return 1331 * bitMask + 7193 * curr + 727 * cost;
 	    }
