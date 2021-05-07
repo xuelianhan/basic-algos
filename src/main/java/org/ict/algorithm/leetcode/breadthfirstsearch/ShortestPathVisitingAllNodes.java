@@ -86,7 +86,8 @@ public class ShortestPathVisitingAllNodes {
         Set<Tuple> set = new HashSet<>();
         for(int i = 0; i < N; i++) {
         	// bitMask range in (1, 2, 4, 8, 16, 32...2^n)
-            int bitMask = (1 << i);//2^i
+			//2^i
+            int bitMask = (1 << i);
             set.add(new Tuple(bitMask, i, 1));
             queue.add(new Tuple(bitMask, i, 1));
         }
@@ -126,7 +127,7 @@ public class ShortestPathVisitingAllNodes {
 	    public Tuple(int bit, int node, int cost) {
 	        bitMask = bit;
 	        curr = node;
-	        cost = cost;
+	        this.cost = cost;
 	    }
 
 		@Override
