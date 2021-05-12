@@ -84,7 +84,7 @@ public class ShortestPathVisitingAllNodes {
 		int N = graph.length;
         Queue<Tuple> queue = new LinkedList<>();
         Set<Tuple> set = new HashSet<>();
-        for(int i = 0; i < N; i++) {
+        for (int i = 0; i < N; i++) {
         	// bitMask range in (1, 2, 4, 8, 16, 32...2^n)
 			//2^i
             int bitMask = (1 << i);
