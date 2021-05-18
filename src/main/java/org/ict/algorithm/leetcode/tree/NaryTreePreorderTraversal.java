@@ -22,7 +22,7 @@ import java.util.Stack;
  * @date 2021/5/18 4:29 PM
  * lc589
  */
-public class NarrayTreePreorderTraversal {
+public class NaryTreePreorderTraversal {
 
     public static void main(String[] args) {
         Node five = new Node(5, null);
