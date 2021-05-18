@@ -1,4 +1,4 @@
-package org.ict.algorithm.tree;
+package org.ict.algorithm.leetcode.tree;
 
 import java.util.List;
 
