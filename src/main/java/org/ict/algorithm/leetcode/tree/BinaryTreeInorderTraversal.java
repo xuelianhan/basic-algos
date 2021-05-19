@@ -9,7 +9,7 @@ import java.util.Stack;
  * return the inorder traversal of its nodes'
  * values.
  * 
- *
+ * @author hxl
  */
 public class BinaryTreeInorderTraversal {
 	
@@ -39,11 +39,15 @@ public class BinaryTreeInorderTraversal {
 	 	while (cur != null || !stack.isEmpty()) {
 	 		while(cur != null) {
 	 			stack.push(cur);
-	 			cur = cur.left;//left
+				//left
+	 			cur = cur.left;
 			}
-	 		cur = stack.pop();//middle
-	 		list.add(cur.val);//middle
-	 		cur = cur.right;//right
+			//middle
+	 		cur = stack.pop();
+			//middle
+	 		list.add(cur.val);
+			//right
+	 		cur = cur.right;
 		}
 	 	return list;
 	 }

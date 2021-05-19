@@ -21,6 +21,7 @@ import java.util.Stack;
  *
  * @author hxl
  * @date 2021/5/18 6:23 PM
+ * lc590
  */
 public class NaryTreePostorderTraversal {
 

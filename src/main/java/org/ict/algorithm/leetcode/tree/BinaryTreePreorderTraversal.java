@@ -57,6 +57,7 @@ public class BinaryTreePreorderTraversal {
     }
 
     /**
+     * root-->left-->right
      * Recommend version
      * @param root
      * @return
