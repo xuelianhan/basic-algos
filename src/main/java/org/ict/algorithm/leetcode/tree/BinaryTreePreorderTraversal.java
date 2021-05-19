@@ -13,16 +13,16 @@ public class BinaryTreePreorderTraversal {
         TreeNode two = new TreeNode(2, null,  null);
         TreeNode three = new TreeNode(3, null, null);
         TreeNode one = new TreeNode(1, two, three);
-
+        System.out.println(preOrderTraversalV3(one));
     }
 
-    public List<Integer> preorderTraversal(TreeNode root) {
+    public static List<Integer> preOrderTraversal(TreeNode root) {
         List<Integer> list = new ArrayList<>();
         helper(root, list);
         return list;
     }
 
-    public void helper(TreeNode node, List<Integer> list) {
+    public static void helper(TreeNode node, List<Integer> list) {
         if (null == node) {
             return;
         }
@@ -35,7 +35,7 @@ public class BinaryTreePreorderTraversal {
         }
     }
 
-    public static List<Integer> preorderTraversalV2(TreeNode root) {
+    public static List<Integer> preOrderTraversalV2(TreeNode root) {
         List<Integer> list = new ArrayList<>();
         if (null == root) {
             return list;
@@ -56,7 +56,12 @@ public class BinaryTreePreorderTraversal {
         return list;
     }
 
-    public List<Integer> preorderTraversalV3(TreeNode root) {
+    /**
+     * Recommend version
+     * @param root
+     * @return
+     */
+    public static List<Integer> preOrderTraversalV3(TreeNode root) {
         List<Integer> list = new ArrayList<>();
         if (null == root) {
             return list;
@@ -64,13 +69,15 @@ public class BinaryTreePreorderTraversal {
         Stack<TreeNode> stack = new Stack<>();
         TreeNode cur = root;
         while(!stack.isEmpty() || cur != null){
-            while(cur != null){
-                list.add(cur.val);
+            if (cur != null){
                 stack.push(cur);
+                // Add before going to children
+                list.add(cur.val);
                 cur = cur.left;
+            } else {
+                cur = stack.pop();
+                cur = cur.right;
             }
-            cur = stack.pop();
-            cur = cur.right;
         }
         return list;
     }

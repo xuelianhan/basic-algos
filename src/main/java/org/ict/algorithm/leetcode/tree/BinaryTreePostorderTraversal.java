@@ -1,6 +1,7 @@
 package org.ict.algorithm.leetcode.tree;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 
@@ -18,13 +19,13 @@ public class BinaryTreePostorderTraversal {
         System.out.println(result);
     }
 
-    public List<Integer> postorderTraversal(TreeNode root) {
+    public static List<Integer> postOrderTraversal(TreeNode root) {
         List<Integer> list = new ArrayList<>();
         helper(root, list);
         return list;
     }
 
-    public void helper(TreeNode node, List<Integer> list) {
+    public static void helper(TreeNode node, List<Integer> list) {
         if (null == node) {
             return;
         }
@@ -37,28 +38,30 @@ public class BinaryTreePostorderTraversal {
         list.add(node.val);
     }
 
+    /**
+     * Recommend version
+     * @param root
+     * @return
+     */
     public static List<Integer> postOrderTraversalV2(TreeNode root) {
-        List<Integer> list = new ArrayList<>();
+        LinkedList<Integer> list = new LinkedList<>();
         if (null == root) {
             return list;
         }
         Stack<TreeNode> stack = new Stack<>();
         TreeNode cur = root;
-        while (!stack.isEmpty() || cur != null) {
-            while (cur != null) {
-                //left
+        while(!stack.isEmpty() || cur != null){
+            if (cur != null){
                 stack.push(cur);
-                cur = cur.left;
-            }
-            cur = stack.pop();
-            while (cur != null) {
-                //right
-                stack.push(cur);
+                // Add before going to children
+                // Reverse the process of preorder
+                list.addFirst(cur.val);
+                // Reverse the process of preorder
                 cur = cur.right;
-            }
-            //middle
-            if (cur != null) {
-                list.add(cur.val);
+            } else {
+                cur = stack.pop();
+                // Reverse the process of preorder
+                cur = cur.left;
             }
         }
         return list;
