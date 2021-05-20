@@ -32,22 +32,28 @@ public class BinaryTreeInorderTraversal {
 		 }
 	 }
 
+	/**
+	 * Left-->Root-->Right
+	 * @param root
+	 * @return
+	 */
 	 public List<Integer> inorderTraversalV2(TreeNode root) {
 	 	List<Integer> list = new ArrayList<>();
 	 	Stack<TreeNode> stack = new Stack<>();
 	 	TreeNode cur = root;
 	 	while (cur != null || !stack.isEmpty()) {
-	 		while(cur != null) {
+	 		if (cur != null) {
 	 			stack.push(cur);
 				//left
 	 			cur = cur.left;
+			} else {
+				//middle
+				cur = stack.pop();
+				//middle
+				list.add(cur.val);
+				//right
+				cur = cur.right;
 			}
-			//middle
-	 		cur = stack.pop();
-			//middle
-	 		list.add(cur.val);
-			//right
-	 		cur = cur.right;
 		}
 	 	return list;
 	 }
