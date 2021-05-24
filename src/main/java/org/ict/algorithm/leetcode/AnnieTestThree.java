@@ -1,9 +1,8 @@
 package org.ict.algorithm.leetcode;
 
-import java.util.Arrays;
-import java.util.Map;
-import java.util.HashMap;
 import java.math.BigInteger;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AnnieTestThree {
 
@@ -70,7 +69,7 @@ public class AnnieTestThree {
             return 0;
         }
 
-        Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+        Map<Integer, Integer> map = new HashMap<>();
         for (int i = 0; i < A.length; i++) {
             map.put(A[i], A[i]);
         }
