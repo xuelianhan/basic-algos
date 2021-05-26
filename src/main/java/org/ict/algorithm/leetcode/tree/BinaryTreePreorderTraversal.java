@@ -35,6 +35,11 @@ public class BinaryTreePreorderTraversal {
         }
     }
 
+    /**
+     * root-->left-->right
+     * @param root
+     * @return
+     */
     public static List<Integer> preOrderTraversalV2(TreeNode root) {
         List<Integer> list = new ArrayList<>();
         if (null == root) {
