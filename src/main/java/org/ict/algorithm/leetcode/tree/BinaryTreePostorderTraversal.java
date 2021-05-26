@@ -39,6 +39,7 @@ public class BinaryTreePostorderTraversal {
     }
 
     /**
+     * Recommend version
      * Left-->Right-->Root
      * Recommend version
      * @param root

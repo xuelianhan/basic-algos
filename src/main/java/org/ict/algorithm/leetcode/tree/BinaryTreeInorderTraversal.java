@@ -33,6 +33,7 @@ public class BinaryTreeInorderTraversal {
 	 }
 
 	/**
+	 * Recommend version
 	 * Left-->Root-->Right
 	 * @param root
 	 * @return
