@@ -1,9 +1,6 @@
 package org.ict.algorithm.leetcode.breadthfirstsearch;
 
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Set;
+import java.util.*;
 
 /**
  * An undirected, connected graph of N nodes (labeled 0, 1, 2, ..., N-1) is given as graph.
@@ -130,6 +127,7 @@ public class ShortestPathVisitingAllNodes {
 		return 0;
 	}
 
+
 	/**
 	 * Idea is to use BFS to traverse the graph.
 	 * Since all edges are weighted 1, we can use a Queue (instead of a PriorityQueue sorted by cost). 
@@ -191,6 +189,7 @@ public class ShortestPathVisitingAllNodes {
 
 				Tuple t = new Tuple(bitMask, v, 1);
 				if (!set.contains(t)) {
+					//Notice here is curr.cost + 1
 					queue.add(new Tuple(bitMask, v, curr.cost + 1));
 					set.add(t);
 				}
