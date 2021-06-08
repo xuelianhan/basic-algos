@@ -28,7 +28,7 @@ public class TwoSum {
     if (nums.length == 0) {
         throw new IllegalArgumentException("input nums must not be empty");
     }
-    Map<Integer, Integer> map = new HashMap<Integer, Integer>();           
+    Map<Integer, Integer> map = new HashMap<>();
     for (int i = 0; i < nums.length; i++) {
         int complement = target - nums[i];
         if (map.containsKey(complement) && map.get(complement) != i) {

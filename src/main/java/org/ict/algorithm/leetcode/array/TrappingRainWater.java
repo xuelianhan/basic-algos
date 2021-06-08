@@ -20,8 +20,8 @@ public class TrappingRainWater {
 	
 	/**
 	 * With left and right index.
-	 * Keep track of the already safe level and the total water so far. 
-	 * In each step, process and discard the lower one of the leftmost or rightmost elevation.
+     * Keep track of the already safe level and the total water so far.
+     * In each step, process and discard the lower one of the leftmost or rightmost elevation.
 	 * @param height
 	 * @return
 	 */
