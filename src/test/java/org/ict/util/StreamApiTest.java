@@ -16,6 +16,9 @@ public class StreamApiTest {
         testMergeMultipleLists();
     }
 
+    /**
+     * @see <a href="https://stackoverflow.com/questions/45281454/combine-multiple-lists-in-java"></a>
+     */
     public static void testMergeMultipleLists() {
         List<Long> list1 = new ArrayList<>();
         list1.add(1L);
