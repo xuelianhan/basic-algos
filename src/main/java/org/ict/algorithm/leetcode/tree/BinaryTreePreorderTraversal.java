@@ -53,9 +53,13 @@ public class BinaryTreePreorderTraversal {
                 //middle
                 list.add(cur.val);
                 //right
-                stack.push(cur.right);
+                if (cur.right != null) {
+                    stack.push(cur.right);
+                }
                 //left
-                stack.push(cur.left);
+                if (cur.left != null) {
+                    stack.push(cur.left);
+                }
             }
         }
         return list;
