@@ -5,7 +5,8 @@ import java.util.List;
 import java.util.Stack;
 
 /**
- * @author hxl
+ * @see <a href="https://leetcode.com/problems/binary-tree-postorder-traversal/discuss/45551/Preorder-Inorder-and-Postorder-Iteratively-Summarization"></a>
+ * @author sniper
  */
 public class BinaryTreePreorderTraversal {
 
