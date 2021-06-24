@@ -8,14 +8,16 @@ import java.util.function.Supplier;
 
 /**
  * 
- * @see https://www.sayem.org/generic-builder-pattern/
- * @see https://github.com/davidmoten/java-builder-pattern-tricks
- * @see https://www.codejava.net/java-core/collections/how-to-write-generic-classes-and-methods-in-java
- * @see https://docs.oracle.com/javase/tutorial/java/generics/types.html
- * @see https://stackoverflow.com/questions/5416577/chaining-tasks-using-generics
- * @see https://www.baeldung.com/guava-functions-predicates
+ * @see <a href="https://www.sayem.org/generic-builder-pattern/"></a>
+ * @see <a href=https://github.com/davidmoten/java-builder-pattern-tricks"></a>
+ * @see <a href=https://www.codejava.net/java-core/collections/how-to-write-generic-classes-and-methods-in-java"></a>
+ * @see <a href=https://docs.oracle.com/javase/tutorial/java/generics/types.html"></a>
+ * @see <a href=https://stackoverflow.com/questions/5416577/chaining-tasks-using-generics"></a>
+ * @see <a href=https://www.baeldung.com/guava-functions-predicates"></a>
  * 
  * @param <T>
+ *
+ * @author sniper
  */
 public class GenericBuilder<T> {
 

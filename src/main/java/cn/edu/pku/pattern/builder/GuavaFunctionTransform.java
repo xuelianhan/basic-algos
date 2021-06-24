@@ -12,7 +12,7 @@ import java.util.*;
 /**
  * @see https://www.baeldung.com/guava-functions-predicates
  * @see https://github.com/google/guava/wiki/FunctionalExplained
- * @author hanxuelian001
+ * @author sniper
  *
  */
 public class GuavaFunctionTransform {
