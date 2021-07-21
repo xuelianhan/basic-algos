@@ -61,9 +61,9 @@ public class BinaryTreePostorderTraversal {
                 // Reverse the process of preorder
                 cur = cur.right;
             } else {
-                cur = stack.pop();
+                TreeNode node = stack.pop();
                 // Reverse the process of preorder
-                cur = cur.left;
+                cur = node.left;
             }
         }
         return list;

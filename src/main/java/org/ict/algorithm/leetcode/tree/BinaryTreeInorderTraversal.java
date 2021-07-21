@@ -49,11 +49,11 @@ public class BinaryTreeInorderTraversal {
 	 			cur = cur.left;
 			} else {
 				//middle
-				cur = stack.pop();
+				TreeNode node = stack.pop();
 				//middle
-				list.add(cur.val);
+				list.add(node.val);
 				//right
-				cur = cur.right;
+				cur = node.right;
 			}
 		}
 	 	return list;
