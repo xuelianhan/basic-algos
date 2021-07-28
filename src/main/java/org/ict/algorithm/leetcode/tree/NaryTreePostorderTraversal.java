@@ -1,6 +1,7 @@
 package org.ict.algorithm.leetcode.tree;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 
@@ -27,19 +28,23 @@ public class NaryTreePostorderTraversal {
 
 
 
-    public List<Integer> postOrderTraversalV2(TreeNode root) {
-        List<Integer> list = new ArrayList<>();
-        Stack<TreeNode> stack = new Stack<>();
+    public List<Integer> postOrderTraversalV2(NaryNode root) {
+        LinkedList<Integer> list = new LinkedList<>();
+        if (null == root) {
+            return list;
+        }
+        Stack<NaryNode> stack = new Stack<>();
         stack.push(root);
         while (!stack.isEmpty()) {
-            TreeNode cur = stack.pop();
+            NaryNode cur = stack.pop();
             if (cur != null) {
-                //right
-                stack.push(cur.right);
-                //left
-                stack.push(cur.left);
                 //middle
-                list.add(cur.val);
+                list.addFirst(cur.val);
+                if (cur.children != null) {
+                    for (int i = cur.children.size() - 1; i >= 0; i--) {
+                        stack.push(cur.children.get(i));
+                    }
+                }
             }
         }
         return list;

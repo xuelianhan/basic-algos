@@ -25,61 +25,45 @@ import java.util.Stack;
 public class NaryTreePreorderTraversal {
 
     public static void main(String[] args) {
-        Node five = new Node(5, null);
-        Node six = new Node(6, null);
-        List<Node> threeChildren = new ArrayList<>();
+        NaryNode five = new NaryNode(5, null);
+        NaryNode six = new NaryNode(6, null);
+        List<NaryNode> threeChildren = new ArrayList<>();
         threeChildren.add(five);
         threeChildren.add(six);
-        Node three = new Node(3, threeChildren);
+        NaryNode three = new NaryNode(3, threeChildren);
 
-        Node two = new Node(2, null);
-        Node four = new Node(4, null);
-        List<Node> rootChildren = new ArrayList<>();
+        NaryNode two = new NaryNode(2, null);
+        NaryNode four = new NaryNode(4, null);
+        List<NaryNode> rootChildren = new ArrayList<>();
         rootChildren.add(three);
         rootChildren.add(two);
         rootChildren.add(four);
-        Node root = new Node(1, rootChildren);
+        NaryNode root = new NaryNode(1, rootChildren);
         List<Integer> result = preorder(root);
         System.out.println(result);
     }
 
 
-    public static List<Integer> preorder(Node root) {
-            List<Integer> list = new ArrayList<>();
-            if (null == root) {
-                return list;
-            }
-            Stack<Node> stack = new Stack<>();
-            stack.push(root);
-            while (!stack.isEmpty()) {
-                Node cur = stack.pop();
-                if (cur != null) {
-                    //middle
-                    list.add(cur.val);
-                    if (cur.children != null) {
-                        for (int i = cur.children.size() - 1; i >= 0; i--) {
-                            stack.push(cur.children.get(i));
-                        }
+    public static List<Integer> preorder(NaryNode root) {
+        List<Integer> list = new ArrayList<>();
+        if (null == root) {
+            return list;
+        }
+        Stack<NaryNode> stack = new Stack<>();
+        stack.push(root);
+        while (!stack.isEmpty()) {
+            NaryNode cur = stack.pop();
+            if (cur != null) {
+                //middle
+                list.add(cur.val);
+                if (cur.children != null) {
+                    for (int i = cur.children.size() - 1; i >= 0; i--) {
+                        stack.push(cur.children.get(i));
                     }
                 }
             }
-            return list;
+        }
+        return list;
     }
 
-
-    static class Node {
-        public int val;
-        public List<Node> children;
-
-        public Node() {}
-
-        public Node(int val) {
-            this.val = val;
-        }
-
-        public Node(int val, List<Node> _children) {
-            this.val = val;
-            children = _children;
-        }
-    }
 }
