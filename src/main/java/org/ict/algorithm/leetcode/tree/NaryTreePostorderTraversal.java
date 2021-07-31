@@ -1,9 +1,6 @@
 package org.ict.algorithm.leetcode.tree;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * Given the root of an n-ary tree, return the postorder traversal of its nodes' values.
@@ -26,9 +23,32 @@ import java.util.Stack;
  */
 public class NaryTreePostorderTraversal {
 
+    public static void main(String[] args) {
+        NaryNode five = new NaryNode(5, null);
+        NaryNode six = new NaryNode(6, null);
+        List<NaryNode> threeChildren = new ArrayList<>();
+        threeChildren.add(five);
+        threeChildren.add(six);
+        NaryNode three = new NaryNode(3, threeChildren);
+
+        NaryNode two = new NaryNode(2, null);
+        NaryNode four = new NaryNode(4, null);
+        List<NaryNode> rootChildren = new ArrayList<>();
+        rootChildren.add(three);
+        rootChildren.add(two);
+        rootChildren.add(four);
+        NaryNode root = new NaryNode(1, rootChildren);
+        List<Integer> result = postOrder(root);
+        System.out.println(result);
+    }
 
 
-    public List<Integer> postOrderTraversalV2(NaryNode root) {
+    /**
+     *
+     * @param root
+     * @return
+     */
+    public static List<Integer> postOrder(NaryNode root) {
         LinkedList<Integer> list = new LinkedList<>();
         if (null == root) {
             return list;
@@ -36,17 +56,16 @@ public class NaryTreePostorderTraversal {
         Stack<NaryNode> stack = new Stack<>();
         stack.push(root);
         while (!stack.isEmpty()) {
-            NaryNode cur = stack.pop();
-            if (cur != null) {
-                //middle
+                NaryNode cur = stack.pop();
+                //add from head of linked list
                 list.addFirst(cur.val);
                 if (cur.children != null) {
-                    for (int i = cur.children.size() - 1; i >= 0; i--) {
+                    for (int i = 0; i <= cur.children.size() - 1; i++) {
                         stack.push(cur.children.get(i));
                     }
                 }
-            }
         }
         return list;
     }
+
 }

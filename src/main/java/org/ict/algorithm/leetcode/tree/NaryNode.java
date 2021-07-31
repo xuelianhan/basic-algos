@@ -15,7 +15,7 @@ public class NaryNode {
 
     public NaryNode(int val, List<NaryNode> children) {
         this.val = val;
-        children = children;
+        this.children = children;
     }
 
 }
