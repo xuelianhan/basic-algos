@@ -42,6 +42,11 @@ public class ConstructStringFromBinaryTree {
 
     }
 
+    /**
+     * DFS solution
+     * @param root
+     * @return
+     */
     public static String tree2str(TreeNode root) {
         if (null == root) {
             return "";
