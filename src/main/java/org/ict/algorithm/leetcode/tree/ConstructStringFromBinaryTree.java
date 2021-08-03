@@ -76,4 +76,23 @@ public class ConstructStringFromBinaryTree {
         }
         return sb.substring(1, sb.length() - 1);
     }
+
+    public static String tree2strRecursive(TreeNode root) {
+        if (null == root) {
+            return "";
+        }
+        String res = root.val + "";
+        String left = tree2strRecursive(root.left);
+        String right = tree2strRecursive(root.right);
+        if (left == "" && right == "") {
+            return res;
+        }
+        if (left == "") {
+            return res + "()" + "(" + right + ")";
+        }
+        if (right == "") {
+            return res + "(" + left + ")";
+        }
+        return res + "(" + left + ")" + "(" + right + ")";
+    }
 }
