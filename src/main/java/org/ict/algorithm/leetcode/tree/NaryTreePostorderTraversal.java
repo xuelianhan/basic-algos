@@ -1,9 +1,6 @@
 package org.ict.algorithm.leetcode.tree;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * Given the root of an n-ary tree, return the postorder traversal of its nodes' values.
@@ -45,8 +42,10 @@ public class NaryTreePostorderTraversal {
         System.out.println(result);
     }
 
+
     /**
      * left -> middle ... right -> root
+     *
      * @param root
      * @return
      */
@@ -58,17 +57,16 @@ public class NaryTreePostorderTraversal {
         Stack<NaryNode> stack = new Stack<>();
         stack.push(root);
         while (!stack.isEmpty()) {
-            NaryNode cur = stack.pop();
-            if (cur != null) {
-                //middle
+                NaryNode cur = stack.pop();
+                //add from head of linked list
                 list.addFirst(cur.val);
                 if (cur.children != null) {
-                    for (int i = cur.children.size() - 1; i >= 0; i--) {
+                    for (int i = 0; i <= cur.children.size() - 1; i++) {
                         stack.push(cur.children.get(i));
                     }
                 }
-            }
         }
         return list;
     }
+
 }
