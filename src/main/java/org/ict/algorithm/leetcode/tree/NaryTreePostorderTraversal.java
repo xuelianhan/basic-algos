@@ -26,9 +26,31 @@ import java.util.Stack;
  */
 public class NaryTreePostorderTraversal {
 
+    public static void main(String[] args) {
+        NaryNode five = new NaryNode(5, null);
+        NaryNode six = new NaryNode(6, null);
+        List<NaryNode> threeChildren = new ArrayList<>();
+        threeChildren.add(five);
+        threeChildren.add(six);
+        NaryNode three = new NaryNode(3, threeChildren);
 
+        NaryNode two = new NaryNode(2, null);
+        NaryNode four = new NaryNode(4, null);
+        List<NaryNode> rootChildren = new ArrayList<>();
+        rootChildren.add(three);
+        rootChildren.add(two);
+        rootChildren.add(four);
+        NaryNode root = new NaryNode(1, rootChildren);
+        List<Integer> result = postOrder(root);
+        System.out.println(result);
+    }
 
-    public List<Integer> postOrderTraversalV2(NaryNode root) {
+    /**
+     * left -> middle ... right -> root
+     * @param root
+     * @return
+     */
+    public static List<Integer> postOrder(NaryNode root) {
         LinkedList<Integer> list = new LinkedList<>();
         if (null == root) {
             return list;
