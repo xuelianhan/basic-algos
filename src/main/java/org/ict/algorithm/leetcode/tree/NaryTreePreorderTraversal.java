@@ -31,7 +31,6 @@ public class NaryTreePreorderTraversal {
         threeChildren.add(five);
         threeChildren.add(six);
         NaryNode three = new NaryNode(3, threeChildren);
-
         NaryNode two = new NaryNode(2, null);
         NaryNode four = new NaryNode(4, null);
         List<NaryNode> rootChildren = new ArrayList<>();
@@ -44,6 +43,11 @@ public class NaryTreePreorderTraversal {
     }
 
 
+    /**
+     *
+     * @param root
+     * @return
+     */
     public static List<Integer> preorder(NaryNode root) {
         List<Integer> list = new ArrayList<>();
         if (null == root) {

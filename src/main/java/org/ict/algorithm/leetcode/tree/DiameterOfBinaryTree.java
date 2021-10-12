@@ -10,7 +10,6 @@ package org.ict.algorithm.leetcode.tree;
  *
  * Example 1:
  *
- *
  * Input: root = [1,2,3,4,5]
  * Output: 3
  * Explanation: 3 is the length of the path [4,2,1,3] or [5,2,1,3].
@@ -18,6 +17,7 @@ package org.ict.algorithm.leetcode.tree;
  *
  * Input: root = [1,2]
  * Output: 1
+ *
  * Constraints:
  *
  * The number of nodes in the tree is in the range [1, 104].
@@ -25,7 +25,10 @@ package org.ict.algorithm.leetcode.tree;
  */
 public class DiameterOfBinaryTree {
 
-    public int diameterOfBinaryTree(TreeNode root) {
+    public static int diameterOfBinaryTree(TreeNode root) {
+        if (null == root) {
+
+        }
         return 0;
     }
 }

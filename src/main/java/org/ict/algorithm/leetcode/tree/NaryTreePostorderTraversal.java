@@ -44,6 +44,7 @@ public class NaryTreePostorderTraversal {
 
 
     /**
+     * left -> middle ... right -> root
      *
      * @param root
      * @return
