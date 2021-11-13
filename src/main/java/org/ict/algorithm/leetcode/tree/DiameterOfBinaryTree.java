@@ -25,13 +25,36 @@ package org.ict.algorithm.leetcode.tree;
  * The number of nodes in the tree is in the range [1, 104].
  * -100 <= Node.val <= 100
  * LC543
+ *
+ * [4,-7,-3,null,null,-9,-3,9,-7,-4,null,6,null,-6,-6,null,null,0,6,5,null,9,null,null,-1,-4,null,null,null,-2]
+ * expected:8
  */
 public class DiameterOfBinaryTree {
 
-    public static int diameterOfBinaryTree(TreeNode root) {
-        if (null == root) {
+    private static int max = 0;
 
+    public static void main(String[] args) {
+        TreeNode root = new TreeNode();
+        TreeNode two = new TreeNode();
+        two.val = 2;
+        root.val = 1;
+        root.left = two;
+        int result = diameterOfBinaryTree(root);
+        System.out.println(result);
+    }
+
+    public static int diameterOfBinaryTree(TreeNode root) {
+        maxDepth(root);
+        return max;
+    }
+
+    private static int maxDepth(TreeNode root) {
+        if (null == root) {
+            return 0;
         }
-        return 0;
+        int left = maxDepth(root.left);
+        int right = maxDepth(root.right);
+        max = Math.max(max, left + right);
+        return Math.max(left, right) + 1;
     }
 }
