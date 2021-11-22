@@ -33,11 +33,11 @@ import java.util.Queue;
  */
 public class DiameterOfBinaryTree {
 
-    private static int maxPath = 0;
+
 
     public static void main(String[] args) {
+        /*
         TreeNode root = new TreeNode();
-
         TreeNode four = new TreeNode();
         TreeNode five = new TreeNode();
         four.val = 4;
@@ -54,17 +54,23 @@ public class DiameterOfBinaryTree {
         root.left = two;
         root.right = three;
         int depth = diameterOfBinaryTree(root);
-        System.out.println(depth);
+        System.out.println(depth);*/
 
-        /*
+
         TreeNode root = new TreeNode();
         TreeNode two = new TreeNode();
         two.val = 2;
         root.val = 1;
-        root.left = two;
+        root.right = two;
         int result = diameterOfBinaryTreeV1(root);
-        System.out.println(result);*/
+        System.out.println("result:"+result);
+        System.out.println("max:" + max);
     }
+
+    /**
+     * Global variables may cause issue when running test cases.
+     */
+    private static int maxPath = 0;
 
     /**
      * It took me a while to figure this out.
@@ -79,8 +85,8 @@ public class DiameterOfBinaryTree {
      * @return
      */
     public static int diameterOfBinaryTree(TreeNode root) {
-       maxDepth(root);
-       return maxPath;
+        maxDepth(root);
+        return maxPath;
     }
 
     public static int maxDepth(TreeNode root) {
@@ -117,6 +123,9 @@ public class DiameterOfBinaryTree {
         return count;
     }
 
+    /**
+     * Global variables may cause issue when running test cases.
+     */
     private static int max = 0;
 
     public static int diameterOfBinaryTreeV1(TreeNode root) {
@@ -128,8 +137,8 @@ public class DiameterOfBinaryTree {
         if (null == root) {
             return 0;
         }
-        int left = maxDepth(root.left);
-        int right = maxDepth(root.right);
+        int left = maxDepthV1(root.left);
+        int right = maxDepthV1(root.right);
         max = Math.max(max, left + right);
         return Math.max(left, right) + 1;
     }
