@@ -69,6 +69,11 @@ public class DiameterOfBinaryTree {
 
     /**
      * Iterative solution with post-order traversal
+     * The idea is to use Post order traversal which means make sure the node is there
+     * till the left and right children are processed
+     * That's the reason you use peek method in the stack to not pop it off without being done with the left and right child nodes.
+     * Then for each node calculate the max of the left and right sub trees depth and simultaneously
+     * calculate the overall max of the left and right subtrees count.
      * @param root
      * @return
      */
@@ -76,7 +81,7 @@ public class DiameterOfBinaryTree {
         if (null == root) {
             return 0;
         }
-        
+
         return 0;
     }
 
@@ -89,7 +94,6 @@ public class DiameterOfBinaryTree {
 
     /**
      * It took me a while to figure this out.
-     * The code is correct, but the explanation is clearly wrong.
      * So although the longest path doesn't have to go through the root node,
      * it has to pass the root node of some subtree of the tree
      * (because it has to be from one leaf node to another leaf node,
@@ -123,6 +127,7 @@ public class DiameterOfBinaryTree {
         int max = list.get(0);
         int newMax = Math.max(max, left + right);
         list.add(0, newMax);
+        // plus 1 due to current root node
         return Math.max(left, right) + 1;
     }
 

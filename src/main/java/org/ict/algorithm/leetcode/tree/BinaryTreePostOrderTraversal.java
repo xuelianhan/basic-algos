@@ -1,21 +1,18 @@
 package org.ict.algorithm.leetcode.tree;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * Given the root of a binary tree, return the postorder traversal of its nodes' values.
  * LC145
  */
-public class BinaryTreePostorderTraversal {
+public class BinaryTreePostOrderTraversal {
 
     public static void main(String[] args) {
         TreeNode two = new TreeNode(2, null,  null);
         TreeNode three = new TreeNode(3, null, null);
         TreeNode one = new TreeNode(1, two, three);
-        List<Integer> result = postOrderTraversalV2(one);
+        List<Integer> result = postOrderTraversalV3(one);
         System.out.println(result);
     }
 
@@ -64,6 +61,29 @@ public class BinaryTreePostorderTraversal {
                 TreeNode node = stack.pop();
                 // Reverse the process of preorder
                 cur = node.left;
+            }
+        }
+        return list;
+    }
+
+    public static List<Integer> postOrderTraversalV3(TreeNode root) {
+        List<Integer> list = new ArrayList<>();
+        if (null == root) {
+            return list;
+        }
+        Stack<TreeNode> stack = new Stack<>();
+        Set<TreeNode> visited = new HashSet<>();
+        stack.push(root);
+        while (!stack.isEmpty()) {
+            TreeNode node = stack.peek();
+            if (node.left != null && !visited.contains(node.left)) {
+                stack.push(node.left);
+            } else if (node.right != null && !visited.contains(node.right)) {
+                stack.push(node.right);
+            } else {
+                TreeNode cur = stack.pop();
+                visited.add(cur);
+                list.add(cur.val);
             }
         }
         return list;
