@@ -1,9 +1,6 @@
 package org.ict.algorithm.leetcode.tree;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * Given the root of a binary tree, return the length of the diameter of the tree.
@@ -81,8 +78,31 @@ public class DiameterOfBinaryTree {
         if (null == root) {
             return 0;
         }
-
-        return 0;
+        int globalDiameter = 0;
+        Stack<TreeNode> stack = new Stack<>();
+        Map<TreeNode, Integer> visited = new HashMap<>();
+        stack.push(root);
+        while (!stack.isEmpty()) {
+            TreeNode node = stack.peek();
+            if (node.left != null && !visited.containsKey(node.left)) {
+                stack.push(node.left);
+            } else if (node.right != null && !visited.containsKey(node.right)) {
+                stack.push(node.right);
+            } else {
+                // cur is the start node of post order
+                TreeNode cur = stack.pop();
+                int leftDepth  = visited.getOrDefault(cur.left, 0);
+                int rightDepth = visited.getOrDefault(cur.right, 0);
+                // the layer height (depth) of node cur.
+                // leaf node's layer height is 1(leaf itself).
+                // non-leaf node's layer height as following:
+                // Max(sub_left, sub_right) + 1
+                int curNodeDepth = Math.max(leftDepth, rightDepth) + 1;
+                visited.put(cur, curNodeDepth);
+                globalDiameter = Math.max(globalDiameter, leftDepth + rightDepth);
+            }
+        }
+        return globalDiameter;
     }
 
 
