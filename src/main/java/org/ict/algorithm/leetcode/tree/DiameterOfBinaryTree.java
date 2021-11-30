@@ -1,6 +1,8 @@
 package org.ict.algorithm.leetcode.tree;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 /**
@@ -36,7 +38,6 @@ public class DiameterOfBinaryTree {
 
 
     public static void main(String[] args) {
-        /*
         TreeNode root = new TreeNode();
         TreeNode four = new TreeNode();
         TreeNode five = new TreeNode();
@@ -54,23 +55,37 @@ public class DiameterOfBinaryTree {
         root.left = two;
         root.right = three;
         int depth = diameterOfBinaryTree(root);
-        System.out.println(depth);*/
+        System.out.println(depth);
 
 
-        TreeNode root = new TreeNode();
+        /*TreeNode root = new TreeNode();
         TreeNode two = new TreeNode();
         two.val = 2;
         root.val = 1;
         root.right = two;
-        int result = diameterOfBinaryTreeV1(root);
-        System.out.println("result:"+result);
-        System.out.println("max:" + max);
+        int result = diameterOfBinaryTree(root);
+        System.out.println("result:"+result);*/
     }
+
+    /**
+     * Iterative solution with post-order traversal
+     * @param root
+     * @return
+     */
+    public static int diameterOfBinaryTreeIterative(TreeNode root) {
+        if (null == root) {
+            return 0;
+        }
+        
+        return 0;
+    }
+
+
 
     /**
      * Global variables may cause issue when running test cases.
      */
-    private static int maxPath = 0;
+    //private static int max = 0;
 
     /**
      * It took me a while to figure this out.
@@ -85,61 +100,30 @@ public class DiameterOfBinaryTree {
      * @return
      */
     public static int diameterOfBinaryTree(TreeNode root) {
-        maxDepth(root);
-        return maxPath;
-    }
-
-    public static int maxDepth(TreeNode root) {
-        if (null == root) {
-            return 0;
-        }
-        int left = maxDepth(root.left);
-        int right = maxDepth(root.right);
-        maxPath = Math.max(maxPath, left + right);
-        return Math.max(left, right) + 1;
-    }
-
-    public static int maxDepthBFS(TreeNode root) {
-        if (null == root) {
-            return 0;
-        }
-        Queue<TreeNode> queue = new LinkedList<>();
-        queue.offer(root);
-        int count = 0;
-        while (!queue.isEmpty()) {
-            int size = queue.size();
-            // here control the save level element push into the queue, can be replaced with while(size-- > 0) loop.
-            for (int i = 0; i < size; i++) {
-                TreeNode cur = queue.poll();
-                if (cur.left != null) {
-                    queue.offer(cur.left);
-                }
-                if (cur.right != null) {
-                    queue.offer(cur.right);
-                }
-            }
-            count++;
-        }
-        return count;
+        List<Integer> list = new ArrayList<>();
+        list.add(0);
+        maxDepth(root, list);
+        return list.get(0);
     }
 
     /**
-     * Global variables may cause issue when running test cases.
+     * The question can be solved by small modification to program of Height of tree.
+     * The idea is quite simple.
+     * Max value of Height(leftSubtree)+Height(rightSubtree) (at any node ) is the diameter.
+     * Keep track of the maxmium diameter during traversal and find the height of the tree.
+     * @param root
+     * @return
      */
-    private static int max = 0;
-
-    public static int diameterOfBinaryTreeV1(TreeNode root) {
-        maxDepthV1(root);
-        return max;
-    }
-
-    private static int maxDepthV1(TreeNode root) {
+    public static int maxDepth(TreeNode root, List<Integer> list) {
         if (null == root) {
             return 0;
         }
-        int left = maxDepthV1(root.left);
-        int right = maxDepthV1(root.right);
-        max = Math.max(max, left + right);
+        int left = maxDepth(root.left, list);
+        int right = maxDepth(root.right, list);
+        int max = list.get(0);
+        int newMax = Math.max(max, left + right);
+        list.add(0, newMax);
         return Math.max(left, right) + 1;
     }
+
 }
