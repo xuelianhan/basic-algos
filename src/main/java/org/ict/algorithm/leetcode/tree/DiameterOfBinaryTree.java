@@ -129,7 +129,7 @@ public class DiameterOfBinaryTree {
         maxDepth(root, list);
         return list.get(0);
     }
-    
+
     public static int maxDepthBFS(TreeNode root) {
         if (null == root) {
             return 0;
