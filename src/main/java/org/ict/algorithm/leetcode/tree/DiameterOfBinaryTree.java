@@ -130,6 +130,30 @@ public class DiameterOfBinaryTree {
         return list.get(0);
     }
 
+    public static int maxDepthBFS(TreeNode root) {
+        if (null == root) {
+            return 0;
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        int count = 0;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            // here control the save level element push into the queue, can be replaced with while(size-- > 0) loop.
+            for (int i = 0; i < size; i++) {
+                TreeNode cur = queue.poll();
+                if (cur.left != null) {
+                    queue.offer(cur.left);
+                }
+                if (cur.right != null) {
+                    queue.offer(cur.right);
+                }
+            }
+            count++;
+        }
+        return count;
+    }
+
     /**
      * The question can be solved by small modification to program of Height of tree.
      * The idea is quite simple.
