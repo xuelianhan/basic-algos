@@ -1,7 +1,6 @@
 package org.ict.algorithm.leetcode.tree;
 
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * Given the root of a binary tree, return the length of the diameter of the tree.
@@ -36,7 +35,6 @@ public class DiameterOfBinaryTree {
 
 
     public static void main(String[] args) {
-        /*
         TreeNode root = new TreeNode();
         TreeNode four = new TreeNode();
         TreeNode five = new TreeNode();
@@ -54,22 +52,68 @@ public class DiameterOfBinaryTree {
         root.left = two;
         root.right = three;
         int depth = diameterOfBinaryTree(root);
-        System.out.println(depth);*/
+        System.out.println(depth);
 
 
-        TreeNode root = new TreeNode();
+        /*TreeNode root = new TreeNode();
         TreeNode two = new TreeNode();
         two.val = 2;
         root.val = 1;
         root.right = two;
-        int result = diameterOfBinaryTreeV1(root);
-        System.out.println("result:"+result);
-        System.out.println("max:" + max);
+        int result = diameterOfBinaryTree(root);
+        System.out.println("result:"+result);*/
     }
 
     /**
+     * Iterative solution with post-order traversal
+     * The idea is to use Post order traversal which means make sure the node is there
+     * till the left and right children are processed
+     * That's the reason you use peek method in the stack to not pop it off without being done with the left and right child nodes.
+     * Then for each node calculate the max of the left and right sub trees depth and simultaneously
+     * calculate the overall max of the left and right subtrees count.
+     * @param root
+     * @return
+     */
+    public static int diameterOfBinaryTreeIterative(TreeNode root) {
+        if (null == root) {
+            return 0;
+        }
+        int globalDiameter = 0;
+        Stack<TreeNode> stack = new Stack<>();
+        Map<TreeNode, Integer> visited = new HashMap<>();
+        stack.push(root);
+        while (!stack.isEmpty()) {
+            TreeNode node = stack.peek();
+            if (node.left != null && !visited.containsKey(node.left)) {
+                stack.push(node.left);
+            } else if (node.right != null && !visited.containsKey(node.right)) {
+                stack.push(node.right);
+            } else {
+                // cur is the start node of post order
+                TreeNode cur = stack.pop();
+                int leftDepth  = visited.getOrDefault(cur.left, 0);
+                int rightDepth = visited.getOrDefault(cur.right, 0);
+                // the layer height (depth) of node cur.
+                // leaf node's layer height is 1(leaf itself).
+                // non-leaf node's layer height as following:
+                // Max(sub_left, sub_right) + 1
+                int curNodeDepth = Math.max(leftDepth, rightDepth) + 1;
+                visited.put(cur, curNodeDepth);
+                globalDiameter = Math.max(globalDiameter, leftDepth + rightDepth);
+            }
+        }
+        return globalDiameter;
+    }
+
+
+
+    /**
+     * Global variables may cause issue when running test cases.
+     */
+    //private static int max = 0;
+
+    /**
      * It took me a while to figure this out.
-     * The code is correct, but the explanation is clearly wrong.
      * So although the longest path doesn't have to go through the root node,
      * it has to pass the root node of some subtree of the tree
      * (because it has to be from one leaf node to another leaf node,
@@ -80,30 +124,12 @@ public class DiameterOfBinaryTree {
      * @return
      */
     public static int diameterOfBinaryTree(TreeNode root) {
-        Integer maxPath = 0;
-        maxDepth(root, maxPath);
-        return maxPath;
+        List<Integer> list = new ArrayList<>();
+        list.add(0);
+        maxDepth(root, list);
+        return list.get(0);
     }
-
-    /**
-     * The question can be solved by small modification to program of Height of tree.
-     * The idea is quite simple. Max value of Height(leftSubtree)+Height(rightSubtree) (at any node ) is the diameter.
-     * Keep track of maxium diameter duing traversal and find the height of the tree.
-     * @param root
-     * @param maxPath
-     * @return
-     */
-    public static int maxDepth(TreeNode root, Integer maxPath) {
-        if (null == root) {
-            return 0;
-        }
-        int left = maxDepth(root.left, maxPath);
-        int right = maxDepth(root.right, maxPath);
-        //This line maintains the max diameter.
-        maxPath = Math.max(maxPath, left + right);
-        return Math.max(left, right) + 1;
-    }
-
+    
     public static int maxDepthBFS(TreeNode root) {
         if (null == root) {
             return 0;
@@ -129,22 +155,24 @@ public class DiameterOfBinaryTree {
     }
 
     /**
-     * Global variables may cause issue when running test cases.
+     * The question can be solved by small modification to program of Height of tree.
+     * The idea is quite simple.
+     * Max value of Height(leftSubtree)+Height(rightSubtree) (at any node ) is the diameter.
+     * Keep track of the maxmium diameter during traversal and find the height of the tree.
+     * @param root
+     * @return
      */
-    private static int max = 0;
-
-    public static int diameterOfBinaryTreeV1(TreeNode root) {
-        maxDepthV1(root);
-        return max;
-    }
-
-    private static int maxDepthV1(TreeNode root) {
+    public static int maxDepth(TreeNode root, List<Integer> list) {
         if (null == root) {
             return 0;
         }
-        int left = maxDepthV1(root.left);
-        int right = maxDepthV1(root.right);
-        max = Math.max(max, left + right);
+        int left = maxDepth(root.left, list);
+        int right = maxDepth(root.right, list);
+        int max = list.get(0);
+        int newMax = Math.max(max, left + right);
+        list.add(0, newMax);
+        // plus 1 due to current root node
         return Math.max(left, right) + 1;
     }
+
 }
