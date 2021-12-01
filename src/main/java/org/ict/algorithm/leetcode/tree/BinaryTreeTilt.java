@@ -52,6 +52,11 @@ public class BinaryTreeTilt {
     }
 
 
+    /**
+     * This solution inspired by the diameter of binary tree with Post-Order Traversal
+     * @param root
+     * @return
+     */
     public static int findTilt(TreeNode root) {
         if (null == root) {
             return 0;
