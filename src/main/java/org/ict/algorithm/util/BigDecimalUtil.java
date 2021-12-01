@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 /**
+ * BigDecimal tools
  * @author sniper
  * @date 2021/11/22 10:29 AM
  */

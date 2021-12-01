@@ -68,11 +68,6 @@ public class DiameterOfBinaryTree {
     }
 
     /**
-     * Global variables may cause issue when running test cases.
-     */
-    private static int maxPath = 0;
-
-    /**
      * It took me a while to figure this out.
      * The code is correct, but the explanation is clearly wrong.
      * So although the longest path doesn't have to go through the root node,
@@ -85,16 +80,26 @@ public class DiameterOfBinaryTree {
      * @return
      */
     public static int diameterOfBinaryTree(TreeNode root) {
-        maxDepth(root);
+        Integer maxPath = 0;
+        maxDepth(root, maxPath);
         return maxPath;
     }
 
-    public static int maxDepth(TreeNode root) {
+    /**
+     * The question can be solved by small modification to program of Height of tree.
+     * The idea is quite simple. Max value of Height(leftSubtree)+Height(rightSubtree) (at any node ) is the diameter.
+     * Keep track of maxium diameter duing traversal and find the height of the tree.
+     * @param root
+     * @param maxPath
+     * @return
+     */
+    public static int maxDepth(TreeNode root, Integer maxPath) {
         if (null == root) {
             return 0;
         }
-        int left = maxDepth(root.left);
-        int right = maxDepth(root.right);
+        int left = maxDepth(root.left, maxPath);
+        int right = maxDepth(root.right, maxPath);
+        //This line maintains the max diameter.
         maxPath = Math.max(maxPath, left + right);
         return Math.max(left, right) + 1;
     }
