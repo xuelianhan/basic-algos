@@ -79,17 +79,19 @@ public class ClosestPointToOrigin {
         
         for (int i = 0; i < array.length; i++) {
             pq.offer(array[i]);
-            if (pq.size() > k)
-                pq.poll();
+            if (pq.size() > k) {
+				pq.poll();
+			}
         }
         
         int index = 0;
         Point[] rvalue = new Point[k];
-        while (!pq.isEmpty())
-            rvalue[index++] = pq.poll();
+        while (!pq.isEmpty()) {
+			rvalue[index++] = pq.poll();
+		}
         return rvalue;
     }
-	
+
     private double getDistance(Point a, Point b) {
         return Math.sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
     }

@@ -8,8 +8,8 @@ import java.util.Stack;
  * Given the root of a binary tree, 
  * return the inorder traversal of its nodes'
  * values.
- * 
- * @author hxl
+ * LC94
+ * @author siper
  */
 public class BinaryTreeInorderTraversal {
 	
@@ -38,7 +38,7 @@ public class BinaryTreeInorderTraversal {
 	 * @param root
 	 * @return
 	 */
-	 public List<Integer> inorderTraversalV2(TreeNode root) {
+	 public static List<Integer> inorderTraversalV2(TreeNode root) {
 	 	List<Integer> list = new ArrayList<>();
 	 	Stack<TreeNode> stack = new Stack<>();
 	 	TreeNode cur = root;

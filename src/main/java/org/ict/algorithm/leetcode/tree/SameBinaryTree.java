@@ -5,10 +5,12 @@ import java.util.Queue;
 
 /**
  *
+ * @author sniper
+ * LC100
  */
 public class SameBinaryTree {
 
-    public boolean isSameTree(TreeNode p, TreeNode q) {
+    public static boolean isSameTree(TreeNode p, TreeNode q) {
         if (null == p && null == q) {
             return true;
         }
@@ -21,7 +23,7 @@ public class SameBinaryTree {
         return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
     }
 
-    public boolean isSameTreeV2(TreeNode p, TreeNode q) {
+    public static boolean isSameTreeV2(TreeNode p, TreeNode q) {
         if (null == p && null == q) {
             return true;
         }

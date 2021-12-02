@@ -2,6 +2,7 @@ package org.ict.algorithm.leetcode.tree;
 
 /**
  * Definition for a binary tree node.
+ * @author lc
  */
 public class TreeNode {
     int val;
