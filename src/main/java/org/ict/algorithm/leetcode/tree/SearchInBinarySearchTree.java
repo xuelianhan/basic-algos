@@ -24,30 +24,16 @@ package org.ict.algorithm.leetcode.tree;
  * LC700
  */
 public class SearchInBinarySearchTree {
-    /**
-     * input:
-     * [4,2,7,1,3]
-     * 2
-     *
-     * output:[]
-     *
-     * expected:[2,1,3]
-     * @param root
-     * @param val
-     * @return
-     */
+    
     public TreeNode searchBST(TreeNode root, int val) {
-        if (null == root) {
-            return null;
-        }
-        if (root.val == val) {
+        if (null == root || root.val == val) {
             return root;
         }
-        if (root.val < val && root.left != null) {
-            return searchBST(root.left, val);
-        } else if (root.val > val && root.right != null) {
+        // Key is greater than root's key
+        if (root.val < val) {
             return searchBST(root.right, val);
         }
-        return null;
+        // Key is smaller than root's key
+        return searchBST(root.left, val);
     }
 }
