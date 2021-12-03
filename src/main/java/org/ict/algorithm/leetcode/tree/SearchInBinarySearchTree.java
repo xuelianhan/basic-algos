@@ -24,7 +24,7 @@ package org.ict.algorithm.leetcode.tree;
  * LC700
  */
 public class SearchInBinarySearchTree {
-    
+
     public TreeNode searchBST(TreeNode root, int val) {
         if (null == root || root.val == val) {
             return root;
