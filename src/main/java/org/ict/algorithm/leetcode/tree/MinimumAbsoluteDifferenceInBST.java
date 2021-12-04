@@ -1,7 +1,5 @@
 package org.ict.algorithm.leetcode.tree;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Stack;
 
 /**
@@ -23,7 +21,7 @@ import java.util.Stack;
  * The number of nodes in the tree is in the range [2, 104].
  * 0 <= Node.val <= 105
  *
- * LC530
+ * LC530 is same as LC783 MinimumDistanceBetweenBSTNodes
  */
 public class MinimumAbsoluteDifferenceInBST {
 
@@ -36,8 +34,6 @@ public class MinimumAbsoluteDifferenceInBST {
         if (null == root) {
             return 0;
         }
-
-        //List<Integer> list = new ArrayList<>();
         Stack<TreeNode> stack = new Stack<>();
         TreeNode cur = root;
         TreeNode pre = null;
@@ -52,7 +48,6 @@ public class MinimumAbsoluteDifferenceInBST {
                  * middle order traversal
                  * replace access middle val with min calculate.
                  */
-                //list.add(cur.val);
                 if (pre != null) {
                     min = Math.min(min, cur.val - pre.val);
                 }

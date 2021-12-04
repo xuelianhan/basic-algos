@@ -1,5 +1,7 @@
 package org.ict.algorithm.leetcode.tree;
 
+import java.util.PriorityQueue;
+
 /**
  * Design a class to find the k^th largest element in a stream.
  * Note that it is the k^th largest element in the sorted order, not the k^th distinct element.
@@ -45,6 +47,7 @@ public class KthLargestElementInStream {
     public static void main(String[] args) {
         int k = 3;
         int[] nums = {4,5,8,2};
+        // Find top k largest using min-heap
         KthLargest obj = new KthLargest(k, nums);
         int x1 = obj.add(3);
         int x2 = obj.add(5);
@@ -60,16 +63,30 @@ public class KthLargestElementInStream {
      */
     public static class KthLargest {
         private int k;
-        private int[] nums;
+
+        final PriorityQueue<Integer> minHeap;
 
         public KthLargest(int k, int[] nums) {
-           this.k = k;
-           this.nums = nums;
+            this.k = k;
+            minHeap = new PriorityQueue<>(k);
+            for(int i = 0; i < nums.length; i++) {
+               minHeap.offer(nums[i]);
+               if (minHeap.size() > k) {
+                   minHeap.poll();
+               }
+            }
         }
 
         public int add(int val) {
-
-            return 0;
+            if (minHeap.size() < k) {
+                minHeap.offer(val);
+            } else if (minHeap.peek() < val){
+                // the val is greater than root,
+                // so take the root out and insert the new val
+                minHeap.poll();
+                minHeap.offer(val);
+            }
+            return minHeap.peek();
         }
 
     }

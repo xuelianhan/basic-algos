@@ -11,7 +11,8 @@ public class BinaryTreeAllOrderTraversal {
         while(!stack.isEmpty() || cur != null) {
             if(cur != null) {
                 stack.push(cur);
-                result.add(cur.val);  // Add before going to children
+                // Add before going to children
+                result.add(cur.val);
                 cur = cur.left;
             } else {
                 TreeNode node = stack.pop();
@@ -31,7 +32,8 @@ public class BinaryTreeAllOrderTraversal {
                 cur = cur.left;
             } else {
                 TreeNode node = stack.pop();
-                result.add(node.val);  // Add after all left children
+                // Add after all left children
+                result.add(node.val);
                 cur = node.right;
             }
         }
@@ -45,11 +47,14 @@ public class BinaryTreeAllOrderTraversal {
         while(!stack.isEmpty() || cur != null) {
             if(cur != null) {
                 stack.push(cur);
-                result.addFirst(cur.val);  // Reverse the process of preorder
-                cur = cur.right;           // Reverse the process of preorder
+                // Reverse the process of preorder
+                result.addFirst(cur.val);
+                // Reverse the process of preorder
+                cur = cur.right;
             } else {
                 TreeNode node = stack.pop();
-                cur = node.left;           // Reverse the process of preorder
+                // Reverse the process of preorder
+                cur = node.left;
             }
         }
         return result;
