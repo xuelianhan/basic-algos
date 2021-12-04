@@ -1,6 +1,5 @@
 package org.ict.algorithm.leetcode.tree;
 
-import org.ict.algorithm.leetcode.breadthfirstsearch.BinaryTreeLevelOrderTraversal;
 
 import java.util.*;
 
@@ -15,9 +14,38 @@ import java.util.*;
  */
 public class UnivaluedBinaryTree {
 
+
+    /**
+     * Breadth/Depth first search to check
+     * if any node's value is different from the root's.
+     * @param root
+     * @return
+     */
+    public boolean isUnivalTreeV3(TreeNode root) {
+        Queue<TreeNode> q = new LinkedList<>();
+        q.offer(root);
+        while (!q.isEmpty()) {
+            TreeNode cur = q.poll();
+            if (cur.val != root.val) { return false; }
+            if (cur.left != null) { q.offer(cur.left); }
+            if (cur.right != null) { q.offer(cur.right); }
+        }
+        return true;
+    }
+
+    /**
+     * Check left and right children have the same value as parent.
+     * @param root
+     * @return
+     */
+    public boolean isUnivalTreeV2(TreeNode root) {
+        return (root.left == null || root.left.val == root.val && isUnivalTree(root.left)) &&
+                (root.right == null || root.right.val == root.val && isUnivalTree(root.right));
+    }
+
     public boolean isUnivalTree(TreeNode root) {
         if (root == null) {
-            return false;
+            return true;
         }
         Map<Integer, Integer> map = new HashMap<>();
         Queue<TreeNode> queue = new LinkedList<>();
