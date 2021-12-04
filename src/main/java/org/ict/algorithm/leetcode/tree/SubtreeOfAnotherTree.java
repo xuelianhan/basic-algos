@@ -28,7 +28,18 @@ package org.ict.algorithm.leetcode.tree;
 public class SubtreeOfAnotherTree {
 
     public boolean isSubtree(TreeNode root, TreeNode subRoot) {
-
-        return false;
+        if (null == root && null == subRoot) {
+            return true;
+        }
+        if (null == root || null == subRoot) {
+            return false;
+        }
+        if (root.val == subRoot.val) {
+            boolean leftMatch = isSubtree(root.left, subRoot.left);
+            boolean rightMatch = isSubtree(root.right, subRoot.right);
+            return (leftMatch || rightMatch);
+        } else {
+            return (isSubtree(root.left, subRoot) || isSubtree(root.right, subRoot));
+        }
     }
 }
