@@ -21,13 +21,18 @@ package org.ict.algorithm.leetcode.tree;
  * The number of nodes in the subRoot tree is in the range [1, 1000].
  * -104 <= root.val <= 104
  * -104 <= subRoot.val <= 104
+ * @author sniper
  *
- * LC572
+ * LC572 is related LC100
  *
  */
 public class SubtreeOfAnotherTree {
 
-    public boolean isSubtree(TreeNode root, TreeNode subRoot) {
+
+    /**
+     * wrong answer
+     */
+    /*public boolean isSubtree(TreeNode root, TreeNode subRoot) {
         if (null == root && null == subRoot) {
             return true;
         }
@@ -40,6 +45,31 @@ public class SubtreeOfAnotherTree {
             return (leftMatch || rightMatch);
         } else {
             return (isSubtree(root.left, subRoot) || isSubtree(root.right, subRoot));
+        }*/
+
+    /**
+     * Input:
+     * [3,4,5,1,2,null,null,null,null,0]
+     * [4,1,2]
+     *
+     * Expected:
+     * false
+     *
+     * @param root
+     * @param subRoot
+     * @return
+     */
+    public boolean isSubtreeV1(TreeNode root, TreeNode subRoot) {
+        if (null == root) {
+            return false;
         }
+        if (SameBinaryTree.isSameTree(root, subRoot)) {
+            return true;
+        }
+        return (isSubtreeV1(root.left, subRoot) || isSubtreeV1(root.right, subRoot));
     }
+
+
+
+
 }

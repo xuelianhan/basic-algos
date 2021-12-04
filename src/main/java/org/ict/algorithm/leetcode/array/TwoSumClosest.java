@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * 
- * 
+ * @author sniper
  */
 public class TwoSumClosest {
 

@@ -5,7 +5,8 @@ import org.ict.algorithm.util.RandomGenUtil;
 
 public class AnnieTestOne {
     /**
-     * A non-empty zero-indexed array A consisting of N integers is given.The amplitude of this array is defined as the largest
+     * A non-empty zero-indexed array A consisting of N integers is given.
+     * The amplitude of this array is defined as the largest
      * possible difference between two of its elements.i.e.:
      * amplitude(A) = max{ A[P] - A[Q]: 0 <= P, Q < N,}
      * that,given a non-empty zero-indexed array A consisting of N integers, returns its amplitude.

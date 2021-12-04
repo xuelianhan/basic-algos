@@ -8,7 +8,7 @@ import java.util.Queue;
  * determine if the tree has a root-to-leaf path such that adding up all the values along the path equals the given sum.
  *
  * Note: A leaf is a node with no children.
- *
+ * @author sniper
  * LC112
  */
 public class BinaryTreePathSum {
@@ -33,7 +33,8 @@ public class BinaryTreePathSum {
                 if (null == cur) {
                     continue;
                 }
-                if (cur.left == null && cur.right == null) {//check whether current node is a leaf.
+                //check whether current node is a leaf.
+                if (cur.left == null && cur.right == null) {
                     if (sum == cur.val) {
                         return true;
                     }
