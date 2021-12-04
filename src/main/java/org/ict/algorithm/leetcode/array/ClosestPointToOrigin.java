@@ -6,7 +6,8 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 /**
- * Given a set of points in a cartesian plane, and a start point , find the k closest points to the starting point.
+ * Given a set of points in a cartesian plane, and a start point ,
+ * find the k closest points to the starting point.
  * Points = [(1,2),(2,3),(4,6),(7,9)]
  * Start Point = (2,2)
  * Find 2 closest points to start point.
@@ -132,19 +133,16 @@ public class ClosestPointToOrigin {
 	 */
 	public List<Point> closestPoints(List<Point> points, int k) {
 		List<Point> result = new ArrayList<>();
-		PriorityQueue<Point> maxHeap = new PriorityQueue<>(k, new Comparator<Point>() {
+		// Find top k minimum in points using max-heap
+		PriorityQueue<Point> maxHeap = new PriorityQueue<>(k, (p1, p2) -> {
+			double d1 = getDistance(p1);
+			double d2 = getDistance(p2);
 
-			// Find top k maximum in points using min-heap
-			@Override
-			public int compare(Point p1, Point p2) {
-				double d1 = getDistance(p1);
-				double d2 = getDistance(p2);
-				
-				if (d1 == d2) {
-					return 0;
-				}
-				return (d1 < d2? 1 : -1);
-			}});
+			if (d1 == d2) {
+				return 0;
+			}
+			return (d1 < d2? 1 : -1);
+		});
 		
 		for (int i = 0; i < points.size(); i++) {
 			Point p = points.get(i);
