@@ -20,7 +20,7 @@ import java.util.*;
  *
  * @author sniper
  * @date 2021/12/1
- * LC1022
+ * LC1022 similarly with LC1290 BinaryNumberOfLinkedListToInteger
  */
 public class SumOfRootToLeafBinaryNumbers {
 
