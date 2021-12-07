@@ -1,7 +1,5 @@
 package org.ict.algorithm.leetcode.tree;
 
-import org.ict.algorithm.leetcode.breadthfirstsearch.BinaryTreeLevelOrderTraversal;
-
 import java.util.*;
 
 /**
@@ -40,18 +38,57 @@ public class SumOfRootToLeafBinaryNumbers {
         middle2.right = leaf4;
         root.left = middle1;
         root.right = middle2;
-        List<List<Integer>> result = bfs(root);
+        List<List<Integer>> result = levelOrder(root);
         System.out.println(result);
     }
 
     public int sumRootToLeaf(TreeNode root) {
-        if (null == root) {
-            return 0;
-        }
-        return 0;
+        return dfs(root, 0);
     }
 
-    public static List<List<Integer>> bfs(TreeNode root) {
+    /**
+     * Intuition
+     * Easily decompose this problem into 2 sub-problem:
+     *
+     * Find all path from root to leaves. DFS recursion should help do that.
+     * Transform a path from base to base 10.
+     * You can do this separately, and it will be a O(N^2) solution.
+     * In my solution, I combine them together.
+     *
+     * Explanation:
+     * We recursively pass the current value of path to the children.
+     * If root == null, no value, return 0.
+     * If root != null,
+     * we double the value from its parent and add the node's value,
+     * like the process of transforming base 2 to base 10.
+     * 1  ->  2^0=1
+     * 11  ->  1*2+1=2^1+1=2^2-1
+     * 111  ->  (1*2+1)*2+1=2^2+2^1+1=2^3-1
+     * 1111  ->  ((1*2+1)*2+1)*2+1=2^3+2^2+2^1+1=2^4-1
+     *
+     * In the end of recursion,
+     * if root.left == root.right == null,
+     * return the current val.
+     *
+     *
+     * Complexity:
+     * Time O(N)
+     * Space O(H) for recursion.
+     * @author lee215
+     *
+     * @param root
+     * @param val
+     * @return
+     */
+    public int dfs(TreeNode root, int val) {
+        if (root == null) {
+            return 0;
+        }
+        val = val * 2 + root.val;
+        return root.left == root.right ? val : dfs(root.left, val) + dfs(root.right, val);
+    }
+
+    public static List<List<Integer>> levelOrder(TreeNode root) {
         List<List<Integer>> result = new ArrayList<>();
         if (root == null) {
             return result;
@@ -70,17 +107,15 @@ public class SumOfRootToLeafBinaryNumbers {
                 temp.add(cur.val);
                 if (cur.left != null) {
                     queue.add(cur.left);
-
                 }
                 if (cur.right != null) {
                     queue.add(cur.right);
                 }
             }
-            //result.add(temp);
+            result.add(temp);
         }
         return result;
     }
-
 
 
 }
