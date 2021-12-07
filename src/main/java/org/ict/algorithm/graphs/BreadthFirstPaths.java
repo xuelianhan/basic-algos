@@ -56,14 +56,21 @@ import org.ict.algorithm.util.StdOut;
 public class BreadthFirstPaths {
 
     private static final int INFINITY = Integer.MAX_VALUE;
-    // marked[v] = is there an s-v path
+
+    /**
+     * marked[v] = is there an s-v path
+     */
     private boolean[] marked;
 
-    //edgeTo[v] = previous edge on shortest s-v path
-    // It also means last vertex on known path to this vertex
+    /**
+     * edgeTo[v] = previous edge on shortest s-v path
+     * It also means last vertex on known path to this vertex
+     */
     private int[] edgeTo;
 
-    // distTo[v] = number of edges shortest s-v path
+    /**
+     * distTo[v] = number of edges shortest s-v path
+     */
     private int[] distTo;
 
     /**

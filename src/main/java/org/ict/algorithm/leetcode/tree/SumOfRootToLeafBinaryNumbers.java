@@ -38,11 +38,11 @@ public class SumOfRootToLeafBinaryNumbers {
         middle2.right = leaf4;
         root.left = middle1;
         root.right = middle2;
-        List<List<Integer>> result = levelOrder(root);
+        int result = sumRootToLeaf(root);
         System.out.println(result);
     }
 
-    public int sumRootToLeaf(TreeNode root) {
+    public static int sumRootToLeaf(TreeNode root) {
         return dfs(root, 0);
     }
 
@@ -80,41 +80,13 @@ public class SumOfRootToLeafBinaryNumbers {
      * @param val
      * @return
      */
-    public int dfs(TreeNode root, int val) {
+    public static int dfs(TreeNode root, int val) {
         if (root == null) {
             return 0;
         }
+        //Double the value from its parent and add the node's value
         val = val * 2 + root.val;
         return root.left == root.right ? val : dfs(root.left, val) + dfs(root.right, val);
-    }
-
-    public static List<List<Integer>> levelOrder(TreeNode root) {
-        List<List<Integer>> result = new ArrayList<>();
-        if (root == null) {
-            return result;
-        }
-        Queue<TreeNode> queue = new LinkedList<>();
-        queue.add(root);
-        while (!queue.isEmpty()) {
-            /* queue size indicates number of nodes at each level */
-            int size = queue.size();
-            LinkedList<Integer> temp = new LinkedList<>();
-            for (int i = 0; i < size; i++) {
-                TreeNode cur = queue.poll();
-                if (cur.left == null && cur.right == null) {
-                    result.add(temp);
-                }
-                temp.add(cur.val);
-                if (cur.left != null) {
-                    queue.add(cur.left);
-                }
-                if (cur.right != null) {
-                    queue.add(cur.right);
-                }
-            }
-            result.add(temp);
-        }
-        return result;
     }
 
 
