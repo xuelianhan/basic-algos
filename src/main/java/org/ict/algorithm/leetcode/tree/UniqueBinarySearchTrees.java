@@ -77,14 +77,37 @@ public class UniqueBinarySearchTrees {
      * C(0) = 1, as there is exactly 1 way to make a BST with 0 nodes.
      * C(1) = 1, as there is exactly 1 way to make a BST with 1 node.
      *
-     * 𝐶(𝑛)=∑𝑖=1𝑛𝐶(𝑖−1)𝐶(𝑛−𝑖)
+     * 𝐶(𝑛)=∑𝑖=1->𝑛:𝐶(𝑖−1)𝐶(𝑛−𝑖)
+     *
+     * @see <a href="https://en.wikipedia.org/wiki/Binomial_coefficient"></a>
      *
      * The above summation dissolves into Catalan Number.
+     * (2n n)/(n+1)
      * @param n
      * @return
      */
-    public int numTreesV2(int n) {
-        return 0;
+    public static int numTreesV2(int n) {
+        int nf = factorial(n);
+        System.out.println("nf:" + nf);
+        int res = 1;
+        for (int i = (n + 2); i<= 2*n; i++) {
+            res *= i;
+        }
+        System.out.println("res:" + res);
+        return res / nf;
+    }
+
+    public static void main(String[] args) {
+        int res = numTreesV2(5);
+        System.out.println(res);
+    }
+
+    public static int factorial(int n) {
+        int res = 1;
+        for (int i = 2; i <= n; i++) {
+            res *= i;
+        }
+        return res;
     }
 
     /**
