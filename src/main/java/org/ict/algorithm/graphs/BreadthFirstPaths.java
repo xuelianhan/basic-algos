@@ -56,14 +56,21 @@ import org.ict.algorithm.util.StdOut;
 public class BreadthFirstPaths {
 
     private static final int INFINITY = Integer.MAX_VALUE;
-    // marked[v] = is there an s-v path
+
+    /**
+     * marked[v] = is there an s-v path
+     */
     private boolean[] marked;
 
-    //edgeTo[v] = previous edge on shortest s-v path
-    // It also means last vertex on known path to this vertex
+    /**
+     * edgeTo[v] = previous edge on shortest s-v path
+     * It also means last vertex on known path to this vertex
+     */
     private int[] edgeTo;
 
-    // distTo[v] = number of edges shortest s-v path
+    /**
+     * distTo[v] = number of edges shortest s-v path
+     */
     private int[] distTo;
 
     /**
@@ -104,7 +111,11 @@ public class BreadthFirstPaths {
         bfs(G, sources); 
     }
 
-    // breadth-first search from a single source
+    /**
+     * breadth-first search from a single source
+     * @param G
+     * @param s
+     */
     private void bfs(Graph G, int s) {
         Queue<Integer> q = new Queue<Integer>();
         for (int v = 0; v < G.V(); v++) {
@@ -127,7 +138,11 @@ public class BreadthFirstPaths {
         }
     }
 
-    // breadth-first search from multiple sources
+    /**
+     *  breadth-first search from multiple sources
+     * @param G
+     * @param sources
+     */
     private void bfs(Graph G, Iterable<Integer> sources) {
         Queue<Integer> q = new Queue<Integer>();
         for (int s : sources) {
