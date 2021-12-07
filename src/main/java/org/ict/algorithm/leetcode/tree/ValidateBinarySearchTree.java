@@ -28,7 +28,24 @@ package org.ict.algorithm.leetcode.tree;
  */
 public class ValidateBinarySearchTree {
 
+    /**
+     * [5,4,6,null,null,3,7]
+     * Expect: false
+     *
+     * @param root
+     * @return
+     */
     public boolean isValidBST(TreeNode root) {
-        return false;
+        return isValidBST(root, Long.MIN_VALUE, Long.MAX_VALUE);
+    }
+
+    public boolean isValidBST(TreeNode root, long min, long max) {
+        if (null == root) {
+            return true;
+        }
+        if (root.val >= max || root.val <= min) {
+            return false;
+        }
+        return isValidBST(root.left, min, root.val) && isValidBST(root.right, root.val, max);
     }
 }
