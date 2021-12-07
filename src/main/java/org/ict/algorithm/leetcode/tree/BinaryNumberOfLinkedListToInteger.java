@@ -14,7 +14,7 @@ package org.ict.algorithm.leetcode.tree;
  * Each node's value is either 0 or 1.
  * @author sniper
  * @date 2021/12/7
- * LC1290
+ * LC1290 similar with BinaryTreePaths.java
  */
 public class BinaryNumberOfLinkedListToInteger {
 

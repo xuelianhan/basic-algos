@@ -1,5 +1,10 @@
 package org.ict.algorithm.leetcode.tree;
 
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Deque;
+import java.util.List;
+
 /**
  * Given the root of a binary tree, determine if it is a valid binary search tree (BST).
  *
@@ -27,6 +32,32 @@ package org.ict.algorithm.leetcode.tree;
  * LC98
  */
 public class ValidateBinarySearchTree {
+
+    /**
+     * Inorder-traversal
+     * @param root
+     * @return
+     */
+    public boolean isValidBSTV2(TreeNode root) {
+        TreeNode pre = null;
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        TreeNode cur = root;
+        while(!stack.isEmpty() || cur != null) {
+            if(cur != null) {
+                stack.push(cur);
+                cur = cur.left;
+            } else {
+                TreeNode node = stack.pop();
+                // Check after all left children
+                if (pre != null && (pre.val >= node.val)) {
+                    return false;
+                }
+                pre = node;
+                cur = node.right;
+            }
+        }
+        return true;
+    }
 
     /**
      * [5,4,6,null,null,3,7]
