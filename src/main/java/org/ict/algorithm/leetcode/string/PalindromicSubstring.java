@@ -67,8 +67,9 @@ public class PalindromicSubstring {
     }
 
     public int countSubstringsV2(String s) {
-        if(s.length()==0)
+        if(s.length() == 0) {
             return 0;
+        }
         int total = 0;
         for(int i = 0; i < s.length(); i++){
             /**
@@ -83,12 +84,12 @@ public class PalindromicSubstring {
         return total;
     }
 
+    /**
+     * Check for the palindrome string
+     */
     private int checkPalindrome(String s, int i, int j) {
         int total = 0;
-        /**
-         * Check for the palindrome string
-         */
-        while(i>= 0 && j< s.length() && s.charAt(i)==s.charAt(j)) {
+        while( i>= 0 && j < s.length() && s.charAt(i) == s.charAt(j)) {
             /**
              * Increment the count if palindromin substring found
              */
