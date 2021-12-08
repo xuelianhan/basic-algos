@@ -120,6 +120,13 @@ public class PalindromicSubstring {
         return total;
     }
 
+    /**
+     * Double-Pointer to check s from lo to hi is palindrome or not.
+     * @param s
+     * @param lo
+     * @param hi
+     * @return
+     */
     private boolean isPalindrome(String s, int lo, int hi) {
         while (lo < hi) {
             if (s.charAt(lo) != s.charAt(hi)) {
