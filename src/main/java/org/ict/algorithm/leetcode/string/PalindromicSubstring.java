@@ -25,6 +25,7 @@ package org.ict.algorithm.leetcode.string;
  *
  * @see <a href="https://www.geeksforgeeks.org/count-palindrome-sub-strings-string/></a>
  *
+ * @author sniper
  * LC647
  */
 public class PalindromicSubstring {
@@ -37,20 +38,26 @@ public class PalindromicSubstring {
 
         int n = s.length();
         boolean[][] dp = new boolean[n][n];
-
-        // one letter
+        /**
+         * one letter
+         */
         for (int i = 0; i < n; i++, total++) {
             dp[i][i] = true;
         }
 
-        // two letters
+        /**
+         * two letters
+         */
         for (int i = 0; i < n - 1; i++) {
             dp[i][i+1] = (s.charAt(i) == s.charAt(i+1) ? true : false);
             total += (dp[i][i+1] ? 1 : 0);
         }
 
-        //three letters and above
-        for (int gap = 3; gap <= n; gap++) {//notice: gap can be up to n
+        /**
+         * three letters and above
+         * notice: gap can be up to n
+         */
+        for (int gap = 3; gap <= n; gap++) {
             for (int i = 0, j = i + gap - 1; j < n; i++, j++) {
                 dp[i][j] = ((dp[i+1][j-1]) && (s.charAt(i) == s.charAt(j)));
                 total += (dp[i][j] ? 1 : 0);
@@ -64,18 +71,36 @@ public class PalindromicSubstring {
             return 0;
         int total = 0;
         for(int i = 0; i < s.length(); i++){
-            total += checkPalindrome(s, i, i);     //To check the palindrome of odd length palindromic sub-string
-            total += checkPalindrome(s, i, i+1);   //To check the palindrome of even length palindromic sub-string
+            /**
+             * To check the palindrome of odd length palindromic sub-string
+             */
+            total += checkPalindrome(s, i, i);
+            /**
+             * To check the palindrome of even length palindromic sub-string
+             */
+            total += checkPalindrome(s, i, i+1);
         }
         return total;
     }
 
     private int checkPalindrome(String s, int i, int j) {
         int total = 0;
-        while(i>= 0 && j< s.length() && s.charAt(i)==s.charAt(j)) {    //Check for the palindrome string
-            total++;    //Increment the count if palindromin substring found
-            i--;    //To trace string in left direction
-            j++;    //To trace string in right direction
+        /**
+         * Check for the palindrome string
+         */
+        while(i>= 0 && j< s.length() && s.charAt(i)==s.charAt(j)) {
+            /**
+             * Increment the count if palindromin substring found
+             */
+            total++;
+            /**
+             * To trace string in left direction
+             */
+            i--;
+            /**
+             * To trace string in right direction
+             */
+            j++;
         }
         return total;
     }
