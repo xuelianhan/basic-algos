@@ -1,5 +1,6 @@
 package org.ict.algorithm.leetcode.tree;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,6 +24,10 @@ import java.util.List;
 public class UniqueBinarySearchTreesTwo {
 
     public List<TreeNode> generateTrees(int n) {
-        return null;
+        List<TreeNode> list = new ArrayList<>();
+        for (int i = 1; i <= n; i++) {
+
+        }
+        return list;
     }
 }
