@@ -36,7 +36,7 @@ package org.ict.algorithm.leetcode.string;
  * LC28
  *
  */
-public class ImplementstrStr {
+public class ImplementStrIndexOf {
 
     public int strStr(String haystack, String needle) {
         if (null == haystack || null == needle || haystack.length() == 0 || needle.length() == 0) {
