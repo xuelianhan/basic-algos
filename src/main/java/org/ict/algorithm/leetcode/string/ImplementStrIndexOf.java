@@ -38,24 +38,47 @@ package org.ict.algorithm.leetcode.string;
  */
 public class ImplementStrIndexOf {
 
+    /**
+     * "mississippi"
+     * "issip"
+     * expected 4
+     *
+     * ""
+     * "a"
+     * expected -1
+     *
+     * @param haystack
+     * @param needle
+     * @return
+     */
     public int strStr(String haystack, String needle) {
-        if (null == haystack || null == needle || haystack.length() == 0 || needle.length() == 0) {
+        if (null == needle || needle.length() == 0) {
+            //needle = ""
             return 0;
         }
-        if (needle.length() > haystack.length()) {
+        if (needle.length() > 0 &&  (haystack == null || haystack.length() == 0)) {
+            //haystack = "", needle = "a"
             return -1;
         }
         char[] a = haystack.toCharArray();
         char[] b = needle.toCharArray();
+        int index = -1;
+        int step = 0;
+        int j = 0;
+        // start compare one by one from left to right
         for (int i = 0; i < a.length; i++) {
-            for (int j = i; j < b.length; j++) {
-                if (a[i] == a[j]) {
-
-                } else {
-
+            step++;
+            if (b[j] == a[i]) {
+                if (j == b.length - 1) {
+                    index = step - b.length;
+                    break;
                 }
+                j++;
+            } else {
+                // if not match, back to start of needle
+                j = 0;
             }
         }
-        return -1;
+        return index;
     }
 }
