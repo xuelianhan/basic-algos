@@ -3,6 +3,7 @@ package org.ict.algorithm.leetcode.string;
 /**
  * @author sniper
  * similar like LC67
+ * LC415
  */
 public class AddDecimal {
 
@@ -11,6 +12,20 @@ public class AddDecimal {
         String b = "121";
         String c = addDecimal(a, b);
         System.out.println(c);
+    }
+
+    public String addDecimalV2(String a, String b) {
+        StringBuilder sb = new StringBuilder();
+        int i = a.length() - 1, j = b.length() -1, carry = 0;
+        while (i >= 0 || j >= 0) {
+            int sum = carry;
+            if (j >= 0) sum += b.charAt(j--) - '0';
+            if (i >= 0) sum += a.charAt(i--) - '0';
+            sb.append(sum % 10);
+            carry = sum / 10;
+        }
+        if (carry != 0) sb.append(carry);
+        return sb.reverse().toString();
     }
 
     public static String addDecimal(String a, String b) {

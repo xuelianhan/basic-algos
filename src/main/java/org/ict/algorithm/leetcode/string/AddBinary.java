@@ -44,6 +44,20 @@ public class AddBinary {
         System.out.println((char)(9 % 2 + '0'));//1
     }
 
+    public String addBinaryV2(String a, String b) {
+        StringBuilder sb = new StringBuilder();
+        int i = a.length() - 1, j = b.length() -1, carry = 0;
+        while (i >= 0 || j >= 0) {
+            int sum = carry;
+            if (j >= 0) sum += b.charAt(j--) - '0';
+            if (i >= 0) sum += a.charAt(i--) - '0';
+            sb.append(sum % 2);
+            carry = sum / 2;
+        }
+        if (carry != 0) sb.append(carry);
+        return sb.reverse().toString();
+    }
+
     public String addBinary(String a, String b) {
         String result = "";
         // digit sum
@@ -70,6 +84,7 @@ public class AddBinary {
              * if s is 1 or 3 then add 1 to result
              */
             result = (char)(s % 2  + '0') + result;
+            //result = s % 2 + result;// this is right too.
             /**
              * Compute the carry
              */
