@@ -25,19 +25,60 @@ package org.ict.algorithm.leetcode.string;
  */
 public class AddBinary {
 
+    public static void main(String[] args) {
+        int s = 60;
+        char i = '0';
+        char j = '1';
+        System.out.println((int)'0');//48
+        System.out.println((int)'1');//49
+        System.out.println(s + i);//108
+        System.out.println(s + j);//109
+        System.out.println(s - '0' + i);//60
+        System.out.println(s - '0' +j);//61
+        System.out.println(8 % 2);//0
+        System.out.println(8 % 2 + '0');//48
+        System.out.println((char)(8 % 2 + '0'));//0
+
+        System.out.println(9 % 2);//1
+        System.out.println(9 % 2 + '0');//49
+        System.out.println((char)(9 % 2 + '0'));//1
+    }
+
     public String addBinary(String a, String b) {
         String result = "";
         // digit sum
         int s = 0;
         int i = a.length() - 1, j = b.length() - 1;
-        char[] arrayA = a.toCharArray();
-        char[] arrayB = b.toCharArray();
-
         /**
          * traverse both strings from last position
+         * char '0' ascii code is 48
+         * char '1' ascii code is 49
+         * So sum of char and int must be subtracted with char '0'
+         * s == 1 means recently sum has carry
          */
-        while (i > 0 || j > 0) {
+        while (i >= 0 || j >= 0 || s == 1) {
+            /**
+             * add the digit of A if exist
+             *
+             */
+            s += (i >= 0) ? a.charAt(i) - '0': 0;
+            /**
+             * add the digit of B if exist
+             */
+            s += (j >= 0) ? b.charAt(j) - '0': 0;
+            /**
+             * if s is 1 or 3 then add 1 to result
+             */
+            result = (char)(s % 2  + '0') + result;
+            /**
+             * Compute the carry
+             */
+            s /= 2;
 
+            /**
+             * Move to the next digits
+             */
+            i--;j--;
         }
         return result;
     }
