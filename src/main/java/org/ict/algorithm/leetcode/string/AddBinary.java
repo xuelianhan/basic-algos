@@ -37,7 +37,7 @@ public class AddBinary {
          * traverse both strings from last position
          */
         while (i > 0 || j > 0) {
-            
+
         }
         return result;
     }

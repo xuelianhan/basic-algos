@@ -47,12 +47,15 @@ public class ImplementStrIndexOf {
         System.out.println(strStr(haystack, needle));
     }
 
+
     /**
-     * 0 1 2 3 4
-     * h e l l o
-     * l l<--
-     *   l l<--
-     *     l l<--
+     * "mississippi"
+     * "issip"
+     * expected 4
+     *
+     * ""
+     * "a"
+     * expected -1
      *
      * @param haystack
      * @param needle
