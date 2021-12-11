@@ -38,24 +38,58 @@ package org.ict.algorithm.leetcode.string;
  */
 public class ImplementStrIndexOf {
 
-    public int strStr(String haystack, String needle) {
-        if (null == haystack || null == needle || haystack.length() == 0 || needle.length() == 0) {
+    public static void main(String[] args) {
+        /**
+         * expected 4, but output -1
+         */
+        String haystack = "mississippi";
+        String needle = "issip";
+        System.out.println(strStr(haystack, needle));
+    }
+
+    /**
+     * 0 1 2 3 4
+     * h e l l o
+     * l l<--
+     *   l l<--
+     *     l l<--
+     *
+     * @param haystack
+     * @param needle
+     * @return
+     */
+    public static int strStr(String haystack, String needle) {
+        if ( null == needle || needle.length() == 0) {
+            //corner case 1: ("a", "") or ("", "")
             return 0;
         }
-        if (needle.length() > haystack.length()) {
+        if (needle.length() > 0 && (haystack == null || haystack.length() == 0)) {
+            // corner case 2: ("", "a")
             return -1;
         }
         char[] a = haystack.toCharArray();
         char[] b = needle.toCharArray();
-        for (int i = 0; i < a.length; i++) {
-            for (int j = i; j < b.length; j++) {
-                if (a[i] == a[j]) {
-
-                } else {
-
+        int index = -1;
+        int matched = 0;
+        int j = 0;
+        // start compare one by one from left to right
+        for (int i = 0; i < a.length;) {
+            if (b[j] == a[i]) {
+                matched++;
+                if (j == b.length - 1) {
+                    index = i - b.length + 1;
+                    break;
                 }
+                j++;
+                i++;
+            } else {
+                // if not match, j back to start of needle
+                // i back to the next round
+                i = i - matched + 1;
+                j = 0;
+                matched = 0;
             }
         }
-        return -1;
+        return index;
     }
 }
