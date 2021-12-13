@@ -42,28 +42,30 @@ package org.ict.algorithm.leetcode.string;
 public class ExcelSheetColumnTitle {
 
     public static void main(String[] args) {
-        System.out.println(convertToTitle(1));//A
-        System.out.println(convertToTitle(28));//
-        System.out.println(convertToTitle(701));//
+        //System.out.println((int)'A');
+        //System.out.println(convertToTitle(1));//A
+        //System.out.println(convertToTitle(27));//AA
+        //System.out.println(convertToTitle(28));//AB
+        System.out.println(convertToTitle(701));//ZY
     }
 
     public static String convertToTitle(int n) {
-        char[] a = charArray();
         String s = "";
         if(n < 26) {
-            s = a[n-1] + "";
+            s = String.valueOf((char)(n - 1 + 'A'));
         } else {
-            s = a[n % 26] + "";
-            //todo
+           while (n > 0) {
+               // store remainder in r;
+               int r = n % 26;
+               System.out.println("n:" + n + ", r:" + r + ", char:" +convertNumberToAlphabet(r));
+               n = n / 26;
+               s = convertNumberToAlphabet(r) + s;
+           }
         }
         return s;
     }
 
-    public static char[] charArray() {
-        char[] a = new char[26];
-        for (int i = 0; i < 26; i++) {
-            a[i] = (char)(65 + i);//a's ascii code is 65
-        }
-        return a;
+    public static String convertNumberToAlphabet(int n) {
+        return String.valueOf((char)(n - 1 + 'A'));
     }
 }
