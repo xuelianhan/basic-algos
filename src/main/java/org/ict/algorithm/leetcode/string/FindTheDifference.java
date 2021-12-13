@@ -52,6 +52,30 @@ public class FindTheDifference {
      * @param t
      * @return
      */
+    public char findTheDifferenceV2(String s, String t) {
+        int[] c = new int[26];
+        char[] S = s.toCharArray();
+        char[] T = t.toCharArray();
+        for (int i = 0; i < S.length; i++) {
+            c[S[i] - 'a']++;
+        }
+        for (int i = 0; i < T.length; i++) {
+            c[T[i] - 'a']--;
+        }
+        for(int i = 0; i < c.length; i++) {
+            if (c[i] != 0) {
+                return (char)(i + 'a');
+            }
+        }
+        return '0';
+    }
+
+    /**
+     *
+     * @param s
+     * @param t
+     * @return
+     */
     public char findTheDifference(String s, String t) {
         if (s.length() == 0 && t.length() == 1) {
             return t.charAt(0);
