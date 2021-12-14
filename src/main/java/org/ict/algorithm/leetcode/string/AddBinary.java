@@ -68,7 +68,7 @@ public class AddBinary {
          * char '0' ascii code is 48
          * char '1' ascii code is 49
          * So sum of char and int must be subtracted with char '0'
-         * carray == 1 means recently sum has carry
+         * s == 1 means recently sum has carry
          */
         while (i >= 0 || j >= 0 || s == 1) {
             /**

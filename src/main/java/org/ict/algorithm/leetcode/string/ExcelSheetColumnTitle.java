@@ -42,8 +42,11 @@ package org.ict.algorithm.leetcode.string;
 public class ExcelSheetColumnTitle {
 
     public static void main(String[] args) {
-        //System.out.println((int)'A');
+        //System.out.println((int)'A');//65
+        //System.out.println((int)'Z');//90
         //System.out.println(convertToTitle(1));//A
+        //System.out.println(convertToTitle(25));//Y
+        //System.out.println(convertToTitle(26));//Z
         //System.out.println(convertToTitle(27));//AA
         //System.out.println(convertToTitle(28));//AB
         System.out.println(convertToTitle(701));//ZY
@@ -51,16 +54,25 @@ public class ExcelSheetColumnTitle {
 
     public static String convertToTitle(int n) {
         String s = "";
-        if(n < 26) {
+
+        if(n <= 26) {
             s = String.valueOf((char)(n - 1 + 'A'));
         } else {
-           while (n > 0) {
-               // store remainder in r;
-               int r = n % 26;
-               System.out.println("n:" + n + ", r:" + r + ", char:" +convertNumberToAlphabet(r));
-               n = n / 26;
-               s = convertNumberToAlphabet(r) + s;
-           }
+            StringBuffer sb = new StringBuffer();
+            while (n > 0) {
+                // store remainder in r;
+                int r = n % 26 ;
+                sb.append(r);
+                sb.append(",");
+                //System.out.println("n:" + n + ", r:" + r + ", char:" +convertNumberToAlphabet(r));
+                n = n / 26;
+                //s = convertNumberToAlphabet(r) + s;
+                //System.out.println("s:" + s);
+            }
+            String[] a = sb.toString().split(",");
+            for (int i = a.length - 1; i >= 0; i--) {
+                System.out.println(a[i]);
+            }
         }
         return s;
     }
