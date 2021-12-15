@@ -54,16 +54,16 @@ public class ExcelSheetColumnTitle {
 
     public static String convertToTitle(int n) {
         String s = "";
-
         if(n <= 26) {
             s = String.valueOf((char)(n - 1 + 'A'));
         } else {
             StringBuffer sb = new StringBuffer();
             while (n > 0) {
-                // store remainder in r;
+                // store remainder in r, remainder is between [0, 25];
                 int r = n % 26 ;
                 sb.append(r);
                 sb.append(",");
+                System.out.println("n:" + n + ", r:" + r);
                 //System.out.println("n:" + n + ", r:" + r + ", char:" +convertNumberToAlphabet(r));
                 n = n / 26;
                 //s = convertNumberToAlphabet(r) + s;
