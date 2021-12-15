@@ -56,39 +56,19 @@ public class ExcelSheetColumnTitle {
         //System.out.println(convertToT     itle(2147483647));//FXSHRXW
     }
 
-    public static String convertToTitle(int n) {
-        if(n <= 26) {
-            return convertNumberToAlphabet(n);
-        }
-        String s = "";
-        int r = n % 26;
-        if (r != 0) {
-            while (n > 26) {
-                // store remainder in r;
-                r = n % 26 ;
-                n = n / 26;
-                if (r > 0) {
-                    s = convertNumberToAlphabet(r) + s;
-                }
-            }
-            if (n >= 1) {
-                s = convertNumberToAlphabet(n) + s;
-            }
-        } else {
-            s = convertNumberToAlphabet(26) + s;
-            int q = n / 26;
-            if ((q - 1) <= 26) {
-                s = convertNumberToAlphabet(q - 1) + s;
-            } else {
-
-            }
-        }
-
-        System.out.println("s:" + s);
-        return s;
+    public static String convertToTitleV2(int n) {
+        return n == 0 ? "" : convertToTitleV2((n - 1) / 26) + (char) ((n - 1) % 26 + 'A');
     }
 
-    public static String convertNumberToAlphabet(int n) {
-        return String.valueOf((char)(n - 1 + 'A'));
+    public static String convertToTitle(int n) {
+        StringBuilder result = new StringBuilder();
+        while(n > 0){
+            //very important, this convert n to n - 1.
+            // n = n - 1;
+            n--;
+            result.insert(0, (char)('A' + n % 26));
+            n /= 26;
+        }
+        return result.toString();
     }
 }
