@@ -49,31 +49,31 @@ public class ExcelSheetColumnTitle {
         //System.out.println(convertToTitle(26));//Z
         //System.out.println(convertToTitle(27));//AA
         //System.out.println(convertToTitle(28));//AB
-        System.out.println(convertToTitle(701));//ZY
+        //System.out.println(convertToTitle(701));//ZY
+        //System.out.println(convertToTitle(5000));//GJH
+        System.out.println(convertToTitle(52));//AZ
+        //System.out.println(convertToT     itle(2147483647));//FXSHRXW
     }
 
     public static String convertToTitle(int n) {
-        String s = "";
         if(n <= 26) {
-            s = String.valueOf((char)(n - 1 + 'A'));
-        } else {
-            StringBuffer sb = new StringBuffer();
-            while (n > 0) {
-                // store remainder in r, remainder is between [0, 25];
-                int r = n % 26 ;
-                sb.append(r);
-                sb.append(",");
-                System.out.println("n:" + n + ", r:" + r);
-                //System.out.println("n:" + n + ", r:" + r + ", char:" +convertNumberToAlphabet(r));
-                n = n / 26;
-                //s = convertNumberToAlphabet(r) + s;
-                //System.out.println("s:" + s);
-            }
-            String[] a = sb.toString().split(",");
-            for (int i = a.length - 1; i >= 0; i--) {
-                System.out.println(a[i]);
+            return String.valueOf((char)(n - 1 + 'A'));
+        }
+        String s = "";
+        while (n > 26) {
+            // store remainder in r;
+            int r = n % 26 ;
+            n = n / 26;
+            if (r > 0) {
+                s = convertNumberToAlphabet(r) + s;
+            } else {
+                //todo
             }
         }
+        if (n >= 1) {
+            s = convertNumberToAlphabet(n) + s;
+        }
+        System.out.println("s:" + s);
         return s;
     }
 
