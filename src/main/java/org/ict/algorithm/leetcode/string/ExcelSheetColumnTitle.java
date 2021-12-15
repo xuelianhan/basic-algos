@@ -66,6 +66,7 @@ public class ExcelSheetColumnTitle {
             //very important, this convert n to n - 1.
             // n = n - 1;
             n--;
+            //insert at the head
             result.insert(0, (char)('A' + n % 26));
             n /= 26;
         }
