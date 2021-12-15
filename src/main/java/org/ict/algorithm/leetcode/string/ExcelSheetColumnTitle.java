@@ -51,28 +51,39 @@ public class ExcelSheetColumnTitle {
         //System.out.println(convertToTitle(28));//AB
         //System.out.println(convertToTitle(701));//ZY
         //System.out.println(convertToTitle(5000));//GJH
-        System.out.println(convertToTitle(52));//AZ
+        //System.out.println(convertToTitle(52));//AZ
+        System.out.println(convertToTitle(28*26));//AAZ
         //System.out.println(convertToT     itle(2147483647));//FXSHRXW
     }
 
     public static String convertToTitle(int n) {
         if(n <= 26) {
-            return String.valueOf((char)(n - 1 + 'A'));
+            return convertNumberToAlphabet(n);
         }
         String s = "";
-        while (n > 26) {
-            // store remainder in r;
-            int r = n % 26 ;
-            n = n / 26;
-            if (r > 0) {
-                s = convertNumberToAlphabet(r) + s;
+        int r = n % 26;
+        if (r != 0) {
+            while (n > 26) {
+                // store remainder in r;
+                r = n % 26 ;
+                n = n / 26;
+                if (r > 0) {
+                    s = convertNumberToAlphabet(r) + s;
+                }
+            }
+            if (n >= 1) {
+                s = convertNumberToAlphabet(n) + s;
+            }
+        } else {
+            s = convertNumberToAlphabet(26) + s;
+            int q = n / 26;
+            if ((q - 1) <= 26) {
+                s = convertNumberToAlphabet(q - 1) + s;
             } else {
-                //todo
+
             }
         }
-        if (n >= 1) {
-            s = convertNumberToAlphabet(n) + s;
-        }
+
         System.out.println("s:" + s);
         return s;
     }
