@@ -1,5 +1,11 @@
 package org.ict.algorithm.leetcode.string;
 
+import org.checkerframework.checker.units.qual.C;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Given two strings s and t, determine if they are isomorphic.
  *
@@ -34,7 +40,12 @@ package org.ict.algorithm.leetcode.string;
  */
 public class IsomorphicString {
 
-    
+    public static void main(String[] args) {
+        String s = "title";
+        String t = "paper";
+        System.out.println(isIsomorphicV2(s, t));
+    }
+
 
     /**
      * Instead of directly mapping 'e' to 'a',
@@ -45,6 +56,49 @@ public class IsomorphicString {
      * 'g' -> 2,
      * and 'd' -> 2,
      * this works same.
+
+
+    /**
+     * The idea is that we need to map a char to another one,
+     * for example, "egg" and "add",
+     * we need to constract the mapping 'e' -> 'a' and 'g' -> 'd'.
+     * Instead of directly mapping 'e' to 'a',
+     * another way is to mark them with same value,
+     * for example, 'e' -> 1, 'a'-> 1, and 'g' -> 2, 'd' -> 2,
+     * this works same.
+     *
+     * So we use two arrays here m1 and m2,
+     * initialized space is 256 (Since the whole ASCII size is 256, 128 also works here).
+     * Traverse the character of both s and t on the same position,
+     * if their mapping values in m1 and m2 are different,
+     * means they are not mapping correctly, returen false;
+     * else we construct the mapping, since m1 and m2 are both initialized as 0,
+     * we want to use a new value when i == 0,
+     * so i + 1 works here.
+     * @return
+     */
+    public static boolean isIsomorphicV2(String s, String t) {
+        int[] m1 = new int[256];
+        int[] m2 = new int[256];
+        for(int i = 0; i < 256; i++) {
+            m1[i] = 0;
+            m2[i] = 0;
+        }
+        for(int i = 0; i < s.length(); ++i) {
+            if (m1[s.charAt(i)] != m2[t.charAt(i)])  {
+                return false;
+            }
+            m1[s.charAt(i)] = i + 1;
+            m2[t.charAt(i)] = i + 1;
+        }
+        System.out.println(Arrays.toString(m1));
+        System.out.println(Arrays.toString(m2));
+        return true;
+    }
+
+
+    /**
+     * Use hash map
      * @param s
      * @param t
      * @return
@@ -53,15 +107,21 @@ public class IsomorphicString {
         if (s.equalsIgnoreCase(t)) {
             return true;
         }
-        int[] m1 = new int[256];
-        int[] m2 = new int[256];
-        int n = s.length();
-        for (int i = 0; i < n; i++) {
-            if (m1[s.charAt(i)] != m2[t.charAt(i)]) {
-                return false;
+        Map<Character, Character> map = new HashMap<>();
+        for(int i = 0; i < s.length(); i++) {
+            char cs = s.charAt(i);
+            char ct = t.charAt(i);
+            if (map.get(cs) == null) {
+                if (map.values().contains(ct)) {
+                    return false;
+                }
+                map.put(cs, ct);
+            } else {
+                char v = map.get(cs);
+                if (v != ct) {
+                    return false;
+                }
             }
-            m1[s.charAt(i)] = i + 1;
-            m2[t.charAt(i)] = i + 1;
         }
         return true;
     }
