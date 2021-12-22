@@ -2,6 +2,7 @@ package org.ict.algorithm.leetcode.string;
 
 import org.checkerframework.checker.units.qual.C;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,7 +11,9 @@ import java.util.Map;
  *
  * Two strings s and t are isomorphic if the characters in s can be replaced to get t.
  *
- * All occurrences of a character must be replaced with another character while preserving the order of characters. No two characters may map to the same character, but a character may map to itself.
+ * All occurrences of a character must be replaced with another character while preserving the order of characters.
+ * No two characters may map to the same character,
+ * but a character may map to itself.
  *
  *
  *
@@ -30,7 +33,7 @@ import java.util.Map;
  *
  * Constraints:
  *
- * 1 <= s.length <= 5 * 104
+ * 1 <= s.length <= 5 * 10^4
  * t.length == s.length
  * s and t consist of any valid ascii character.
  * LC205
@@ -40,8 +43,20 @@ public class IsomorphicString {
     public static void main(String[] args) {
         String s = "title";
         String t = "paper";
-        System.out.println(isIsomorphic(s, t));
+        System.out.println(isIsomorphicV2(s, t));
     }
+
+
+    /**
+     * Instead of directly mapping 'e' to 'a',
+     * another way is to mark them with same value,
+     * for example,
+     * 'e' -> 1,
+     * 'a'-> 1,
+     * 'g' -> 2,
+     * and 'd' -> 2,
+     * this works same.
+
 
     /**
      * The idea is that we need to map a char to another one,
@@ -76,6 +91,8 @@ public class IsomorphicString {
             m1[s.charAt(i)] = i + 1;
             m2[t.charAt(i)] = i + 1;
         }
+        System.out.println(Arrays.toString(m1));
+        System.out.println(Arrays.toString(m2));
         return true;
     }
 
