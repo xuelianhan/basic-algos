@@ -29,6 +29,12 @@ package org.ict.algorithm.leetcode.string;
  */
 public class MaximalSquare {
 
+    public static void main(String[] args) {
+        char[][] matrix = {{'1','0','1','0','0'},{'1','0','1','1','1'},{'1','1','1','1','1'},{'1','0','0','1','0'}};
+        int x = maximalSquare(matrix);
+        System.out.println(x);
+    }
+
     /**
      * 1)Construct a sum matrix S[R][C] for the given M[R][C].
      *      a)    Copy first row and first columns as it is from M[][] to S[][]
@@ -42,7 +48,7 @@ public class MaximalSquare {
      * @param matrix
      * @return
      */
-    public int maximalSquare(char[][] matrix) {
+    public static int maximalSquare(char[][] matrix) {
         int m = matrix.length;
         int n = matrix[0].length;
         int[][] aux = new int[m][n];
@@ -75,6 +81,6 @@ public class MaximalSquare {
                 }
             }
         }
-        return maxSize * maxSize;
+        return maxSize;
     }
 }
