@@ -38,4 +38,9 @@ package org.ict.algorithm.leetcode.string;
  * LC290
  */
 public class WordPattern {
+
+    public boolean wordPattern(String pattern, String s) {
+        return false;
+    }
+
 }

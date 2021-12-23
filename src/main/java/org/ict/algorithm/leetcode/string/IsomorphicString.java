@@ -1,7 +1,4 @@
 package org.ict.algorithm.leetcode.string;
-
-import org.checkerframework.checker.units.qual.C;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -45,18 +42,6 @@ public class IsomorphicString {
         String t = "paper";
         System.out.println(isIsomorphicV2(s, t));
     }
-
-
-    /**
-     * Instead of directly mapping 'e' to 'a',
-     * another way is to mark them with same value,
-     * for example,
-     * 'e' -> 1,
-     * 'a'-> 1,
-     * 'g' -> 2,
-     * and 'd' -> 2,
-     * this works same.
-
 
     /**
      * The idea is that we need to map a char to another one,
