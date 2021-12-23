@@ -1,5 +1,8 @@
 package org.ict.algorithm.leetcode.string;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Given a pattern and a string s, find if s follows the same pattern.
  *
@@ -39,14 +42,59 @@ package org.ict.algorithm.leetcode.string;
  */
 public class WordPattern {
 
-    public boolean wordPattern(String pattern, String s) {
+    public static void main(String[] args) {
+        String pattern = "abba";
+        String s = "dog dog dog dog";
+        boolean flag = wordPatternV2(pattern, s);
+        System.out.println(flag);
+    }
+
+    public static boolean wordPatternV2(String pattern, String s) {
         int pLength = pattern.length();
-        int sLength = s.split(" ").length;
+        String[] arr = s.split(" ");
+        int sLength = arr.length;
         if (pLength != sLength) {
             return false;
         }
-        
-        return false;
+        Map<String, Integer> map = new HashMap<>();
+        for (int i = 0; i < pLength; i++) {
+            Character c = pattern.charAt(i);
+            /**
+             * put method return the previous value associated with key, or
+             * null if there was no mapping for key
+             */
+            if (map.put(String.valueOf(c), i) != map.put(arr[i], i)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+
+    public static boolean wordPattern(String pattern, String s) {
+        int pLength = pattern.length();
+        String[] arr = s.split(" ");
+        int sLength = arr.length;
+        if (pLength != sLength) {
+            return false;
+        }
+        Map<Character, String> map = new HashMap<>();
+        for (int i = 0; i < pLength; i++) {
+            Character c = pattern.charAt(i);
+            String t = map.get(c);
+            if (null == t) {
+                if (map.size() != 0 && map.values().contains(arr[i])) {
+                    return false;
+                }
+                map.put(c, arr[i]);
+            } else {
+                if (!t.equalsIgnoreCase(arr[i])) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
 }
