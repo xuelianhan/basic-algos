@@ -1,5 +1,7 @@
 package org.ict.algorithm.leetcode.string;
 
+import java.util.Arrays;
+
 /**
  * Given an m x n binary matrix filled with 0's and 1's,
  * find the largest square containing only 1's and return its area.
@@ -49,23 +51,33 @@ public class MaximalSquare {
      * @return
      */
     public static int maximalSquare(char[][] matrix) {
-        int m = matrix.length;
-        int n = matrix[0].length;
-        int[][] aux = new int[m][n];
+        /**
+         * number of rows
+         */
+        int rows = matrix.length;
+
+        /**
+         * number of columns
+         */
+        int cols = matrix[0].length;
+        int[][] aux = new int[rows][cols];
         /**
          * Copy First row to aux
          */
-        for (int j = 0; j < n; j++) {
-            aux[0][j] = matrix[0][j];
+        for (int j = 0; j < cols; j++) {
+            //Converting char to it's int value, such as '1' to 1
+            aux[0][j] = matrix[0][j] - '0';
         }
         /**
          * Copy first column to aux
          */
-        for (int i = 0; i < m; i++) {
-            aux[i][0] = matrix[i][0];
+        for (int i = 0; i < rows; i++) {
+            //Converting char to it's int value, such as '1' to 1
+            aux[i][0] = matrix[i][0]  - '0';
         }
-        for (int i = 1; i < m; i++) {
-            for (int j = 1; j < n; j++) {
+        System.out.println(Arrays.deepToString(aux));
+        for (int i = 1; i < rows; i++) {
+            for (int j = 1; j < cols; j++) {
                 if (matrix[i][j] == '1') {
                     aux[i][j] = Math.min(aux[i-1][j], Math.min(aux[i][j-1], aux[i-1][j-1])) + 1;
                 } else {
@@ -73,14 +85,15 @@ public class MaximalSquare {
                 }
             }
         }
+        System.out.println(Arrays.deepToString(aux));
         int maxSize = 0;
-        for (int i = 0; i < m; i++) {
-            for(int j = 0; j < n; j++) {
+        for (int i = 0; i < rows; i++) {
+            for(int j = 0; j < cols; j++) {
                 if (aux[i][j] > maxSize) {
                     maxSize = aux[i][j];
                 }
             }
         }
-        return maxSize;
+        return maxSize * maxSize;
     }
 }
