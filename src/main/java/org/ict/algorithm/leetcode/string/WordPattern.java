@@ -40,6 +40,12 @@ package org.ict.algorithm.leetcode.string;
 public class WordPattern {
 
     public boolean wordPattern(String pattern, String s) {
+        int pLength = pattern.length();
+        int sLength = s.split(" ").length;
+        if (pLength != sLength) {
+            return false;
+        }
+        
         return false;
     }
 
