@@ -28,6 +28,11 @@ public class BinarySearch {
         int low = 0;
         int high = a.length - 1; 
         while (low <= high) {
+            /**
+             * To avoid overflow, (low + high)/2 replaced with the
+             * following code, and can be accumulated with
+             * low + ((high - low) >> 1)
+             */
             int mid = low + (high - low) / 2;
             if (key < a[mid]) {
                 high = mid - 1;
@@ -38,6 +43,24 @@ public class BinarySearch {
             }
         }
         return -1;
+    }
+
+    public static int indexOfRecursive(int[] a, int low,  int high, int key) {
+        if (low > high) {
+            return -1;
+        }
+        int mid = low + (high - low) / 2;
+        if (key < a[mid]) {
+            return indexOfRecursive(a, low,  mid -1, key);
+        } else if (key > a[mid]) {
+            return indexOfRecursive(a, mid + 1,  high, key);
+        } else {
+            return mid;
+        }
+    }
+
+    public static int binaryRecursive(int[] a, int key) {
+        return indexOfRecursive(a, 0,  a.length - 1, key);
     }
 
     public static void main(String[] args) {
