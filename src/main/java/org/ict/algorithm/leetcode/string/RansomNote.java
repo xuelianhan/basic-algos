@@ -1,7 +1,5 @@
 package org.ict.algorithm.leetcode.string;
 
-import java.util.Arrays;
-
 /**
  * Given two strings ransomNote and magazine,
  * return true if ransomNote can be constructed from magazine and false otherwise.
@@ -40,6 +38,19 @@ public class RansomNote {
         String magazine = "b";
         boolean result = canConstruct(ransomNote, magazine);
         System.out.println(result);
+    }
+
+    public boolean canConstructV2(String ransomNote, String magazine) {
+        int[] arr = new int[26];
+        for (int i = 0; i < magazine.length(); i++) {
+            arr[magazine.charAt(i) - 'a']++;
+        }
+        for (int i = 0; i < ransomNote.length(); i++) {
+            if(--arr[ransomNote.charAt(i)-'a'] < 0) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
