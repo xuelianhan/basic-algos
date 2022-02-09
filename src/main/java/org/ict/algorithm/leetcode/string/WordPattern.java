@@ -43,8 +43,8 @@ import java.util.Map;
 public class WordPattern {
 
     public static void main(String[] args) {
-        String pattern = "abba";
-        String s = "dog dog dog dog";
+        String pattern = "a";
+        String s = "a";
         boolean flag = wordPatternV2(pattern, s);
         System.out.println(flag);
     }
@@ -63,7 +63,11 @@ public class WordPattern {
              * put method return the previous value associated with key, or
              * null if there was no mapping for key
              */
-            if (map.put(String.valueOf(c), i) != map.put(arr[i], i)) {
+            Integer x = map.put(String.valueOf(c), i);
+            System.out.println("x:" + x);
+            Integer y = map.put(arr[i], i);
+            System.out.println("y:" + y);
+            if (x != y) {
                 return false;
             }
         }
