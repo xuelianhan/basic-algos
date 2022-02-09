@@ -46,7 +46,7 @@ public class IsomorphicString {
     /**
      * The idea is that we need to map a char to another one,
      * for example, "egg" and "add",
-     * we need to constract the mapping 'e' -> 'a' and 'g' -> 'd'.
+     * we need to construct the mapping 'e' -> 'a' and 'g' -> 'd'.
      * Instead of directly mapping 'e' to 'a',
      * another way is to mark them with same value,
      * for example, 'e' -> 1, 'a'-> 1, and 'g' -> 2, 'd' -> 2,
@@ -56,7 +56,7 @@ public class IsomorphicString {
      * initialized space is 256 (Since the whole ASCII size is 256, 128 also works here).
      * Traverse the character of both s and t on the same position,
      * if their mapping values in m1 and m2 are different,
-     * means they are not mapping correctly, returen false;
+     * means they are not mapping correctly, return false;
      * else we construct the mapping, since m1 and m2 are both initialized as 0,
      * we want to use a new value when i == 0,
      * so i + 1 works here.
@@ -73,6 +73,10 @@ public class IsomorphicString {
             if (m1[s.charAt(i)] != m2[t.charAt(i)])  {
                 return false;
             }
+            /**
+             * Due to initialized with zero, so the following use plus one,
+             * You can also use plus 2, 3, ..., or other numbers not equals zero.
+             */
             m1[s.charAt(i)] = i + 1;
             m2[t.charAt(i)] = i + 1;
         }
