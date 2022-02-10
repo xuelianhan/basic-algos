@@ -1,7 +1,6 @@
 package org.ict.algorithm.leetcode.string;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Given a string s,
@@ -32,12 +31,30 @@ import java.util.Map;
  * @date 2022/2/9
  */
 public class FirstUniqueCharacterOfString {
-
-    public int firstUniqueChar(String s) {
+    
+    public static void main(String[] args) {
+        String s = "loveleetcode";
+        int result = firstUniqueChar(s);
+        System.out.println(result);
+    }
+    
+    public static int firstUniqueChar(String s) {
+        /**
+         * record the frequency of each character of s
+         */
         int[] arr = new int[26];
+
         for (int i = 0; i < s.length(); i++) {
-            arr[s.charAt(i) - 'a']++;
+            int idx = s.charAt(i) - 'a';
+            arr[idx]++;
+        }
+        for (int i = 0; i < s.length(); i++) {
+            int idx = s.charAt(i) - 'a';
+            if (arr[idx] == 1) {
+                return i;
+            }
         }
         return -1;
     }
+    
 }
