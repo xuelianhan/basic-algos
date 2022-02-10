@@ -3,7 +3,8 @@ package org.ict.algorithm.leetcode.string;
 /**
  * p5
  * tag:string
- * Given a string s, find the longest palindromic substring in s. You may assume that the maximum length of s is 100
+ * Given a string s, find the longest palindromic substring in s.
+ * You may assume that the maximum length of s is 100
  * Example:
  * Input: "babad"
  * Output: "bab"
@@ -24,8 +25,14 @@ public class LongestPalindromicSubstring {
             return s;
         
         for (int i = 0; i < len-1; i++) {
-            extendPalindrome(s, i, i);  //assume odd length, try to extend Palindrome as possible
-            extendPalindrome(s, i, i+1); //assume even length.
+            /**
+             * assume odd length, try to extend Palindrome as possible
+             */
+            extendPalindrome(s, i, i);
+            /**
+             * assume even length.
+             */
+            extendPalindrome(s, i, i+1);
         }
         return s.substring(lo, lo + maxLen);
     }
