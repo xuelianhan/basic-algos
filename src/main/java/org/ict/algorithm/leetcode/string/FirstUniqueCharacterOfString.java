@@ -29,6 +29,7 @@ import java.util.*;
  * s consists of only lowercase English letters.
  * @author sniper
  * @date 2022/2/9
+ * LC387
  */
 public class FirstUniqueCharacterOfString {
     
