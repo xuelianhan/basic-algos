@@ -47,11 +47,13 @@ public class LongestPalindrome {
         //String s = "abcccccdd";
         //String s = "cccdd";
         //String s = "ccc";
-        //String s = "AAbccc";
-        //String s = "jglknendplocymmvwtoxvebkekzfdhykknufqdkntnqvgfbahsljkobhbxkvyictzkqjqydczuxjkgecdyhixdttxfqmgksrkyvopwprsgoszftuhawflzjyuyrujrxluhzjvbflxgcovilthvuihzttzithnsqbdxtafxrfrblulsakrahulwthhbjcslceewxfxtavljpimaqqlcbrdgtgjryjytgxljxtravwdlnrrauxplempnbfeusgtqzjtzshwieutxdytlrrqvyemlyzolhbkzhyfyttevqnfvmpqjngcnazmaagwihxrhmcibyfkccyrqwnzlzqeuenhwlzhbxqxerfifzncimwqsfatudjihtumrtjtggzleovihifxufvwqeimbxvzlxwcsknksogsbwwdlwulnetdysvsfkonggeedtshxqkgbhoscjgpiel";
-        String s = "aaaccccbbdddeeeee";
+        //String s = "bb";
+        //String s = "AAbcccDDD";
+        String s = "jglknendplocymmvwtoxvebkekzfdhykknufqdkntnqvgfbahsljkobhbxkvyictzkqjqydczuxjkgecdyhixdttxfqmgksrkyvopwprsgoszftuhawflzjyuyrujrxluhzjvbflxgcovilthvuihzttzithnsqbdxtafxrfrblulsakrahulwthhbjcslceewxfxtavljpimaqqlcbrdgtgjryjytgxljxtravwdlnrrauxplempnbfeusgtqzjtzshwieutxdytlrrqvyemlyzolhbkzhyfyttevqnfvmpqjngcnazmaagwihxrhmcibyfkccyrqwnzlzqeuenhwlzhbxqxerfifzncimwqsfatudjihtumrtjtggzleovihifxufvwqeimbxvzlxwcsknksogsbwwdlwulnetdysvsfkonggeedtshxqkgbhoscjgpiel";
+        //String s = "aaaccccbbaa";
+        System.out.println("s length:" + s.length());
         int result = longestPalindrome(s);
-        System.out.println(result);
+        System.out.println("result:" + result);
     }
 
     public static int longestPalindrome(String s) {
@@ -68,26 +70,18 @@ public class LongestPalindrome {
             }
         }
         System.out.println(Arrays.toString(arr));
-        int total = 0, eqOne = 0, odd = 0;
-
+        int total = 0;
         for (int i = 0; i < arr.length; i++) {
             if (arr[i] % 2 == 0) {
                 total += arr[i];
             } else {
-                if (arr[i] == 1) {
-                    eqOne++;
-                } else {
+                if (arr[i] != 1) {
                     total += arr[i] - 1;
                 }
             }
         }
         if (s.length() % 2 != 0) {
-            //ccc
             total++;
-        } else {
-            if (eqOne > 0) {
-                total ++;
-            }
         }
         return total;
     }
