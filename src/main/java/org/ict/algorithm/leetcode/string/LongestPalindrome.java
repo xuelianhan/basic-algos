@@ -47,10 +47,12 @@ public class LongestPalindrome {
         //String s = "abcccccdd";
         //String s = "cccdd";
         //String s = "ccc";
+        //String s = "aaaccccbbaa";
         //String s = "bb";
         //String s = "AAbcccDDD";
-        String s = "jglknendplocymmvwtoxvebkekzfdhykknufqdkntnqvgfbahsljkobhbxkvyictzkqjqydczuxjkgecdyhixdttxfqmgksrkyvopwprsgoszftuhawflzjyuyrujrxluhzjvbflxgcovilthvuihzttzithnsqbdxtafxrfrblulsakrahulwthhbjcslceewxfxtavljpimaqqlcbrdgtgjryjytgxljxtravwdlnrrauxplempnbfeusgtqzjtzshwieutxdytlrrqvyemlyzolhbkzhyfyttevqnfvmpqjngcnazmaagwihxrhmcibyfkccyrqwnzlzqeuenhwlzhbxqxerfifzncimwqsfatudjihtumrtjtggzleovihifxufvwqeimbxvzlxwcsknksogsbwwdlwulnetdysvsfkonggeedtshxqkgbhoscjgpiel";
-        //String s = "aaaccccbbaa";
+        String s = "abcddeee";
+        //String s = "abccccdd";
+        //String s = "jglknendplocymmvwtoxvebkekzfdhykknufqdkntnqvgfbahsljkobhbxkvyictzkqjqydczuxjkgecdyhixdttxfqmgksrkyvopwprsgoszftuhawflzjyuyrujrxluhzjvbflxgcovilthvuihzttzithnsqbdxtafxrfrblulsakrahulwthhbjcslceewxfxtavljpimaqqlcbrdgtgjryjytgxljxtravwdlnrrauxplempnbfeusgtqzjtzshwieutxdytlrrqvyemlyzolhbkzhyfyttevqnfvmpqjngcnazmaagwihxrhmcibyfkccyrqwnzlzqeuenhwlzhbxqxerfifzncimwqsfatudjihtumrtjtggzleovihifxufvwqeimbxvzlxwcsknksogsbwwdlwulnetdysvsfkonggeedtshxqkgbhoscjgpiel";
         System.out.println("s length:" + s.length());
         int result = longestPalindrome(s);
         System.out.println("result:" + result);
@@ -69,20 +71,29 @@ public class LongestPalindrome {
                 arr[chars[i] - 'a' + 26]++;
             }
         }
-        System.out.println(Arrays.toString(arr));
-        int total = 0;
+        //System.out.println(Arrays.toString(arr));
+        int total = 0,  odd = 0;
         for (int i = 0; i < arr.length; i++) {
             if (arr[i] % 2 == 0) {
                 total += arr[i];
             } else {
-                if (arr[i] != 1) {
+                odd++;
+                /**
+                 * arr[i] is an odd, so subtract one
+                 */
+                if (arr[i] >= 1) {
                     total += arr[i] - 1;
                 }
             }
         }
-        if (s.length() % 2 != 0) {
+        /**
+         * if odd count greater than zero, need to plus one
+         * e.g. cccdd, ccc
+         */
+        if (odd > 0) {
             total++;
         }
+
         return total;
     }
 }

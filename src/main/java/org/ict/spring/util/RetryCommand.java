@@ -14,7 +14,6 @@ import java.util.function.Supplier;
  * @author sniper
  * @date 2022/1/27 11:56 AM
  */
-@Slf4j
 public class RetryCommand<T> {
     private int maxRetries;
 
@@ -31,7 +30,6 @@ public class RetryCommand<T> {
         try {
             return function.get();
         } catch (Exception e) {
-            log.error("FAILED - Command failed, will be retried " + maxRetries + " times.");
             return retry(function);
         }
     }
@@ -40,7 +38,6 @@ public class RetryCommand<T> {
         try {
             return function.get();
         } catch (Exception e) {
-            log.error("FAILED - Command failed, will be retried " + maxRetries + " times.");
             return retry(function, sleep, breakMessage);
         }
     }
@@ -58,25 +55,20 @@ public class RetryCommand<T> {
             } catch (Exception ex) {
                 res = ex;
                 retryCounter++;
-                log.warn("FAILED - Command failed on retry " + retryCounter + " of " + maxRetries, ex);
                 if (CollectionUtils.isNotEmpty(breakMessage) && breakMessage.contains(ex.getMessage())) {
-                    log.warn("breakMessage matched:{}.", ex.getMessage());
                     break;
                 }
                 if (retryCounter >= maxRetries) {
-                    log.warn("Max retries exceeded.");
                     break;
                 }
                 try {
                     Thread.sleep(sleep);
                 } catch (InterruptedException e) {
-                    log.warn("Interrupted!", e);
                     // Restore interrupted state...
                     Thread.currentThread().interrupt();
                 }
             }
         }
-        log.info("Command failed on all of " + retryCounter + " retries");
         if (res != null) {
             throw res;
         }
