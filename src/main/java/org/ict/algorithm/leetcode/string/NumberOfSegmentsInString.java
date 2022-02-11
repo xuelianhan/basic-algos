@@ -38,6 +38,7 @@ public class NumberOfSegmentsInString {
 
     /**
      * continuous space counts + 1
+     * count: ", space + f, space + b
      * @param s
      * @return
      */
