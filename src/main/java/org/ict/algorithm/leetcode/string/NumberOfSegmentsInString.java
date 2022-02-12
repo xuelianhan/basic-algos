@@ -38,7 +38,9 @@ public class NumberOfSegmentsInString {
 
     /**
      * continuous space counts + 1
-     * count: ", space + f, space + b
+     * use "    foo    bar" for example,
+     * count processing: ", space + f, space + b
+     *
      * @param s
      * @return
      */
