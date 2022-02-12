@@ -22,11 +22,18 @@ package org.ict.algorithm.leetcode.string;
  * Output: true
  * Explanation: It is the substring "abc" four times or the substring "abcabc" twice.
  *
+ * Input: s = "a"
+ * Output: false
+ *
+ * Input: s = "ababba"
+ * Output: false
+ *
  *
  * Constraints:
  *
  * 1 <= s.length <= 104
  * s consists of lowercase English letters.
+ * 
  * @author sniper
  * @date 12 Feb, 2022
  * LC459
@@ -41,6 +48,22 @@ public class RepeatedSubstringPattern {
     }
 
     public static boolean repeatedSubstringPattern(String s) {
+
+        return false;
+    }
+
+    /**
+     * Wrong answer, only consider the frequency but ignore the sequence of string,
+     * so the solution is not right.
+     *
+     * case:
+     * Expected false, but returns true, fix it.
+     * String s = "ababba";
+     *
+     * @param s
+     * @return
+     */
+    public static boolean wrongAnswer(String s) {
         if (s.length() == 1) {
             return true;
         }
