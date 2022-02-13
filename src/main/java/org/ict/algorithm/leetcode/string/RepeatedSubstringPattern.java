@@ -59,6 +59,28 @@ public class RepeatedSubstringPattern {
      * @param s
      * @return
      * @see <a href="https://stackoverflow.com/questions/40670242/find-a-repeated-substring-pattern-in-a-given-string"></a>
+     * answered by Manish Chauhan, edited by Julien M
+     *
+     * Mathematical Proof:
+     * Let P be the pattern that is repeated K times in a string S.
+     * S = P*K.
+     *
+     * Let N be the newly created string by repeating string S
+     * N = S+S.
+     *
+     * Let F be the first character of string N and L be the last character of string N
+     * N = ( F+ P*(K-1) )+ (P*(K-1) + L)
+     * N = F+ P(2K-2)+ L
+     *
+     * If K = 1. i.e a string repeated only once
+     * N = F+L. //as N != S So False
+     *
+     * If K ≥ 2.
+     * N = F+k'+ N
+     *
+     * Where k'≥K. As our S=P*K. So, S must be in N.
+     * We can further use KMP algorithm to check if S is a sub-string of N.
+     * Which will give us time complexity of O(n)
      */
     public static boolean repeatedSubstringPattern(String s) {
         String newStr = s + s;
