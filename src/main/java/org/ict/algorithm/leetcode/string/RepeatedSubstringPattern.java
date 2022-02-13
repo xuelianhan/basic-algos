@@ -31,7 +31,7 @@ package org.ict.algorithm.leetcode.string;
  *
  * Constraints:
  *
- * 1 <= s.length <= 104
+ * 1 <= s.length <= 10^4
  * s consists of lowercase English letters.
  *
  * @author sniper
@@ -42,13 +42,31 @@ public class RepeatedSubstringPattern {
 
     public static void main(String[] args) {
         // Expected false, but returns true, fix it.
-        String s = "ababba";
+        String s = "aba";
+
         boolean result = repeatedSubstringPattern(s);
         System.out.println(result);
     }
 
+    /**
+     * Ther's a literally one-line solution to the problem.
+     * Repeat the given string twice and remove the first and last character of the newly created string,
+     * check if a given string is a substring of the newly created string.
+     *
+     * "aba"
+     * abaaba
+     *  baab
+     * @param s
+     * @return
+     * @see <a href="https://stackoverflow.com/questions/40670242/find-a-repeated-substring-pattern-in-a-given-string"></a>
+     */
     public static boolean repeatedSubstringPattern(String s) {
-
+        String newStr = s + s;
+        String middle = newStr.substring(1, newStr.length() - 1);
+        System.out.println(middle);
+        if (middle.contains(s)) {
+            return true;
+        }
         return false;
     }
 
