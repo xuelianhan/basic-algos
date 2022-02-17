@@ -36,6 +36,7 @@ package org.ict.algorithm.leetcode.string;
  * 1 <= k <= 10^4
  * @author sniper
  * @date 14 Feb, 2022
+ * LC482
  */
 public class LicenseKeyFormatting {
 
