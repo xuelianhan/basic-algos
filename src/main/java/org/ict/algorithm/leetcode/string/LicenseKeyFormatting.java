@@ -39,7 +39,47 @@ package org.ict.algorithm.leetcode.string;
  */
 public class LicenseKeyFormatting {
 
-    public String licenseKeyFormatting(String s, int k) {
-        return null;
+    public static void main(String[] args) {
+        String s = "r";
+        int k = 1;
+        String result = licenseKeyFormatting(s, k);
+        System.out.println(result);
+    }
+
+    public static String licenseKeyFormatting(String s, int k) {
+        int i = s.length() - 1;
+        int j = 0;
+        StringBuffer sb = new StringBuffer();
+        while (i >= 0) {
+            char c = s.charAt(i);
+            if ('-' == c) {
+                i--;
+                continue;
+            }
+            if (Character.isLetter(c)){
+                if (Character.isLowerCase(c)) {
+                    c = Character.toUpperCase(c);
+                }
+                sb.append(c);
+                j++;
+            }
+            if (Character.isDigit(c)) {
+                sb.append(c);
+                j++;
+            }
+            if (j % k == 0) {
+                sb.append('-');
+            }
+            i--;
+        }
+        String result = sb.reverse().toString();
+        if (result.length() == 0) {
+            return "";
+        }
+        if ('-' == result.charAt(0)) {
+            return result.substring(1);
+        } else {
+            return result;
+        }
     }
 }
