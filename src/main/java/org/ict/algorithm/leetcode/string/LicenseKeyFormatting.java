@@ -50,10 +50,11 @@ public class LicenseKeyFormatting {
     public static String licenseKeyFormatting(String s, int k) {
         int i = s.length() - 1;
         int j = 0;
+        char dash = '-';
         StringBuffer sb = new StringBuffer();
         while (i >= 0) {
             char c = s.charAt(i);
-            if ('-' == c) {
+            if (dash == c) {
                 i--;
                 continue;
             }
@@ -77,7 +78,7 @@ public class LicenseKeyFormatting {
         if (result.length() == 0) {
             return "";
         }
-        if ('-' == result.charAt(0)) {
+        if (dash == result.charAt(0)) {
             return result.substring(1);
         } else {
             return result;

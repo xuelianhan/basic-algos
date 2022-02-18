@@ -1,9 +1,6 @@
 package org.ict.algorithm.leetcode.string;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -43,22 +40,44 @@ import java.util.stream.Collectors;
  */
 public class KeyboardRow {
 
-    public String[] findWords(String[] words) {
-        Set<Character> sc1 = "qwertyuiop".chars().mapToObj(e->(char)e).collect(Collectors.toSet());
-        Set<Character> sc2 = "asdfghjkl".chars().mapToObj(e->(char)e).collect(Collectors.toSet());
-        Set<Character> sc3 = "zxcvbnm".chars().mapToObj(e->(char)e).collect(Collectors.toSet());
+    public static void main(String[] args) {
+        String[] words = new String[]{"adsdf","sfd"};
+        String[] result = findWords(words);
+        System.out.println(Arrays.toString(result));
+    }
+
+    public static String[] findWords(String[] words) {
+        Set<Character> sc1 = "qwertyuiopQWERTYUIOP".chars().mapToObj(e->(char)e).collect(Collectors.toSet());
+        Set<Character> sc2 = "asdfghjklASDFGHJKL".chars().mapToObj(e->(char)e).collect(Collectors.toSet());
+        Set<Character> sc3 = "zxcvbnmZXCVBNM".chars().mapToObj(e->(char)e).collect(Collectors.toSet());
         List<String> list = new ArrayList<>();
         for (String s : words) {
-
+            char[] arr = s.toCharArray();
+            /**
+             * Using set to check s all in one line.
+             */
+            Set<Integer> set = new HashSet<>();
+            for(int i = 0; i < arr.length; i++) {
+                if (sc1.contains(arr[i])) {
+                    set.add(1);
+                } else if (sc2.contains(arr[i])) {
+                    set.add(2);
+                } else if (sc3.contains(arr[i])) {
+                    set.add(3);
+                }
+                if (set.size() > 1) {
+                    break;
+                }
+            }
+            /**
+             * if set size is 1, then all character is in one line
+             */
+            if (set.size() == 1) {
+                list.add(s);
+            }
         }
-        if (list.size() == 0){
-            return new String[0];
-        }
-        String[] arr = new String[list.size()];
-        int i = 0;
-        for(String s : list) {
-            arr[i] = s;
-        }
-        return arr;
+        return list.stream().toArray(String[]::new);
     }
+
+
 }
