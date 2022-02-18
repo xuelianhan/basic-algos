@@ -2,6 +2,7 @@ package org.ict.algorithm.leetcode.string;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Given an array of strings words, return the words that can be typed using letters of the alphabet
@@ -44,6 +45,26 @@ public class KeyboardRow {
         String[] words = new String[]{"adsdf","sfd"};
         String[] result = findWords(words);
         System.out.println(Arrays.toString(result));
+    }
+
+    /**
+     * Check every word if this word set is the subset of any line set
+     * @param words
+     * @return
+     */
+    public static String[] findWordsV2(String[] words) {
+        Set<Character> sc1 = "qwertyuiop".chars().mapToObj(e->(char)e).collect(Collectors.toSet());
+        Set<Character> sc2 = "asdfghjkl".chars().mapToObj(e->(char)e).collect(Collectors.toSet());
+        Set<Character> sc3 = "zxcvbnm".chars().mapToObj(e->(char)e).collect(Collectors.toSet());
+        List<String> list = new ArrayList<>();
+        for (String s : words) {
+            Set<Character> set = new HashSet<>();
+            set.addAll(s.toLowerCase().chars().mapToObj(e->(char)e).collect(Collectors.toSet()));
+            if (sc1.containsAll(set) || sc2.containsAll(set) || sc3.containsAll(set)) {
+                list.add(s);
+            }
+        }
+        return list.stream().toArray(String[]::new);
     }
 
     public static String[] findWords(String[] words) {
