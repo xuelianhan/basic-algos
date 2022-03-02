@@ -31,6 +31,8 @@ package org.ict.algorithm.leetcode.string;
 public class DetectCapital {
 
     public boolean detectCapitalUse(String word) {
+        char[] arr = word.toCharArray();
+
         return false;
     }
 }
