@@ -42,6 +42,9 @@ import java.util.Stack;
 public class ReversePrefixOfWord {
 
     public String reversePrefix(String word, char ch) {
+        if (word.length() == 1) {
+            return word;
+        }
         StringBuffer sb = new StringBuffer();
         Stack<Character> stack = new Stack<>();
         for(char c : word.toCharArray()) {
