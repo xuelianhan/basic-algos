@@ -48,6 +48,7 @@ import java.util.List;
  * fill is a lowercase English letter.
  * @author sniper
  * @date 03 Mar, 2022
+ * LC2138
  */
 public class DivideStringIntoGroupsOfSizeK {
 
