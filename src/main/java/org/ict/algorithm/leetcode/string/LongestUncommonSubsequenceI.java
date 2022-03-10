@@ -42,8 +42,45 @@ package org.ict.algorithm.leetcode.string;
 
 public class LongestUncommonSubsequenceI {
 
+    /**
+     * concise solution
+     * @param a
+     * @param b
+     * @return
+     */
     public int findLUSlength(String a, String b) {
-        //todo
+        /**
+         * if a equals b and a.length == b.length
+         * no uncommon subsequence between a and b.
+         */
+        if (a.equals(b)) {
+            return -1;
+        } else {
+            if (a.length() != b.length()) {
+                return Math.max(a.length(), b.length());
+            } else {
+                /**
+                 *  or return b.length() is ok
+                 */
+                return a.length();
+            }
+        }
+    }
+
+    /**
+     * In general, the first thought many people may have is to generate
+     * all possible 2^n subsequences of both strings and store there
+     * frequency in hashmap.
+     * Longest subsequence whose frequency is equal to 1 will be the
+     * required subsequence.
+     * but the time complexity is O(2^x) + O(2^y), where x and y are the
+     * lengths of two strings.
+     *
+     * @param a
+     * @param b
+     * @return
+     */
+    public int bruteForce(String a, String b) {
         return -1;
     }
 
