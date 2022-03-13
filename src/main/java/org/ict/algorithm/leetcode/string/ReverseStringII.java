@@ -1,5 +1,8 @@
 package org.ict.algorithm.leetcode.string;
 
+
+import java.util.Stack;
+
 /**
  * Given a string s and an integer k,
  * reverse the first k characters for every 2k characters counting from the start of the string.
@@ -31,8 +34,33 @@ package org.ict.algorithm.leetcode.string;
 public class ReverseStringII {
 
     public String reverseStr(String s, int k) {
+        if (s.length() == 1) {
+            return s;
+        }
+        int i = 0;
+        int j = i + 2 * k;
+        for(i = 0; i < s.length(); ) {
 
-
+            i  = j;
+            j = i + 2 * k;
+        }
         return "";
+    }
+
+    public static String reverseString(String s) {
+        if (s == null || s.length() == 0 || s.length() == 1) {
+            return s;
+        }
+        Stack<Character> stack = new Stack<>();
+        int i = 0;
+        while (i < s.length()) {
+            stack.push(s.charAt(i));
+            i++;
+        }
+        StringBuilder sb = new StringBuilder();
+        while (!stack.isEmpty()) {
+            sb.append(stack.pop());
+        }
+        return sb.toString();
     }
 }
