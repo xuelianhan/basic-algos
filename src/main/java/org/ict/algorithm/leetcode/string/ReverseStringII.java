@@ -43,16 +43,18 @@ public class ReverseStringII {
         }
         int i = 0;
         int j = i + 2 * k;
+        StringBuffer sb = new StringBuffer();
         for(i = 0; i < s.length(); ) {
-            if ((i + 1) % k == 0) {
-
+            if (i < i + k) {
+                String sub = s.substring(i, i + k);
+                sb.append(reverseString(sub));
             } else {
-
+                sb.append(s.charAt(i));
             }
-            i  = j;
+            i  = i + k;
             j = i + 2 * k;
         }
-        return "";
+        return sb.toString();
     }
 
     public static String reverseString(String s) {
