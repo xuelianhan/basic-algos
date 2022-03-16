@@ -23,6 +23,10 @@ import java.util.Stack;
  * Input: s = "abcd", k = 2
  * Output: "bacd"
  *
+ * Example3:
+ * Input:s = "abc", k = 2
+ * Output: "bac"
+ *
  *
  * Constraints:
  *
@@ -34,7 +38,73 @@ import java.util.Stack;
  */
 public class ReverseStringII {
 
-    public String reverseStr(String s, int k) {
+    /**
+     *
+     * input: k = 20
+     * "krmyfshbspcgtesxnnljhfursyissjnsocgdhgfxubewllxzqhpasguvlrxtkgatzfybprfmmfithphckksnvjkcvnsqgsgosfxc"
+     * output:
+     * "jlnnxsetgcpsbhsfymrkhfursyissjnsocgdhgfxtxrlvugsaphqzxllwebukgatzfybprfmmfithphckksnvjkcvnsqgsgosfxc"
+     * expected:
+     * "jlnnxsetgcpsbhsfymrkhfursyissjnsocgdhgfxtxrlvugsaphqzxllwebukgatzfybprfmmfithphccxfsogsgqsnvckjvnskk"
+     *
+     *
+     * input: k=39
+     * hyzqyljrnigxvdtneasepfahmtyhlohwxmkqcdfehybknvdmfrfvtbsovjbdhevlfxpdaovjgunjqlimjkfnqcqnajmebeddqsgl
+     * output:
+     * fdcqkmxwholhytmhafpesaentdvxginrjlyqzyhehybknvdmfrfvtbsovjbdhevlfxpdaovjgunjqlimjkfnqcqnajmebeddqsgl
+     * expected: 39,39,22
+     * fdcqkmxwholhytmhafpesaentdvxginrjlyqzyhehybknvdmfrfvtbsovjbdhevlfxpdaovjgunjqllgsqddebemjanqcqnfkjmi
+     *
+     *
+     * input: abcdefg, k= 4;
+     * output:
+     * dcbagfe
+     * expected: 4,3
+     * dcbaefg
+     *
+     * @param args
+     */
+    public static void main(String[] args) {
+        String s = "uxzpsogzkwgwacxxvvzlhkaahjaqagdfjkmyutvhxclzskvxckjvfgzptlzldjwhrpocfugzqkpaxexezbvggtkoxriysqivupofrcoxbrdgccvphvdtvrjtsbospmgyfduvaslnvxwuepleziodaaqmonsxjszyjwjmvgdqgowjjtwdmynvirnlujimedfyntgacntvyqujvehhvruiolfkeprqpzdvmapeukemmzxdtyolxeixatgsupvpidmeyifjyxkzudxvsunghtklzgxsjhrxgxgqcdebukrarpkpqmusempvulagashxpaisfvetrmiqiordsyjgyjmkvavxorrmnxbiikuxmezpkhgkjzmapldnmjvfxtmckskiwhdnuqpqrsrdspxuixxnibjxoyagijmlbhjtuchzbdpaxommfvlbpxfnzkkcdentdhhxracunvrtqxrbqanufaglncjqiwofanuznfmbtjalehlqidtcmqbsgppqyoaoglifareljluigqyxtveukstzepridpmdltpxjmzdvatgzmqexrauywreoslyoydmiyipyqiaihfjqncelefiaxjhdaamrvahbvoznsfvsdknlktsifioxjdsqldzlyzqkqxkwjfrehqbhlaanbcvxomxyypqfxbwmtaiegcjlzeslmpghirzsaprxdcbobflvbupwahxwjgrcqskewvjsjyyggozkvwwytrwpmuguclssmrshlwukkjapiwnkybydergdqkhttbakooghbskiqlesocfrjuxotecnhkfmwtmzcysppmffnskvfabunfzsibqrerfstonzjhtcpnscpteflsnmqqphelpngnlnczritcjxewlhftujrpaeaxylqkswaisvzgciaemvodvcnqtuwcjkmzjzkikaqifymwwlvyxndgwwlauwiyiflgoahyaavkudvemfftzwlxdltwicouwboeaddxmvind";
+        int k = 22;
+        //String s = "hyzqyljrnigxvdtneasepfahmtyhlohwxmkqcdfehybknvdmfrfvtbsovjbdhevlfxpdaovjgunjqlimjkfnqcqnajmebeddqsgl";
+        //int k = 39;
+        //String s = "abcdefg";
+        //int k = 4;
+        //String s = "krmyfshbspcgtesxnnljhfursyissjnsocgdhgfxubewllxzqhpasguvlrxtkgatzfybprfmmfithphckksnvjkcvnsqgsgosfxc";
+        //int k = 20;
+        System.out.println(s.length());
+        System.out.println(s);
+        String result = reverseStr(s, k);
+        System.out.println(result);
+    }
+
+    /**
+     * Recommend this solution, it's very concise and clear
+     * @param s
+     * @param k
+     * @return
+     */
+    public String reverseStrV2(String s, int k) {
+        char[] arr = s.toCharArray();
+        int n = arr.length;
+        int i = 0;
+        while(i < n) {
+            int j = Math.min(i + k - 1, n - 1);
+            swap(arr, i, j);
+            i += 2 * k;
+        }
+        return String.valueOf(arr);
+    }
+    private void swap(char[] arr, int l, int r) {
+        while (l < r) {
+            char temp = arr[l];
+            arr[l++] = arr[r];
+            arr[r--] = temp;
+        }
+    }
+
+    public static String reverseStr(String s, int k) {
         if (s.length() == 1 || k == 1) {
             return s;
         }
@@ -42,18 +112,33 @@ public class ReverseStringII {
             return reverseString(s);
         }
         int i = 0;
-        int j = i + 2 * k;
+        int j = k;
         StringBuffer sb = new StringBuffer();
-        for(i = 0; i < s.length(); ) {
-            if (i < i + k) {
-                String sub = s.substring(i, i + k);
-                sb.append(reverseString(sub));
+        boolean flip = true;
+        for(; i < s.length() && j < s.length(); ) {
+            if (flip) {
+                String rs = reverseString(s.substring(i, j));
+                sb.append(rs);
+                flip = false;
+                //System.out.println("rs:" + rs);
             } else {
-                sb.append(s.charAt(i));
+                String rs = s.substring(i, j);
+                sb.append(rs);
+                //System.out.println("rs:" + rs);
+                flip = true;
             }
-            i  = i + k;
-            j = i + 2 * k;
+            //System.out.println("sb:" + sb);
+            i = j;
+            j = i + k;
         }
+        if ((s.length() - i) <= k && flip) {
+            String tail = reverseString(s.substring(i, s.length()));
+            sb.append(tail);
+        } else {
+            String tail = s.substring(i, s.length());
+            sb.append(tail);
+        }
+
         return sb.toString();
     }
 
@@ -61,16 +146,8 @@ public class ReverseStringII {
         if (s == null || s.length() == 0 || s.length() == 1) {
             return s;
         }
-        Stack<Character> stack = new Stack<>();
-        int i = 0;
-        while (i < s.length()) {
-            stack.push(s.charAt(i));
-            i++;
-        }
-        StringBuilder sb = new StringBuilder();
-        while (!stack.isEmpty()) {
-            sb.append(stack.pop());
-        }
-        return sb.toString();
+        StringBuffer sb = new StringBuffer();
+        sb.append(s);
+        return sb.reverse().toString();
     }
 }
