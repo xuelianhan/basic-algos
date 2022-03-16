@@ -47,6 +47,9 @@ public class ReverseWordsStringIII {
                 j++;
             }
         }
+        if (i < arr.length) {
+            swap(arr, i, arr.length - 1);
+        }
         return String.valueOf(arr);
     }
 
