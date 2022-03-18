@@ -1,6 +1,8 @@
 package org.ict.algorithm.leetcode.string;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -10,7 +12,8 @@ import java.util.stream.IntStream;
  * and they both have a list of favorite restaurants represented by strings.
  *
  * You need to help them find out their common interest with the least list index sum.
- * If there is a choice tie between answers, output all of them with no order requirement. You could assume there always exists an answer.
+ * If there is a choice tie between answers, output all of them with no order requirement.
+ * You could assume there always exists an answer.
  *
  *
  *
@@ -27,6 +30,17 @@ import java.util.stream.IntStream;
  * Output: ["Shogun"]
  * Explanation: The restaurant they both like and have the least index sum is "Shogun" with index sum 1 (0+1).
  *
+ * Input:
+ * ["Shogun","Tapioca Express","Burger King","KFC"]
+ * ["KFC","Burger King","Tapioca Express","Shogun"]
+ * Expected:
+ * ["KFC","Burger King","Tapioca Express","Shogun"]
+ *
+ * Input:
+ * ["Shogun","Tapioca Express","Burger King","KFC"]
+ * ["KFC","Shogun","Burger King"]
+ * Expected:
+ * ["Shogun"]
  *
  * Constraints:
  *
@@ -41,25 +55,52 @@ import java.util.stream.IntStream;
  */
 public class MinimumIndexSumOfTwoLists {
 
-    public String[] findRestaurant(String[] list1, String[] list2) {
-        int minimumIdxSum = Integer.MAX_VALUE;
+    /**
+     *
+     * @param args
+     */
+    public static void main(String[] args) {
+        String[] list1 = {"Shogun","Tapioca Express","Burger King","KFC"};
+        String[] list2 = {"KFC","Burger King","Tapioca Express","Shogun"};
+        //String[] list1 = {"C", "A", "B"};
+        //String[] list2 = {"C", "B", "A"};
+        String[] result = findRestaurant(list1, list2);
+        System.out.println(Arrays.toString(result));
+    }
+
+    public static String[] findRestaurant(String[] list1, String[] list2) {
+        Integer minimumIdxSum = Integer.MAX_VALUE;
+        List<String> result = new ArrayList<>();
         if (list1.length > list2.length) {
             Map<String, Integer> map = IntStream.range(0, list1.length)
                     .boxed()
-                    .collect(Collectors.toMap(i -> list1[i], i -> i));
-            for(String s : list2) {
-                if (map.get(s) != null) {
-                    int idxSum =
-                } else {
-
+                    .collect(Collectors.toMap(i -> list1[i], i -> i + 1));
+            for(int i = 0; i < list2.length; i++) {
+                Integer idx = map.get(list2[i]);
+                if (map.get(list2[i]) != null) {
+                    Integer idxSum = idx + (i + 1);
+                    if (idxSum <= minimumIdxSum) {
+                        minimumIdxSum = idxSum;
+                        result.add(list2[i]);
+                    }
                 }
             }
         } else {
-            Map<Integer, String> map = IntStream.range(0, list2.length)
+            Map<String, Integer> map = IntStream.range(0, list2.length)
                     .boxed()
-                    .collect(Collectors.toMap(i -> i, i -> list2[i]));
-
+                    .collect(Collectors.toMap(i -> list2[i], i -> i + 1));
+            for(int i = 0; i < list1.length; i++) {
+                Integer idx = map.get(list1[i]);
+                if (map.get(list1[i]) != null) {
+                    Integer idxSum = idx + (i + 1);
+                    if (idxSum <= minimumIdxSum) {
+                        minimumIdxSum = idxSum;
+                        result.add(list1[i]);
+                    }
+                }
+            }
         }
-        return null;
+        String[] a = new String[result.size()];
+        return result.toArray(a);
     }
 }
