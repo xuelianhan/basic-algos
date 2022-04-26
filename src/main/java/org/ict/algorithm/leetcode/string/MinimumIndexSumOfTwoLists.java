@@ -60,10 +60,12 @@ public class MinimumIndexSumOfTwoLists {
      * @param args
      */
     public static void main(String[] args) {
-        String[] list1 = {"Shogun","Tapioca Express","Burger King","KFC"};
-        String[] list2 = {"KFC","Shogun","Burger King"};
+        //String[] list1 = {"Shogun","Tapioca Express","Burger King","KFC"};
+        //String[] list2 = {"KFC","Shogun","Burger King"};
         //String[] list1 = {"C", "A", "B"};
         //String[] list2 = {"C", "B", "A"};
+        String[] list1 = {"Shogun","Tapioca Express","Burger King","KFC"};
+        String[] list2 = {"Piatti","The Grill at Torrey Pines","Hungry Hunter Steakhouse","Shogun"};
         String[] result = findRestaurant(list1, list2);
         System.out.println(Arrays.toString(result));
     }
@@ -72,35 +74,31 @@ public class MinimumIndexSumOfTwoLists {
         Integer minimumIdxSum = Integer.MAX_VALUE;
         List<String> result = new ArrayList<>();
         if (list1.length > list2.length) {
-            Map<String, Integer> map = IntStream.range(0, list1.length)
-                    .boxed()
-                    .collect(Collectors.toMap(i -> list1[i], i -> i + 1));
-            for(int i = 0; i < list2.length; i++) {
-                Integer idx = map.get(list2[i]);
-                if (map.get(list2[i]) != null) {
-                    Integer idxSum = idx + (i + 1);
-                    if (idxSum <= minimumIdxSum) {
-                        minimumIdxSum = idxSum;
-                        result.add(list2[i]);
-                    }
-                }
-            }
+            find(list2, list1,  minimumIdxSum, result);
         } else {
-            Map<String, Integer> map = IntStream.range(0, list2.length)
-                    .boxed()
-                    .collect(Collectors.toMap(i -> list2[i], i -> i + 1));
-            for(int i = 0; i < list1.length; i++) {
-                Integer idx = map.get(list1[i]);
-                if (map.get(list1[i]) != null) {
-                    Integer idxSum = idx + (i + 1);
-                    if (idxSum <= minimumIdxSum) {
-                        minimumIdxSum = idxSum;
-                        result.add(list1[i]);
-                    }
-                }
-            }
+            find(list1, list2,  minimumIdxSum, result);
         }
         String[] a = new String[result.size()];
         return result.toArray(a);
     }
+
+    private static void find(String[] shorter, String[] longer,  Integer minimumIdxSum, List<String> result) {
+        Map<String, Integer> map = IntStream.range(0, longer.length)
+                .boxed()
+                .collect(Collectors.toMap(i -> longer[i], i -> i + 1));
+        for(int i = 0; i < shorter.length; i++) {
+            Integer idx = map.get(shorter[i]);
+            if (map.get(shorter[i]) != null) {
+                Integer idxSum = idx + (i + 1);
+                if (idxSum < minimumIdxSum) {
+                    minimumIdxSum = idxSum;
+                    result.clear();
+                    result.add(shorter[i]);
+                } else if (idxSum.equals(minimumIdxSum)) {
+                    result.add(shorter[i]);
+                }
+            }
+        }
+    }
 }
+
