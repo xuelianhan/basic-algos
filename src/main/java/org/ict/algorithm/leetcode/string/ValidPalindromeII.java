@@ -69,6 +69,14 @@ public class ValidPalindromeII {
         return true;
     }
 
+    /**
+     * Check if substring from low to high is palindrome or not.
+     *
+     * @param str
+     * @param low
+     * @param high
+     * @return
+     */
     public static boolean isPalindrome(String str, int low, int high) {
         while (low < high) {
             if (str.charAt(low) != str.charAt(high)) {
