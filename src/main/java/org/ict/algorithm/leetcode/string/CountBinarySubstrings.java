@@ -35,6 +35,7 @@ package org.ict.algorithm.leetcode.string;
 public class CountBinarySubstrings {
 
     public int countBinarySubstrings(String s) {
+        //
         return 0;
     }
 }
