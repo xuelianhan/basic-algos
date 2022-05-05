@@ -35,6 +35,18 @@ package org.ict.algorithm.leetcode.string;
 public class CountBinarySubstrings {
 
     public int countBinarySubstrings(String s) {
+        if (s.length() == 1) {
+            return 0;
+        }
+        if (s.length() == 2) {
+            if (s.charAt(0) == s.charAt(1)) {
+                return 0;
+            } else {
+                return 1;
+            }
+        }
+        //length of string greater than 2
+
         return 0;
     }
 }
