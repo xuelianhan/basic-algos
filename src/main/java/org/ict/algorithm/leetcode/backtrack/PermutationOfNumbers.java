@@ -7,7 +7,7 @@ import java.util.List;
  * Input a number array and output all the permutations of it.
  * e.g.
  * Input: [1,2,3]
- * Output:123,132,213,231,312,321
+ * Output:[[123],[132],[213],[231],[312],[321]]
  * @author sniper
  * @date 2022/5/6
  */
