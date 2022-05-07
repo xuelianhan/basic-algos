@@ -67,6 +67,41 @@ public class ShortestCompletingWord {
         System.out.println(res);
     }
 
+    /**
+     * The following solution is provided by jmcelvenny
+     * Assign each letter a prime number and compute the product for the license plate.
+     * Then, compute the product for each word in wordlist.
+     * We know if the char product for a word is divisible by the license plate char product,
+     * it contains all the characters
+     *
+     * @param licensePlate
+     * @param words
+     * @return
+     */
+    public String shortestCompletingWordV2(String licensePlate, String[] words) {
+        int[] primes = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103};
+        long charProduct = getCharProduct(licensePlate.toLowerCase(), primes);
+        // 16 a's
+        String shortest = "aaaaaaaaaaaaaaaaaaaa";
+        for(String word : words) {
+            if (word.length() < shortest.length() && getCharProduct(word, primes) % charProduct == 0) {
+                shortest = word;
+            }
+        }
+        return shortest;
+    }
+
+    private long getCharProduct(String plate, int[] primes) {
+        long product = 1L;
+        for(char c : plate.toCharArray()) {
+            int index = c - 'a';
+            if (0 <= index && index <= 25) {
+                product *= primes[index];
+            }
+        }
+        return product;
+    }
+
     public static String shortestCompletingWord(String licensePlate, String[] words) {
         String res = null;
         Map<Character, Integer> plateFrequency = count(licensePlate);
