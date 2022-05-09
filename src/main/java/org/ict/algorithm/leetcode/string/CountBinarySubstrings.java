@@ -38,13 +38,79 @@ import java.util.List;
 public class CountBinarySubstrings {
 
     public static void main(String[] args) {
-        List<String> list = new ArrayList<>();
-        String s = "00110011";
-        subString(s.toCharArray(), s.length(), list);
-        System.out.println(list);
+        String sub  = "0110001111";
+        int result = countBinarySubstringsV2(sub);
+        System.out.println(result);
     }
 
-    public int countBinarySubstrings(String s) {
+    /**
+     * The following solution is provided by compton_scatter
+     *
+     * Maintain the current character run length and previous character run length.
+     * If prevRunLength >= curRunLength, we have found a valid string.
+     *
+     * @param s
+     * @return
+     */
+    public static int countBinarySubstringsV3(String s) {
+        int prevRunLength = 0, curRunLength = 1, res = 0;
+        for (int i = 1; i < s.length(); i++) {
+            if (s.charAt(i) == s.charAt(i - 1)) {
+                curRunLength++;
+            } else {
+                prevRunLength = curRunLength;
+                curRunLength = 1;
+            }
+            if (prevRunLength >= curRunLength) {
+                res++;
+            }
+        }
+        return res;
+    }
+
+    /**
+     * The following solution is provided by lee215
+     *
+     * First, I count the number of 1 or 0 grouped consecutively.
+     * For example "0110001111" will be [1, 2, 3, 4].
+     *
+     * Second, for any possible substrings with 1 and 0 grouped consecutively,
+     * the number of valid substring will be the minimum number of 0 and 1.
+     * For example "0001111", will be min(3, 4) = 3, ("01", "0011", "000111")
+     *
+     *
+     * Complexity
+     * Time O(N)
+     * Space O(1)
+     * @param s
+     * @return
+     */
+    public static int countBinarySubstringsV2(String s) {
+        int cur = 1, pre = 0, res = 0;
+        for(int i = 1; i < s.length(); i++) {
+            if (s.charAt(i) == s.charAt(i - 1)) {
+                cur++;
+            } else {
+                res += Math.min(pre, cur);
+                pre = cur;
+                cur = 1;
+            }//"0110001111"
+            System.out.println("pre:" + pre + ", cur:" + cur + ", res:" + res);
+        }
+        /**
+         * Due to the res sum is before pre and cur, so in the last time when pre and cur
+         * update, the res should add this one.
+         */
+        return res + Math.min(pre, cur);
+    }
+
+
+    /**
+     * Time Limit Exceeded
+     * @param s
+     * @return
+     */
+    public static int countBinarySubstringsV1(String s) {
         if (s.length() == 1) {
             return 0;
         }
@@ -57,8 +123,37 @@ public class CountBinarySubstrings {
         }
         //length of string greater than 2
         int size = s.length() / 2;
+        int mod = s.length() % 2;
+        int maxStep = (mod == 0 ? s.length() : s.length() - 1);
+        int total = 0;
+        for (int step = 2; step <= maxStep; step += 2) {
+            for (int i = 0;  i + step <= s.length(); i++) {
+                // substring
+                String sub = s.substring(i, i + step);
+                // judge substring whether match or not
+                boolean flag = subMatch(sub);
+                if (flag) {
+                    //System.out.println("sub:"+sub);
+                    total++;
+                }
+            }
+        }
+        return total;
+    }
 
-        return 0;
+    private static boolean subMatch(String sub) {
+        int pivot = sub.length() / 2;
+        int i = 0;
+        int frontSum = 0;
+        int backSum = 0;
+        char[] arr = sub.toCharArray();
+        for (i = 0; i < pivot; i++) {
+            frontSum += Character.getNumericValue(arr[i]);
+        }
+        for (; i < sub.length(); i++) {
+            backSum += Character.getNumericValue(arr[i]);
+        }
+        return (frontSum == 0 && backSum == pivot) || (frontSum == pivot && backSum == 0);
     }
 
     /**
