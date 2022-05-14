@@ -1,5 +1,7 @@
 package org.ict.algorithm.leetcode.string;
 
+import java.util.Arrays;
+
 /**
  * You are given a string s of lowercase English letters and an array widths denoting how many pixels wide each lowercase English letter is.
  * Specifically, widths[0] is the width of 'a', widths[1] is the width of 'b', and so on.
@@ -46,8 +48,43 @@ package org.ict.algorithm.leetcode.string;
  */
 public class NumberOfLinesToWriteString {
 
-    public int[] numberOfLines(int[] widths, String s) {
+    public static void main(String[] args) {
+        //int[] width = {10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10};
+        //String s = "abcdefghijklmnopqrstuvwxyz";
+        int[] width = {3,4,10,4,8,7,3,3,4,9,8,2,9,6,2,8,4,9,9,10,2,4,9,10,8,2};
+        String s = "mqblbtpvicqhbrejb";
+        int[] result = numberOfLines(width, s);
+        System.out.println(Arrays.toString(result));
+    }
+
+    public static int[] numberOfLines(int[] widths, String s) {
         int[] result = new int[2];
+        char[] arr = s.toCharArray();
+        int lines = 0;
+        int sum = 0;
+        for (int i = 0; i < arr.length; i++) {
+            int width = widths[arr[i] - 'a'];
+            if (sum < 100){
+                sum += width;
+            }
+            if (sum == 100) {
+                lines++;
+                sum = 0;
+            }
+            if (sum > 100) {
+                lines++;
+                sum = width;
+            }
+            System.out.println("i:" + i + ", lines:" + lines + ", width:" + width  + ", sum:" + sum);
+        }
+        if (lines == 1 && sum == 0) {
+            result[0] = lines;
+            result[1] = 100;
+        } else {
+            result[0] = ++lines;
+            result[1] = sum;
+        }
+
         return result;
     }
 }
