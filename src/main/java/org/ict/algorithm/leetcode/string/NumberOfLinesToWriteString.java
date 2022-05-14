@@ -57,7 +57,23 @@ public class NumberOfLinesToWriteString {
         System.out.println(Arrays.toString(result));
     }
 
+    /**
+     * @author lee215
+     * @param widths
+     * @param s
+     * @return
+     */
     public static int[] numberOfLines(int[] widths, String s) {
+        int lines = 1, sum = 0;
+        for (char c : s.toCharArray()) {
+            int width = widths[c - 'a'];
+            lines = (sum + width) > 100 ? lines + 1 : lines;
+            sum = (sum + width) > 100 ? width : (sum + width);
+        }
+        return new int[] {lines, sum};
+    }
+
+    public static int[] numberOfLinesV1(int[] widths, String s) {
         int[] result = new int[2];
         char[] arr = s.toCharArray();
         int lines = 0;
