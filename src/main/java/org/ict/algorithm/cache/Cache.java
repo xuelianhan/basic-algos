@@ -1,8 +1,17 @@
 package org.ict.algorithm.cache;
 
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
+/**
+ * @author sniper
+ * @date 2022/6/9 10:32 AM
+ */
+public interface Cache<K, V> {
 
-public interface Cache<K, V> extends Map<K, V> {
-    V put(K key, V value, long ttl, TimeUnit ttlUnit, long maxIdleTime, TimeUnit maxIdleUnit);
+    V get(K key);
+
+    void put(K key, V value);
+
+    boolean remove(K key);
+
+    long size();
+
 }
