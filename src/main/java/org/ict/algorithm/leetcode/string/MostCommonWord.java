@@ -53,11 +53,12 @@ public class MostCommonWord {
      * @param args
      */
     public static void main(String[] args) {
-        String paragraph = "Bob hit a ball, the hit BALL flew far after it was hit.";
+        //String paragraph = "Bob hit a ball, the hit BALL flew far after it was hit.";
         //String[] banned = {"hit"};
         //String paragraph = "a.";
         //String[] banned = {};
         //String paragraph = "Bob";
+        String paragraph = "word,word,word";
         String[] banned = {};
         String result = mostCommonWord(paragraph, banned);
         System.out.println(result);
@@ -70,9 +71,18 @@ public class MostCommonWord {
      * @return
      */
     public static String mostCommonWord(String paragraph, String[] banned) {
+        /**
+         * may be replace with \\W+
+         */
         String regex = "[^a-zA-Z0-9]";
+        /**
+         * 1. remove all punctuations.
+         * 2. split with rest string with spaces
+         * 3. count each word not in banned list;
+         * 4. find  the word with max frequency;
+         */
         String[] replaced = paragraph.replaceAll(regex, " ").toLowerCase().split("\\s+");
-        Map<String, Integer> cntMap = new HashMap<>();
+        Map<String, Integer> cntMap = new HashMap<>(16);
         Set<String> banSet = Stream.of(banned).collect(Collectors.toSet());
         for (String s : replaced) {
             if (banSet.contains(s)) {
