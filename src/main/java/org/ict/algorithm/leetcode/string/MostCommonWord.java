@@ -1,9 +1,6 @@
 package org.ict.algorithm.leetcode.string;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -58,6 +55,8 @@ public class MostCommonWord {
     }
 
     public static String mostCommonWord(String paragraph, String[] banned) {
+        String[] arr = paragraph.split("\\W+");
+
         StringBuffer sb = new StringBuffer();
         Map<String, Integer> cntMap = new HashMap<>();
         String result = "";
@@ -73,18 +72,15 @@ public class MostCommonWord {
             } else {
                 s = sb.toString().toLowerCase();
             }
-
             if (s == null || s.length() == 0) {
                 continue;
             }
-
             if (null != banned && banned.length > 0) {
                 Set<String> banSet = Stream.of(banned).collect(Collectors.toSet());
                 if (banSet.contains(s)) {
                     continue;
                 }
             }
-
             Integer cnt = cntMap.getOrDefault(s, 0);
             cntMap.put(s, cnt + 1);
             if (cnt + 1 > max) {
