@@ -1,9 +1,9 @@
 package org.ict.algorithm.leetcode.string;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -27,6 +27,7 @@ import java.util.stream.Stream;
  * Note that words in the paragraph are not case sensitive,
  * that punctuation is ignored (even if adjacent to words, such as "ball,"),
  * and that "hit" isn't the answer even though it occurs more because it is banned.
+ *
  * Example 2:
  *
  * Input: paragraph = "a.", banned = []
@@ -46,18 +47,44 @@ import java.util.stream.Stream;
  */
 public class MostCommonWord {
 
+    /**
+     * return value.replaceAll("[^A-Za-z0-9]", "");
+     * return value.replaceAll("[\\W]|_", "");
+     * @param args
+     */
     public static void main(String[] args) {
-        //String paragraph = "Bob hit a ball, the hit BALL flew far after it was hit.";
+        String paragraph = "Bob hit a ball, the hit BALL flew far after it was hit.";
         //String[] banned = {"hit"};
         //String paragraph = "a.";
         //String[] banned = {};
-        String paragraph = "Bob";
+        //String paragraph = "Bob";
         String[] banned = {};
         String result = mostCommonWord(paragraph, banned);
         System.out.println(result);
     }
 
+    /**
+     * @see <a href="https://stackoverflow.com/questions/1805518/replacing-all-non-alphanumeric-characters-with-empty-strings"></a>
+     * @param paragraph
+     * @param banned
+     * @return
+     */
     public static String mostCommonWord(String paragraph, String[] banned) {
+        String regex = "[^a-zA-Z0-9]";
+        String[] replaced = paragraph.replaceAll(regex, " ").toLowerCase().split("\\s+");
+        Map<String, Integer> cntMap = new HashMap<>();
+        Set<String> banSet = Stream.of(banned).collect(Collectors.toSet());
+        for (String s : replaced) {
+            if (banSet.contains(s)) {
+                continue;
+            }
+            Integer cnt = cntMap.getOrDefault(s, 0);
+            cntMap.put(s, cnt + 1);
+        }
+        return Collections.max(cntMap.entrySet(), Map.Entry.comparingByValue()).getKey();
+    }
+
+    public static String mostCommonWordWrongSolution(String paragraph, String[] banned) {
         StringBuffer sb = new StringBuffer();
         Map<String, Integer> cntMap = new HashMap<>();
         String result = "";
