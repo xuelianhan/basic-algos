@@ -5,7 +5,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.TimeUnit;
 
-public abstract class AbstractCacheMap<K, V> implements Cache<K, V> {
+public abstract class AbstractCacheMap<K, V> implements MapCache<K, V> {
     final int size;
     final ConcurrentMap<K, CachedValue<K, V>> map = new ConcurrentHashMap<>();
     private final long timeToLiveInMillis;
