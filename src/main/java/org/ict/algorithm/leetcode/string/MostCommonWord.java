@@ -110,18 +110,15 @@ public class MostCommonWord {
             } else {
                 s = sb.toString().toLowerCase();
             }
-
             if (s == null || s.length() == 0) {
                 continue;
             }
-
             if (null != banned && banned.length > 0) {
                 Set<String> banSet = Stream.of(banned).collect(Collectors.toSet());
                 if (banSet.contains(s)) {
                     continue;
                 }
             }
-
             Integer cnt = cntMap.getOrDefault(s, 0);
             cntMap.put(s, cnt + 1);
             if (cnt + 1 > max) {
