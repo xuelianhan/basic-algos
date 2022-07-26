@@ -22,6 +22,10 @@ public class MemoryUtil {
 
     private static final String OS_NAME_VAR = "os.name";
 
+    private static final String PROC_FILE = "/proc/%s/status";
+
+    private static final String RSS_PREFIX = "VmRSS:";
+
     public static void main(String[] args) {
         long result = getProcessRssInKb();
         System.out.println(result);
@@ -38,12 +42,11 @@ public class MemoryUtil {
         if (!LINUX_OS_NAME.equals(osName)) {
             return invalidValuePlaceholder;
         }
-
-        String statusFile = "/proc/" + pid + "/status";
+        String statusFile = String.format(PROC_FILE, pid);
         try {
             return Files.readAllLines(Paths.get(statusFile))
                     .stream()
-                    .filter(line -> line.startsWith("VmRSS:"))
+                    .filter(line -> line.startsWith(RSS_PREFIX))
                     .map(line -> line.split("\\s+")[1].trim())
                     .mapToLong(Long::parseLong)
                     .findFirst()
