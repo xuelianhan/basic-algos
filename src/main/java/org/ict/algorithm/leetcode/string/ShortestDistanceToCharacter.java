@@ -37,11 +37,12 @@ package org.ict.algorithm.leetcode.string;
  *
  * @author sniper
  * @date 27 June, 2022
+ * LC821
  */
 public class ShortestDistanceToCharacter {
 
     public int[] shortestToChar(String s, char c) {
-
+        
         return null;
     }
 }
