@@ -1,5 +1,7 @@
 package org.ict.algorithm.leetcode.string;
 
+import java.util.Arrays;
+
 /**
  * Given a string s and a character c that occurs in s,
  * return an array of integers answer where answer.length == s.length
@@ -41,8 +43,70 @@ package org.ict.algorithm.leetcode.string;
  */
 public class ShortestDistanceToCharacter {
 
-    public int[] shortestToChar(String s, char c) {
-        
-        return null;
+    public static void main(String[] args) {
+        String s = "loveleetcode";
+        char c = 'e';
+        shortestToChar(s, c);
+    }
+
+    /**
+     * Before the first C value is reached,
+     * there is no index behind it to compute a difference.
+     * So letting pos = -n assures that the computed difference on the first pass
+     * before the first C value is reached is higher than what would be computed on the way back.
+     *
+     * Say the example was aacaacacaca, and C = 'c'.
+     * The first c is at index 2.
+     * On the first pass, the two 'a' values will be given a difference
+     * of 0 - (-12) = 12, and 1 - (-12) = 13,
+     * respectively, since pos = -n = -12.
+     * When the first 'c' is reached,
+     * the 'a' values in front of it will be compared to it's index,
+     * until the next 'c' is reached,
+     * and so on so forth.
+     *
+     * On the way back, when that leftmost 'c' is finally reached,
+     * the actual difference for the leftmost 'a' values will be computed as 2 - 1 = 1,
+     * and 2 - 0 = 2,
+     * since pos will now equal the index of the first 'c', which is 2.
+     *
+     * So basically, on the first pass,
+     * the values given to everything behind the first C from the left is "incorrect".
+     * On the backwards pass, this is fixed.
+     *
+     * @param s
+     * @param c
+     * @return
+     */
+    public static int[] shortestToChar(String s, char c) {
+        int n = s.length(), pos = -n;
+        int[] res = new int[n];
+        /**
+         * First pass to find the shortest distance to character c from left to right.
+         */
+        for (int i = 0; i < n; i++) {
+            if (s.charAt(i) == c) {
+                pos = i;
+            }
+            res[i] = i - pos;
+        }
+        /**
+         * [12, 13, 14, 0, 1, 0, 0, 1, 2, 3, 4, 0]
+         */
+        System.out.println(Arrays.toString(res));
+        /**
+         * Second pass to find the shortest distance to character c from right to left
+         */
+        for (int i = pos - 1; i >= 0; i--) {
+            if (s.charAt(i) == c) {
+                pos = i;
+            }
+            res[i] = Math.min(res[i], pos - i);
+        }
+        /**
+         * [3, 2, 1, 0, 1, 0, 0, 1, 2, 2, 1, 0]
+         */
+        System.out.println(Arrays.toString(res));
+        return res;
     }
 }

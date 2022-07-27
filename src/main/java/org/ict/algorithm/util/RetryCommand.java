@@ -5,13 +5,13 @@ import java.util.function.Supplier;
 /**
  * Creating a simple retry command with function passing in Java 8
  * 
- * @see https://myadventuresincoding.wordpress.com/2014/07/30/java-creating-a-simple-retry-command-with-function-passing-in-java-8/
- * @see https://github.com/myadventuresincoding/RetryCommandExample
- * @see https://github.com/jhalterman/failsafe/tree/master/src/main/java/net/jodah/failsafe
- * @see http://servicedesignpatterns.com/WebServiceInfrastructures/IdempotentRetry
- * @see https://www.yegor256.com/2014/08/15/retry-java-method-on-exception.html
- * @see https://github.com/jcabi/jcabi-aspects
- * @see https://crunchify.com/how-to-retry-operation-n-number-of-times-in-java/
+ * @see <a href="https://myadventuresincoding.wordpress.com/2014/07/30/java-creating-a-simple-retry-command-with-function-passing-in-java-8/"></a>
+ * @see <a href="https://github.com/myadventuresincoding/RetryCommandExample"></a>
+ * @see <a href="https://github.com/jhalterman/failsafe/tree/master/src/main/java/net/jodah/failsafe"></a>
+ * @see <a href="http://servicedesignpatterns.com/WebServiceInfrastructures/IdempotentRetry"></a>
+ * @see <a href="https://www.yegor256.com/2014/08/15/retry-java-method-on-exception.html"></a>
+ * @see <a href="https://github.com/jcabi/jcabi-aspects"></a>
+ * @see <a href="https://crunchify.com/how-to-retry-operation-n-number-of-times-in-java/"></a>
  */
 public class RetryCommand<T> {
 	
