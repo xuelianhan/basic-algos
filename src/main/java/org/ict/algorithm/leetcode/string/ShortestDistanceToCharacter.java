@@ -97,7 +97,7 @@ public class ShortestDistanceToCharacter {
         /**
          * Second pass to find the shortest distance to character c from right to left
          */
-        for (int i = pos - 1; i >= 0; i--) {
+        for (int i = pos; i >= 0; i--) {
             if (s.charAt(i) == c) {
                 pos = i;
             }
