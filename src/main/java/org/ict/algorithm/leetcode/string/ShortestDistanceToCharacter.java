@@ -49,8 +49,7 @@ public class ShortestDistanceToCharacter {
     }
 
     /**
-     * The following solution is provided by Lee215, we also called him God Shuang.
-     * He is currently worked at Google, sometimes he take some quiz for taste merely.
+     * The following solution is provided by Lee215.
      * Thanks to Lee215's bright idea.
      *
      * Before the first C value is reached,
@@ -85,10 +84,12 @@ public class ShortestDistanceToCharacter {
     public static int[] shortestToChar(String s, char c) {
         /**
          * Why pos is initiated with -n? not Integer.MIN_VALUE or Integer.MAX_VALUE?
-         * Firstly, if pos is initiated with Integer.MIN_VALUE, the Math.min cannot get
-         * the minimum absolute distance because Integer.MIN_VALUE is always the minimum.
-         * Secondly, if pos is initiated with Integer.MAX_VALUE, the addition operation
-         * may be overflow.
+         * Firstly, if pos is initiated with Integer.MIN_VALUE, (i - Integer.MIN_VALUE) may overflow.
+         * Secondly, if pos is initiated with Integer.MAX_VALUE, (i - Integer.MAX_VALUE)'s value may be
+         * very small, which lead to the Math.min cannot get the minimum absolute distance.
+         *
+         * pos initial value no more greater than -n
+         * e.g. pos = -(n + 1), or, -(n + 2),... are ok
          */
         int n = s.length(), pos = -n;
         int[] res = new int[n];
