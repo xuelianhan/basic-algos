@@ -49,7 +49,10 @@ public class ShortestDistanceToCharacter {
     }
 
     /**
-     * The following solution is provided by Lee215
+     * The following solution is provided by Lee215, we also called him God Shuang.
+     * He is currently worked at Google, sometimes he take some quiz for taste merely.
+     * Thanks to Lee215's bright idea.
+     *  
      * Before the first C value is reached,
      * there is no index behind it to compute a difference.
      * So letting pos = -n assures that the computed difference on the first pass
@@ -82,7 +85,7 @@ public class ShortestDistanceToCharacter {
     public static int[] shortestToChar(String s, char c) {
         /**
          * Why pos is initiated with -n? not Integer.MIN_VALUE or Integer.MAX_VALUE?
-         * 
+         *
          */
         int n = s.length(), pos = -n;
         int[] res = new int[n];
