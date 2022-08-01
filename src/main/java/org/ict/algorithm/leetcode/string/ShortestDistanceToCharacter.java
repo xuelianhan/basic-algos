@@ -95,8 +95,10 @@ public class ShortestDistanceToCharacter {
         int[] res = new int[n];
         /**
          * First pass to find the shortest distance to character c from left to right.
+         * i runs faster than pos, pos equals i when i's c.
          * Adjust pos index dynamically according to the occurrence of c.
          * the i is greater than pos when scanning from left to right.
+         *
          */
         for (int i = 0; i < n; i++) {
             if (s.charAt(i) == c) {
@@ -111,6 +113,7 @@ public class ShortestDistanceToCharacter {
         /**
          * Second pass to find the shortest distance to character c from right to left
          * And fix the first pass distance.
+         * i less than pos, only i equals pos when i's c. i runs back from right to left.
          *
          * Due to it is guaranteed that c occurs at least once in s,
          * pos is the biggest index of c from left to right(only -n at first, then pos is positive number).
