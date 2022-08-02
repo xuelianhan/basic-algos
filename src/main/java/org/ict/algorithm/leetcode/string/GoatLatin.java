@@ -1,5 +1,8 @@
 package org.ict.algorithm.leetcode.string;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * You are given a string sentence that consist of words separated by spaces.
  * Each word consists of lowercase and uppercase letters only.
@@ -43,8 +46,39 @@ package org.ict.algorithm.leetcode.string;
  */
 public class GoatLatin {
 
-    public String toGoatLatin(String sentence) {
+    public static void main(String[] args) {
+        String sentence = "The quick brown fox jumped over the lazy dog";
+        String result = toGoatLatin(sentence);
+        System.out.println(result);
+    }
 
-        return null;
+    public static String toGoatLatin(String sentence) {
+        String[] arr = sentence.split("\\s+");
+        Set<String> vowel = new HashSet<>();
+        vowel.add("a");
+        vowel.add("e");
+        vowel.add("i");
+        vowel.add("o");
+        vowel.add("u");
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < arr.length; i++) {
+            String item = arr[i];
+            String s = item.substring(0, 1).toLowerCase();
+            if (vowel.contains(s)) {
+                sb.append(item + "ma");
+            } else {
+                sb.append(item.substring(1, item.length()) + item.substring(0, 1)+  "ma");
+            }
+            for(int j = 0; j < (i + 1); j++) {
+                sb.append("a");
+            }
+            /**
+             * last index not need to append space, so skip it.
+             */
+            if (i < arr.length - 1) {
+                sb.append(" ");
+            }
+        }
+        return sb.toString();
     }
 }
