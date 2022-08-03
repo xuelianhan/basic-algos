@@ -82,7 +82,8 @@ public class BuddyStrings {
             }
         }
         /**
-         * consider s = abcd, goal = dbca
+         * consider cases s not equals goal, such as:
+         * s = abcd, goal = dbca
          * diff = [0, 3]
          *
          * s = abcd
