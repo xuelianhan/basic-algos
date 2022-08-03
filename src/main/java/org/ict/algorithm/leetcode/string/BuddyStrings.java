@@ -54,9 +54,10 @@ public class BuddyStrings {
         if (s.length() != goal.length()) {
             return false;
         }
+        /*
         if (s.length() == 1) {
             return false;
-        }
+        }*/
         /**
          * If s equals goal:
          * consider case such as:
