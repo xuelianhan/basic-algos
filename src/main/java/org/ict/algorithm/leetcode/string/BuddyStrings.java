@@ -72,8 +72,12 @@ public class BuddyStrings {
             return (set.size() < s.length());
         }
         /**
-         * if s not equals goal
+         * consider cases s not equals goal,
          * s and goal should have only 2 diffs
+         *
+         * e.g.
+         * s = abcd, goal = dbca
+         * diff = [0, 3]
          */
         List<Integer> diff = new ArrayList<>();
         for (int i = 0; i < s.length(); i++) {
@@ -82,10 +86,7 @@ public class BuddyStrings {
             }
         }
         /**
-         * consider cases s not equals goal, such as:
-         * s = abcd, goal = dbca
          * diff = [0, 3]
-         *
          * s = abcd
          * g = dbca
          *
