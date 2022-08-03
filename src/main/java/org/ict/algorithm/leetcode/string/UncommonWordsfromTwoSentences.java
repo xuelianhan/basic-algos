@@ -1,9 +1,6 @@
 package org.ict.algorithm.leetcode.string;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * A sentence is a string of single-space separated words where each word consists only of lowercase letters.
@@ -38,7 +35,13 @@ import java.util.Set;
  */
 public class UncommonWordsfromTwoSentences {
 
-    public String[] uncommonFromSentences(String s1, String s2) {
+    public static void main(String[] args) {
+        String s1 = "this apple is sweet", s2 = "this apple is sour";
+        String[] result = uncommonFromSentences(s1, s2);
+        System.out.println(Arrays.deepToString(result));
+    }
+
+    public static String[] uncommonFromSentences(String s1, String s2) {
         String spaceRegex = "\\s";
         List<String> list = new ArrayList<>();
         Set<String> set = new HashSet<>();
@@ -46,11 +49,12 @@ public class UncommonWordsfromTwoSentences {
             set.add(item);
         }
         for(String item : s2.split(spaceRegex)) {
-            if (set.contains(item)) {
-
+            if (!set.contains(item)) {
+                list.add(item);
+                set.add(item);
             }
-            set.add(item);
         }
-        return null;
+        String[] result = new String[list.size()];
+        return list.toArray(result);
     }
 }
