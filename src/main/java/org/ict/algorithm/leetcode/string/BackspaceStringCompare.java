@@ -39,8 +39,50 @@ import java.util.Stack;
  */
 public class BackspaceStringCompare {
 
-    public boolean backspaceCompare(String s, String t) {
-        //todo
+    public static void main(String[] args) {
+        String s = "y#fo##f", t = "y#f#o##f";
+        boolean result = backspaceCompareV1(s, t);
+        System.out.println(result);
+    }
+
+    public static boolean backspaceCompareV2(String s, String t) {
         return false;
+    }
+
+    public static boolean backspaceCompareV1(String s, String t) {
+        Stack<Character> stackS = new Stack<>();
+        Stack<Character> stackT = new Stack<>();
+        for (char c : s.toCharArray()) {
+            if ('#' == c && !stackS.isEmpty()) {
+                stackS.pop();
+            } else {
+                if ('#' != c) {
+                    stackS.push(c);
+                }
+            }
+        }
+        for (char c : t.toCharArray()) {
+            if ('#' == c && !stackT.isEmpty()) {
+                stackT.pop();
+            } else {
+                if ('#' != c) {
+                    stackT.push(c);
+                }
+            }
+        }
+        StringBuffer s1 = new StringBuffer();
+        StringBuffer s2 = new StringBuffer();
+        while (!stackS.isEmpty()) {
+            s1.append(stackS.pop());
+        }
+        while (!stackT.isEmpty()) {
+            s2.append(stackT.pop());
+        }
+        //System.out.println(s1);
+        //System.out.println(s2);
+        if (s1.length() != s2.length()) {
+            return false;
+        }
+        return s1.toString().equals(s2.toString());
     }
 }
