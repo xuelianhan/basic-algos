@@ -46,9 +46,16 @@ public class BackspaceStringCompare {
     }
 
     public static boolean backspaceCompareV2(String s, String t) {
+        //todo
         return false;
     }
 
+    /**
+     * Time Compa
+     * @param s
+     * @param t
+     * @return
+     */
     public static boolean backspaceCompareV1(String s, String t) {
         Stack<Character> stackS = new Stack<>();
         Stack<Character> stackT = new Stack<>();
@@ -78,8 +85,6 @@ public class BackspaceStringCompare {
         while (!stackT.isEmpty()) {
             s2.append(stackT.pop());
         }
-        //System.out.println(s1);
-        //System.out.println(s2);
         if (s1.length() != s2.length()) {
             return false;
         }
