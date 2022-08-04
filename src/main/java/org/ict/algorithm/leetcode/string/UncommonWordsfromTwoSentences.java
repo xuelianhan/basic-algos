@@ -36,22 +36,75 @@ import java.util.*;
 public class UncommonWordsfromTwoSentences {
 
     public static void main(String[] args) {
-        String s1 = "this apple is sweet", s2 = "this apple is sour";
+        /**
+         * output:   ["s","ejt"]
+         * expected: ["ejt"]
+         */
+        String s1 = "s z z z s";
+        String s2 = "s z ejt";
+        //String s1 = "apple apple";
+        //String s2 = "banana";
+        //String s1 = "this apple is sweet";
+        //String s2 = "this apple is sour";
         String[] result = uncommonFromSentences(s1, s2);
         System.out.println(Arrays.deepToString(result));
     }
 
-    public static String[] uncommonFromSentences(String s1, String s2) {
+    /**
+     * Elegant Solution provided by Lee215
+     * @param A
+     * @param B
+     * @return
+     */
+    public static String[] uncommonFromSentences(String A, String B) {
+        String space = " ";
+        Map<String, Integer> count = new HashMap<>(8);
+        for (String w : (A + space + B).split(space)) {
+            count.put(w, count.getOrDefault(w, 0) + 1);
+        }
+        ArrayList<String> res = new ArrayList<>();
+        for (String w : count.keySet()) {
+            if (count.get(w) == 1) {
+                res.add(w);
+            }
+        }
+        return res.toArray(new String[0]);
+    }
+
+    public static String[] uncommonFromSentencesV1(String s1, String s2) {
         String spaceRegex = "\\s";
         List<String> list = new ArrayList<>();
-        Set<String> set = new HashSet<>();
+        Map<String, Integer> map1 = new HashMap<>(8);
+        Map<String, Integer> map2 = new HashMap<>(8);
         for(String item : s1.split(spaceRegex)) {
-            set.add(item);
+           if (map1.get(item) == null) {
+               map1.put(item, 1);
+           } else {
+               map1.put(item, map1.get(item) + 1);
+           }
         }
         for(String item : s2.split(spaceRegex)) {
-            if (!set.contains(item)) {
+            if (map2.get(item) == null) {
+                map2.put(item, 1);
+            } else {
+                map2.put(item, map2.get(item) + 1);
+            }
+        }
+
+        for(String item : map1.keySet()) {
+            if (map1.get(item) > 1) {
+                continue;
+            }
+            if (!map2.keySet().contains(item)) {
                 list.add(item);
-                set.add(item);
+            }
+        }
+        for(String item : map2.keySet()) {
+            if (map2.get(item) > 1) {
+                continue;
+            }
+            if (!map1.keySet().contains(item)) {
+                list.add(item);
             }
         }
         String[] result = new String[list.size()];
