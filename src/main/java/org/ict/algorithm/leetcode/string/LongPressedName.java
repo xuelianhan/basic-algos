@@ -68,8 +68,11 @@ public class LongPressedName {
             return false;
         }
         /**
+         * passed cases:
          * name = "saeed", typed = "ssaaedd"
          * name = "alex", typed = "aaleex"
+         *
+         * failed cases:
          * name = "leelee", typed = "lleeelee", expected true
          *
          */
