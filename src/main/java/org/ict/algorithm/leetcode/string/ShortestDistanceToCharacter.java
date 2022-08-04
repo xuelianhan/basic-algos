@@ -37,7 +37,6 @@ import java.util.Arrays;
  * s[i] and c are lowercase English letters.
  * It is guaranteed that c occurs at least once in s.
  *
- * @author sniper
  * @date 27 June, 2022
  * LC821
  */
@@ -50,6 +49,9 @@ public class ShortestDistanceToCharacter {
     }
 
     /**
+     * The following solution is provided by Lee215.
+     * Thanks to Lee215's bright idea.
+     *
      * Before the first C value is reached,
      * there is no index behind it to compute a difference.
      * So letting pos = -n assures that the computed difference on the first pass
@@ -77,12 +79,26 @@ public class ShortestDistanceToCharacter {
      * @param s
      * @param c
      * @return
+     * @author lee215
      */
     public static int[] shortestToChar(String s, char c) {
+        /**
+         * Why pos is initiated with -n? not Integer.MIN_VALUE or Integer.MAX_VALUE?
+         * Firstly, if pos is initiated with Integer.MIN_VALUE, (i - Integer.MIN_VALUE) may overflow.
+         * Secondly, if pos is initiated with Integer.MAX_VALUE, (i - Integer.MAX_VALUE)'s value may be
+         * very small, which lead to the Math.min cannot get the minimum absolute distance.
+         *
+         * pos initial value no more greater than -n
+         * e.g. pos = -(n + 1), or, -(n + 2),... are ok
+         */
         int n = s.length(), pos = -n;
         int[] res = new int[n];
         /**
          * First pass to find the shortest distance to character c from left to right.
+         * i runs faster than pos, pos equals i when i's c.
+         * Adjust pos index dynamically according to the occurrence of c.
+         * the i is greater than pos when scanning from left to right.
+         *
          */
         for (int i = 0; i < n; i++) {
             if (s.charAt(i) == c) {
@@ -96,8 +112,20 @@ public class ShortestDistanceToCharacter {
         System.out.println(Arrays.toString(res));
         /**
          * Second pass to find the shortest distance to character c from right to left
+         * And fix the first pass distance.
+         * i less than pos, only i equals pos when i's c. i runs back from right to left.
+         *
+         * Due to it is guaranteed that c occurs at least once in s,
+         * pos is the biggest index of c from left to right(only -n at first, then pos is positive number).
+         * If we do the right-to-left search at the second pass, we need to
+         * start at pos - 1(start at pos is ok but waste one-loop).
+         * right-to-left
+         *
+         * Adjust pos index dynamically according to the occurrence of c.
+         * the i pos is greater than i when scanning from right to left.
+         * Use Math.min to amend the absolute distance.
          */
-        for (int i = pos; i >= 0; i--) {
+        for (int i = pos - 1; i >= 0; i--) {
             if (s.charAt(i) == c) {
                 pos = i;
             }
