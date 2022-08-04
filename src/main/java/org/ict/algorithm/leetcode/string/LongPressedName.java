@@ -36,8 +36,8 @@ package org.ict.algorithm.leetcode.string;
 public class LongPressedName {
 
     public static void main(String[] args) {
-        //String name = "saeed", typed = "ssaaedd";
-        String name = "alex", typed = "aaleex";
+        String name = "saeed", typed = "ssaaedd";
+        //String name = "alex", typed = "aaleex";
         boolean result = isLongPressedName(name, typed);
         System.out.println(result);
     }
@@ -70,23 +70,23 @@ public class LongPressedName {
         /**
          * name = "saeed", typed = "ssaaedd"
          * name = "alex", typed = "aaleex"
+         * name = "leelee", typed = "lleeelee", expected true
+         *
          */
         int i = 0;
         int j = 0;
         while( i < name.length()) {
             int crossOutCnt = 0;
-            if (name.charAt(i) == typed.charAt(j)) {
-                while (name.charAt(i) == typed.charAt(j) && j < typed.length()) {
-                    j++;
-                    crossOutCnt++;
-                }
-            } else {
-                if (crossOutCnt == 0) {
-                    return false;
-                }
-                i++;
+            while (j < typed.length() && name.charAt(i) == typed.charAt(j)) {
+                j++;
+                crossOutCnt++;
             }
+            System.out.println("i:" + i + ", j:" + j + ", crossOutCnt:" + crossOutCnt);
+            if (crossOutCnt == 0) {
+                return false;
+            }
+            i++;
         }
-        return (i == (name.length() - 1));
+        return (i == name.length());
     }
 }
