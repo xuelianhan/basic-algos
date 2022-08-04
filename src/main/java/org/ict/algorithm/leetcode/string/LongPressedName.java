@@ -35,10 +35,58 @@ package org.ict.algorithm.leetcode.string;
  */
 public class LongPressedName {
 
-    public boolean isLongPressedName(String name, String typed) {
+    public static void main(String[] args) {
+        //String name = "saeed", typed = "ssaaedd";
+        String name = "alex", typed = "aaleex";
+        boolean result = isLongPressedName(name, typed);
+        System.out.println(result);
+    }
+
+    /**
+     * Two Pointers solution provided by lee215
+     * @param name
+     * @param typed
+     * @return
+     */
+    public static boolean isLongPressedNameV2(String name, String typed) {
+        int i = 0, m = name.length(), n = typed.length();
+        for (int j = 0; j < n; ++j) {
+            if (i < m && name.charAt(i) == typed.charAt(j)) {
+                ++i;
+            } else if (j == 0 || typed.charAt(j) != typed.charAt(j - 1)) {
+                return false;
+            }
+        }
+        return i == m;
+    }
+
+    public static boolean isLongPressedName(String name, String typed) {
         if (name.equals(typed)) {
             return true;
         }
-        return false;
+        if (name.length() > typed.length()) {
+            return false;
+        }
+        /**
+         * name = "saeed", typed = "ssaaedd"
+         * name = "alex", typed = "aaleex"
+         */
+        int i = 0;
+        int j = 0;
+        while( i < name.length()) {
+            int crossOutCnt = 0;
+            if (name.charAt(i) == typed.charAt(j)) {
+                while (name.charAt(i) == typed.charAt(j) && j < typed.length()) {
+                    j++;
+                    crossOutCnt++;
+                }
+            } else {
+                if (crossOutCnt == 0) {
+                    return false;
+                }
+                i++;
+            }
+        }
+        return (i == (name.length() - 1));
     }
 }
