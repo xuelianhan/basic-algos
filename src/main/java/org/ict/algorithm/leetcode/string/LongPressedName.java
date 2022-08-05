@@ -64,6 +64,15 @@ public class LongPressedName {
         return i == m;
     }
 
+    /**
+     * passed cases:
+     * name = "saeed", typed = "ssaaedd", expected false
+     * name = "alex", typed = "aaleex", expected true
+     * name = "leelee", typed = "lleeelee", expected true
+     * name = "alex", typed = "aaleexa", expected false
+     * name = "alex", typed = "aaleexeex", expected false
+     * name = "alex", typed = "aaleelx", expected false
+     */
     public static boolean isLongPressedName(String name, String typed) {
         if (name.equals(typed)) {
             return true;
@@ -71,16 +80,6 @@ public class LongPressedName {
         if (name.length() > typed.length()) {
             return false;
         }
-        /**
-         * passed cases:
-         * name = "saeed", typed = "ssaaedd", expected false
-         * name = "alex", typed = "aaleex", expected true
-         * name = "leelee", typed = "lleeelee", expected true
-         * name = "alex", typed = "aaleexa", expected false
-         * name = "alex", typed = "aaleexeex", expected false
-         *
-         * name = "alex", typed = "aaleelx", expected false
-         */
         int n = 0;
         int t = 0;
         int lenName = name.length();
