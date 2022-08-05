@@ -36,8 +36,12 @@ package org.ict.algorithm.leetcode.string;
 public class LongPressedName {
 
     public static void main(String[] args) {
-        String name = "saeed", typed = "ssaaedd";
+        //String name = "saeed", typed = "ssaaedd";
         //String name = "alex", typed = "aaleex";
+        //String name = "leelee", typed = "lleeelee";
+        //String name = "alex", typed = "aaleexa";
+        String name = "alex", typed = "aaleexeex";
+        //String name = "alex", typed = "aaleelx";
         boolean result = isLongPressedName(name, typed);
         System.out.println(result);
     }
@@ -69,27 +73,40 @@ public class LongPressedName {
         }
         /**
          * passed cases:
-         * name = "saeed", typed = "ssaaedd"
-         * name = "alex", typed = "aaleex"
-         *
-         * failed cases:
+         * name = "saeed", typed = "ssaaedd", expected false
+         * name = "alex", typed = "aaleex", expected true
          * name = "leelee", typed = "lleeelee", expected true
+         * name = "alex", typed = "aaleexa", expected false
+         * name = "alex", typed = "aaleexeex", expected false
          *
+         * name = "alex", typed = "aaleelx", expected false
          */
-        int i = 0;
-        int j = 0;
-        while( i < name.length()) {
-            int crossOutCnt = 0;
-            while (j < typed.length() && name.charAt(i) == typed.charAt(j)) {
-                j++;
-                crossOutCnt++;
-            }
-            System.out.println("i:" + i + ", j:" + j + ", crossOutCnt:" + crossOutCnt);
-            if (crossOutCnt == 0) {
+        int n = 0;
+        int t = 0;
+        int lenName = name.length();
+        int lenTyped = typed.length();
+        while(n < lenName && t < lenTyped) {
+            char c = name.charAt(n);
+            if(c != typed.charAt(t))  {
                 return false;
             }
-            i++;
+            int countInName = 0;
+            int countInTyped = 0;
+            while(n < lenName && name.charAt(n) == c){
+                n++;
+                countInName++;
+            }
+            while(t < lenTyped && typed.charAt(t) == c){
+                t++;
+                countInTyped++;
+            }
+            if(countInName > countInTyped) {
+                return false;
+            }
         }
-        return (i == name.length());
+        if(n == lenName && t== lenTyped) {
+            return true;
+        }
+        return false;
     }
 }
