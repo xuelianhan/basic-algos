@@ -37,12 +37,29 @@ public class LongPressedName {
 
     public static void main(String[] args) {
         //String name = "saeed", typed = "ssaaedd";
-        String name = "alex", typed = "aaleex";
+        //String name = "alex", typed = "aaleex";
+        //String name = "leelee", typed = "lleeelee";
+        //String name = "alex", typed = "aaleexa";
+        //String name = "alex", typed = "aaleexeex";
+        //String name = "alex", typed = "aaleelx";
+        String name = "ab", typed = "a";
+
         boolean result = isLongPressedName(name, typed);
         System.out.println(result);
     }
 
     /**
+     * j == 0 || assure the charAt(j - 1) not exceed the range.
+     * j == 0 || also check the equality of first character in name and typed
+     * consider case:
+     * name = "a", typed = "b";
+     *
+     * condition as "j > 1 &&" is not right, case:
+     * name = "zlexya", typed = "aazlllllllllllllleexxxxxxxxxxxxxxxya"
+     *
+     * name = "a", typed = "ab", expected false
+     * name = "ab", typed = "a", expected false
+     * name = "abc", typed = "ab", expected false
      * Two Pointers solution provided by lee215
      * @param name
      * @param typed
@@ -50,7 +67,7 @@ public class LongPressedName {
      */
     public static boolean isLongPressedNameV2(String name, String typed) {
         int i = 0, m = name.length(), n = typed.length();
-        for (int j = 0; j < n; ++j) {
+        for (int j = 0; j < n; j++) {
             if (i < m && name.charAt(i) == typed.charAt(j)) {
                 ++i;
             } else if (j == 0 || typed.charAt(j) != typed.charAt(j - 1)) {
@@ -60,6 +77,16 @@ public class LongPressedName {
         return i == m;
     }
 
+    /**
+     * Two-Pointers solution of count
+     * passed cases:
+     * name = "saeed", typed = "ssaaedd", expected false
+     * name = "alex", typed = "aaleex", expected true
+     * name = "leelee", typed = "lleeelee", expected true
+     * name = "alex", typed = "aaleexa", expected false
+     * name = "alex", typed = "aaleexeex", expected false
+     * name = "alex", typed = "aaleelx", expected false
+     */
     public static boolean isLongPressedName(String name, String typed) {
         if (name.equals(typed)) {
             return true;
@@ -67,29 +94,35 @@ public class LongPressedName {
         if (name.length() > typed.length()) {
             return false;
         }
-        /**
-         * passed cases:
-         * name = "saeed", typed = "ssaaedd"
-         * name = "alex", typed = "aaleex"
-         *
-         * failed cases:
-         * name = "leelee", typed = "lleeelee", expected true
-         *
-         */
-        int i = 0;
-        int j = 0;
-        while( i < name.length()) {
-            int crossOutCnt = 0;
-            while (j < typed.length() && name.charAt(i) == typed.charAt(j)) {
-                j++;
-                crossOutCnt++;
-            }
-            System.out.println("i:" + i + ", j:" + j + ", crossOutCnt:" + crossOutCnt);
-            if (crossOutCnt == 0) {
+        int n = 0;
+        int t = 0;
+        int lenName = name.length();
+        int lenTyped = typed.length();
+        while (n < lenName && t < lenTyped) {
+            char c = name.charAt(n);
+            if(c != typed.charAt(t)) {
                 return false;
             }
-            i++;
+            /**
+             * count the same characters
+             */
+            int countInName = 0;
+            int countInTyped = 0;
+            while (n < lenName && name.charAt(n) == c) {
+                n++;
+                countInName++;
+            }
+            while (t < lenTyped && typed.charAt(t) == c) {
+                t++;
+                countInTyped++;
+            }
+            if (countInName > countInTyped) {
+                return false;
+            }
         }
-        return (i == name.length());
+        if (n == lenName && t== lenTyped) {
+            return true;
+        }
+        return false;
     }
 }
