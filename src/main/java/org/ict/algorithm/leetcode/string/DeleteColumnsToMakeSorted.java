@@ -10,8 +10,13 @@ package org.ict.algorithm.leetcode.string;
  * bce
  * cae
  * You want to delete the columns that are not sorted lexicographically.
+<<<<<<< HEAD
  * In the above example (0-indexed), columns 0 ('a', 'b', 'c') and 2 ('c', 'e', 'e') are sorted while column 1 ('b', 'c', 'a') is not,
  * so you would delete column 1.
+=======
+ * In the above example (0-indexed), columns 0 ('a', 'b', 'c') and 2 ('c', 'e', 'e')
+ * are sorted while column 1 ('b', 'c', 'a') is not, so you would delete column 1.
+>>>>>>> 362ecd929a6c19793978f111aba2984950f0da29
  *
  * Return the number of columns that you will delete.
  *
@@ -52,11 +57,33 @@ package org.ict.algorithm.leetcode.string;
  * 1 <= strs[i].length <= 1000
  * strs[i] consists of lowercase English letters.
  * @author sniper
+<<<<<<< HEAD
  * @date 07 Aug, 2022
  */
 public class DeleteColumnsToMakeSorted {
 
-    public int minDeletionSize(String[] strs) {
-        return 0;
+
+    public static void main(String[] args) {
+        //String[] strs = {"a","b"};
+        //String[] strs = {"cba","daf","ghi"};
+        String[] strs = {"zyx","wvu","tsr"};
+        int result = minDeletionSize(strs);
+        System.out.println(result);
+    }
+
+    public static int minDeletionSize(String[] strs) {
+        int cnt = 0;
+        for(int col = 0; col < strs[0].length(); col++) {
+            char prev = 0;
+            for (int row = 0; row < strs.length; row++) {
+                char current = strs[row].charAt(col);
+                if (current < prev) {
+                    cnt++;
+                    break;
+                }
+                prev = current;
+            }
+        }
+        return cnt;
     }
 }
