@@ -35,26 +35,47 @@ public class FindCommonCharacters {
         System.out.println(result);
     }
 
+    /**
+     * This problem can be solved in following steps :-
+     *
+     * 1.Create two integer array of size 26 (Total number of characters in the English language),
+     * One array (count array) will be used to store the frequency of each character in the S string of input array
+     * and another array (main array) will be used to store the minimum frequency of each character
+     * among all strings of input array. Initialize this array with Integer.MAX_VALUE.
+     *
+     * 2.Iterate through the given input array from start (index 0) to end (n-1, where n is the length of an array)
+     * and for each iteration convert the string into a character array
+     * and assign a frequency of each character to count array.
+     *
+     * 3.Iterate through the count array (prepared in the last step)
+     * and for each iteration and assign a minimum value between count array
+     * and main array to the main array.
+     * @param words
+     * @return
+     */
     public static List<String> commonCharsV2(String[] words) {
         int[] array = new int[26];
         int[] main = new int[26];
         Arrays.fill(main,Integer.MAX_VALUE);
 
         char[] temp;
-        for(String string : words){
+        for (String string : words) {
             temp = string.toCharArray();
-            for(int i=0; i<temp.length; i++){
+            for (int i = 0; i < temp.length; i++) {
                 array[temp[i] - 'a']++;
             }
-            for(int i = 0; i<26; i++){
+            for (int i = 0; i < 26; i++){
                 main[i] = Math.min(main[i], array[i]);
+                /**
+                 * reset array[i] to initialized zero for next loop usage.
+                 */
                 array[i] = 0;
             }
         }
 
         List<String> result = new ArrayList<>();
-        for(int i=0; i<26; i++) {
-            while((main[i]--) > 0) {
+        for (int i = 0; i < 26; i++) {
+            while ((main[i]--) > 0) {
                 result.add((((char)('a' + i))+""));
             }
         }
@@ -77,11 +98,10 @@ public class FindCommonCharacters {
     public static List<String> commonChars(String[] words) {
         int MAX_CNT = 100;
         Map<Character, Integer> totalMap = new HashMap<>(26);
-        for(char c = 'a'; c <= 'z'; c++) {
+        for (char c = 'a'; c <= 'z'; c++) {
             totalMap.put(c, MAX_CNT);
         }
         Map<Character, Integer> cntMap = new HashMap<>(26);
-
         for (int i = 0; i < words.length; i++) {
             cntMap.clear();
             /**
@@ -92,9 +112,9 @@ public class FindCommonCharacters {
                 cntMap.put(c, cntMap.getOrDefault(c, 0) + 1);
             }
             /**
-             * calculate the minimum frequency after accessed one string.
+             * calculate the minimum frequency of each little character after accessed one string.
              */
-            for(char c = 'a'; c <= 'z'; c++) {
+            for (char c = 'a'; c <= 'z'; c++) {
                 totalMap.put(c, Math.min(totalMap.get(c), cntMap.getOrDefault(c, 0)));
             }
         }
@@ -103,7 +123,7 @@ public class FindCommonCharacters {
          */
         List<String> list = new ArrayList<>();
         totalMap.forEach((k, v) -> {
-            for(int i = 0; i < v; i++) {
+            for (int i = 0; i < v; i++) {
                 list.add(Character.toString(k));
             }
         });
