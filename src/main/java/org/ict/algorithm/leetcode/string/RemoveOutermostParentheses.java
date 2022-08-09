@@ -101,7 +101,7 @@ public class RemoveOutermostParentheses {
      * 2.Add every ‘(‘ to the result if count is greater than 0,
      * i.e.add all ‘(‘ after the first ‘(‘ of a primitive substring is encountered.
      *
-     * 3.Add every ‘)’ to the result if count is greater than 0,
+     * 3.Add every ‘)’ to the result if count is greater than 1,
      * i.e. add all ‘)’ before the last ‘)’ of a primitive substring is encountered.
      *
      * 4.Finally, print the resultant string obtained.
