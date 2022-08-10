@@ -1,6 +1,7 @@
 package org.ict.algorithm.leetcode;
 
 
+import java.util.Arrays;
 
 /**
  * You are given a string s formed by digits and '#'.
@@ -37,8 +38,8 @@ package org.ict.algorithm.leetcode;
 public class DecryptStringFromAlphabetToIntegerMapping {
 
     public static void main(String[] args) {
-        //String s = "10#11#12";
-        String s = "1326#";
+        String s = "10#11#12";
+        //String s = "1326#";
         String result = freqAlphabets(s);
         System.out.println(result);
     }
@@ -49,17 +50,15 @@ public class DecryptStringFromAlphabetToIntegerMapping {
             chars[i] = (char)(97 + i);
         }
         StringBuilder sb = new StringBuilder();
-
-        for(int i = s.length() - 1; i >= 0;) {
+        for(int i = s.length() - 1; i >= 0; i--) {
             char c = s.charAt(i);
             if (c == '#') {
                 String x = s.substring(i - 2, i);
                 sb.append(chars[Integer.valueOf(x) - 1]);
-                i-=2;
+                i-= 2;
             } else {
                 int y = Integer.valueOf(Character.toString(c)) - 1;
                 sb.append(chars[y]);
-                i--;
             }
         }
         return sb.reverse().toString();
