@@ -41,6 +41,12 @@ public class GreatestCommonDivisorOfStrings {
         System.out.println(res);
     }
 
+    /**
+     * Solution provided by Mahmoud Ramadan who is an engineer in Google at USA.
+     * @param str1
+     * @param str2
+     * @return
+     */
     public static String gcdOfStrings(String str1, String str2) {
         if (!(str1+str2).equals(str2+str1)) {
             return "";
