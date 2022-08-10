@@ -21,7 +21,7 @@ package org.ict.algorithm.leetcode.string;
  *
  * The given address is a valid IPv4 address.
  * @author sniper
- * @date 2022/8/10 10:53 AM
+ * @date 2022/8/10
  * LC1108
  */
 public class DefangingAnIPaddress {
