@@ -43,6 +43,16 @@ public class GreatestCommonDivisorOfStrings {
 
     /**
      * Solution provided by Mahmoud Ramadan who is an engineer in Google at USA.
+     *
+     * If there exists a valid gcd (length > 0),
+     * For each input string the gcd will repeat throughout the entire string.
+     * Therefore it must also repeat throughout the entire concatenation of both strings.
+     * Since it repeats through the entirety of the concatenation,
+     * the order of the concatenation must not matter.
+     *
+     * once it is established there is a valid gcd,
+     * the number of characters to repeat will be the gcd of the lengths
+     *
      * @param str1
      * @param str2
      * @return
@@ -52,6 +62,11 @@ public class GreatestCommonDivisorOfStrings {
             return "";
         }
         int gcdVal = gcd(str1.length() , str2.length());
+        /**
+         * use str1.substring(0, gcdVal) is OK too.
+         * In another words, substring any of str1 or str2 with
+         * gcd length of two strings is right.
+         */
         return str2.substring(0, gcdVal);
     }
 
