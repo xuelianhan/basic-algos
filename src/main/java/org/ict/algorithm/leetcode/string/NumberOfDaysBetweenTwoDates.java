@@ -32,7 +32,17 @@ public class NumberOfDaysBetweenTwoDates {
 
     public int daysBetweenDates(String date1, String date2) {
         int[] monthDays = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+        String[] s1 = date1.split("-");
+        String[] s2 = date2.split("-");
+        int year1 = Integer.valueOf(s1[0]);
+        int month1 = Integer.valueOf(s1[1]);
+        int day1 = Integer.valueOf(s1[2]);
 
+        int year2 = Integer.valueOf(s2[0]);
+        int month2 = Integer.valueOf(s2[1]);
+        int day2 = Integer.valueOf(s2[2]);
+
+        
         return 0;
     }
 
