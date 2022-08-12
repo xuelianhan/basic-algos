@@ -30,7 +30,11 @@ package org.ict.algorithm.leetcode.string;
 public class ConsecutiveCharacters {
 
     public static void main(String[] args) {
-        String s = "ccbccbb";
+        //String s = "ccbccbb";
+        //String s = "leetcode";
+        //String s = "abbcccddddeeeeedcba";
+        //String s = "ccc";
+        String s = "bacacccbba";
         int result = maxPower(s);
         System.out.println(result);
     }
@@ -42,12 +46,14 @@ public class ConsecutiveCharacters {
         int max = 1;
         for (int i = 0, j = 1; i < s.length() && j < s.length();) {
             if (s.charAt(i) != s.charAt(j)) {
-                i++;
+                if ((j - i) > max) {
+                    max = j - i;
+                }
+                i = j;
+            } else {
+                max = (j - i + 1);
             }
             j++;
-            if ((j - i + 1) > max) {
-                max = j - i;
-            }
         }
         return max;
     }
