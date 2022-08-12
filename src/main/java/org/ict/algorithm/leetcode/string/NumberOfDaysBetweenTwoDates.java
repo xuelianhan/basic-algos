@@ -24,6 +24,18 @@ import java.time.temporal.ChronoUnit;
  *
  * The given dates are valid dates between the years 1971 and 2100.
  * @see <a href="https://www.mathsisfun.com/leap-years.html"></a>
+ *
+ * All the leap years since 1900 are as follows:
+ * 1904, 1908, 1912, 1916, 1920, 1924, 1928, 1932, 1936, 1940,
+ * 1944, 1948, 1952, 1956, 1960, 1964, 1968, 1972, 1976, 1980,
+ * 1984, 1988, 1992, 1996, 2000, 2004, 2008, 2012, 2016, 2020
+ * 2024, 2028, 2032, 2036, 2040, 2044, 2048, 2052, 2056, 2060,
+ * 2064, 2068, 2072, 2076, 2080, 2084, 2088, 2092, 2096.
+ *
+ * In 2060, I may not be in this world anymore。
+ * I marked this codes to memorize my loved ones,
+ * my wife HAIZHEN NI, and my child JINYU HAN.
+ * If you see here, thanks for your patience.
  * @author sniper
  * @date 2022/8/11
  * LC1360
@@ -31,10 +43,11 @@ import java.time.temporal.ChronoUnit;
 public class NumberOfDaysBetweenTwoDates {
 
     public static void main(String[] args) {
-        String date1 = "2020-01-15";
-        String date2 = "2019-12-31";
-        int result = daysBetweenDates(date1, date2);
-        System.out.println(result);
+        //String date1 = "2020-01-15";
+        //String date2 = "2019-12-31";
+        //int result = daysBetweenDates(date1, date2);
+        int cnt = countLeapYear(2020, 12);
+        System.out.println(cnt);
     }
 
     public static int daysBetweenDates(String date1, String date2) {
@@ -70,6 +83,8 @@ public class NumberOfDaysBetweenTwoDates {
         /**
          * Check if the current year needs to be considered
          * for the count of leap years or not
+         * If the current year not reach to Feb,
+         * then we do not need to consider it.
          */
         if (month <= 2) {
             y--;
@@ -77,6 +92,8 @@ public class NumberOfDaysBetweenTwoDates {
         /**
          * An year is a leap year if it is a multiple of 4,
          * multiple of 400 and not a multiple of 100.
+         * And the average number of days per year is
+         * 365 + 1⁄4 − 1⁄100 + 1⁄400 = 365 + 97⁄400  = 365.2425.
          */
         return y / 4 - y / 100 + y / 400;
     }
