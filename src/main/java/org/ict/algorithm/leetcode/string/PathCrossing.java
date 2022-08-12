@@ -62,8 +62,6 @@ public class PathCrossing {
         return false;
     }
 
-
-
     public static boolean isPathCrossing(String path) {
         if (path.length() == 1) {
             return false;
