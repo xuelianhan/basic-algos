@@ -40,7 +40,7 @@ public class DayOfTheYear {
         String mStr = arr[1];
         String dStr = arr[2];
         int y = Integer.valueOf(arr[0]);
-        int m = (mStr.startsWith("0") ? Integer.valueOf(mStr.substring(1)) : Integer.valueOf(mStr.substring(0)));
+        int m = Integer.valueOf(mStr.substring(0));
         int d = Integer.valueOf(dStr);
         for (int i = 1; i < m; i++) {
             if (i == 1 || i == 3 || i == 5 || i == 7 || i == 8 || i == 10) {
