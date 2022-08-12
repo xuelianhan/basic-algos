@@ -64,7 +64,7 @@ public class IncreasingDecreasingString {
         }
         return ans.toString();
     }
-    
+
     private static void add(int[] cnt, StringBuilder ans, boolean asc) {
         for (int i = 0; i < 26; ++i) {
             int j = (asc ? i : 25 - i);
