@@ -30,15 +30,36 @@ package org.ict.algorithm.leetcode.string;
 public class ConsecutiveCharacters {
 
     public static void main(String[] args) {
-        //String s = "ccbccbb";
+        String s = "ccbccbb";
         //String s = "leetcode";
         //String s = "abbcccddddeeeeedcba";
         //String s = "ccc";
-        String s = "bacacccbba";
+        //String s = "bacacccbba";
         int result = maxPower(s);
         System.out.println(result);
     }
 
+    /**
+     * Slide window
+     * @param s
+     * @return
+     */
+    public int maxPowerV2(String s) {
+        int res = 0;
+        for(int b = 0, e = 0; e < s.length(); e++) {
+            if(s.charAt(b)!= s.charAt(e)) {
+                b = e;
+            }
+            res = Math.max(res, e - b + 1);
+        }
+        return res;
+    }
+
+    /**
+     * Two pointers
+     * @param s
+     * @return
+     */
     public static int maxPower(String s) {
         if (s.length() == 1) {
             return 1;
@@ -46,12 +67,10 @@ public class ConsecutiveCharacters {
         int max = 1;
         for (int i = 0, j = 1; i < s.length() && j < s.length();) {
             if (s.charAt(i) != s.charAt(j)) {
-                if ((j - i) > max) {
-                    max = j - i;
-                }
+                max = Math.max((j-i), max);
                 i = j;
             } else {
-                max = (j - i + 1);
+                max = Math.max(j - i + 1, max);
             }
             j++;
         }
