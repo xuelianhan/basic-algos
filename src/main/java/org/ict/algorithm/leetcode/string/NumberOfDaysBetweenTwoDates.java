@@ -1,5 +1,8 @@
 package org.ict.algorithm.leetcode.string;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+
 /**
  * Write a program to count the number of days between two dates.
  *
@@ -28,17 +31,20 @@ package org.ict.algorithm.leetcode.string;
 public class NumberOfDaysBetweenTwoDates {
 
     public static void main(String[] args) {
-
+        String date1 = "2020-01-15";
+        String date2 = "2019-12-31";
+        int result = daysBetweenDates(date1, date2);
+        System.out.println(result);
     }
 
-    public int daysBetweenDates(String date1, String date2) {
+    public static int daysBetweenDates(String date1, String date2) {
         int[] monthDays = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
         int d1 = calculateDays(date1, monthDays);
         int d2 = calculateDays(date2, monthDays);
         return Math.abs(d2 - d1);
     }
 
-    public int calculateDays(String date, int[] monthDays) {
+    public static int calculateDays(String date, int[] monthDays) {
         String[] s = date.split("-");
         int year = Integer.valueOf(s[0]);
         int month = Integer.valueOf(s[1]);
@@ -59,7 +65,7 @@ public class NumberOfDaysBetweenTwoDates {
         return days;
     }
 
-    public int countLeapYear(int year, int month) {
+    public static int countLeapYear(int year, int month) {
         int y = year;
         /**
          * Check if the current year needs to be considered
@@ -75,7 +81,11 @@ public class NumberOfDaysBetweenTwoDates {
         return y / 4 - y / 100 + y / 400;
     }
 
-    public boolean isLeapYear(int year) {
+    public static boolean isLeapYear(int year) {
         return ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0));
+    }
+
+    public int daysBetweenDatesV2(String date1, String date2) {
+        return Math.abs((int) ChronoUnit.DAYS.between(LocalDate.parse(date1), LocalDate.parse(date2)));
     }
 }
