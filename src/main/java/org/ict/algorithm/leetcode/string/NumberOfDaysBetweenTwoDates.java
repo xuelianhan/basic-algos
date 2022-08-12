@@ -23,6 +23,13 @@ import java.time.temporal.ChronoUnit;
  * Constraints:
  *
  * The given dates are valid dates between the years 1971 and 2100.
+ *
+ * Actually I was asked this question during the interview of Amazon (intern) last year.
+ * I have no idea of the Date API and I tried to solve the problem with map at that time.
+ * I ran out of time and missed the opportunity in the end.
+ * If I was asked a hard dynamic programming question and I couldn't solve it, I would accept.
+ * But this question? I felt some kind of unfair and really disappointed.
+ *
  * @see <a href="https://www.mathsisfun.com/leap-years.html"></a>
  *
  * All the leap years since 1900 are as follows:
@@ -50,6 +57,15 @@ public class NumberOfDaysBetweenTwoDates {
         System.out.println(cnt);
     }
 
+    /**
+     * A Better and Simple solution is to count total number of days before dt1 from i.e.,
+     * total days from 00/00/0000 to dt1,
+     * then count total number of days before dt2.
+     * Finally return the difference between two counts.
+     * @param date1
+     * @param date2
+     * @return
+     */
     public static int daysBetweenDates(String date1, String date2) {
         int[] monthDays = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
         int d1 = calculateDays(date1, monthDays);
@@ -57,6 +73,12 @@ public class NumberOfDaysBetweenTwoDates {
         return Math.abs(d2 - d1);
     }
 
+    /**
+     * Count number of days before date from 0000-00-00.
+     * @param date
+     * @param monthDays
+     * @return
+     */
     public static int calculateDays(String date, int[] monthDays) {
         String[] s = date.split("-");
         int year = Integer.valueOf(s[0]);
@@ -72,19 +94,39 @@ public class NumberOfDaysBetweenTwoDates {
         }
         /**
          * Since every leap year is of 366 days,
-         * Add a day for every leap year
+         * Add a day for every leap year,
+         * So we need to count the leap years.
          */
         days += countLeapYear(year, month);
         return days;
     }
 
+    /**
+     * Every leap year adds one extra day (29 Feb) to total days.
+     * n1 = 2000*365 + 31 + 1 + Number of leap years
+     * Count of leap years for a date 'd/m/y' can be calculated
+     * using the following formula:
+     * Number leap years
+     *  = floor(y/4) - floor(y/100) + floor(y/400) if m > 2
+     *   = floor((y-1)/4) - floor((y-1)/100) + floor((y-1)/400) if m <= 2
+     * All above divisions must be done using integer arithmetic
+     * So that the remainder is ignored.
+     * For 01/01/2000, leap year count is 1999/4 - 1999/100
+     * + 1999/400 which is 499 - 19 + 4 = 484
+     * Therefore n1 is 2000*365 + 31 + 1 + 484
+     *
+     * @param year
+     * @param month
+     * @return
+     */
     public static int countLeapYear(int year, int month) {
         int y = year;
         /**
          * Check if the current year needs to be considered
          * for the count of leap years or not
          * If the current year not reach to Feb,
-         * then we do not need to consider it.
+         * then we need to subtract one
+         * cnt = floor((y-1)/4) - floor((y-1)/100) + floor((y-1)/400) if m <= 2
          */
         if (month <= 2) {
             y--;
@@ -94,6 +136,10 @@ public class NumberOfDaysBetweenTwoDates {
          * multiple of 400 and not a multiple of 100.
          * And the average number of days per year is
          * 365 + 1⁄4 − 1⁄100 + 1⁄400 = 365 + 97⁄400  = 365.2425.
+         *
+         * Number leap years: cnt
+         * cnt = floor(y/4) - floor(y/100) + floor(y/400) if m > 2
+         * cnt = floor((y-1)/4) - floor((y-1)/100) + floor((y-1)/400) if m <= 2
          */
         return y / 4 - y / 100 + y / 400;
     }
