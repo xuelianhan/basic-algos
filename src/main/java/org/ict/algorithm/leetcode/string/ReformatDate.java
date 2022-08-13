@@ -1,5 +1,9 @@
 package org.ict.algorithm.leetcode.string;
 
+
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Given a date string in the form Day Month Year, where:
  *
@@ -37,7 +41,34 @@ package org.ict.algorithm.leetcode.string;
 public class ReformatDate {
 
     public String reformatDate(String date) {
-        return null;
+        Map<String, String> month = new HashMap<>();
+        month.put("Jan", "01");
+        month.put("Feb", "02");
+        month.put("Mar", "03");
+        month.put("Apr", "04");
+        month.put("May", "05");
+        month.put("Jun", "06");
+        month.put("Jul", "07");
+        month.put("Aug", "08");
+        month.put("Sep", "09");
+        month.put("Oct", "10");
+        month.put("Nov", "11");
+        month.put("Dec", "12");
+        StringBuilder sb = new StringBuilder();
+        String[] arr = date.split("\\s");
+        String d = arr[0];
+        String m = arr[1];
+        String y = arr[2];
+        sb.append(y);
+        sb.append("-");
+        sb.append(month.get(m));
+        sb.append("-");
+        if (d.length() == 4) {
+            sb.append(d.substring(0, 2));
+        } else if (d.length() == 3) {
+            sb.append("0"+ d.substring(0, 1));
+        }
+        return sb.toString();
     }
 
 }

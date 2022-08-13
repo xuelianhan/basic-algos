@@ -1,6 +1,5 @@
 package org.ict.algorithm.leetcode.string;
 
-import java.awt.image.WritableRaster;
 import java.util.Arrays;
 
 /**
