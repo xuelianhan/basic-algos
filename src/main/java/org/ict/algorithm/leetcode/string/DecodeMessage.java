@@ -34,7 +34,7 @@ import java.util.Map;
  * key contains every letter in the English alphabet ('a' to 'z') at least once.
  * 1 <= message.length <= 2000
  * message consists of lowercase English letters and ' '.
- * 
+ *
  * @author sniper
  * @date 13 Aug, 2022
  * LC2325
