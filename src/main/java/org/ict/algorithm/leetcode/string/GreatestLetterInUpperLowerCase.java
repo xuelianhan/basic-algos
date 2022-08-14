@@ -45,10 +45,19 @@ import java.util.Set;
  */
 public class GreatestLetterInUpperLowerCase {
 
+    /**
+     * 90-65=25
+     * 122-97=25
+     * @param args
+     */
     public static void main(String[] args) {
         String s = "AbCdEfGhIjK";
         String result = greatestLetter(s);
         System.out.println(result);
+        char c = 'Z' - 'A';//ascii code is 25
+        System.out.println(c);
+        char add = (char)('a' + c);
+        System.out.println(add);
     }
 
     public String greatestLetterV2(String s) {
@@ -57,6 +66,10 @@ public class GreatestLetterInUpperLowerCase {
             set.add(ch);
         }
         for(char ch = 'Z'; ch >= 'A'; ch--) {
+            /**
+             * The distance of Big A-Z equals the distance of a-z
+             * we can use this character to operate chars.
+             */
             if(set.contains(ch) && set.contains((char)('a'+(ch-'A')))) {
                 return ""+ch;
             }
