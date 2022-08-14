@@ -89,13 +89,14 @@ public class RingsAndRods {
                 b[a]++;
             }
         }
+        
         //if all three rings are present increase count
         int count=0;
-        for(int j=0; j<10; j++){
-            if(r[j] > 0 && g[j] > 0 && b[j] > 0)
+        for(int j = 0; j < 10; j++){
+            if(r[j] > 0 && g[j] > 0 && b[j] > 0) {
                 count++;
+            }
         }
-
         return count;
     }
 
