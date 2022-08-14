@@ -40,7 +40,7 @@ import java.util.Set;
  */
 public class CountNumberConsistentStrings {
 
-    public int countConsistentStringsV2(String allowed, String[] words) {
+    public int countConsistentStringsV3(String allowed, String[] words) {
         // support variable
         int res = words.length;
         boolean[] alpha = new boolean[26];
@@ -56,6 +56,20 @@ public class CountNumberConsistentStrings {
                     res--;
                     break;
                 }
+            }
+        }
+        return res;
+    }
+
+    public int countConsistentStringsV2(String allowed, String[] words) {
+        // support variable
+        int res = words.length;
+        for (String word : words) {
+            for (char c : word.toCharArray()) {
+               if (!allowed.contains(Character.toString(c))) {
+                   res--;
+                   break;
+               }
             }
         }
         return res;
