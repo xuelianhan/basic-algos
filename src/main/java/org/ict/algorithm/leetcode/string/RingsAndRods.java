@@ -64,9 +64,34 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class RingsAndRods {
 
+    /**
+     * Code colors with bits (1, 2 and 4),
+     * and use the OR operation for each rod.
+     * Return number of rods that have all 3 bits (colors) set
+     * which value of 7.
+     * @param rings
+     * @return
+     */
     public int countPointsV2(String rings) {
-        int res = 0;
-        return res;
+        int[] rods = new int[10];
+        for (int i = 0; i < rings.length() - 1; i += 2) {
+            int c = rings.charAt(i + 1) - '0';
+            if(rings.charAt(i) == 'R') {
+                rods[c] |= (1 << 0);
+            }
+            if(rings.charAt(i) == 'G') {
+                rods[c] |= (1 << 1);
+            }
+            if(rings.charAt(i) == 'B') {
+                rods[c] |= (1 << 2);
+            }
+        }
+        int total = 0;
+        for(int i = 0; i < rods.length; i++){
+            if(rods[i] == 7)
+                total++;
+        }
+        return total;
     }
 
     public int countPoints(String rings) {
