@@ -65,6 +65,41 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class RingsAndRods {
 
     /**
+     * Solution provided by hetvigarg
+     * @param rings
+     * @return
+     */
+    public int countPointsV3(String rings) {
+        int r[] = new int[10];
+        int g[] = new int[10];
+        int b[] = new int[10];
+
+        int n = rings.length();
+        for(int i = 0; i < n; i += 2){
+            //convert char to integer
+            int a = rings.charAt(i+1)-'0';
+            //wherever rings are present add it in that colour array
+            if(rings.charAt(i) == 'R'){
+                r[a]++;
+            }
+            else if(rings.charAt(i) == 'G'){
+                g[a]++;
+            }
+            else if(rings.charAt(i) == 'B'){
+                b[a]++;
+            }
+        }
+        //if all three rings are present increase count
+        int count=0;
+        for(int j=0; j<10; j++){
+            if(r[j] > 0 && g[j] > 0 && b[j] > 0)
+                count++;
+        }
+
+        return count;
+    }
+
+    /**
      * Code colors with bits (1, 2 and 4),
      * and use the OR operation for each rod.
      * Return number of rods that have all 3 bits (colors) set
