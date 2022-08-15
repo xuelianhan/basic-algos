@@ -74,6 +74,11 @@ public class CrawlerLogFolder {
                  * <code>res = Math.max(0, --res);</code>
                  */
                 res--;
+                /**
+                 * Why? because res's initial value is zero
+                 * when operation -- occurs, the value of res might be reduced to negative number
+                 * So we need th Math.max(0, res) to amend it.
+                 */
                 res = Math.max(0, res);
             } else {
                 res++;
@@ -88,6 +93,10 @@ public class CrawlerLogFolder {
             if ("./".equals(op)) {
                 continue;
             } else if ("../".equals(op)) {
+                /**
+                 * if-condition here cannot move to the upper if statement
+                 * They don't express the same meaning.
+                 */
                 if (!stack.isEmpty()) {
                     stack.pop();
                 }
