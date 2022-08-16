@@ -36,13 +36,22 @@ package org.ict.algorithm.leetcode.string;
  */
 public class LargestOddNumberInString {
 
-    public String largestOddNumber(String num) {
+    public static void main(String[] args) {
+        String num = "35427";
+        String result = largestOddNumber(num);
+        System.out.println(result);
+    }
+
+    public static String largestOddNumber(String num) {
         int len = num.length();
-        int last = num.charAt(len - 1) - '0';
-        if (last % 2 != 0) {
-            return num;
+        for (int i = len - 1; i >= 0;) {
+            int last = num.charAt(i) - '0';
+            if (last % 2 != 0) {
+                return num.substring(0, i + 1);
+            } else {
+                i--;
+            }
         }
-        String res = "";
-        return res;
+        return "";
     }
 }
