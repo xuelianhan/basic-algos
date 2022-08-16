@@ -41,6 +41,9 @@ package org.ict.algorithm.leetcode.string;
 public class MaximumNestingDepthOfParentheses {
 
     public int maxDepth(String s) {
-        return 0;
+        int res = 0;
+        
+        return res;
+
     }
 }

@@ -2,6 +2,7 @@ package org.ict.algorithm.leetcode.string;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 import java.util.stream.Collectors;
 
 /**
@@ -14,29 +15,27 @@ import java.util.stream.Collectors;
  * To make the string good, you can choose two adjacent characters that make the string bad and remove them.
  * You can keep doing this until the string becomes good.
  *
- * Return the string after making it good. The answer is guaranteed to be unique under the given constraints.
+ * Return the string after making it good.
+ * The answer is guaranteed to be unique under the given constraints.
  *
  * Notice that an empty string is also good.
  *
  *
- *
  * Example 1:
- *
  * Input: s = "leEeetcode"
  * Output: "leetcode"
  * Explanation: In the first step, either you choose i = 1 or i = 2, both will result "leEeetcode" to be reduced to "leetcode".
- * Example 2:
  *
+ * Example 2:
  * Input: s = "abBAcC"
  * Output: ""
  * Explanation: We have many possible scenarios, and all lead to the same answer. For example:
  * "abBAcC" --> "aAcC" --> "cC" --> ""
  * "abBAcC" --> "abBA" --> "aA" --> ""
- * Example 3:
  *
+ * Example 3:
  * Input: s = "s"
  * Output: "s"
- *
  *
  * Constraints:
  *
@@ -54,35 +53,68 @@ import java.util.stream.Collectors;
 public class MakeTheStringGreat {
 
     public static void main(String[] args) {
-        String s = "leEeetcode";
+        String s = "hHcOzoC";
+        //String s = "abBAcC";
+        //String s = "leEeetcode";
         String result = makeGood(s);
         System.out.println(result);
     }
 
+    public String makeGoodV2(String s) {
+        Stack<Character> stack = new Stack();
+        for (int i = 0;i < s.length(); i++){
+            if(!stack.isEmpty() && Math.abs(stack.peek() - s.charAt(i)) == 32) {
+                stack.pop();
+            } else {
+                stack.push(s.charAt(i));
+            }
+        }
+        char res[] = new char[stack.size()];
+        int index = stack.size()-1;
+        while(!stack.isEmpty()){
+            res[index--] = stack.pop();
+        }
+        return new String(res);
+    }
+
+    /**
+     * It should be noted that the difference between the any lowercase and uppercase alphabet is 32.
+     * Example - ASCII value of a is 97 and A is 65 , 97-65 = 32
+     * Using same trick, we can delete adjacent characters with absolute difference of 32.
+     * @param s
+     * @return
+     */
     public static String makeGood(String s) {
         if (s.length() == 1) {
             return s;
         }
         String result = "";
-        List<Character> list = new ArrayList<>();
-        String subStr = s;
-        for (int i = 1;i < s.length();) {
-            char c1 = s.charAt(i-1);
-            char c2 = s.charAt(i);
-            if (Character.isUpperCase(c1) && Character.isLowerCase(c2) && Character.toLowerCase(c1) == c2) {
-                i += 2;
-            } else if (Character.isUpperCase(c2) && Character.isLowerCase(c1) && Character.toLowerCase(c2) == c1) {
-                i += 2;
+        Stack<Character> stack = new Stack<>();
+        stack.push(s.charAt(0));
+        for (int i = 1; i < s.length(); i++) {
+            /**
+             * The following if-condition is very important
+             */
+            if (stack.isEmpty()) {
+                stack.push(s.charAt(i));
+                continue;
+            }
+            char top = stack.peek();
+            char ch = s.charAt(i);
+            int diff = Math.abs(ch - top);
+            if (diff == 32) {
+                stack.pop();
             } else {
-                list.add(c1);
-                list.add(c2);
-                i++;
+                stack.push(ch);
             }
         }
-        if (subStr.length() == list.size()) {
-            subStr = list.stream().map(c -> c.toString()).collect(Collectors.joining());
-            result = subStr;
+        if (stack.isEmpty()) {
+            return result;
         }
-        return result;
+        StringBuilder sb = new StringBuilder();
+        while (!stack.isEmpty()) {
+            sb.append(stack.pop());
+        }
+        return sb.reverse().toString();
     }
 }
