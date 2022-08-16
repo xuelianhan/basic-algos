@@ -12,7 +12,9 @@ package org.ict.algorithm.leetcode.string;
  * depth(C) = 0, where C is a string with a single character not equal to "(" or ")".
  * depth(A + B) = max(depth(A), depth(B)), where A and B are VPS's.
  * depth("(" + A + ")") = 1 + depth(A), where A is a VPS.
- * For example, "", "()()", and "()(()())" are VPS's (with nesting depths 0, 1, and 2), and ")(" and "(()" are not VPS's.
+ * For example,
+ * "", "()()", and "()(()())" are VPS's (with nesting depths 0, 1, and 2),
+ * and ")(" and "(()" are not VPS's.
  *
  * Given a VPS represented as string s, return the nesting depth of s.
  *
@@ -40,9 +42,68 @@ package org.ict.algorithm.leetcode.string;
  */
 public class MaximumNestingDepthOfParentheses {
 
-    public int maxDepth(String s) {
+    public static void main(String[] args) {
+        //String s = "(1)+((2))+(((3)))";
+        //String s = "(1+(2*3)+((8)/4))+1";
+        String s = "()(()())";
+        int result = maxDepth(s);
+        System.out.println(result);
+    }
+
+    /**
+     * The depth of any character in the VPS is the
+     * ( number of left brackets before it ) - ( number of right brackets before it )
+     * @param s
+     * @return
+     */
+    public static int maxDepth(String s) {
         int res = 0;
-        
+        int leftBracketCnt = 0;
+        int rightBracketCnt = 0;
+        for (char ch : s.toCharArray()) {
+            if ('(' == ch) {
+                leftBracketCnt++;
+            }
+            if (')' == ch) {
+                rightBracketCnt++;
+            }
+            res = Math.max(res, (leftBracketCnt - rightBracketCnt));
+        }
+        return res;
+    }
+
+    /**
+     * Solution provided by lee215
+     *
+     * Ignore digits and signs,
+     * only count the current open parentheses cur.
+     *
+     * The depth equals to the maximum open parentheses.
+     *
+     * More Parentheses Problem To Advance
+     * Here is a ladder of parentheses problem, in order of problem number.
+     *
+     * 1541.Minimum Insertions to Balance a Parentheses String
+     * 1249.Minimum Remove to Make Valid Parentheses
+     * 1111.Maximum Nesting Depth of Two Valid Parentheses Strings
+     * 1190.Reverse Substrings Between Each Pair of Parentheses
+     * 1021.Remove Outermost Parentheses
+     * 921.Minimum Add to Make Parentheses Valid
+     * 856.Score of Parentheses
+     *
+     * @param s
+     * @return
+     */
+    public int maxDepthV2(String s) {
+        int res = 0, cur = 0;
+        for (int i = 0; i < s.length(); ++i) {
+            if (s.charAt(i) == '(') {
+                res = Math.max(res, ++cur);
+            }
+            if (s.charAt(i) == ')') {
+                cur--;
+            }
+        }
         return res;
     }
 }
