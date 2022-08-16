@@ -41,20 +41,39 @@ import java.util.Stack;
  */
 public class ReversePrefixOfWord {
 
+    public String reversePrefixV2(String word, char ch) {
+        char[] c = word.toCharArray();
+        int locate = 0;
+        for (int i = 0; i < word.length(); i++) {
+            if (ch == c[i]) {
+                /**
+                 * first occurrence of ch
+                 */
+                locate = i;
+                break;
+            }
+        }
+        char[] res = new char[word.length()];
+        for (int i = 0; i <= locate; i++) {
+            res[i] = c[locate - i];
+        }
+        for (int i = locate + 1; i < word.length(); i++) {
+            res[i] = c[i];
+        }
+        return String.valueOf(res);
+    }
+
     public String reversePrefix(String word, char ch) {
         if (word.length() == 1) {
             return word;
         }
         StringBuffer sb = new StringBuffer();
-        Stack<Character> stack = new Stack<>();
-        for(char c : word.toCharArray()) {
-            if (c != ch) {
-                stack.push(c);
-            } else {
-
-            }
-
+        int idx = word.indexOf(Character.toString(ch));
+        if (idx < 0) {
+            return word;
         }
-        return sb.toString();
+        sb.append(word.substring(0, idx + 1));
+        String first = sb.reverse().toString();
+        return first + word.substring(idx + 1);
     }
 }
