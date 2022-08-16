@@ -62,8 +62,37 @@ package org.ict.algorithm.leetcode.string;
  */
 public class MinimumTimeToTypeWordUsingSpecialTypewriter {
 
+    public static void main(String[] args) {
+        int res = 'j' - 'z';
+        System.out.println(res);
+    }
+
     public int minTimeToType(String word) {
         int res = 0;
+        char prev = 'a';
+        for (char ch : word.toCharArray()) {
+            /**
+             * abs operation always make the result positive.
+             * It means the clockwise or ascend order
+             * (26 - abs) means the counter-clockwise or descend order.
+             *
+             * Each step, we can move clockwise(ascend order) or counter-clockwise(descend order)
+             * So we need to determine which one is more smaller than another.
+             */
+            int clockwise = Math.abs(ch - prev);
+            int counterClockWise = 26 - Math.abs(ch - prev);
+            /**
+             * (Math.min) means the move operations.
+             * (+ 1) means the type in operations.
+             */
+            res += Math.min(clockwise, counterClockWise) + 1;
+            /**
+             * Don't forget mark the prev char.
+             */
+            prev = ch;
+        }
         return res;
     }
+
+
 }
