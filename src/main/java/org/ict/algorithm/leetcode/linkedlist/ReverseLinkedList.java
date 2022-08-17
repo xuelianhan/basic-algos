@@ -3,13 +3,12 @@ package org.ict.algorithm.leetcode.linkedlist;
 /**
  * p206. Reverse Linked List
  * 92.reverse-linked-list-ii
- * @see https://leetcode.com/problems/reverse-linked-list/discuss/58125/In-place-iterative-and-recursive-Java-solution
- * @see https://leetcode.com/problems/reverse-linked-list-ii/description/
- * @see https://www.geeksforgeeks.org/reverse-a-linked-list/
- *
+ * @see <a href="https://leetcode.com/problems/reverse-linked-list/discuss/58125/In-place-iterative-and-recursive-Java-solution"></a>
+ * @see <a href="https://leetcode.com/problems/reverse-linked-list-ii/description/"></a>
+ * @see <a href="https://www.geeksforgeeks.org/reverse-a-linked-list/"></a>
+ * LC206
  */
-public class
-ReverseLinkedList {
+public class ReverseLinkedList {
     
     /**
      * Definition for singly-linked list.
@@ -74,7 +73,7 @@ ReverseLinkedList {
     
     /**
      * iterative solution
-     * use 3 pointer:newHead,next,head
+     * use 3 pointer: newHead, next, head
      * @param head
      */
     public static Node reverse(Node head) {
@@ -90,7 +89,7 @@ ReverseLinkedList {
     
     /**
      * iterative solution
-     * user 3 pointer:prev,current,next
+     * user 3 pointer: prev, current, next
      * @param node
      * @return
      */
