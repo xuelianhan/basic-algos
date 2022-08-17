@@ -51,8 +51,17 @@ import java.util.Set;
 public class CountVowelSubstringsOfString {
 
     public int countVowelSubstrings(String word) {
+        if (word.length() < 5) {
+            return 0;
+        }
         Set<Character> vowelSet = new HashSet<>(Arrays.asList('a', 'e', 'i', 'o', 'u'));
-        //todo
+        for (int i = 0; i < word.length(); i++) {
+            char ch = word.charAt(i);
+            if (!vowelSet.contains(ch)) {
+                continue;
+            }
+            //todo
+        }
         return 0;
     }
 
