@@ -52,7 +52,7 @@ public class CountVowelSubstringsOfString {
 
     public int countVowelSubstrings(String word) {
         Set<Character> vowelSet = new HashSet<>(Arrays.asList('a', 'e', 'i', 'o', 'u'));
-
+        //todo
         return 0;
     }
 
