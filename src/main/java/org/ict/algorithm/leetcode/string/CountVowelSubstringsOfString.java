@@ -67,7 +67,10 @@ public class CountVowelSubstringsOfString {
      * j mark the start of an "all-vowel" substring, and i is the current position.
      * The window between k - 1 and i is the smallest window with all 5 vowels.
      *
-     * So, for each position i, we have k - j valid substrings.
+     * [j, i] is a string with all vowels.
+     * [k, i] is the shortest substring containing all 5 vowels.
+     * Therefore, for position i, we have k - j substrings with 5 vowels.
+     *
      * The picture below demonstrate it for "xxaiioueiiaxx" test case:
      *   jk   i         substrings
      * xxaiioueiiaxx         1
