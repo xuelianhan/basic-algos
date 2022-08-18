@@ -60,9 +60,10 @@ public class CountVowelSubstringsOfString {
 
     /**
      * Sliding Window Solution provided by Vlad(votrubac)
-     * I spent more time on this problem than on medium/hard problems in the contest.
      *
-     * I realize that brute-force would do for 100 characters, otherwise, this problem would be medium.
+     * I spent more time on this problem than on medium/hard problems in the contest.
+     * I realize that brute-force would do for 100 characters,
+     * otherwise, this problem would be medium.
      *
      * j mark the start of an "all-vowel" substring, and i is the current position.
      * The window between k - 1 and i is the smallest window with all 5 vowels.
