@@ -59,7 +59,7 @@ public class CountVowelSubstringsOfString {
     }
 
     /**
-     * Solution provided by Vlad(votrubac)
+     * Sliding Window Solution provided by Vlad(votrubac)
      * I spent more time on this problem than on medium/hard problems in the contest.
      *
      * I realize that brute-force would do for 100 characters, otherwise, this problem would be medium.
@@ -69,6 +69,17 @@ public class CountVowelSubstringsOfString {
      *
      * So, for each position i, we have k - j valid substrings.
      * The picture below demonstrate it for "xxaiioueiiaxx" test case:
+     *   jk   i
+     * xxaiioueiiaxx
+     *
+     *   jk    i
+     * xxaiioueiiaxx
+     *
+     *   jk     i
+     * xxaiioueiiaxx
+     *
+     *   jk      i
+     * xxaiioueiiaxx
      *
      * @param word
      * @return
@@ -83,7 +94,7 @@ public class CountVowelSubstringsOfString {
         map.put('u', 0);
         for (int i = 0; i < word.length(); ++i) {
             char ch = word.charAt(i);
-            
+
         }
         return cnt;
     }
