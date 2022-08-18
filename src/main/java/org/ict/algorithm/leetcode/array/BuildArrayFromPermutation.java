@@ -43,7 +43,7 @@ public class BuildArrayFromPermutation {
 
     /**
      * Follow-up
-     * 
+     *
      * @param nums
      * @return
      */
