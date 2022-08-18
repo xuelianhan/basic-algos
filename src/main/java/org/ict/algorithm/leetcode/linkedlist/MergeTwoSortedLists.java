@@ -9,19 +9,38 @@ public class MergeTwoSortedLists {
     /**
      * Definition for singly-linked list.
      * */
-    private static class Node {
-         int val;
+    private static class ListNode {
+        int val;
          
-         Node next;
-         
-         Node(int x) { 
-             val = x; 
+        ListNode next;
+
+        ListNode(){}
+
+        ListNode(int x) {
+             this.val = x;
          }
+
+        ListNode(int x, ListNode next) {
+            this.val = x;
+            this.next = next;
+        }
+    }
+
+    /**
+     *
+     * @param list1
+     * @param list2
+     * @return
+     */
+    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        ListNode head = new ListNode();
+
+        return null;
     }
     
-    public static Node mergeSortedLists(Node l1, Node l2) {
-        Node dummy = new Node(0);
-        Node prev = dummy;
+    public static ListNode mergeSortedLists(ListNode l1, ListNode l2) {
+        ListNode dummy = new ListNode(0);
+        ListNode prev = dummy;
         
         while (l1 != null && l2 != null) {
             if (l1.val > l2.val) {
@@ -43,7 +62,7 @@ public class MergeTwoSortedLists {
         return dummy.next;
     }
     
-    public static void printList(Node head) {
+    public static void printList(ListNode head) {
         while (head != null) {
             System.out.print(head.val);
             head = head.next;
@@ -56,11 +75,11 @@ public class MergeTwoSortedLists {
         System.out.println();
     }
     
-    public static Node constructLinkedList(int start, int end, int step) {
-        Node l1 = new Node(start);
-        Node previousNode = l1;
+    public static ListNode constructLinkedList(int start, int end, int step) {
+        ListNode l1 = new ListNode(start);
+        ListNode previousNode = l1;
         for (int i = start; i < end; i+=step) {
-            Node inode = new Node(i + step);
+            ListNode inode = new ListNode(i + step);
             previousNode.next = inode;
             previousNode = inode;
         }
@@ -78,10 +97,10 @@ public class MergeTwoSortedLists {
      */
     public static void main(String[] args) {
         /* construct LinkedList with nodes */
-        Node l1 = constructLinkedList(0, 5, 1);
-        Node l2 = constructLinkedList(5, 12, 1);
+        ListNode l1 = constructLinkedList(0, 5, 1);
+        ListNode l2 = constructLinkedList(5, 12, 1);
         
-        Node l3 = mergeSortedLists(l1, l2);
+        ListNode l3 = mergeSortedLists(l1, l2);
         printList(l3);
     }
     
