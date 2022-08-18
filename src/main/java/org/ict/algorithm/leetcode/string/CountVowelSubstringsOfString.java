@@ -1,8 +1,6 @@
 package org.ict.algorithm.leetcode.string;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * A substring is a contiguous (non-empty) sequence of characters within a string.
@@ -50,19 +48,72 @@ import java.util.Set;
  */
 public class CountVowelSubstringsOfString {
 
-    public int countVowelSubstrings(String word) {
+    public static void main(String[] args) {
+        //String word = "aeiouu";
+        /**
+         * Expected 7
+         */
+        String word = "cuaieuouac";
+        int result = countVowelSubstrings(word);
+        System.out.println(result);
+    }
+
+    public int countVowelSubStringsV3(String word) {
+        return 0;
+    }
+
+    public int countVowelSubstringsV2(String word) {
+        int count = 0;
+        Map<Character, Integer> lastSeen = new HashMap<>(5);
+        lastSeen.put('a', -1);
+        lastSeen.put('e', -1);
+        lastSeen.put('i', -1);
+        lastSeen.put('o', -1);
+        lastSeen.put('u', -1);
+        for (int i = 0, lastInvalidPos = -1; i < word.length(); ++i) {
+            if (lastSeen.containsKey(word.charAt(i))) {
+                lastSeen.put(word.charAt(i), i);
+                count += Math.max(Collections.min(lastSeen.values()) - lastInvalidPos, 0);
+            } else {
+                lastInvalidPos = i;
+            }
+        }
+        return count;
+    }
+
+    public static int countVowelSubstrings(String word) {
         if (word.length() < 5) {
             return 0;
         }
-        Set<Character> vowelSet = new HashSet<>(Arrays.asList('a', 'e', 'i', 'o', 'u'));
+        int count = 0;
+        Set<Character> vowels = new HashSet<>();
         for (int i = 0; i < word.length(); i++) {
-            char ch = word.charAt(i);
-            if (!vowelSet.contains(ch)) {
-                continue;
+            for (int j = i; j < word.length(); j++) {
+                char ch = word.charAt(j);
+                if (!isVowel(ch)) {
+                    /**
+                     * Here is break, not continue
+                     * because our vowels require every char in it is vowel.
+                     * So we don't need continue if we meet a consonant char.
+                     */
+                    break;
+                }
+                vowels.add(ch);
+                if (vowels.size() == 5) {
+                    count++;
+                }
             }
-            //todo
+            /**
+             * When i-loop ends, the counts should be restart.
+             * So we need clear vowels set.
+             */
+            vowels.clear();
         }
-        return 0;
+        return count;
+    }
+
+    public static boolean isVowel(char ch) {
+        return (ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u');
     }
 
 
