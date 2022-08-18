@@ -74,15 +74,15 @@ public class NumbersSmallerThanCurrentNumber {
         for (int i = 0; i < nums.length; i++) {
             bucket[nums[i]+1]++;
         }
-        System.out.println(Arrays.toString(bucket));
+        //System.out.println(Arrays.toString(bucket));
         for (int i = 1; i < 102; i++) {
             bucket[i] += bucket[i-1];
         }
-        System.out.println(Arrays.toString(bucket));
+        //System.out.println(Arrays.toString(bucket));
         for (int i = 0; i < nums.length; i++) {
             nums[i] = bucket[nums[i]];
         }
-        System.out.println(Arrays.toString(nums));
+        //System.out.println(Arrays.toString(nums));
         return nums;
     }
 
@@ -119,12 +119,12 @@ public class NumbersSmallerThanCurrentNumber {
         for (int i = 0; i < nums.length; i++) {
             count[nums[i]]++;
         }
-        System.out.println(Arrays.toString(count));
+        //System.out.println(Arrays.toString(count));
 
         for (int i = 1 ; i <= 100; i++) {
             count[i] += count[i-1];
         }
-        System.out.println(Arrays.toString(count));
+        //System.out.println(Arrays.toString(count));
         for (int i = 0; i < nums.length; i++) {
             if (nums[i] == 0) {
                 res[i] = 0;
@@ -132,7 +132,7 @@ public class NumbersSmallerThanCurrentNumber {
                 res[i] = count[nums[i] - 1];
             }
         }
-        System.out.println(Arrays.toString(nums));
+        //System.out.println(Arrays.toString(nums));
         return res;
     }
 
