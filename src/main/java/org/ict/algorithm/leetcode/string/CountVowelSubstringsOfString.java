@@ -58,8 +58,34 @@ public class CountVowelSubstringsOfString {
         System.out.println(result);
     }
 
+    /**
+     * Solution provided by Vlad(votrubac)
+     * I spent more time on this problem than on medium/hard problems in the contest.
+     *
+     * I realize that brute-force would do for 100 characters, otherwise, this problem would be medium.
+     *
+     * j mark the start of an "all-vowel" substring, and i is the current position.
+     * The window between k - 1 and i is the smallest window with all 5 vowels.
+     *
+     * So, for each position i, we have k - j valid substrings.
+     * The picture below demonstrate it for "xxaiioueiiaxx" test case:
+     *
+     * @param word
+     * @return
+     */
     public int countVowelSubStringsV3(String word) {
-        return 0;
+        int j = 0, k = 0, vow = 0, cnt = 0;
+        Map<Character, Integer> map = new HashMap<>(5);
+        map.put('a', 0);
+        map.put('e', 0);
+        map.put('i', 0);
+        map.put('o', 0);
+        map.put('u', 0);
+        for (int i = 0; i < word.length(); ++i) {
+            char ch = word.charAt(i);
+            
+        }
+        return cnt;
     }
 
     public int countVowelSubstringsV2(String word) {
