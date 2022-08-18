@@ -92,11 +92,11 @@ public class CountVowelSubstringsOfString {
         map.put('i', 0);
         map.put('o', 0);
         map.put('u', 0);
-        for (int i = 0; i < word.length(); ++i) {
-            char ch = word.charAt(i);
-            if (map.containsKey(ch)) {
-                map.put(ch, map.get(ch) + 1);
-                if (map.getOrDefault(ch, 0) == 1) {
+        for (int i = 0; i < word.length(); i++) {
+            char ich = word.charAt(i);
+            if (map.containsKey(ich)) {
+                map.put(ich, map.get(ich) + 1);
+                if (map.get(ich) == 1) {
                     vow++;
                 }
                 while (vow == 5) {
@@ -120,6 +120,19 @@ public class CountVowelSubstringsOfString {
         return cnt;
     }
 
+    /**
+     * Solution provided by Kevin(kcsquared)
+     * @see <a href="https://leetcode.com/kcsquared/"></a>
+     *
+     * Intuition:
+     * 1.Keep track of 6 values: the last index we saw a consonant,
+     * and the last index where we saw each of the 5 vowels.
+     *
+     * 2.At each index: the number of valid substrings ending here is the distance backwards
+     * from the earliest last seen vowel to the last seen consonant.
+     * @param word
+     * @return
+     */
     public int countVowelSubstringsV2(String word) {
         int count = 0;
         Map<Character, Integer> lastSeen = new HashMap<>(5);
