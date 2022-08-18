@@ -30,6 +30,17 @@ public class LongestPalindromicSubstring {
     }
 
     /**
+     * Solution provided by GraceMeng(Xinrong Meng)
+     * @param s
+     * @return
+     */
+    public String longestPalindromeV3(String s) {
+
+        return "";
+    }
+
+
+    /**
      * Brute-Force Solution, Very Slow, cost 2014ms, Memory usage 567MB
      * aba
      * @param s
@@ -72,7 +83,6 @@ public class LongestPalindromicSubstring {
     private int lo, maxLen;
 
     public String longestPalindromeV2(String s) {
-        System.out.println("input:" + s);
         int len = s.length();
         if (len < 2) {
             return s;
