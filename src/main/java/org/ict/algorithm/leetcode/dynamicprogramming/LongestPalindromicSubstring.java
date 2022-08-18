@@ -7,7 +7,7 @@ package org.ict.algorithm.leetcode.dynamicprogramming;
 public class LongestPalindromicSubstring {
 
     /**
-     * Solution provided by GraceMeng(Xinrong Meng)
+     * Solution provided by GraceMeng(Xinrong Meng), an engineer in Databricks
      * Intuitively,
      * we list all the substrings, pick those palindromic, and get the longest one.
      * This approach takes O(n^3) time complexity, where n is the length of s.

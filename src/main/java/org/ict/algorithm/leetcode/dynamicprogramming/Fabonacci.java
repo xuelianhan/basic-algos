@@ -10,7 +10,7 @@ package org.ict.algorithm.leetcode.dynamicprogramming;
  * with seed values
  * F0 = 0 and F1 = 1.
  * @see https://www.geeksforgeeks.org/program-for-nth-fibonacci-number/
- * 
+ * LC509
  */
 public class Fabonacci {
 	
@@ -76,7 +76,7 @@ public class Fabonacci {
 		f[0] = 0;
 		f[1] = 1;
 		
-		for (int i = 2; i <=n; i++) {
+		for (int i = 2; i <= n; i++) {
 			f[i] = f[i-1] + f[i-2];
 		}
 		return f[n];
