@@ -152,6 +152,12 @@ public class CountVowelSubstringsOfString {
         return count;
     }
 
+    /**
+     * Brute-Force solution using HashSet
+     *
+     * @param word
+     * @return
+     */
     public static int countVowelSubstrings(String word) {
         if (word.length() < 5) {
             return 0;
