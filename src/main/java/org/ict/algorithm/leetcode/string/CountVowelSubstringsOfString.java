@@ -69,17 +69,17 @@ public class CountVowelSubstringsOfString {
      *
      * So, for each position i, we have k - j valid substrings.
      * The picture below demonstrate it for "xxaiioueiiaxx" test case:
-     *   jk   i
-     * xxaiioueiiaxx
+     *   jk   i         substrings
+     * xxaiioueiiaxx         1
      *
      *   jk    i
-     * xxaiioueiiaxx
+     * xxaiioueiiaxx         1
      *
      *   jk     i
-     * xxaiioueiiaxx
+     * xxaiioueiiaxx         1
      *
      *   jk      i
-     * xxaiioueiiaxx
+     * xxaiioueiiaxx         4
      *
      * @param word
      * @return
@@ -94,7 +94,28 @@ public class CountVowelSubstringsOfString {
         map.put('u', 0);
         for (int i = 0; i < word.length(); ++i) {
             char ch = word.charAt(i);
-
+            if (map.containsKey(ch)) {
+                map.put(ch, map.get(ch) + 1);
+                if (map.getOrDefault(ch, 0) == 1) {
+                    vow++;
+                }
+                while (vow == 5) {
+                    char kch = word.charAt(k);
+                    map.put(kch, map.get(kch) - 1);
+                    if (map.get(kch) == 0) {
+                        vow--;
+                    }
+                    k++;
+                }
+                cnt += (k - j);
+            } else {
+                map.forEach((key, val) -> {
+                    map.put(key, 0);
+                });
+                vow = 0;
+                j = i + 1;
+                k = i + 1;
+            }
         }
         return cnt;
     }
