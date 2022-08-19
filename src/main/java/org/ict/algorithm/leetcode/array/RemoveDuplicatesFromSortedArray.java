@@ -60,6 +60,21 @@ package org.ict.algorithm.leetcode.array;
  */
 public class RemoveDuplicatesFromSortedArray {
 
+    public int removeDuplicates(int[] nums) {
+        /**
+         * i indicate the next available space index for insertion
+         * Taking advantage of sorted array
+         */
+        int i = 0;
+        for (int num : nums) {
+            if (i == 0 || num > nums[i-1]) {
+                nums[i] = num;
+                i++;
+            }
+        }
+        return i;
+    }
+
     /**
      * Solution provided by StefanPochmann, a very awesome guy!
      * Taking advantage of sorted array
