@@ -32,7 +32,7 @@ public class LongestPalindromicSubstring {
 
     /**
      * Solution provided by GraceMeng(Xinrong Meng)
-     *
+     * DP solution
      *
      * @param s
      * @return
