@@ -1,5 +1,7 @@
 package org.ict.algorithm.leetcode.array;
 
+import java.util.Arrays;
+
 /**
  * Given the array nums consisting of 2n elements in the form [x1,x2,...,xn,y1,y2,...,yn].
  *
@@ -33,24 +35,53 @@ package org.ict.algorithm.leetcode.array;
  */
 public class ShuffleTheArray {
 
+    public static void main(String[] args) {
+        int[] nums = {0, 1, 2, 3, 4, 5};
+        int n = 3;
+        int[] res = shuffle(nums, n);
+        System.out.println(Arrays.toString(res));
+    }
+
+    public static int[] shuffleV2(int[] nums, int n) {
+        int[] res = new int[2 * n];
+        for(int i = 0; i < n; i++){
+            res[2 * i] = nums[i];
+            res[2 * i + 1] = nums[n + i];
+        }
+        return res;
+    }
+
 
     /**
      * 0, 1, 2, 3, 4, 5
      * 0, 3, 1, 4, 2, 5
+     * we can see nums as two arrays
+     * nums1 = [0, 1, 2]
+     * nums2 = [3, 4, 5]
+     * res = [0, 0, 0, 0, 0, 0]
+     *
+     * even in low part of num
+     * odd in high part of num
+     * [0,...,n-1, n, ..., 2n-1]
+     * i = 0, j = 0
+     * i = 1, j = n
+     * i = 2, j = 1
+     * i = 3, j = n + 1
+     * i = 4, j = 2
+     * i = 5, j = n + 2;
+     * i = 6, j = 3
+     *
      * @param nums
      * @param n
      * @return
      */
-    public int[] shuffle(int[] nums, int n) {
+    public static int[] shuffle(int[] nums, int n) {
         int[] res = new int[nums.length];
-        boolean flag = true;
         for (int i = 0; i < nums.length; i++) {
-            if (flag) {
-                res[i] = nums[i];
-                flag = false;
+            if (i % 2 == 0) {
+                res[i] = nums[i/2];
             } else {
-                res[i] = nums[n-i];
-                flag = true;
+                res[i] = nums[i/2 + n];
             }
         }
         return res;
