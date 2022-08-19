@@ -20,23 +20,51 @@ public class LongestPalindromicSubstring {
 
     public static void main(String[] args) {
         //String s = "aba";
-        String s = "abcdefgfedcba";
+        //String s = "abcdefgfedcba";
         //String s = "aaaaaaaaaaaaaaaaaaaaaaaa";
+        String s = "aacabdkacaa";
         LongestPalindromicSubstring obj = new LongestPalindromicSubstring();
         //obj.longestPalindrome(s1);
-        String result = obj.longestPalindrome(s);
+        String result = obj.longestPalindromeV3(s);
         //obj.longestPalindrome(s3);
         System.out.println(result);
     }
 
     /**
      * Solution provided by GraceMeng(Xinrong Meng)
+     *
+     *
      * @param s
      * @return
      */
     public String longestPalindromeV3(String s) {
-
-        return "";
+        if (s == null || s.length() <= 1) {
+            return s;
+        }
+        int n = s.length();
+        /**
+         * dp[i][j] means the state of substring from i to j
+         */
+        boolean[][] dp = new boolean[n][n];
+        for (int i = 0; i < n; i++) {
+            dp[i][i] = true;
+        }
+        int longestPalindromeStart = 0, longestPalindromeLen = 1;
+        for (int end = 0; end < n; end++) {
+            for (int start = end - 1; start > -1; start--) {
+                if (s.charAt(start) == s.charAt(end)) {
+                    if (end - start == 1 || dp[start+1][end-1]) {
+                        dp[start][end] = true;
+                        int palindromeLen = end - start + 1;
+                        if (longestPalindromeLen < palindromeLen) {
+                            longestPalindromeStart = start;
+                            longestPalindromeLen = palindromeLen;
+                        }
+                    }
+                }
+            }
+        }
+        return s.substring(longestPalindromeStart, longestPalindromeStart + longestPalindromeLen);
     }
 
 
@@ -82,6 +110,11 @@ public class LongestPalindromicSubstring {
 
     private int lo, maxLen;
 
+    /**
+     * Cost: 25ms, 42.7MB
+     * @param s
+     * @return
+     */
     public String longestPalindromeV2(String s) {
         int len = s.length();
         if (len < 2) {
