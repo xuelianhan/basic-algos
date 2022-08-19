@@ -64,6 +64,7 @@ public class RemoveDuplicatesFromSortedArray {
      * Solution provided by StefanPochmann, a very awesome guy!
      * Taking advantage of sorted array
      *
+     * nums = [0,0,0,0,1,1,1,2,2,3,3,4]
      * @param nums
      * @return
      */
@@ -81,6 +82,7 @@ public class RemoveDuplicatesFromSortedArray {
      * Solution provided by StefanPochmann, a very awesome guy!
      * Taking advantage of sorted array
      *
+     * nums = [0,0,0,0,1,1,1,2,2,3,3,4]
      * @param nums
      * @return
      */
