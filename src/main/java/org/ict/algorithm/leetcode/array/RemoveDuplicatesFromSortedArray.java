@@ -61,7 +61,7 @@ package org.ict.algorithm.leetcode.array;
 public class RemoveDuplicatesFromSortedArray {
 
     /**
-     * Solution provided by StefanPochmann, a very awesome man!
+     * Solution provided by StefanPochmann, a very awesome guy!
      * Taking advantage of sorted array
      *
      * @param nums
@@ -78,7 +78,7 @@ public class RemoveDuplicatesFromSortedArray {
     }
 
     /**
-     * Solution provided by StefanPochmann, a very awesome man!
+     * Solution provided by StefanPochmann, a very awesome guy!
      * Taking advantage of sorted array
      *
      * @param nums
