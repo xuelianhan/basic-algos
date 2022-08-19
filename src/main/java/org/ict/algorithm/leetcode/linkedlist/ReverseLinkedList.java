@@ -63,10 +63,10 @@ public class ReverseLinkedList {
         // pre(A)-->(C)-->start(B)-->then(D)-->null
         // pre(A)-->(D)-->(C)-->start(B)-->then(null)
         for (int i = 0; i < n-m; i++) {
-            start.next = then.next;//1
-            then.next = pre.next;//2
-            pre.next = then;//3
-            then = start.next;//4
+            start.next = then.next;
+            then.next = pre.next;
+            pre.next = then;
+            then = start.next;
         }
         return dummy.next;
     }
