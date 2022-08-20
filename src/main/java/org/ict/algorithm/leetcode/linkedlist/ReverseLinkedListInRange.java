@@ -11,6 +11,10 @@ public class ReverseLinkedListInRange {
 
 
     public ListNode reverseBetween(ListNode head, int left, int right) {
+        if (head == null || left == right) {
+            return head;
+        }
+
         return null;
     }
 

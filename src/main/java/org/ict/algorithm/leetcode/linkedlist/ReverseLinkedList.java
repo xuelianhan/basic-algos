@@ -13,12 +13,12 @@ public class ReverseLinkedList {
     /**
      * Definition for singly-linked list.
      * */
-    private static class Node {
+    private static class ListNode {
          int val;
          
-         Node next;
+         ListNode next;
          
-         Node(int x) { 
+         ListNode(int x) {
              val = x; 
          }
     }
@@ -36,7 +36,7 @@ public class ReverseLinkedList {
      * 
      * @return
      */
-    public static Node reverseBetween(Node head, int m, int n) {
+    public static ListNode reverseBetween(ListNode head, int m, int n) {
         if (m < 1 || n < 1 || (m > n)) {
             throw new IllegalArgumentException("input m and n is not satisfied condition (1 <= m <= n <= length of list)");
         }
@@ -44,17 +44,17 @@ public class ReverseLinkedList {
             return null;
         }
         // create a dummy node to mark the head of this list
-        Node dummy = new Node(0);
+        ListNode dummy = new ListNode(0);
         dummy.next = head;
         // make a pointer pre as a marker for the node before reversing
-        Node pre = dummy;
+        ListNode pre = dummy;
         for (int i = 0; i < m-1; i++) {
             pre = pre.next;
         }
         // start is a pointer to the beginning of a sub-list that will be reversed
-        Node start = pre.next;
+        ListNode start = pre.next;
         // then is a pointer to a node that will be reversed
-        Node then = start.next;
+        ListNode then = start.next;
         
         // Init input: pre(A)-->start(B)-->then(C)-->D-->null
         //
@@ -76,10 +76,10 @@ public class ReverseLinkedList {
      * use 3 pointer: newHead, next, head
      * @param head
      */
-    public static Node reverse(Node head) {
-        Node newHead = null;
+    public static ListNode reverse(ListNode head) {
+        ListNode newHead = null;
         while (head != null) {
-            Node next = head.next;
+            ListNode next = head.next;
             head.next = newHead;
             newHead = head;
             head = next;
@@ -93,10 +93,10 @@ public class ReverseLinkedList {
      * @param node
      * @return
      */
-    public static Node reverse2(Node node) {
-        Node prev = null;
-        Node current = node;
-        Node next = null;
+    public static ListNode reverse2(ListNode node) {
+        ListNode prev = null;
+        ListNode current = node;
+        ListNode next = null;
         while (current != null) {
             next = current.next;
             current.next = prev;
@@ -111,16 +111,16 @@ public class ReverseLinkedList {
      * recursive solution
      * @param head
      */
-    public static Node reverse(Node head, Node newHead) {
+    public static ListNode reverse(ListNode head, ListNode newHead) {
         if (head == null) {
             return newHead;
         }
-        Node next = head.next;
+        ListNode next = head.next;
         head.next = newHead;
         return reverse(next, head);
     }
     
-    public static void printList(Node head) {
+    public static void printList(ListNode head) {
         while (head != null) {
             System.out.print(head.val);
             head = head.next;
@@ -147,27 +147,27 @@ public class ReverseLinkedList {
      */
     public static void main(String[] args) {
         /* construct LinkedList with nodes */
-        Node head = new Node(0);
-        Node previousNode = head;
+        ListNode head = new ListNode(0);
+        ListNode previousNode = head;
         for (int i = 0; i < 5; i++) {
-            Node inode = new Node(i + 1);
+            ListNode inode = new ListNode(i + 1);
             previousNode.next = inode;
             previousNode = inode;
         }
         printList(head);
         
         /* iterative solution */
-        Node newHead = reverse(head);
+        ListNode newHead = reverse(head);
         printList(newHead);
         
-        Node newHead1 = reverse2(newHead);
+        ListNode newHead1 = reverse2(newHead);
         printList(newHead1);
         
         /* recursive solution */
-        Node newHead2 = reverse(newHead1, null);
+        ListNode newHead2 = reverse(newHead1, null);
         printList(newHead2);
         
-        Node newHead3 = reverseBetween(newHead2, 2, 6);
+        ListNode newHead3 = reverseBetween(newHead2, 2, 6);
         printList(newHead3);
     }
     
