@@ -128,7 +128,7 @@ public class MergeTwoSortedLists {
             return list2;
         }
     }
-    
+
     public static void printList(ListNode head) {
         while (head != null) {
             System.out.print(head.val);
@@ -166,8 +166,9 @@ public class MergeTwoSortedLists {
         /* construct LinkedList with nodes */
         ListNode l1 = constructLinkedList(0, 5, 1);
         ListNode l2 = constructLinkedList(5, 12, 1);
-        
-        ListNode l3 = mergeSortedLists(l1, l2);
+
+        MergeTwoSortedLists instance = new MergeTwoSortedLists();
+        ListNode l3 = instance.mergeSortedLists(l1, l2);
         printList(l3);
     }
     
