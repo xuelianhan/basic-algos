@@ -32,6 +32,10 @@ package org.ict.algorithm.leetcode.linkedlist;
  */
 public class MiddleOfTheLinkedList {
 
+    public static void main(String[] args) {
+
+    }
+
     /**
      * Definition for singly-linked list.
      * */
@@ -52,19 +56,29 @@ public class MiddleOfTheLinkedList {
         }
     }
 
+    /**
+     *
+     * @param head
+     * @return
+     */
     public ListNode middleNode(ListNode head) {
         if (null == head) {
             return null;
         }
+
         int cnt = 0;
         ListNode cur = head;
         while(cur != null) {
             cur = cur.next;
             cnt++;
         }
-        int stop = (cnt % 2 == 0 ? (cnt / 2 + 2) : (cnt / 2 + 1));
+        /**
+         * 1,2,3,4,5 stop at 2 index started from zero
+         * 1,2,3,4,5,6  stop at 3 index started from zero
+         */
+        int stop = (cnt / 2);
         ListNode pre = head;
-        int i = 1;
+        int i = 0;
         while (pre != null) {
             if (i == stop) {
                 break;
@@ -72,6 +86,7 @@ public class MiddleOfTheLinkedList {
             pre = pre.next;
             i++;
         }
+
         return pre;
     }
 }
