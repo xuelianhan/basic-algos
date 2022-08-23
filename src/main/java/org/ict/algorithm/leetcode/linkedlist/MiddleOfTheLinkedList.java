@@ -73,8 +73,8 @@ public class MiddleOfTheLinkedList {
             cnt++;
         }
         /**
-         * 1,2,3,4,5 stop at 2 index started from zero
-         * 1,2,3,4,5,6  stop at 3 index started from zero
+         * 1,2,3,4,5  cnt=5, stop at 2 index started from zero(0,1,2)
+         * 1,2,3,4,5,6  cnt=6, stop at 3 index started from zero(0,1,2,3)
          */
         int stop = (cnt / 2);
         ListNode pre = head;
