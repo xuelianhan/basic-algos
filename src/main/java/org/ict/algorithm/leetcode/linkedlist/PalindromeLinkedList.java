@@ -25,8 +25,29 @@ package org.ict.algorithm.leetcode.linkedlist;
  */
 public class PalindromeLinkedList {
 
-    public boolean isPalindrome(ListNode head) {
-        return false;
+    public boolean isPalindromeV1(ListNode head) {
+        if (head == null) {
+            return true;
+        }
+        ListNode cur = head;
+        StringBuilder sb = new StringBuilder();
+        while (cur != null) {
+            sb.append(cur.val);
+            cur = cur.next;
+        }
+        return isPalindrome(sb.toString(), 0, sb.length() - 1);
+    }
+
+    public boolean isPalindrome(String s, int low, int high) {
+        while (low < high) {
+            if (s.charAt(low) != s.charAt(high)) {
+                return false;
+            } else {
+                low++;
+                high--;
+            }
+        }
+        return true;
     }
 
     private static class ListNode {
