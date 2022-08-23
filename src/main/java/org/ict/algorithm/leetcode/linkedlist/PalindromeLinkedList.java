@@ -25,6 +25,10 @@ package org.ict.algorithm.leetcode.linkedlist;
  */
 public class PalindromeLinkedList {
 
+    public boolean isPalindromeV2(ListNode head) {
+        return false;
+    }
+
     public boolean isPalindromeV1(ListNode head) {
         if (head == null) {
             return true;
