@@ -25,7 +25,13 @@ package org.ict.algorithm.leetcode.linkedlist;
  */
 public class PalindromeLinkedList {
 
+    /**
+     * Fast-Slow Pointer
+     * @param head
+     * @return
+     */
     public boolean isPalindromeV2(ListNode head) {
+        //todo
         return false;
     }
 
