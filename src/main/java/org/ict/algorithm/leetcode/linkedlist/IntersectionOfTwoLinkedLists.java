@@ -77,6 +77,64 @@ import java.util.Map;
  */
 public class IntersectionOfTwoLinkedLists {
 
+    /**
+     * Solution provided by MyFavCat
+     *
+     * I found most solutions here preprocess linkedlists to get the difference in len.
+     * Actually we don't care about the "value" of difference,
+     * we just want to make sure two pointers reach the intersection node at the same time.
+     *
+     * We can use two iterations to do that.
+     * In the first iteration, we will reset the pointer of one linkedlist to the head
+     * of another linkedlist after it reaches the tail node.
+     * In the second iteration, we will move two pointers until they points to the same node.
+     * Our operations in first iteration will help us counteract the difference.
+     * So if two linkedlist intersects,
+     * the meeting point in second iteration must be the intersection point.
+     * If the two linked lists have no intersection at all,
+     * then the meeting pointer in second iteration must be the tail node of both lists, which is null
+     *
+     * see Visualization provided by BryanBoCao
+     * Case 1 (Have Intersection & Same Len)
+     *
+     * Case 2 (Have Intersection & Different Len)
+     *
+     * Case 3 (Have No Intersection & Same Len)
+     *
+     * Case 4 (Have No Intersection & Different Len)
+     * Notice that if list A and list B have the same length,
+     * this solution will terminate in no more than 1 traversal;
+     * if both lists have different lengths,
+     * this solution will terminate in no more than 2 traversals -- in the second traversal,
+     * swapping a and b synchronizes a and b before the end of the second traversal.
+     * By synchronizing a and b I mean both have the same remaining steps in the second traversal
+     * so that it's guaranteed for them to reach the first intersection node,
+     * or reach null at the same time (technically speaking, in the same iteration)
+     * -- see Case 2 (Have Intersection & Different Len)
+     * and Case 4 (Have No Intersection & Different Len).
+     *
+     * PS: There are many great explanations of this solution for various cases,
+     * I believe to visualize it can resolve most of the doubts posted previously.
+     *
+     * Below is my commented Java code:
+     * @param headA
+     * @param headB
+     * @return
+     */
+    public ListNode getIntersectionNodeV2(ListNode headA, ListNode headB) {
+        if (null == headA || null == headB) {
+            return null;
+        }
+        ListNode a = headA;
+        ListNode b = headB;
+
+        while (a != b) {
+            a = (a == null ? headB : a.next);
+            b = (b == null ? headA : b.next);
+        }
+        return a;
+    }
+
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
         Map<ListNode, Boolean> visited = new HashMap<>();
         ListNode a = headA;
@@ -101,6 +159,8 @@ public class IntersectionOfTwoLinkedLists {
 
     private static class ListNode {
         int val;
+
+        boolean visited;
 
         ListNode next;
 
