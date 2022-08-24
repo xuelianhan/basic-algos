@@ -1,5 +1,8 @@
 package org.ict.algorithm.leetcode.linkedlist;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Given the heads of two singly linked-lists headA and headB, return the node at which the two lists intersect. If the two linked lists have no intersection at all, return null.
  *
@@ -73,7 +76,26 @@ package org.ict.algorithm.leetcode.linkedlist;
  * LC160
  */
 public class IntersectionOfTwoLinkedLists {
+
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        Map<ListNode, Boolean> visited = new HashMap<>();
+        ListNode a = headA;
+        ListNode b = headB;
+        while (a != null) {
+            if (visited.getOrDefault(a, false) == false) {
+                visited.put(a, true);
+            }
+            a = a.next;
+        }
+
+        while (b != null) {
+            if (visited.getOrDefault(b, false) == false) {
+                visited.put(b, true);
+                b = b.next;
+            } else {
+                return b;
+            }
+        }
         return null;
     }
 
