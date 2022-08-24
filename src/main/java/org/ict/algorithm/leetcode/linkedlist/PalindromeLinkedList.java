@@ -27,6 +27,8 @@ public class PalindromeLinkedList {
 
     /**
      * Fast-Slow Pointer
+     * Solution provided by yavinci
+     *
      * @param head
      * @return
      */
