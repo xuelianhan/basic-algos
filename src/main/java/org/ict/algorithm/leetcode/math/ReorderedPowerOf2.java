@@ -26,4 +26,8 @@ package org.ict.algorithm.leetcode.math;
  * LC869
  */
 public class ReorderedPowerOf2 {
+
+    public boolean reorderedPowerOf2(int n) {
+        return false;
+    }
 }
