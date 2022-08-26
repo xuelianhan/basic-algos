@@ -18,6 +18,7 @@ package org.ict.algorithm.leetcode.linkedlist;
  *
  * @author sniper
  * @date 2022/8/26
+ * @see <a href="https://www.geeksforgeeks.org/given-linked-list-reverse-alternate-nodes-append-end/"></a>
  * hulu coding interview
  *
  */
