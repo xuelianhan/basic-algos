@@ -32,11 +32,23 @@ package org.ict.algorithm.leetcode.linkedlist;
 public class RemoveLinkedListElements {
 
     public ListNode removeElements(ListNode head, int val) {
+        /**
+         * The key to solve this problem
+         * is using a helper node to track the head of the list.
+         */
         ListNode dummy = new ListNode(0);
         dummy.next = head;
         ListNode cur = dummy;
         while (cur.next != null) {
-
+            if (cur.next.val == val) {
+                /**
+                 * Here if being writen as (cur = cur.next.next;) is OK too.
+                 */
+                ListNode next = cur.next;
+                cur.next = next.next;
+            } else {
+                cur = cur.next;
+            }
         }
         return dummy.next;
     }
