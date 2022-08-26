@@ -25,8 +25,46 @@ package org.ict.algorithm.leetcode.linkedlist;
 public class ReversLinkedListAlternate {
 
     public ListNode reverseAlternately(ListNode head) {
+        ListNode fast = head, slow = head;
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        /**
+         * If odd numbers of nodes, let slow move one step forward.
+         * e.g.
+         * 1--->2--->3--->4--->5--->null
+         *           s         f
+         *
+         * even numbers nodes,e.g.
+         * 1--->2--->3--->4--->null
+         *           s         f
+         */
+        if (fast != null) {
+            slow = slow.next;
+        }
+        slow = reverse(slow);
+        fast = head;
+        /**
+         * alternately append second list to first list
+         */
+        while (slow != null) {
+           //todo
+        }
         return null;
     }
+
+    public ListNode reverse(ListNode head) {
+        ListNode prev = null;
+        while (head != null) {
+            ListNode next = head.next;
+            head.next = prev;
+            prev = head;
+            head = next;
+        }
+        return prev;
+    }
+
 
     private static class ListNode {
         int val;
