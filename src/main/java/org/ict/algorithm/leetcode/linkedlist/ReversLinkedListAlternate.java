@@ -24,6 +24,7 @@ package org.ict.algorithm.leetcode.linkedlist;
  */
 public class ReversLinkedListAlternate {
 
+
     public ListNode reverseAlternately(ListNode head) {
         ListNode fast = head, slow = head;
         while (fast != null && fast.next != null) {
