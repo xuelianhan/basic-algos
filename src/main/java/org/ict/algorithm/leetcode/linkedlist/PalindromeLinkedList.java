@@ -27,12 +27,55 @@ public class PalindromeLinkedList {
 
     /**
      * Fast-Slow Pointer
+     * Solution provided by yavinci
+     *
      * @param head
      * @return
      */
     public boolean isPalindromeV2(ListNode head) {
-        //todo
-        return false;
+        ListNode fast = head, slow = head;
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        /**
+         * If odd numbers of nodes, let slow move one step forward.
+         * e.g.
+         * 1--->2--->3--->4--->5--->null
+         *           s         f
+         *
+         * even numbers nodes,e.g.
+         * 1--->2--->3--->4--->null
+         *           s         f
+         */
+        if (fast != null) {
+            slow = slow.next;
+        }
+        slow = reverse(slow);
+        fast = head;
+        /**
+         * here should use slow pointer, not fast
+         * because slow may end before fast(fast started at head)
+         */
+        while (slow != null) {
+            if (slow.val != fast.val) {
+                return false;
+            }
+            slow = slow.next;
+            fast = fast.next;
+        }
+        return true;
+    }
+
+    public ListNode reverse(ListNode head) {
+        ListNode prev = null;
+        while (head != null) {
+            ListNode next = head.next;
+            head.next = prev;
+            prev = head;
+            head = next;
+        }
+        return prev;
     }
 
     public boolean isPalindromeV1(ListNode head) {
