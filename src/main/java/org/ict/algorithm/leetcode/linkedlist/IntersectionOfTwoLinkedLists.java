@@ -74,6 +74,7 @@ package org.ict.algorithm.leetcode.linkedlist;
  */
 public class IntersectionOfTwoLinkedLists {
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        //todo
         return null;
     }
 
