@@ -37,6 +37,74 @@ import java.util.List;
  */
 public class SortMatrixDiagonally {
 
+    public int[][] diagonalSortV2(int[][] mat) {
+        int m = mat.length;
+        int n = mat[0].length;
+
+        /**
+         * row = 0
+         * top-triangle include diagonal line
+         */
+        for (int col = 0; col < n; col++) {
+            sortV2(mat, 0, col, m, n);
+        }
+
+
+        /**
+         * col=0
+         * bottom-triangle not include diagonal line
+         * row = 1 due to diagonal line has been sorted in the up for-loop(row=0)
+         */
+        for (int row = 1; row < m; row++) {
+            sortV2(mat, row, 0, m, n);
+        }
+
+        return mat;
+    }
+
+    /**
+     * Use Count Sorting.
+     * Time O((m+n)*k)
+     * Space O(1)
+     *
+     * @param mat
+     * @param row
+     * @param col
+     * @param m
+     * @param n
+     */
+    public void sortV2(int[][] mat, int row, int col, int m, int n) {
+        int[] list = new int[101];
+        int r = row, c = col;
+        while (r < m && c < n) {
+            list[mat[r][c]]++;
+            r++;
+            c++;
+        }
+
+
+        r = row;
+        c = col;
+        for (int i = 1; i < 101; i++) {
+            if (list[i] > 0) {
+                int count = list[i];
+                while (count-- > 0) {
+                    mat[r][c] = i;
+                    r++;
+                    c++;
+                }
+            }
+        }
+    }
+
+    /**
+     * Time O((m+n)*klogk)
+     * Space O(k)
+     * where k = min(m,n)
+     *
+     * @param mat
+     * @return
+     */
     public int[][] diagonalSort(int[][] mat) {
         int m = mat.length;
         int n = mat[0].length;
@@ -62,6 +130,14 @@ public class SortMatrixDiagonally {
         return mat;
     }
 
+    /**
+     *
+     * @param mat matrix
+     * @param row start row
+     * @param col start col
+     * @param m row limit
+     * @param n column limit
+     */
     public void sort(int[][] mat, int row, int col, int m, int n) {
         List<Integer> list = new ArrayList<>();
         int r = row, c = col;
