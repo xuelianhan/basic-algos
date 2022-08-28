@@ -1,6 +1,7 @@
 package org.ict.algorithm.leetcode.array;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -37,24 +38,48 @@ import java.util.List;
 public class SortMatrixDiagonally {
 
     public int[][] diagonalSort(int[][] mat) {
-        List<List<Integer>> diaList = new ArrayList<>();
         int m = mat.length;
         int n = mat[0].length;
 
         /**
-         * sort row by row from 0 to m
-         */
-        for (int row = 0; row < m; row++) {
-
-        }
-
-        /**
-         * sort column by column from 0 to n
+         * row = 0
+         * top-triangle include diagonal line
          */
         for (int col = 0; col < n; col++) {
-            
+            sort(mat, 0, col, m, n);
+        }
+
+
+        /**
+         * col=0
+         * bottom-triangle not include diagonal line
+         * row = 1 due to diagonal line has been sorted in the up for-loop(row=0)
+         */
+        for (int row = 1; row < m; row++) {
+            sort(mat, row, 0, m, n);
         }
 
         return mat;
+    }
+
+    public void sort(int[][] mat, int row, int col, int m, int n) {
+        List<Integer> list = new ArrayList<>();
+        int r = row, c = col;
+        while (r < m && c < n) {
+            list.add(mat[r][c]);
+            r++;
+            c++;
+        }
+
+        Collections.sort(list);
+
+        r = row;
+        c = col;
+        int idx = 0;
+        while (r < m && c < n) {
+            mat[r][c] = list.get(idx++);
+            r++;
+            c++;
+        }
     }
 }
