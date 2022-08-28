@@ -40,7 +40,21 @@ public class SortMatrixDiagonally {
         List<List<Integer>> diaList = new ArrayList<>();
         int m = mat.length;
         int n = mat[0].length;
-        
-        return null;
+
+        /**
+         * sort row by row from 0 to m
+         */
+        for (int row = 0; row < m; row++) {
+
+        }
+
+        /**
+         * sort column by column from 0 to n
+         */
+        for (int col = 0; col < n; col++) {
+            
+        }
+
+        return mat;
     }
 }
