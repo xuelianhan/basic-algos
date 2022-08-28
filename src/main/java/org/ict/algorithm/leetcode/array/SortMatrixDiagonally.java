@@ -37,6 +37,12 @@ import java.util.List;
  */
 public class SortMatrixDiagonally {
 
+    public int[][] diagonalSortV3(int[][] mat) {
+        //todo
+        return mat;
+    }
+
+
     public int[][] diagonalSortV2(int[][] mat) {
         int m = mat.length;
         int n = mat[0].length;
@@ -46,7 +52,7 @@ public class SortMatrixDiagonally {
          * top-triangle include diagonal line
          */
         for (int col = 0; col < n; col++) {
-            sortV2(mat, 0, col, m, n);
+            countingSort(mat, 0, col, m, n);
         }
 
 
@@ -56,16 +62,18 @@ public class SortMatrixDiagonally {
          * row = 1 due to diagonal line has been sorted in the up for-loop(row=0)
          */
         for (int row = 1; row < m; row++) {
-            sortV2(mat, row, 0, m, n);
+            countingSort(mat, row, 0, m, n);
         }
 
         return mat;
     }
 
     /**
-     * Use Count Sorting.
+     * Use Counting Sort
      * Time O((m+n)*k)
      * Space O(1)
+     *
+     * Use condition: 1 <= mat[i][j] <= 100
      *
      * @param mat
      * @param row
@@ -73,7 +81,7 @@ public class SortMatrixDiagonally {
      * @param m
      * @param n
      */
-    public void sortV2(int[][] mat, int row, int col, int m, int n) {
+    public void countingSort(int[][] mat, int row, int col, int m, int n) {
         int[] list = new int[101];
         int r = row, c = col;
         while (r < m && c < n) {
