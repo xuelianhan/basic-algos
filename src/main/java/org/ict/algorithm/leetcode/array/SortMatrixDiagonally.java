@@ -139,7 +139,7 @@ public class SortMatrixDiagonally {
     }
 
     /**
-     *
+     * This solution should be very familiar.It's recommended.
      * @param mat matrix
      * @param row start row
      * @param col start col

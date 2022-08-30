@@ -18,6 +18,7 @@ import java.util.Arrays;
  *
  * 3.It uses a temporary array making it a non In Place algorithm.
  *
+ * Not recommend to use Counting sort when the numbers difference range(max- min) is very large.
  *
  * @see <a href="https://www.geeksforgeeks.org/counting-sort/"></a>
  * @author sniper
@@ -41,29 +42,35 @@ public class CountingSort {
 
 
     /**
+     * The problem with the previous counting sortV1 and sortV2 was that we could not sort the elements if we have negative numbers in it.
+     * Because there are no negative array indices.
+     * So what we do is,
+     * we find the minimum element and we will store the count of that minimum element at zero index.
      * stable ascending sort
      */
-    public static void sort3(int[] array) {
+    public static void sortV3(int[] array) {
         int size = array.length;
         int[] minMax = getMinMax(array);
         int min = minMax[0];
         int max = minMax[1];
-        int k = max-min+1;
-        int[] counts = new int[ k ];
+        int range = max - min + 1;
+        int[] counts = new int[range];
 
         for (int i = 0; i < size; i++) {
-            int dataInCountIndex = array[i] - min;
-            counts[dataInCountIndex] +=1;
+            counts[array[i] - min]++;
         }
 
-        for (int i = 1; i < k; i++) {
-            counts[i] = counts[i-1] + counts[i];
+        for (int i = 1; i < range; i++) {
+            counts[i] += counts[i-1];
         }
 
         int[] sortedArray = new int[size];
-
         for (int i = size - 1; i >= 0; i--) {
             int dataInCountIndex = array[i] - min;
+            /**
+             * Array index starts at zero,
+             * So we subtract 1 here.
+             */
             int sortIndex = counts[dataInCountIndex] - 1;
             sortedArray[sortIndex] = array[i];
             counts[dataInCountIndex]--;
@@ -73,11 +80,11 @@ public class CountingSort {
     private static int[] getMinMax(int[] array) {
         int min = array[0];
         int max = array[0];
-        for(int i=1; i<array.length; i++) {
-            if( array[i]>max ) {
+        for(int i = 1; i < array.length; i++) {
+            if( array[i] > max ) {
                 max = array[i];
             }
-            if( array[i]<min ) {
+            if( array[i] < min ) {
                 min = array[i];
             }
         }
