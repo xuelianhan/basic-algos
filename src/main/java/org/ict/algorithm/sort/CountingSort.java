@@ -39,6 +39,53 @@ public class CountingSort {
         }
     }
 
+
+    /**
+     * stable ascending sort
+     */
+    public static void sort3(int[] array) {
+        int size = array.length;
+        int[] minMax = getMinMax(array);
+        int min = minMax[0];
+        int max = minMax[1];
+        int k = max-min+1;
+        int[] counts = new int[ k ];
+
+        for (int i = 0; i < size; i++) {
+            int dataInCountIndex = array[i] - min;
+            counts[dataInCountIndex] +=1;
+        }
+
+        for (int i = 1; i < k; i++) {
+            counts[i] = counts[i-1] + counts[i];
+        }
+
+        int[] sortedArray = new int[size];
+
+        for (int i = size - 1; i >= 0; i--) {
+            int dataInCountIndex = array[i] - min;
+            int sortIndex = counts[dataInCountIndex] - 1;
+            sortedArray[sortIndex] = array[i];
+            counts[dataInCountIndex]--;
+        }
+    }
+
+    private static int[] getMinMax(int[] array) {
+        int min = array[0];
+        int max = array[0];
+        for(int i=1; i<array.length; i++) {
+            if( array[i]>max ) {
+                max = array[i];
+            }
+            if( array[i]<min ) {
+                min = array[i];
+            }
+        }
+        int[] minMax = new int[]{min,max};
+        return minMax;
+    }
+
+
     public void sortV2(int arr[]) {
         int n = arr.length;
 
