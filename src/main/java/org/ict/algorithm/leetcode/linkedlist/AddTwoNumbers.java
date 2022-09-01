@@ -231,9 +231,6 @@ public class AddTwoNumbers {
             this.val = val;
             this.next = next;
         }
-
-
-
     }
 
 }
