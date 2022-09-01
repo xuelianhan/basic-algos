@@ -42,6 +42,12 @@ import java.util.Stack;
  */
 public class AddTwoNumbers {
 
+    /**
+     * Use sum = sum / 10 to replace carry variable.
+     * @param l1
+     * @param l2
+     * @return
+     */
     public ListNode addTwoNumbersV3(ListNode l1, ListNode l2) {
         ListNode c1 = l1;
         ListNode c2 = l2;
@@ -49,6 +55,10 @@ public class AddTwoNumbers {
         ListNode cur = dummy;
         int sum = 0;
         while (c1 != null || c2 != null) {
+            /**
+             * sum = sum / 10
+             * This is carry of the last one round loop.
+             */
             sum /= 10;
             if (c1 != null) {
                 sum += c1.val;
@@ -58,6 +68,10 @@ public class AddTwoNumbers {
                 sum += c2.val;
                 c2 = c2.next;
             }
+            /**
+             * (carry + c1.val + c2.val) mod 10
+             * This is the remainder.
+             */
             cur.next = new ListNode(sum % 10);
             cur = cur.next;
         }
@@ -97,6 +111,9 @@ public class AddTwoNumbers {
                 l2 = l2.next;
             }
             sum = n1 + n2 + carry;
+            /**
+             * Calculate carry of the next round loop.
+             */
             carry = sum / 10;
             int mod = sum % 10;
             /**
