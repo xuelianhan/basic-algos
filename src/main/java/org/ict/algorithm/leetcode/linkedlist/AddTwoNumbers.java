@@ -42,6 +42,43 @@ import java.util.Stack;
  */
 public class AddTwoNumbers {
 
+    public ListNode addTwoNumbersV4(ListNode l1, ListNode l2) {
+        int carry = 0;
+        ListNode dummy = new ListNode(0);
+        ListNode cur = dummy;
+        /**
+         * Because numbers are reverse order,
+         * so we add the number one by one
+         * from lower to higher digit.
+         * This is the order of iteration the list.
+         * So we don't need using stack here.
+         */
+        while (l1 != null || l2 != null || carry != 0) {
+            int sum = 0;
+            if (l1 != null) {
+                sum += l1.val;
+                l1 = l1.next;
+            }
+            if (l2 != null) {
+                sum += l2.val;
+                l2 = l2.next;
+            }
+            sum += carry;
+            int mod = sum % 10;
+            /**
+             * append new ListNode at the tail each time.
+             */
+            cur.next = new ListNode(mod);
+            cur = cur.next;
+
+            /**
+             * Calculate the carry of the next round loop.
+             */
+            carry = sum / 10;
+        }
+        return dummy.next;
+    }
+
     /**
      * Use sum = sum / 10 to replace carry variable.
      * @param l1
@@ -111,16 +148,17 @@ public class AddTwoNumbers {
                 l2 = l2.next;
             }
             sum = n1 + n2 + carry;
-            /**
-             * Calculate carry of the next round loop.
-             */
-            carry = sum / 10;
             int mod = sum % 10;
             /**
              * append new ListNode at the tail each time.
              */
             cur.next = new ListNode(mod);
             cur = cur.next;
+
+            /**
+             * Calculate the carry of the next round loop.
+             */
+            carry = sum / 10;
         }
         return dummy.next;
     }
