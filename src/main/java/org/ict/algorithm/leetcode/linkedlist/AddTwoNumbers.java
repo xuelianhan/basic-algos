@@ -4,7 +4,7 @@ import java.util.Stack;
 
 /**
  * You are given two non-empty linked lists representing two non-negative integers.
- * The digits are stored in reverse order, and each of their nodes contains a single digit.
+ * The digits are stored in reverse order(lower digit before, higher digit after), and each of their nodes contains a single digit.
  * Add the two numbers and return the sum as a linked list.
  *
  * You may assume the two numbers do not contain any leading zero, except the number 0 itself.
@@ -12,7 +12,7 @@ import java.util.Stack;
  * Example1:
  * Input: l1 = [2,4,3], l2 = [5,6,4]
  * Output: [7,0,8]
- * Explanation: 342 + 465 = 807.
+ * Explanation: 342 + 465 = 807 --> reverse operation --> 708
  *
  * Example 2:
  *
@@ -26,7 +26,7 @@ import java.util.Stack;
  *
  * Input: l1 = [2,4,9], l2 = [5,6,4,9]
  * Output: [7,0,4,0,1]
- * 942 + 9465 = 70401
+ * 942 + 9465 = 10407 --> reverse operation --> 70401
  *
  *
  * Constraints:
@@ -47,6 +47,13 @@ public class AddTwoNumbers {
         int sum = 0;
         ListNode first = null;
         ListNode oldFirst = null;
+        /**
+         * Because numbers are reverse order,
+         * so we add the number one by one
+         * from lower to higher digit.
+         * This is the order of iteration the list.
+         * So we don't need using stack here.
+         */
         while (l1 != null || l2 != null) {
             int n1 = (l1 == null ? 0 : l1.val);
             int n2 = (l2 == null ? 0 : l2.val);
