@@ -1,5 +1,7 @@
 package org.ict.algorithm.leetcode.linkedlist;
 
+import java.util.Stack;
+
 /**
  * You are given two non-empty linked lists representing two non-negative integers.
  * The digits are stored in reverse order, and each of their nodes contains a single digit.
@@ -16,10 +18,15 @@ package org.ict.algorithm.leetcode.linkedlist;
  *
  * Input: l1 = [0], l2 = [0]
  * Output: [0]
- * Example 3:
  *
+ * Example 3:
  * Input: l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9]
  * Output: [8,9,9,9,0,0,0,1]
+ *
+ *
+ * Input: l1 = [2,4,9], l2 = [5,6,4,9]
+ * Output: [7,0,4,0,1]
+ * 942 + 9465 = 70401
  *
  *
  * Constraints:
@@ -36,8 +43,48 @@ package org.ict.algorithm.leetcode.linkedlist;
 public class AddTwoNumbers {
 
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        //todo
-        return null;
+        int carry = 0;
+        int sum = 0;
+        ListNode first = null;
+        ListNode oldFirst = null;
+        while (l1 != null || l2 != null) {
+            int n1 = (l1 == null ? 0 : l1.val);
+            int n2 = (l2 == null ? 0 : l2.val);
+            if (l1 != null) {
+                l1 = l1.next;
+            }
+            if (l2 != null) {
+                l2 = l2.next;
+            }
+            sum = n1 + n2 + carry;
+            carry = sum / 10;
+            int mod = sum % 10;
+            /**
+             * Insert node at the head
+             */
+            oldFirst = first;
+            first = new ListNode(mod);
+            first.next = oldFirst;
+        }
+
+        if (carry == 1) {
+            oldFirst = first;
+            first = new ListNode(1);
+            first.next = oldFirst;
+        }
+
+        return reverse(first);
+    }
+
+    public ListNode reverse(ListNode head) {
+        ListNode newHead = null;
+        while (head != null) {
+            ListNode next = head.next;
+            head.next = newHead;
+            newHead = head;
+            head = next;
+        }
+        return newHead;
     }
 
     private static class ListNode {
