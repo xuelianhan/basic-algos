@@ -35,13 +35,31 @@ package org.ict.algorithm.leetcode.linkedlist;
  */
 public class RemoveNthNodeFromEndOfList {
 
+    /**
+     * Two-Pointer Solution.
+     * @param head
+     * @param n
+     * @return
+     */
     public ListNode removeNthFromEnd(ListNode head, int n) {
         ListNode dummy = new ListNode(0);
         dummy.next = head;
-        ListNode cur = dummy;
-
-
-        return null;
+        ListNode fast = dummy;
+        ListNode slow = dummy;
+        int step = 0;
+        while (fast.next != null) {
+            if (step >= n) {
+                slow = slow.next;
+            }
+            fast = fast.next;
+            step++;
+        }
+        if (slow.next == null) {
+            return dummy.next;
+        }
+        ListNode next = slow.next.next;
+        slow.next = next;
+        return dummy.next;
     }
 
     private static class ListNode {
