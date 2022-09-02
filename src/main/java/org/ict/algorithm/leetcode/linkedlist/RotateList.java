@@ -33,6 +33,9 @@ public class RotateList {
         ListNode dummy = new ListNode(0);
         dummy.next = head;
         ListNode cur = dummy;
+        /**
+         * count the length of this link list.
+         */
         int len = 0;
         while (cur.next != null) {
             len++;
@@ -42,6 +45,7 @@ public class RotateList {
             return head;
         }
         /**
+         * cur arrived at the tail of this link list,
          * circle the link, this step is very important.
          */
         cur.next = head;
@@ -49,7 +53,7 @@ public class RotateList {
         int step = len - mod;
 
         /**
-         * move cur forward with steps.
+         * move cur forward with len - mod steps.
          */
         int i = 0;
         while (cur != null) {
@@ -59,7 +63,7 @@ public class RotateList {
             i++;
             cur = cur.next;
         }
-        
+
         dummy.next = cur.next;
         cur.next = null;
         return dummy.next;
