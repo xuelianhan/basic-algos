@@ -40,10 +40,29 @@ public class RotateList {
         }
         if (k % len == 0) {
             return head;
-        } else {
-            //todo
         }
-        return null;
+        /**
+         * circle the link, this step is very important.
+         */
+        cur.next = head;
+        int mod = k % len;
+        int step = len - mod;
+
+        /**
+         * move cur forward with steps.
+         */
+        int i = 0;
+        while (cur != null) {
+            if (i >= step) {
+                break;
+            }
+            i++;
+            cur = cur.next;
+        }
+        
+        dummy.next = cur.next;
+        cur.next = null;
+        return dummy.next;
     }
 
 
