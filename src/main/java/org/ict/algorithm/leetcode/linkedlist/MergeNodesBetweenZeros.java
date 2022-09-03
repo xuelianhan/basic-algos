@@ -46,6 +46,25 @@ package org.ict.algorithm.leetcode.linkedlist;
 public class MergeNodesBetweenZeros {
 
     public ListNode mergeNodes(ListNode head) {
+        ListNode cur = head.next;
+        ListNode dummy = new ListNode(0);
+        ListNode prev = null;
+        ListNode oldPrev = null;
+        dummy.next = prev;
+        int sum = 0;
+        while (cur != null) {
+            if (cur.val > 0) {
+                sum += cur.val;
+            } else {
+                oldPrev = prev;
+                prev = new ListNode(sum);
+                if (oldPrev != null) {
+                    oldPrev.next = prev;
+                }
+                sum = 0;
+            }
+            cur = cur.next;
+        }
         return null;
     }
 
