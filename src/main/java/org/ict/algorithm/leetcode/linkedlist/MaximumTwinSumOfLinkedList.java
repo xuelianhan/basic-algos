@@ -51,6 +51,32 @@ package org.ict.algorithm.leetcode.linkedlist;
  */
 public class MaximumTwinSumOfLinkedList {
 
+    public int pairSumV2(ListNode head) {
+        if (head == null) {
+            return 0;
+        }
+        if (head.next == null) {
+            return head.next.val;
+        }
+        ListNode fast = head;
+        ListNode slow = head;
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+
+        slow = reverse(slow);
+        fast = head;
+
+        int sum = 0;
+        while (slow != null) {
+            sum = Math.max(sum, slow.val + fast.val);
+            slow = slow.next;
+            fast = fast.next;
+        }
+        return sum;
+    }
+
     public int pairSum(ListNode head) {
         ListNode dummy = new ListNode(0);
         dummy.next = head;
