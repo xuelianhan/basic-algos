@@ -51,6 +51,11 @@ package org.ict.algorithm.leetcode.linkedlist;
  */
 public class MaximumTwinSumOfLinkedList {
 
+    /**
+     * Fast-Slow pointer solution.
+     * @param head
+     * @return
+     */
     public int pairSumV2(ListNode head) {
         if (head == null) {
             return 0;
