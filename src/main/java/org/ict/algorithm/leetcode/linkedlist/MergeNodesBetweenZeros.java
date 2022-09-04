@@ -48,20 +48,17 @@ public class MergeNodesBetweenZeros {
     public ListNode mergeNodes(ListNode head) {
         ListNode dummy = new ListNode(0);
         ListNode p = head;
-        ListNode prev = null;
-        ListNode cur = null;
-        dummy.next = prev;
+        ListNode cur = dummy;
         int sum = 0;
         while (p != null) {
             if (p.val > 0) {
                 sum += p.val;
             } else {
-                prev = cur;
-                cur = new ListNode(sum);
-                if (prev != null) {
-                    prev.next = cur;
+                if (sum > 0) {
+                    cur.next = new ListNode(sum);
+                    cur = cur.next;
+                    sum = 0;
                 }
-                sum = 0;
             }
             p = p.next;
         }
