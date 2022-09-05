@@ -45,6 +45,56 @@ package org.ict.algorithm.leetcode.linkedlist;
  */
 public class MergeNodesBetweenZeros {
 
+    /**
+     * This solution modify the original link list.
+     * @param head
+     * @return
+     */
+    public ListNode mergeNodesV3(ListNode head) {
+        /**
+         * this step is very important.
+         * head point at the first non-zero node.
+         */
+        head = head.next;
+        ListNode start = head;
+        while (start != null) {
+            ListNode end = start;
+            int sum = 0;
+            while (end.val != 0) {
+                sum += end.val;
+                end = end.next;
+            }
+            if (sum > 0) {
+                start.val = sum;
+                start.next = end.next;
+                start = start.next;
+            }
+        }
+        return head;
+    }
+
+    public ListNode mergeNodesV2(ListNode head) {
+        ListNode dummy = new ListNode(0);
+        ListNode cur = dummy;
+
+        ListNode start = head.next;
+        while (start != null) {
+            ListNode end = start;
+            int sum = 0;
+            while (end.val != 0) {
+                sum += end.val;
+                end = end.next;
+            }
+            if (sum > 0) {
+                cur.next = new ListNode(sum);
+                cur = cur.next;
+            }
+            start = end.next;
+        }
+        return dummy.next;
+    }
+
+
     public ListNode mergeNodes(ListNode head) {
         ListNode dummy = new ListNode(0);
         ListNode p = head.next;
