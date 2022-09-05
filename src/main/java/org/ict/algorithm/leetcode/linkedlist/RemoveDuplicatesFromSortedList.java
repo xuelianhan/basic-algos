@@ -27,15 +27,15 @@ package org.ict.algorithm.leetcode.linkedlist;
 public class RemoveDuplicatesFromSortedList {
 
     public ListNode deleteDuplicatesV2(ListNode head) {
-        ListNode curr = head;
-        while (curr != null) {
-            if (curr.next == null) {
+        ListNode cur = head;
+        while (cur != null) {
+            if (cur.next == null) {
                 break;
             }
-            if (curr.val == curr.next.val) {
-                curr.next = curr.next.next;
+            if (cur.val == cur.next.val) {
+                cur.next = cur.next.next;
             } else {
-                curr = curr.next;
+                cur = cur.next;
             }
         }
         return head;
@@ -45,17 +45,17 @@ public class RemoveDuplicatesFromSortedList {
         if (null == head) {
             return null;
         }
-        ListNode curr = head;
-        ListNode next = curr.next;
+        ListNode cur = head;
+        ListNode next = cur.next;
         if (next == null) {
             return head;
         }
         while (next != null) {
-            if (curr.val == next.val) {
-                curr.next = next.next;
-                next = curr.next;
+            if (cur.val == next.val) {
+                cur.next = next.next;
+                next = cur.next;
             } else {
-                curr = next;
+                cur = next;
                 next = next.next;
             }
         }
