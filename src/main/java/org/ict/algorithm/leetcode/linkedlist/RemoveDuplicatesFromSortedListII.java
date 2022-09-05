@@ -43,7 +43,18 @@ public class RemoveDuplicatesFromSortedListII {
             while (cur.next != null && cur.val == cur.next.val) {
                 cur = cur.next;
             }
-            //todo
+            /**
+             * why use pre.next == cur not pre.next.val == cur.val?
+             * it's because you want to make sure if current position's element is unique,
+             * then you can move forward, so you have to compare pointers.
+             * value's comparison is only to find dups and discard them.
+             */
+            if (pre.next == cur) {
+                pre = pre.next;
+            } else {
+                pre.next = cur.next;
+            }
+            cur = cur.next;
         }
         return dummy.next;
     }
