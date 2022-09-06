@@ -1,5 +1,8 @@
 package org.ict.algorithm.leetcode.linkedlist;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Given the head of a sorted linked list,
  * delete all nodes that have duplicate numbers,
@@ -30,6 +33,7 @@ package org.ict.algorithm.leetcode.linkedlist;
  * LC82
  */
 public class RemoveDuplicatesFromSortedListII {
+    
 
     public ListNode deleteDuplicates(ListNode head) {
         if (head == null) {
@@ -47,10 +51,10 @@ public class RemoveDuplicatesFromSortedListII {
              * why use pre.next == cur not pre.next.val == cur.val?
              * it's because you want to make sure if current position's element is unique,
              * then you can move forward, so you have to compare pointers.
-             * value's comparison is only to find dups and discard them.
+             * value's comparison is only to find duplicates and discard them.
              */
             if (pre.next == cur) {
-                pre = pre.next;
+                pre = cur;
             } else {
                 pre.next = cur.next;
             }
