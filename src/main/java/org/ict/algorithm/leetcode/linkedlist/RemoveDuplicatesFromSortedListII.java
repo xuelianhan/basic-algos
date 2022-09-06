@@ -33,7 +33,25 @@ import java.util.Set;
  * LC82
  */
 public class RemoveDuplicatesFromSortedListII {
-    
+
+    public ListNode deleteDuplicatesV2(ListNode head) {
+        ListNode dummy = new ListNode(0);
+        ListNode fast = head;
+        ListNode slow = dummy;
+        slow.next = fast;
+        while (fast != null) {
+            while (fast.next != null && fast.next.val == fast.val) {
+                fast = fast.next;
+            }
+            if (slow.next != fast) {
+                slow.next = fast.next;
+            } else {
+                slow = slow.next;
+            }
+            fast = fast.next;
+        }
+        return dummy.next;
+    }
 
     public ListNode deleteDuplicates(ListNode head) {
         if (head == null) {
