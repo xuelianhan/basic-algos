@@ -30,8 +30,38 @@ package org.ict.algorithm.leetcode.linkedlist;
  */
 public class PartitionList {
 
+    /**
+     * The fundamental principles are to separate the list into 2 distinct lists
+     * and link them afterwards.
+     * @param head
+     * @param x
+     * @return
+     */
     public ListNode partition(ListNode head, int x) {
-        return null;
+        if (null == head || null == head.next) {
+            return head;
+        }
+
+        ListNode smallerHead = new ListNode(0);
+        ListNode biggerHead  = new ListNode(0);
+        ListNode smaller = smallerHead;
+        ListNode bigger  = biggerHead;
+        while (head != null) {
+            if (head.val < x) {
+                smaller.next = head;
+                smaller = head;
+            } else {
+                bigger.next = head;
+                bigger = head;
+            }
+            head = head.next;
+        }
+        /**
+         * Join bigger after smaller.
+         */
+        smaller.next = biggerHead.next;
+        bigger.next = null;
+        return smallerHead.next;
     }
 
     private static class ListNode {
