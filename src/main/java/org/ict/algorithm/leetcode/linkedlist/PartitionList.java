@@ -60,6 +60,9 @@ public class PartitionList {
          * Join bigger after smaller.
          */
         smaller.next = biggerHead.next;
+        /**
+         * cut off anything after bigger.
+         */
         bigger.next = null;
         return smallerHead.next;
     }
