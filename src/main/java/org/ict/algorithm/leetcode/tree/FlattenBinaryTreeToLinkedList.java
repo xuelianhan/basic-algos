@@ -28,6 +28,6 @@ package org.ict.algorithm.leetcode.tree;
 public class FlattenBinaryTreeToLinkedList {
 
     public void flatten(TreeNode root) {
-
+        //todo
     }
 }

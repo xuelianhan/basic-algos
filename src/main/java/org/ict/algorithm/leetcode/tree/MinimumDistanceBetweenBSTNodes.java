@@ -23,6 +23,7 @@ package org.ict.algorithm.leetcode.tree;
 public class MinimumDistanceBetweenBSTNodes {
 
     public int minDiffInBST(TreeNode root) {
+        //todo
         return 0;
     }
 }
