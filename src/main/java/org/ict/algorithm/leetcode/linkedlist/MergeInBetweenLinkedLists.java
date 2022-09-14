@@ -38,14 +38,69 @@ package org.ict.algorithm.leetcode.linkedlist;
  */
 public class MergeInBetweenLinkedLists {
 
+    public ListNode mergeInBetweenV2(ListNode list1, int a, int b, ListNode list2) {
+        /**
+         * Two pointer
+         * start point at the previous node before a
+         * end point at the previous node before b
+         */
+        ListNode start = null;
+        ListNode end = list1;
+        /**
+         * Get the previous node index before a and b;
+         */
+        for (int i = 0; i < b; i++, end = end.next) {
+            if (i == (a - 1)) {
+                start = end;
+            }
+        }
+        /**
+         * Connect start point to the list2
+         */
+        start.next = list2;
+        /**
+         * Find the last node of list2
+         */
+        while (list2.next != null) {
+            list2 = list2.next;
+        }
+        /**
+         * Connect list2 to the end next pointer of list1
+         */
+        list2.next = end.next;
+        /**
+         * Cut off nodes after end point from list1
+         */
+        end.next = null;
+        return list1;
+    }
+
     public ListNode mergeInBetween(ListNode list1, int a, int b, ListNode list2) {
         ListNode dummy = new ListNode(0);
         dummy.next = list1;
         ListNode fast = dummy;
         ListNode slow = dummy;
-
-        
-        return null;
+        int x = 0;
+        int y = 0;
+        while (fast != null && slow != null) {
+            if (x <= (b + 1)) {
+                x++;
+                fast = fast.next;
+            } else {
+                break;
+            }
+            if (y <= a) {
+                y++;
+                slow = slow.next;
+            }
+        }
+        slow.next = list2;
+        ListNode cur = list2;
+        while (cur != null && cur.next != null) {
+            cur = cur.next;
+        }
+        cur.next = fast.next;
+        return dummy.next;
     }
 
     private static class ListNode {
