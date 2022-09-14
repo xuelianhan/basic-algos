@@ -33,7 +33,68 @@ package org.ict.algorithm.leetcode.tree;
 public class SortedListToBinarySearchTree {
 
     public TreeNode sortedListToBST(ListNode head) {
-        //todo
-        return null;
+        if (null == head) {
+            return null;
+        }
+        if (head.next == null) {
+            return new TreeNode(head.val);
+        }
+        return toBST(head, null);
+    }
+
+    public TreeNode toBST(ListNode head, ListNode tail) {
+        if (head == tail) {
+            return null;
+        }
+        ListNode fast = head;
+        ListNode slow = head;
+
+        while (fast != tail && fast.next != tail) {
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        /**
+         * slow point at the root
+         * fast point at the last node
+         */
+        TreeNode root = new TreeNode(slow.val);
+        TreeNode left = toBST(head, slow);
+        TreeNode right = toBST(slow.next, tail);
+        root.left = left;
+        root.right = right;
+        return root;
+    }
+
+    private static class ListNode {
+        int val;
+
+        ListNode next;
+
+        ListNode(){}
+
+        ListNode(int x) {
+            this.val = x;
+        }
+
+        ListNode(int x, ListNode next) {
+            this.val = x;
+            this.next = next;
+        }
+    }
+
+    /**
+     * Definition for a binary tree node.
+     */
+    private static class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+        TreeNode() {}
+        TreeNode(int val) { this.val = val; }
+        TreeNode(int val, TreeNode left, TreeNode right) {
+            this.val = val;
+            this.left = left;
+            this.right = right;
+        }
     }
 }
