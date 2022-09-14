@@ -29,6 +29,10 @@ import java.util.Stack;
  */
 public class FlattenBinaryTreeToLinkedList {
 
+    /**
+     * Recursion Tree
+     * @param args
+     */
     public static void main(String[] args) {
         TreeNode three = new TreeNode(3);
         TreeNode four = new TreeNode(4);
@@ -49,6 +53,38 @@ public class FlattenBinaryTreeToLinkedList {
      * We need to flat tree with order of root-left-right,
      * So we should push the node in reverse order like right-left-root
      *
+     * Preorder (Root Left Right) = Reverse PostOrder(Right,Left,Root)
+     * The output tree(Linked List) is formed from Bottom to top(or you can say tail to head)
+     * since post-order has the property to go deep in the tree and then process the nodes
+     * We also exploit the backtracking abilities of dfs post-order to connect the links.
+     *
+     * Running output:
+     * before root right:root:1, prev:null
+     * before root right:root:5, prev:null
+     * before root right:root:6, prev:null
+     * before return:root:null, prev:null
+     * before root left:root:6, prev:null
+     * before return:root:null, prev:null
+     * before root:root:6, prev:null
+     * before root left:root:5, prev:6
+     * before return:root:null, prev:6
+     * before root:root:5, prev:6
+     * before root left:root:1, prev:5
+     * before root right:root:2, prev:5
+     * before root right:root:4, prev:5
+     * before return:root:null, prev:5
+     * before root left:root:4, prev:5
+     * before return:root:null, prev:5
+     * before root:root:4, prev:5
+     * before root left:root:2, prev:4
+     * before root right:root:3, prev:4
+     * before return:root:null, prev:4
+     * before root left:root:3, prev:4
+     * before return:root:null, prev:4
+     * before root:root:3, prev:4
+     * before root:root:2, prev:3
+     * before root:root:1, prev:2
+     *
      * @param root
      */
     public static void flatten(TreeNode root) {
@@ -57,6 +93,8 @@ public class FlattenBinaryTreeToLinkedList {
 
     public static TreeNode flatten(TreeNode root, TreeNode prev) {
        if (root == null) {
+           System.out.print("before return:");
+           System.out.println("root:" + (root == null ? null : root.val) + ", prev:" + (prev == null ? null : prev.val));
            return prev;
        }
        System.out.print("before root right:");
