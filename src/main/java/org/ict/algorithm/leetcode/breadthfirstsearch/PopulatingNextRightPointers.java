@@ -4,7 +4,6 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- * LC116
  * You are given a perfect binary tree where all leaves are on the same level,
  * and every parent has two children. The binary tree has the following definition:
  * struct Node {
@@ -33,6 +32,7 @@ import java.util.Queue;
  * The number of nodes in the given tree is less than 4096.
  * -1000 <= node.val <= 1000
  * @author sniper
+ * LC116
  */
 public class PopulatingNextRightPointers {
 
