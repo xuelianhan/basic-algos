@@ -1,5 +1,7 @@
 package org.ict.algorithm.leetcode.tree;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Stack;
 
 /**
@@ -48,6 +50,9 @@ public class FlattenBinaryTreeToLinkedList {
         one.right = five;
         flatten(one);
     }
+
+
+
 
     /**
      * We need to flat tree with order of root-left-right,
@@ -115,5 +120,32 @@ public class FlattenBinaryTreeToLinkedList {
 
     private static void printTreeNode(TreeNode root, TreeNode prev) {
         System.out.println("root:" + (root == null ? null : root.val) + ", prev:" + (prev == null ? null : prev.val));
+    }
+
+
+    /**
+     * Time complexity for stack approach : O(n)
+     * Space complexity for stack approach : O(n)
+     * @param root
+     */
+    public  void flattenV1(TreeNode root) {
+        if (null == root) {
+            return;
+        }
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        stack.push(root);
+        while (!stack.isEmpty()) {
+            TreeNode cur = stack.pop();
+            if (cur.right != null) {
+                stack.push(cur.right);
+            }
+            if (cur.left != null) {
+                stack.push(cur.left);
+            }
+            if (!stack.isEmpty()) {
+                cur.right = stack.peek();
+            }
+            cur.left = null;
+        }
     }
 }
