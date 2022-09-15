@@ -50,6 +50,60 @@ import java.util.Queue;
 public class PopulatingNextRightPointersInEachNodeII {
 
 
+    /**
+     * BFS - Right to Left
+     *
+     * Solution explanation provided by Abhishek(archit91)
+     * It's important to see that the given tree is a perfect binary tree.
+     * Now, we need to populate next pointers of each node with nodes that occur to its immediate right on the same level.
+     * This can easily be done with BFS.
+     * Since for each node, we require the right node on the same level, we will perform a right-to-left BFS instead of the standard left-to-right BFS.
+     *
+     * Before starting the traversal of each level, we would initialize a rightNode variable set to NULL.
+     * Then, since we are performing right-to-left BFS, we would be starting at rightmost node of each level.
+     * We set the next node of cur as rightNode and update rightNode = cur. This would ensure that each node would be assigned its rightNode properly while traversing from right to left.
+     * Also, if cur has a child, we would first push its right child and only then its left child (since we are doing right-to-left BFS).
+     * Once BFS is completed (after queue becomes empty), all next node would be populated and we can finally return root.
+     * This means that each node will always have both children and only the last level of nodes will have no children.
+     *
+     * Time Complexity : O(N), where N is the number of nodes in the given tree.
+     *   We only traverse the tree once using BFS which requires O(N).
+     * Space Complexity : O(W) = O(N), where W is the width of given tree.
+     *   This is required to store the nodes in queue.
+     * Since the given tree is a perfect binary tree, its width is given as W = (N+1)/2 ≈ O(N)
+     *
+     * @param root
+     * @return
+     */
+    public Node connectV2(Node root) {
+        if (null == root) {
+            return null;
+        }
+        Queue<Node> queue = new LinkedList<>();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            Node right = null;
+            for (int i = size - 1; i >=0 ; i--) {
+                Node cur = queue.poll();
+                cur.next = right;
+                right = cur;
+                if (cur.right != null) {
+                    queue.offer(cur.right);
+                }
+                if (cur.left != null) {
+                    queue.offer(cur.left);
+                }
+            }
+        }
+        return root;
+    }
+
+    /**
+     * BFS-left-to-right
+     * @param root
+     * @return
+     */
     public Node connect(Node root) {
         if (null == root) {
             return null;
@@ -66,7 +120,11 @@ public class PopulatingNextRightPointersInEachNodeII {
                     if (prev != null) {
                         prev.next = cur;
                     }
-                    prev = null;
+                    /**
+                     *  prev = null;
+                     * this code is redundant because cur is the last node of current layer.
+                     */
+                    //prev = null;
                 } else {
                     if (prev != null) {
                         prev.next = cur;

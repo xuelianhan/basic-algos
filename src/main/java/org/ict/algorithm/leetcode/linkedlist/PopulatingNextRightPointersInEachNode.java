@@ -96,7 +96,6 @@ public class PopulatingNextRightPointersInEachNode {
                     queue.offer(cur.left);
                 }
             }
-
         }
         return root;
     }
@@ -148,9 +147,27 @@ public class PopulatingNextRightPointersInEachNode {
         return root;
     }
 
+    /**
+     * Same solution as connectV2 but use for-loop instead of while-loop
+     * @param root
+     * @return
+     */
     public Node connect(Node root) {
-        //todo
-        return null;
+        Node levelStart = root;
+        /**
+         * keep level start at the current level
+         */
+        for (; levelStart != null; levelStart = levelStart.left) {
+            for (Node cur = levelStart; cur != null; cur = cur.next) {
+                if (cur.left != null) {
+                    cur.left.next = cur.right;
+                }
+                if (cur.next != null && cur.right != null) {
+                    cur.right.next = cur.next.left;
+                }
+            }
+        }
+        return root;
     }
 
 
