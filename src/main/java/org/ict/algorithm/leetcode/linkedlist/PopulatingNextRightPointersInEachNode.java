@@ -52,55 +52,38 @@ import java.util.Queue;
  */
 public class PopulatingNextRightPointersInEachNode {
 
+
     /**
-     * Solution explanation provided by Abhishek(archit91)
-     * BFS - Right to Left
-     * It's important to see that the given tree is a perfect binary tree.
-     * Now, we need to populate next pointers of each node with nodes that occur to its immediate right on the same level.
-     * This can easily be done with BFS.
-     * Since for each node, we require the right node on the same level, we will perform a right-to-left BFS instead of the standard left-to-right BFS.
+     * BFS-level-by-level using for-loop
      *
-     * Before starting the traversal of each level, we would initialize a rightNode variable set to NULL.
-     * Then, since we are performing right-to-left BFS, we would be starting at rightmost node of each level.
-     * We set the next node of cur as rightNode and update rightNode = cur. This would ensure that each node would be assigned its rightNode properly while traversing from right to left.
-     * Also, if cur has a child, we would first push its right child and only then its left child (since we are doing right-to-left BFS).
-     * Once BFS is completed (after queue becomes empty), all next node would be populated and we can finally return root.
-     * This means that each node will always have both children and only the last level of nodes will have no children.
-     *
-     * Time Complexity : O(N), where N is the number of nodes in the given tree.
-     *   We only traverse the tree once using BFS which requires O(N).
-     * Space Complexity : O(W) = O(N), where W is the width of given tree.
-     *   This is required to store the nodes in queue.
-     * Since the given tree is a perfect binary tree, its width is given as W = (N+1)/2 ≈ O(N)
-     *
+     * Same solution as connectV3 but use for-loop instead of while-loop
+     * Time Complexity : O(N), we only traverse each node once, basically doing a standard BFS.
+     * Space Complexity : O(1), only constant extra space is being used
      * @param root
      * @return
      */
-    public Node connectV3(Node root) {
-        if (null == root) {
-            return null;
-        }
-        Queue<Node> queue = new LinkedList<>();
-        queue.offer(root);
-        while (!queue.isEmpty()) {
-            int size = queue.size();
-            Node right = null;
-            for (int i = size - 1; i >=0 ; i--) {
-                Node cur = queue.poll();
-                cur.next = right;
-                right = cur;
-                if (cur.right != null) {
-                    queue.offer(cur.right);
-                }
+    public Node connectV4(Node root) {
+        Node levelStart = root;
+        /**
+         * keep level start at the current level
+         */
+        for (; levelStart != null; levelStart = levelStart.left) {
+            for (Node cur = levelStart; cur != null; cur = cur.next) {
                 if (cur.left != null) {
-                    queue.offer(cur.left);
+                    cur.left.next = cur.right;
+                }
+                if (cur.next != null && cur.right != null) {
+                    cur.right.next = cur.next.left;
                 }
             }
         }
         return root;
     }
 
+
     /**
+     * BFS-level-by-level using while-loop
+     *
      * Solution explanation provided by StefanPochmann
      * Simply do it level by level,
      * using the next-pointers of the current level to go through the current level and set the next-pointers of the next level.
@@ -111,7 +94,7 @@ public class PopulatingNextRightPointersInEachNode {
      * @param root
      * @return
      */
-    public Node connectV2(Node root) {
+    public Node connectV3(Node root) {
         /**
          * Level start is the first node of each layer.
          */
@@ -148,25 +131,79 @@ public class PopulatingNextRightPointersInEachNode {
     }
 
     /**
-     * Same solution as connectV2 but use for-loop instead of while-loop
+     * Solution explanation provided by Abhishek(archit91)
+     * BFS - Right to Left
+     * It's important to see that the given tree is a perfect binary tree.
+     * Now, we need to populate next pointers of each node with nodes that occur to its immediate right on the same level.
+     * This can easily be done with BFS.
+     * Since for each node, we require the right node on the same level, we will perform a right-to-left BFS instead of the standard left-to-right BFS.
+     *
+     * Before starting the traversal of each level, we would initialize a rightNode variable set to NULL.
+     * Then, since we are performing right-to-left BFS, we would be starting at rightmost node of each level.
+     * We set the next node of cur as rightNode and update rightNode = cur. This would ensure that each node would be assigned its rightNode properly while traversing from right to left.
+     * Also, if cur has a child, we would first push its right child and only then its left child (since we are doing right-to-left BFS).
+     * Once BFS is completed (after queue becomes empty), all next node would be populated and we can finally return root.
+     * This means that each node will always have both children and only the last level of nodes will have no children.
+     *
+     * Time Complexity : O(N), where N is the number of nodes in the given tree.
+     *   We only traverse the tree once using BFS which requires O(N).
+     * Space Complexity : O(W) = O(N), where W is the width of given tree.
+     *   This is required to store the nodes in queue.
+     * Since the given tree is a perfect binary tree, its width is given as W = (N+1)/2 ≈ O(N)
+     *
+     * @param root
+     * @return
+     */
+    public Node connectV2(Node root) {
+        if (null == root) {
+            return null;
+        }
+        Queue<Node> queue = new LinkedList<>();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            Node right = null;
+            for (int i = size - 1; i >=0 ; i--) {
+                Node cur = queue.poll();
+                cur.next = right;
+                right = cur;
+                if (cur.right != null) {
+                    queue.offer(cur.right);
+                }
+                if (cur.left != null) {
+                    queue.offer(cur.left);
+                }
+            }
+        }
+        return root;
+    }
+
+
+    /**
+     * DFS solution( recursive solution)
+     *
      * @param root
      * @return
      */
     public Node connect(Node root) {
-        Node levelStart = root;
-        /**
-         * keep level start at the current level
-         */
-        for (; levelStart != null; levelStart = levelStart.left) {
-            for (Node cur = levelStart; cur != null; cur = cur.next) {
-                if (cur.left != null) {
-                    cur.left.next = cur.right;
-                }
-                if (cur.next != null && cur.right != null) {
-                    cur.right.next = cur.next.left;
-                }
-            }
+        if (null == root) {
+            return null;
         }
+        Node left = root.left;
+        Node right = root.right;
+        Node next = root.next;
+        if (left != null) {
+            left.next = right;
+        }
+        if (next != null && right != null) {
+            right.next = next.left;
+        }
+        /**
+         * Because we connect next from left to right,
+         * So we invoke connect left firstly and connect right secondly.
+         */
+        connect(left);
+        connect(right);
         return root;
     }
 
