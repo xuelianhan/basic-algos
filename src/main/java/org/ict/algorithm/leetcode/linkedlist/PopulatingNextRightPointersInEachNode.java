@@ -1,5 +1,8 @@
 package org.ict.algorithm.leetcode.linkedlist;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 /**
  * You are given a perfect binary tree where all leaves are on the same level,
  * and every parent has two children.
@@ -48,6 +51,102 @@ package org.ict.algorithm.leetcode.linkedlist;
  * LC116
  */
 public class PopulatingNextRightPointersInEachNode {
+
+    /**
+     * Solution explanation provided by Abhishek(archit91)
+     * BFS - Right to Left
+     * It's important to see that the given tree is a perfect binary tree.
+     * Now, we need to populate next pointers of each node with nodes that occur to its immediate right on the same level.
+     * This can easily be done with BFS.
+     * Since for each node, we require the right node on the same level, we will perform a right-to-left BFS instead of the standard left-to-right BFS.
+     *
+     * Before starting the traversal of each level, we would initialize a rightNode variable set to NULL.
+     * Then, since we are performing right-to-left BFS, we would be starting at rightmost node of each level.
+     * We set the next node of cur as rightNode and update rightNode = cur. This would ensure that each node would be assigned its rightNode properly while traversing from right to left.
+     * Also, if cur has a child, we would first push its right child and only then its left child (since we are doing right-to-left BFS).
+     * Once BFS is completed (after queue becomes empty), all next node would be populated and we can finally return root.
+     * This means that each node will always have both children and only the last level of nodes will have no children.
+     *
+     * Time Complexity : O(N), where N is the number of nodes in the given tree.
+     *   We only traverse the tree once using BFS which requires O(N).
+     * Space Complexity : O(W) = O(N), where W is the width of given tree.
+     *   This is required to store the nodes in queue.
+     * Since the given tree is a perfect binary tree, its width is given as W = (N+1)/2 ≈ O(N)
+     *
+     * @param root
+     * @return
+     */
+    public Node connectV3(Node root) {
+        if (null == root) {
+            return null;
+        }
+        Queue<Node> queue = new LinkedList<>();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            Node right = null;
+            for (int i = size - 1; i >=0 ; i--) {
+                Node cur = queue.poll();
+                cur.next = right;
+                right = cur;
+                if (cur.right != null) {
+                    queue.offer(cur.right);
+                }
+                if (cur.left != null) {
+                    queue.offer(cur.left);
+                }
+            }
+
+        }
+        return root;
+    }
+
+    /**
+     * Solution explanation provided by StefanPochmann
+     * Simply do it level by level,
+     * using the next-pointers of the current level to go through the current level and set the next-pointers of the next level.
+     * I say "real" O(1) space because of the many recursive solutions ignoring that recursion management needs space.
+     *
+     * O(1) Space
+     * O(n) Time
+     * @param root
+     * @return
+     */
+    public Node connectV2(Node root) {
+        /**
+         * Level start is the first node of each layer.
+         */
+        Node levelStart = root;
+        while (levelStart != null) {
+            Node cur = levelStart;
+            while (cur != null) {
+                /**
+                 * cur is at current level
+                 * we use cur to operate the next level
+                 *
+                 * connect cur's left to cur's right
+                 */
+                if (cur.left != null) {
+                    cur.left.next = cur.right;
+                }
+                /**
+                 * connect cur's right to the right neighbor of same level.
+                 */
+                if (cur.next != null && cur.right != null) {
+                    cur.right.next = cur.next.left;
+                }
+                /**
+                 * move cur to next node of same level
+                 */
+                cur = cur.next;
+            }
+            /**
+             * move levelStart to the start of next level.
+             */
+            levelStart = levelStart.left;
+        }
+        return root;
+    }
 
     public Node connect(Node root) {
         //todo
