@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- * Given a binary tree
+ * Given a binary tree(not guarantee perfect)
  *
  * struct Node {
  *   int val;
@@ -49,6 +49,68 @@ import java.util.Queue;
  */
 public class PopulatingNextRightPointersInEachNodeII {
 
+    /**
+     * Level-Order traversal. Using three-pointer.
+     * @param root
+     * @return
+     */
+    public Node connectV3(Node root) {
+        if (null == root) {
+            return null;
+        }
+        /**
+         * start head of next level
+         */
+        Node levelStart = null;
+        /**
+         * the leading node on the next level
+         */
+        Node prev = null;
+        /**
+         * the current node of current level.
+         */
+        Node cur = root;
+        while (cur != null) {
+            while (cur != null) {
+                /**
+                 * cur is at current level,
+                 * we use cur to operate the next level.
+                 *
+                 * connect cur's left to cur's right.
+                 */
+                if (cur.left != null) {
+                    if (prev != null) {
+                        prev.next = cur.left;
+                    } else {
+                        levelStart = cur.left;
+                    }
+                    prev = cur.left;
+                }
+                /**
+                 * connect cur's right to the right neighbor of same level.
+                 */
+                if (cur.right != null) {
+                   if (prev != null) {
+                       prev.next = cur.right;
+                   } else {
+                       levelStart = cur.right;
+                   }
+                   prev = cur.right;
+                }
+                /**
+                 * move cur to next node of same level.
+                 */
+                cur = cur.next;
+            }
+            /**
+             * move cur to the start of next level.
+             */
+            cur = levelStart;
+            levelStart = null;
+            prev = null;
+        }
+        return root;
+    }
 
     /**
      * BFS - Right to Left
