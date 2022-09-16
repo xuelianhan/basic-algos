@@ -9,7 +9,8 @@ import java.util.Map;
  *
  * Construct a deep copy of the list. The deep copy should consist of exactly n brand new nodes,
  * where each new node has its value set to the value of its corresponding original node.
- * Both the next and random pointer of the new nodes should point to new nodes in the copied list such that the pointers in the original list and copied list represent the same list state.
+ * Both the next and random pointer of the new nodes should point to new nodes in the copied list
+ * such that the pointers in the original list and copied list represent the same list state.
  * None of the pointers in the new list should point to nodes in the original list.
  *
  * For example,
@@ -59,14 +60,97 @@ public class CopyListWithRandomPointer {
 
     /**
      * Solution provided by liaison
+     *
+     * An intuitive solution is to keep a hash table for each node in the list,
+     * via which we just need to iterate the list in 2 rounds respectively to create nodes and assign the values
+     * for their random pointers.
+     * As a result, the space complexity of this solution is O(N),
+     * although with a linear time complexity.
+     *
+     * Note: if we do not consider the space reversed for the output,
+     * then we could say that the algorithm does not consume any additional memory during the processing,
+     * i.e. O(1) space complexity
+     *
+     * As an optimised solution, we could reduce the space complexity into constant.
+     * The idea is to associate the original node with its copy node in a single linked list.
+     * In this way, we don't need extra space to keep track of the new nodes.
+     *
+     * The algorithm is composed of the follow three steps which are also 3 iteration rounds.
+     *
+     * 1.Iterate the original list and duplicate each node. The duplicate
+     * of each node follows its original immediately.
+     *
+     * 2.Iterate the new list and assign the random pointer for each
+     * duplicated node.
+     *
+     * 3.Restore the original list and extract the duplicated nodes.
+     *
      * Time Complexity O(N)
      * Space Complexity O(1)
      * @param head
      * @return
      */
     public Node copyRandomListV2(Node head) {
+        if (null == head) {
+            return null;
+        }
+        /**
+         * First round, make copy of each node,
+         * and link the original node with the copy node one-by-one.
+         */
+        Node cur = head;
+        Node next = null;
+        while (cur != null) {
+            next = cur.next;
 
-        return null;
+            Node copy = new Node(cur.val);
+            cur.next = copy;
+            copy.next = next;
+
+            cur = next;
+        }
+
+        /**
+         * Second round, assign random pointers for the copy nodes.
+         */
+        cur = head;
+        Node copy = null;
+        while (cur != null) {
+            copy = cur.next;
+            if (cur.random != null) {
+                /**
+                 * here may easily get wrong with following code:
+                 * copy.random = cur.random;
+                 */
+                copy.random = cur.random.next;
+            }
+            cur = copy.next;
+        }
+
+        /**
+         * Third round, restore the original list, and extract the copy list.
+         */
+        cur = head;
+        copy = null;
+        Node dummy = new Node(0);
+        Node copyPre = dummy;
+        while (cur != null) {
+            next = cur.next.next;
+
+            /**
+             * Extract the copy list
+             */
+            copy = cur.next;
+            copyPre.next = copy;
+            copyPre = copy;
+
+            /**
+             * Restore the original list
+             */
+            cur.next = next;
+            cur = next;
+        }
+        return dummy.next;
     }
 
     /**
