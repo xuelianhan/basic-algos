@@ -66,6 +66,9 @@ import java.util.*;
 public class GraphClone {
 	
 	public Node cloneGraph(Node node) {
+		/**
+		 * Use map to store the copied value and copied node.
+		 */
 		HashMap<Integer, Node> map = new HashMap<>();
 		return dfs(node, map);
 	}
@@ -80,11 +83,21 @@ public class GraphClone {
 		if (node == null) {
 			return null;
 		}
+		/**
+		 * Has copied, return the clone node.
+		 */
 		if (map.containsKey(node.val)) {
 			return map.get(node.val);
-		} 
+		}
+		/**
+		 * Not copied, clone the value and the node, and mark this copied node as visited.
+		 */
 		Node clone = new Node(node.val, new ArrayList<>());
 		map.put(clone.val, clone);
+
+		/**
+		 * Clone the neighbors of current node one by one, and add them as copied neighbors.
+		 */
 		for (Node neighbor : node.neighbors) {
 			Node copied = dfs(neighbor, map);
 			clone.neighbors.add(copied);
