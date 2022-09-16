@@ -167,6 +167,7 @@ public class CopyListWithRandomPointer {
         }
         /**
          * Using a map to store the relation of original Node and the copied Node.
+         * Create each node and copy the data.
          */
         Map<Node, Node> map = new HashMap<>();
         Node cur = head;
@@ -174,6 +175,10 @@ public class CopyListWithRandomPointer {
             map.put(cur, new Node(cur.val));
             cur = cur.next;
         }
+
+        /**
+         * Copy the next pointer and random pointer one by one.
+         */
         cur = head;
         while (cur != null) {
             Node copy = map.get(cur);
