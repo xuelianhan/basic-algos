@@ -1,5 +1,8 @@
 package org.ict.algorithm.leetcode.linkedlist;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * press ⌥ ⌘ L. to format code
  *
@@ -48,9 +51,80 @@ package org.ict.algorithm.leetcode.linkedlist;
  */
 public class LinkedListCycleII {
 
+    /**
+     * Floyd's algorithm
+     *
+     * To understand this solution, you just need to ask yourself these question.
+     * Assume the distance from head to the start of the loop is x1
+     * the distance from the start of the loop to the point where fast and slow meet is x2
+     * the distance from the point where fast and slow meet to the start of the loop is x3
+     * What is the distance fast moved? What is the distance slow moved? And their relationship?
+     *
+     * x1 + x2 + x3 + x2
+     * x1 + x2
+     * x1 + x2 + x3 + x2 = 2 (x1 + x2)
+     * Thus x1 = x3
+     *
+     * Finally got the idea.
+     *
+     * You can draw out a graph to show this relationship.
+     *
+     * @param head
+     * @return
+     */
+    public ListNode detectCycleV2(ListNode head) {
+        ListNode fast = head;
+        ListNode slow = head;
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+            if (fast == slow) {
+                /**
+                 * when fast and slow come across,
+                 * we can let slow start back at head,
+                 * and move fast, slow step one by one until they come across again.
+                 * the slow point at the start of the circle.
+                 */
+                slow = head;
+                while (slow != fast) {
+                    slow = slow.next;
+                    fast = fast.next;
+                }
+                return slow;
+            }
+        }
+       return null;
+    }
 
+
+    /**
+     * Floyd's algorithm
+     * @param head
+     * @return
+     */
     public ListNode detectCycle(ListNode head) {
-        return null;
+        ListNode fast = head;
+        ListNode slow = head;
+        boolean hasCycle = false;
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+            if (fast == slow) {
+                hasCycle = true;
+                break;
+            }
+        }
+
+        if (!hasCycle) {
+            return null;
+        }
+
+        slow = head;
+        while (slow != fast) {
+            slow = slow.next;
+            fast = fast.next;
+        }
+        return slow;
     }
 
 
