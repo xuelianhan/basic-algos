@@ -69,8 +69,13 @@ public class GraphClone {
 		HashMap<Integer, Node> map = new HashMap<>();
 		return dfs(node, map);
 	}
-	
-	
+
+	/**
+	 * Time cost 48ms, very slow.
+	 * @param node
+	 * @param map
+	 * @return
+	 */
 	private Node dfs(Node node, HashMap<Integer, Node> map) {
 		if (node == null) {
 			return null;
@@ -78,14 +83,20 @@ public class GraphClone {
 		if (map.containsKey(node.val)) {
 			return map.get(node.val);
 		} 
-		Node newNode = new Node(node.val, new ArrayList<>());
-		map.put(newNode.val, newNode);
-		for (Node neighbor : newNode.neighbors) {
-			newNode.neighbors.add(dfs(neighbor, map));
+		Node clone = new Node(node.val, new ArrayList<>());
+		map.put(clone.val, clone);
+		for (Node neighbor : node.neighbors) {
+			Node copied = dfs(neighbor, map);
+			clone.neighbors.add(copied);
 		}
-		return newNode;
+		return clone;
 	}
 
+	/**
+	 * Time cost 2ms.
+	 * @param node
+	 * @return
+	 */
 	public Node cloneGraphV2(Node node) {
 		if (node == null) {
 			return null;
@@ -107,14 +118,14 @@ public class GraphClone {
 			for (Node neighbor : cur.neighbors) {
 				if (!visited.containsKey(neighbor.val)) {
 					/**
-					 * Copy node val
+					 * Copy neighbors val of current node.
 					 */
 					Node copy = new Node(neighbor.val, new ArrayList<>());
 					visited.put(neighbor.val, copy);
 					queue.add(neighbor);
 				}
 				/**
-				 * Copy neighbors of current node.
+				 * Copy neighbors relation of current node.
 				 */
 				visited.get(cur.val).neighbors.add(visited.get(neighbor.val));
 			}
