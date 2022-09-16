@@ -122,8 +122,7 @@ public class GraphClone {
 		queue.add(src);
 
 		Map<Integer, Node> visited = new HashMap<>();
-		List<Node> newNeighbors = new ArrayList<>();
-		Node newHead = new Node(src.val, newNeighbors);
+		Node newHead = new Node(src.val, new ArrayList<>());
 		visited.put(src.val, newHead);
 
 		while (!queue.isEmpty()) {
