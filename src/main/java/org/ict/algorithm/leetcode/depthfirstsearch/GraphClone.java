@@ -1,7 +1,6 @@
 package org.ict.algorithm.leetcode.depthfirstsearch;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 
 /**
  *
@@ -79,12 +78,48 @@ public class GraphClone {
 		if (map.containsKey(node.val)) {
 			return map.get(node.val);
 		} 
-		Node newNode = new Node(node.val, new ArrayList<Node>());
+		Node newNode = new Node(node.val, new ArrayList<>());
 		map.put(newNode.val, newNode);
 		for (Node neighbor : newNode.neighbors) {
 			newNode.neighbors.add(dfs(neighbor, map));
 		}
 		return newNode;
+	}
+
+	public Node cloneGraphV2(Node node) {
+		if (node == null) {
+			return null;
+		}
+		return bfs(node);
+	}
+
+	private Node bfs(Node src) {
+		Queue<Node> queue = new LinkedList<>();
+		queue.add(src);
+
+		Map<Integer, Node> visited = new HashMap<>();
+		List<Node> newNeighbors = new ArrayList<>();
+		Node newHead = new Node(src.val, newNeighbors);
+		visited.put(src.val, newHead);
+
+		while (!queue.isEmpty()) {
+			Node cur = queue.poll();
+			for (Node neighbor : cur.neighbors) {
+				if (!visited.containsKey(neighbor.val)) {
+					/**
+					 * Copy node val
+					 */
+					Node copy = new Node(neighbor.val, new ArrayList<>());
+					visited.put(neighbor.val, copy);
+					queue.add(neighbor);
+				}
+				/**
+				 * Copy neighbors of current node.
+				 */
+				visited.get(cur.val).neighbors.add(visited.get(neighbor.val));
+			}
+		}
+		return newHead;
 	}
 	 
 	 
