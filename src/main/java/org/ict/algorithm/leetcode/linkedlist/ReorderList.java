@@ -75,7 +75,7 @@ public class ReorderList {
         }
 
         /**
-         * Merge two lists
+         * Merge two lists one by one.
          */
         ListNode l1 = head;
         ListNode l2 = pre;
