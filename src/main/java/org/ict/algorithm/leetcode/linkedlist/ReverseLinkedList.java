@@ -73,16 +73,16 @@ public class ReverseLinkedList {
     
     /**
      * iterative solution
-     * use 3 pointer: newHead, next, head
-     * @param head
+     * use 3 pointer: newHead, current, next
+     * @param current
      */
-    public static ListNode reverse(ListNode head) {
+    public static ListNode reverse(ListNode current) {
         ListNode newHead = null;
-        while (head != null) {
-            ListNode next = head.next;
-            head.next = newHead;
-            newHead = head;
-            head = next;
+        while (current != null) {
+            ListNode next = current.next;
+            current.next = newHead;
+            newHead = current;
+            current = next;
         }
         return newHead;
     }
@@ -103,8 +103,7 @@ public class ReverseLinkedList {
             prev = current;
             current = next;
         }
-        head = prev;
-        return head;
+        return prev;
     }
     
     /**
