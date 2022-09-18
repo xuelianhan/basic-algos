@@ -31,11 +31,65 @@ package org.ict.algorithm.leetcode.linkedlist;
  * @author sniper
  * @date 18 Sep, 2022
  * LC328
+ *
  */
 public class OddEvenLinkedList {
 
+    /**
+     * We can get an idea from problem LC138.
+     *
+     * An intuitive idea is to separate the original list into two parts.
+     * One part is all with odd index, another is all with even index.
+     * At last, we concat the tail of odd list to the head of the even list together.
+
+     * @param head of the list
+     * @return head of the list which has been adjusted.
+     */
     public ListNode oddEvenList(ListNode head) {
-        return null;
+        if (null == head || head.next == null || head.next.next == null) {
+            return head;
+        }
+
+        /**
+         * odd pointer points at the current node of odd list.
+         * preOdd is the previous node before current odd.
+         */
+        ListNode preOdd = null;
+        ListNode odd = head;
+
+        /**
+         * even pointer points at the current even node.
+         */
+        ListNode even = null;
+        ListNode dummy = new ListNode(0);
+        ListNode evenPre = dummy;
+
+        while (odd != null) {
+            /**
+             * Mark the next odd node to be picked up.
+             */
+            ListNode nextOdd = (odd.next == null ? null : odd.next.next);
+
+            /**
+             * Extract the even node from original list.
+             */
+            even = odd.next;
+            evenPre.next = even;
+            evenPre = even;
+
+            /**
+             * Connect the odd node in original list and move cur to the next odd node.
+             */
+            odd.next = nextOdd;
+            preOdd = odd;
+            odd = nextOdd;
+        }
+        /**
+         * Link the last node in odd list to the start of the even list.
+         */
+        preOdd.next = dummy.next;
+
+        return head;
     }
 
     private static class ListNode {
