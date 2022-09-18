@@ -35,26 +35,79 @@ package org.ict.algorithm.leetcode.linkedlist;
  */
 public class OddEvenLinkedList {
 
+    public ListNode oddEvenListV3(ListNode head) {
+        if (null == head) {
+            return null;
+        }
+
+        /**
+         * mark the start of odd and even.
+         */
+        ListNode odd = head;
+        ListNode even = head.next;
+        ListNode evenHead = head.next;
+
+        while (even != null && even.next != null) {
+            /**
+             * link the odd to the next odd.
+             * link the even to the next even.
+             */
+            odd.next = even.next;
+            even.next = even.next.next;
+
+            /**
+             * move odd to the next odd.
+             * move even to the next even.
+             */
+            odd = odd.next;
+            even = even.next;
+        }
+
+        /**
+         * link odd to the head of even.
+         */
+        odd.next = evenHead;
+
+        return head;
+    }
+
 
     public ListNode oddEvenListV2(ListNode head) {
         if (null == head) {
             return null;
         }
 
+        /**
+         * mark the start of odd and even.
+         */
         ListNode odd = head;
         ListNode even = head.next;
         ListNode evenHead = head.next;
 
         while (even != null && even.next != null) {
+            /**
+             * Mark the next odd.
+             */
             ListNode nextOdd = even.next;
 
-            odd.next = even.next;
+            /**
+             * link the odd to the next odd.
+             * link the even to the next even.
+             */
+            odd.next = nextOdd;
             even.next = nextOdd.next;
 
-            odd = odd.next;
-            even = even.next;
+            /**
+             * move odd to the next odd.
+             * move even to the next even.
+             */
+            odd = nextOdd;
+            even = nextOdd.next;
         }
 
+        /**
+         * link odd to the head of even.
+         */
         odd.next = evenHead;
 
         return head;
