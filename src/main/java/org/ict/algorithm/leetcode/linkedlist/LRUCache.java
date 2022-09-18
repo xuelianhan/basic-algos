@@ -47,11 +47,17 @@ import java.util.Map;
  * @author sniper
  * @date 16 Sep, 2022
  * LC146
+ *
  */
 public class LRUCache {
 
     private final LinkedHashMap<Integer, Integer> cache;
 
+    /**
+     * This is the laziest implementation using Java's LinkedHashMap.
+     * In the real interview, however, it is definitely not what interviewer expected.
+     * @param capacity
+     */
     public LRUCache(int capacity) {
         cache = new LinkedHashMap<Integer, Integer>(16, 0.75f, true) {
             @Override
