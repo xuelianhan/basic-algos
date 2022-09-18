@@ -36,8 +36,9 @@ public class SwappingNodesInALinkedList {
         }
         ListNode dummy = new ListNode(0);
         dummy.next = head;
+        ListNode fast = dummy;
+        ListNode slow = dummy;
 
-        
         return dummy.next;
     }
 

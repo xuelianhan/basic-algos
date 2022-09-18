@@ -37,6 +37,24 @@ public class RemoveNthNodeFromEndOfList {
 
     /**
      * Two-Pointer Solution.
+     * Input: head = [1,2,3,4,5], n = 2
+     * Output: [1,2,3,5]
+     *
+     * Dummy->1->2->3->4->5->null
+     * fast:dummy, slow:dummy, step:0
+     * fast:1, step==0, so slow:dummy, step:1
+     * fast:2, step==1, so slow:dummy, step:2
+     * fast:3, step==2, so slow:1, step:3
+     * fast:4, step==3, so slow:2, step:4
+     * fast:5, step==4, so slow:3, step:5
+     * fast.next==null, while-loop ended.
+     *
+     * slow point at the previous node before the node waiting to delete.
+     * slow.next is 4 that the one we need to delete.
+     * 1.Firstly, we mark the next node of slow.next
+     * 2.Then we link slow next to next mark
+     * 3.Finally, we return the head.
+     *
      * @param head
      * @param n
      * @return
@@ -46,6 +64,13 @@ public class RemoveNthNodeFromEndOfList {
         dummy.next = head;
         ListNode fast = dummy;
         ListNode slow = dummy;
+        /**
+         * Move fast n steps firstly, then we move slow forward
+         * The gap between fast and slow is n steps.
+         *
+         * Why step start with zero?
+         * Because both fast and slow are initialized with a dummy node.
+         */
         int step = 0;
         while (fast.next != null) {
             if (step >= n) {
