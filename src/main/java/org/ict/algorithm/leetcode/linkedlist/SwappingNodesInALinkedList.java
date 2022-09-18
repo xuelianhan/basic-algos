@@ -38,6 +38,30 @@ public class SwappingNodesInALinkedList {
         dummy.next = head;
         ListNode fast = dummy;
         ListNode slow = dummy;
+        ListNode prev = dummy;
+
+        int step = 0;
+        while (fast.next != null) {
+            if (step < (k-1)) {
+                prev = prev.next;
+            }
+            if (step >= k) {
+                slow = slow.next;
+            }
+            fast = fast.next;
+            step++;
+        }
+
+        /**
+         * e.g.
+         * Dummy->1->2->3->4->5->null, k=2
+         * prev point at 1
+         * slow point at 3
+         * Due to no limit to swap values, so we can swap values directly.
+         */
+        int temp = prev.next.val;
+        prev.next.val = slow.next.val;
+        slow.next.val = temp;
 
         return dummy.next;
     }
