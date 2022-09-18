@@ -34,7 +34,7 @@ package org.ict.algorithm.leetcode.linkedlist;
  * 1 <= m * n <= 10^5
  * The number of nodes in the list is in the range [1, m * n].
  * 0 <= Node.val <= 1000
- * 
+ *
  * @author sniper
  * @date 18 Sep, 2022
  * LC2326
