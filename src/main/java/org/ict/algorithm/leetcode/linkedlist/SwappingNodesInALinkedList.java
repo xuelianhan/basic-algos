@@ -74,6 +74,55 @@ public class SwappingNodesInALinkedList {
     }
 
 
+    public ListNode swapNodesV2(ListNode head, int k) {
+        if (null == head || head.next == null) {
+            return head;
+        }
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode fast = dummy;
+        ListNode slow = dummy;
+        ListNode prev = dummy;
+
+        int step = 0;
+        while (fast.next != null) {
+            if (step < (k-1)) {
+                prev = prev.next;
+            }
+            if (step >= k) {
+                slow = slow.next;
+            }
+            fast = fast.next;
+            step++;
+        }
+
+        /**
+         * Three cases need to be considered when we swap nodes directly.
+         */
+        ListNode t1 = prev.next;
+        ListNode t1Next = prev.next.next;
+        ListNode t2 = slow.next;
+        ListNode t2Next = slow.next.next;
+
+        if (prev.next == slow) {
+            prev.next = t2;
+            t2.next = t1;
+            t1.next = t2Next;
+        } else if (slow.next == prev) {
+            slow.next = t1;
+            t1.next = t2;
+            t2.next = t1Next;
+        } else {
+            prev.next = t2;
+            t2.next = t1Next;
+            t1.next = t2Next;
+            slow.next = t1;
+        }
+
+        return dummy.next;
+    }
+
+
     private static class ListNode {
         int val;
 
