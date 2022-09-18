@@ -129,6 +129,7 @@ public class CopyListWithRandomPointer {
 
         /**
          * Third round, restore the original list, and extract the copy list.
+         * The following codes can solve LC328(Odd Even Linked List).
          */
         cur = head;
         copy = null;
