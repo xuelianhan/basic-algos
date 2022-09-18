@@ -30,6 +30,13 @@ package org.ict.algorithm.leetcode.linkedlist;
  */
 public class SwappingNodesInALinkedList {
 
+    /**
+     * Three Pointers solution.
+     * Swap nodes values instead of changing nodes themselves.
+     * @param head
+     * @param k
+     * @return
+     */
     public ListNode swapNodes(ListNode head, int k) {
         if (null == head || head.next == null) {
             return head;
