@@ -74,6 +74,13 @@ public class SwappingNodesInALinkedList {
     }
 
 
+    /**
+     * If we are not allowed to swap values of nodes, we need to swap nodes directly.
+     * In this situation, we need to consider four cases.
+     * @param head
+     * @param k
+     * @return
+     */
     public ListNode swapNodesV2(ListNode head, int k) {
         if (null == head || head.next == null) {
             return head;
@@ -97,7 +104,13 @@ public class SwappingNodesInALinkedList {
         }
 
         /**
-         * Three cases need to be considered when we swap nodes directly.
+         * Four cases need to be considered when we swap nodes directly.
+         * 1.prev next is slow
+         * 2.slow next is prev
+         * 3.prev equals slow
+         * 4.not all the above.
+         *
+         * Two cases of them can be combined together.
          *
          * e.g.1
          * Dummy->1->2->3->4->5->null, k=2
@@ -112,14 +125,6 @@ public class SwappingNodesInALinkedList {
          *
          *
          * e.g.2
-         * Dummy->1->2->null, k=2
-         * fast:dummy, prev:dummy, slow:dummy, step:0
-         * fast:1, prev:1, slow:dummy, step:1
-         * fast:2, prev:1, slow:dummy, step:2
-         * while-loop-ended.
-         * At last, the slow.next points at prev.
-         *
-         * e.g.3
          * Dummy->1->2->3->4->5->null, k=3
          * fast:dummy, prev:dummy, slow:dummy, step:0
          * fast:1, prev:1, slow:dummy, step:1
@@ -129,6 +134,16 @@ public class SwappingNodesInALinkedList {
          * fast:5, prev:2, slow:2, step:5
          * while-loop-ended.
          * At last, the slow equals prev.
+         *
+         *
+         * e.g.3
+         * Dummy->1->2->null, k=2
+         * fast:dummy, prev:dummy, slow:dummy, step:0
+         * fast:1, prev:1, slow:dummy, step:1
+         * fast:2, prev:1, slow:dummy, step:2
+         * while-loop-ended.
+         * At last, the slow.next points at prev.
+         *
          *
          * e.g.4
          * Dummy->1->2->3->4->null, k=2
@@ -148,14 +163,17 @@ public class SwappingNodesInALinkedList {
         ListNode t2Next = slow.next.next;
 
         if (prev.next == slow) {
+            //e.g.4
             prev.next = t2;
             t2.next = t1;
             t1.next = t2Next;
         } else if (slow.next == prev) {
+            //e.g.3
             slow.next = t1;
             t1.next = t2;
             t2.next = t1Next;
         } else {
+            //e.g.1 and e.g.2
             prev.next = t2;
             t2.next = t1Next;
             t1.next = t2Next;
