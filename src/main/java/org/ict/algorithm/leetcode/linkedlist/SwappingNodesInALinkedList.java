@@ -98,6 +98,49 @@ public class SwappingNodesInALinkedList {
 
         /**
          * Three cases need to be considered when we swap nodes directly.
+         *
+         * e.g.1
+         * Dummy->1->2->3->4->5->null, k=2
+         * fast:dummy, prev:dummy, slow:dummy, step:0
+         * fast:1, prev:1, slow:dummy, step:1
+         * fast:2, prev:1, slow:dummy, step:2
+         * fast:3, prev:1, slow:1, step:3
+         * fast:4, prev:1, slow:2, step:4
+         * fast:5, prev:1, slow:3, step:5
+         * while-loop-ended.
+         * At last, prev.next not points at slow.
+         *
+         *
+         * e.g.2
+         * Dummy->1->2->null, k=2
+         * fast:dummy, prev:dummy, slow:dummy, step:0
+         * fast:1, prev:1, slow:dummy, step:1
+         * fast:2, prev:1, slow:dummy, step:2
+         * while-loop-ended.
+         * At last, the slow.next points at prev.
+         *
+         * e.g.3
+         * Dummy->1->2->3->4->5->null, k=3
+         * fast:dummy, prev:dummy, slow:dummy, step:0
+         * fast:1, prev:1, slow:dummy, step:1
+         * fast:2, prev:2, slow:dummy, step:2
+         * fast:3, prev:2, slow:dummy, step:3
+         * fast:4, prev:2, slow:1, step:4
+         * fast:5, prev:2, slow:2, step:5
+         * while-loop-ended.
+         * At last, the slow equals prev.
+         *
+         * e.g.4
+         * Dummy->1->2->3->4->null, k=2
+         * fast:dummy, prev:dummy, slow:dummy, step:0
+         * fast:1, prev: 1, slow:dummy, step:1
+         * fast:2, prev:1, slow: dummy, step:2
+         * fast:3, prev:1, slow:1, step:3
+         * fast:4, prev:1, slow:2, step:4
+         * while-loop-ended.
+         * At last, the prev.next points at slow.
+         *
+         *
          */
         ListNode t1 = prev.next;
         ListNode t1Next = prev.next.next;
