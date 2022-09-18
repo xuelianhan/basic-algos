@@ -39,6 +39,9 @@ public class ReorderList {
      * @param head
      */
     public void reorderListV2(ListNode head) {
+        /**
+         * Corner cases
+         */
         if (null == head || head.next == null || head.next.next == null) {
             return;
         }
@@ -91,6 +94,9 @@ public class ReorderList {
     }
 
     public void reorderList(ListNode head) {
+        /**
+         * Corner cases
+         */
         if (null == head || head.next == null || head.next.next == null) {
             return;
         }

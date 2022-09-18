@@ -20,6 +20,8 @@ package org.ict.algorithm.leetcode.linkedlist;
  * @date 2022/8/26
  * @see <a href="https://www.geeksforgeeks.org/given-linked-list-reverse-alternate-nodes-append-end/"></a>
  * hulu coding interview
+ * see RecorderList.java
+ * LC143
  *
  */
 public class ReversLinkedListAlternate {
