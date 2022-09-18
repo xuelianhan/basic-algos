@@ -35,6 +35,12 @@ package org.ict.algorithm.leetcode.linkedlist;
  */
 public class OddEvenLinkedList {
 
+
+    public ListNode oddEvenListV2(ListNode head) {
+        //todo
+        return null;
+    }
+
     /**
      * We can get an idea from problem LC138.
      *
