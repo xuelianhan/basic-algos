@@ -84,7 +84,7 @@ public class SpiralMatrix {
 				}
 			}
 			rowEnd--;
-			
+
 			/**
 			 * Traverse Up, this if condition cannot be commented here
 			 */

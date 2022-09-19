@@ -84,7 +84,7 @@ public class SpiralMatriIV {
             }
             colEnd--;
             /**
-             * Traverse left, comment if  (rowBegin <= rowEnd)
+             * Traverse left, comment if  (rowBegin <= rowEnd) is ok for this problem.
              */
             //if (rowBegin <= rowEnd) {
             for (int i = colEnd; i>= colBegin; i--, head = head.next) {
@@ -97,7 +97,7 @@ public class SpiralMatriIV {
             //}
             rowEnd--;
             /**
-             * Traverse Up, comment if (colBegin <= colEnd).
+             * Traverse Up, comment if (colBegin <= colEnd) is ok for this problem.
              */
             //if (colBegin <= colEnd) {
             for (int i = rowEnd; i >= rowBegin; i--, head = head.next) {
