@@ -25,6 +25,7 @@ package org.ict.algorithm.leetcode.array;
  * Output: 0
  * 
  * LC35
+ * Must be remembered and write in 30 seconds.
  *
  */
 public class SearchInsertPosition {
@@ -69,6 +70,8 @@ public class SearchInsertPosition {
      *                 high----low
      * high less than low, while-loop ended, the insert position is at index 2, which low point at.
      *
+     * The following code is rank function in Algorithms book written by Robert Sedgwick.
+     *
      * @param nums
      * @param target
      * @return
@@ -76,6 +79,13 @@ public class SearchInsertPosition {
 	public static int searchInsertV1(int[] nums, int target) {
         int low = 0;
         int high = nums.length-1;
+        /**
+         * Notice Point:
+         * 1.while condition is low <= high, not low < high.
+         * 2.when array[mid] != target, low = mid + 1 or high = mid -1, not write as low = mid or high = mid.
+         * 3.the rank(insert position) is low, due to while condition low<= high, this condition will let
+         * low greater than high in the above three cases finally.
+         */
         while (low <= high) {
             int mid = low + (high - low) / 2;
             if(nums[mid] == target)  {
