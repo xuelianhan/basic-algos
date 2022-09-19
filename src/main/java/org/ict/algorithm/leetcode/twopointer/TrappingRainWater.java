@@ -40,6 +40,14 @@ public class TrappingRainWater {
      * For example, if current height of left is lower,we fill water in the left bin.
      * Until left meets right, we filled the whole container.
      *
+     * Input: height = [0,1,0,2,1,0,1,3,2,1,2,1]
+     * 0  1  0  2  1  0  1  3  2  1   2   1
+     * -------------------------------------
+     * 0  1  2  3  4  5  6  7  8  9  10  11
+     * -------------------------------------
+     * left                             right
+     *
+     *
      * @author mcrystal
      * @param height
      * @return
@@ -52,6 +60,13 @@ public class TrappingRainWater {
         int maxLeft = 0;
         int maxRight = 0;
         while (left <= right) {
+            /**
+             * when height[left] less than or equal to height[right],
+             * the amount of water can be trapped is determined by left highest.
+             * No matter how the bar[k] between[left, right] look like.
+             *
+             * shorter bar will determine volume of water.
+             */
             if (height[left] <= height[right]) {
                 /**
                  * The left bin is lower, so we fill water in the left bin.
