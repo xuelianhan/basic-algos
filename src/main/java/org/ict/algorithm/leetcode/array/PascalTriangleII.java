@@ -1,6 +1,5 @@
 package org.ict.algorithm.leetcode.array;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -135,8 +134,15 @@ public class PascalTriangleII {
          * So level starts at 1 here, not start at 0, so condition in outer-loop is level=1
          * col ends at 1 because res[0] has set to 1, so condition int inner-loop is col>=1
          * res[col-1] condition also requires col >= 1 because array index minimum is zero.
+         *
+         * Why col start from right to left, not from left to right?
+         * We cannot do it from left to right. You can try it. The result is not matching our target.
+         *
          */
         for (int level = 1; level <= rowIndex; level++) {
+            /**
+             * Notice col is start from right to left.
+             */
             for (int col = level; col >= 1; col--) {
                 res[col] += res[col-1];
             }
@@ -223,6 +229,7 @@ public class PascalTriangleII {
             for (int col = level; col > 0; col--) {
                res[col] += res[col-1];
             }
+            System.out.println(Arrays.toString(res));
         }
         return IntStream.of(res).boxed().collect(Collectors.toList());
     }
