@@ -44,9 +44,51 @@ package org.ict.algorithm.leetcode.array;
  */
 public class PlusOne {
 
+    /**
+     * Two test cases
+     * Input: digits = [1,2,3]
+     * Input: digits = [8,9,9,9]
+     *
+     * @param digits
+     * @return
+     */
+    public int[] plusOneV3(int[] digits) {
+        int n = digits.length;
+        for(int i = n-1; i >= 0; i--) {
+            if(digits[i] < 9) {
+                digits[i]++;
+                return digits;
+            }
+            digits[i] = 0;
+        }
+        int[] newNumber = new int[n+1];
+        newNumber[0] = 1;
+        return newNumber;
+    }
 
     public int[] plusOneV2(int[] digits) {
-        return null;
+        StringBuilder sb = new StringBuilder();
+        int carry = 0;
+        int sum = 0;
+        for (int i = digits.length - 1; i >= 0; i--) {
+            sum = digits[i] + carry;
+            if (i == digits.length - 1) {
+                sum += 1;
+            }
+            carry = (sum >= 10 ? 1: 0);
+            sum = (sum >= 10 ? sum - 10 : sum);
+            sb.append(sum);
+        }
+
+        if (carry > 0) {
+            sb.append(carry);
+        }
+        char[] arr = sb.reverse().toString().toCharArray();
+        int[] res = new int[sb.length()];
+        for(int i = 0; i < res.length; i++) {
+            res[i] = arr[i] - '0';
+        }
+        return res;
     }
 
     public int[] plusOne(int[] digits) {
