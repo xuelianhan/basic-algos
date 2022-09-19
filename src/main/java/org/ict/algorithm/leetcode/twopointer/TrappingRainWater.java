@@ -61,11 +61,13 @@ public class TrappingRainWater {
         int maxRight = 0;
         while (left <= right) {
             /**
+             * Shorter bar will determine volume of water.
              * when height[left] less than or equal to height[right],
              * the amount of water can be trapped is determined by left highest.
              * No matter how the bar[k] between[left, right] look like.
              *
-             * shorter bar will determine volume of water.
+             *
+             *
              */
             if (height[left] <= height[right]) {
                 /**
