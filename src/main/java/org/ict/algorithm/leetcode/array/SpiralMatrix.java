@@ -39,8 +39,18 @@ public class SpiralMatrix {
 		List<Integer> result = spiralOrderV1(matrix);
 		System.out.println(result);
 	}
-	
 
+
+	/**
+	 * Input:
+	 * [[1,2,3,4],[5,6,7,8],[9,10,11,12]]
+	 *
+	 * Expected:
+	 * [1,2,3,4,8,12,11,10,9,5,6,7]
+	 *
+	 * @param matrix
+	 * @return
+	 */
 	public static List<Integer> spiralOrderV1(int[][] matrix) {
 		List<Integer> result = new ArrayList<>();
 		if (matrix.length == 0) {
@@ -49,19 +59,25 @@ public class SpiralMatrix {
 		int rowBegin = 0, rowEnd = matrix.length - 1;
 		int colBegin = 0, colEnd = matrix[0].length - 1;
 		while (rowBegin <= rowEnd && colBegin <= colEnd) {
-			// Traverse Right
+			/**
+			 * Traverse Right
+			 */
 			for (int i = colBegin; i <= colEnd; i++) {
 				result.add(matrix[rowBegin][i]);
 			}
 			rowBegin++;
-			
-			// Traverse Down
+
+			/**
+			 * Traverse Down
+			 */
 			for (int i = rowBegin; i <= rowEnd; i++) {
 				result.add(matrix[i][colEnd]);
 			}
 			colEnd--;
-			
-			// Traverse left
+
+			/**
+			 * Traverse left, this if condition cannot be commented here
+			 */
 			if (rowBegin <= rowEnd) {
 				for (int i = colEnd; i>= colBegin; i--) {
 					result.add(matrix[rowEnd][i]);
@@ -69,7 +85,9 @@ public class SpiralMatrix {
 			}
 			rowEnd--;
 			
-			// Traverse Up
+			/**
+			 * Traverse Up, this if condition cannot be commented here
+			 */
 			if (colBegin <= colEnd) {
 				for (int i = rowEnd; i >= rowBegin; i--) {
 					result.add(matrix[i][colBegin]);

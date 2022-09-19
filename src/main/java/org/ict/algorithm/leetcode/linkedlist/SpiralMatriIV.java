@@ -44,6 +44,114 @@ import java.util.Arrays;
 public class SpiralMatriIV {
 
     /**
+     * Recommend this solution.
+     * we comment two if-condition compared with spiralMatrix.
+     * @param m
+     * @param n
+     * @param head
+     * @return
+     */
+    public int[][] spiralMatrixV4(int m, int n, ListNode head) {
+        int[][] res = new int[m][n];
+
+        for (int[] arr: res) {
+            Arrays.fill(arr, -1);
+        }
+
+        int rowBegin = 0, rowEnd = m - 1;
+        int colBegin = 0, colEnd = n - 1;
+        while (rowBegin <= rowEnd && colBegin <= colEnd && head != null) {
+            /**
+             * Traverse Right
+             */
+            for (int i = colBegin; i <= colEnd; i++, head = head.next) {
+                if (head != null) {
+                    res[rowBegin][i] = head.val;
+                } else {
+                    break;
+                }
+            }
+            rowBegin++;
+            /**
+             * Traverse Down
+             */
+            for (int i = rowBegin; i <= rowEnd; i++, head = head.next) {
+                if (head != null) {
+                    res[i][colEnd] = head.val;
+                } else {
+                    break;
+                }
+            }
+            colEnd--;
+            /**
+             * Traverse left, comment if  (rowBegin <= rowEnd)
+             */
+            //if (rowBegin <= rowEnd) {
+            for (int i = colEnd; i>= colBegin; i--, head = head.next) {
+                if (head != null) {
+                    res[rowEnd][i] = head.val;
+                } else {
+                    break;
+                }
+            }
+            //}
+            rowEnd--;
+            /**
+             * Traverse Up, comment if (colBegin <= colEnd).
+             */
+            //if (colBegin <= colEnd) {
+            for (int i = rowEnd; i >= rowBegin; i--, head = head.next) {
+                if (head != null) {
+                    res[i][colBegin] = head.val;
+                } else {
+                    break;
+                }
+            }
+            //}
+            colBegin++;
+        }//end-while-loop
+
+        return res;
+    }
+
+
+    /**
+     * Solution provided by votrubac
+     *
+     * We use directions (d) to right->down->left->up and then repeat. When we bump into an edge - we change the direction.
+     * Note that an edge is also a cell that we've already filled (not equal to -1).
+     * This makes it a bit easier, otherwise we could use an offset, incrementing it after each full turn.
+     *
+     * @param m
+     * @param n
+     * @param head
+     * @return
+     */
+    public int[][] spiralMatrixV3(int m, int n, ListNode head) {
+        int[][] res = new int[m][n];
+
+        for (int[] arr: res) {
+            Arrays.fill(arr, -1);
+        }
+
+        int i = 0, j = 0, cur_d = 0;
+        int[] d = {0, 1, 0, -1, 0};
+        for (; head != null; head = head.next) {
+            res[i][j] = head.val;
+
+            int ni = i + d[cur_d];
+            int nj = j + d[cur_d + 1];
+
+            if (Math.min(ni, nj) < 0 || ni >= m || nj >= n || res[ni][nj] != -1) {
+                cur_d = (cur_d + 1) % 4;
+            }
+            i += d[cur_d];
+            j += d[cur_d + 1];
+        }
+        return res;
+    }
+
+    /**
      *
      * @param m
      * @param n
@@ -91,6 +199,13 @@ public class SpiralMatriIV {
         return res;
     }
 
+    /**
+     * Recommend this solution because it's easy to understand.
+     * @param m
+     * @param n
+     * @param head
+     * @return
+     */
     public int[][] spiralMatrix(int m, int n, ListNode head) {
         int[][] res = new int[m][n];
 
@@ -149,7 +264,8 @@ public class SpiralMatriIV {
                 }
             }
             colBegin++;
-        }
+        }//end-while-loop
+
         return res;
     }
 
