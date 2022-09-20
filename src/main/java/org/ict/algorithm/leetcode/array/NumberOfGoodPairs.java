@@ -54,8 +54,10 @@ public class NumberOfGoodPairs {
         int res = 0;
         int[] count = new int[101];
         for (int a : nums) {
+            
             int freq = count[a];
             res += freq;
+
             count[a]++;
         }
         return res;
@@ -173,7 +175,7 @@ public class NumberOfGoodPairs {
      *
      * Time complexity is O(N^2)
      * Space complexity is O(1).
-     * 
+     *
      * @param nums
      * @return
      */
