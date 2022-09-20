@@ -50,6 +50,8 @@ public class MergeKSortedLists {
 
     /**
      * Using Priority Queue
+     *
+     *
      * @param lists
      * @return
      */
@@ -69,7 +71,7 @@ public class MergeKSortedLists {
         });
 
         for (ListNode head : lists) {
-            if (head == null) {
+            if (null == head) {
                 continue;
             }
             queue.offer(head);
@@ -78,8 +80,12 @@ public class MergeKSortedLists {
         ListNode dummy = new ListNode(0);
         ListNode pre = dummy;
         while (!queue.isEmpty()) {
-            ListNode cur = queue.poll();
+            pre.next = queue.poll();
+            pre = pre.next;
 
+            if (pre.next != null) {
+                queue.add(pre.next);
+            }
         }
         return dummy.next;
     }
