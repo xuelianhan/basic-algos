@@ -23,8 +23,8 @@ import java.util.PriorityQueue;
  * at last we get the M min value in the max-heap
  * 
  * Please referer the Algorithms 4th Edition by Robert Sedgewick
- * @see https://leetcode.com/discuss/interview-question/124642/k-closest-points-to-a-starting-point-in-cartesian-plane
- * @see http://www.zrzahid.com/k-closest-points/
+ * @see <a href="https://leetcode.com/discuss/interview-question/124642/k-closest-points-to-a-starting-point-in-cartesian-plane"></a>
+ * @see <a href="http://www.zrzahid.com/k-closest-points/"></a>
  *
  * This problem is one kind of amz oa
  */
@@ -67,10 +67,12 @@ public class ClosestPointToOrigin {
 		List<List<Integer>> result2 = instance.closestPoints(matrix, 3, 2);
 		System.out.println(result2);
 	}
-	
-	
+
+
+	/**
+	 * Find top k minimum in points using max-heap
+	 */
 	public Point[] closestPoints(Point[] array, Point origin, int k) {
-        // Find top k minimum in points using max-heap
         PriorityQueue<Point> pq = new PriorityQueue<Point> (k, new Comparator<Point> () {
             @Override
             public int compare(Point a, Point b) {
@@ -126,7 +128,7 @@ public class ClosestPointToOrigin {
 	}
 
 	/**
-	 * Find top k maximum in points.
+	 * Find top k minimum in points.
 	 * @param points
 	 * @param k
 	 * @return
