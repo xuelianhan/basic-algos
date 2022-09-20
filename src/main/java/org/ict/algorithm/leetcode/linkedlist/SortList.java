@@ -89,10 +89,10 @@ public class SortList {
         /**
          * Merge sort.
          */
-        return mergeSort(l1, l2);
+        return mergeSortedList(l1, l2);
     }
 
-    public ListNode mergeSort(ListNode l1, ListNode l2) {
+    public ListNode mergeSortedList(ListNode l1, ListNode l2) {
         ListNode dummy = new ListNode(0);
         ListNode cur = dummy;
 
@@ -148,7 +148,7 @@ public class SortList {
 
         return head;
     }
-    
+
 
     private static class ListNode {
         int val;
