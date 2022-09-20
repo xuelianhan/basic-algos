@@ -40,9 +40,185 @@ package org.ict.algorithm.leetcode.linkedlist;
  */
 public class InsertionSortList {
 
+
+    /**
+     * Solution in insertionSortList always reset pre to dummy and looking forward the
+     * next insert location from beginning.
+     * To tune this problem, we no longer reset pre to dummy.
+     * In another way, we compare pre value with cur value before finding the insert location.
+     * If pre.value >= cur.value, we reset pre to dummy again.
+     * If pre.value < cur.value, we don't need to reset pre to beginning, because pre next is the right insert location.
+     *
+     * Recommend this solution.
+     * Time Cost 2ms.
+     *
+     * @param head
+     * @return
+     */
+    public ListNode insertionSortListV1(ListNode head) {
+        if (null == head || head.next == null) {
+            return head;
+        }
+        ListNode dummy = new ListNode(0);
+        ListNode pre = dummy;
+        ListNode cur = head;
+
+        ListNode next = null;
+        while (cur != null) {
+            next = cur.next;
+
+            if (pre.val >= cur.val) {
+                pre = dummy;
+            }
+            while (pre.next != null && pre.next.val < cur.val) {
+                pre = pre.next;
+            }
+
+            cur.next = pre.next;
+            pre.next = cur;
+
+            cur = next;
+        }
+        return dummy.next;
+    }
+
+    /**
+     *    ListNode pre = dummy;
+     *    ListNode cur = head;
+     *    ListNode next = cur.next;
+     *
+     *    dummy[0]--->null
+     *          ^
+     *          |
+     *          pre
+     *
+     *         head
+     *          |
+     *          V
+     *          3--->2--->1--->null
+     *          ^    ^
+     *          |    |
+     *         cur  next
+     *-----------------------------------
+     *    cur.next = pre.next;
+     *    pre.next = cur;
+     *    pre = dummy;
+     *    cur = next;
+     *
+     *    dummy[0]--->3--->null
+     *          ^
+     *          |
+     *          pre
+     *
+     *          2--->1--->null
+     *          ^
+     *          |
+     *         cur
+     *------------------------------------
+     *    ListNode next = cur.next;
+     *
+     *    dummy[0]--->3--->null
+     *          ^
+     *          |
+     *          pre
+     *
+     *          2--->1--->null
+     *          ^    ^
+     *          |    |
+     *         cur  next
+     *
+     *    cur.next = pre.next;
+     *    pre.next = cur;
+     *    pre = dummy;
+     *    cur = next;
+     *
+     *    dummy[0]--->2--->3--->null
+     *          ^
+     *          |
+     *          pre
+     *
+     *          1--->null
+     *          ^
+     *          |
+     *         cur
+     * -----------------------------------
+     *    dummy[0]--->2--->3--->null
+     *          ^
+     *          |
+     *          pre
+     *
+     *          1--->null
+     *          ^     ^
+     *          |     |
+     *         cur   next
+     *
+     *    dummy[0]--->1--->2--->3--->null
+     *          ^
+     *          |
+     *          pre
+     *
+     *         null
+     *          ^
+     *          |
+     *         cur
+     * @param head
+     * @return
+     */
     public ListNode insertionSortList(ListNode head) {
-        //todo
-        return null;
+        /**
+         * when head == null or list has only one element, no need to sort.
+         */
+        if (null == head || head.next == null) {
+            return head;
+        }
+        /**
+         * dummy points at the new sorted list.
+         */
+        ListNode dummy = new ListNode(0);
+
+        /**
+         * pre points at the location to insert.
+         */
+        ListNode pre = dummy;
+        /**
+         * cur points at the node need to be comparing with.
+         */
+        ListNode cur = head;
+
+        /**
+         * next points at the next node to be comparing with.
+         */
+        ListNode next = null;
+
+        while (cur != null) {
+            /**
+             * Mark the next node to be comparing with.
+             */
+            next = cur.next;
+
+            /**
+             * Scan the insert location.
+             */
+            while (pre.next != null && pre.next.val < cur.val) {
+                pre = pre.next;
+            }
+            /**
+             * Insert cur after pre
+             */
+            cur.next = pre.next;
+            pre.next = cur;
+
+            /**
+             * Let pre point at scanning start again.
+             */
+            pre = dummy;
+
+            /**
+             * Move cur to next node.
+             */
+            cur = next;
+        }
+        return dummy.next;
     }
 
     private static class ListNode {

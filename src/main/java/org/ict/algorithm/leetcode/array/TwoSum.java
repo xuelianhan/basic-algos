@@ -38,50 +38,5 @@ public class TwoSum {
     }
     return new int[]{0};
   }
-
-  public static int[] caculateTwoSumIndex(int[] array, int target) {
-    int[] indexs;
-    indexs = caculate1(array, target);
-    return indexs;
-  }
-
-  /**
-   * O(n^2)
-   */
-  private static int[] caculate1(int[] array, int target) {
-    int[] indexs = {0, 0};
-    int len = array.length;
-    for (int i = 0; i < len; i++) {
-      int j = i + 1;
-      boolean find = false;
-      if (array[i] > target) {
-        continue;
-      }
-      while (j < len ) {
-        if (array[j] > target) {
-          j++;
-          continue;
-        }
-        if ((array[j] + array[i]) != target) {
-          j++;
-        } else {
-          indexs[0] = i + 1;
-          indexs[1] = j + 1;
-          find = true;
-          break;
-        }
-      }
-      if (find) {
-        break;
-      }
-    }
-    return indexs;
-  }
   
-  public static void main(String[] args) {
-    int[] array = {200, 1, 3, 100, 31, 5, 7, 50, 51, 101, 9, 10, 28, 23}; 
-    int target = 51;
-    int[] indexs = caculateTwoSumIndex(array, target);
-    System.out.println("indexs[0]:"+indexs[0]+",indexs[1]:"+indexs[1]);
-  }
 }
