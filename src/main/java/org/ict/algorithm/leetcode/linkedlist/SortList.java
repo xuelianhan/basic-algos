@@ -31,7 +31,7 @@ import java.util.List;
  * -10^5 <= Node.val <= 10^5
  *
  *
- * Follow up: Can you sort the linked list in O(n logn) time and O(1) memory (i.e. constant space)?
+ * Follow up: Can you sort the linked list in O(N*logN) time and O(1) memory (i.e. constant space)?
  * @author sniper
  * @date 20 Sep, 2022
  * LC148
@@ -41,15 +41,90 @@ public class SortList {
 
     /**
      * Top-Down-Merge-Sort.
+     *
+     * e.g.1
+     * 1-->2-->3-->4-->5-->null
+     * fast:1, slow:1, prev:null
+     * fast:3, slow:2, prev:1
+     * fast:5, slow:3, prev:2
+     * while-loop-ended
+     * slow stay at the middle of the list.
+     *
+     * e.g.2
+     * 1-->2-->3-->4-->null
+     * fast:1,    slow:1, prev:null
+     * fast:3,    slow:2, prev:1
+     * fast:null, slow:3, prev:2
+     * while-loop-ended
+     * slow stay at the middle of the list.
+     *
+     *
      * @param head
      * @return
      */
     public ListNode sortListV2(ListNode head) {
-        //todo
-        return null;
+        if (head == null || head.next == null) {
+            return head;
+        }
+        /**
+         * find the middle node of the list.
+         */
+        ListNode fast = head;
+        ListNode slow = head;
+        ListNode prev = null;
+        while (fast != null && fast.next != null) {
+            prev = slow;
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        /**
+         * cut first half off the list.
+         */
+        prev.next = null;
+
+        ListNode l1 = sortListV2(head);
+        ListNode l2 = sortListV2(slow);
+
+        /**
+         * Merge sort.
+         */
+        return mergeSort(l1, l2);
+    }
+
+    public ListNode mergeSort(ListNode l1, ListNode l2) {
+        ListNode dummy = new ListNode(0);
+        ListNode cur = dummy;
+
+        while (l1 != null && l2 != null) {
+            if (l1.val > l2.val) {
+                cur.next = l2;
+                l2 = l2.next;
+            } else {
+                cur.next = l1;
+                l1 = l1.next;
+            }
+            cur = cur.next;
+        }
+        if (l1 != null) {
+            cur.next = l1;
+        }
+        if (l2 != null) {
+            cur.next = l2;
+        }
+        return dummy.next;
     }
 
 
+    /**
+     * Sort based values in LisNode and copy values back to ListNodes.
+     *
+     * Time Complexity O(2N) + O(N*logN).
+     * Space Complexity O(N).
+     *
+     * @param head
+     * @return
+     */
     public ListNode sortList(ListNode head) {
         if (head == null || head.next == null) {
             return head;
@@ -73,6 +148,7 @@ public class SortList {
 
         return head;
     }
+    
 
     private static class ListNode {
         int val;

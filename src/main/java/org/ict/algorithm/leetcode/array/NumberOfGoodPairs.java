@@ -47,6 +47,21 @@ public class NumberOfGoodPairs {
     /**
      * This solution is same as numIdenticalPairsV3.
      *
+     * When we count frequency of each element in the array, we ignore the count at first time.
+     * Thereafter, we begin to count frequency of each element accumulatively.
+     *
+     * e.g.
+     * input: 1 2 3 1 1 3
+     * freq:  0 0 0 1 2 1
+     * ==================
+     * e.g.
+     * input: 1 1 1 1
+     * freq:  0 1 2 3
+     * ==================
+     * e.g.
+     * input: 1 2 3
+     * freq:  0 0 0
+     *
      * @param nums
      * @return
      */
@@ -54,7 +69,7 @@ public class NumberOfGoodPairs {
         int res = 0;
         int[] count = new int[101];
         for (int a : nums) {
-            
+
             int freq = count[a];
             res += freq;
 
