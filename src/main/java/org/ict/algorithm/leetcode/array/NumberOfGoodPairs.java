@@ -145,6 +145,7 @@ public class NumberOfGoodPairs {
 
 
     /**
+     * Math formula solution.
      * todo
      * Need answer one question:
      * Why the count is n*(n-1)/2 ?
@@ -165,5 +166,26 @@ public class NumberOfGoodPairs {
             }
         }
         return cnt;
+    }
+
+    /**
+     * Brute-Force Solution
+     *
+     * Time complexity is O(N^2)
+     * Space complexity is O(1).
+     * 
+     * @param nums
+     * @return
+     */
+    public int numIdenticalPairsBruteForce(int[] nums) {
+        int res = 0;
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = i+1; j < nums.length; j++) {
+                if (nums[i] == nums[j]) {
+                    res++;
+                }
+            }
+        }
+        return res;
     }
 }
