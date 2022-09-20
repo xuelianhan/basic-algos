@@ -83,7 +83,8 @@ public class NumberOfArithmeticTriplets {
 
     /**
      * Recommend this solution.
-     * 
+     * Similar to problem NumberOfGoodPairs of LC1512.
+     *
      * Solution provided by Vlad votrubac.
      * So Brilliant! Amazing!
      * @param nums

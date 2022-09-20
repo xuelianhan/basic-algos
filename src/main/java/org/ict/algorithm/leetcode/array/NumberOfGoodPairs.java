@@ -62,6 +62,8 @@ public class NumberOfGoodPairs {
      * input: 1 2 3
      * freq:  0 0 0
      *
+     * Similar to problem NumberOfArithmeticTriplets of LC2367.
+     *
      * @param nums
      * @return
      */
