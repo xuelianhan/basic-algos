@@ -1,5 +1,6 @@
 package org.ict.algorithm.leetcode.array;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,14 +38,116 @@ import java.util.Map;
  */
 public class NumberOfGoodPairs {
 
-    public int numIdenticalPairsV2(int[] nums) {
-        //todo
-        return 0;
+    public static void main(String[] args) {
+        int[] nums = {1,2,3,1,1,3};
+        int res = numIdenticalPairsV3(nums);
+        System.out.println(res);
     }
+
+    /**
+     * This solution is same as numIdenticalPairsV3.
+     *
+     * @param nums
+     * @return
+     */
+    public int numIdenticalPairsV4(int[] nums) {
+        int res = 0;
+        int[] count = new int[101];
+        for (int a : nums) {
+            int freq = count[a];
+            res += freq;
+            count[a]++;
+        }
+        return res;
+    }
+
+    /**
+     * Solution provided by lee215.
+     *
+     * For each nums[j],
+     * count[a] is the frequency where nums[i] = a and i < j.
+     *
+     * Notice the constraints:
+     * 1 <= nums.length <= 100
+     * 1 <= nums[i] <= 100
+     *
+     * Time O(N)
+     * Space O(N)
+     *
+     * Input: nums = [1,2,3,1,1,3]
+     * ------------------
+     * index 0 1 2 3 4...
+     * ------------------
+     * count 0 3 1 2 0...
+     *
+     * idx:0, a:1, freq:0
+     * idx:1, a:2, freq:0
+     * idx:2, a:3, freq:0
+     * idx:3, a:1, freq:1
+     * idx:4, a:1, freq:2
+     * idx:5, a:3, freq:1
+     * res = count[1] + count[1] + count[3] = 1 + 2 + 1 = 4
+     *
+     * A trick here is to use count[a]++.
+     * This operation makes the counting always later than frequency accumulate for one step.
+     *
+     * e.g.
+     * input: 1 2 3 1 1 3
+     * freq:  0 0 0 1 2 1
+     * ==================
+     * e.g.
+     * input: 1 1 1 1
+     * freq:  0 1 2 3
+     * ==================
+     * e.g.
+     * input: 1 2 3
+     * freq:  0 0 0
+     *
+     *
+     * @param nums
+     * @return
+     */
+    public static int numIdenticalPairsV3(int[] nums) {
+        int res = 0;
+        int[] count = new int[101];
+        for (int a : nums) {
+            /**
+             * statement:
+             * freq = count[a]++;
+             * res += freq;
+             *
+             * its effect equals:
+             *
+             * freq = count[a];
+             * count[a]++;
+             * res += freq;
+             *
+             */
+            int freq = count[a]++;
+            //System.out.println("a:"+ a + ", freq:"+ freq);
+            res += freq;
+        }
+        //System.out.println(Arrays.toString(count));
+        return res;
+    }
+
+    public int numIdenticalPairsV2(int[] nums) {
+        int res = 0;
+        Map<Integer, Integer> freq = new HashMap<>();
+        for (int num : nums) {
+            int count = freq.getOrDefault(num, 0);
+            res += count;
+            freq.put(num, count + 1);
+        }
+        return res;
+    }
+
 
 
     /**
      * todo
+     * Need answer one question:
+     * Why the count is n*(n-1)/2 ?
      * @param nums
      * @return
      */
