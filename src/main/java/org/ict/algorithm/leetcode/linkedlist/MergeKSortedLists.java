@@ -1,6 +1,5 @@
 package org.ict.algorithm.leetcode.linkedlist;
 
-import org.ict.algorithm.leetcode.array.ClosestPointToOrigin;
 
 import java.util.*;
 
@@ -48,6 +47,52 @@ import java.util.*;
  */
 public class MergeKSortedLists {
 
+    public ListNode mergeKListsV3(ListNode[] lists) {
+        if (null == lists || lists.length == 0) {
+            return null;
+        }
+
+        /**
+         * Natural Sort using MinPQ.
+         * The root in MinPQ is the smallest element.
+         */
+        PriorityQueue<ListNode> queue = new PriorityQueue<> (lists.length, (o1, o2) -> {
+            if (o1.val < o2.val) {
+                return -1;
+            } else if (o1.val > o2.val) {
+                return 1;
+            } else {
+                return 0;
+            }
+        });
+
+        /**
+         * Add head of every list into the queue.
+         * Notice we only add the head, not add all nodes into the queue.
+         */
+        for (ListNode head : lists) {
+            if (null == head) {
+                continue;
+            }
+            queue.offer(head);
+        }
+
+        /**
+         * When dequeue from the queue, the output is natural order.
+         */
+        ListNode dummy = new ListNode(0);
+        ListNode pre = dummy;
+        while (!queue.isEmpty()) {
+            pre.next = queue.poll();
+            pre = pre.next;
+
+            if (pre.next != null) {
+                queue.add(pre.next);
+            }
+        }
+        return dummy.next;
+    }
+
     /**
      * Using Priority Queue
      *
@@ -61,7 +106,8 @@ public class MergeKSortedLists {
         }
 
         /**
-         * Natural Sort.
+         * Natural Sort using MinPQ.
+         * The root in MinPQ is the smallest element.
          */
         PriorityQueue<ListNode> queue = new PriorityQueue<> (lists.length, (o1, o2) -> {
             if (o1.val < o2.val) {
@@ -73,6 +119,10 @@ public class MergeKSortedLists {
             }
         });
 
+        /**
+         * Add head of every list into the queue.
+         * Notice we only add the head, not add all nodes into the queue.
+         */
         for (ListNode head : lists) {
             if (null == head) {
                 continue;
@@ -80,14 +130,70 @@ public class MergeKSortedLists {
             queue.offer(head);
         }
 
+        /**
+         * When dequeue from the queue, the output is natural order.
+         * Because each list has been ordered.
+         * we process the ListNode here list by list.
+         * Take three lists for example:
+         * list1: 4->5->null
+         * list2: 1->2->3->null
+         * list3: 9->null
+         *
+         * ----------head added into queue-------
+         * queue add three heads firstly.
+         * queue: 1 9 4, root is 1
+         * --------------------------------------
+         *
+         * ---------list2 sort ----------------
+         * node-1 of list2 dequeue
+         * dummy->1->null
+         * queue: 4 9
+         * node-1 of list2 has next node-2, so node-2 of list2 enqueue
+         * queue: 2 9 4
+         *
+         * node-2 of list2 dequeue
+         * dummy->1->2->null
+         * queue: 4 9
+         * node-2 of list2 has next node-3, so node-3 of list2 enqueue
+         * queue: 3 4 9
+         *
+         * node-3 of list2 dequeue
+         * dummy->1->2->3->null
+         * queue: 4 9
+         * node-3 of list2 has no next node, so list2 ends
+         * --------------------------------------
+         *
+         * ---------list1 sort ------------------
+         * node-4 of list1 dequeue
+         * dummy->1->2->3->4->null
+         * queue: 9
+         * node-4 of list1 has next node-5, so node-5 of list1 enqueue
+         * queue: 5 9
+         *
+         * node-5 of list1 dequeue
+         * dummy->1->2->3->4->5->null
+         * queue:9
+         * node-5 of list1 has no next node, so list1 ends.
+         * --------------------------------------
+         *
+         * ---------list3 sort ------------------
+         * node-9 of list3 dequeue
+         * dummy->1->2->3->4->5->9->null
+         * node-9 of list3 has no next node, so list3 ends.
+         * --------------------------------------
+         * queue has no more elements, final result:
+         * dummy->1->2->3->4->5->9->null
+         *
+         */
         ListNode dummy = new ListNode(0);
         ListNode pre = dummy;
         while (!queue.isEmpty()) {
-            pre.next = queue.poll();
-            pre = pre.next;
+            ListNode cur =  queue.poll();
+            pre.next = cur;
+            pre = cur;
 
-            if (pre.next != null) {
-                queue.add(pre.next);
+            if (cur.next != null) {
+                queue.add(cur.next);
             }
         }
         return dummy.next;
