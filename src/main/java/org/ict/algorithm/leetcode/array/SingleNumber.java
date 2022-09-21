@@ -37,6 +37,10 @@ import java.util.stream.Stream;
  * @date 21 Sep, 2022
  * LC136
  *
+ * Some tips comes from Krypto02.
+ * His homepage is <a href="https://leetcode.com/Krypto02/"></>
+ *
+ *
  * The question simply asks us to find an element in the given array whose frequency is 1.
  * All the other elements have a frequency of 2.
  * We have to do so in :
