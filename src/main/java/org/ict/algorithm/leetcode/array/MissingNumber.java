@@ -69,8 +69,14 @@ public class MissingNumber {
      * @return
      */
     public int missingNumber(int[] nums) {
-        //todo
         Arrays.sort(nums);
+        int len = nums.length;
+        /**
+         * Process the case that missing number is the last one.
+         */
+        if (nums[len - 1] != len) {
+            return len;
+        }
         int res = 0;
         for (int i = 1; i < nums.length;) {
             if ((nums[i-1]+1) == nums[i]) {
