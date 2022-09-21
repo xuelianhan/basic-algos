@@ -60,6 +60,9 @@ public class MergeKSortedLists {
             return null;
         }
 
+        /**
+         * Natural Sort.
+         */
         PriorityQueue<ListNode> queue = new PriorityQueue<> (lists.length, (o1, o2) -> {
             if (o1.val < o2.val) {
                 return -1;
