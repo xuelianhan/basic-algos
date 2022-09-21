@@ -1,5 +1,6 @@
 package org.ict.algorithm;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.PriorityQueue;
 
@@ -21,7 +22,7 @@ public class MinPQTest {
          * iterate output: 1 2 5 4 3 9 6 10 7 8
          * sorted output: 1 2 3 4 5 6 7 8 9 10
          */
-        buildMinPQ();
+        //buildMinPQ();
 
         /**
          * [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
@@ -33,6 +34,11 @@ public class MinPQTest {
          * sorted output: 10 9 8 7 6 5 4 3 2 1
          */
         //buildMaxPQ();
+
+        int[] arr = {100, 50, 80, 10, 25, 20, 75};
+        int k = 3;
+        topKMaximum(arr, k);
+        //topKMinimum(arr, k);
     }
 
 
@@ -161,5 +167,81 @@ public class MinPQTest {
         }
     }
 
+    public static void topKMaximum(int[] arr, int k) {
+        System.out.println("Find top-" + k + " maximum elements in array:" + Arrays.toString(arr));
+        /**
+         * Use the MinPQ default.
+         */
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        for(int a : arr) {
+            /**
+             * add to queue.
+             */
+            pq.offer(a);
+            System.out.println("queue elements:" + pq);
+
+            /**
+             * remove the top element, smallest in this case,
+             * once the queue reaches the size k
+             */
+            if (pq.size() > k) {
+                Integer root = pq.poll();
+                System.out.println("queue size greater than " + k + ", queue root poll:" + root);
+                System.out.println("queue elements:" + pq);
+            }
+        }
+
+        /**
+         * The remained elements is top-k elements
+         */
+        System.out.print("top-" + k + "Maximum: ");
+        while (!pq.isEmpty()) {
+            Integer x = pq.poll();
+            System.out.print(x + " ");
+        }
+    }
+
+    public static void topKMinimum(int[] arr, int k) {
+        System.out.println("Find top-" + k + " minimum elements in array:" + Arrays.toString(arr));
+
+        /**
+         * Use the MaxPQ default.
+         */
+        PriorityQueue<Integer> pq = new PriorityQueue<>((o1, o2) -> {
+                    if (o1 < o2) {
+                        return 1;
+                    } else if (o1 > o2) {
+                        return -1;
+                    } else {
+                        return 0;
+                    }
+                });
+        for(int a : arr) {
+            /**
+             * add to queue.
+             */
+            pq.offer(a);
+            System.out.println("queue elements:" + pq);
+
+            /**
+             * remove the top element, smallest in this case,
+             * once the queue reaches the size k
+             */
+            if (pq.size() > k) {
+                Integer root = pq.poll();
+                System.out.println("queue size greater than " + k + ", queue root poll:" + root);
+                System.out.println("queue elements:" + pq);
+            }
+        }
+
+        /**
+         * The remained elements is top-k elements
+         */
+        System.out.print("top-" + k + "Minimum: ");
+        while (!pq.isEmpty()) {
+            Integer x = pq.poll();
+            System.out.print(x + " ");
+        }
+    }
 
 }
