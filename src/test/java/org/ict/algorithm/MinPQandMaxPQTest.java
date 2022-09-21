@@ -8,7 +8,7 @@ import java.util.PriorityQueue;
  * @author sniper
  * @date 21 Sep, 2022
  */
-public class MinPQTest {
+public class MinPQandMaxPQTest {
 
 
 
