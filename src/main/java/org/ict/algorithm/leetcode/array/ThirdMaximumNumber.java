@@ -36,9 +36,15 @@ package org.ict.algorithm.leetcode.array;
  * 1 <= nums.length <= 10^4
  * -2^31 <= nums[i] <= 2^31 - 1
  *
+ * Follow up: Can you find an O(n) solution?
+ *
  * @author sniper
  * @date 22 Sep, 2022
  * LC414
  */
 public class ThirdMaximumNumber {
+
+    public int thirdMax(int[] nums) {
+       return 0;
+    }
 }
