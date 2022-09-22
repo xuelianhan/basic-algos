@@ -73,9 +73,6 @@ public class SqrtX {
      * @return
      */
     public static int mySqrtV2(int a) {
-        if (a == 0 || a == 1) {
-            return a;
-        }
         long x = a;
         while (x*x > a) {
             x = (x + a/x) / 2;
@@ -90,8 +87,13 @@ public class SqrtX {
         int low = 1, high = x;
         while (low < high) {
             int mid = low + (high - low) / 2;
-
-
+            if (mid <= x / mid && (mid + 1) > x/(mid + 1)) {
+                return mid;
+            } else if (mid > x / mid) {
+                high = mid;
+            } else {
+                low = mid + 1;
+            }
         }
         return low;
     }
