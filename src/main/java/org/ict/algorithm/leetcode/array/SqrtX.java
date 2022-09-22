@@ -63,16 +63,21 @@ public class SqrtX {
      *
      * @see <a href="https://math.mit.edu/~stevenj/18.335/newton-sqrt.pdf"></a>
      *
+     * x^2-a = 0 --> x = a/x
+     *         --> 2x = a/x + x
+     *         --> 2x = x + a/x
+     *         --> x = (x + a/x)/2
      *
-     * @param x
+     *
+     * @param a
      * @return
      */
-    public static int mySqrtV2(int x) {
-        long r = x;
-        while (r*r > x) {
-            r = (r + x/r) / 2;
+    public static int mySqrtV2(int a) {
+        long x = a;
+        while (x*x > a) {
+            x = (x + a/x) / 2;
         }
-        return (int) r;
+        return (int) x;
     }
 
     public static int mySqrt(int x) {
