@@ -80,6 +80,15 @@ public class SqrtX {
         return (int) x;
     }
 
+    /**
+     * Look for the critical point: i * i <= x && (i+1)(i+1) > x
+     *
+     * A little trick is using i <= x / i for comparison,
+     * instead of i * i <= x, to avoid exceeding integer upper limit.
+     *
+     * @param x
+     * @return
+     */
     public static int mySqrt(int x) {
         if (x == 0 || x == 1) {
             return x;
