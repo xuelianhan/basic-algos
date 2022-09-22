@@ -1,8 +1,7 @@
 package org.ict.algorithm.leetcode.array;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.stream.IntStream;
 
 /**
  * Given an array nums containing n distinct numbers in the range [0, n],
@@ -45,12 +44,100 @@ import java.util.Map;
  */
 public class MissingNumber {
 
-    public int missingNumberV2(int[] nums) {
-        return 0;
+    /**
+     * The basic idea is to use XOR operation.
+     * We all know that a^b^b = a,
+     * which means two xor operations with the same number will eliminate the number and reveal the original number.
+     * In this solution, I apply XOR operation to both the index and value of the array.
+     * In a complete array with no missing numbers,
+     * the index and value should be perfectly corresponding( nums[index] = index),
+     * so in a missing array, what left finally is the missing number.
+     *
+     * @param nums
+     * @return
+     */
+    public int missingNumberV5(int[] nums) {
+        int xor = 0, i = 0;
+        for (i = 0; i < nums.length; i++) {
+            xor = xor ^ i ^ nums[i];
+        }
+
+        return xor ^ i;
     }
 
+
+    /**
+     * XOR Solution.
+     * @param nums
+     * @return
+     */
+    public int missingNumberV4(int[] nums) {
+        int res = nums.length;
+        for(int i = 0; i < nums.length; i++){
+            res ^= i;
+            res ^= nums[i];
+        }
+        return res;
+    }
+
+    /**
+     * Sum subtract Solution.
+     * @param nums
+     * @return
+     */
+    public int missingNumberV3(int[] nums) {
+        int n = nums.length;
+        int sum = n * (n + 1) / 2;
+        for (int num : nums) {
+            sum -= num;
+        }
+        return sum;
+    }
+
+    /**
+     * Time Complexity O(N)
+     * Space Complexity O(1)
+     *
+     * @param nums
+     * @return
+     */
+    public int missingNumberV2(int[] nums) {
+        long n = nums.length;
+        return (int)(n * (n+1) / 2 - IntStream.of(nums).sum());
+    }
+
+    /**
+     * Pretty simple since we are told that we are missing only one number in [1,n],
+     * we just need to look at the difference between the sum([1,n]) = n * (n+1) / 2 and the sum of nums in our array.
+     *
+     *
+     * @param nums
+     * @return
+     */
     public int missingNumberV1(int[] nums) {
-        return 0;
+        int n = nums.length;
+        int sum = 0;
+        for (int num : nums) {
+            sum += num;
+        }
+        int nSum = n * (n + 1) / 2;
+        return (nSum - sum);
+    }
+
+    public int missingNumberV0(int[] nums) {
+        Arrays.sort(nums);
+        int left = 0;
+        int right = nums.length;
+        int mid= (left + right)/2;
+        while(left < right){
+            mid = (left + right)/2;
+            if(nums[mid]>mid) {
+                right = mid;
+            } else {
+                left = mid+1;
+            }
+        }
+        return left;
     }
 
     /**
