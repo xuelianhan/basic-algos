@@ -53,13 +53,17 @@ public class ThirdMaximumNumber {
     }
 
 
+    /**
+     * Recommend this version.
+     * @param nums
+     * @return
+     */
     public static int thirdMaxV3(int[] nums) {
         TreeSet<Integer> set = new TreeSet<>();
         for (int num : nums) {
             set.add(num);
             if (set.size() > 3) {
                 set.pollFirst();
-
             }
         }
         return (set.size() < 3 ? set.pollLast() : set.pollFirst());
@@ -144,6 +148,8 @@ public class ThirdMaximumNumber {
     }
 
     /**
+     * Recommend this version.
+     *
      * Time Complexity O(N)
      * Input [1, 2] expected 2
      * Notice the constraint  -2^31 <= nums[i] <= 2^31 - 1

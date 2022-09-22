@@ -32,7 +32,12 @@ import java.util.PriorityQueue;
  */
 public class KthLargestElementInAnArray {
 
+
+
     /**
+     * Note that it is the kth largest element in the sorted order, not the kth distinct element.
+     * So we cannot use TreeSet to solve this problem, Because TreeSet will keep all elements distinct.
+     *
      * We can easily solve this problem in O(n + k.log(n)) by using a max-heap.
      * The idea is to simply construct a max-heap of size n and insert all the array elements [0…n-1] into it.
      * Then pop first k-1 elements from it.
