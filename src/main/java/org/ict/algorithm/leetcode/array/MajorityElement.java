@@ -36,14 +36,47 @@ import java.util.stream.Stream;
 public class MajorityElement {
 
     /**
-     * The Boyer-Moore Voting Algorithms
+     * Boyer-Moore Majority Voting Algorithm
      *
+     * Here is an intuition behind this algorithm:
+     * Since majority element occurs more than n/2 times,
+     * its frequency is greater than all other elements combined.
+     * Therefore, if we mark the occurrence of majority element as +1 and occurrence of any other element as -1,
+     * then overall sum of them would be definitely greater than zero.
+     *
+     * Another interesting analogy to understand this algorithm:
+     * Suppose we have n number of people, each holding one element of the array.
+     * Then, whenever two people find each other that neither holds the same array element as the other,
+     * they sit down.
+     * Eventually, in the end, if anyone is left standing,
+     * then that element is the majority element.
+     * Since majority element occurs more than n/2 times,
+     * we can guarantee that this approach will always find the majority element.
+     *
+     * Time Complexity O(N)
+     * Space Complexity O(1)
+     *
+     *
+     *
+     * @see <a href="http://www.cs.utexas.edu/~moore/best-ideas/mjrty/"></a>
      * @see <a href="https://www.enjoyalgorithms.com/blog/find-the-majority-element-in-an-array"></a>
      * @param nums
      * @return
      */
     public int majorityElementV4(int[] nums) {
-        return 0;
+        Integer majorityCandidate = null;
+        int count = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (count == 0) {
+                majorityCandidate = nums[i];
+            }
+            if (nums[i] == majorityCandidate) {
+                count += 1;
+            } else {
+                count -= 1;
+            }
+        }
+        return majorityCandidate;
     }
 
     /**
