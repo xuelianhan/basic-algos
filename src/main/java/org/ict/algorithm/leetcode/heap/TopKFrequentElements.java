@@ -64,12 +64,15 @@ public class TopKFrequentElements {
         for (int n: count.keySet()) {
             heap.add(n);
             if (heap.size() > k) {
+                /**
+                 * heap will poll the top element(smallest) out.
+                 */
                 heap.poll();
             }
         }
 
         /**
-         *  3. build an output array
+         *  3. build an output array and put the kth-biggest at the end position in the array.
          *   O(k log k) time.
          */
         int[] top = new int[k];
