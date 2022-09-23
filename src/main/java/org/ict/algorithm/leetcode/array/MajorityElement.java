@@ -1,9 +1,6 @@
 package org.ict.algorithm.leetcode.array;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.PriorityQueue;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.stream.Stream;
 
 /**
@@ -38,13 +35,32 @@ import java.util.stream.Stream;
  */
 public class MajorityElement {
 
+    /**
+     * @see <a href="https://www.enjoyalgorithms.com/blog/find-the-majority-element-in-an-array"></a>
+     * @param nums
+     * @return
+     */
     public int majorityElementV3(int[] nums) {
+        Arrays.sort(nums);
         int res = 0;
-        
+        int maxFrequency = 0;
+        for (int i = 1; i < nums.length;) {
+            if (nums[i] == nums[i-1]) {
+
+                i++;
+            } else {
+
+            }
+        }
         return res;
     }
 
     /**
+     * What is the right output for the case as following?
+     * e.g.
+     * Input: nums=[1,1,1,1,2,2,2,2]
+     * So in the above case, which on is the majority element? 1 or 2?
+     *
      * Cost 37 ms
      * Time Complexity O(N)
      * Space Complexity O(N)
