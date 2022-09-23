@@ -160,7 +160,7 @@ public class NumberOf1Bits {
             /**
              * must use >>>(unsigned right shift, only Java has this operation) instead of >>(signed right shift)
              *
-             * n >>> 1 will discard 1 bit at the right most, and complement one bit 0 at the left most.
+             * n >>> 1 will discard one bit at the right most, and complement one bit 0 at the left most.
              */
             n = n >>> 1;
         }
@@ -227,17 +227,6 @@ public class NumberOf1Bits {
          * for (int i = 0; i < 32; i++) {
          *     ans = ans + (n & 1);
          *     n = n >> 1;
-         * }
-         * return ans;
-         */
-
-        /**
-         * Brian Kernighan Algorithm
-         *
-         * int ans=0;
-         * while (n != 0) {
-         *    n = n & (n-1);
-         *    ans++;
          * }
          * return ans;
          */
