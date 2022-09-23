@@ -108,7 +108,7 @@ public class NumberOf1Bits {
      * @param n
      * @return
      */
-    public int hammingWeightV4(int n) {
+    public static int hammingWeightV4(int n) {
         int res = 0;
         while (n != 0) {
             /**
@@ -157,7 +157,7 @@ public class NumberOf1Bits {
      * @param n
      * @return
      */
-    public int hammingWeightV3(int n) {
+    public static int hammingWeightV3(int n) {
         int res = 0;
         while (n != 0) {
             res += n & 1;
@@ -169,34 +169,38 @@ public class NumberOf1Bits {
         return res;
     }
 
-    public int hammingWeightV2(int n) {
-        int res = 0;
-        for (int i = 0; i < 32; i++) {
-            res += n & 1;
-            /**
-             * using >>> is ok
-             */
-            n >>>= 1;
-        }
-        return res;
-    }
-
     /**
+     * Understand the following method.
+     * 
      * @see <a href="https://www.johncanessa.com/2021/12/10/leetcode-191-number-of-1-bits-in-java/"></a>
      * @param n
      * @return
      */
+    public static int hammingWeightV2(int n) {
+        int res = 0;
+        for (int i = 0; i < 32; i++) {
+            res += n & 1;
+            /**
+             * using >>> (unsigned right shift)
+             */
+            n = n >>> 1;
+        }
+        return res;
+    }
+
     public static int hammingWeightV1(int n) {
         int res = 0;
         for (int i = 0; i < 32; i++) {
             res += n & 1;
             /**
-             * using >> is ok
+             * using >> (signed right shift )is ok here, but for the safe,
+             * you'd better to use >>> instead of >>
              */
-            n >>= 1;
+            n = n >> 1;
         }
         return res;
     }
+
 
     /**
      * you need to treat n as an unsigned value
