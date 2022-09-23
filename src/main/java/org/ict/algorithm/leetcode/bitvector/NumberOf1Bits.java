@@ -104,6 +104,8 @@ public class NumberOf1Bits {
     }
 
     /**
+     * Brian Kernighan Algorithm
+     *
      * Understand the following method.
      * @param n
      * @return
@@ -142,18 +144,13 @@ public class NumberOf1Bits {
      *
      * We keep doing this until the input Integer is 0.
      * In Java we need to put attention on the fact that the maximum integer is 2147483647.
-     * Integer type in Java is signed and there is no unsigned int.
+     * Integer type in Java is a signed int and there is no unsigned int.
      * So the input 2147483648 is represented in Java as -2147483648 (in java int type has a cyclic representation,
      * that means Integer.MAX_VALUE+1==Integer.MIN_VALUE).
-     * This force us to use
      *
-     * n!=0
-     *
-     * in the while condition and we cannot use
-     *
-     * n>0
-     *
-     * because the input 2147483648 would correspond to -2147483648 in java and the code would not enter the while if the condition is n>0 for n=2147483648.
+     * This force us to use n!=0 in the while condition and
+     * we cannot use n>0 because the input 2147483648 would correspond to -2147483648 in java and
+     * the code would not enter the while if the condition is n>0 for n=2147483648.
      * @param n
      * @return
      */
@@ -162,7 +159,9 @@ public class NumberOf1Bits {
         while (n != 0) {
             res += n & 1;
             /**
-             * must use >>> instead of >>
+             * must use >>>(unsigned right shift, only Java has this operation) instead of >>(signed right shift)
+             *
+             * n >>> 1 will discard 1 bit at the right most, and complement one bit 0 at the left most.
              */
             n = n >>> 1;
         }
@@ -170,8 +169,7 @@ public class NumberOf1Bits {
     }
 
     /**
-     * Understand the following method.
-     * 
+     *
      * @see <a href="https://www.johncanessa.com/2021/12/10/leetcode-191-number-of-1-bits-in-java/"></a>
      * @param n
      * @return
