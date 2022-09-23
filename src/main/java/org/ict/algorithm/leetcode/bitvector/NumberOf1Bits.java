@@ -1,5 +1,7 @@
 package org.ict.algorithm.leetcode.bitvector;
 
+import java.util.Arrays;
+
 /**
  * Write a function that takes an unsigned integer and returns the number of '1' bits it has (also known as the Hamming weight).
  *
@@ -41,8 +43,173 @@ package org.ict.algorithm.leetcode.bitvector;
  */
 public class NumberOf1Bits {
 
-    // you need to treat n as an unsigned value
-    public int hammingWeight(int n) {
+    /**
+     * Why doesn't Java support unsigned ints?
+     * @see <a href="https://codefordev.com/discuss/5171515356/why-doesnt-java-support-unsigned-ints"></a>
+     *
+     * Answer #1
+     * This is from an interview with Gosling and others, about simplicity:
+     *
+     * Gosling: For me as a language designer,
+     * which I don't really count myself as these days,
+     * what "simple" really ended up meaning was could I expect J. Random Developer to hold the spec in his head.
+     * That definition says that, for instance,
+     * Java isn't -- and in fact a lot of these languages end up with a lot of corner cases,
+     * things that nobody really understands. Quiz any C developer about unsigned,
+     * and pretty soon you discover that almost no C developers actually understand what goes on with unsigned,
+     * what unsigned arithmetic is.
+     * Things like that made C complex.
+     * The language part of Java is, I think, pretty simple.
+     * The libraries you have to look up.
+     * -------------------------------------
+     * Answer #2
+     * With JDK8 there are new APIs for Long and Integer which provide helper methods when treating long and int values as unsigned values.
+     *
+     * compareUnsigned
+     * divideUnsigned
+     * parseUnsignedInt
+     * parseUnsignedLong
+     * remainderUnsigned
+     * toUnsignedLong
+     * toUnsignedString
+     *--------------------------------------
+     * Answer #3
+     * Reading between the lines, I think the logic was something like this:
+     *
+     * 1.generally, the Java designers wanted to simplify the repertoire of data types available
+     *
+     * 2.for everyday purposes, they felt that the most common need was for signed data types
+     *
+     * 3.for implementing certain algorithms, unsigned arithmetic is sometimes needed,
+     * but the kind of programmers that would be implementing such algorithms
+     * would also have the knowledge to "work round" doing unsigned arithmetic with signed data types
+     * Mostly, I'd say it was a reasonable decision.
+     * Possibly, I would have:
+     *
+     * made byte unsigned, or at least have provided a signed/unsigned alternatives,
+     * possibly with different names,
+     * for this one data type (making it signed is good for consistency, but when do you ever need a signed byte?)
+     * done away with 'short' (when did you last use 16-bit signed arithmetic?)
+     * Still, with a bit of kludging, operations on unsigned values up to 32 bits aren't tooo bad,
+     * and most people don't need unsigned 64-bit division or comparison.
+     * -------------------------------------
+     *
+     *
+     * @param args
+     */
+    public static void main(String[] args) {
+        int n = -3;
+        int res = hammingWeightV1(n);
+        System.out.println(res);
+    }
 
+    /**
+     * Understand the following method.
+     * @param n
+     * @return
+     */
+    public int hammingWeightV4(int n) {
+        int res = 0;
+        while (n != 0) {
+            /**
+             * if n = 1100, n-1=1011
+             * n & (n - 1) = 1000
+             * It set the right most 1 in to 0.
+             * final effect: 1100 --> 1000
+             */
+            n = n & (n - 1);
+            res++;
+        }
+        return res;
+    }
+
+    /**
+     * Understand the following method.
+     * @param n
+     * @return
+     */
+    public int hammingWeightV3(int n) {
+        int res = 0;
+        while (n != 0) {
+            res += n & 1;
+            /**
+             * must use >>> instead of >>
+             */
+            n = n >>> 1;
+        }
+        return res;
+    }
+
+    public int hammingWeightV2(int n) {
+        int res = 0;
+        for (int i = 0; i < 32; i++) {
+            res += n & 1;
+            /**
+             * using >>> is ok
+             */
+            n >>>= 1;
+        }
+        return res;
+    }
+
+    /**
+     * @see <a href="https://www.johncanessa.com/2021/12/10/leetcode-191-number-of-1-bits-in-java/"></a>
+     * @param n
+     * @return
+     */
+    public static int hammingWeightV1(int n) {
+        int res = 0;
+        for (int i = 0; i < 32; i++) {
+            res += n & 1;
+            /**
+             * using >> is ok
+             */
+            n >>= 1;
+        }
+        return res;
+    }
+
+    /**
+     * you need to treat n as an unsigned value
+     *
+     *
+     * 11111111111111111111111111111101
+     * as -3 expected 31, not -2
+     * So the following is not right in Java, but right in other languages.
+     * @see <a href="https://www.tutorialcup.com/interview/algorithm/number-of-1-bits.htm"></a>
+     * @param n
+     * @return
+     */
+    public static int hammingWeightWrongAnswerInJava(int n) {
+        return 0;
+        /**
+         * int res = 0;
+         * while (n != 0) {
+         *     res += n % 2;
+         *     n = n / 2;
+         * }
+         * return res;
+         */
+
+        /**
+         *
+         * int ans=0;
+         * for (int i = 0; i < 32; i++) {
+         *     ans = ans + (n & 1);
+         *     n = n >> 1;
+         * }
+         * return ans;
+         */
+
+        /**
+         * Brian Kernighan Algorithm
+         *
+         * int ans=0;
+         * while (n != 0) {
+         *    n = n & (n-1);
+         *    ans++;
+         * }
+         * return ans;
+         */
     }
 }
