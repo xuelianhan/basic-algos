@@ -36,20 +36,31 @@ import java.util.stream.Stream;
 public class MajorityElement {
 
     /**
+     * The Boyer-Moore Voting Algorithms
+     *
      * @see <a href="https://www.enjoyalgorithms.com/blog/find-the-majority-element-in-an-array"></a>
      * @param nums
      * @return
      */
+    public int majorityElementV4(int[] nums) {
+        return 0;
+    }
+
+    /**
+     * Improvement's of majorityElementV2
+     * cost 33ms.
+     *
+     *
+     * @param nums
+     * @return
+     */
     public int majorityElementV3(int[] nums) {
-        Arrays.sort(nums);
-        int res = 0;
-        int maxFrequency = 0;
-        for (int i = 1; i < nums.length;) {
-            if (nums[i] == nums[i-1]) {
-
-                i++;
-            } else {
-
+        int res = Integer.MIN_VALUE;
+        Map<Integer, Integer> frequency = new HashMap<>();
+        for (int num : nums) {
+            frequency.put(num, frequency.getOrDefault(num, 0) + 1);
+            if (frequency.get(num) > nums.length/2) {
+                return num;
             }
         }
         return res;
