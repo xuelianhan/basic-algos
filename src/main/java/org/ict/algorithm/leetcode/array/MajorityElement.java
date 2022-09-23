@@ -38,9 +38,31 @@ import java.util.stream.Stream;
  */
 public class MajorityElement {
 
+    public int majorityElementV3(int[] nums) {
+        int res = 0;
+        
+        return res;
+    }
+
+    /**
+     * Cost 37 ms
+     * Time Complexity O(N)
+     * Space Complexity O(N)
+     * @param nums
+     * @return
+     */
     public int majorityElementV2(int[] nums) {
-        //todo
-        return 0;
+        int maxFrequency = 0;
+        int res = Integer.MIN_VALUE;
+        Map<Integer, Integer> frequency = new HashMap<>();
+        for (int num : nums) {
+            frequency.put(num, frequency.getOrDefault(num, 0) + 1);
+            if (frequency.get(num) > maxFrequency) {
+                maxFrequency = frequency.get(num);
+                res = num;
+            }
+        }
+        return res;
     }
 
 
