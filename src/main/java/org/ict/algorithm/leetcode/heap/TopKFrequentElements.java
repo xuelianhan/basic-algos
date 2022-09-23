@@ -36,6 +36,13 @@ import java.util.Queue;
  */
 public class TopKFrequentElements {
 
+    /**
+     * A simplified version of topKFrequent
+     *
+     * @param nums
+     * @param k
+     * @return
+     */
     public int[] topKFrequentV2(int[] nums, int k) {
         if (k == nums.length) {
             return nums;
@@ -51,7 +58,8 @@ public class TopKFrequentElements {
         }
 
         /**
-         * init heap 'the less frequent element first'
+         * init heap 'the less frequent element first'.
+         * create a MinPQ here.
          */
         Queue<Integer> heap = new PriorityQueue<>(
                 (n1, n2) -> count.get(n1) - count.get(n2));

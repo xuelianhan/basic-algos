@@ -2,6 +2,7 @@ package org.ict.algorithm.leetcode.array;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.PriorityQueue;
 import java.util.TreeMap;
 import java.util.stream.Stream;
 
@@ -37,9 +38,42 @@ import java.util.stream.Stream;
  */
 public class MajorityElement {
 
-    public int majorityElementV1(int[] nums) {
-
+    public int majorityElementV2(int[] nums) {
+        //todo
         return 0;
+    }
+
+
+    /**
+     * Solution Using MinPQ(min-top-heap), cost 19 ms
+     * @param nums
+     * @return
+     */
+    public int majorityElementV1(int[] nums) {
+        /**
+         * 1.Counting frequency of each num in the array.
+         */
+        Map<Integer, Integer> frequency = new HashMap<>();
+        for (int num : nums) {
+            frequency.put(num, frequency.getOrDefault(num, 0) + 1);
+        }
+
+        /**
+         * 2.Creating a MinPQ
+         */
+        PriorityQueue<Integer> queue = new PriorityQueue<>(((o1, o2) -> frequency.get(o1) - frequency.get(o2)));
+
+        /**
+         * 3.Build a heap and keep the heap size at 1
+         * Keep the most frequently element in the heap.
+         */
+        for (int num : frequency.keySet()) {
+            queue.offer(num);
+            if (queue.size() > 1) {
+                queue.poll();
+            }
+        }
+        return queue.peek();
     }
 
 
