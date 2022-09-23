@@ -36,7 +36,10 @@ import java.util.stream.Stream;
 public class MajorityElement {
 
     /**
+     *
      * Boyer-Moore Majority Voting Algorithm
+     *
+     * Understanding this most effective solution!
      *
      * Here is an intuition behind this algorithm:
      * Since majority element occurs more than n/2 times,
