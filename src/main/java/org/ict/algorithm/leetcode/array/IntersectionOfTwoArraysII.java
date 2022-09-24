@@ -39,6 +39,11 @@ import java.util.*;
  * LC350
  */
 public class IntersectionOfTwoArraysII {
+    public int[] intersectV3(int[] nums1, int[] nums2) {
+
+        return null;
+    }
+
 
     /**
      * Notice the constraints:
@@ -54,7 +59,7 @@ public class IntersectionOfTwoArraysII {
      * @param nums2
      * @return
      */
-    public int[] intersectV1(int[] nums1, int[] nums2) {
+    public int[] intersectV2(int[] nums1, int[] nums2) {
         int[] count1 = new int[1001];
         int[] count2 = new int[1001];
 
@@ -88,6 +93,26 @@ public class IntersectionOfTwoArraysII {
         }
         return res;
     }
+
+    public int[] intersectV1(int[] nums1, int[] nums2) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int num : nums1) {
+            map.put(num ,map.getOrDefault(num, 0) + 1);
+        }
+
+        List<Integer> list = new ArrayList<>();
+        for (int num : nums2) {
+            if (map.containsKey(num) && map.getOrDefault(num, 0) > 0) {
+                /**
+                 * 
+                 */
+                list.add(num);
+                map.put(num, map.get(num) - 1);
+            }
+        }
+        return null;
+    }
+
 
     public int[] intersect(int[] nums1, int[] nums2) {
         /**
