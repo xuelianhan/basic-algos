@@ -40,9 +40,53 @@ import java.util.*;
  */
 public class IntersectionOfTwoArraysII {
 
+    /**
+     * Notice the constraints:
+     * 1 <= nums1.length, nums2.length <= 1000
+     * 0 <= nums1[i], nums2[i] <= 1000
+     *
+     * Input: nums1 = [4,9,5], nums2 = [9,4,9,8,4]
+     *        0 1 2 3 4 5 6 7 8 9 10
+     * count1:        1 1       1
+     * count2:        2 0     1 2
+     *
+     * @param nums1
+     * @param nums2
+     * @return
+     */
     public int[] intersectV1(int[] nums1, int[] nums2) {
+        int[] count1 = new int[1001];
+        int[] count2 = new int[1001];
 
-        return null;
+        /**
+         * 1.Counting frequency of numbers in nums1 and nums2
+         */
+        for (int i = 0; i < nums1.length; i++) {
+            count1[nums1[i]]++;
+        }
+        for (int i = 0; i < nums2.length; i++) {
+            count2[nums2[i]]++;
+        }
+
+        /**
+         * 2.when number appears in both nums1 and nums2, we collect this number.
+         */
+        List<Integer> list = new ArrayList<>();
+        for (int i = 0; i < count1.length; i++) {
+            if (count1[i] > 0 && count2[i] > 0) {
+                int repeatTimes = Math.min(count1[i], count2[i]);
+                while (repeatTimes > 0) {
+                    list.add(i);
+                    repeatTimes--;
+                }
+            }
+        }
+
+        int[] res = new int[list.size()];
+        for(int i = 0; i < list.size(); i++) {
+            res[i] = list.get(i);
+        }
+        return res;
     }
 
     public int[] intersect(int[] nums1, int[] nums2) {
