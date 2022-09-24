@@ -52,6 +52,45 @@ public class IntersectionOfTwoArraysII {
      * and the memory is limited such that you cannot load all elements into the memory at once?
      *
      *
+     * Input: nums1 = [4,9,5], nums2 = [9,4,9,8,4]
+     *
+     * After sorts:
+     * 0  1  2  3  4
+     * -------------
+     * 4  5  9
+     * p1
+     *
+     * 4  4  8  9  9
+     * p2
+     * list.add(4);
+     * -------------
+     * 4  5  9
+     *    p1
+     *
+     * 4  4  8  9  9
+     *    p2
+     *--------------
+     * 4  5  9
+     *    p1
+     *
+     * 4  4  8  9  9
+     *       p2
+     *--------------
+     * 4  5  9
+     *      p1
+     *
+     * 4  4  8  9  9
+     *       p2
+     *--------------
+     * 4  5  9
+     *      p1
+     *
+     * 4  4  8  9  9
+     *          p2
+     * list.add(9)
+     * while-loop-end
+     * list:4, 9
+     *--------------
      * @param nums1
      * @param nums2
      * @return
