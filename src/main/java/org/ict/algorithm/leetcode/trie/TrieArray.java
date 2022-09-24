@@ -1,7 +1,7 @@
 package org.ict.algorithm.leetcode.trie;
 
 /**
- * @see https://www.programcreek.com/2014/05/leetcode-implement-trie-prefix-tree-java/
+ * @see <a href="https://www.programcreek.com/2014/05/leetcode-implement-trie-prefix-tree-java/"></a>
  */
 public class TrieArray {
     private TrieNode root;
