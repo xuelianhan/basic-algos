@@ -33,18 +33,18 @@ import java.util.Set;
 public class IntersectionOfTwoArrays {
 
     public int[] intersection(int[] nums1, int[] nums2) {
-        Set<Integer> set = new HashSet<>();
+        Set<Integer> set1 = new HashSet<>();
         for (int num : nums1) {
-            set.add(num);
+            set1.add(num);
         }
-        Set<Integer> result = new HashSet<>();
+        Set<Integer> set2 = new HashSet<>();
         for (int num : nums2) {
-            if (set.contains(num)) {
-                result.add(num);
+            if (set1.contains(num)) {
+                set2.add(num);
             }
         }
-        int[] res = new int[result.size()];
-        Iterator<Integer> iter = result.iterator();
+        int[] res = new int[set2.size()];
+        Iterator<Integer> iter = set2.iterator();
         int i = 0;
         while (iter.hasNext()) {
             res[i] = iter.next();

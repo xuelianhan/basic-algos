@@ -39,9 +39,48 @@ import java.util.*;
  * LC350
  */
 public class IntersectionOfTwoArraysII {
-    public int[] intersectV3(int[] nums1, int[] nums2) {
 
-        return null;
+    /**
+     * Follow Up:
+     * What if the given array is already sorted?
+     * How would you optimize your algorithm?
+     *
+     * What if nums1's size is small compared to nums2's size?
+     * Which algorithm is better?
+     *
+     * What if elements of nums2 are stored on disk,
+     * and the memory is limited such that you cannot load all elements into the memory at once?
+     *
+     *
+     * @param nums1
+     * @param nums2
+     * @return
+     */
+    public int[] intersectV3(int[] nums1, int[] nums2) {
+        Arrays.sort(nums1);
+        Arrays.sort(nums2);
+        int p1 = 0;
+        int p2 = 0;
+        List<Integer> list = new ArrayList<>();
+        while (p1 < nums1.length && p2 < nums2.length) {
+            if (nums1[p1] == nums2[p2]) {
+                /**
+                 * Adding before increment both pointers.
+                 */
+                list.add(nums1[p1]);
+                p1++;
+                p2++;
+            } else if (nums1[p1] < nums2[p2]) {
+                p1++;
+            } else {
+                p2++;
+            }
+        }
+        int[] res = new int[list.size()];
+        for(int i = 0; i < list.size(); i++) {
+            res[i] = list.get(i);
+        }
+        return res;
     }
 
 
@@ -74,7 +113,7 @@ public class IntersectionOfTwoArraysII {
         }
 
         /**
-         * 2.when number appears in both nums1 and nums2, we collect this number.
+         * 2.we collect this number at least times, when number appears in both nums1 and nums2.
          */
         List<Integer> list = new ArrayList<>();
         for (int i = 0; i < count1.length; i++) {
@@ -94,6 +133,16 @@ public class IntersectionOfTwoArraysII {
         return res;
     }
 
+
+    /**
+     * Understanding the following solution.
+     *
+     * Improvement's version of intersect using one HashMap instead of two HashMaps.
+     *
+     * @param nums1
+     * @param nums2
+     * @return
+     */
     public int[] intersectV1(int[] nums1, int[] nums2) {
         Map<Integer, Integer> map = new HashMap<>();
         for (int num : nums1) {
@@ -102,15 +151,22 @@ public class IntersectionOfTwoArraysII {
 
         List<Integer> list = new ArrayList<>();
         for (int num : nums2) {
+            /**
+             * A trick here.
+             */
             if (map.containsKey(num) && map.getOrDefault(num, 0) > 0) {
-                /**
-                 * 
-                 */
-                list.add(num);
                 map.put(num, map.get(num) - 1);
+                list.add(num);
             }
         }
-        return null;
+        /**
+         * 3.Convert to int array.
+         */
+        int[] res = new int[list.size()];
+        for(int i = 0; i < list.size(); i++) {
+            res[i] = list.get(i);
+        }
+        return res;
     }
 
 
