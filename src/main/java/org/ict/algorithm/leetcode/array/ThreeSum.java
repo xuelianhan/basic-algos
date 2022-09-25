@@ -1,8 +1,6 @@
 package org.ict.algorithm.leetcode.array;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * 
@@ -50,41 +48,110 @@ import java.util.List;
  */
 public class ThreeSum {
 
-	public List<List<Integer>> threeSumV2(int[] nums) {
-		List<List<Integer>> res = new LinkedList<>();
 
-		return res;
-	}
-	
 	/**
-	 * The idea is to sort an input array and then run through all indices of a possible first element of a triplet. 
-	 * For each possible first element we make a standard bi-directional 2Sum sweep of the remaining part of the array. 
-	 * Also we want to skip equal elements to avoid duplicates in the answer without making a set or smth like that.
+	 * Understand this solution.
+	 * @param nums
+	 * @return
+	 */
+	public List<List<Integer>> threeSumV1(int[] nums) {
+		if (nums == null || nums.length < 3) {
+			return null;
+		}
+		/**
+		 * 1.Use Set to remove duplicated triplets.
+		 */
+		Set<List<Integer>> set = new HashSet<>();
+		/**
+		 * 2.Sort before using two-pointer.
+		 */
+		Arrays.sort(nums);
+		for (int i = 0; i < nums.length - 2; i++) {
+			int j = i + 1;
+			int k = nums.length - 1;
+			/**
+			 * 3.Process like binary search.
+			 */
+			while (j < k) {
+				int sum = nums[i] + nums[j] + nums[k];
+				if (sum == 0) {
+					set.add(Arrays.asList(nums[i], nums[j], nums[k]));
+					j++;
+					k--;
+				} else if (sum > 0) {
+					k--;
+				} else if (sum < 0) {
+					j++;
+				}
+			}
+		}
+		/**
+		 * 4.Convert set back to list.
+		 */
+		return new ArrayList<>(set);
+	}
+
+
+	/**
+	 * A basic idea is to convert it to Two-Sum problem.
+	 * x + y + z = 0
+	 * x + y = -z
+	 * target is -z, we need to find two numbers add up to -z in the array.
+	 *
+	 *
+	 * Input: nums = [-1,0,1,2,-1,-4]
+	 * After sort: = [-4,-1,-1,0,1,2]
+	 *
+	 * Expected: [[-1,-1,2],[-1,0,1]]
+	 *
+	 * @param nums
+	 * @return
 	 */
 	public List<List<Integer>> threeSum(int[] nums) {
-	    Arrays.sort(nums);
-	    List<List<Integer>> res = new LinkedList<>(); 
-	    for (int i = 0; i < nums.length-2; i++) {
-	        if (i == 0 || (i > 0 && nums[i] != nums[i-1])) {
-	            int lo = i+1, hi = nums.length-1, sum = 0 - nums[i];
-	            while (lo < hi) {
-	                if (nums[lo] + nums[hi] == sum) {
-	                    res.add(Arrays.asList(nums[i], nums[lo], nums[hi]));
-	                    while (lo < hi && nums[lo] == nums[lo+1]) {
-	                    	lo++;
-	                    }
-	                    while (lo < hi && nums[hi] == nums[hi-1]) {
-	                    	hi--;
-	                    }
-	                    lo++; hi--;
-	                } else if (nums[lo] + nums[hi] < sum) {
-	                	lo++; 
-	                } else { 
-	                	hi--; 
-	                }
-	           }
-	        }
-	    }
-	    return res;
+		if (nums == null || nums.length < 3) {
+			return null;
+		}
+		/**
+		 * Use Set to remove duplicated triplets.
+		 */
+		Set<List<Integer>> set = new HashSet<>();
+		Arrays.sort(nums);
+		for (int i = 0; i < nums.length-2; i++) {
+			/**
+			 * target = -z
+			 */
+			int target = -nums[i];
+			Map<Integer, Integer> map = new HashMap<>();
+			for (int j = i + 1; j < nums.length; j++) {
+				/**
+				 * y = -z - x
+				 */
+				int complement = target - nums[j];
+				if (map.containsKey(complement)) {
+					List<Integer> list = new ArrayList<>();
+					/**
+					 * x = nums[j]
+					 * y = complement
+					 * z = -target
+					 */
+					list.add(nums[j]);
+					list.add(complement);
+					list.add(-target);
+
+					set.add(list);
+				}
+				/**
+				 * x = nums[j]
+				 */
+				map.put(nums[j], j);
+			}
+		}
+		/**
+		 * Convert set back to list.
+		 */
+		return new ArrayList<>(set);
 	}
+
+	
+
 }
