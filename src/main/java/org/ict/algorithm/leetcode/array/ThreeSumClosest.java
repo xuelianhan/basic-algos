@@ -35,11 +35,42 @@ import java.util.Arrays;
  */
 public class ThreeSumClosest {
 
-    public int threeSumClosestV2(int[] nums, int target) {
-        return 0;
+    public int threeSumClosestV1(int[] nums, int target) {
+        int result = nums[0] + nums[1] + nums[nums.length - 1];
+        Arrays.sort(nums);
+        for (int i = 0; i < nums.length - 2; i++) {
+            /**
+             * Skip duplicated elements in array after being sorted.
+             */
+            if (i > 0 && nums[i] == nums[i-1]) {
+                continue;
+            }
+            int j = i + 1;
+            int k = nums.length - 1;
+            while (j < k) {
+                int sum = nums[i] + nums[j] + nums[k];
+                if (sum == target) {
+                    return sum;
+                }
+                if (sum > target) {
+                    k--;
+                } else {
+                    j++;
+                }
+                if (Math.abs(sum - target) < Math.abs(result - target)) {
+                    result = sum;
+                }
+            }
+        }
+        return result;
     }
 
+
+
 	/**
+     * Understanding the following solution.
+     *
+     *
 	 * Similar to 3 Sum problem,
      * use 3 pointers to point the current element, the next element and the last element.
 	 * If the sum is less than target,
@@ -67,13 +98,13 @@ public class ThreeSumClosest {
                 if (sum == target) {
                     return sum;
                 }
+                if (Math.abs(sum - target) < Math.abs(result - target)) {
+                    result = sum;
+                }
                 if (sum > target) {
                     k--;
                 } else {
                     j++;
-                }
-                if (Math.abs(sum - target) < Math.abs(result - target)) {
-                    result = sum;
                 }
             }
         }

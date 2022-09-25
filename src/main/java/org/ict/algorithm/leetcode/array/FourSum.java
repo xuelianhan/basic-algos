@@ -32,19 +32,21 @@ public class FourSum {
 	 */
 	public List<List<Integer>> fourSum(int[] num, int target) {
 	    ArrayList<List<Integer>> ans = new ArrayList<>();
-	    if(num.length<4)return ans;
+	    if (num.length < 4) {
+	    	return ans;
+		}
 	    Arrays.sort(num);
-	    for(int i = 0; i < num.length-3; i++){
-	        if(num[i] + num[i+1] + num[i+2] + num[i+3] > target) {
+	    for(int i = 0; i < num.length - 3; i++){
+	        if (num[i] + num[i + 1] + num[i + 2] + num[i + 3] > target) {
 	        	break; //first candidate too large, search finished
 	        }
-	        if(num[i] + num[num.length-1] + num[num.length-2] + num[num.length-3] < target) {
+	        if (num[i] + num[num.length - 1] + num[num.length - 2] + num[num.length - 3] < target) {
 	        	continue; //first candidate too small
 	        }
-	        if(i > 0 && num[i] == num[i-1]) {
+	        if (i > 0 && num[i] == num[i-1]) {
 	        	continue; //prevents duplicate result in ans list
 	        }
-	        for(int j = i+1; j < num.length-2; j++) {
+	        for (int j = i+1; j < num.length-2; j++) {
 	            if(num[i] + num[j] + num[j+1] + num[j+2] > target) {
 	            	break; //second candidate too large
 	            }
