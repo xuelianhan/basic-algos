@@ -48,6 +48,40 @@ import java.util.*;
  */
 public class ThreeSum {
 
+	public List<List<Integer>> threeSumV2(int[] nums) {
+		if (nums == null || nums.length < 3) {
+			return null;
+		}
+
+		Set<List<Integer>> set = new HashSet<>();
+		Arrays.sort(nums);
+		for (int i = 0; i < nums.length - 2; i++) {
+			/**
+			 * Skip continuous duplicated items.
+			 */
+			if (i > 0 && nums[i] == nums[i-1]) {
+				continue;
+			}
+			int j = i + 1;
+			int k = nums.length - 1;
+			while (j < k) {
+				int sum = nums[i] + nums[j] + nums[k];
+				if (sum == 0) {
+					/**
+					 * short j++, k-- to one line.
+					 */
+					set.add(Arrays.asList(nums[i], nums[j++], nums[k--]));
+				} else if (sum > 0) {
+					k--;
+				} else if (sum < 0) {
+					j++;
+				}
+			}
+		}
+
+		return new ArrayList<>(set);
+	}
+
 
 	/**
 	 * Understand this solution.
