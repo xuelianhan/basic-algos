@@ -1,5 +1,7 @@
 package org.ict.algorithm.leetcode.linkedlist;
 
+import java.util.*;
+
 /**
  * You are given the head of a linked list with n nodes.
  *
@@ -35,10 +37,66 @@ package org.ict.algorithm.leetcode.linkedlist;
  */
 public class NextGreaterNodeInLinkedList {
 
+    public static void main(String[] args) {
+        ListNode head = new ListNode(2);
+        ListNode seven = new ListNode(7);
+        head.next = seven;
+        ListNode four = new ListNode(4);
+        seven.next = four;
+        ListNode three = new ListNode(3);
+        four.next = three;
+        ListNode five = new ListNode(5);
+        three.next = five;
+        int[] res = nextLargerNodes(head);
+        System.out.println(Arrays.toString(res));
+    }
 
-    public int[] nextLargerNodes(ListNode head) {
-        //todo
+    public int[] nextLargerNodesV1(ListNode head) {
         return null;
+    }
+
+    /**
+     *
+     * Monotonic Bottom-Top Decreasing Stack.
+     *
+     * Use a Bottom-Top Decreasing Stack to store the current most big value.
+     * 
+     * Time Complexity O(2*N).
+     * Space Complexity O(N).
+     *
+     * @param head
+     * @return
+     */
+    public static int[] nextLargerNodes(ListNode head) {
+        if (head == null) {
+            return null;
+        }
+        if (head.next == null) {
+            return new int[]{0};
+        }
+        Map<ListNode, Integer> map = new HashMap<>();
+        Stack<ListNode> stack = new Stack<>();
+        int len = 0;
+        ListNode cur = head;
+        while (cur != null) {
+            while (!stack.isEmpty() && stack.peek().val < cur.val) {
+                ListNode top = stack.pop();
+                map.put(top, cur.val);
+            }
+            stack.push(cur);
+            cur = cur.next;
+            len++;
+        }
+        int[] res = new int[len];
+        int i = 0;
+        ListNode iter = head;
+        while (iter != null) {
+            int x = map.getOrDefault(iter, 0);
+            res[i] = x;
+            iter = iter.next;
+            i++;
+        }
+        return res;
     }
 
 

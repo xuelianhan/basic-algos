@@ -8,3 +8,4 @@ The minima/maxima elements
 When an element is popped from the monotonic stack, it will never be utilised again.
 The monotonic stack problem is mainly the previous/next smaller/larger problem. 
 It maintains monotonicity while popping elements when a new item is pushed into the stack.
+
