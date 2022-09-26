@@ -1,68 +1,77 @@
 package org.ict.algorithm.leetcode.array;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
- * 
- * Given an array nums of n integers and an integer target, 
- * are there elements a, b, c, and d in nums such that a + b + c + d = target? 
- * Find all unique quadruplets in the array which gives the sum of target.
- * Note:
- * The solution set must not contain duplicate quadruplets.
- * Example:
- * Given array nums = [1, 0, -1, 0, -2, 2], and target = 0.
- * A solution set is:
-[
-  [-1,  0, 0, 1],
-  [-2, -1, 1, 2],
-  [-2,  0, 0, 2]
-]
+ * Given an array nums of n integers,
+ * return an array of all the unique quadruplets [nums[a], nums[b], nums[c], nums[d]] such that:
  *
+ * 0 <= a, b, c, d < n
+ * a, b, c, and d are distinct.
+ * nums[a] + nums[b] + nums[c] + nums[d] == target
+ * You may return the answer in any order.
+ *
+ *
+ *
+ * Example 1:
+ *
+ * Input: nums = [1,0,-1,0,-2,2], target = 0
+ * Output: [[-2,-1,1,2],[-2,0,0,2],[-1,0,0,1]]
+ * Example 2:
+ *
+ * Input: nums = [2,2,2,2,2], target = 8
+ * Output: [[2,2,2,2]]
+ *
+ *
+ * Constraints:
+ *
+ * 1 <= nums.length <= 200
+ * -10^9 <= nums[i] <= 10^9
+ * -10^9 <= target <= 10^9
  * LC18
  */
 public class FourSum {
+	
 
 	/**
-	 *  Basic idea is using subfunctions for 3sum and 2sum, 
+	 *  Basic idea is using sub-functions for 3sum and 2sum,
 	 *  and keeping throwing all impossible cases. 
 	 *  O(n^3) time complexity, 
 	 *  O(1) extra space complexity.
 	 */
-	public List<List<Integer>> fourSum(int[] num, int target) {
+	public List<List<Integer>> fourSumV1(int[] nums, int target) {
 	    ArrayList<List<Integer>> ans = new ArrayList<>();
-	    if (num.length < 4) {
+	    if (null == null || nums.length < 4) {
 	    	return ans;
 		}
-	    Arrays.sort(num);
-	    for(int i = 0; i < num.length - 3; i++){
-	        if (num[i] + num[i + 1] + num[i + 2] + num[i + 3] > target) {
+	    Arrays.sort(nums);
+	    for(int i = 0; i < nums.length - 3; i++){
+	        if (nums[i] + nums[i + 1] + nums[i + 2] + nums[i + 3] > target) {
 	        	break; //first candidate too large, search finished
 	        }
-	        if (num[i] + num[num.length - 1] + num[num.length - 2] + num[num.length - 3] < target) {
+	        if (nums[i] + nums[nums.length - 1] + nums[nums.length - 2] + nums[nums.length - 3] < target) {
 	        	continue; //first candidate too small
 	        }
-	        if (i > 0 && num[i] == num[i-1]) {
+	        if (i > 0 && nums[i] == nums[i-1]) {
 	        	continue; //prevents duplicate result in ans list
 	        }
-	        for (int j = i+1; j < num.length-2; j++) {
-	            if(num[i] + num[j] + num[j+1] + num[j+2] > target) {
+	        for (int j = i+1; j < nums.length-2; j++) {
+	            if(nums[i] + nums[j] + nums[j+1] + nums[j+2] > target) {
 	            	break; //second candidate too large
 	            }
-	            if(num[i] + num[j] + num[num.length-1] + num[num.length-2] < target) {
+	            if(nums[i] + nums[j] + nums[nums.length-1] + nums[nums.length-2] < target) {
 	            	continue; //second candidate too small
 	            }
-	            if(j > i+1 && num[j] == num[j-1]) {
+	            if(j > i+1 && nums[j] == nums[j-1]) {
 	            	continue; //prevents duplicate results in ans list
 	            }
-	            int low = j+1, high = num.length-1;
+	            int low = j+1, high = nums.length-1;
 	            while (low < high) {
-	                int sum = num[i] + num[j] + num[low] + num[high];
+	                int sum = nums[i] + nums[j] + nums[low] + nums[high];
 	                if (sum == target) { 
-	                    ans.add(Arrays.asList(num[i], num[j], num[low], num[high]));
-	                    while(low < high && num[low] == num[low+1])low++; //skipping over duplicate on low
-	                    while(low < high && num[high] == num[high-1])high--; //skipping over duplicate on high
+	                    ans.add(Arrays.asList(nums[i], nums[j], nums[low], nums[high]));
+	                    while(low < high && nums[low] == nums[low+1])low++; //skipping over duplicate on low
+	                    while(low < high && nums[high] == nums[high-1])high--; //skipping over duplicate on high
 	                    low++; 
 	                    high--;
 	                } else if (sum < target) {
@@ -76,6 +85,56 @@ public class FourSum {
 	        }
 	    }
 	    return ans;
+	}
+
+
+	/**
+	 *
+	 * [-2,-1,0,0,1,2], target=0
+	 * [2,2,2,2,2], target=8
+	 *
+	 * [0,0,0,0], target=0
+	 *
+	 * [-5,-4,-3,-2,1,3,3,5], target=-11
+	 *  i  j  low        high
+	 *
+	 *
+	 *
+	 * @param nums
+	 * @param target
+	 * @return
+	 */
+	public List<List<Integer>> fourSum(int[] nums, int target) {
+		List<List<Integer>> res = new ArrayList<>();
+		if (null == nums || nums.length < 4) {
+			return res;
+		}
+		if (target < 0 && nums[0] > 0) {
+			return res;
+		}
+		Arrays.sort(nums);
+		Set<List<Integer>> set = new HashSet<>();
+		for (int i = 0; i < nums.length - 2; i++) {
+			for (int j = i+1; j < nums.length - 2; j++) {
+				int low = j+1;
+				int high = nums.length - 1;
+				while (low < high) {
+					int sum = nums[i] + nums[j] + nums[low] + nums[high];
+					if (sum == target) {
+						/**
+						 * short j++, k-- to one line.
+						 */
+						set.add(Arrays.asList(nums[i], nums[j], nums[low++], nums[high--]));
+					} else if (sum > target) {
+						high--;
+					} else if (sum < target) {
+						low++;
+					}
+				}
+			}
+		}
+
+		return new ArrayList<>(set);
 	}
 }
 

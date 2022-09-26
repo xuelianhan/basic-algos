@@ -38,8 +38,35 @@ package org.ict.algorithm.leetcode.math;
  */
 public class PowerOfThree {
 
+    /**
+     * General Solution to check if any number N is a power of P:
+     *
+     *
+     * log3(81) = 4
+     * log3(84) = 4.0222
+     *
+     * if any number B is some power of A, then logB to the base A
+     * will always give an integer as illustrated above.
+     *
+     * Log has a property where Log(a(b)) = Log(b)/Log(a)
+     * Therefore, power can be calculated as power(P) = Log(b)/Log(a)
+     * e.g.
+     * log3(81) = Log(81)/Log(3) = 4
+     * log3(84) = Log(84)/Log(3) = 4.0222
+     * if P is not an integer then B is not power of A.
+     *
+     * @param n
+     * @return
+     */
+    public boolean isPowerOfThreeV4(int n) {
+        int a = 3;
+        int b = n;
+        double p = Math.log10(b)/Math.log10(a);
+        return (p - (int)p) == 0;
+    }
+
     public boolean isPowerOfThreeV3(int n) {
-        return false;
+        return ((n > 0) && (1162261467 % n == 0));
     }
 
 
@@ -52,7 +79,7 @@ public class PowerOfThree {
      * @return
      */
     public boolean isPowerOfThreeV2(int n) {
-        return ((n > 0) && (1162261467 % n == 0));
+        return ((n > 0) && (Math.pow(3, 19) % n == 0));
     }
 
     /**
@@ -77,6 +104,10 @@ public class PowerOfThree {
      * Careful with floating point rounding errors, use a math calculator like Wolfram Alpha to calculate the constant.
      * For example for 2^63-1 (signed int64) both C++ and Java give 4052555153018976256,
      * but the correct value is 4052555153018976267.
+     *
+     * The positive divisors of 319 are exactly the powers of 3 from 30 to 319.
+     * That's all powers of 3 in the possible range here (signed 32-bit integer).
+     * So just check whether the number is positive and whether it divides 319.
      * @param n
      * @return
      */

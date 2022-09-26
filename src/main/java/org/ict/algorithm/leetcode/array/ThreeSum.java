@@ -52,7 +52,6 @@ public class ThreeSum {
 		if (nums == null || nums.length < 3) {
 			return null;
 		}
-
 		Set<List<Integer>> set = new HashSet<>();
 		Arrays.sort(nums);
 		for (int i = 0; i < nums.length - 2; i++) {
@@ -62,19 +61,19 @@ public class ThreeSum {
 			if (i > 0 && nums[i] == nums[i-1]) {
 				continue;
 			}
-			int j = i + 1;
-			int k = nums.length - 1;
-			while (j < k) {
-				int sum = nums[i] + nums[j] + nums[k];
+			int low = i + 1;
+			int high = nums.length - 1;
+			while (low < high) {
+				int sum = nums[i] + nums[low] + nums[high];
 				if (sum == 0) {
 					/**
 					 * short j++, k-- to one line.
 					 */
-					set.add(Arrays.asList(nums[i], nums[j++], nums[k--]));
+					set.add(Arrays.asList(nums[i], nums[low++], nums[high--]));
 				} else if (sum > 0) {
-					k--;
+					high--;
 				} else if (sum < 0) {
-					j++;
+					low++;
 				}
 			}
 		}
