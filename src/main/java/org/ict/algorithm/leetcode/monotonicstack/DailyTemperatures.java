@@ -38,17 +38,18 @@ public class DailyTemperatures {
      * @return
      */
     public int[] dailyTemperaturesV1(int[] temperatures) {
-        int[] stack = new int[temperatures.length];
-        int top = -1;
-        int[] ret = new int[temperatures.length];
-        for(int i = 0; i < temperatures.length; i++) {
-            while(top > -1 && temperatures[stack[top]] < temperatures[i]) {
-                int idx = stack[top--];
-                ret[idx] = i - idx;
+        int peek = -1;
+        int n = temperatures.length;
+        int[] res = new int[n];
+        int[] stack = new int[n];
+        for(int i = 0; i < n; i++) {
+            while(peek > -1 && temperatures[stack[peek]] < temperatures[i]) {
+                int idx = stack[peek--];
+                res[idx] = i - idx;
             }
-            stack[++top] = i;
+            stack[++peek] = i;
         }
-        return ret;
+        return res;
     }
 
     /**

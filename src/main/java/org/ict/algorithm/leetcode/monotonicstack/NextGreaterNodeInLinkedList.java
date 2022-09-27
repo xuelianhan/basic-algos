@@ -99,6 +99,33 @@ public class NextGreaterNodeInLinkedList {
     }
 
     /**
+     * Monotonic Stack with an array based on nextLargerNodesV1
+     * @param head
+     * @return
+     */
+    public int[] nextLargerNodesV2(ListNode head) {
+        List<Integer> list = new ArrayList<>();
+        for (ListNode cur = head; cur != null; cur = cur.next) {
+            list.add(cur.val);
+        }
+
+        int[] res = new int[list.size()];
+        /**
+         * Notice we use stack store the index instead of node's value here.
+         */
+        int peek = -1;
+        int[] stack = new int[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            while (peek > -1 && list.get(stack[peek]) < list.get(i)) {
+                Integer top = stack[peek--];
+                res[top] = list.get(i);
+            }
+            stack[++peek] = i;
+        }
+        return res;
+    }
+
+    /**
      *
      * Bottom-Top Decreasing Monotonic Stack.
      *

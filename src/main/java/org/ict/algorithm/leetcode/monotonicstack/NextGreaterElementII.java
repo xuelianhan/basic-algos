@@ -54,7 +54,7 @@ public class NextGreaterElementII {
     /**
      * Understand the following process.
      *
-     * Solution provided by lee215
+     * Solution provided by lee215, a legend man!
      *
      * Loop once, we can get the Next Greater Number of a normal array.
      * Loop twice, we can get the Next Greater Number if a circular array(cyclic array).
