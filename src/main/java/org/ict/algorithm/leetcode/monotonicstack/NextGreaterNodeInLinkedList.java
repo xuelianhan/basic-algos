@@ -100,7 +100,7 @@ public class NextGreaterNodeInLinkedList {
 
     /**
      *
-     * Monotonic Bottom-Top Decreasing Stack.
+     * Bottom-Top Decreasing Monotonic Stack.
      *
      * Use a Bottom-Top Decreasing Stack to store the current most big value.
      *
