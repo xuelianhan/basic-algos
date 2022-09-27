@@ -1,4 +1,4 @@
-package org.ict.algorithm.leetcode.linkedlist;
+package org.ict.algorithm.leetcode.monotonicstack;
 
 import java.util.*;
 
@@ -54,6 +54,10 @@ public class NextGreaterNodeInLinkedList {
 
     /**
      * Convert List to Array and Use Monotonic Stack.
+     *
+     * Input: head = [2,7,4,3,5]
+     *
+     *
      * @param head
      * @return
      */
@@ -64,12 +68,16 @@ public class NextGreaterNodeInLinkedList {
         }
 
         int[] res = new int[list.size()];
+        /**
+         * Notice we use stack store the index instead of node's value here.
+         */
         Stack<Integer> stack = new Stack<>();
         for (int i = 0; i < list.size(); i++) {
-            while (!stack.isEmpty() && stack.peek() < list.get(i)) {
-
+            while (!stack.isEmpty() && list.get(stack.peek()) < list.get(i)) {
+                Integer top = stack.pop();
+                res[top] = list.get(i);
             }
-            stack.push(list.get(i));
+            stack.push(i);
         }
         return res;
     }
@@ -79,6 +87,8 @@ public class NextGreaterNodeInLinkedList {
      * Monotonic Bottom-Top Decreasing Stack.
      *
      * Use a Bottom-Top Decreasing Stack to store the current most big value.
+     *
+     * Input: head = [2,7,4,3,5]
      *
      * Time Complexity O(2*N).
      * Space Complexity O(N).
