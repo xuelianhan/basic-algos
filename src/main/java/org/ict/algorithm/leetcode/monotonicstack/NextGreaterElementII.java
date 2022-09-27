@@ -42,13 +42,18 @@ import java.util.Deque;
 public class NextGreaterElementII {
 
     public static void main(String[] args) {
-        int[] nums = {1,2,1,1,2,1};
+        int[] nums = {1,2,1};
         //int[] nums = {1,2,3,4,3,1,2,3,4,3};
-        int[] res = nextGreaterElementsForNarmalArray(nums);
+        int[] res = nextGreaterElementsV1(nums);
         System.out.println(Arrays.toString(res));
     }
 
+
+
+
     /**
+     * Understand the following process.
+     *
      * Solution provided by lee215
      *
      * Loop once, we can get the Next Greater Number of a normal array.
@@ -60,17 +65,25 @@ public class NextGreaterElementII {
      * 1 2 1
      *
      * i:0, cyclicPos:0, stack:, push 0 into the stack
-     * i:1, cyclicPos:1, stack:0, peek:0, nums[peek] = nums[0] = 1, nums[0] < nums[1]=2, pop 0 from the stack, res[0]=nums[1]=2, push 1 into the stack
+     * i:1, cyclicPos:1, stack:0, peek:0, nums[0] < nums[1], pop 0 from the stack, res[0]=nums[1]=2
+     *                   push 1 into the stack
+     *
      * i:2, cyclicPos:2, stack:1, peek:1, nums[1] > nums[2], push 2 into the stack.
-     * i:3, cyclicPos:0, stack:1,2, peek:2, nums[2] = nums[0], push 0 into the stack.
-     * i:4, cyclicPos:1, stack:1,2,0, peek:0, nums[0] < nums[1], pop 0 from the stack, res[0]=nums[1]=2, push 1 into the stack.
-     * i:5, cyclicPos:2, stack:1,2,1, peek:1, nums[1] > nums[2], push 2 into the stack.
+     * i:3, cyclicPos:0, stack:1,2, peek:2, nums[2] == nums[0], push 0 into the stack.
+     * i:4, cyclicPos:1, stack:1,2,0, peek:0, nums[0] < nums[1], pop 0 from the stack, res[0]=nums[1]=2
+     *                   stack:1,2, peek:2, nums[2]< nums[1], pop 2 from the stack, res[2]=nums[1]=2,
+     *                   stack:1, peek:1, nums[1]==nums[cyclic]==2
+     *                   push 1 into the stack.
+     *
+     * i:5, cyclicPos:2, stack:1,1, peek:1, nums[1] > nums[2], push 2 into the stack.
+     *      for-loop-end
+     *                   stack:1,1,2
      *
      *
      * @param nums
      * @return
      */
-    public static int[] nextGreaterElementsV1(int[] nums) {
+    public static int[] nextGreaterElementsV2(int[] nums) {
         if (nums == null || nums.length == 0) {
             return null;
         }
@@ -84,12 +97,57 @@ public class NextGreaterElementII {
         for (int i = 0; i < n * 2; i++) {
             int cyclicPos = i % n;
             while (!stack.isEmpty() && nums[stack.peek()] < nums[cyclicPos]) {
-                res[stack.pop()] = nums[cyclicPos];
+                int top = stack.pop();
+                res[top] = nums[cyclicPos];
             }
             stack.push(cyclicPos);
         }
+
         return res;
     }
+
+    /**
+     * Expand the input array to double size and Use the Normal array
+     * At last, we only get the first half of the array.
+     * @param nums
+     * @return
+     */
+    public static int[] nextGreaterElementsV1(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return null;
+        }
+
+        int n = nums.length;
+        if (n == 1) {
+            return new int[]{-1};
+        }
+        /**
+         * Expand the original array to double size
+         * e.g.
+         * nums:[1,2,1]
+         * arr:[1,2,1,1,2,1]
+         */
+        int len = n * 2;
+        int[] arr = new int[len];
+        for (int i = 0; i < len; i++) {
+            arr[i] = nums[i % n];
+        }
+
+        /**
+         * Make use of the Next Greater Element in a normal array.
+         */
+        int[] res = new int[n];
+        Arrays.fill(res, -1);
+        Deque<Integer> stack = new ArrayDeque<>();
+        for (int i = 0; i < len; i++) {
+            while (!stack.isEmpty() && arr[stack.peek()] < arr[i]) {
+                res[stack.pop() % n] = arr[i];
+            }
+            stack.push(i);
+        }
+        return res;
+    }
+
 
     /**
      * input: nums = [1,2,1,1,2,1]
@@ -98,18 +156,18 @@ public class NextGreaterElementII {
      * @param nums
      * @return
      */
-    public static int[] nextGreaterElementsForNarmalArray(int[] nums) {
+    public static int[] nextGreaterElementsForNormalArray(int[] nums) {
         if (nums == null || nums.length == 0) {
             return null;
         }
-        int len = nums.length;
-        if (len == 1) {
+        int n = nums.length;
+        if (n == 1) {
             return new int[]{-1};
         }
-        int[] res = new int[len];
+        int[] res = new int[n];
         Arrays.fill(res, -1);
         Deque<Integer> stack = new ArrayDeque<>();
-        for (int i = 0; i < len; i++) {
+        for (int i = 0; i < n; i++) {
             while (!stack.isEmpty() && nums[stack.peek()] < nums[i]) {
                 res[stack.pop()] = nums[i];
             }
