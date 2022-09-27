@@ -54,6 +54,26 @@ public class NextGreaterNodeInLinkedList {
 
     /**
      * Convert List to Array and Use Monotonic Stack.
+     *
+     * Input: head =[2,7,4,3,5]
+     *
+     * 0 1 2 3 4
+     * 2 7 4 3 5
+     *
+     * i:0, stack:0
+     * i:1, stack:0, list[0] < list[1]=7, pop 0, res[0] = list[1] = 7
+     * i:2, stack:null, push 2 into the stack, stack:2
+     * i:3, stack:2, list[2]=4 > list[3]=3, push index 3 into the stack.
+     * i:4, stack:2,3, peek=3, list[peek] = 3 < list[4] = 5, pop 3 out of the stack, res[3] = list[4] = 5
+     *      stack:2, peek=2, list[peek]=4 < list[4]=5, pop 2 out of the stack, res[2]= list[4] = 5
+     *
+     * res:
+     * 0 1 2 3 4
+     * 7 0 5 5 0
+     *
+     * Time Complexity O(N)
+     * Space Complexity O(N)
+     *
      * @param head
      * @return
      */
@@ -64,12 +84,16 @@ public class NextGreaterNodeInLinkedList {
         }
 
         int[] res = new int[list.size()];
-        Stack<Integer> stack = new Stack<>();
+        /**
+         * Notice we use stack store the index instead of node's value here.
+         */
+        Deque<Integer> stack = new ArrayDeque<>();
         for (int i = 0; i < list.size(); i++) {
-            while (!stack.isEmpty() && stack.peek() < list.get(i)) {
-
+            while (!stack.isEmpty() && list.get(stack.peek()) < list.get(i)) {
+                Integer top = stack.pop();
+                res[top] = list.get(i);
             }
-            stack.push(list.get(i));
+            stack.push(i);
         }
         return res;
     }
@@ -79,6 +103,8 @@ public class NextGreaterNodeInLinkedList {
      * Monotonic Bottom-Top Decreasing Stack.
      *
      * Use a Bottom-Top Decreasing Stack to store the current most big value.
+     *
+     * Input: head = [2,7,4,3,5]
      *
      * Time Complexity O(2*N).
      * Space Complexity O(N).
