@@ -35,7 +35,11 @@ public class BestTimeToBuyAndSellStock {
 
     /**
      * [3,2,6,5,0,3]
+     * 6,6,0,0,3,0
      * expected:4
+     *
+     * [7,1,5,3,6,4]
+     * 0,5,6,6,0,0
      *
      * @param prices
      * @return
@@ -45,15 +49,14 @@ public class BestTimeToBuyAndSellStock {
         int right = prices.length-1;
         int minLeft = 10001;
         int maxRight = -1;
-        while (left <= right) {
-            if (prices[left] < minLeft) {
-                minLeft = prices[left];
+        for (int i = 0; i < prices.length; i++) {
+            for (int j = prices.length - 1; j >= i + 1; j--) {
+                if (prices[j] > maxRight) {
+                    maxRight = prices[j];
+                }
+                right--;
             }
-            left++;
-            if (prices[right] > maxRight) {
-                maxRight = prices[right];
-            }
-            right--;
+
         }
         return (minLeft < maxRight ? (maxRight-minLeft) : 0);
     }
