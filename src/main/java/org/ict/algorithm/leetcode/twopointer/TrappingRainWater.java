@@ -65,9 +65,6 @@ public class TrappingRainWater {
              * when height[left] less than or equal to height[right],
              * the amount of water can be trapped is determined by left highest.
              * No matter how the bar[k] between[left, right] look like.
-             *
-             *
-             *
              */
             if (height[left] <= height[right]) {
                 /**
