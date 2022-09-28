@@ -41,17 +41,17 @@ public class BestTimeToBuyAndSellStock {
 
     public int maxProfixV2(int[] prices) {
         int n = prices.length;
-        int buy = prices[0], max_profit = 0;
+        int buy = prices[0], maxProfit = 0;
         for (int i = 1; i < n; i++) {
             if (buy > prices[i]) {
                 // Checking for lower buy value
                 buy = prices[i];
-            } else if (prices[i] - buy > max_profit) {
+            } else if (prices[i] - buy > maxProfit) {
                 // Checking for higher profit
-                max_profit = prices[i] - buy;
+                maxProfit = prices[i] - buy;
             }
         }
-        return max_profit;
+        return maxProfit;
     }
 
     public int maxProfitV1(int[] prices) {
@@ -78,7 +78,7 @@ public class BestTimeToBuyAndSellStock {
     }
 
     /**
-     * Time Limit Exceeded.
+     * Brute-Force But Time Limit Exceeded.
      *
      * [3,2,6,5,0,3]
      * expected:4
