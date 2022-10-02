@@ -133,14 +133,21 @@ public class BestTimeToBuyAndSellStock {
         return maxProfit;
     }
 
-    
+
     public static int maxProfix(int[] prices) {
         int n = prices.length;
         int minBuySoFar = prices[0], maxProfit = 0;
         for (int i = 1; i < n; i++) {
             if (prices[i] < minBuySoFar) {
+                /**
+                 * If current price is much lower than minimum price, update the minimum price to current price.
+                 */
                 minBuySoFar = prices[i];
             } else {
+                /**
+                 * If current price is greater than minimum price, calculate the profit and compare it with
+                 * previous profit, choose the greater one of the two profit variables.
+                 */
                 maxProfit = Math.max(maxProfit, prices[i] - minBuySoFar);
             }
         }
