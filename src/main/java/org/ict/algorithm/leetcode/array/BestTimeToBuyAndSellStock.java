@@ -115,6 +115,11 @@ public class BestTimeToBuyAndSellStock {
         return maxProfit;
     }
 
+    /**
+     * Same with method maxProfix.
+     * @param prices
+     * @return
+     */
     public static int maxProfixV0(int[] prices) {
         int n = prices.length;
         int minBuySoFar = prices[0], maxProfit = 0;
@@ -128,6 +133,7 @@ public class BestTimeToBuyAndSellStock {
         return maxProfit;
     }
 
+    
     public static int maxProfix(int[] prices) {
         int n = prices.length;
         int minBuySoFar = prices[0], maxProfit = 0;
