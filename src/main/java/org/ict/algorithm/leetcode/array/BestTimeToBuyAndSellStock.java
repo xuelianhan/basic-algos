@@ -68,6 +68,11 @@ public class BestTimeToBuyAndSellStock {
     }
 
 
+    /**
+     * No need if-condition, calculate minimum price and maximum profit directly.
+     * @param prices
+     * @return
+     */
     public static int maxProfitV2(int[] prices) {
         int maxProfit = 0;
         int minPrice = Integer.MAX_VALUE;
