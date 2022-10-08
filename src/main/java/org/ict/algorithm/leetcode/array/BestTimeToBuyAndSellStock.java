@@ -40,11 +40,13 @@ public class BestTimeToBuyAndSellStock {
     }
 
     /**
-     * Solution provided by Earl<a href="https://leetcode.com/earlme/">Earl</a>
      * Kadane's Algorithm
      *
-     * The logic to solve this problem is same as "max subarray problem" using Kadane's Algorithm.
-     * Since no body has mentioned this so far, I thought it's a good thing for everybody to know.
+     * Solution provided by Earl<a href="https://leetcode.com/earlme/">Earl</a>
+     *
+     *
+     * The logic to solve this problem is same as "maximum sub-array problem" using Kadane's Algorithm.
+     * Since nobody has mentioned this so far, I thought it's a good thing for everybody to know.
      *
      * All the straight forward solution should work,
      * but if the interviewer twists the question slightly by giving the difference array of prices, Ex: for {1, 7, 4, 11},
