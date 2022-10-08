@@ -27,7 +27,7 @@ public class MaximumSubArray {
 	 * @param nums
 	 * @return
 	 */
-	public int maxSubArrayV5(int[] nums) {
+	public int maxSubArrayV6(int[] nums) {
 		
 		return 0;
 	}
@@ -59,7 +59,7 @@ public class MaximumSubArray {
 	 * @param nums
 	 * @return
 	 */
-	public int maxSubArrayV4(int[] nums) {
+	public int maxSubArrayV5(int[] nums) {
 		int n = nums.length;
         int[] dp = new int[n];//dp[i] means the maximum subarray ending with A[i];
         dp[0] = nums[0];
@@ -80,7 +80,7 @@ public class MaximumSubArray {
 	 * @param nums
 	 * @return
 	 */
-	public int maxSubArrayV3(int[] nums) {
+	public int maxSubArrayV4(int[] nums) {
 		int sum = 0, min = 0, result = nums[0];
 		for (int i = 0; i < nums.length; i++) {
 			sum += nums[i];
@@ -95,8 +95,8 @@ public class MaximumSubArray {
 	}
 	
 	/**
-	 * this problem was discussed by Jon Bentley (Sep. 1984 Vol. 27 No. 9 Communications of the ACM P885)
-	 * the paragraph below was copied from his paper (with a little modifications)
+	 * This problem was discussed by Jon Bentley (Sep. 1984 Vol. 27 No. 9 Communications of the ACM P885)
+	 * The paragraph below was copied from his paper (with a little modifications)
 	 * algorithm that operates on arrays: it starts at the left end (element A[1]) and scans through to the right end (element A[n]), 
 	 * keeping track of the maximum sum subvector seen so far. The maximum is initially A[0].
 	 * Suppose we've solved the problem for A[1 .. i - 1]; how can we extend that to A[1 .. i]? 
@@ -107,11 +107,27 @@ public class MaximumSubArray {
 	 * @param nums
 	 * @return
 	 */
-	public int maxSubArrayV2(int[] nums) {
+	public int maxSubArrayV3(int[] nums) {
 		int maxSoFar = nums[0], maxEndingHere = nums[0];
 		for (int i = 1; i < nums.length; i++) {
 			maxEndingHere = Math.max(maxEndingHere + nums[i], nums[i]);
 			maxSoFar = Math.max(maxEndingHere, maxSoFar);
+		}
+		return maxSoFar;
+	}
+
+	/**
+	 * Kadane’s Algorithm
+	 * @param nums
+	 * @return
+	 */
+	public int maxSubArrayV2(int[] nums) {
+		int maxEndingHere = 0;
+		int maxSoFar = Integer.MIN_VALUE;
+		for (int i = 0; i < nums.length; i++) {
+			maxEndingHere += nums[i];
+			maxSoFar = Math.max(maxSoFar, maxEndingHere);
+			maxEndingHere = Math.max(0, maxEndingHere);
 		}
 		return maxSoFar;
 	}
