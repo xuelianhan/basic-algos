@@ -40,6 +40,11 @@ package org.ict.algorithm.leetcode.array;
  */
 public class BestTimeToBuyAndSellStockII {
 
+    /**
+     * Modify the Kadane's Algorithm
+     * @param prices
+     * @return
+     */
     public int maxProfitV2(int[] prices) {
         int currentMax = 0;
         for (int i = 1; i < prices.length; i++) {
@@ -48,6 +53,11 @@ public class BestTimeToBuyAndSellStockII {
         return currentMax;
     }
 
+    /**
+     * Modify the Kadane's Algorithm
+     * @param prices
+     * @return
+     */
     public int maxProfitV1(int[] prices) {
         int currentMax = 0;
         int soFarFoundMax = 0;
@@ -58,6 +68,18 @@ public class BestTimeToBuyAndSellStockII {
         return soFarFoundMax;
     }
 
+    /**
+     * You can buy it then immediately sell it on the same day. This means that your net profit is zero on that day.
+     * We will only buy a stock and sell it some other day, only if the net profit is more than zero.
+     * So our net profit is nothing, but the summation of increase in price of the stocks every alternate days.
+     *
+     * 4ms
+     * Time Complexity O(N)
+     * Space Complexity O(1)
+     *
+     * @param prices
+     * @return
+     */
     public int maxProfit(int[] prices) {
         int currentMax = 0;
         for (int i = 1; i < prices.length; i++) {
