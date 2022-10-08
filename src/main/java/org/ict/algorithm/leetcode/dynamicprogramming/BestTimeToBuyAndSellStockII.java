@@ -41,6 +41,23 @@ package org.ict.algorithm.leetcode.dynamicprogramming;
 public class BestTimeToBuyAndSellStockII {
 
     /**
+     * The following solution provided by chipbk10
+     *
+     * The action we can do on ith day is either buy(if last action is sell) or sell(if last action is buy), or
+     * do nothing(not buy, not sell)
+     *
+     * @param prices
+     * @return
+     */
+    public int maxProfitV3(int[] prices) {
+        if (prices.length == 0) {
+            return 0;
+        }
+        return 0;
+    }
+
+
+    /**
      * Modify the Kadane's Algorithm
      * @param prices
      * @return
