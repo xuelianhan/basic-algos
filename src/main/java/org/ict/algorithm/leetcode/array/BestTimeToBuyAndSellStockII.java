@@ -1,4 +1,4 @@
-package org.ict.algorithm.leetcode.dynamicprogramming;
+package org.ict.algorithm.leetcode.array;
 
 /**
  * You are given an integer array prices where prices[i] is the price of a given stock on the ith day.
