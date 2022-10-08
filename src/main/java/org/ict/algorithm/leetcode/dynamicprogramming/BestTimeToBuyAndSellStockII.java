@@ -34,6 +34,7 @@ package org.ict.algorithm.leetcode.dynamicprogramming;
  *
  * 1 <= prices.length <= 3 * 10^4
  * 0 <= prices[i] <= 10^4
+ * 
  * @author sniper
  * @date 08 Oct, 2022
  * LC122
@@ -52,6 +53,12 @@ public class BestTimeToBuyAndSellStockII {
     public int maxProfitV3(int[] prices) {
         if (prices.length == 0) {
             return 0;
+        }
+        int lastBuy = - prices[0];
+        int lastSold = 0;
+
+        for (int i = 0; i < prices.length; i++) {
+
         }
         return 0;
     }
