@@ -42,11 +42,17 @@ package org.ict.algorithm.leetcode.dynamicprogramming;
 public class BestTimeToBuyAndSellStockII {
 
     /**
-     * Same with maxProfitV5 but a little difference lies at the initialization of s1.
+     * Same with maxProfitV6 but a little difference lies at the initialization of s1.
+     *
+     * s1: state of buying (you can come to this state after selling i.e. s2)
+     * s2: state of selling (you can come to this state after buying i.e. s1)
+     * The aim is here is to maximize the profit and hence Math.max().
+     * The profit will be maximum only in s2 and hence return that.
+     *
      * @param prices
      * @return
      */
-    public int maxProfitV6(int[] prices) {
+    public int maxProfitV7(int[] prices) {
         int s1 = Integer.MIN_VALUE;
         int s2 = 0;
         for (int i = 0; i < prices.length; i++) {
@@ -60,11 +66,13 @@ public class BestTimeToBuyAndSellStockII {
      * Can be made more concise as below and can be done using state machines:
      * s1: state of buying (you can come to this state after selling i.e. s2)
      * s2: state of selling (you can come to this state after buying i.e. s1)
-     * The aim is here is to maximize the profit and hence Math.max(). The profit will be maximum only in s2 and hence return that.
+     * The aim is here is to maximize the profit and hence Math.max().
+     * The profit will be maximum only in s2 and hence return that.
+     *
      * @param prices
      * @return
      */
-    public int maxProfitV5(int[] prices) {
+    public int maxProfitV6(int[] prices) {
         int s1 = -prices[0];
         int s2 = 0;
         for (int i = 0; i < prices.length; i++) {
@@ -74,7 +82,7 @@ public class BestTimeToBuyAndSellStockII {
         return s2;
     }
 
-    public int maxProfitV4(int[] prices) {
+    public int maxProfitV5(int[] prices) {
         if (prices.length == 0) {
             return 0;
         }
@@ -135,7 +143,7 @@ public class BestTimeToBuyAndSellStockII {
      * @param prices
      * @return
      */
-    public int maxProfitV3(int[] prices) {
+    public int maxProfitV4(int[] prices) {
         if (prices.length == 0) {
             return 0;
         }
@@ -181,7 +189,7 @@ public class BestTimeToBuyAndSellStockII {
      * @param prices
      * @return
      */
-    public int maxProfitV2(int[] prices) {
+    public int maxProfitV3(int[] prices) {
         int currentMax = 0;
         for (int i = 1; i < prices.length; i++) {
             currentMax += Math.max(0, (prices[i] - prices[i-1]));
@@ -194,7 +202,7 @@ public class BestTimeToBuyAndSellStockII {
      * @param prices
      * @return
      */
-    public int maxProfitV1(int[] prices) {
+    public int maxProfitV2(int[] prices) {
         int currentMax = 0;
         int soFarFoundMax = 0;
         for (int i = 1; i < prices.length; i++) {
@@ -216,7 +224,7 @@ public class BestTimeToBuyAndSellStockII {
      * @param prices
      * @return
      */
-    public int maxProfit(int[] prices) {
+    public int maxProfitV1(int[] prices) {
         int currentMax = 0;
         for (int i = 1; i < prices.length; i++) {
             if (prices[i] > prices[i-1]) {
@@ -225,4 +233,16 @@ public class BestTimeToBuyAndSellStockII {
         }
         return currentMax;
     }
+
+    public int maxProfit(int[] prices) {
+        int profit = 0;
+        for (int i = 1; i < prices.length; i++) {
+            if (prices[i] > prices[i-1]) {
+                profit += (prices[i] - prices[i-1]);
+            }
+        }
+        return profit;
+    }
+
+
 }

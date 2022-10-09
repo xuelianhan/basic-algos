@@ -40,7 +40,29 @@ package org.ict.algorithm.leetcode.array;
  */
 public class BestTimeToBuyAndSellStockIII {
 
+    /**
+     * Solution provided by weijiac
+     *
+     * init --> oneBuy --> oneSold --> twoBuy --> twoSold
+     *
+     *
+     * @param prices
+     * @return
+     */
     public int maxProfit(int[] prices) {
-        return 0;
+        if (prices == null || prices.length <= 1) {
+            return 0;
+        }
+        int oneBuy = Integer.MIN_VALUE;
+        int twoBuy = Integer.MIN_VALUE;
+        int oneSold = 0;
+        int twoSold = 0;
+        for (int i = 0; i < prices.length; i++) {
+            twoSold = Math.max(twoSold, twoBuy + prices[i]);
+            twoBuy = Math.max(twoBuy, oneSold - prices[i]);
+            oneSold = Math.max(oneSold, oneBuy + prices[i]);
+            oneBuy = Math.max(oneBuy, -prices[i]);
+        }
+        return Math.max(twoSold, oneSold);
     }
 }
