@@ -20,7 +20,7 @@ package org.ict.algorithm.leetcode.array;
  *
  * Input: prices = [7,6,4,3,1]
  * Output: 0
- * Explanation: In this case, no transactions are done and the max profit = 0.
+ * Explanation: In this case, no transactions are done, and the max profit = 0.
  *
  *
  * Constraints:
@@ -57,6 +57,14 @@ public class BestTimeToBuyAndSellStock {
      * and find a contiguous sub-array giving maximum profit.
      * If the difference falls below 0, reset it to zero.
      *
+     * e.g.
+     * prices: [7,1,5,3,6,4]
+     * curMax:0, 1-7=-6, curMax=-6+0=-6, curMax=max(0,-6)=0, soFarFoundMax=max(0,0)=0
+     * curMax:0, 5-1=4, curMax=0+4=4, curMax=max(0,4)=4, soFarFoundMax=max(0,4)=4
+     * curMax:4, 3-5=-2, curMax=-2+4=2, curMax=max(0,2)=2, soFarFoundMax=max(4,2)=4
+     * curMax:2, 6-3=3, curMax=2+3=5, curMax=max(0,5)=5, soFarFoundMax=max(4,5)=5
+     * curMax:5, 4-6=-2, curMax=-2+5=3, curMax=max(0,3)=3, soFarFoundMax=max(5,3)=5
+     * 
      * @param prices
      * @return
      */

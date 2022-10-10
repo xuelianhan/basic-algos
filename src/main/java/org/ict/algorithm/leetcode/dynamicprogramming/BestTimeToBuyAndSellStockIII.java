@@ -1,4 +1,4 @@
-package org.ict.algorithm.leetcode.array;
+package org.ict.algorithm.leetcode.dynamicprogramming;
 
 /**
  * You are given an array prices where prices[i] is the price of a given stock on the ith day.
@@ -45,8 +45,7 @@ public class BestTimeToBuyAndSellStockIII {
      *
      * init --> oneBuy --> oneSold --> twoBuy --> twoSold
      *
-     * Notice the order of the code should be reversed,
-     * although the normal order can get the same result, but the logic of normal order is not right.
+     *
      * @param prices
      * @return
      */
