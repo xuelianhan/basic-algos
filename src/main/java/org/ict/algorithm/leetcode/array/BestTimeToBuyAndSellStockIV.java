@@ -59,10 +59,10 @@ public class BestTimeToBuyAndSellStockIV {
      *
      * Time complexity of this approach is O(n2k).
      * In order to reduce it to O(nk),
-     * we must find t:0->j-1, max(prices[j]-prices[t]+dp[i-1][t-1]) this expression in constant time.
+     * we must find t:0->j-1 max(prices[j]-prices[t]+dp[i-1][t-1]) this expression in constant time.
      * If you see carefully,
      *
-     * t:0->j-1, max(prices[j]-prices[t]+dp[i-1][t-1]) is same as
+     * t:0->j-1 max(prices[j]-prices[t]+dp[i-1][t-1]) is same as
      * prices[j] + t:0->j-1 max(dp[i-1][t-1]-prices[t])
      *
      * Second part of the above expression maxTemp = t:0->j-1 max(dp[i-1][t-1]-prices[t])
