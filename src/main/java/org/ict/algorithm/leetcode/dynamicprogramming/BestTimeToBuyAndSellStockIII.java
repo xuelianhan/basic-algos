@@ -43,6 +43,12 @@ public class BestTimeToBuyAndSellStockIII {
     /**
      * Solution provided by weijiac
      *
+     * The thinking is simple and is inspired by the best solution from Single Number II (I read through the discussion after I use DP).
+     * Assume we only have 0 money at first;
+     * 4 Variables to maintain some interested 'ceilings' so far:
+     * The maximum of if we've just buy 1st stock, if we've just sold 1nd stock, if we've just buy 2nd stock, if we've just sold 2nd stock.
+     * Very simple code too and work well. I have to say the logic is simple than those in Single Number II.
+     *
      * init --> oneBuy --> oneSold --> twoBuy --> twoSold
      *
      * Notice the order of the code should be reversed,
