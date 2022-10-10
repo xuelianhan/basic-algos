@@ -88,33 +88,33 @@ public class BestTimeToBuyAndSellStockIII {
         if (prices == null || prices.length <= 1) {
             return 0;
         }
-        int oneBuy = Integer.MAX_VALUE;
-        int twoBuy = Integer.MAX_VALUE;
-        int oneSold = 0;
-        int twoSold = 0;
+        int oneCost = Integer.MAX_VALUE;
+        int twoCost = Integer.MAX_VALUE;
+        int oneSoldProfit = 0;
+        int twoSoldProfit = 0;
         for (int p : prices) {
             /**
-             * twoSold is the profit at the second time.
-             * twoBuy is the cost, so need to be subtracted.
+             * twoSoldProfit is the profit at the second time.
+             * twoCost is the cost, so need to be subtracted.
              */
-            twoSold = Math.max(twoSold, p - twoBuy);
+            twoSoldProfit = Math.max(twoSoldProfit, p - twoCost);
             /**
-             * When buy at the second time, oneSold is the profit in our hand.
-             * So we need only cost (p - oneSold) or do nothing.
+             * When buy at the second time, oneSoldProfit is the profit in our hand.
+             * So we need only cost (p - oneSoldProfit) or do nothing.
              */
-            twoBuy = Math.min(twoBuy, p - oneSold);
+            twoCost = Math.min(twoCost, p - oneSoldProfit);
 
             /**
              * sell price must greater than buy price
-             * oneSold is the profit at the first time.
-             * oneBuy is the cost, so need to be subtracted.
+             * oneSoldProfit is the profit at the first time.
+             * oneCost is the cost, so need to be subtracted.
              */
-            oneSold = Math.max(oneSold, p - oneBuy);
+            oneSoldProfit = Math.max(oneSoldProfit, p - oneCost);
             /**
              * buy at lowest price
              */
-            oneBuy = Math.min(oneBuy, p);
+            oneCost = Math.min(oneCost, p);
         }
-        return twoSold;
+        return twoSoldProfit;
     }
 }
