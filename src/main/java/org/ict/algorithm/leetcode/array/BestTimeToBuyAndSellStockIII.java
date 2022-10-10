@@ -73,6 +73,11 @@ public class BestTimeToBuyAndSellStockIII {
         return Math.max(twoSold, oneSold);
     }
 
+    /**
+     * Buy at lowest price, sell at highest price, So we can get the maximum profit.
+     * @param prices
+     * @return
+     */
     public int maxProfit(int[] prices) {
         if (prices == null || prices.length <= 1) {
             return 0;
@@ -83,9 +88,20 @@ public class BestTimeToBuyAndSellStockIII {
         int twoSold = 0;
         for (int i = 0; i < prices.length; i++) {
             int p = prices[i];
+            /**
+             * twoSold is the profit at the second time.
+             */
             twoSold = Math.max(twoSold, p - twoBuy);
             twoBuy = Math.min(twoBuy, p - oneSold);
+
+            /**
+             * sell price must greater than buy price
+             * oneSold is the profit at the first time.
+             */
             oneSold = Math.max(oneSold, p - oneBuy);
+            /**
+             * buy at lowest price
+             */
             oneBuy = Math.min(oneBuy, p);
         }
         return twoSold;
