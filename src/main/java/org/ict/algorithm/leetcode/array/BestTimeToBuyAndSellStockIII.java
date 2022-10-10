@@ -90,13 +90,19 @@ public class BestTimeToBuyAndSellStockIII {
             int p = prices[i];
             /**
              * twoSold is the profit at the second time.
+             * twoBuy is the cost, so need to be subtracted.
              */
             twoSold = Math.max(twoSold, p - twoBuy);
+            /**
+             * When buy at the second time, oneSold is the profit in our hand.
+             * So we need only cost (p - oneSold) or do nothing.
+             */
             twoBuy = Math.min(twoBuy, p - oneSold);
 
             /**
              * sell price must greater than buy price
              * oneSold is the profit at the first time.
+             * oneBuy is the cost, so need to be subtracted.
              */
             oneSold = Math.max(oneSold, p - oneBuy);
             /**
