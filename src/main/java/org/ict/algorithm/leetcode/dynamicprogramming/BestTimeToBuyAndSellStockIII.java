@@ -74,6 +74,11 @@ public class BestTimeToBuyAndSellStockIII {
             twoSold = Math.max(twoSold, twoBuy + prices[i]);
             twoBuy = Math.max(twoBuy, oneSold - prices[i]);
             oneSold = Math.max(oneSold, oneBuy + prices[i]);
+            /**
+             * We set prices to negative,
+             * so the calculation of profit will be convenient
+             * Here we use max due to oneBuy initialized with Integer.MIN_VALUE.
+             */
             oneBuy = Math.max(oneBuy, -prices[i]);
         }
         return Math.max(twoSold, oneSold);
