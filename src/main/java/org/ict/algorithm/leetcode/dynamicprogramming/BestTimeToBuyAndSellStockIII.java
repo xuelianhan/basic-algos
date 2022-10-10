@@ -92,8 +92,7 @@ public class BestTimeToBuyAndSellStockIII {
         int twoBuy = Integer.MAX_VALUE;
         int oneSold = 0;
         int twoSold = 0;
-        for (int i = 0; i < prices.length; i++) {
-            int p = prices[i];
+        for (int p : prices) {
             /**
              * twoSold is the profit at the second time.
              * twoBuy is the cost, so need to be subtracted.
