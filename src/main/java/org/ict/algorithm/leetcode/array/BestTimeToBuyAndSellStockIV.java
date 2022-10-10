@@ -48,12 +48,14 @@ public class BestTimeToBuyAndSellStockIV {
         /**
          * if k >= n/2, then you can make the maximum number of transactions.
          * Same as BestTimeToBuyAndSellStockII problem.
-         * The definition of one transaction means only one buy and sell, only buy or sell is not a integrated transaction.
+         * The definition of one transaction means only one buy and sell, only buy or sell is not an integrated transaction.
+         * (buy, sell)== one transaction
+         *
          * e.g.
          * n = 4
-         * 1 2 3 4, (1 buy,2 sell), (2 buy, 3 sell), (3 buy, 4 sell), so the total transaction times is 3.
+         * 1 2 3 4, (buy at 1, sell at 2), (buy at 2, sell at 3), (buy at 3, sell at 4), so the total transaction times is 3.
          * n = 5
-         * 1 2 3 4 5, (1 buy,2 sell), (2 buy, 3 sell), (3 buy, 4 sell), (4 buy, 5 sell), so the transaction times is 4
+         * 1 2 3 4 5, (buy at 1, sell at 2), (buy at 2, sell at 3), (buy at 3, sell at 4), (buy at 4, sell at 5), so the transaction times is 4
          */
         if (k >= n/2) {
             int maxProfit = 0;

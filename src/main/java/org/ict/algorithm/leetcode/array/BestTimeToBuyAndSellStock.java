@@ -64,7 +64,7 @@ public class BestTimeToBuyAndSellStock {
      * curMax:4, 3-5=-2, curMax=-2+4=2, curMax=max(0,2)=2, soFarFoundMax=max(4,2)=4
      * curMax:2, 6-3=3, curMax=2+3=5, curMax=max(0,5)=5, soFarFoundMax=max(4,5)=5
      * curMax:5, 4-6=-2, curMax=-2+5=3, curMax=max(0,3)=3, soFarFoundMax=max(5,3)=5
-     * 
+     *
      * @param prices
      * @return
      */
@@ -151,6 +151,11 @@ public class BestTimeToBuyAndSellStock {
     }
 
 
+    /**
+     * Our target is to buy at the lowest price and sell at the highest price to make the profit maximum.
+     * @param prices
+     * @return
+     */
     public static int maxProfix(int[] prices) {
         int n = prices.length;
         int minBuySoFar = prices[0], maxProfit = 0;
