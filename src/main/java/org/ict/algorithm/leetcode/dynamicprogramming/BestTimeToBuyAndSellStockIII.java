@@ -45,6 +45,13 @@ public class BestTimeToBuyAndSellStockIII {
      *
      * init --> oneBuy --> oneSold --> twoBuy --> twoSold
      *
+     * Notice the order of the code should be reversed,
+     * although the normal order can get the same result, but the logic of normal order is not right.
+     *
+     * twoSold: Final profit.
+     * twoBuy: Best profit so far, if you buy the stock not after Day i (2nd transaction).
+     * oneSold: Best profit so far, if you sell the stock not after Day i (1st transaction).
+     * oneBuy: Minimum price to buy the stock.
      *
      * @param prices
      * @return
