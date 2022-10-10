@@ -56,7 +56,7 @@ public class BestTimeToBuyAndSellStockIII {
      * @param prices
      * @return
      */
-    public int maxProfit(int[] prices) {
+    public int maxProfitV1(int[] prices) {
         if (prices == null || prices.length <= 1) {
             return 0;
         }
@@ -71,5 +71,23 @@ public class BestTimeToBuyAndSellStockIII {
             oneBuy = Math.max(oneBuy, -prices[i]);
         }
         return Math.max(twoSold, oneSold);
+    }
+
+    public int maxProfit(int[] prices) {
+        if (prices == null || prices.length <= 1) {
+            return 0;
+        }
+        int oneBuy = Integer.MAX_VALUE;
+        int twoBuy = Integer.MAX_VALUE;
+        int oneSold = 0;
+        int twoSold = 0;
+        for (int i = 0; i < prices.length; i++) {
+            int p = prices[i];
+            twoSold = Math.max(twoSold, p - twoBuy);
+            twoBuy = Math.min(twoBuy, p - oneSold);
+            oneSold = Math.max(oneSold, p - oneBuy);
+            oneBuy = Math.min(oneBuy, p);
+        }
+        return twoSold;
     }
 }
