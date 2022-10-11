@@ -1,4 +1,4 @@
-package org.ict.algorithm.leetcode.array;
+package org.ict.algorithm.leetcode.dynamicprogramming;
 
 /**
  * You are given an integer array prices where prices[i] is the price of a given stock on the ith day, and an integer k.
@@ -44,6 +44,7 @@ public class BestTimeToBuyAndSellStockIV {
      * dp[0, j] = 0; 0 transactions makes 0 profit
      * dp[i, 0] = 0; if there is only one price data point you can't make any transaction.
      *
+     * ------------------------------------------------------------------------------------
      * Description provided by Sireesh
      * Easy to understand explanation for the above solution
      * dp[i][j] = maximum profit from at most i transactions using prices[0..j]
@@ -123,6 +124,6 @@ public class BestTimeToBuyAndSellStockIV {
                 localMax = Math.max(localMax, dp[i-1][j] - prices[j]);
             }
         }
-        return 0;
+        return dp[k][n-1];
     }
 }
