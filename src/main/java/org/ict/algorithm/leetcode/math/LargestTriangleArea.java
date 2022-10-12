@@ -51,6 +51,7 @@ public class LargestTriangleArea {
 
     /**
      * @see <a href="https://www.vedantu.com/maths/area-of-triangle-with-3-points"></a>
+     * @see <a href="https://www.cuemath.com/geometry/area-of-triangle-in-coordinate-geometry/"></a>
      *
      * (x1, y1), (x2, y2) and (x3, y3)
      * (P[0], P[1]), (Q[0], Q[1]), (R[0], R[1])
