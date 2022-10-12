@@ -51,6 +51,15 @@ public class LargestTriangleArea {
 
     /**
      * @see <a href="https://www.vedantu.com/maths/area-of-triangle-with-3-points"></a>
+     *
+     * (x1, y1), (x2, y2) and (x3, y3)
+     * (P[0], P[1]), (Q[0], Q[1]), (R[0], R[1])
+     *
+     * (x1*y2 + x2*y3 + x3*y1 - x1*y3 - x2*y1 - x3*y2)
+     *                   |
+     *                   |
+     *                   V
+     * (p[0]*Q[1] + Q[0]*R[1] + R[0]*P[1]) - (P[0]*R[1] + Q[0]*P[1] + R[0]*Q[1])
      * @param P
      * @param Q
      * @param R
@@ -65,6 +74,8 @@ public class LargestTriangleArea {
      * @see <a href="https://www.educative.io/answers/how-to-calculate-the-area-of-a-triangle-with-three-points"></a>
      * A function to calculate the area of triangle
      * formed by (x1, y1), (x2, y2) and (x3, y3) coordinates
+     *
+     * 0.5*Math.abs(x1*y2 + x2*y3 + x3*y1 - x1*y3 - x2*y1 - x3*y2);
      * @param x1
      * @param y1
      * @param x2
@@ -74,7 +85,7 @@ public class LargestTriangleArea {
      * @return
      */
     public double area(int x1, int y1, int x2, int y2, int x3, int y3) {
-        return Math.abs((x1 * (y2 - y3) + x2 * (y3 - y1) +
-                x3 * (y1 - y2)) / 2.0);
+        return 0.5* Math.abs((x1 * (y2 - y3) + x2 * (y3 - y1) +
+                x3 * (y1 - y2)));
     }
 }
