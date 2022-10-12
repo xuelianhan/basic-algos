@@ -110,7 +110,7 @@ public class JumpGameII {
 
     /**
      * Understanding the following solution
-     * 
+     *
      * 6ms
      *
      * Greedy Solution or Implicit BFS Solution
