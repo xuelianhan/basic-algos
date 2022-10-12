@@ -36,7 +36,37 @@ package org.ict.algorithm.leetcode.greedy;
 public class JumpGameII {
 
     /**
+     * 7ms BFS
+     * @param nums
+     * @return
+     */
+    public int jumpV2(int[] nums) {
+        if (nums.length < 2) {
+            return 0;
+        }
+        int reachable = 0;
+        int lastReachable = 0;
+        int level = 0;
+        int i = 0;
+        /**
+         * Nodes of current level
+         */
+        while (i <= reachable) {
+            level++;
+            for (; i <= lastReachable ; i++) {
+                reachable = Math.max(reachable, i + nums[i]);
+                if (reachable >= (nums.length - 1)) {
+                    return level;
+                }
+            }
+            lastReachable = reachable;
+        }
+        return level;
+    }
+
+    /**
      * BFS Solution provided by enriquewang.
+     * 1 ms
      *
      * I try to change this problem to a BFS problem,
      * where nodes in level-i are all the nodes that can be reached in i-1th jump.
@@ -65,7 +95,7 @@ public class JumpGameII {
         /**
          * Nodes of current level
          */
-        while ((lastReachable - i + 1) > 0) {
+        while (lastReachable - i + 1 > 0) {
             level++;
             for (; i <= lastReachable ; i++) {
                 reachable = Math.max(reachable, i + nums[i]);
@@ -80,6 +110,8 @@ public class JumpGameII {
 
     /**
      * Understanding the following solution
+     * 
+     * 6ms
      *
      * Greedy Solution or Implicit BFS Solution
      * Description detailed by EddieCarrillo.
