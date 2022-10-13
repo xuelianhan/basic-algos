@@ -39,8 +39,14 @@ public class LargestRectangleInHistogram {
 
         int res = 0;
         Deque<Integer> stack = new ArrayDeque<>();
-        for (int i = 0; i < heights.length; i++) {
+        /**
+         * Why i up to heights.length?
+         */
+        for (int i = 0; i <= heights.length; i++) {
             int h = (i == heights.length ? 0 : heights[i]);
+            /**
+             *
+             */
             while (!stack.isEmpty() && heights[stack.peek()] > h) {
 
             }
