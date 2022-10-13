@@ -32,6 +32,22 @@ import java.util.Deque;
  */
 public class LargestRectangleInHistogram {
 
+    public int largestRectangleAreaV1(int[] heights) {
+        if (null == heights || heights.length == 0) {
+            return 0;
+        }
+
+        int res = 0;
+        return res;
+    }
+
+    /**
+     * Time Cost 60ms
+     *
+     *
+     * @param heights
+     * @return
+     */
     public int largestRectangleArea(int[] heights) {
         if (null == heights || heights.length == 0) {
             return 0;
@@ -48,8 +64,12 @@ public class LargestRectangleInHistogram {
              *
              */
             while (!stack.isEmpty() && heights[stack.peek()] > h) {
-
+                int height = heights[stack.pop()];
+                int start = (stack.isEmpty() ? -1 : stack.peek());
+                int area = height * (i - start - 1);
+                res = Math.max(res, area);
             }
+            stack.push(i);
         }
         return res;
     }
