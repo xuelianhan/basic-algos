@@ -33,7 +33,20 @@ import java.util.Deque;
 public class LargestRectangleInHistogram {
 
     /**
+     * Solution provided by <a href="https://leetcode.com/anton4/">anton4</a>
+     * @param heights
+     * @return
+     */
+    public int largestRectangleAreaV2(int[] heights) {
+        return 0;
+    }
+
+
+
+    /**
      * Solution provided by <a href="https://leetcode.com/legendaryengineer/">legendaryengineer</a>
+     *
+     * This solution seems a bit tricky especially at the line i--.
      *
      * @param heights
      * @return
@@ -60,6 +73,8 @@ public class LargestRectangleInHistogram {
     }
 
     /**
+     * Under standing the following solution.
+     *
      * Time Cost 60ms
      * e.g.
      * append one element at the last of the original array, and its height is zero.
@@ -99,7 +114,7 @@ public class LargestRectangleInHistogram {
         /**
          * Why i up to heights.length?
          * because we must let the stack empty absolutely, so we add one more loop and make its height to zero.
-         * Or you can add a sentinel node zero to the original array.
+         * Or you can add a sentinel node zero to the original array at the last position.
          */
         for (int i = 0; i <= heights.length; i++) {
             int h = (i == heights.length ? 0 : heights[i]);
