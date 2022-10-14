@@ -46,6 +46,8 @@ public class LargestRectangleInHistogram {
     /**
      * Solution provided by <a href="https://leetcode.com/legendaryengineer/">legendaryengineer</a>
      *
+     * @see <a href="https://www.geeksforgeeks.org/largest-rectangle-under-histogram/"></a>
+     *
      * This solution seems a bit tricky especially at the line i--.
      *
      * @param heights
