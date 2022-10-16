@@ -5,7 +5,7 @@ package org.ict.algorithm.leetcode.string;
  * @see <a href="commons-text">LongestCommonSubsequence.java</a>
  * @date 2021/12/1 12:32 PM
  */
-public class LongestCommonSubSequence {
+public class LongestCommonSubSequenceOfApache {
 
     public CharSequence longestCommonSubsequence(final CharSequence left, final CharSequence right) {
         // Quick return
