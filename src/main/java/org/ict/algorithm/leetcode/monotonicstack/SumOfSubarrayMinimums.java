@@ -54,24 +54,27 @@ public class SumOfSubarrayMinimums {
      * Solution provided by <a href="https://leetcode.com/cindyzhou/">cindyzhou</a>
      *
      * So by appending -inf and -inf at the head and tail,
-     * you can compute the number of consecutive number > nums[i] from right and left of i with one stack.
+     * you can compute the number of consecutive number > arr[i] from right and left of i with one stack.
      *
      * I use a monotonous non-decreasing stack to store the left boundary and right boundary where a number is the minimal number in the sub-array
      *
+     * The boundary is the maximum contiguous array where an element would be minimum.
+     * so for 1 it is | 3 1 2 4|
+     *
      * e.g. given [3,1,2,4],
-     * For 3, the boudary is: | 3 | ...
-     * For 1, the boudray is: | 3 1 2 4 |
-     * For 2, the boudray is: ... | 2 4 |
-     * For 4, the boudary is: ... | 4 |
+     * For 3, if 3 is the minimum number, then the boundary is: | 3 | ...
+     * For 1, if 1 is the minimum number, then the boundary is: | 3 1 2 4 |
+     * For 2, if 2 is the minimum number, then the boundary is: ... | 2 4 |
+     * For 4, if 4 is the minimum number, then the boundary is: ... | 4 |
      *
-     * The times a number n occurs in the minimums is |left_bounday-indexof(n)| * |right_bounday-indexof(n)|
+     * The times a number n occurs in the minimums is |left_boundary-indexOf(n)| * |right_boundary-indexOf(n)|
      *
-     * The total sum is sum([n * |left_bounday - indexof(n)| * |right_bounday - indexof(n)| for n in array])
+     * The total sum is sum([n * |left_boundary - indexOf(n)| * |right_boundary - indexOf(n)| for n in the array])
      *
      * After a number n pops out from an increasing stack, the current stack top is n's left_boundary,
      * the number forcing n to pop is n's right_boundary.
      *
-     * A tricky here is to add MIN_VALUE at the head and end.
+     * A tricky technique here is to add a MIN_VALUE at the head and end of the original array.
      *
      * @param arr
      * @return
