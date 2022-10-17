@@ -50,7 +50,54 @@ public class SumOfSubarrayMinimums {
     }
 
     /**
-     * Solution provided by Zane Wang
+     *
+     * Solution provided by <a href="https://leetcode.com/cindyzhou/">cindyzhou</a>
+     *
+     * So by appending -inf and -inf at the head and tail,
+     * you can compute the number of consecutive number > nums[i] from right and left of i with one stack.
+     *
+     * I use a monotonous non-decreasing stack to store the left boundary and right boundary where a number is the minimal number in the sub-array
+     *
+     * e.g. given [3,1,2,4],
+     * For 3, the boudary is: | 3 | ...
+     * For 1, the boudray is: | 3 1 2 4 |
+     * For 2, the boudray is: ... | 2 4 |
+     * For 4, the boudary is: ... | 4 |
+     *
+     * The times a number n occurs in the minimums is |left_bounday-indexof(n)| * |right_bounday-indexof(n)|
+     *
+     * The total sum is sum([n * |left_bounday - indexof(n)| * |right_bounday - indexof(n)| for n in array])
+     *
+     * After a number n pops out from an increasing stack, the current stack top is n's left_boundary,
+     * the number forcing n to pop is n's right_boundary.
+     *
+     * A tricky here is to add MIN_VALUE at the head and end.
+     *
+     * @param arr
+     * @return
+     */
+    public static int sumSubarrayMinsV1(int[] arr) {
+        int[] copy = new int[arr.length + 2];
+        for (int i = 1; i <= arr.length; i++) {
+            copy[i] = arr[i-1];
+        }
+        copy[0] = Integer.MIN_VALUE;
+        copy[copy.length - 1] = Integer.MIN_VALUE;
+        Deque<Integer> stack = new ArrayDeque<>();
+        int res = 0;
+        int mod = (int)1e9 + 7;
+        for (int i = 0; i < copy.length; i++) {
+            while (!stack.isEmpty() && arr[stack.peek()] > arr[i]) {
+                int cur = stack.pop();
+                res += copy[cur] * (i - cur) * (cur - stack.peek());
+            }
+            stack.push(i);
+        }
+        return (res % mod);
+    }
+
+    /**
+     * Solution provided by <a href="https://leetcode.com/wangzi6147/">Zane Wang</a>
      *
      * stack: An increasing stack, store the index
      * dp[i + 1]: Sum of minimum of sub-arrays which end with A[i]
@@ -131,18 +178,19 @@ public class SumOfSubarrayMinimums {
         stack.push(-1);
         int res = 0;
         /**
-         * 1e9 + 7 = 10^9 + 7, to prevent overflow.
+         * 1e9 + 7 = 10^9 + 7, to prevent res overflow, so modulo (1e9 + 7)
+         * @see <a href="https://wingkwong.github.io/leetcode-the-hard-way/tutorials/basic-topics/mod"></a>
          */
         int mod = (int)1e9 + 7;
         for (int i = 0; i < arr.length; i++) {
-            while (stack.peek() != -1 && arr[i] < arr[stack.peek()]) {
+            while (stack.peek() != -1 && arr[stack.peek()] > arr[i]) {
                 stack.pop();
             }
             dp[i + 1] = (dp[stack.peek() + 1] + (i - stack.peek()) * arr[i]) % mod;
             stack.push(i);
             res += dp[i + 1];
             res %= mod;
-            System.out.println("i:" + i + ", dp[" + (i + 1) + "]:" + dp[i+1] + ", res:" + res);
+            //System.out.println("i:" + i + ", dp[" + (i + 1) + "]:" + dp[i+1] + ", res:" + res);
         }
         return res;
     }
