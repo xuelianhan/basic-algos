@@ -38,7 +38,7 @@ package org.ict.algorithm.leetcode.dynamicprogramming;
  * LC1143
  */
 public class LongestCommonSubsequence {
-    
+
 
     /**
      * Solution provided by votrubac
