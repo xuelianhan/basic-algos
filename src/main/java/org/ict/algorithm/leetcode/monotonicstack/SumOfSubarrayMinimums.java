@@ -79,6 +79,7 @@ public class SumOfSubarrayMinimums {
 
     /**
      * Same as sumSubarrayMinsV1.
+     * Adding two sentinels node zero at the beginning and the tail of the array.
      *
      * @param arr
      * @return
