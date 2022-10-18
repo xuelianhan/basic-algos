@@ -77,6 +77,12 @@ public class SumOfSubarrayMinimums {
         return (int)(res % 1_000_000_007);
     }
 
+    /**
+     * Same as sumSubarrayMinsV1.
+     *
+     * @param arr
+     * @return
+     */
     public int sumSubarrayMinsV2(int[] arr) {
         int[] copy = new int[arr.length + 2];
         for (int i = 1; i <= arr.length; i++) {

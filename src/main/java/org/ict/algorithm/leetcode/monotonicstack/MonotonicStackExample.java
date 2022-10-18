@@ -43,7 +43,7 @@ public class MonotonicStackExample {
                 int top = stack.peek();
                 stack.pop();
                 /**
-                 * easy to make mistake here
+                 * easy to make mistake here.
                  */
                 res[top] = nums[i];
             }
@@ -51,6 +51,7 @@ public class MonotonicStackExample {
             stack.push(i);
         }
         /**
+         * nums = [3, 7, 8, 4]
          * NLE res:[-1, 4, 4, -1]
          */
         System.out.println("NLE res:" + Arrays.toString(res));
@@ -83,11 +84,16 @@ public class MonotonicStackExample {
             stack.push(i);
         }
         /**
+         * nums = [3, 7, 8, 4]
          * PLE res:[-1, 3, 7, 3]
          */
         System.out.println("PLE res:" + Arrays.toString(res));
     }
 
+    /**
+     * Top-Bottom increasing monotonic stack.
+     * @param nums
+     */
     public static void increasingMonotonicStackIdx(int[] nums) {
         Deque<Integer> stack = new ArrayDeque<>();
         for (int i = 0; i < nums.length; i++) {
@@ -97,11 +103,16 @@ public class MonotonicStackExample {
             stack.push(i);
         }
         /**
+         * nums = [3, 7, 8, 4]
          * index stack:[3, 0]
          */
         System.out.println("index stack:" + stack);
     }
 
+    /**
+     * Top-Bottom increasing monotonic stack.
+     * @param nums
+     */
     public static void increasingMonotonicStack(int[] nums) {
         Deque<Integer> stack = new ArrayDeque<>();
         for (int i = 0; i < nums.length; i++) {
@@ -111,6 +122,7 @@ public class MonotonicStackExample {
             stack.push(nums[i]);
         }
         /**
+         * nums = [3, 7, 8, 4]
          * ele stack:[4, 3]
          */
         System.out.println("ele stack:" + stack);

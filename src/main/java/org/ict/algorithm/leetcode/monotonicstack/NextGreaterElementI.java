@@ -178,7 +178,7 @@ public class NextGreaterElementI {
             }
             stack.push(i);
         }
-        System.out.println(Arrays.toString(res2));
+        //System.out.println(Arrays.toString(res2));
         for (int i = 0; i < n; i++) {
             int idx = res2[indexMap.get(nums1[i])];
             res1[i] = (idx == -1? -1: nums2[idx] );
