@@ -45,14 +45,67 @@ import java.util.Deque;
 public class SumOfSubarrayMinimums {
 
     public static void main(String[] args) {
-        int[] arr = {3, 1, 2, 4, 3};
-        sumSubarrayMins(arr);
+        int[] arr = {3, 1, 2, 4};
+        sumSubarrayMinsV1(arr);
+    }
+
+    /**
+     * Solution provided by <a href="https://leetcode.com/shk10/">Shahid Hussain Khan</a>
+     *
+     * @param arr
+     * @return
+     */
+    public static int sumSubarrayMinsV3(int[] arr) {
+        long res = 0;
+        Deque<Integer> stack = new ArrayDeque<>();
+        for (int i = 0; i <= arr.length; i++) {
+            while (!stack.isEmpty() && (i == arr.length || arr[stack.peek()] > arr[i])) {
+                int mid = stack.pop();
+                int left = mid - (stack.isEmpty() ? -1 : stack.peek());
+                int right = i - mid;
+                res += (long)arr[mid] * left * right;
+            }
+            stack.push(i);
+        }
+        /**
+         * In Java SE 7 and later, any number of underscore characters (_) can appear anywhere between digits in a numerical literal.
+         * This feature enables you,
+         * for example,
+         * to separate groups of digits in numeric literals, which can improve the readability of your code.
+         * <a href="https://docs.oracle.com/javase/7/docs/technotes/guides/language/underscores-literals.html">Underscores in Numeric Literals</a>
+         */
+        return (int)(res % 1_000_000_007);
+    }
+
+    public int sumSubarrayMinsV2(int[] arr) {
+        int[] copy = new int[arr.length + 2];
+        for (int i = 1; i <= arr.length; i++) {
+            copy[i] = arr[i-1];
+        }
+        Deque<Integer> stack = new ArrayDeque<>();
+        long res = 0;
+        int mod = (int)1e9 + 7;
+        for (int i = 0; i < copy.length; i++) {
+            while (!stack.isEmpty() && copy[stack.peek()] > copy[i]) {
+                int cur = stack.pop();
+                int left = cur - stack.peek();
+                int right = i - cur;
+                /**
+                 * Notice the conversion to long here is very important.
+                 */
+                res += (long)copy[cur] * left * right;
+            }
+            stack.push(i);
+        }
+        return (int)(res % mod);
     }
 
     /**
      *
      * Solution provided by <a href="https://leetcode.com/cindyzhou/">cindyzhou</a>
+     * Cost 22ms, adding two sentinels node zero at the beginning and the tail of the array
      *
+     * float(“inf”) represents a positive infinite number.
      * So by appending -inf and -inf at the head and tail,
      * you can compute the number of consecutive number > arr[i] from right and left of i with one stack.
      *
@@ -76,6 +129,20 @@ public class SumOfSubarrayMinimums {
      *
      * A tricky technique here is to add a MIN_VALUE at the head and end of the original array.
      *
+     * e.g. given [3,1,2,4], expected 17
+     * 0 1 2 3 4 5
+     * 0 3 1 2 4 0
+     * i: 0, stack is empty, push 0 into the stack
+     * i: 1, stack:0, arr[0] < arr[1], push 1 into the stack, stack:0,1
+     * i: 2, stack:0,1, arr[1] > arr[2], pop 1 from the stack, cur:1, res = arr[1] * (2 - 1) * (1 - 0) = 3
+     *       push 2 into the stack, stack:0,2
+     * i: 3, stack:0,2, arr[2] < arr[3], push 3 into the stack, stack:0,2,3
+     * i: 4, stack:0,2,3, arr[3] < arr[4], push 4 into the stack, stack:0,2,3,4
+     * i: 5, stack:0,2,3,4,
+     *       arr[4] > arr[5], pop 4 from the stack, cur:4, stack:0,2,3, res = 3 + arr[4]*(5-4)*(4-3) = 3 + 4 = 7
+     *       arr[3] > arr[5], pop 3 from the stack, cur:3, stack:0,2, res = 7 + arr[3]*(5-3)*(3-2) = 7 + 2*2 = 11
+     *       arr[2] > arr[5], pop 2 from the stack, cur:2, stack:0, res = 11 + arr[2]*(5-2)((2-0) = 11 + 1*3*2 = 17
+     *
      * <code>
      *      def sumSubarrayMins(self, arr: List[int]) -> int:
      *         res = 0
@@ -84,8 +151,8 @@ public class SumOfSubarrayMinimums {
      *         for i, n in enumerate(arr):
      *             while stack and arr[stack[-1]] > n:
      *                 cur = stack.pop()
-     *                 #print ("i:", i, ",cur:", cur, ",stack top:", stack[-1])
      *                 res += arr[cur] * (i - cur) * (cur - stack[-1])
+     *                 #print ("i:", i, ",cur:", cur, ",stack top:", stack[-1], ",res:", res)
      *             stack.append(i)
      *         return res % (10**9 + 7)
      * </code>
@@ -98,19 +165,20 @@ public class SumOfSubarrayMinimums {
         for (int i = 1; i <= arr.length; i++) {
             copy[i] = arr[i-1];
         }
-        copy[0] = Integer.MIN_VALUE;
-        copy[copy.length - 1] = Integer.MIN_VALUE;
         Deque<Integer> stack = new ArrayDeque<>();
-        int res = 0;
+        long res = 0;
         int mod = (int)1e9 + 7;
         for (int i = 0; i < copy.length; i++) {
-            while (!stack.isEmpty() && arr[stack.peek()] > arr[i]) {
+            while (!stack.isEmpty() && copy[stack.peek()] > copy[i]) {
                 int cur = stack.pop();
-                res += copy[cur] * (i - cur) * (cur - stack.peek());
+                /**
+                 * Notice the conversion to long here is very important.
+                 */
+                res += (long)copy[cur] * (i - cur) * (cur - stack.peek());
             }
             stack.push(i);
         }
-        return (res % mod);
+        return (int)(res % mod);
     }
 
     /**
