@@ -49,9 +49,45 @@ public class SumOfSubarrayMinimums {
         sumSubarrayMinsV3(arr);
     }
 
+    /**
+     * Cost 43ms
+     * Same as sumSubarrayMinsV3 but add a sentinel node zero at the end of the array copy,
+     * and remove the condition i == arr.length in sumSubarrayMinsV3.
+     * If we add another zero node at the beginning of the array copy,
+     * then we can simplify the left statement to this:
+     * int left = mid - stack.peek();
+     * So the solution is same as sumSubarrayMinsV1 and sumSubarrayMinsV2
+     * 
+     * @param arr
+     * @return
+     */
     public static int sumSubarrayMinsV4(int[] arr) {
         long res = 0;
-        return (int)res;
+        Deque<Integer> stack = new ArrayDeque<>();
+        int[] copy = new int[arr.length + 1];
+        for (int i = 0; i < arr.length; i++) {
+            copy[i] = arr[i];
+        }
+        for (int i = 0; i < copy.length; i++) {
+            /**
+             * Notice here i == arr.length must put before condition of arr[peek] > arr[i].
+             */
+            while (!stack.isEmpty() && copy[stack.peek()] > copy[i]) {
+                int mid = stack.pop();
+                int left = mid - (stack.isEmpty() ? -1 : stack.peek());
+                int right = i - mid;
+                res += (long)copy[mid] * left * right;
+            }
+            stack.push(i);
+        }
+        /**
+         * In Java SE 7 and later, any number of underscore characters (_) can appear anywhere between digits in a numerical literal.
+         * This feature enables you,
+         * for example,
+         * to separate groups of digits in numeric literals, which can improve the readability of your code.
+         * <a href="https://docs.oracle.com/javase/7/docs/technotes/guides/language/underscores-literals.html">Underscores in Numeric Literals</a>
+         */
+        return (int)(res % 1_000_000_007);
     }
 
     /**
