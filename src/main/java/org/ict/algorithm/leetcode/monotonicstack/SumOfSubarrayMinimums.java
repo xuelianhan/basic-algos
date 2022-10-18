@@ -46,11 +46,39 @@ public class SumOfSubarrayMinimums {
 
     public static void main(String[] args) {
         int[] arr = {3, 1, 2, 4};
-        sumSubarrayMinsV1(arr);
+        sumSubarrayMinsV3(arr);
+    }
+
+    public static int sumSubarrayMinsV4(int[] arr) {
+        long res = 0;
+        return (int)res;
     }
 
     /**
      * Solution provided by <a href="https://leetcode.com/shk10/">Shahid Hussain Khan</a>
+     *
+     * e.g. given [3,1,2,4], expected 17
+     * 0 1 2 3 4
+     * 3 1 2 4
+     *
+     * i:0, stack is empty, push 0 into the stack, stack:0
+     * i:1, stack:0, arr[peek] > arr[1], pop 0 from the stack, stack:empty
+     *      mid = 0, left = mid - (-1) = 1, right = 1 - 0 = 1, res = 0 + arr[0]*1*1 = 3
+     *      push 1 into the stack, stack:1
+     * i:2, stack:1, arr[peek] < arr[2], push 2 into the stack, stack:1,2
+     * i:3, stack:1,2, arr[peek] < arr[3], push 3 into the stack, stack:1,2,3
+     * i:4, 4==arr.length,
+     *      pop 3 from the stack, stack:1,2
+     *      mid = 3, left = mid - peek = 3 - 2 = 1, right = i - mid = 4 - 3 = 1, res = 3 + arr[3]*1*1 = 3 + 4*1 = 7
+     *
+     *      pop 2 from the stack, stack:1
+     *      mid = 2, left = mid - peek = 2 - 1 = 1, right = i - mid = 4 - 2 = 2, res = 7 + arr[2]*1*2 = 7 + 2*2 = 11
+     *
+     *      pop 1 from the stack, stack:empty
+     *      mid = 1, left = mid - empty = 1 - (-1) = 2, right = i - mid = 4 - 1 = 3, res = 11 + arr[1]*2*3 = 11 + 6 = 17
+     * the stack is empty, while-loop-end, push 4 into the stack, stack:4
+     * for-loop-end.
+     *
      *
      * @param arr
      * @return
@@ -59,6 +87,9 @@ public class SumOfSubarrayMinimums {
         long res = 0;
         Deque<Integer> stack = new ArrayDeque<>();
         for (int i = 0; i <= arr.length; i++) {
+            /**
+             * Notice here i == arr.length must put before condition of arr[peek] > arr[i].
+             */
             while (!stack.isEmpty() && (i == arr.length || arr[stack.peek()] > arr[i])) {
                 int mid = stack.pop();
                 int left = mid - (stack.isEmpty() ? -1 : stack.peek());
