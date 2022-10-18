@@ -57,7 +57,7 @@ public class SumOfSubarrayMinimums {
      * then we can simplify the left statement to this:
      * int left = mid - stack.peek();
      * So the solution is same as sumSubarrayMinsV1 and sumSubarrayMinsV2
-     * 
+     *
      * @param arr
      * @return
      */
