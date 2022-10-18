@@ -76,6 +76,20 @@ public class SumOfSubarrayMinimums {
      *
      * A tricky technique here is to add a MIN_VALUE at the head and end of the original array.
      *
+     * <code>
+     *      def sumSubarrayMins(self, arr: List[int]) -> int:
+     *         res = 0
+     *         stack = []  #  non-decreasing
+     *         arr = [float('-inf')] + arr + [float('-inf')]
+     *         for i, n in enumerate(arr):
+     *             while stack and arr[stack[-1]] > n:
+     *                 cur = stack.pop()
+     *                 #print ("i:", i, ",cur:", cur, ",stack top:", stack[-1])
+     *                 res += arr[cur] * (i - cur) * (cur - stack[-1])
+     *             stack.append(i)
+     *         return res % (10**9 + 7)
+     * </code>
+     *
      * @param arr
      * @return
      */
