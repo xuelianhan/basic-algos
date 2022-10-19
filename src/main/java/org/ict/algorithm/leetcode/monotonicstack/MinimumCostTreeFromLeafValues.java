@@ -38,6 +38,13 @@ package org.ict.algorithm.leetcode.monotonicstack;
  */
 public class MinimumCostTreeFromLeafValues {
 
+    /**
+     * Solution provided by <a href="https://leetcode.com/problems/minimum-cost-tree-from-leaf-values/discuss/339959/One-Pass-O(N)-Time-and-Space">lee215</a>
+     *
+     * @author lee215
+     * @param arr
+     * @return
+     */
     public int mctFromLeafValues(int[] arr) {
         int res = 0;
         //todo
