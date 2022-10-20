@@ -12,6 +12,9 @@ import java.util.Deque;
  * 3.Find next less element.
  * 4.Find previous less element.
  *
+ * previous: pop continuously until while-loop end, then store the result.
+ * next: store the result simultaneously when pop each element.
+ *
  * @author sniper
  * @date 17 Oct, 2022
  */
