@@ -126,6 +126,11 @@ public class NextGreaterElementII {
          * e.g.
          * nums:[1,2,1]
          * arr:[1,2,1,1,2,1]
+         *
+         *   i: 0 1 2 ... (n-1) (n) n+1 n+2 ... 2n-1
+         * i%n: 0 1 2 ... (n-1) (0) (1) (2) ... (n-1)
+         *
+         * (2n-1)%n = (n + n-1)%n = n%n + (n-1)%n = 0 + n-1 = n-1
          */
         int len = n * 2;
         int[] arr = new int[len];
