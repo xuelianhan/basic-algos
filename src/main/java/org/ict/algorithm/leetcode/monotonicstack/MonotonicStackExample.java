@@ -5,7 +5,12 @@ import java.util.Arrays;
 import java.util.Deque;
 
 /**
- * What can monotonous increase stack do?
+ * What can monotonous stack do?
+ *
+ * 1.Find next greater element.
+ * 2.Find previous greater element.
+ * 3.Find next less element.
+ * 4.Find previous less element.
  *
  * @author sniper
  * @date 17 Oct, 2022
@@ -18,7 +23,51 @@ public class MonotonicStackExample {
         increasingMonotonicStack(nums);
         findPreviousLessElement(nums);
         findNextLessElement(nums);
+        findPreviousGreaterElement(nums);
+        findNextGreaterElement(nums);
     }
+
+    public static void findNextGreaterElement(int[] nums) {
+        int[] res = new int[nums.length];
+        Arrays.fill(res, -1);
+        Deque<Integer> stack = new ArrayDeque<>();
+        for (int i = 0; i < nums.length; i++) {
+            while (!stack.isEmpty() && nums[stack.peek()] < nums[i]) {
+                int top = stack.peek();
+                stack.pop();
+                /**
+                 * easy to make mistake here.
+                 */
+                res[top] = nums[i];
+            }
+
+            stack.push(i);
+        }
+        /**
+         * nums = [3, 7, 8, 4]
+         * NGE res:[-1, 4, 4, -1]
+         */
+        System.out.println("NGE res:" + Arrays.toString(res));
+    }
+
+    public static void findPreviousGreaterElement(int[] nums) {
+        int[] res = new int[nums.length];
+        Arrays.fill(res, -1);
+        Deque<Integer> stack = new ArrayDeque<>();
+        for (int i = 0; i < nums.length; i++) {
+            while (!stack.isEmpty() && nums[stack.peek()] < nums[i]) {
+                stack.pop();
+            }
+            res[i] = (stack.isEmpty() ? -1 : nums[stack.peek()]);
+            stack.push(i);
+        }
+        /**
+         * nums = [3, 7, 8, 4]
+         * PGE res:[-1, 3, 7, 3]
+         */
+        System.out.println("PGE res:" + Arrays.toString(res));
+    }
+
 
     /**
      * Find the next less element of each element in a vector with O(n) time:
