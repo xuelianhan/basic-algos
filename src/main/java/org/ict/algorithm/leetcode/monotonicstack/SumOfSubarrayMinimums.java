@@ -50,6 +50,8 @@ public class SumOfSubarrayMinimums {
     }
 
     /**
+     * Understand the following solution.
+     *
      * Cost 43ms
      * Same as sumSubarrayMinsV3 but add a sentinel node zero at the end of the array copy,
      * and remove the condition i == arr.length in sumSubarrayMinsV3.
@@ -91,6 +93,8 @@ public class SumOfSubarrayMinimums {
     }
 
     /**
+     * Understand the following solution.
+     *
      * Solution provided by <a href="https://leetcode.com/shk10/">Shahid Hussain Khan</a>
      *
      * e.g. given [3,1,2,4], expected 17
@@ -145,6 +149,8 @@ public class SumOfSubarrayMinimums {
     }
 
     /**
+     * Understand the following solution.
+     *
      * Same as sumSubarrayMinsV1.
      * Adding two sentinels node zero at the beginning and the tail of the array.
      *
@@ -175,6 +181,7 @@ public class SumOfSubarrayMinimums {
     }
 
     /**
+     * Understand the following solution.
      *
      * Solution provided by <a href="https://leetcode.com/cindyzhou/">cindyzhou</a>
      * Cost 22ms, adding two sentinels node zero at the beginning and the tail of the array
