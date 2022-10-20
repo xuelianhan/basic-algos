@@ -162,13 +162,17 @@ public class MinimumCostTreeFromLeafValues {
      *
      *
      * e.g. arr=[6, 7, 8]
-     *    48
+     *    56
      *   /\
      *  42 8
      *  /\
      * 6 7
      * i:0, push 6 into the stack, stack:Max,6
-     * i:1, peek=6, peek<=7, pop 6 from the stack, top=6, res=0 +
+     * i:1, peek=6, peek<=7, pop 6 from the stack, top=6, res=0 + 6*min(Max,7)=42, push 7 into the stack, stack:Max,7
+     * i:2, peek=7, peek<=8, pop 7 from the stack, top=7, res=42 +7*min(Max, 8)=98, push 8 into the stack, stack:Max,8
+     * stack size is 2
+     * return res=98
+     *
      *
      * @author lee215
      * @param arr
