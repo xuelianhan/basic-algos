@@ -1,5 +1,7 @@
 package org.ict.algorithm.leetcode.math;
 
+import java.util.Arrays;
+
 /**
  * Given an integer array nums, return the greatest common divisor of the smallest number and largest number in nums.
  *
@@ -44,6 +46,19 @@ package org.ict.algorithm.leetcode.math;
 public class FindGreatestCommonDivisorOfArray {
 
     public int findGCD(int[] nums) {
-        return 0;
+        Arrays.sort(nums);
+        int min = nums[0];
+        int max = nums[nums.length - 1];
+        return gcd(max, min);
+    }
+
+    public int gcd(int a, int b) {
+        int temp = 0;
+        while (b != 0) {
+            temp = b;
+            b = a % b;
+            a = temp;
+        }
+        return a;
     }
 }
