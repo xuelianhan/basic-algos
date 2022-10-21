@@ -37,6 +37,20 @@ public class SqrtX {
 
     /**
      * Newton-Raphson Iteration Method
+     * Use >> 1 to replace the / 2 operation.
+     * @param a
+     * @return
+     */
+    public static int mySqrtV3(int a) {
+        long x = a;
+        while (x * x > a) {
+            x = (x + a / x) >> 1;
+        }
+        return (int) x;
+    }
+
+    /**
+     * Newton-Raphson Iteration Method
      *
      * f(x) = f(x0) + f'(x0)(x-x0)
      *
@@ -74,8 +88,8 @@ public class SqrtX {
      */
     public static int mySqrtV2(int a) {
         long x = a;
-        while (x*x > a) {
-            x = (x + a/x) / 2;
+        while (x * x > a) {
+            x = (x + a / x) / 2;
         }
         return (int) x;
     }
