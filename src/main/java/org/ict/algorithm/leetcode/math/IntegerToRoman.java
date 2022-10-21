@@ -1,5 +1,8 @@
 package org.ict.algorithm.leetcode.math;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Roman numerals are represented by seven different symbols: I, V, X, L, C, D and M.
  *
@@ -53,8 +56,101 @@ package org.ict.algorithm.leetcode.math;
  */
 public class IntegerToRoman {
 
-    public String intToRoman(int num) {
-        String res = "";
-        return res;
+    public static void main(String[] args) {
+        int num = 3999;
+        String res = intToRoman(num);
+        System.out.println(res);
+    }
+
+    public static String intToRomanV2(int num) {
+        String M[] = {"", "M", "MM", "MMM"};
+        String C[] = {"", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM"};
+        String X[] = {"", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC"};
+        String I[] = {"", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"};
+        return M[num/1000] + C[(num%1000)/100] + X[(num%100)/10] + I[num%10];
+    }
+
+    public String intToRomanV1(int num) {
+        StringBuilder res = new StringBuilder();
+        String[] roman = {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
+        int[]  values = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+        int i = 0;
+        while (num > 0) {
+            while (num >= values[i]) {
+                num -= values[i];
+                res.append(roman[i]);
+            }
+            i++;
+        }
+        return res.toString();
+    }
+
+    public static String intToRoman(int num) {
+        StringBuilder res = new StringBuilder();
+        Map<Integer, String> map = romanMap();
+        if (map.containsKey(num)) {
+            return map.get(num);
+        }
+        while (num > 0) {
+            if (num >= 1000) {
+                num -= 1000;
+                res.append("M");
+            } else if (num >= 900 && num < 1000) {
+                num -= 900;
+                res.append("CM");
+            } else if (num >= 500 && num < 900) {
+                num -= 500;
+                res.append("D");
+            } else if (num >= 400 && num < 500) {
+                num -= 400;
+                res.append("CD");
+            } else if (num >= 100 && num < 400) {
+                num -= 100;
+                res.append("C");
+            } else if (num >= 90 && num < 100) {
+                num -= 90;
+                res.append("XC");
+            } else if (num >= 50 && num < 90) {
+                num -= 50;
+                res.append("L");
+            } else if (num >= 40 && num < 50) {
+                num -= 40;
+                res.append("XL");
+            } else if (num >= 10 && num < 40) {
+                num -= 10;
+                res.append("X");
+            } else if (num == 9) {
+                num -= 9;
+                res.append("IX");
+            } else if (num >= 5 && num < 9) {
+                num -= 5;
+                res.append("V");
+            } else if (num == 4) {
+                num -= 4;
+                res.append("IV");
+            } else if (num >= 1 && num < 4) {
+                num -= 1;
+                res.append("I");
+            }
+        }
+        return res.toString();
+    }
+
+    public static  Map<Integer, String> romanMap() {
+        Map<Integer, String> map = new HashMap<>();
+        map.put(1, "I");
+        map.put(4, "IV");
+        map.put(5, "V");
+        map.put(9, "IX");
+        map.put(10, "X");
+        map.put(40, "XL");
+        map.put(50, "L");
+        map.put(90, "XC");
+        map.put(100, "C");
+        map.put(400, "CD");
+        map.put(500, "D");
+        map.put(900, "CM");
+        map.put(1000, "M");
+        return map;
     }
 }
