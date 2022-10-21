@@ -59,7 +59,7 @@ public class RomanToInteger {
      * @return
      */
     public int romanToIntV2(String s) {
-        int sum=0;
+        int sum = 0;
         if(s.indexOf("IV") != -1){sum -= 2;}
         if(s.indexOf("IX") != -1){sum -= 2;}
         if(s.indexOf("XL") != -1){sum -= 20;}
