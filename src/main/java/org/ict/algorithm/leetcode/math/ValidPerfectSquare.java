@@ -73,6 +73,13 @@ public class ValidPerfectSquare {
         }
         return x * x == num;
     }
+
+    /**
+     * One thing to note is that we have to use long for mid to avoid mid*mid from overflow.
+     * Similarly, you can use long type for low and high to avoid type casting for mid from long to int.
+     * @param num
+     * @return
+     */
     public boolean isPerfectSquareV2(int num) {
         long low = 1;
         long high = num;
@@ -89,6 +96,12 @@ public class ValidPerfectSquare {
         return false;
     }
 
+    /**
+     * One thing to note is that we have to use long for mid to avoid mid*mid from overflow.
+     * Similarly, you can use long type for low and high to avoid type casting for mid from long to int.
+     * @param num
+     * @return
+     */
     public boolean isPerfectSquareV1(int num) {
         long low = 1;
         long high = num;
