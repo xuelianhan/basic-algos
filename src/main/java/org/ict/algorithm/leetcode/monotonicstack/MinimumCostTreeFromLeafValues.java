@@ -183,6 +183,15 @@ public class MinimumCostTreeFromLeafValues {
         Deque<Integer> stack = new ArrayDeque<>();
         stack.push(Integer.MAX_VALUE);
         for (int num : arr) {
+            /**
+             * Why use peek <= num, not peek < num?
+             * Consider a case: arr = [2, 2, 2]
+             *     4
+             *    /|
+             *   4 2
+             *  /\
+             * 2 2
+             */
             while (!stack.isEmpty() && stack.peek() <= num) {
                 int top = stack.pop();
                 res += top * Math.min(stack.peek(), num);
