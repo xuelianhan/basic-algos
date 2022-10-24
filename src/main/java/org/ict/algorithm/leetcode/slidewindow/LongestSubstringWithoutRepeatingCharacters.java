@@ -246,15 +246,15 @@ public class LongestSubstringWithoutRepeatingCharacters {
         if (s == null || s.length() == 0) {
             return res;
         }
-        int[] window = new int[128];
+        int[] map = new int[128];
         int left = 0, right = 0;
         while (right < s.length()) {
             char rc = s.charAt(right);
-            window[rc]++;
+            map[rc]++;
             right++;
-            while (window[rc] > 1) {
+            while (map[rc] > 1) {
                 char lc = s.charAt(left);
-                window[lc]--;
+                map[lc]--;
                 left++;
             }
             res = Math.max(res, right - left);
@@ -267,11 +267,11 @@ public class LongestSubstringWithoutRepeatingCharacters {
      * Slide-Window solution
      *
      * s = "abcab"
-     * left:0, right:0, window[97]=1, res=max(0, 0-0+1)=1, right:1
-     * left:0, right:1, window[98]=1, res=max(1, 1-0+1)=2, right:2
-     * left:0, right:2, window[99]=1, res=max(2, 2-0+1)=3, right:3
-     * left:0, right:3, window[97]=2, window[97]--, window[97]=1, left:1, res=max(3, 3-1+1)=3, right:4
-     * left:1, right:4, window[98]=2, window[98]--, window[98]=1, left:2, res=max(3, 4-2+1)=3, right:5
+     * left:0, right:0, map[97]=1, res=max(0, 0-0+1)=1, right:1
+     * left:0, right:1, map[98]=1, res=max(1, 1-0+1)=2, right:2
+     * left:0, right:2, map[99]=1, res=max(2, 2-0+1)=3, right:3
+     * left:0, right:3, map[97]=2, map[97]--, map[97]=1, left:1, res=max(3, 3-1+1)=3, right:4
+     * left:1, right:4, map[98]=2, map[98]--, map[98]=1, left:2, res=max(3, 4-2+1)=3, right:5
      *
      *
      * @param s
@@ -285,31 +285,31 @@ public class LongestSubstringWithoutRepeatingCharacters {
         /**
          * Array to store the occurrences of all the characters
          */
-        int[] window = new int[128];
+        int[] map = new int[128];
         int left = 0, right = 0;
         /**
          * Iterate over the string till the right pointer reaches the end of the string
          */
         while (right < s.length()) {
             char rc = s.charAt(right);
-            window[rc]++;
+            map[rc]++;
             /**
              * If the occurrence become more than 1, the current char is a repeated char.
-             * We need to shrink the window.
+             * We need to shrink the map.
              */
-            while (window[rc] > 1) {
+            while (map[rc] > 1) {
                 /**
                  * Reduce the occurrence of temp as it might be present ahead also in the string
                  */
                 char lc = s.charAt(left);
-                window[lc]--;
+                map[lc]--;
                 /**
-                 * Contraction of the present window till the occurrence of the 't' char becomes 1
+                 * Contraction of the present map till the occurrence of the 't' char becomes 1
                  */
                 left++;
             }
             /**
-             * After the window is shrink, we need to calculate the max-length of no repeated substring.
+             * After the map is shrink, we need to calculate the max-length of no repeated substring.
              * As the index starts from 0 , ans will be (right pointer-left pointer + 1)
              */
             res = Math.max(res, right - left + 1);
