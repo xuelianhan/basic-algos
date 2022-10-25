@@ -29,7 +29,70 @@ package org.ict.algorithm.leetcode.slidewindow;
  */
 public class LongestSubstringAtLeastKRepeatingCharacters {
 
+    public int longestSubstringV4(String s, int k) {
+        int res = 0;
+        int[] map = new int[26];
+        for (char ch : s.toCharArray()) {
+            map[ch]++;
+        }
 
+        int left = 0, right = 0;
+        while (right < s.length()) {
+            char rc = s.charAt(right);
+            map[rc]++;
+            right++;
+
+        }
+        return res;
+    }
+
+    public int longestSubstringV3(String s, int k) {
+        int res = 0;
+        int[] map = new int[26];
+        for (char ch : s.toCharArray()) {
+            map[ch]++;
+        }
+
+        int left = 0, right = 0;
+        while (right < s.length()) {
+            char rc = s.charAt(right);
+            map[rc]++;
+            right++;
+
+        }
+        return res;
+    }
+
+    /**
+     * Divide And Conquer solution
+     * @param s
+     * @param k
+     * @return
+     */
+    public int longestSubstringV2(String s, int k) {
+        int res = 0;
+        int[] map = new int[26];
+        for (char ch : s.toCharArray()) {
+            map[ch]++;
+        }
+
+        int left = 0, right = 0;
+        while (right < s.length()) {
+            char rc = s.charAt(right);
+            map[rc]++;
+            right++;
+
+        }
+        return res;
+    }
+
+
+    /**
+     * Divide And Conquer solution
+     * @param s
+     * @param k
+     * @return
+     */
     public int longestSubstringV1(String s, int k) {
         int res = 0;
         int[] map = new int[26];
@@ -66,9 +129,12 @@ public class LongestSubstringAtLeastKRepeatingCharacters {
         if (s == null || s.length() == 0) {
             return 0;
         }
+        if (k == 1) {
+            return s.length();
+        }
         char[] map = new char[26];
         for (char ch : s.toCharArray()) {
-            map[ch-'a']++;
+            map[ch - 'a']++;
         }
         for (int i = 0; i < 26; i++) {
             int fre = map[i];
