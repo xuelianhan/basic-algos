@@ -96,14 +96,20 @@ public class MinimumWindowSubstring {
      * 2. Move right to find a valid window.
      * 3. When a valid window found, move left to find a smaller window.
      *
+     * To check if a window is valid, we use a map to store (char, count) for chars in t,
+     * and use counter for the number of chars of t to be found in s.
+     * The key part is m[s.charAt(right)]--;.
+     * We decrease count for each char in s.
+     * If it does not exist in t, the count will be negative.
+     *
      * e.g.
      * s = "abcdef", t = "bd", expected "bcd"
      * map[97]=0, map[98]=1, map[99]=0, map[100]=1, map[101]=0, map[102]=0, counter=2
      * right:0, rc:a, map[97]=0, counter:2, map[97]=-1, right:1, left:0
      * right:1, rc:b, map[98]=1, counter:1, map[98]=0, right:2, left:0
      * right:2, rc:c, map[99]=0, counter:1, map[99]=-1, right:3, left:0
-     * right:3, rc:d, map[100]=1, counter:0, map[100]=0, right:4, minLength:4-0=4, minStart=0, lc:a, map[97]=-1+1=0, left:1
-     *                            counter:0, right:4, minLength:4-1=3, minStart:1, lc:b, map[98]=0+1=1, counter:1, left:2
+     * right:3, rc:d, map[100]=1, counter:0, map[100]=0, right:4, left:0, minLength:4-0=4, minStart=0, lc:a, map[97]=-1+1=0, left:1
+     *                            counter:0, right:4, left:1, minLength:4-1=3, minStart:1, lc:b, map[98]=0+1=1, counter:1, left:2
      * right:4, rc:e, map[101]=0, counter:1, map[101]=-1, right:5
      * right:5, rc:f, map[102]=0, counter:1, map[102]=-1, right:6
      * outer-while-loop-end
