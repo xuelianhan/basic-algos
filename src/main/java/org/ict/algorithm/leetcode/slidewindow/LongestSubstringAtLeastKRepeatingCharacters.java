@@ -89,11 +89,18 @@ public class LongestSubstringAtLeastKRepeatingCharacters {
 
     /**
      * Divide And Conquer solution
+     * Cost 63ms
      * @param s
      * @param k
      * @return
      */
     public int longestSubstringV1(String s, int k) {
+        if (s == null || s.length() == 0) {
+            return 0;
+        }
+        if (k == 1) {
+            return s.length();
+        }
         char[] arr = s.toCharArray();
         return helper(arr, 0, arr.length, k);
     }
@@ -113,11 +120,11 @@ public class LongestSubstringAtLeastKRepeatingCharacters {
         for (int i = 0; i < 26; i++) {
             int fre = map[i];
             if (fre > 0 && fre < k) {
-                int j = start;
-                while (j < end && arr[j] == 'a' + i) {
-                    j++;
+                for (int j = start; j < end; j++) {
+                    if (arr[j] == 'a' + i) {
+                        return Math.max(helper(arr, start, j,  k), helper(arr, j + 1, end, k));
+                    }
                 }
-                return Math.max(helper(arr, start, j,  k), helper(arr, j + 1, end, k));
             }
         }
         return end - start;
@@ -125,6 +132,7 @@ public class LongestSubstringAtLeastKRepeatingCharacters {
 
     /**
      * Divide And Conquer solution
+     * Cost 150ms
      *
      * If a character is less than K in the string,
      * it must not be in the longest substring,
