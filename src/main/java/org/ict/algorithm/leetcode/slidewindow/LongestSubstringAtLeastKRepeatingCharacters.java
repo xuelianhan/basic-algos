@@ -1,5 +1,7 @@
 package org.ict.algorithm.leetcode.slidewindow;
 
+import java.util.Arrays;
+
 /**
  * Given a string s and an integer k,
  * return the length of the longest substring of s such that the frequency of each character in this substring is greater than or equal to k.
@@ -29,61 +31,100 @@ package org.ict.algorithm.leetcode.slidewindow;
  */
 public class LongestSubstringAtLeastKRepeatingCharacters {
 
-    public int longestSubstringV4(String s, int k) {
-        int res = 0;
-        int[] map = new int[26];
-        for (char ch : s.toCharArray()) {
-            map[ch]++;
-        }
-
-        int left = 0, right = 0;
-        while (right < s.length()) {
-            char rc = s.charAt(right);
-            map[rc]++;
-            right++;
-
-        }
-        return res;
-    }
-
-    public int longestSubstringV3(String s, int k) {
-        int res = 0;
-        int[] map = new int[26];
-        for (char ch : s.toCharArray()) {
-            map[ch]++;
-        }
-
-        int left = 0, right = 0;
-        while (right < s.length()) {
-            char rc = s.charAt(right);
-            map[rc]++;
-            right++;
-
-        }
-        return res;
-    }
 
     /**
-     * Divide And Conquer solution
+     * Slide Window Solution
+     * 1.Store the number of unique characters in the string str in a variable, say unique.
+     * 2.Store the frequency of each character in frequency array.
+     * 3.
+     *
+     * @see <a href="https://www.geeksforgeeks.org/longest-substring-where-all-the-characters-appear-at-least-k-times-set-3/"></a>
      * @param s
      * @param k
      * @return
      */
     public int longestSubstringV2(String s, int k) {
-        int res = 0;
-        int[] map = new int[26];
-        for (char ch : s.toCharArray()) {
-            map[ch]++;
+        // Store the required answer
+        int ans = 0;
+        // Create a frequency map of the
+        // characters of the String
+        int freq[] = new int[26];
+        // Traverse the String, s
+        for (int i = 0; i < s.length(); i++) {
+            // Increment the frequency of
+            // the current character by 1
+            freq[s.charAt(i) - 'a']++;
+        }
+        // Stores count of unique characters
+        int unique = 0;
+        // Find the number of unique
+        // characters in String
+        for (int i = 0; i < 26; i++) {
+            if (freq[i] != 0) {
+                unique++;
+            }
+        }
+        // Iterate in range [1, unique]
+        for (int curr_unique = 1; curr_unique <= unique; curr_unique++) {
+            // Initialize frequency of all
+            // characters as 0
+            Arrays.fill(freq, 0);
+            // Stores the start and the
+            // end of the window
+            int start = 0, end = 0;
+            // Stores the current number of
+            // unique characters and characters
+            // occurring at least K times
+            int cnt = 0, count_k = 0;
+            while (end < s.length()) {
+                if (cnt <= curr_unique)
+                {
+                    int ind = s.charAt(end) - 'a';
+
+                    // New unique character
+                    if (freq[ind] == 0)
+                        cnt++;
+                    freq[ind]++;
+
+                    // New character which
+                    // occurs atleast k times
+                    if (freq[ind] == k)
+                        count_k++;
+
+                    // Expand window by
+                    // incrementing end by 1
+                    end++;
+                } else {
+                    int ind = s.charAt(start) - 'a';
+                    // Check if this character
+                    // is present atleast k times
+                    if (freq[ind] == k)
+                        count_k--;
+                    freq[ind]--;
+
+                    // Check if this character
+                    // is unique
+                    if (freq[ind] == 0)
+                        cnt--;
+
+                    // Shrink the window by
+                    // incrementing start by 1
+                    start++;
+                }
+
+                // If there are curr_unique
+                // characters and each character
+                // is atleast k times
+                if (cnt == curr_unique
+                        && count_k == curr_unique) {
+                    // Update the overall
+                    // maximum length
+                    ans = Math.max(ans, end - start);
+                }
+            }
         }
 
-        int left = 0, right = 0;
-        while (right < s.length()) {
-            char rc = s.charAt(right);
-            map[rc]++;
-            right++;
-
-        }
-        return res;
+        return ans;
     }
 
 
@@ -112,13 +153,12 @@ public class LongestSubstringAtLeastKRepeatingCharacters {
         if (end - start < k) {
             return 0;
         }
-        int res = 0;
-        int[] map = new int[26];
+        int[] freq = new int[26];
         for (int i = start; i < end; i++) {
-            map[arr[i] - 'a']++;
+            freq[arr[i] - 'a']++;
         }
         for (int i = 0; i < 26; i++) {
-            int fre = map[i];
+            int fre = freq[i];
             if (fre > 0 && fre < k) {
                 for (int j = start; j < end; j++) {
                     if (arr[j] == 'a' + i) {
@@ -153,12 +193,12 @@ public class LongestSubstringAtLeastKRepeatingCharacters {
         if (k == 1) {
             return s.length();
         }
-        char[] map = new char[26];
+        char[] freq = new char[26];
         for (char ch : s.toCharArray()) {
-            map[ch - 'a']++;
+            freq[ch - 'a']++;
         }
         for (int i = 0; i < 26; i++) {
-            int fre = map[i];
+            int fre = freq[i];
             /**
              * when fre == 0, i + 'a' not exist in s
              */
