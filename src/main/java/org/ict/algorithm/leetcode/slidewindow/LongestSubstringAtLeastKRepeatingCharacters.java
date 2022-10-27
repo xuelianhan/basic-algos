@@ -1,6 +1,8 @@
 package org.ict.algorithm.leetcode.slidewindow;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Given a string s and an integer k,
@@ -32,7 +34,7 @@ import java.util.Arrays;
 public class LongestSubstringAtLeastKRepeatingCharacters {
 
     public int longestSubstringV3(String s, int k) {
-
+        return 0;
     }
 
 
@@ -48,75 +50,54 @@ public class LongestSubstringAtLeastKRepeatingCharacters {
      * @return
      */
     public int longestSubstringV2(String s, int k) {
+        /**
+         * Find the number of unique characters in String
+         */
+        Set<Character> set = new HashSet<>();
+        for (char ch : s.toCharArray()) {
+            set.add(ch);
+        }
         int res = 0;
-        // Create a frequency map of the characters of the String
-        int freq[] = new int[26];
-        // Traverse the String, s
-        for (int i = 0; i < s.length(); i++) {
-            // Increment the frequency of the current character by 1
-            freq[s.charAt(i) - 'a']++;
-        }
-        // Stores count of unique characters
-        int unique = 0;
-        // Find the number of unique characters in String
-        for (int i = 0; i < 26; i++) {
-            if (freq[i] != 0) {
-                unique++;
-            }
-        }
-        // Iterate in range [1, unique]
+        int[] freq = new int[26];
+        int unique = set.size();
+        /**
+         * Iterate in range [1, unique]
+         */
         for (int currUnique = 1; currUnique <= unique; currUnique++) {
-
             Arrays.fill(freq, 0);
-            // Stores the start and the
-            // end of the window
+            /**
+             * Stores the start, and the end of the window
+             */
             int start = 0, end = 0;
-            // Stores the current number of
-            // unique characters and characters
-            // occurring at least K times
+            /**
+             * Stores the current number of unique characters and characters occurring at least K times
+             */
             int cnt = 0, countK = 0;
             while (end < s.length()) {
-                if (cnt <= currUnique)
-                {
-                    int ind = s.charAt(end) - 'a';
-
+                if (cnt <= currUnique) {
+                    int idx = s.charAt(end) - 'a';
                     // New unique character
-                    if (freq[ind] == 0)
-                        cnt++;
-                    freq[ind]++;
-
-                    // New character which
-                    // occurs atleast k times
-                    if (freq[ind] == k)
-                        countK++;
-
-                    // Expand window by
-                    // incrementing end by 1
+                    if (freq[idx] == 0) cnt++;
+                    freq[idx]++;
+                    // New character which occurs at least k times
+                    if (freq[idx] == k) countK++;
+                    // Expand window by incrementing end by 1
                     end++;
                 } else {
-                    int ind = s.charAt(start) - 'a';
-                    // Check if this character
-                    // is present atleast k times
-                    if (freq[ind] == k)
-                        countK--;
-                    freq[ind]--;
-
-                    // Check if this character
-                    // is unique
-                    if (freq[ind] == 0)
-                        cnt--;
-
-                    // Shrink the window by
-                    // incrementing start by 1
+                    int idx = s.charAt(start) - 'a';
+                    // Check if this character is present at least k times
+                    if (freq[idx] == k) countK--;
+                    freq[idx]--;
+                    // Check if this character is unique
+                    if (freq[idx] == 0) cnt--;
+                    // Shrink the window by incrementing start by 1
                     start++;
                 }
-
-                // If there are currUnique
-                // characters and each character
-                // is atleast k times
+                /**
+                 * If there are currUnique characters and each character is at least k times,
+                 * update the overall maximum length
+                 */
                 if (cnt == currUnique && countK == currUnique) {
-                    // Update the overall
-                    // maximum length
                     res = Math.max(res, end - start);
                 }
             }
