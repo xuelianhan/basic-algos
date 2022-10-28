@@ -39,6 +39,14 @@ public class LongestSubstringAtLeastKRepeatingCharacters {
         longestSubstringV2(s, k);
     }
 
+    public int longestSubstringV4(String s, int k) {
+        int res = 0;
+        for (int curUnique = 1; curUnique <= 26; curUnique++) {
+            res = Math.max(res, slideWindow(s, k, curUnique));
+        }
+        return res;
+    }
+
     public int longestSubstringV3(String s, int k) {
         Set<Character> set = new HashSet<>();
         for (char ch : s.toCharArray()) {
