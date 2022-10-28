@@ -39,6 +39,35 @@ public class LongestSubstringAtLeastKRepeatingCharacters {
         longestSubstringV2(s, k);
     }
 
+    /**
+     * Description provided by ioctl and improved by sniper.
+     *
+     * This problem prompts us to use two pointers method,
+     * however it's quite difficult to decide the condition to expand (end++) and shrink (start++).
+     * That's where the following posted solution rocks.
+     *
+     * Here are some explanations to understand the code:
+     * how do we explore all possible solutions (substrings that satisfy given constraints) ?
+     *
+     * this post's solution explores this way
+     * -- find all sub-strings which have "curUnique=1" unique character(s) and each character in the substring repeats at least "k" times
+     * -- find all sub-strings which have "curUnique=2" unique character(s) and each character in the substring repeats at least "k" times
+     * -- ....
+     * -- find all sub-strings which have "curUnique=26" unique character(s) and each character in the substring repeats at least "k" times
+     * -- and we're done! at curUnique = 26, we're done.
+     * Take the max of all the above valid substrings (by tracking with res variable) -- that'll be our answer.
+     * Details: (for a fixed curUnique)
+     * Basically, we want to find a window (start to end) which has "curUnique" unique chars and if all curUnique occur at least K times,
+     * we have a candidate solution
+     * [Rules for window Expansion] so expand (end++) as long as the num of unique characters between 'start' to 'end' are curUnique or less (cnt <= curUnique)
+     * during expansion, also track chars that are "countK" (which occur at least k)
+     * end of the loop update res (max len of valid window which have curUnique unique chars and all h have at least k occurences)
+     * once we see (cnt == curUnique + 1), we just expanded our window with (curUnique+1)th unique char, so we should start to shrink now.
+     * [Rules to window Shrink window] shrink as long as we have unique chars > curUnique (update countK, cnt, start along the way)
+     * @param s
+     * @param k
+     * @return
+     */
     public int longestSubstringV4(String s, int k) {
         int res = 0;
         for (int curUnique = 1; curUnique <= 26; curUnique++) {
@@ -58,6 +87,7 @@ public class LongestSubstringAtLeastKRepeatingCharacters {
         }
         return res;
     }
+
 
     private int slideWindow(String s, int k, int curUnique) {
         int res = 0;
@@ -158,7 +188,6 @@ public class LongestSubstringAtLeastKRepeatingCharacters {
                     if (freq[idx] == k) countK++;
                     // Expand window by incrementing end by 1
                     end++;
-                    System.out.println("cnt:" + cnt + ", start:" + start + ", freq["+idx+"]:" + freq[idx] + ", countK:" + countK + ", end:" + end) ;
                 } else {
                     int idx = s.charAt(start) - 'a';
                     // Check if this character is present at least k times
@@ -168,16 +197,13 @@ public class LongestSubstringAtLeastKRepeatingCharacters {
                     if (freq[idx] == 0) cnt--;
                     // Shrink the window by incrementing start by 1
                     start++;
-                    System.out.println("cnt:" + cnt+ ", start:" + start  + ", freq["+idx+"]:" + freq[idx] + ", countK:" + countK + ", start:" + start) ;
                 }
                 /**
                  * If there are curUnique characters and each character is at least k times,
                  * update the overall maximum length
                  */
-                System.out.println("curUnique:" + curUnique + ", cnt:" + cnt + ", countK:" + countK);
                 if (cnt == curUnique && countK == curUnique) {
                     res = Math.max(res, end - start);
-                    System.out.println("curUnique:" + curUnique + ", cnt:" + cnt + ", countK:" + countK + ", res:" + res);
                 }
             }
         }
