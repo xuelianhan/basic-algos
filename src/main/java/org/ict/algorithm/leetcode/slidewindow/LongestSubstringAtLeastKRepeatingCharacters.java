@@ -123,7 +123,6 @@ public class LongestSubstringAtLeastKRepeatingCharacters {
      * curUnique:2,
      * curUnique:3,
      *
-     *
      * @param s
      * @param k
      * @return
@@ -137,11 +136,12 @@ public class LongestSubstringAtLeastKRepeatingCharacters {
             set.add(ch);
         }
         int res = 0;
+        int[] freq = new int[26];
         /**
          * Iterate in range [1, unique]
          */
         for (int curUnique = 1; curUnique <= set.size(); curUnique++) {
-            int[] freq = new int[26];
+            Arrays.fill(freq, 0);
             /**
              * Stores the start, and the end of the window
              * Stores the current number of unique characters and characters occurring at least K times
