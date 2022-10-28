@@ -33,23 +33,94 @@ import java.util.Set;
  */
 public class LongestSubstringAtLeastKRepeatingCharacters {
 
-    public int longestSubstringV3(String s, int k) {
-        return 0;
+    public static void main(String[] args) {
+        String s = "ababbc";
+        int k = 2;
+        longestSubstringV2(s, k);
     }
 
+    public int longestSubstringV3(String s, int k) {
+        Set<Character> set = new HashSet<>();
+        for (char ch : s.toCharArray()) {
+            set.add(ch);
+        }
+        int res = 0;
+        for (int curUnique = 1; curUnique <= set.size(); curUnique++) {
+            res = Math.max(res, slideWindow(s, k, curUnique));
+        }
+        return res;
+    }
+
+    private int slideWindow(String s, int k, int curUnique) {
+        int res = 0;
+        int[] freq = new int[26];
+        int start = 0, end = 0;
+        int cnt = 0, countK = 0;
+        while (end < s.length()) {
+            if (cnt <= curUnique) {
+                int idx = s.charAt(end) - 'a';
+                // New unique character
+                if (freq[idx] == 0) cnt++;
+                freq[idx]++;
+                // New character which occurs at least k times
+                if (freq[idx] == k) countK++;
+                // Expand window by incrementing end by 1
+                end++;
+            } else {
+                int idx = s.charAt(start) - 'a';
+                // Check if this character is present at least k times
+                if (freq[idx] == k) countK--;
+                freq[idx]--;
+                // Check if this character is unique
+                if (freq[idx] == 0) cnt--;
+                // Shrink the window by incrementing start by 1
+                start++;
+            }
+
+            if (cnt == curUnique && countK == curUnique) {
+                res = Math.max(res, end - start);
+            }
+        }
+        return res;
+    }
 
     /**
      * Slide Window Solution
-     * 1.Store the number of unique characters in the string str in a variable, say unique.
-     * 2.Store the frequency of each character in frequency array.
-     * 3.
      *
+     * find all sub-strings which have unique characters count(from 1 to unique) of character(s) and each character in the substring repeats at least "k" times.
+     * return the max of the longest one.
      * @see <a href="https://www.geeksforgeeks.org/longest-substring-where-all-the-characters-appear-at-least-k-times-set-3/"></a>
+     *
+     * e.g. the whole process like this:
+     * --------------------------------
+     * [---] [---]  [---]  [---]  [---] max1
+     * [---------]  [---------] max2
+     * [----------------------] maxN
+     * res = max(max1, max2, ..., maxN)
+     *
+     * e.g.s = "ababbc", k = 2.
+     * unique = 3
+     * 0 1 2 3 4 5
+     * a b a b b c
+     * curUnique:1, cnt:0, end:0, freq[0]:0 --> cnt:1, freq[0]:1, countK:0, end:1
+     *              cnt:1, end:1, freq[1]:0 --> cnt:2, freq[1]:1, countK:0, end:2
+     *              cnt:2, start:0, freq[0]:1 --> freq[0]:0, cnt:2 --> cnt:1, countK:0, start:1
+     *              cnt:1, end:2, freq[0]:0, cnt:1 --> cnt:2, freq[0]:1, countK:0, end:3
+     *              cnt:2, start:1, freq[1]:1 --> freq[1]:0, cnt:2 --> cnt:1, countK:0, start:2
+     *              cnt:1, end:3, freq[1]:0 --> cnt:2, freq[1]:1, countK:0, end:4
+     *              cnt:2, start:2, freq[0]:1 --> freq[0]:0, cnt:2 --> cnt:1, countK:0, start:3
+     *              cnt:1, end:4, freq[1]:1 --> freq[1]:2, countK:1, end:5, res=max(0, 5 - 3)=2
+     *              cnt:1, end:5, freq[2]:0 --> cnt:2, freq[2]:1, countK:1, end:6, res=max(2, 6 - 3)=3
+     *              end-while-loop of curUnique:1
+     * curUnique:2,
+     * curUnique:3,
+     *
+     *
      * @param s
      * @param k
      * @return
      */
-    public int longestSubstringV2(String s, int k) {
+    public static int longestSubstringV2(String s, int k) {
         /**
          * Find the number of unique characters in String
          */
@@ -58,23 +129,19 @@ public class LongestSubstringAtLeastKRepeatingCharacters {
             set.add(ch);
         }
         int res = 0;
-        int[] freq = new int[26];
-        int unique = set.size();
         /**
          * Iterate in range [1, unique]
          */
-        for (int currUnique = 1; currUnique <= unique; currUnique++) {
-            Arrays.fill(freq, 0);
+        for (int curUnique = 1; curUnique <= set.size(); curUnique++) {
+            int[] freq = new int[26];
             /**
              * Stores the start, and the end of the window
-             */
-            int start = 0, end = 0;
-            /**
              * Stores the current number of unique characters and characters occurring at least K times
              */
+            int start = 0, end = 0;
             int cnt = 0, countK = 0;
             while (end < s.length()) {
-                if (cnt <= currUnique) {
+                if (cnt <= curUnique) {
                     int idx = s.charAt(end) - 'a';
                     // New unique character
                     if (freq[idx] == 0) cnt++;
@@ -83,6 +150,7 @@ public class LongestSubstringAtLeastKRepeatingCharacters {
                     if (freq[idx] == k) countK++;
                     // Expand window by incrementing end by 1
                     end++;
+                    System.out.println("cnt:" + cnt + ", start:" + start + ", freq["+idx+"]:" + freq[idx] + ", countK:" + countK + ", end:" + end) ;
                 } else {
                     int idx = s.charAt(start) - 'a';
                     // Check if this character is present at least k times
@@ -92,13 +160,16 @@ public class LongestSubstringAtLeastKRepeatingCharacters {
                     if (freq[idx] == 0) cnt--;
                     // Shrink the window by incrementing start by 1
                     start++;
+                    System.out.println("cnt:" + cnt+ ", start:" + start  + ", freq["+idx+"]:" + freq[idx] + ", countK:" + countK + ", start:" + start) ;
                 }
                 /**
-                 * If there are currUnique characters and each character is at least k times,
+                 * If there are curUnique characters and each character is at least k times,
                  * update the overall maximum length
                  */
-                if (cnt == currUnique && countK == currUnique) {
+                System.out.println("curUnique:" + curUnique + ", cnt:" + cnt + ", countK:" + countK);
+                if (cnt == curUnique && countK == curUnique) {
                     res = Math.max(res, end - start);
+                    System.out.println("curUnique:" + curUnique + ", cnt:" + cnt + ", countK:" + countK + ", res:" + res);
                 }
             }
         }
