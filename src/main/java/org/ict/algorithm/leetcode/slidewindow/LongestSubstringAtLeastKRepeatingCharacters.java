@@ -92,13 +92,13 @@ public class LongestSubstringAtLeastKRepeatingCharacters {
         int res = 0;
         int[] freq = new int[26];
         int start = 0, end = 0;
-        int cnt = 0, countK = 0;
+        int uniqueCnt = 0, countK = 0;
         while (end < s.length()) {
-            if (cnt <= curUnique) {
+            if (uniqueCnt <= curUnique) {
                 int idx = s.charAt(end) - 'a';
                 freq[idx]++;
                 // New unique character
-                if (freq[idx] == 1) cnt++;
+                if (freq[idx] == 1) uniqueCnt++;
                 // New character which occurs at least k times
                 if (freq[idx] == k) countK++;
                 // Expand window by incrementing end by 1
@@ -108,13 +108,13 @@ public class LongestSubstringAtLeastKRepeatingCharacters {
                 // Check if this character is present at least k times
                 if (freq[idx] == k) countK--;
                 // Check if this character is unique
-                if (freq[idx] == 1) cnt--;
+                if (freq[idx] == 1) uniqueCnt--;
                 freq[idx]--;
                 // Shrink the window by incrementing start by 1
                 start++;
             }
 
-            if (cnt == curUnique && countK == curUnique) {
+            if (uniqueCnt == curUnique && countK == curUnique) {
                 res = Math.max(res, end - start);
             }
         }
@@ -218,7 +218,33 @@ public class LongestSubstringAtLeastKRepeatingCharacters {
      *              uniqueCnt:1, end:5, freq[2]:0 --> uniqueCnt:2, freq[2]:1, countK:1, end:6, window:bbc.
      *              end-while-loop of curUnique:1
      * curUnique:2,
-     * curUnique:3,
+     * curUnique:3
+     * ------------------------------------------
+     * uniqueCnt:1, end:1, freq[0]:1, countK:0, window:a
+     * uniqueCnt:2, end:2, freq[1]:1, countK:0, window:ab
+     * uniqueCnt:1, start:1, freq[0]:0, countK:0, window:b
+     * uniqueCnt:2, end:3, freq[0]:1, countK:0, window:ba
+     * uniqueCnt:1, start:2, freq[1]:0, countK:0, window:a
+     * uniqueCnt:2, end:4, freq[1]:1, countK:0, window:ab
+     * uniqueCnt:1, start:3, freq[0]:0, countK:0, window:b
+     * uniqueCnt:1, end:5, freq[1]:2, countK:1, window:bb
+     * uniqueCnt:1, start:3, countK:1, res:bb
+     * uniqueCnt:2, end:6, freq[2]:1, countK:1, window:bbc
+     * uniqueCnt:1, end:1, freq[0]:1, countK:0, window:a
+     * uniqueCnt:2, end:2, freq[1]:1, countK:0, window:ab
+     * uniqueCnt:2, end:3, freq[0]:2, countK:1, window:aba
+     * uniqueCnt:2, end:4, freq[1]:2, countK:2, window:abab
+     * uniqueCnt:2, start:0, countK:2, res:abab
+     * uniqueCnt:2, end:5, freq[1]:3, countK:2, window:ababb
+     * uniqueCnt:2, start:0, countK:2, res:ababb
+     * uniqueCnt:3, end:6, freq[2]:1, countK:2, window:ababbc
+     * uniqueCnt:1, end:1, freq[0]:1, countK:0, window:a
+     * uniqueCnt:2, end:2, freq[1]:1, countK:0, window:ab
+     * uniqueCnt:2, end:3, freq[0]:2, countK:1, window:aba
+     * uniqueCnt:2, end:4, freq[1]:2, countK:2, window:abab
+     * uniqueCnt:2, end:5, freq[1]:3, countK:2, window:ababb
+     * uniqueCnt:3, end:6, freq[2]:1, countK:2, window:ababbc
+     *
      * @param s
      * @param k
      * @return
