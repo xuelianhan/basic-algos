@@ -88,6 +88,40 @@ public class LongestSubstringAtLeastKRepeatingCharacters {
         return res;
     }
 
+    private int slideWindowV2(String s, int k, int curUnique) {
+        int res = 0;
+        int[] freq = new int[26];
+        int start = 0, end = 0;
+        int cnt = 0, countK = 0;
+        while (end < s.length()) {
+            if (cnt <= curUnique) {
+                int idx = s.charAt(end) - 'a';
+                freq[idx]++;
+                // New unique character
+                if (freq[idx] == 1) cnt++;
+                // New character which occurs at least k times
+                if (freq[idx] == k) countK++;
+                // Expand window by incrementing end by 1
+                end++;
+            } else {
+                int idx = s.charAt(start) - 'a';
+                // Check if this character is present at least k times
+                if (freq[idx] == k) countK--;
+                // Check if this character is unique
+                if (freq[idx] == 1) cnt--;
+                freq[idx]--;
+                // Shrink the window by incrementing start by 1
+                start++;
+            }
+
+            if (cnt == curUnique && countK == curUnique) {
+                res = Math.max(res, end - start);
+            }
+        }
+        return res;
+    }
+
+
     private int slideWindowV1(String s, int k, int curUnique) {
         int res = 0;
         int[] freq = new int[26];
