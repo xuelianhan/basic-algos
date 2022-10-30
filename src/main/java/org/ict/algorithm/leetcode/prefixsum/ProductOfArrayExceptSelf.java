@@ -82,8 +82,8 @@ public class ProductOfArrayExceptSelf {
      * starting from the right end. The idea is simple:
      * if we know the value of suffixProduct[i+1], we can easily calculate the suffixProduct[i].
      * suffixProduct calculation:
-     * suffixProduct[i+1] = product of elements from index i+2 to n-1.
      * suffixProduct[i] = product of elements from index i+1 to n-1.
+     * suffixProduct[i+1] = product of elements from index i+2 to n-1.
      * suffixProduct[i] = nums[i+1] * suffixProduct[i+1].
      * For i = n - 1, there is no element on the right of the array.
      * So we initialize suffixProduct[n-1] with 1 and loop will run from i = n - 2 to 0.
@@ -98,6 +98,7 @@ public class ProductOfArrayExceptSelf {
      *
      * prefixProduct:[1, 2, 2, 6]
      * suffixProduct:[12, 12, 4, 1]
+     *
      *
      * Time Complexity O(N)
      * Space Complexity O(N)
