@@ -94,6 +94,16 @@ public class LongestSubstringAtLeastKRepeatingCharacters {
         int start = 0, end = 0;
         int uniqueCnt = 0, countK = 0;
         while (end < s.length()) {
+            /**
+             * Notice the symmetry structure of expanding window and shrinking window.
+             * uniqueCnt means the number of these characters that appear only once in each substring.
+             * countK means the number of these characters that appear at least k times in each substring.
+             * uniqueCnt and countK are basically similar except the limit number
+             * (uniqueCnt: freq[idx]==1, countK: freq[idx] == k).
+             * substring:[ababbc], k = 2, so uniqueCnt=3(only a, b, c three characters), countK = 2 (ababbc, a appears
+             * two times, b appears three times, c appears only once, so there are only two characters a and b appears
+             * at least k=2 times)
+             */
             if (uniqueCnt <= curUnique) {
                 int idx = s.charAt(end) - 'a';
                 freq[idx]++;
