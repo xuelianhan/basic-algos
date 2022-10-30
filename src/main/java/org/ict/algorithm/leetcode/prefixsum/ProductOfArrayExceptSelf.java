@@ -37,7 +37,7 @@ package org.ict.algorithm.leetcode.prefixsum;
 public class ProductOfArrayExceptSelf {
 
     /**
-     * @see <a href="https://www.enjoyalgorithms.com/blog/product-of-array-except-self"></a>
+     *
      * @param nums
      * @return
      */
@@ -57,8 +57,26 @@ public class ProductOfArrayExceptSelf {
      */
     public int[] productExceptSelfV2(int[] nums) {
         int n = nums.length;
+        int[] product = new int[n];
+        /**
+         * Multiply prefix product and store one by one from index 1 to n-1
+         */
+        product[0] = 1;
+        for (int i = 1; i < n; i++) {
+            product[i] = nums[i-1]*product[i-1];
+        }
 
-        return null;
+        /**
+         * Multiply suffix product, update the product,
+         * then update the value of suffix product one by one from an index n-1 to 0.
+         */
+        int suffixProduct = 1;
+        for (int i = n - 1; i >= 0; i--) {
+            product[i] = product[i] * suffixProduct;
+            suffixProduct = suffixProduct * nums[i];
+        }
+
+        return product;
     }
 
 
@@ -91,13 +109,18 @@ public class ProductOfArrayExceptSelf {
      * Finally, we run another single loop to store the product excluding each element in the output array.
      * product[i] = prefixProduct[i] * suffixProduct[i]
      *
-     * nums = [2, 1, 3, 4]
+     * e.g.nums = [2, 1, 3, 4]
      * product[2] = 2 * 1 * 4
      * prefixProduct[2] = nums[2-1]*prefixProduct[2-1] = 1 * prefixProduct[1] = 1 * nums[1-1]*prefixProduct[1-1]=1*2*1
      * suffixProduct[2] = nums[2+1]* suffixProduct[2+1] = 4 * suffixProduct[3] = 4 * 1
      *
      * prefixProduct:[1, 2, 2, 6]
      * suffixProduct:[12, 12, 4, 1]
+     *
+     * e.g.nums = [1, 2, 3, 4]
+     * prefixProduct = [1, 1, 2, 6]
+     * suffixProduct = [24, 12, 4, 1]
+     * product = [24, 12, 8, 6]
      *
      *
      * Time Complexity O(N)
