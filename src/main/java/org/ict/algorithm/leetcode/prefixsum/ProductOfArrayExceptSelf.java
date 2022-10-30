@@ -1,5 +1,7 @@
 package org.ict.algorithm.leetcode.prefixsum;
 
+import java.util.Arrays;
+
 /**
  * Given an integer array nums,
  * return an array answer such that answer[i] is equal to the product of all the elements of nums except nums[i].
@@ -36,18 +38,64 @@ package org.ict.algorithm.leetcode.prefixsum;
  */
 public class ProductOfArrayExceptSelf {
 
+    public int[] productExceptSelfV6(int[] nums) {
+        int n = nums.length;
+        int[] product = new int[n];
+        Arrays.fill(product, 1);
+        int pre = 1, suf = 1;
+        for (int i = 0; i < n; i++) {
+            product[i] *=  pre;
+            pre *= nums[i];
+
+            int j = n - i - 1;
+            product[j] *= suf;
+            suf *= nums[j];
+        }
+        return product;
+    }
+
     /**
+     * Calculate without both prefix and suffix product arrays.
+     * e.g.nums = [1, 2, 3, 4]
+     * prefixProduct = [1, 1, 2, 6]
+     * suffixProduct = [24, 12, 4, 1]
+     * product = [24, 12, 8, 6]
+     * Key observation: product[i] = prefixProduct[i] * suffixProduct[i]
+     *
+     * e.g.nums = [1, 2, 3, 4]
+     * product = [1, 1, 1, 1]
+     * i:0, product[0] = 1 * 1 = 1, pre = 1 * 1 = 1
+     *      product[3] = 1 * 1 = 1, suf = 1 * 4 = 4
+     * i:1, product[1] = 1 * 1 = 1, pre = 1 * 2 = 2
+     *      product[2] = 1 * 4 = 4, suf = 4 * 3 = 12
+     * i:2, product[2] = 4 * 2 = 8, pre = 2 * 3 = 6
+     *      product[1] = 1 * 12 = 12, suf = 12 * 2 = 24
+     * i:3, product[3] = 1 * 6 = 6, pre = 6 * 4 = 24
+     *      product[0] = 1 * 24 = 24, suf = 24 * 1 = 24
+     *
      *
      * @param nums
      * @return
      */
-    public int[] productExceptSelfV4(int[] nums) {
+    public int[] productExceptSelfV5(int[] nums) {
+        int n = nums.length;
+        int[] product = new int[n];
+        Arrays.fill(product, 1);
+        int pre = 1, suf = 1;
+        for (int i = 0, j = n - i - 1; i < n && j >=0; i++, j--) {
+            product[i] *=  pre;
+            pre *= nums[i];
 
-        return null;
+            product[j] *= suf;
+            suf *= nums[j];
+        }
+        return product;
     }
 
 
     /**
+     * Understanding the following solution:
+     *
      * An efficient in-place solution.
      * Can we solve the problem in O(1) extra space complexity?
      *
@@ -55,7 +103,7 @@ public class ProductOfArrayExceptSelf {
      * @param nums
      * @return
      */
-    public int[] productExceptSelfV3(int[] nums) {
+    public int[] productExceptSelfV4(int[] nums) {
         int n = nums.length;
         int[] product = new int[n];
         /**
@@ -79,7 +127,29 @@ public class ProductOfArrayExceptSelf {
         return product;
     }
 
+    public int[] productExceptSelfV3(int[] nums) {
+        int n = nums.length;
+        int[] prefixProduct = new int[n];
+        int[] suffixProduct = new int[n];
+        prefixProduct[0] = 1;
+        suffixProduct[n - 1] = 1;
+        for (int i = 1; i < n; i++) {
+            prefixProduct[i] = nums[i-1] * prefixProduct[i-1];
+            int j = n - i - 1;
+            suffixProduct[j] = nums[j+1] * suffixProduct[j+1];
+        }
+
+        int[] product = new int[n];
+        for (int i = 0; i < n; i++) {
+            product[i] = prefixProduct[i] * suffixProduct[i];
+        }
+
+        return product;
+    }
+
     /**
+     * Understanding the following solution:
+     *
      * Combine the calculation of prefix product and suffix product together.
      * e.g.nums = [1, 2, 3, 4]
      * prefixProduct = [1, 1, 2, 6]
@@ -108,6 +178,8 @@ public class ProductOfArrayExceptSelf {
 
 
     /**
+     * Understanding the following solution:
+     *
      * Using prefix and suffix product array
      * If we observe the output pattern, product[i] = nums[0]...nums[i-1]* nums[i+1]...nums[n-1]
      * So if we multiply the prefix product with the suffix product, we will get the product of elements
