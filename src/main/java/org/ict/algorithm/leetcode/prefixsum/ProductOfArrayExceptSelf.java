@@ -41,7 +41,7 @@ public class ProductOfArrayExceptSelf {
      * @param nums
      * @return
      */
-    public int[] productExceptSelfV3(int[] nums) {
+    public int[] productExceptSelfV4(int[] nums) {
 
         return null;
     }
@@ -55,11 +55,11 @@ public class ProductOfArrayExceptSelf {
      * @param nums
      * @return
      */
-    public int[] productExceptSelfV2(int[] nums) {
+    public int[] productExceptSelfV3(int[] nums) {
         int n = nums.length;
         int[] product = new int[n];
         /**
-         * Multiply prefix product and store one by one from index 1 to n-1
+         * Multiply prefix product and store one by one from an index 1 to n-1
          */
         product[0] = 1;
         for (int i = 1; i < n; i++) {
@@ -74,6 +74,33 @@ public class ProductOfArrayExceptSelf {
         for (int i = n - 1; i >= 0; i--) {
             product[i] = product[i] * suffixProduct;
             suffixProduct = suffixProduct * nums[i];
+        }
+
+        return product;
+    }
+
+    /**
+     * Combine the calculation of prefix product and suffix product together.
+     * e.g.nums = [1, 2, 3, 4]
+     * prefixProduct = [1, 1, 2, 6]
+     * suffixProduct = [24, 12, 4, 1]
+     * product = [24, 12, 8, 6]
+     * Key observation: product[i] = prefixProduct[i] * suffixProduct[i]
+     */
+    public int[] productExceptSelfV2(int[] nums) {
+        int n = nums.length;
+        int[] prefixProduct = new int[n];
+        int[] suffixProduct = new int[n];
+        prefixProduct[0] = 1;
+        suffixProduct[n - 1] = 1;
+        for (int i = 1, j = n - i - 1; i < n && j >= 0; i++, j--) {
+            prefixProduct[i] = nums[i-1] * prefixProduct[i-1];
+            suffixProduct[j] = nums[j+1] * suffixProduct[j+1];
+        }
+
+        int[] product = new int[n];
+        for (int i = 0; i < n; i++) {
+            product[i] = prefixProduct[i] * suffixProduct[i];
         }
 
         return product;
@@ -132,8 +159,7 @@ public class ProductOfArrayExceptSelf {
      */
     public int[] productExceptSelfV1(int[] nums) {
         /**
-         * prefix product
-         *
+         * prefix product calculating from an index 1 to n-1
          */
         int n = nums.length;
         int[] prefixProduct = new int[n];
@@ -143,7 +169,7 @@ public class ProductOfArrayExceptSelf {
         }
 
         /**
-         * suffix product
+         * suffix product calculating from an index n-2 to 0.
          */
         int[] suffixProduct = new int[n];
         suffixProduct[n - 1] = 1;
