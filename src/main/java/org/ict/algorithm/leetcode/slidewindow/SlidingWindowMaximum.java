@@ -96,6 +96,9 @@ public class SlidingWindowMaximum {
      * Understanding the following solution
      *
      * Monotonic Queue Solution
+     * provided by <a href="https://leetcode.com/flyingpenguin/">flyingpenguin</a>, an awesome guy!
+     * He has finished all the problems on leetcode. So crazy!
+     *
      * Time Cost 33ms
      * Time Complexity: amortised O(N)
      * e.g. k = 3
