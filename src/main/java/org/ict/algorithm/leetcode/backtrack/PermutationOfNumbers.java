@@ -4,12 +4,32 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Input a number array and output all the permutations of it.
- * e.g.
- * Input: [1,2,3]
- * Output:[[123],[132],[213],[231],[312],[321]]
+ * Given an array nums of distinct integers, return all the possible permutations. You can return the answer in any order.
+ *
+ *
+ *
+ * Example 1:
+ *
+ * Input: nums = [1,2,3]
+ * Output: [[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]
+ * Example 2:
+ *
+ * Input: nums = [0,1]
+ * Output: [[0,1],[1,0]]
+ * Example 3:
+ *
+ * Input: nums = [1]
+ * Output: [[1]]
+ *
+ *
+ * Constraints:
+ *
+ * 1 <= nums.length <= 6
+ * -10 <= nums[i] <= 10
+ * All the integers of nums are unique.
  * @author sniper
  * @date 2022/5/6
+ * LC46
  */
 public class PermutationOfNumbers {
 
@@ -23,7 +43,7 @@ public class PermutationOfNumbers {
 
     public static List<List<Integer>> permutate(int[] numbers) {
         /**
-         * 1.Use LinkedList instead of ArrayList
+         * Use LinkedList instead of ArrayList
          */
         List<List<Integer>> result = new LinkedList<>();
         LinkedList<Integer> track = new LinkedList<>();
@@ -31,6 +51,21 @@ public class PermutationOfNumbers {
         return result;
     }
 
+    /**           (1, 2, 3)
+     *             --------
+     *            /   |    \
+     *         1 /    | 2   \3
+     *         --------------
+     *      (2,3)   (1,3)  (1,2)
+     *        -----------------
+     *      2/ \3    1/\3   1/\2
+     *      /   \    /  \   /  \
+     *     (3) (2)  (3)(1) (2)(1)
+     *
+     * @param numbers
+     * @param track
+     * @param result
+     */
     public static void backtrack(int[] numbers, LinkedList<Integer> track, List<List<Integer>> result) {
         if (track.size() == numbers.length) {
             /**
