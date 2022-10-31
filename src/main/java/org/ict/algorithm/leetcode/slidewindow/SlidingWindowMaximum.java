@@ -2,8 +2,6 @@ package org.ict.algorithm.leetcode.slidewindow;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
-import java.util.PriorityQueue;
-import java.util.Queue;
 
 /**
  * You are given an array of integers nums,
@@ -55,6 +53,7 @@ public class SlidingWindowMaximum {
     /**
      * Understanding the following solution
      * Monotonic Queue Solution
+     * Cost 86 ms
      * @param nums
      * @param k
      * @return
@@ -71,7 +70,7 @@ public class SlidingWindowMaximum {
              * Remove index out of range k from the head of the queue
              */
             if (!queue.isEmpty() && queue.peek() < i - k + 1) {
-                queue.poll();
+                queue.pollFirst();
             }
 
             /**
@@ -136,6 +135,7 @@ public class SlidingWindowMaximum {
              * Kick off the left index out of range, and it no longer participate the subsequent comparision.
              */
             if (!queue.isEmpty() && queue.peek() < i - k + 1) {
+                // default pull the head element of the queue.
                 queue.poll();
             }
 
