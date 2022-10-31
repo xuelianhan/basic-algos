@@ -97,12 +97,23 @@ public class SlidingWindowMaximum {
      *
      * Monotonic Queue Solution
      * Time Cost 33ms
+     * Time Complexity: amortised O(N)
      * e.g. k = 3
      * 0 1  2  3 4 5 6 7
      * 1 3 -1 -3 5 3 6 7
      *
      * i:0, queue:empty, push 0 into the queue, queue:0, i:0 not arrive at 2, so no need to store
-     * i:1, queue:0,
+     * i:1, queue:0, peek:0, i-k+1=1-3+1=-1, peek > -1, nums[0] < nums[1], poll 0 from the queue, push 1 into the queue:1
+     * i:2, queue:1, peek:1, i-k+1=2-3+1=0, peek > 0, nums[1] > nums[2], push 2 into the queue:1,2, 2 >= 3-1, res[0]=nums[1]=3
+     * i:3, queue:1,2, peek:1, i-k+1=3-3+1=1, peek = 1, nums[2] > nums[3], push 3 into the queue:1,2,3, 3>=3-1, res[1]=nums[1]=3
+     * i:4, queue:1,2,3, peek:1, i-k+1=4-3+1=2, peek < 2, poll 1 from the queue,
+     *      queue:2,3, nums[3] < nums[4], pull 3 from the queue, queue:2
+     *      queue:2, nums[2] < nums[4], pull 2 from the queue, queue:empty, push 4 into the queue, queue:4, 4 >= 3-1, res[2]=nums[4]=5
+     * i:5, queue:4, peek:4, i-k+1=5-3+1=3, peek > 3, nums[4] > nums[5], push 5 into the queue, queue:4,5, 5 >= 3-1, res[3]=nums[4]=5
+     * i:6, queue:4,5, peek:4, i-k+1=6-3+1=4, peek = 4, nums[5] < nums[6], pull 5 from the queue,
+     *      queue:4, nums[4] < nums[6], pull 4 from the queue, queue: empty, push 6 into the queue:, queue:6, 6 >= 3-1, res[4]=nums[6]=6
+     * i:7, queue:6, peek:6, i-k+1=7-3+1=5, peek > 5,
+     *      queue:6, nums[6] < nums[7], pull 6 from the queue, queue:empty, push 7 into the queue, queue:7, 7 >= 3-1, res[5]=nums[7]=7
      *
      * @param nums
      * @param k
@@ -118,7 +129,8 @@ public class SlidingWindowMaximum {
         Deque<Integer> queue = new ArrayDeque<>();
         for (int i = 0; i < n; i++) {
             /**
-             * Remove index out of range k from the head of the queue
+             * Remove index out of range k from the head of the queue.
+             * Kick off the left index out of range, and it no longer participate the subsequent comparision.
              */
             if (!queue.isEmpty() && queue.peek() < i - k + 1) {
                 queue.poll();
