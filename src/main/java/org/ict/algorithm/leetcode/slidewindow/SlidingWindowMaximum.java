@@ -135,12 +135,13 @@ public class SlidingWindowMaximum {
              * Kick off the left index out of range, and it no longer participate the subsequent comparision.
              */
             if (!queue.isEmpty() && queue.peek() < i - k + 1) {
-                // default pull the head element of the queue.
+                // default pull the head element of the queue, equals the operation of queue.pollFirst()
                 queue.poll();
             }
 
             /**
              * Remove smaller elements in range k from the tail of the queue
+             * This operation
              */
             while (!queue.isEmpty() && nums[queue.peekLast()] < nums[i]) {
                 queue.pollLast();
