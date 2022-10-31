@@ -1,5 +1,8 @@
 package org.ict.algorithm.leetcode.greedy;
 
+import java.util.PriorityQueue;
+import java.util.Queue;
+
 /**
  * You are given an array of integers nums,
  * there is a sliding window of size k which is moving from the very left of the array to the very right.
@@ -41,6 +44,8 @@ package org.ict.algorithm.leetcode.greedy;
 public class SlidingWindowMaximum {
 
     public int[] maxSlidingWindow(int[] nums, int k) {
+        int left = 0, right = 0;
+        Queue<Integer> queue = new PriorityQueue<>();
         return null;
     }
 }

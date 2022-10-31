@@ -41,6 +41,8 @@ package org.ict.algorithm.leetcode.monotonicqueue;
 public class SlidingWindowMaximum {
 
     public int[] maxSlidingWindow(int[] nums, int k) {
-        return null;
+        int n = nums.length;
+        int[] res = new int[n - k + 1];
+        return res;
     }
 }

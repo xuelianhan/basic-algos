@@ -1,0 +1,132 @@
+Monotonic Queue Explained with LeetCode Problems
+Li Yin
+Nov 2, 2018
+https://medium.com/algorithms-and-leetcode/monotonic-queue-explained-with-leetcode-problems-7db7c530c1d6#:~:text=Definition%20of%20Monotonic%20Queue%20A%20monotonic%20Queue%20is,naturally%20start%20from%20the%20end%20of%20the%20line.
+I have been searching online about an article related to monotonic queue or stack, there not much organized information. So, I decided to just write something about it on my own.
+
+Definition of Monotonic Queue
+A monotonic Queue is a data structure the elements from the front to the end is strictly either increasing or decreasing. For example, there is an line at the hair salon, and you would naturally start from the end of the line. However, if you are allowed to kick out any person that you can win at a fight, if every one follows the rule, then the line would start with the most powerful man and end up with the weakest one. This is an example of monotonic decreasing queue. We have either increasing or decreasing queue.
+
+Monotonic increasing queue: to push an element e, starts from the rear element, we pop out element s≥e(violation);
+Monotonic decreasing queue: we pop out element s<=e (violation).
+Sometimes, we can relax the strict monotonic condition, and can allow the stack or queue have repeat value.
+Features and Basic Code
+To get the feature of the monotonic queue, with [5, 3, 1, 2, 4] as example, if it is increasing:
+
+index   v   Increasing queue        Decreasing queue
+1       5   [5]                     [5]
+2       3   [3] 3 kick out 5        [5, 3] #3->5
+3       1   [1] 1 kick out 3        [5, 3, 1] #1->3
+4       2   [1, 2] #2->1            [5, 3, 2] 2 kick out 1 #2->3
+5       4   [1, 2, 4] #4->2         [5,4] 4 kick out 2, 3 #4->2
+In the increasing queue, for elements 2, 4 when found 1,2 which are the top element when new element push in (after the pop operation). So we can find the first element in the left that is smaller than current element. What if we want the first element in the right that is smaller than current? Observing that the right answer should be [3, 1, -1, -1, -1]. The answers corresponds to the result in the kicking out stage: 3 kick out 5, so for 5 we found 3, 1 kick out 3, for 3, we found 1, all remaining elements in the queue their answer is -1. Similarily, in the decreasing queue, for element 3,1,2,4 we found 5,3,3,2 that is the first element in the left larger than current element. Also, we found the kicked out elements in the process:[5,3] and [1,2,3] are the violation elements which would break the monotonity. The features can be generalized:
+
+increasing queue: find the first element smaller than current either in the left (from pushing in) or in the right (from popping out);
+decreasing queue: find the first element larger than current either in the left (from pushing in) or in the right (from popping out);
+This monotonic queue is actually a data structure that needed to add/remove element from the end. In some application we might further need to remove element from the front. Thus Deque from collections fits well to implement this data structure. Now, let us implement the above algorithm:
+
+Monotonic Increasing Queue
+A = [5, 3, 1, 2, 4]
+import collections
+def increasingQueue(A):
+    queue = collections.deque()
+    firstSmallerToLeft = [-1]*len(A)
+    firstSmallerToRight = [-1]*len(A)
+    for i,v in enumerate(A):
+        while queue and A[queue[-1]] >= v: # right is from the popping out
+            firstSmallerToRight[queue.pop()] = v
+
+        if queue:  #left is from the pushing in
+            firstSmallerToLeft[i] = A[queue[-1]]
+        queue.append(i)
+    print(queue)
+    return firstSmallerToLeft, firstSmallerToRight
+
+firstSmallerToLeft, firstSmallerToRight = increasingQueue(A)
+print(firstSmallerToLeft)
+print(firstSmallerToRight)
+The output is:
+
+deque([2, 3, 4])
+[-1, -1, -1, 1, 2]
+[3, 1, -1, -1, -1]
+Monotonic Decreasing Queue:
+A = [5, 3, 1, 2, 4]
+import collections
+def decreasingQueue(A):
+    queue = collections.deque()
+    firstLargerToLeft = [-1]*len(A)
+    firstLargerToRight = [-1]*len(A)
+    for i,v in enumerate(A):
+        while queue and A[queue[-1]] <= v:
+            firstLargerToRight[queue.pop()] = v
+
+        if queue:
+            firstLargerToLeft[i] = A[queue[-1]]
+        queue.append(i)
+    print(queue)
+    return firstLargerToLeft, firstLargerToRight
+
+firstLargerToLeft, firstLargerToRight = decreasingQueue(A)
+print(firstLargerToLeft)
+print(firstLargerToRight)
+The output is:
+
+deque([0, 4])
+[-1, 5, 3, 3, 5]
+[-1, 4, 2, 4, -1]
+For the above problem, If we do it with brute force, then use one for loop to point at the current element, and another embedding for loop to look for the first element that is larger than current, which gives us O(n²) time complexity. If we think about the BCR, and try to trade space for efficiency, and use monotonic queue instead, we gain O(n) linear time and O(n) space complexity.
+
+Some LeetCode Examples
+581. Shortest Unsorted Continuous Subarray
+
+Given an integer array, you need to find one continuous subarray that if you only sort this subarray in ascending order, then the whole array will be sorted in ascending order, too.
+
+You need to find the shortest such subarray and output its length.
+
+Example 1:
+
+Input: [2, 6, 4, 8, 10, 9, 15]
+Output: 5
+Explanation: You need to sort [6, 4, 8, 10, 9] in ascending order to make the whole array sorted in ascending order.
+Note:
+
+Then length of the input array is in range [1, 10,000].
+The input array may contain duplicates, so ascending order here means <=.
+Answer: if we use monotonic stack, we record the left bound and right bound, which is the first element that is kicked out (violation) and the last element kicked out (the last violation).
+
+class Solution:
+    def findUnsortedSubarray(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        if not nums:
+            return 0
+        minLen = len(nums)
+        #find the left bound which is 6, and the right bound is 10, these two violates the mono increasking/decreasing stack
+        leftbound = len(nums)-1
+        rightbound = 0
+        monoStack = collections.deque()
+        #use increasing mono stack to find left bound
+        for i,v in enumerate(nums):
+            while monoStack and v<nums[monoStack[-1]]:
+                leftbound=min(leftbound, monoStack.pop())
+            monoStack.append(i)
+
+        # use decreasing mono stack to find the right bound
+
+        monoStack = collections.deque()
+        for i in reversed(range(len(nums))):
+            while monoStack and nums[i]>nums[monoStack[-1]]:
+                rightbound=max(rightbound, monoStack.pop())
+            monoStack.append(i)
+return rightbound-leftbound+1 if  rightbound-leftbound>0 else 0
+Others include:
+
+496. Next Greater Element I
+503.Next Greater Element II
+84. Largest Rectangle in Histogram
+122. Best Time to Buy and Sell Stock II
+862. Shortest Subarray with Sum at Least K
+Also, I started a thread to gain different opinion on coding interviews. Check it out!
