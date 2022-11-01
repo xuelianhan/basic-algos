@@ -1,4 +1,4 @@
-package org.ict.algorithm.acwing;
+package org.ict.algorithm.acwing.dynamicprogramming;
 
 /**
  * @see <a href="https://www.acwing.com/problem/content/description/293/"></a>
