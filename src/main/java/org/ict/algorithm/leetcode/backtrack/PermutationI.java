@@ -32,10 +32,15 @@ import java.util.List;
  * @date 2022/5/6
  * LC46
  */
-public class PermutationOfNumbers {
+public class PermutationI {
+
+    public static void main(String[] args) {
+        int[] nums = {1, 2, 3};
+        permuteV1(nums);
+    }
 
 
-    public List<List<Integer>> permuteV2(int[] nums) {
+    public static List<List<Integer>> permuteV2(int[] nums) {
         /**
          * Use LinkedList instead of ArrayList
          */
@@ -45,7 +50,7 @@ public class PermutationOfNumbers {
     }
 
 
-    public void dfs(int[] nums, LinkedList<Integer> path, boolean[] visited,  List<List<Integer>> result) {
+    public static void dfs(int[] nums, LinkedList<Integer> path, boolean[] visited,  List<List<Integer>> result) {
         if (path.size() == nums.length) {
             //Make a deep copy of path here, otherwise we'd be append the same path over and over
             result.add(new ArrayList<>(path));
@@ -73,9 +78,9 @@ public class PermutationOfNumbers {
     }
 
 
-    public List<List<Integer>> permuteV1(int[] nums) {
+    public static List<List<Integer>> permuteV1(int[] nums) {
         /**
-         * Use LinkedList instead of ArrayList
+         * Use LinkedList instead of ArrayList in order to use the removeLast method.
          */
         List<List<Integer>> result = new LinkedList<>();
         LinkedList<Integer> track = new LinkedList<>();
@@ -83,7 +88,8 @@ public class PermutationOfNumbers {
         return result;
     }
 
-    /**           (1, 2, 3)
+    /**
+     *             (1, 2, 3)
      *             --------
      *            /   |    \
      *          1/    |2    \3
@@ -93,11 +99,25 @@ public class PermutationOfNumbers {
      *      2/ \3    1/\3    1/\2
      *      /   \    /  \    /  \
      *     3    2   3   1   2    1
+     *
+     * e.g.
+     * nums = [1, 2, 3]
+     * i:0, track:1
+     *         |
+     *       backtrack(nums, track, result), skip 1
+     *       track:1,2
+     *         |
+     *       backtrack(nums, track, result), skip 1, 2
+     *       track:1,2,3
+     *         |
+     *       backtrack(nums, track, result), track size == 3, result:1,2,3, return, track remove last, track:1,2
+     *
+     *
      * @param nums
      * @param track
      * @param result
      */
-    public void backtrackV1(int[] nums, LinkedList<Integer> track, List<List<Integer>> result) {
+    public static void backtrackV1(int[] nums, LinkedList<Integer> track, List<List<Integer>> result) {
         if (track.size() == nums.length) {
             /**
              * Use new LinkedList to wrapper track instead of adding track into result list directly
@@ -118,14 +138,14 @@ public class PermutationOfNumbers {
         }
     }
 
-    public List<List<Integer>> permute(int[] nums) {
+    public static List<List<Integer>> permute(int[] nums) {
         List<List<Integer>> result = new ArrayList<>();
         List<Integer> track = new ArrayList<>();
         backtrack(nums, track, result);
         return result;
     }
 
-    public void backtrack(int[] nums, List<Integer> track, List<List<Integer>> result) {
+    public static void backtrack(int[] nums, List<Integer> track, List<List<Integer>> result) {
         if (track.size() == nums.length) {
             /**
              * Wrapper track with ArrayList is very important.

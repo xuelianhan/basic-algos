@@ -33,6 +33,51 @@ import java.util.List;
  */
 public class SubsetsII {
 
+
+    /**
+     * @see <a href="https://leetcode.com/zpcore/">apcore</a>
+     * @param nums
+     * @return
+     */
+    public List<List<Integer>> subsetsWithDupV1(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        LinkedList<Integer> track = new LinkedList<>();
+        /**
+         * sort the nums to prepare for subsequent removing duplicates
+         */
+        Arrays.sort(nums);
+        backtrackV1(nums, track, result, 0, false);
+        return result;
+    }
+
+    /**
+     *
+     * Each recursion level focuses on one element, we need to decide choose or not choose this element.
+     * Every level split into 2 branches.
+     * @param nums
+     * @param track
+     * @param result
+     * @param k
+     * @param choosePre
+     */
+    public void backtrackV1(int[] nums, LinkedList<Integer> track, List<List<Integer>> result, int k, boolean choosePre) {
+        if (k == nums.length) {
+            result.add(new ArrayList<>(track));
+            return;
+        }
+        backtrackV1(nums, track, result, k + 1, false);
+        /**
+         * removing duplicates, this step requires the input array has sorted already.
+         */
+        if (k >= 1  && nums[k] == nums[k-1] && !choosePre) {
+            return;
+        }
+        track.add(nums[k]);
+        backtrackV1(nums, track, result, k + 1, true);
+        track.removeLast();
+    }
+
+
     public List<List<Integer>> subsetsWithDup(int[] nums) {
         List<List<Integer>> result = new ArrayList<>();
         LinkedList<Integer> track = new LinkedList<>();
@@ -44,6 +89,16 @@ public class SubsetsII {
         return result;
     }
 
+    /**
+     * Each recursion level focuses on all the following elements.
+     * Every level split into N branches.
+     * We scan through all the following elements and decide whether to choose or not choose that element.
+     *
+     * @param nums
+     * @param track
+     * @param result
+     * @param k
+     */
     public void backtrack(int[] nums, LinkedList<Integer> track, List<List<Integer>> result, int k) {
         result.add(new ArrayList<>(track));
         for (int i = k; i < nums.length; i++) {
