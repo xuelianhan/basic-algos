@@ -1,7 +1,9 @@
 package org.ict.algorithm.leetcode.backtrack;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Given a string containing digits from 2-9 inclusive,
@@ -46,13 +48,48 @@ import java.util.List;
  */
 public class LetterCombinationsOfPhoneNumber {
 
-    public List<String> letterCombinations(String digits) {
-        List<String> result = new ArrayList<>();
+    public static void main(String[] args) {
+        String digits = "23";
+        letterCombinations(digits);
+    }
 
+    public static List<String> letterCombinations(String digits) {
+        List<String> result = new ArrayList<>();
+        StringBuilder track = new StringBuilder();
+        Map<Character, String> map = new HashMap<>();
+        map.put('2', "abc");
+        map.put('3', "def");
+        map.put('4', "ghi");
+        map.put('5', "jkl");
+        map.put('6', "mno");
+        map.put('7', "pqrs");
+        map.put('8', "tuv");
+        map.put('9', "wxyz");
+        List<Character> choise = new ArrayList<>();
+        for (char digit : digits.toCharArray()) {
+            for (char ch : map.get(digit).toCharArray()) {
+                choise.add(ch);
+            }
+        }
+        backtrack(result, digits.length(), track, choise);
         return result;
     }
 
-    public void backtrack(List<String> result) {
-
+    public static void backtrack(List<String> result, int max, StringBuilder track, List<Character> choise) {
+        if (track.length() == max) {
+            result.add(track.toString());
+            return;
+        }
+        for (char ch : choise) {
+            if (track.toString().contains(Character.toString(ch))) {
+                /**
+                 * Skip the number which has been accessed.
+                 */
+                continue;
+            }
+            track.append(ch);
+            backtrack(result, max, track, choise);
+            track.deleteCharAt(track.length() - 1);
+        }
     }
 }
