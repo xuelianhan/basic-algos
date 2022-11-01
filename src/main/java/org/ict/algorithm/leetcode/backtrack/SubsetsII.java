@@ -54,6 +54,9 @@ public class SubsetsII {
                 continue;
             }
             track.add(nums[i]);
+            /**
+             * Notice here, pass i + 1 into k, not k+1
+             */
             backtrack(nums, track, result, i+1);
             track.removeLast();
         }
