@@ -48,13 +48,26 @@ import java.util.Map;
  */
 public class LetterCombinationsOfPhoneNumber {
 
-    public static void main(String[] args) {
-        String digits = "23";
-        letterCombinations(digits);
+
+    /**
+     * Breadth-First-Search Solution
+     * @param digits
+     * @return
+     */
+    public List<String> letterCombinationsV1(String digits) {
+        return null;
     }
 
-    public static List<String> letterCombinations(String digits) {
+
+    public List<String> letterCombinations(String digits) {
+        /**
+         * Corner case digits = "", return expected []
+         */
         List<String> result = new ArrayList<>();
+        if (digits == null || digits.length() == 0) {
+            return result;
+        }
+
         StringBuilder track = new StringBuilder();
         Map<Character, String> map = new HashMap<>();
         map.put('2', "abc");
@@ -65,30 +78,39 @@ public class LetterCombinationsOfPhoneNumber {
         map.put('7', "pqrs");
         map.put('8', "tuv");
         map.put('9', "wxyz");
-        List<Character> choise = new ArrayList<>();
-        for (char digit : digits.toCharArray()) {
-            for (char ch : map.get(digit).toCharArray()) {
-                choise.add(ch);
-            }
-        }
-        backtrack(result, digits.length(), track, choise);
+        backtrack(result, digits, track, map, 0);
         return result;
     }
 
-    public static void backtrack(List<String> result, int max, StringBuilder track, List<Character> choise) {
-        if (track.length() == max) {
+    /**
+     * digits = "23"
+     * 2 --> abc, 3 --> def
+     *          root
+     *        /  |  \      pos:0, select 2
+     *       a   b   c
+     *       /   |    \    pos:1, select 3
+     *    (def) (def) (def)
+     *
+     *    ad,ae,af
+     *    bd,be,bf
+     *    cd,ce,cf
+     *
+     * @see <a href="https://www.interviewbit.com/blog/letter-combinations-of-a-phone-number/"></a>
+     * @param result
+     * @param digits
+     * @param track
+     * @param map
+     * @param pos
+     */
+    public void backtrack(List<String> result, String digits, StringBuilder track, Map<Character, String> map, int pos) {
+        if (track.length() == digits.length()) {
             result.add(track.toString());
             return;
         }
-        for (char ch : choise) {
-            if (track.toString().contains(Character.toString(ch))) {
-                /**
-                 * Skip the number which has been accessed.
-                 */
-                continue;
-            }
+        String possibleLetters = map.get(digits.charAt(pos));
+        for (char ch : possibleLetters.toCharArray()) {
             track.append(ch);
-            backtrack(result, max, track, choise);
+            backtrack(result, digits, track, map, pos + 1);
             track.deleteCharAt(track.length() - 1);
         }
     }
