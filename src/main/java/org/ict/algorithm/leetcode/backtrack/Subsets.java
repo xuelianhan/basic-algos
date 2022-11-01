@@ -42,6 +42,9 @@ public class Subsets {
     }
 
     public void backtrackV1(int[] nums, List<Integer> track, List<List<Integer>> result, int k) {
+        /**
+         * Make a deep copy of track, don't add the track directly
+         */
         result.add(new ArrayList<>(track));
         for (int i = k; i < nums.length; i++) {
             track.add(nums[i]);
@@ -61,6 +64,9 @@ public class Subsets {
     }
 
     public void backtrack(int[] nums, LinkedList<Integer> track, List<List<Integer>> result, int k) {
+        /**
+         * Make a deep copy of track, don't add the track directly
+         */
         result.add(new ArrayList<>(track));
         for (int i = k; i < nums.length; i++) {
             track.add(nums[i]);
