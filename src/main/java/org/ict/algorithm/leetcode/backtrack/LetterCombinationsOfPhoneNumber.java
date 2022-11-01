@@ -1,9 +1,6 @@
 package org.ict.algorithm.leetcode.backtrack;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Given a string containing digits from 2-9 inclusive,
@@ -59,8 +56,20 @@ public class LetterCombinationsOfPhoneNumber {
      * @return
      */
     public List<String> letterCombinationsV1(String digits) {
-        //todo
-        return null;
+        String[] map = new String[] {"0",   "1",   "abc",  "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+        List<String> result = new ArrayList<>();
+        Queue<String> queue = new LinkedList<>();
+        queue.add("");
+        while (!queue.isEmpty()) {
+            String s = queue.poll();
+            if (s.length() == digits.length()) {
+                result.add(s);
+                continue;
+            }
+            //todo
+            //String choise = map[]
+        }
+        return result;
     }
 
 
