@@ -49,7 +49,7 @@ public class PermutationsII {
      * 2.i > 0 && nums[i] == nums[i-1] && visited[i-1]
      * Why using 1 is faster than 2?
      * What's the difference of 1 and 2?
-     * 
+     *
      *
      * @param nums
      * @param path
