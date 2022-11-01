@@ -46,7 +46,7 @@ public class GenerateParentheses {
      * @param n
      * @return
      */
-    public List<String> generateParenthesisV1(int n) {
+    public List<String> generateParenthesisV3(int n) {
         List<String> result = new ArrayList<>();
         List<Character> track = new ArrayList<>();
         /**
@@ -61,6 +61,13 @@ public class GenerateParentheses {
      * We can use two counters to remember the number of opening and closed Parentheses respectively,
      * and only backtracking those valid branches.
      * The invalid branches are cut-off and abandoned.
+     *
+     * If anyone wondering why does this work, then the main concept is that in a parenthesis balanced string,
+     * count of ')' must be less than equal to count of '(' for every prefix of the string.
+     * A parenthesis balanced string (of size 2*N) must have N number of '(' and N number of ')'.
+     * We go on adding '(' before ')' for every recursive state string until count of '(' becomes equal to N.
+     * Then we start adding ')' only on a condition that count of ')' is less than count of '('.
+     * These two conditions will always produce balanced string.
      *
      * @param result
      * @param track
@@ -85,6 +92,51 @@ public class GenerateParentheses {
          */
         if (close < open) {
             dfs(result,  n, track + ")", open, close + 1);
+        }
+    }
+
+    /**
+     * Backtrack Solution
+     *
+     * Time Cost 1ms
+     * @param n
+     * @return
+     */
+    public List<String> generateParenthesisV2(int n) {
+        List<String> result = new ArrayList<>();
+        StringBuilder track = new StringBuilder();
+        backtrackV2(result, track, n, n);
+        return result;
+    }
+
+    /**
+     * The key to all backtracking problems is "to choose".
+     * You have to choose between many options and then come back to choose again.
+     * In this problem, you have to choose between left and right parenthesis.
+     * In another backtracking problem:letter-combinations-of-a-phone-number.
+     * You have to choose between different letters.
+     * These problems share a same pattern.
+     * In backtrackV2 function, you just need to list all your options and try each one of them out.
+     * As for this problem, every time you choose a "(" means making another ")" available.
+     * @param result
+     * @param track
+     * @param left
+     * @param right
+     */
+    public void backtrackV2(List<String> result, StringBuilder track, int left, int right) {
+        if (left == 0 && right == 0) {
+            result.add(track.toString());
+            return;
+        }
+        if (left > 0) {
+            track.append("(");
+            backtrackV2(result, track, left - 1, right);
+            track.deleteCharAt(track.length() - 1);
+        }
+        if (right > left) {
+            track.append(")");
+            backtrackV2(result, track, left, right - 1);
+            track.deleteCharAt(track.length() - 1);
         }
     }
 
