@@ -1,5 +1,6 @@
 package org.ict.algorithm.leetcode.backtrack;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -33,21 +34,15 @@ import java.util.List;
  */
 public class PermutationOfNumbers {
 
-    public static void main(String[] args) {
-        int[] numbers = new int[] {1,2,3};
-        List<List<Integer>> result = permutate(numbers);
-        result.forEach(item -> {
-            System.out.println(item);
-        });
-    }
 
-    public static List<List<Integer>> permutate(int[] numbers) {
+
+    public List<List<Integer>> permuteV1(int[] numbers) {
         /**
          * Use LinkedList instead of ArrayList
          */
         List<List<Integer>> result = new LinkedList<>();
         LinkedList<Integer> track = new LinkedList<>();
-        backtrack(numbers, track, result);
+        backtrackV1(numbers, track, result);
         return result;
     }
 
@@ -65,7 +60,7 @@ public class PermutationOfNumbers {
      * @param track
      * @param result
      */
-    public static void backtrack(int[] numbers, LinkedList<Integer> track, List<List<Integer>> result) {
+    public void backtrackV1(int[] numbers, LinkedList<Integer> track, List<List<Integer>> result) {
         if (track.size() == numbers.length) {
             /**
              * Use new LinkedList to wrapper track instead of adding track into result list directly
@@ -81,8 +76,38 @@ public class PermutationOfNumbers {
                 continue;
             }
             track.add(numbers[i]);
-            backtrack(numbers, track, result);
+            backtrackV1(numbers, track, result);
             track.removeLast();
         }
     }
+
+    public List<List<Integer>> permute(int[] numbers) {
+        List<List<Integer>> result = new ArrayList<>();
+        List<Integer> track = new ArrayList<>();
+        backtrack(numbers, track, result);
+        return result;
+    }
+
+    public void backtrack(int[] numbers, List<Integer> track, List<List<Integer>> result) {
+        if (track.size() == numbers.length) {
+            /**
+             * Wrapper track with ArrayList is very important.
+             * If you don't do that, you will get an empty array.
+             */
+            result.add(new ArrayList<>(track));
+            return;
+        }
+        for (int i = 0; i < numbers.length; i++) {
+            if (track.contains(numbers[i])) {
+                continue;
+            }
+            track.add(numbers[i]);
+            backtrack(numbers, track, result);
+            /**
+             * remove the last one of the track.
+             */
+            track.remove(track.size() - 1);
+        }
+    }
+
 }
