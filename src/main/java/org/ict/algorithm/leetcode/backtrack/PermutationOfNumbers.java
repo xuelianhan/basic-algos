@@ -35,14 +35,51 @@ import java.util.List;
 public class PermutationOfNumbers {
 
 
+    public List<List<Integer>> permuteV2(int[] nums) {
+        /**
+         * Use LinkedList instead of ArrayList
+         */
+        List<List<Integer>> result = new LinkedList<>();
+        dfs(nums, new LinkedList<>(), new boolean[nums.length],  result);
+        return result;
+    }
 
-    public List<List<Integer>> permuteV1(int[] numbers) {
+
+    public void dfs(int[] nums, LinkedList<Integer> path, boolean[] visited,  List<List<Integer>> result) {
+        if (path.size() == nums.length) {
+            //Make a deep copy of path here, otherwise we'd be append the same path over and over
+            result.add(new ArrayList<>(path));
+            return;
+        }
+        for (int i = 0; i < nums.length; i++) {
+            /**
+             *  skip visited num
+             */
+            if (visited[i]) {
+                continue;
+            }
+            /**
+             * add num on the path and mark num as visited.
+             */
+            path.add(nums[i]);
+            visited[i] = true;
+            dfs(nums, path, visited, result);
+            /**
+             * remove num off the path and mark num as unvisited.
+             */
+            path.removeLast();
+            visited[i] = false;
+        }
+    }
+
+
+    public List<List<Integer>> permuteV1(int[] nums) {
         /**
          * Use LinkedList instead of ArrayList
          */
         List<List<Integer>> result = new LinkedList<>();
         LinkedList<Integer> track = new LinkedList<>();
-        backtrackV1(numbers, track, result);
+        backtrackV1(nums, track, result);
         return result;
     }
 
@@ -56,40 +93,40 @@ public class PermutationOfNumbers {
      *      2/ \3    1/\3    1/\2
      *      /   \    /  \    /  \
      *     3    2   3   1   2    1
-     * @param numbers
+     * @param nums
      * @param track
      * @param result
      */
-    public void backtrackV1(int[] numbers, LinkedList<Integer> track, List<List<Integer>> result) {
-        if (track.size() == numbers.length) {
+    public void backtrackV1(int[] nums, LinkedList<Integer> track, List<List<Integer>> result) {
+        if (track.size() == nums.length) {
             /**
              * Use new LinkedList to wrapper track instead of adding track into result list directly
              */
             result.add(new LinkedList<>(track));
             return;
         }
-        for (int i = 0; i < numbers.length; i++) {
-            if (track.contains(numbers[i])) {
+        for (int i = 0; i < nums.length; i++) {
+            if (track.contains(nums[i])) {
                 /**
                  * Skip the number which has been accessed.
                  */
                 continue;
             }
-            track.add(numbers[i]);
-            backtrackV1(numbers, track, result);
+            track.add(nums[i]);
+            backtrackV1(nums, track, result);
             track.removeLast();
         }
     }
 
-    public List<List<Integer>> permute(int[] numbers) {
+    public List<List<Integer>> permute(int[] nums) {
         List<List<Integer>> result = new ArrayList<>();
         List<Integer> track = new ArrayList<>();
-        backtrack(numbers, track, result);
+        backtrack(nums, track, result);
         return result;
     }
 
-    public void backtrack(int[] numbers, List<Integer> track, List<List<Integer>> result) {
-        if (track.size() == numbers.length) {
+    public void backtrack(int[] nums, List<Integer> track, List<List<Integer>> result) {
+        if (track.size() == nums.length) {
             /**
              * Wrapper track with ArrayList is very important.
              * If you don't do that, you will get an empty array.
@@ -97,12 +134,12 @@ public class PermutationOfNumbers {
             result.add(new ArrayList<>(track));
             return;
         }
-        for (int i = 0; i < numbers.length; i++) {
-            if (track.contains(numbers[i])) {
+        for (int i = 0; i < nums.length; i++) {
+            if (track.contains(nums[i])) {
                 continue;
             }
-            track.add(numbers[i]);
-            backtrack(numbers, track, result);
+            track.add(nums[i]);
+            backtrack(nums, track, result);
             /**
              * remove the last one of the track.
              */
