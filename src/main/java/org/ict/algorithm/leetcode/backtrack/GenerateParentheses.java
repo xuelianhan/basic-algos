@@ -29,6 +29,36 @@ import java.util.stream.Collectors;
 public class GenerateParentheses {
 
     /**
+     * track:
+     * track:(
+     * track:((
+     * track:(((
+     * track:((()
+     * track:((())
+     * track:((()))
+     * track:(()
+     * track:(()(
+     * track:(()()
+     * track:(()())
+     * track:(())
+     * track:(())(
+     * track:(())()
+     * track:()
+     * track:()(
+     * track:()((
+     * track:()(()
+     * track:()(())
+     * track:()()
+     * track:()()(
+     * track:()()()
+     * @param args
+     */
+    public static void main(String[] args) {
+        int n = 3;
+        generateParenthesisV3(n);
+    }
+
+    /**
      * Backtracking/Depth First Search Solution
      *
      * Apparently, the performance of the brute force algorithm is not ideal,
@@ -46,11 +76,11 @@ public class GenerateParentheses {
      * @param n
      * @return
      */
-    public List<String> generateParenthesisV3(int n) {
+    public static List<String> generateParenthesisV3(int n) {
         List<String> result = new ArrayList<>();
         List<Character> track = new ArrayList<>();
         /**
-         * result, n, track, open, close
+         * result, max, track, open, close
          */
         dfs(result, n, "", 0, 0);
         return result;
@@ -71,12 +101,13 @@ public class GenerateParentheses {
      *
      * @param result
      * @param track
-     * @param n
+     * @param max
      * @param open
      * @param close
      */
-    public void dfs(List<String> result, int n, String track,  int open, int close) {
-        if (track.length() == 2 * n) {
+    public static void dfs(List<String> result, int max, String track,  int open, int close) {
+        System.out.println("track:" + track);
+        if (track.length() == 2 * max) {
             result.add(track);
             return;
         }
@@ -84,14 +115,14 @@ public class GenerateParentheses {
          * Because open initialized with zero, it's at most n '(' characters
          * So open is less than n here(open is start from 0 to n-1)
          */
-        if (open < n) {
-            dfs(result, n, track + "(", open + 1, close);
+        if (open < max) {
+            dfs(result, max, track + "(", open + 1, close);
         }
         /**
          * he close Parentheses should be less than the opening Parentheses
          */
         if (close < open) {
-            dfs(result,  n, track + ")", open, close + 1);
+            dfs(result,  max, track + ")", open, close + 1);
         }
     }
 
