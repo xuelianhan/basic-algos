@@ -45,34 +45,42 @@ import java.util.*;
  */
 public class LetterCombinationsOfPhoneNumber {
 
+    /**
+     * Understanding the following Breadth-First-Search Solution
+     * 
+     * @param digits
+     * @return
+     */
     public List<String> letterCombinationsV2(String digits) {
         return null;
     }
 
 
     /**
-     * Breadth-First-Search Solution
+     * Understanding the following Breadth-First-Search Solution
+     *
+     *
+     * @see <a href="https://afteracademy.com/blog/letter-combinations-of-a-phone-number"></a>
+     *
      * @param digits
      * @return
      */
     public List<String> letterCombinationsV1(String digits) {
         String[] map = new String[] {"0",   "1",   "abc",  "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
-        List<String> result = new ArrayList<>();
-        Queue<String> queue = new LinkedList<>();
-        queue.add("");
-        while (!queue.isEmpty()) {
-            String s = queue.poll();
-            if (s.length() == digits.length()) {
-                result.add(s);
-                continue;
-            }
-            //todo
-            //String choise = map[]
+        LinkedList<String> queue = new LinkedList<>();
+        if (digits.isEmpty()) {
+            return queue;
         }
-        return result;
+        return queue;
     }
 
 
+    /**
+     * Understanding the following Backtracking Solution
+     *
+     * @param digits
+     * @return
+     */
     public List<String> letterCombinations(String digits) {
         /**
          * Corner case digits = "", return expected []
