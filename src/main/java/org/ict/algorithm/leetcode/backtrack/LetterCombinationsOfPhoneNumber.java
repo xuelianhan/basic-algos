@@ -48,6 +48,10 @@ import java.util.Map;
  */
 public class LetterCombinationsOfPhoneNumber {
 
+    public List<String> letterCombinationsV2(String digits) {
+        return null;
+    }
+
 
     /**
      * Breadth-First-Search Solution
@@ -55,6 +59,7 @@ public class LetterCombinationsOfPhoneNumber {
      * @return
      */
     public List<String> letterCombinationsV1(String digits) {
+        //todo
         return null;
     }
 
