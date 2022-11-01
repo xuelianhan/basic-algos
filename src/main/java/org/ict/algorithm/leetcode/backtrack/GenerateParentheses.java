@@ -42,9 +42,11 @@ public class GenerateParentheses {
 
     /**
      * Brute-Force Solution
-     *
+     * Time Complexity: O(N*2^(2*N))
+     * @see <a href="https://helloacm.com/how-to-generate-parentheses-using-bruteforce-or-depth-first-search-backtracking-algorithms"></a>
      * @param n
      * @return
+     *
      */
     public List<String> generateParenthesis(int n) {
         List<String> result = new ArrayList<>();
@@ -59,6 +61,7 @@ public class GenerateParentheses {
 
     /**
      * Same with backtrack method.
+     * Time Complexity: O(N*2^(2*N))
      * @param result
      * @param track
      * @param pos
@@ -76,6 +79,12 @@ public class GenerateParentheses {
         backtrack(result, track, pos + 1);
     }
 
+    /**
+     * Time Complexity: O(N*2^(2*N))
+     * @param result
+     * @param track
+     * @param pos
+     */
     public void backtrack(List<String> result, char[] track, int pos) {
         if (pos == track.length) {
             /**
@@ -99,6 +108,8 @@ public class GenerateParentheses {
      * If we meet '(' we increment the balance, and ')' we decrement it.
      * At any time, if the balance is negative, it is invalid.
      * Finally, a valid Parenthesis should have zero balance at the end.
+     *
+     * Time Complexity: O(N)
      * @param a
      * @return
      */
