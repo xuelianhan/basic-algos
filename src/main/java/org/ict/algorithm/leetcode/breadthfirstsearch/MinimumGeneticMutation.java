@@ -135,6 +135,8 @@ public class MinimumGeneticMutation {
     }
 
     /**
+     * A Typical backtracking steps:
+     * 
      * 1.filter repeated choices or not matched choices.
      * 2.mark the choice.
      * 3.recursion backtrack.
