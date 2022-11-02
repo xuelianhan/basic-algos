@@ -82,6 +82,10 @@ public class MinimumGeneticMutation {
     }
 
     public int backtrackV1(String current, String end, String[] bank, boolean[] visited) {
+        /**
+         * while current is same as end, it means no need to do any transform between current and end.
+         * So the transform step count is zero.
+         */
         if (current.equals(end)) {
             return 0;
         }
