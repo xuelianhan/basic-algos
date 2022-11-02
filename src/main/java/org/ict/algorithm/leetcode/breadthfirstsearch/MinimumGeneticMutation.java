@@ -81,6 +81,23 @@ public class MinimumGeneticMutation {
         return backtrack(start, end, bank, visited);
     }
 
+    /**
+     *               start has N choices(bank[0]...bank[n-1])                 level[0]
+     *              /               |               \
+     *        bank[0]...bank[n-1]    ...         bank[0]...bank[n-1]          level[1]
+     *            /                 |                \                          .
+     *           ...               ...               ...                        .
+     *           /                  |                  \                        .
+     *       end has choices bank[0]...bank[n-1]                              level[n - 1]
+     *
+     *
+     *
+     * @param current
+     * @param end
+     * @param bank
+     * @param visited
+     * @return
+     */
     public int backtrackV1(String current, String end, String[] bank, boolean[] visited) {
         /**
          * while current is same as end, it means no need to do any transform between current and end.
@@ -136,13 +153,14 @@ public class MinimumGeneticMutation {
 
     /**
      * A Typical backtracking steps:
-     * 
+     *
      * 1.filter repeated choices or not matched choices.
      * 2.mark the choice.
      * 3.recursion backtrack.
      * 4.unmark the choice.
      * 5.other process like calculate minimum or maximum,
      * this step is not necessary sometimes but is needed here.
+     *
      */
     public int backtrack(String current, String end, String[] bank, boolean[] visited) {
         if (current.equals(end)) {
