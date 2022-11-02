@@ -45,12 +45,12 @@ public class PermutationI {
          * Use LinkedList instead of ArrayList
          */
         List<List<Integer>> result = new LinkedList<>();
-        dfs(nums, new LinkedList<>(), new boolean[nums.length],  result);
+        backtrackV2(nums, new LinkedList<>(), new boolean[nums.length],  result);
         return result;
     }
 
 
-    public static void dfs(int[] nums, LinkedList<Integer> path, boolean[] visited,  List<List<Integer>> result) {
+    public static void backtrackV2(int[] nums, LinkedList<Integer> path, boolean[] visited, List<List<Integer>> result) {
         if (path.size() == nums.length) {
             //Make a deep copy of path here, otherwise we'd be append the same path over and over
             result.add(new ArrayList<>(path));
@@ -68,7 +68,7 @@ public class PermutationI {
              */
             path.add(nums[i]);
             visited[i] = true;
-            dfs(nums, path, visited, result);
+            backtrackV2(nums, path, visited, result);
             /**
              * remove num off the path and mark num as unvisited.
              */

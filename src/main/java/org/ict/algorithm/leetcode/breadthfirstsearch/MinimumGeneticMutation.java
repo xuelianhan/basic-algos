@@ -120,52 +120,41 @@ public class MinimumGeneticMutation {
              */
             visited[i] = false;
             /**
-             * Calculate the minimum
+             * Calculate the minimum between current transform steps and the value from recursion above.
+             * We should to skip -1 here because while no such a mutation, this function returns -1.
+             * See the last return statement of this function to understand the line: total != -1.
              */
             if (total != -1) {
                 res = Math.min(res, total);
             }
         }
+        /**
+         *
+         */
         return (res == Integer.MAX_VALUE ? -1 : res + 1);
     }
 
+    /**
+     * 1.filter repeated choices or not matched choices.
+     * 2.mark the choice.
+     * 3.recursion backtrack.
+     * 4.unmark the choice.
+     * 5.other process like calculate minimum or maximum,
+     * this step is not necessary sometimes but is needed here.
+     */
     public int backtrack(String current, String end, String[] bank, boolean[] visited) {
         if (current.equals(end)) {
             return 0;
         }
         int n = bank.length;
-        /**
-         * e.g. start:abc --> end:def, bank:[dbc, dec, def]
-         * The path length from start to end via bank array is following:
-         * abc --> dbc --> dec --> def, we need 3 steps to transform abc to def.
-         * In the worst case, we need to traverse all the nodes in the bank array.
-         * So the variable res here means the minimum steps to transform.
-         * It is initialized as n + 1 only for subsequent processing.
-         * Because steps at most n, never greater than n + 1
-         * we can use Integer.MAX_VALUE to replace n + 1.
-         */
         int res = n + 1;
         for (int i = 0; i < n; i++) {
-            /**
-             * skip bank items has been visited.
-             * skip bank items differ more than one character with the current node string.
-             */
             if (visited[i] || !isDiffOne(bank[i], current)) {
                 continue;
             }
-            /**
-             * If current node bank[i] has not been visited,
-             * marked it as visited and go to the next layer from the current node bank[i].
-             */
             visited[i] = true;
             int total = backtrack(bank[i], end, bank, visited);
-            /**
-             * unmarked the current node bank[i] when above recursion return.
-             */
             visited[i] = false;
-            /**
-             * Calculate the minimum
-             */
             if (total != -1) {
                 res = Math.min(res, total);
             }
