@@ -38,7 +38,7 @@ public class PermutationI {
         int[] nums = {1, 2, 3};
         permuteV1(nums);
     }
-    
+
 
     public static List<List<Integer>> permuteV2(int[] nums) {
         /**
