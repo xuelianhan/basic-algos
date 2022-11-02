@@ -43,6 +43,20 @@ package org.ict.algorithm.leetcode.backtrack;
  */
 public class WordSearch {
 
+
+    /**
+     * We all have played Word Search but what if we build a code which would actually search a word and return whether it exists or not?
+     * This can be achieved by one very simple and elegant algorithmic technique known as the backtracking algorithm.
+     * We choose the backtracking algorithm because it's deterministic and goes in a depth-first order,
+     * at each level we can edit information, which keeps the state of our system the way we need it to for the next level's recursive calls,
+     * and then we can undo the change we made for whenever we go back up to the previous level.
+     * In short, we can have shared variable without having to create a new one for each recursive call which in turn,
+     * saves time as well as memory.
+     * 
+     * @param board
+     * @param word
+     * @return
+     */
     public boolean exist(char[][] board, String word) {
         if (word == null || word.length() == 0) {
             return false;
@@ -60,7 +74,6 @@ public class WordSearch {
     }
 
     /**
-     * Depth First Search Solution
      * Time Cost 147ms
      * @param board
      * @param word
@@ -111,9 +124,10 @@ public class WordSearch {
     }
 
     /**
-     * Depth First Search Solution
      *
      * Time Cost 181ms
+     *
+     *
      *
      * We are allowed to start from any block in the board,
      * can only travel to adjacent (i.e., up, down, left & right) blocks and cannot reuse any block.
