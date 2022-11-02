@@ -1,5 +1,7 @@
 package org.ict.algorithm.leetcode.backtrack;
 
+import sun.applet.AppletResourceLoader;
+
 import java.util.*;
 
 /**
@@ -45,6 +47,41 @@ import java.util.*;
  */
 public class LetterCombinationsOfPhoneNumber {
 
+    public static void main(String[] args) {
+        LetterCombinationsOfPhoneNumber instance = new LetterCombinationsOfPhoneNumber();
+        instance.letterCombinations("23");
+    }
+
+    /**
+     * Time Cost 6ms
+     * @param digits
+     * @return
+     */
+    public List<String> letterCombinationsV3(String digits) {
+        List<String> result = new LinkedList<>();
+        if (digits == null || digits.length() == 0) {
+            return result;
+        }
+        String prefix = new String();
+        String[] map = new String[] {"",   "",   "abc",  "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+        backtrackV3(result, digits, prefix, map, 0);
+        return result;
+    }
+
+
+    public void backtrackV3(List<String> result, String digits, String track, String[] map, int pos) {
+        if (pos == digits.length()) {
+            result.add(track.toString());
+            return;
+        }
+        int idx = digits.charAt(pos) - '0';
+        String possibleLetters = map[idx];
+        for (char ch : possibleLetters.toCharArray()) {
+            backtrackV3(result, digits, track + ch, map, pos + 1);
+        }
+    }
+
+
     /**
      * Understanding the following Breadth-First-Search Solution
      * Same as letterCombinationsV1 but without outer-for-loop
@@ -61,9 +98,9 @@ public class LetterCombinationsOfPhoneNumber {
         }
 
         /**
-         * Add "0", "1" here for sake of the array index from 2 to 9.
+         * Add "", "" here for sake of the array index from 0 to 9.
          */
-        String[] map = new String[] {"0",   "1",   "abc",  "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+        String[] map = new String[] {"",   "",   "abc",  "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
         queue.add("");
         while (queue.peek().length() != digits.length()) {
             String head = queue.poll();
@@ -179,6 +216,20 @@ public class LetterCombinationsOfPhoneNumber {
      *    bd,be,bf
      *    cd,ce,cf
      *
+     * output:
+     * a
+     * ad
+     * ae
+     * af
+     * b
+     * bd
+     * be
+     * bf
+     * c
+     * cd
+     * ce
+     * cf
+     *
      * @see <a href="https://www.interviewbit.com/blog/letter-combinations-of-a-phone-number/"></a>
      * @param result
      * @param digits
@@ -187,6 +238,7 @@ public class LetterCombinationsOfPhoneNumber {
      * @param pos
      */
     public void backtrack(List<String> result, String digits, StringBuilder track, Map<Character, String> map, int pos) {
+        System.out.println(track.toString());
         if (track.length() == digits.length()) {
             result.add(track.toString());
             return;
