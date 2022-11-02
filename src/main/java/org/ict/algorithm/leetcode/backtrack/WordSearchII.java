@@ -45,6 +45,14 @@ import java.util.List;
 public class WordSearchII {
 
 
+    /**
+     * Trie-Tree Solution.
+     * When the size of words.length is very big, brute force solution will run timeout.
+     * So using trie-tree here.
+     * @param board
+     * @param words
+     * @return
+     */
     public List<String> findWords(char[][] board, String[] words) {
         List<String> result = new ArrayList<>();
         return result;

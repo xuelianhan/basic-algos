@@ -11,7 +11,7 @@ import java.util.Set;
 
 /**
  * Given two words (beginWord and endWord), and a dictionary's word list, 
- * find the length of shortest transformation sequence from beginWord to endWord, such that:
+ * find the length of the shortest transformation sequence from beginWord to endWord, such that:
  * Only one letter can be changed at a time.
  * Each transformed word must exist in the word list. Note that beginWord is not a transformed word.
  * Note:
@@ -56,12 +56,14 @@ import java.util.Set;
  * traverse all words that adjacent (differ by one character) to it 
  * and keep doing so until we find the target word or we have traversed all words.
  * 
- * @see https://algs4.cs.princeton.edu/41graph/WordLadder.java.html
- * @see https://bradfieldcs.com/algos/graphs/word-ladder/
- * @see https://www.geeksforgeeks.org/word-ladder-length-of-shortest-chain-to-reach-a-target-word/
- * @see https://www.cs.cmu.edu/~adamchik/15-121/labs/HW-4%20Word%20Ladder/lab.html
- * @see https://www.cs.cmu.edu/~adamchik/15-121/
- * @see http://www.learn4master.com/algorithms/bread-first-search/leetcode-word-ladder-solution-in-java
+ * @see <a href="https://algs4.cs.princeton.edu/41graph/WordLadder.java.html"></a>
+ * @see <a href="https://bradfieldcs.com/algos/graphs/word-ladder/"></a>
+ * @see <a href="https://www.geeksforgeeks.org/word-ladder-length-of-shortest-chain-to-reach-a-target-word/"></a>
+ * @see <a href="https://www.cs.cmu.edu/~adamchik/15-121/labs/HW-4%20Word%20Ladder/lab.html"></a>
+ * @see <a href="https://www.cs.cmu.edu/~adamchik/15-121/"></a>
+ * @see <a href="http://www.learn4master.com/algorithms/bread-first-search/leetcode-word-ladder-solution-in-java"></a>
+ *
+ * This problem is same with MinimumGeneticMutation of LC433
  *
  * LC127
  *
@@ -85,12 +87,12 @@ public class WordLadder {
 	    String endWord = "plea";*/
 	    long startTime = System.currentTimeMillis();
 	    WordLadder ladder = new WordLadder();
-	    int length = ladder.ladderLengthV3(beginWord, endWord, wordList);
+	    int length = ladder.ladderLengthV1(beginWord, endWord, wordList);
 	    long duration = System.currentTimeMillis() - startTime;
 	    System.out.println(length + ", time cost:" + duration);
 	}
 	
-	public int ladderLengthV3(String beginWord, String endWord, List<String> wordList) {
+	public int ladderLengthV1(String beginWord, String endWord, List<String> wordList) {
 		if (wordList == null || wordList.size() == 0) {
 			return 0;
 		}
@@ -148,8 +150,8 @@ public class WordLadder {
 	}
 	
 	/**
-	 * This version is very slow when input huge data.
-	 * Returns length of shortest chain to reach 'target' from 'start' 
+	 * This version is very slow when input huge data
+	 * Returns length of the shortest chain to reach 'target' from 'start'
 	 * using minimum number of adjacent moves. 
 	 * @param beginWord
 	 * @param endWord
@@ -195,7 +197,7 @@ public class WordLadder {
             for (String word : words) {
                 System.out.println("word:" + word);
                 // Process a dictionary word if it is adjacent to current word (or vertex) of BFS 
-                if (isNeighbor(cur, word) && (visited.get(word) == Boolean.FALSE)) {
+                if (isDiffOne(cur, word) && (visited.get(word) == Boolean.FALSE)) {
                     int count = countMap.get(cur);//(countMap.get(cur) == null ? 0 : countMap.get(cur));
                     countMap.put(word, count + 1);
                     queue.add(word);
@@ -217,7 +219,7 @@ public class WordLadder {
 	 * @param b
 	 * @return
 	 */
-	public static boolean isNeighbor(String a, String b) {
+	public static boolean isDiffOne(String a, String b) {
 		if (a == null || b == null) {
 			return false;
 		}

@@ -13,17 +13,23 @@ package org.ict.algorithm.leetcode.backtrack;
  * Example 1:
  *
  *
- * Input: board = [["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]], word = "ABCCED"
+ * Input: board = [["A","B","C","E"],
+ *                 ["S","F","C","S"],
+ *                 ["A","D","E","E"]], word = "ABCCED"
  * Output: true
  * Example 2:
  *
  *
- * Input: board = [["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]], word = "SEE"
+ * Input: board = [["A","B","C","E"],
+ *                 ["S","F","C","S"],
+ *                 ["A","D","E","E"]], word = "SEE"
  * Output: true
  * Example 3:
  *
  *
- * Input: board = [["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]], word = "ABCB"
+ * Input: board = [["A","B","C","E"],
+ *                 ["S","F","C","S"],
+ *                 ["A","D","E","E"]], word = "ABCB"
  * Output: false
  *
  *
@@ -52,7 +58,7 @@ public class WordSearch {
      * and then we can undo the change we made for whenever we go back up to the previous level.
      * In short, we can have shared variable without having to create a new one for each recursive call which in turn,
      * saves time as well as memory.
-     * 
+     *
      * @param board
      * @param word
      * @return
