@@ -1,6 +1,8 @@
 package org.ict.algorithm.leetcode.backtrack;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -45,9 +47,84 @@ import java.util.List;
  */
 public class CombinationSum {
 
+    /**
+     * Time Cost 6ms
+     * @param candidates
+     * @param target
+     * @return
+     */
+    public List<List<Integer>> combinationSumV1(int[] candidates, int target) {
+        List<List<Integer>> result = new ArrayList<>();
+        LinkedList<Integer> track = new LinkedList<>();
+        /**
+         * Corner case process.
+         */
+        Arrays.sort(candidates);
+        if (candidates[0] > target) {
+            return result;
+        }
+        backtrackV1(result, track, candidates, target, 0, candidates.length - 1);
+        return result;
+    }
+
+    public void backtrackV1(List<List<Integer>> result, LinkedList<Integer> track, int[] candidates, int target, int sum, int pos) {
+        if (sum > target) {
+            return;
+        } else if (sum == target) {
+            result.add(new ArrayList<>(track));
+            return;
+        }
+        for (int i = pos; i >= 0; i--) {
+            track.add(candidates[i]);
+            sum += candidates[i];
+            /**
+             * not i + 1 because we can reuse same elements
+             */
+            backtrackV1(result, track, candidates, target, sum,  i);
+            track.removeLast();
+            sum -= candidates[i];
+        }
+    }
+
+    /**
+     * Time Cost 9ms
+     *
+     * @param candidates
+     * @param target
+     * @return
+     */
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         List<List<Integer>> result = new ArrayList<>();
+        LinkedList<Integer> track = new LinkedList<>();
+        /**
+         * Corner case process.
+         */
+        Arrays.sort(candidates);
+        if (candidates[0] > target) {
+            return result;
+        }
+        backtrack(result, track, candidates, target, 0);
         return result;
+    }
+
+    public void backtrack(List<List<Integer>> result, LinkedList<Integer> track, int[] candidates, int target, int pos) {
+        if (target < 0) {
+            /**
+             * target may less than zero, we should return to break recursive invoking stack.
+             */
+            return;
+        } else if (0 == target) {
+            result.add(new ArrayList<>(track));
+            return;
+        }
+        for (int i = pos; i < candidates.length; i++) {
+            track.add(candidates[i]);
+            /**
+             * not i + 1 because we can reuse same elements
+             */
+            backtrack(result, track, candidates, target - candidates[i], i);
+            track.removeLast();
+        }
     }
 
 }
