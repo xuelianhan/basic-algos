@@ -22,9 +22,10 @@ public class LongestSubstringAtMostTwoDistinctCharacters {
 
     public static void main(String[] args) {
         String s = "ccaabbb";
-        int result = lengthOfLongestSubstringTwoDistinct(s);
+        int result = lengthOfLongestSubstringTwoDistinctV2(s);
         System.out.println(result);
     }
+
 
     /**
      * Slide Window with For-While-Loop
@@ -32,7 +33,7 @@ public class LongestSubstringAtMostTwoDistinctCharacters {
      * @param s
      * @return
      */
-    public static int lengthOfLongestSubstringTwoDistinctV1(String s) {
+    public static int lengthOfLongestSubstringTwoDistinctV2(String s) {
         int ans = 0;
         int distinct = 0;
         int[] count = new int[128];
@@ -52,7 +53,47 @@ public class LongestSubstringAtMostTwoDistinctCharacters {
                 }
                 left++;
             }
+            /**
+             * update the window size
+             */
             ans = Math.max(ans, right - left + 1);
+            /**
+             * expand the window in for-loop
+             */
+        }
+        return ans;
+    }
+
+    public static int lengthOfLongestSubstringTwoDistinctV1(String s) {
+        int ans = 0;
+        int distinct = 0;
+        int[] count = new int[128];
+        int left = 0, right = 0;
+
+        while (right < s.length()) {
+            count[s.charAt(right)]++;
+            if (count[s.charAt(right)] == 1) {
+                distinct++;
+            }
+            /**
+             * shrink the window size
+             *  both distinct == 3 and distinct > 2 are ok here.
+             */
+            while (distinct == 3) {
+                count[s.charAt(left)]--;
+                if (count[s.charAt(left)] == 0) {
+                    distinct--;
+                }
+                left++;
+            }
+            /**
+             * expand the window
+             */
+            right++;
+            /**
+             * update the window size
+             */
+            ans = Math.max(ans, right - left);
         }
         return ans;
     }
@@ -84,6 +125,9 @@ public class LongestSubstringAtMostTwoDistinctCharacters {
                 }
                 left++;
             }
+            /**
+             * update the window size
+             */
             ans = Math.max(ans, right - left + 1);
             /**
              * expand the window
