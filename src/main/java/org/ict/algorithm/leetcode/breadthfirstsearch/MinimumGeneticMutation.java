@@ -1,5 +1,7 @@
 package org.ict.algorithm.leetcode.breadthfirstsearch;
 
+import java.util.*;
+
 /**
  * A gene string can be represented by an 8-character long string, with choices from 'A', 'C', 'G', and 'T'.
  *
@@ -32,6 +34,7 @@ package org.ict.algorithm.leetcode.breadthfirstsearch;
  *
  * Input: start = "AAAAACCC", end = "AACCCCCC", bank = ["AAAACCCC","AAACCCCC","AACCCCCC"]
  * Output: 3
+ * because AAAAACCC --> AAAACCCC --> AAACCCCC --> AACCCCCC
  *
  *
  * Constraints:
@@ -49,7 +52,23 @@ package org.ict.algorithm.leetcode.breadthfirstsearch;
  * LC433
  */
 public class MinimumGeneticMutation {
+
+    public static void main(String[] args) {
+        String start = "qa";
+        String end = "sq";
+        String[] bank = {"si","go","se","cm","so","ph","mt","db","mb","sb","kr","ln","tm","le","av","sm","ar","ci","ca","br","ti","ba","to","ra","fa","yo","ow","sn","ya","cr","po","fe","ho","ma","re","or","rn","au","ur","rh","sr","tc","lt","lo","as","fr","nb","yb","if","pb","ge","th","pm","rb","sh","co","ga","li","ha","hz","no","bi","di","hi","qa","pi","os","uh","wm","an","me","mo","na","la","st","er","sc","ne","mn","mi","am","ex","pt","io","be","fm","ta","tb","ni","mr","pa","he","lr","sq","ye"};
+        System.out.println("bank size:" + bank.length);
+        //String start = "abc";
+        //String end = "def";
+        //String[] bank = {"dbc", "dec", "def"};
+
+        //minMutation(start, end, bank);
+    }
+
     /**
+     * Understanding the following Breadth First Search Solution.
+     *
+     *
      * Intuition: we can see each string as a node, and we can connect them if
      * 1. there is only one single character different
      * 2. the target node is available in `bank`
@@ -61,19 +80,86 @@ public class MinimumGeneticMutation {
         if (null == bank || bank.length == 0) {
             return -1;
         }
-        //todo
-        return 0;
+
+        int level = 0;
+        String replaceStr = "ACGT";
+        Queue<String> queue = new LinkedList<>();
+        Set<String> visited = new HashSet<>();
+        Set<String> bankSet = new HashSet<>(Arrays.asList(bank));
+
+
+        queue.offer(start);
+        visited.add(start);
+        while (!queue.isEmpty()) {
+            /**
+             * Iterate from the tail due to the queue size varies.
+             * Another alternative option is to store the size of queue:
+             * e.g
+             * int size = queue.size();
+             * for (int i = 0; i < size; i++)
+             * do-level-order-traversal-here;
+             */
+            for (int i = queue.size(); i > 0; i--) {
+                String cur = queue.poll();
+                if (cur.equals(end)) {
+                    return level;
+                }
+
+                /**
+                 * Replace each character with 'A', 'C', 'G', 'T', generate string with 8-characters,
+                 * If the generated string has not been visited, and within the range of bank,
+                 * then we add the generated string to the tail of the queue.
+                 * It likes the level-order traversal in BFS.
+                 */
+                char[] curArr = cur.toCharArray();
+                for (int j = 0; j < curArr.length; j++) {
+                    /**
+                     * Replace curArr[j] with one of the character of "ACGT", and generate new string,
+                     * after it has been added to the queue, restore the curArr[j].
+                     */
+                    char temp = curArr[j];
+                    /**
+                     * Iterate "ACGT" characters.
+                     */
+                    for (char ch : replaceStr.toCharArray()) {
+                        curArr[j] = ch;
+                        String generatedStr = new String(curArr);
+                        /**
+                         * add elements of next level-order to the queue.
+                         */
+                        if (!visited.contains(generatedStr) && bankSet.contains(generatedStr)) {
+                            queue.offer(generatedStr);
+                            /**
+                             * Don't forget marking current generatedStr as visited.
+                             */
+                            visited.add(generatedStr);
+                        }
+                    }
+                    /**
+                     * restore the original value of curArr[j].
+                     */
+                    curArr[j] = temp;
+                }
+            }//current-level-order-for-end
+            level++;
+        }
+        /**
+         * If there is no such a mutation, return -1
+         */
+        return -1;
     }
 
     /**
      * Solution is similar with PermutationI LC46
+     * But this backtracking solution exceed the time limit at LC46
+     * So don't use backtrack in LC46.
      * @see <a href="https://grandyang.com/leetcode/433"></a>
      * @param start
      * @param end
      * @param bank
      * @return
      */
-    public int minMutation(String start, String end, String[] bank) {
+    public static int minMutation(String start, String end, String[] bank) {
         if (null == bank || bank.length == 0) {
             return -1;
         }
@@ -146,7 +232,8 @@ public class MinimumGeneticMutation {
             }
         }
         /**
-         *
+         * while at here, it means that we have already transformed one plus.
+         * So need to add one: res + 1
          */
         return (res == Integer.MAX_VALUE ? -1 : res + 1);
     }
@@ -162,14 +249,14 @@ public class MinimumGeneticMutation {
      * this step is not necessary sometimes but is needed here.
      *
      */
-    public int backtrack(String current, String end, String[] bank, boolean[] visited) {
+    public static int backtrack(String current, String end, String[] bank, boolean[] visited) {
         if (current.equals(end)) {
             return 0;
         }
         int n = bank.length;
         int res = n + 1;
         for (int i = 0; i < n; i++) {
-            if (visited[i] || !isDiffOne(bank[i], current)) {
+            if (visited[i] || ! isDiffOne(bank[i], current)) {
                 continue;
             }
             visited[i] = true;
@@ -179,10 +266,11 @@ public class MinimumGeneticMutation {
                 res = Math.min(res, total);
             }
         }
+        System.out.println("current:" + current + ", end:" + end + ", res:" +  res);
         return (res == n + 1 ? -1 : res + 1);
     }
 
-    public boolean isDiffOne(String a, String b) {
+    public static boolean isDiffOne(String a, String b) {
         if (a == null || b == null) {
             return false;
         }
