@@ -27,6 +27,7 @@ public class LongestSubstringAtMostTwoDistinctCharacters {
     }
 
     /**
+     * Slide Window with For-While-Loop
      * @see <a href="https://leetcode.ca/2016-05-07-159-Longest-Substring-with-At-Most-Two-Distinct-Characters/"></a>
      * @param s
      * @return
@@ -42,8 +43,9 @@ public class LongestSubstringAtMostTwoDistinctCharacters {
             }
             /**
              * shrink the window size
+             * both distinct > 2 and distinct == 3 are ok here.
              */
-            while (distinct == 3) {
+            while (distinct > 2) {
                 count[s.charAt(left)]--;
                 if (count[s.charAt(left)] == 0) {
                     distinct--;
@@ -55,6 +57,11 @@ public class LongestSubstringAtMostTwoDistinctCharacters {
         return ans;
     }
 
+    /**
+     * Slide Window with While-While-Loop
+     * @param s
+     * @return
+     */
     public static int lengthOfLongestSubstringTwoDistinct(String s) {
         int ans = 0;
         int distinct = 0;
@@ -68,6 +75,7 @@ public class LongestSubstringAtMostTwoDistinctCharacters {
             }
             /**
              * shrink the window size
+             *  both distinct == 3 and distinct > 2 are ok here.
              */
             while (distinct == 3) {
                 count[s.charAt(left)]--;
