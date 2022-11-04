@@ -47,10 +47,12 @@ import java.util.Map;
 public class LongestPalindromeConcatenatingTwoLetterWords {
 
     public static void main(String[] args) {
-        String[] words = {"ab","ty","yt","lc","cl","ab", "ba", "ty", "aa", "aa", "bb", "ab", "ef"};//not pass
-        //String[] words = {"cc","ll","xx"};//pass
-        //String[] words = {"lc","cl","gg"};//pass
-        //String[] words = {"ab","ty","yt","lc","cl","ab"};//pass
+        //String[] words = {"ab","ty","yt","lc","cl","ab", "ba", "ty", "aa", "aa", "bb", "ab", "ef"};//pass, expected 16
+        //String[] words = {"cc","ll","xx"};//pass, expected 2
+        //String[] words = {"lc","cl","gg"};//pass, expected 6
+        //String[] words = {"ab","ty","yt","lc","cl","ab"};//pass, expected 8
+
+        String[] words = {"dd","aa","bb","dd","aa","dd","bb","dd","aa","cc","bb","cc","dd","cc"};//not pass, expected 22
         int result = wrongAnswer(words);
         System.out.println(result);
     }
@@ -69,7 +71,7 @@ public class LongestPalindromeConcatenatingTwoLetterWords {
      * @param words
      * @return
      */
-    public static int longestPalindrome(String[] words) {
+    public int longestPalindrome(String[] words) {
         int res = 0;
         Map<String, Integer> freq = new HashMap<>();
         int unpaired = 0;
@@ -120,27 +122,55 @@ public class LongestPalindromeConcatenatingTwoLetterWords {
      * aa:2
      * bb:1
      *
+     * String[] words = {"dd","aa","bb","dd","aa","dd","bb","dd","aa","cc","bb","cc","dd","cc"}
+     *
+     * Please notice that we can only concat two words other than insert one word into another
+     * e.g.
+     * dd dd dd dd dd --> dd dd aa aa aa dd dd --> dd dd aa bb bb bb aa dd dd --> dd dd aa bb cc cc cc bb aa dd dd
+     * 5 -> 5 + 3 - 1 --> 7 + 3 - 1 --> 9 + 3, the last one not need to subtract 1
+     * wrong:
+     * dd dd dd dd dd --> dd dd d aa aa aa d dd dd, this sequence doesn't satisfy the concat words, because it split
+     * original word, such as dd --> daad.
+     *
+     *
+     * -------
+     * dd:5
+     * -------
+     * aa:3
+     * -------
+     * bb:3
+     * -------
+     * cc:3
+     * -------
      * @param words
      * @return
      */
     public static int wrongAnswer(String[] words) {
-        int res = 0;
         Map<String, Integer> freq = new HashMap<>();
-        int uniqueMaxLen = 0;
+        int maxUniqueCnt = 0;
         int validPairCnt = 0;
         for (String word : words) {
             freq.put(word, freq.getOrDefault(word, 0) + 1);
             if (word.charAt(0) == word.charAt(1)) {
-                int uniqueCnt = freq.getOrDefault(word,0);
-                uniqueMaxLen = Math.max(uniqueMaxLen, uniqueCnt);
+                int uniqueCnt = freq.get(word);
+                if (uniqueCnt > 0) {
+                    uniqueCnt += 1;
+                    freq.put(word, freq.get(word) - 1);
+                } else {
+
+                }
+                maxUniqueCnt = Math.max(maxUniqueCnt, uniqueCnt);
             } else {
                 String mirror = new String(new char[]{word.charAt(1), word.charAt(0)});
                 int mirrorCnt = freq.getOrDefault(mirror, 0);
-                validPairCnt += Math.min(mirrorCnt, freq.getOrDefault(word, 0));
+                if (mirrorCnt > 0) {
+                    validPairCnt++;
+                    freq.put(mirror, freq.get(mirror) - 1);
+                    freq.put(word, freq.get(word) - 1);
+                }
             }
         }
-        res = 4 * validPairCnt + 2 * uniqueMaxLen;
-        return res;
+        return (4 * validPairCnt + 2 * maxUniqueCnt);
     }
 
 

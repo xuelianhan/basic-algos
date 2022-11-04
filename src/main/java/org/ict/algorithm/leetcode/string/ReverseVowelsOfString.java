@@ -46,6 +46,28 @@ public class ReverseVowelsOfString {
         System.out.println(result);
     }
 
+    public static String reverseVowelsV1(String s) {
+        Set<Character> vowelSet = new HashSet<Character>(Arrays.asList('a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'));
+        char[] a = s.toCharArray();
+        int len = a.length;
+        int start = 0;
+        int end = len - 1;
+        while (start < end) {
+            while (start < end && !vowelSet.contains(a[start])) {
+                start++;
+            }
+            while (start < end && !vowelSet.contains(a[end])) {
+                end--;
+            }
+            char temp = a[start];
+            a[start] = a[end];
+            a[end] = temp;
+            start++;
+            end--;
+        }
+        return new String(a);
+    }
+
     /**
      * Two Pointer Solution
      * In the inner while loop,
