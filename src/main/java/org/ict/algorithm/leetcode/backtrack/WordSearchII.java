@@ -82,10 +82,8 @@ public class WordSearchII {
         /**
          * Build Trie Tree with words
          */
-        Trie tree = new Trie();
-        for (String word : words) {
-            tree.insert(word);
-        }
+        TrieNode root = buildTrie(words);
+
         /**
          * Build visit marking array.
          */
@@ -97,7 +95,7 @@ public class WordSearchII {
          */
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                Trie.TrieNode[] children = tree.getRoot().getChildren();
+                TrieNode[] children = root.children;
                 int idx = board[i][j] - 'a';
                 if (children[idx] != null) {
                     search(board, children[idx], i, j, visited, result);
@@ -109,20 +107,22 @@ public class WordSearchII {
     }
 
 
-    public void search(char[][] board, Trie.TrieNode p, int i, int j, boolean[][] visited, List<String> result) {
-        if (p.isWord()) {
-            result.add(p.getWord());
-            p.word(false);
-            p.setWord(null);
+    public void search(char[][] board, TrieNode p, int i, int j, boolean[][] visited, List<String> result) {
+        if (p.word != null) {
+            result.add(p.word);
+            /**
+             * deduplicate.
+             */
+            p.word = null;
             return;
         }
-        int[][] dir = {{-1, 0}, {1, 0}, {0, 1}, {0, -1}};
+        int[][] dir = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
         visited[i][j] = true;
         for (int[] a : dir) {
             int nx = a[0] +  i, ny = a[1] + j;
             if (nx >= 0 && nx < board.length && ny >= 0 && ny < board[0].length
                     && !visited[nx][ny]) {
-                Trie.TrieNode[] children = p.getChildren();
+                TrieNode[] children = p.children;
                 int idx = board[i][j] - 'a';
                 if (children[idx] != null) {
                     search(board, children[idx], nx, ny, visited, result);
@@ -132,6 +132,26 @@ public class WordSearchII {
         visited[i][j] = false;
     }
 
+    public TrieNode buildTrie(String[] words) {
+        TrieNode root = new TrieNode();
+        for (String w : words) {
+            TrieNode p = root;
+            for (char c : w.toCharArray()) {
+                int i = c - 'a';
+                if (p.children[i] == null) {
+                    p.children[i] = new TrieNode();
+                }
+                p = p.children[i];
+            }
+            p.word = w;
+        }
+        return root;
+    }
+
+    class TrieNode {
+        TrieNode[] children = new TrieNode[26];
+        String word;
+    }
 
 
 }
