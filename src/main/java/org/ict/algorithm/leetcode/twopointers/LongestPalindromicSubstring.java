@@ -1,4 +1,4 @@
-package org.ict.algorithm.leetcode.twopointer;
+package org.ict.algorithm.leetcode.twopointers;
 
 /**
  * @author sniper

@@ -47,14 +47,38 @@ import java.util.Map;
 public class LongestPalindromeConcatenatingTwoLetterWords {
 
     public static void main(String[] args) {
-        //String[] words = {"ab","ty","yt","lc","cl","ab", "ba", "ty", "aa", "aa", "bb", "ab", "ef"};//pass, expected 16
+        String[] words = {"dd", "dd", "aa"};//pass, expected 6
+        //String[] words = {"ab","ty","yt","lc","cl","ab", "ba", "ty", "aa", "aa", "bb", "ab", "ef"};//pass, expected 18
         //String[] words = {"cc","ll","xx"};//pass, expected 2
         //String[] words = {"lc","cl","gg"};//pass, expected 6
         //String[] words = {"ab","ty","yt","lc","cl","ab"};//pass, expected 8
 
-        String[] words = {"dd","aa","bb","dd","aa","dd","bb","dd","aa","cc","bb","cc","dd","cc"};//not pass, expected 22
-        int result = wrongAnswer(words);
+        //String[] words = {"dd","aa","bb","dd","aa","dd","bb","dd","aa","cc","bb","cc","dd","cc"};//pass, expected 22
+        //String[] words = {"bb", "bb"};//pass, expected 4
+        int result = longestPalindrome(words);
         System.out.println(result);
+    }
+
+    public int longestPalindromeV2(String[] words) {
+        int[][] counting = new int[26][26];
+        int max = 0;
+        for (String word : words) {
+            int a = word.charAt(0) - 'a';
+            int b = word.charAt(1) - 'a';
+            if (counting[b][a] > 0) {
+                max += 4;
+                counting[b][a]--;
+            } else {
+                counting[a][b]++;
+            }
+        }
+        for (int i = 0; i < 26; i++) {
+            if (counting[i][i] > 0) {
+                max += 2;
+                break;
+            }
+        }
+        return max;
     }
 
     /**
@@ -71,7 +95,7 @@ public class LongestPalindromeConcatenatingTwoLetterWords {
      * @param words
      * @return
      */
-    public int longestPalindrome(String[] words) {
+    public int longestPalindromeV1(String[] words) {
         int res = 0;
         Map<String, Integer> freq = new HashMap<>();
         int unpaired = 0;
@@ -118,7 +142,7 @@ public class LongestPalindromeConcatenatingTwoLetterWords {
      * -------1*4
      * lc:1
      * cl:1
-     * -------2*2
+     * -------2*2 + 1*2
      * aa:2
      * bb:1
      *
@@ -142,27 +166,65 @@ public class LongestPalindromeConcatenatingTwoLetterWords {
      * -------
      * cc:3
      * -------
+     *
+     *
+     * e.g.
+     * dd dd aa
+     * 1  0  1
      * @param words
      * @return
      */
-    public static int wrongAnswer(String[] words) {
+    public static int longestPalindrome(String[] words) {
         Map<String, Integer> freq = new HashMap<>();
+        /**
+         * Count pair numbers such as aa,aa,bb
+         * e.g. words = ["aa", "aa", "bb"]
+         * maxUniqueCnt = 2, unPairedCnt = 1
+         * because "aa" appears two times, "bb" appears only one.
+         */
         int maxUniqueCnt = 0;
+        int unPairedCnt = 0;
+
+        /**
+         * Count the valid pair numbers such as ef,fe
+         * e.g. words = ["ef", "fe"]
+         * validPairCnt = 1, because "ef" and "fe" compose a valid pair.
+         */
         int validPairCnt = 0;
         for (String word : words) {
             freq.put(word, freq.getOrDefault(word, 0) + 1);
             if (word.charAt(0) == word.charAt(1)) {
-                int uniqueCnt = freq.get(word);
-                if (uniqueCnt > 0) {
-                    uniqueCnt += 1;
-                    freq.put(word, freq.get(word) - 1);
-                } else {
-
+                if (freq.get(word) > 1) {
+                    /**
+                     * e.g. words = ["bb", "bb"]
+                     * when we meet the first "bb",unPairedCnt++,
+                     * when we meet the second "bb", they compose a valid pair of uniqueCnt,
+                     * So an addition of two to maxUniqueCnt, at the same time
+                     * the first "bb" is no longer unpaired, we need to subtract one at unPairedCnt.
+                     */
+                    maxUniqueCnt += 2;
+                    freq.put(word, freq.get(word) - 2);
+                    unPairedCnt--;
+                } else if (freq.get(word) == 1) {
+                    /**
+                     * when we meet word at first time, unPairedCnt need to increment one.
+                     */
+                    unPairedCnt++;
                 }
-                maxUniqueCnt = Math.max(maxUniqueCnt, uniqueCnt);
+                /**
+                 * Never has the situation of freq.get(word) < 1, because we have added one in the above:
+                 * freq.put(word, freq.getOrDefault(word, 0) + 1);
+                 */
             } else {
                 String mirror = new String(new char[]{word.charAt(1), word.charAt(0)});
                 int mirrorCnt = freq.getOrDefault(mirror, 0);
+                /**
+                 * e.g.
+                 * words = ["ef", "fe"]
+                 * when iterated at "fe", its mirror "ef" has appeared once already.
+                 * "ef" and "fe" compose a valid pair.
+                 * To prevent duplicated counting, we also need to subtract one from their frequency count.
+                 */
                 if (mirrorCnt > 0) {
                     validPairCnt++;
                     freq.put(mirror, freq.get(mirror) - 1);
@@ -170,7 +232,8 @@ public class LongestPalindromeConcatenatingTwoLetterWords {
                 }
             }
         }
-        return (4 * validPairCnt + 2 * maxUniqueCnt);
+        //System.out.println("validPairCnt:" + validPairCnt + ", maxUniqCnt:" + maxUniqueCnt + ", unPairedCnt:" + unPairedCnt);
+        return (4 * validPairCnt + 2 * maxUniqueCnt) + (unPairedCnt > 0 ? 2 : 0);
     }
 
 
