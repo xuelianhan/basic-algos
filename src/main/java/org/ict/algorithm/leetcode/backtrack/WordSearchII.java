@@ -103,8 +103,8 @@ public class WordSearchII {
          */
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                TrieNode[] children = root.children;
                 int idx = board[i][j] - 'a';
+                TrieNode[] children = root.children;
                 if (children[idx] != null) {
                     search(board, children[idx], i, j, visited, result);
                 }
@@ -123,19 +123,22 @@ public class WordSearchII {
              * deduplicate.
              */
             p.word = null;
-            return;
         }
         int[][] dir = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
         visited[i][j] = true;
         for (int[] a : dir) {
             int nx = a[0] +  i, ny = a[1] + j;
-            if (nx >= 0 && nx < board.length && ny >= 0 && ny < board[0].length
-                    && !visited[nx][ny]) {
-                TrieNode[] children = p.children;
-                int idx = board[i][j] - 'a';
-                if (children[idx] != null) {
-                    search(board, children[idx], nx, ny, visited, result);
-                }
+            if (nx < 0 || nx >= board.length || ny < 0 || ny >= board[0].length) {
+                continue;
+            }
+            if (visited[nx][ny]) {
+                continue;
+            }
+            System.out.println("board[" + i + "][" + j + "]:" + board[i][j] + ", board[" + nx + "][" + ny + "]:" +  board[nx][ny] + ", visited:" + visited[nx][ny]);
+            TrieNode[] children = p.children;
+            int idx = board[i][j] - 'a';
+            if (children[idx] != null) {
+                search(board, children[idx], nx, ny, visited, result);
             }
         }
         visited[i][j] = false;
