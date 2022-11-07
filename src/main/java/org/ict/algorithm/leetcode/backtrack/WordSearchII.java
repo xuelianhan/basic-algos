@@ -238,6 +238,20 @@ public class WordSearchII {
         visited[i][j] = false;
     }
 
+    /**
+     * "oath","pea","eat","rain"
+     *          root
+     *          /|\ \
+     *         o p e r
+     *        /  |  \ \
+     *       a   e   a a
+     *      /    |    \ \
+     *     t     a     t i
+     *    /               \
+     *   h                n
+     * @param words
+     * @return
+     */
     public TrieNode buildTrie(String[] words) {
         TrieNode root = new TrieNode();
         /**
