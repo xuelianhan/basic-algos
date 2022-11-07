@@ -68,9 +68,33 @@ public class WordSearchII {
     }
 
     public List<String> findWordsV1(char[][] board, String[] words) {
-        List<String> result = new ArrayList<>();
+        List<String> res = new ArrayList<>();
+        TrieNode root = buildTrie(words);
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                dfs (board, i, j, root, res);
+            }
+        }
+        return res;
+    }
 
-        return result;
+    public void dfs(char[][] board, int i, int j, TrieNode p, List<String> res) {
+        char c = board[i][j];
+        if (c == '#' || p.children[c - 'a'] == null) {
+            return;
+        }
+        p = p.children[c - 'a'];
+        if (p.word != null) {   // found one
+            res.add(p.word);
+            p.word = null;     // de-duplicate
+        }
+
+        board[i][j] = '#';
+        if (i > 0) dfs(board, i - 1, j ,p, res);
+        if (j > 0) dfs(board, i, j - 1, p, res);
+        if (i < board.length - 1) dfs(board, i + 1, j, p, res);
+        if (j < board[0].length - 1) dfs(board, i, j + 1, p, res);
+        board[i][j] = c;
     }
 
     /**
@@ -100,14 +124,11 @@ public class WordSearchII {
 
         /**
          * Search board with Trie Tree.
+         * Notice here, we must search trie from root every time.
          */
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                int idx = board[i][j] - 'a';
-                TrieNode[] children = root.children;
-                if (children[idx] != null) {
-                    search(board, children[idx], i, j, visited, result);
-                }
+                search(board, root, i, j, visited, result);
             }
         }
 
@@ -116,7 +137,24 @@ public class WordSearchII {
 
 
     public void search(char[][] board, TrieNode p, int i, int j, boolean[][] visited, List<String> result) {
+        /**
+         * Notice the boarder conditions of i and j.
+         */
+        if (i < 0 || i >= board.length || j < 0 || j >= board[0].length) {
+            return;
+        }
+        if (visited[i][j]) {
+            return;
+        }
         System.out.println("p.word:" + p.word);
+        char c = board[i][j];
+        if (p.children[c - 'a'] == null) {
+            return;
+        }
+        /**
+         *
+         */
+        p = p.children[c - 'a'];
         if (p.word != null) {
             result.add(p.word);
             /**
@@ -124,23 +162,11 @@ public class WordSearchII {
              */
             p.word = null;
         }
-        int[][] dir = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
         visited[i][j] = true;
-        for (int[] a : dir) {
-            int nx = a[0] +  i, ny = a[1] + j;
-            if (nx < 0 || nx >= board.length || ny < 0 || ny >= board[0].length) {
-                continue;
-            }
-            if (visited[nx][ny]) {
-                continue;
-            }
-            System.out.println("board[" + i + "][" + j + "]:" + board[i][j] + ", board[" + nx + "][" + ny + "]:" +  board[nx][ny] + ", visited:" + visited[nx][ny]);
-            TrieNode[] children = p.children;
-            int idx = board[i][j] - 'a';
-            if (children[idx] != null) {
-                search(board, children[idx], nx, ny, visited, result);
-            }
-        }
+        search(board, p, i - 1, j, visited, result);
+        search(board, p, i + 1, j, visited, result);
+        search(board, p, i, j - 1, visited, result);
+        search(board, p, i, j + 1, visited, result);
         visited[i][j] = false;
     }
 
