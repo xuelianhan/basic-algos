@@ -1,7 +1,5 @@
 package org.ict.algorithm.leetcode.backtrack;
 
-import org.ict.algorithm.leetcode.trie.Trie;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,18 +65,18 @@ public class WordSearchII {
         System.out.println(result);
     }
 
-    public List<String> findWordsV1(char[][] board, String[] words) {
+    public List<String> findWordsV2(char[][] board, String[] words) {
         List<String> res = new ArrayList<>();
         TrieNode root = buildTrie(words);
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
-                dfs (board, i, j, root, res);
+                searchV2(board, i, j, root, res);
             }
         }
         return res;
     }
 
-    public void dfs(char[][] board, int i, int j, TrieNode p, List<String> res) {
+    public void searchV2(char[][] board, int i, int j, TrieNode p, List<String> res) {
         char c = board[i][j];
         if (c == '#' || p.children[c - 'a'] == null) {
             return;
@@ -90,10 +88,10 @@ public class WordSearchII {
         }
 
         board[i][j] = '#';
-        if (i > 0) dfs(board, i - 1, j ,p, res);
-        if (j > 0) dfs(board, i, j - 1, p, res);
-        if (i < board.length - 1) dfs(board, i + 1, j, p, res);
-        if (j < board[0].length - 1) dfs(board, i, j + 1, p, res);
+        if (i > 0) searchV2(board, i - 1, j ,p, res);
+        if (j > 0) searchV2(board, i, j - 1, p, res);
+        if (i < board.length - 1) searchV2(board, i + 1, j, p, res);
+        if (j < board[0].length - 1) searchV2(board, i, j + 1, p, res);
         board[i][j] = c;
     }
 
@@ -128,15 +126,18 @@ public class WordSearchII {
          */
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
+                /**
+                 * two version of implements is similar except some tiny difference on the traversal of directions.
+                 */
                 search(board, root, i, j, visited, result);
+                //searchV1(board, root, i, j, visited, result);
             }
         }
 
         return result;
     }
 
-
-    public void search(char[][] board, TrieNode p, int i, int j, boolean[][] visited, List<String> result) {
+    public void searchV1(char[][] board, TrieNode p, int i, int j, boolean[][] visited, List<String> result) {
         /**
          * Notice the boarder conditions of i and j.
          */
@@ -146,7 +147,6 @@ public class WordSearchII {
         if (visited[i][j]) {
             return;
         }
-        System.out.println("p.word:" + p.word);
         char c = board[i][j];
         if (p.children[c - 'a'] == null) {
             return;
@@ -161,6 +161,49 @@ public class WordSearchII {
              * deduplicate.
              */
             p.word = null;
+            /**
+             * don't put return here, otherwise you will get a wrong answer.
+             */
+        }
+        /**
+         * Use dir to store the 4 moving directions
+         */
+        int[][] dir = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+        visited[i][j] = true;
+        for (int[] a : dir) {
+            int nx = a[0] +  i, ny = a[1] + j;
+            search(board, p, nx, ny, visited, result);
+        }
+        visited[i][j] = false;
+    }
+
+    public void search(char[][] board, TrieNode p, int i, int j, boolean[][] visited, List<String> result) {
+        /**
+         * Notice the boarder conditions of i and j.
+         */
+        if (i < 0 || i >= board.length || j < 0 || j >= board[0].length) {
+            return;
+        }
+        if (visited[i][j]) {
+            return;
+        }
+        char c = board[i][j];
+        if (p.children[c - 'a'] == null) {
+            return;
+        }
+        /**
+         *
+         */
+        p = p.children[c - 'a'];
+        if (p.word != null) {
+            result.add(p.word);
+            /**
+             * deduplicate.
+             */
+            p.word = null;
+            /**
+             * don't put return here, otherwise you will get a wrong answer.
+             */
         }
         visited[i][j] = true;
         search(board, p, i - 1, j, visited, result);
@@ -172,6 +215,9 @@ public class WordSearchII {
 
     public TrieNode buildTrie(String[] words) {
         TrieNode root = new TrieNode();
+        /**
+         * All the words start from the same root.
+         */
         for (String w : words) {
             TrieNode p = root;
             for (char c : w.toCharArray()) {
