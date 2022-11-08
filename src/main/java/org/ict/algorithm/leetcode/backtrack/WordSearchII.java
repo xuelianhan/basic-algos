@@ -70,6 +70,9 @@ public class WordSearchII {
         TrieNode root = buildTrie(words);
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
+                /**
+                 * Notice here, we always start to search from root at each char in board.
+                 */
                 searchV2(board, i, j, root, res);
             }
         }
@@ -153,6 +156,7 @@ public class WordSearchII {
             for (int j = 0; j < n; j++) {
                 /**
                  * two version of implements is similar except some tiny difference on the traversal of directions.
+                 * Notice here, we always start to search from root at each char in board.
                  */
                 search(board, root, i, j, visited, result);
                 //searchV1(board, root, i, j, visited, result);
@@ -273,6 +277,11 @@ public class WordSearchII {
 
     class TrieNode {
         TrieNode[] children = new TrieNode[26];
+        /**
+         * Usually, we use a marked field here to mark
+         * the end of the string, but we store the word directly here to
+         * prevent searching the whole trie-tree to combine the word string.
+         */
         String word;
     }
 
