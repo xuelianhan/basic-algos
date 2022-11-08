@@ -1,9 +1,9 @@
 package org.ict.algorithm.leetcode.string;
 
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Stack;
-import java.util.stream.Collectors;
 
 /**
  * Given a string s of lower and upper case English letters.
@@ -58,6 +58,30 @@ public class MakeTheStringGreat {
         //String s = "leEeetcode";
         String result = makeGood(s);
         System.out.println(result);
+    }
+
+    public String makeGoodV3(String s) {
+        if (null == s || s.length() == 0) {
+            return s;
+        }
+        Deque<Character> stack = new ArrayDeque<>();
+        for (char ch : s.toCharArray()) {
+            /**
+             * a ascii code is 96, A ascii code is 64, the difference is 32
+             */
+            if (!stack.isEmpty() && Math.abs(ch - stack.peek()) == 32) {
+                stack.pop();
+            } else {
+                stack.push(ch);
+            }
+        }
+        char[] arr = new char[stack.size()];
+        int idx = stack.size() - 1;
+        while (!stack.isEmpty()) {
+            arr[idx] = stack.pop();
+            idx--;
+        }
+        return new String(arr);
     }
 
     public String makeGoodV2(String s) {
