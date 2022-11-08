@@ -4,14 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 目前在用 Mac mini 作为主力办公电脑，无奈跟 Windows 不一样的是，在 macOS 下通过数据线链接安卓平板后无法作为MTP 设备看到，传输文件数据不方便，所以才想要安装 adb，可以通过 adb install 来安装apk 应用。首先安装 homebrew：/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"让后通过 homebrew 来安装 adb：brew install --cask android-platform-toolsHomebrew的使用可以去官网详细了解：Homebrew​brew.sh之后就可以使用了：adb devices -l
- * List of devices attached
- * 99418373459118  authorizing usb:338690048X transport_id:44
- *
- * 作者：默契
- * 链接：https://zhuanlan.zhihu.com/p/445554966
- * 来源：知乎
- * 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
  * Given an m x n board of characters and a list of strings words, return all words on the board.
  *
  * Each word must be constructed from letters of sequentially adjacent cells,
