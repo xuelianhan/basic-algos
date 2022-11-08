@@ -52,20 +52,51 @@ public class ImplementTrie {
      */
     static class Trie {
 
-        public Trie() {
+        static class TrieNode {
+            boolean end;
+            TrieNode[] children = new TrieNode[26];
+        }
 
+        TrieNode root;
+
+        public Trie() {
+            root = new TrieNode();
         }
 
         public void insert(String word) {
-
+            TrieNode node = root;
+            for (char ch : word.toCharArray()) {
+                int idx = ch - 'a';
+                if (node.children[idx] == null) {
+                    node.children[idx] = new TrieNode();
+                }
+                node = node.children[idx];
+            }
+            node.end = true;
         }
 
         public boolean search(String word) {
-            return false;
+            TrieNode node = root;
+            for (char ch : word.toCharArray()) {
+                int idx = ch - 'a';
+                if (node.children[idx] == null) {
+                    return false;
+                }
+                node = node.children[idx];
+            }
+            return node.end;
         }
 
         public boolean startsWith(String prefix) {
-            return false;
+            TrieNode node = root;
+            for (char ch : prefix.toCharArray()) {
+                int idx = ch - 'a';
+                if (node.children[idx] == null) {
+                    return false;
+                }
+                node = node.children[idx];
+            }
+            return true;
         }
     }
 }
