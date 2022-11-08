@@ -57,8 +57,27 @@ public class Maximum69Number {
      * @param num
      * @return
      */
-    public int maximum69NumberV2(int num) {
+    public int maximum69NumberV3(int num) {
         return Integer.parseInt(("" + num).replaceFirst("6", "9"));
+    }
+
+    public int maximum69NumberV2(int num) {
+        /**
+         * 6999 --> 9999, 9999 = 6999 + 3 * 10^3
+         * 9999 --> 9999, 9999 = 9999 + 3 * 0
+         */
+        int firstSix = -1;
+        int i = 0;
+        int x = num;
+        while (x > 0) {
+            if (x % 10 == 6) {
+                firstSix = i;
+            }
+            x /= 10;
+            i++;
+        }
+        int add = 3 * (int)Math.pow(10, firstSix);
+        return (num + add);
     }
 
     /**
@@ -88,6 +107,7 @@ public class Maximum69Number {
          * In num + 3 * (int)Math.pow(10,firstSix);
          * we need the second part of 3 * (int)Math.pow(10,firstSix) to be 0 while we haven't found the 6 in num digits.
          * So, we initialized firstSix as -1;
+         *
          */
         int firstSix = -1;
         int number = num;
