@@ -51,17 +51,12 @@ public class Maximum69Number {
     }
 
     /**
-     * String solution one line
-     * Cost 7ms
-     * @author tzhenia
+     * Math solution
+     * Cost 0ms
      * @param num
      * @return
      */
     public int maximum69NumberV3(int num) {
-        return Integer.parseInt(("" + num).replaceFirst("6", "9"));
-    }
-
-    public int maximum69NumberV2(int num) {
         /**
          * 6999 --> 9999, 9999 = 6999 + 3 * 10^3
          * 9999 --> 9999, 9999 = 9999 + 3 * 0
@@ -78,6 +73,17 @@ public class Maximum69Number {
         }
         int add = 3 * (int)Math.pow(10, firstSix);
         return (num + add);
+    }
+
+    /**
+     * String solution one line
+     * Cost 7ms
+     * @author tzhenia
+     * @param num
+     * @return
+     */
+    public int maximum69NumberV2(int num) {
+        return Integer.parseInt(("" + num).replaceFirst("6", "9"));
     }
 
     /**
