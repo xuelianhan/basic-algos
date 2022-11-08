@@ -66,6 +66,12 @@ public class DesignAddAndSearchWordsDS {
 
         TrieNode root;
 
+        /**
+         * Consider storing length of the current longest word.
+         * In search method you can return False if word is longer than current longest word
+         */
+        int maxDepth;
+
         public WordDictionary() {
             root = new TrieNode();
         }
@@ -82,8 +88,10 @@ public class DesignAddAndSearchWordsDS {
                     node.children[i] = new TrieNode();
                 }
                 node = node.children[i];
+
             }
             node.end = true;
+            maxDepth = Math.max(maxDepth, word.length());
         }
 
         /**
@@ -92,11 +100,52 @@ public class DesignAddAndSearchWordsDS {
          * @return
          */
         public boolean search(String word) {
-            return search(word.toCharArray(), root, 0);
+            /**
+             * Time cost 411 ms, when add length check.
+             */
+            if (word.length() > maxDepth) {
+                return false;
+            }
+            return searchV2(word.toCharArray(), root, 0);
+            //return searchV1(word.toCharArray(), root, 0);
+            //return search(word.toCharArray(), root, 0);
+        }
+
+
+        /**
+         * Time Cost 975 ms, very slow
+         * @param arr
+         * @param p
+         * @param k
+         * @return
+         */
+        private boolean searchV2(char[] arr, TrieNode p, int k) {
+            /**
+             * Because trie-tree start from root, high of each tree-branch
+             * equals the length of word.
+             */
+            if (k == arr.length) {
+                return p.end;
+            }
+            if (arr[k] != '.') {
+                int i = arr[k] - 'a';
+                if (p.children[i] == null) {
+                    return false;
+                }
+                return searchV2(arr, p.children[i], k + 1);
+            }
+            for (TrieNode node : p.children) {
+                if (node != null) {
+                    if (searchV2(arr, node, k + 1)) {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
 
         /**
-         * Time Cost 1039 ms, very slow.
+         * Time Cost 1275 ms, very slow.
          * @param arr
          * @param p
          * @param k
@@ -115,10 +164,10 @@ public class DesignAddAndSearchWordsDS {
                 if (p.children[i] == null) {
                     return false;
                 }
-                return search(arr, p.children[i], k + 1);
+                return searchV1(arr, p.children[i], k + 1);
             }
             for (TrieNode node : p.children) {
-                if (node != null && search(arr, node, k + 1)) {
+                if (node != null && searchV1(arr, node, k + 1)) {
                     return true;
                 }
             }
