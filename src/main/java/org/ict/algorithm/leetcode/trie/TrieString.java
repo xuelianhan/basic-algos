@@ -4,7 +4,7 @@ package org.ict.algorithm.leetcode.trie;
  * @author sniper
  * @date 06 Nov, 2022
  */
-public class Trie {
+public class TrieString {
 
     public static class TrieNode {
 
@@ -38,7 +38,7 @@ public class Trie {
 
     private TrieNode root;
 
-    public Trie() {
+    public TrieString() {
         root = new TrieNode();
     }
 
