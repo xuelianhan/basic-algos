@@ -39,6 +39,17 @@ package org.ict.algorithm.leetcode.greedy;
  */
 public class Maximum69Number {
 
+    public static void main(String[] args) {
+        double x = Math.pow(10, -1);
+        double y = Math.pow(10, 0);
+        System.out.println("x:" + x);
+        System.out.println("y:" + y);
+        int intX = (int)x;
+        int intY = (int)y;
+        System.out.println("intX:" + intX);
+        System.out.println("intY:" + intY);
+    }
+
     /**
      * String solution one line
      * Cost 7ms
@@ -51,12 +62,33 @@ public class Maximum69Number {
     }
 
     /**
-     * e.g.9996
+     * e.g.6699
+     * i:0, 6699 modular 10 = 9(right-first, the lower digit)
+     * i:1, 669 modular 10 = 9
+     * i:2, 66 modular 10 = 6,
+     * i:3, 6 modular 10 = 6(left-first, the higher digit)
+     *
+     * So the highest digit of 6 is at the index 3
+     * result = 6699 + 3 * 3*10^3 = 6699 + 3*1000 = 9699
      *
      * @param num
      * @return
      */
     public int maximum69NumberV1(int num) {
+        /**
+         * firstSix is used as an exponent digit,
+         * So it can'not be initialized with 0.
+         * e.g.9999
+         * we can't find any 6 in 9999, if we initialize firstSix as 0,
+         * then double y = Math.pow(10, 0); y will be 1.0
+         *      int intY = (int)y; intY will be 1
+         * if we initialize firstSix as -1, then
+         *      double x = Math.pow(10, -1); x will be 0.1
+         *       int intX = (int)x; intX will be 0
+         * In num + 3 * (int)Math.pow(10,firstSix);
+         * we need the second part of 3 * (int)Math.pow(10,firstSix) to be 0 while we haven't found the 6 in num digits.
+         * So, we initialized firstSix as -1;
+         */
         int firstSix = -1;
         int number = num;
         for(int i = 0; number > 0; i++){
