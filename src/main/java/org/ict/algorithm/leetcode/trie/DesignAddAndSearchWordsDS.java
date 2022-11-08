@@ -134,6 +134,10 @@ public class DesignAddAndSearchWordsDS {
                 }
                 return searchV2(arr, p.children[i], k + 1);
             }
+            /**
+             * When we meet '.', we traverse the no-null nodes at the same level, if one branch of them is matched, then we find the
+             * word. This process is similar with DFS. At here, using DFS is better than BFS, we don't need to check all the branches of current node.
+             */
             for (TrieNode node : p.children) {
                 if (node != null) {
                     if (searchV2(arr, node, k + 1)) {
@@ -166,6 +170,10 @@ public class DesignAddAndSearchWordsDS {
                 }
                 return searchV1(arr, p.children[i], k + 1);
             }
+            /**
+             * When we meet '.', we traverse the no-null nodes at the same level, if one branch of them is matched, then we find the
+             * word. This process is similar with DFS. At here, using DFS is better than BFS, we don't need to check all the branches of current node.
+             */
             for (TrieNode node : p.children) {
                 if (node != null && searchV1(arr, node, k + 1)) {
                     return true;
@@ -191,6 +199,10 @@ public class DesignAddAndSearchWordsDS {
                 return p.end;
             }
             if (arr[k] == '.') {
+                /**
+                 * When we meet '.', we traverse the no-null nodes at the same level, if one branch of them is matched, then we find the
+                 * word. This process is similar with DFS. At here, using DFS is better than BFS, we don't need to check all the branches of current node.
+                 */
                 for (TrieNode node : p.children) {
                     if (node != null && search(arr, node, k + 1)) {
                         return true;
