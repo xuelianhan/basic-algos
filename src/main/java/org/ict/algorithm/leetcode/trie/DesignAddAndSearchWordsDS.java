@@ -29,6 +29,7 @@ package org.ict.algorithm.leetcode.trie;
  * wordDictionary.search(".ad"); // return True
  * wordDictionary.search("b.."); // return True
  *
+ * Notice the tree level high == word.length
  *         root
  *         /|\
  *        b d m
@@ -102,6 +103,10 @@ public class DesignAddAndSearchWordsDS {
          * @return
          */
         private boolean searchV1(char[] arr, TrieNode p, int k) {
+            /**
+             * Because trie-tree start from root, high of each tree-branch
+             * equals the length of word.
+             */
             if (k == arr.length) {
                 return p.end;
             }
@@ -129,6 +134,10 @@ public class DesignAddAndSearchWordsDS {
          * @return
          */
         private boolean search(char[] arr, TrieNode p, int k) {
+            /**
+             * Because trie-tree start from root, high of each tree-branch
+             * equals the length of word.
+             */
             if (k == arr.length) {
                 return p.end;
             }
