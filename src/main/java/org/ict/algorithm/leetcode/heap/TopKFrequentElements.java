@@ -34,41 +34,13 @@ import java.util.*;
 public class TopKFrequentElements {
 
     /**
-     * Use Max-Heap can also solve problems like Top-K series, but it needs to add all the elements to the heap.
-     * Conversely, Min-Heap will save more spaces, min-heap needs only at most k elements spaces.
-     * @param nums
-     * @param k
-     * @return
-     */
-    public List<Integer> topKFrequentV3(int[] nums, int k) {
-        Map<Integer, Integer> map = new HashMap<>();
-        for (int n: nums) {
-            map.put(n, map.getOrDefault(n,0)+1);
-        }
-
-        PriorityQueue<Map.Entry<Integer, Integer>> maxHeap = new PriorityQueue<>((a, b) -> (b.getValue() - a.getValue()));
-        for (Map.Entry<Integer,Integer> entry: map.entrySet()) {
-            maxHeap.add(entry);
-        }
-
-        List<Integer> res = new ArrayList<>();
-        while (res.size() < k) {
-            Map.Entry<Integer, Integer> entry = maxHeap.poll();
-            res.add(entry.getKey());
-        }
-        return res;
-    }
-
-
-
-    /**
      * A simplified version of topKFrequent
      *
      * @param nums
      * @param k
      * @return
      */
-    public int[] topKFrequentV2(int[] nums, int k) {
+    public int[] topKFrequentV3(int[] nums, int k) {
         if (k == nums.length) {
             return nums;
         }
@@ -116,6 +88,32 @@ public class TopKFrequentElements {
         return top;
     }
 
+    /**
+     * Use Max-Heap can also solve problems like Top-K series, but it needs to add all the elements to the heap.
+     * Conversely, Min-Heap will save more spaces, min-heap needs only at most k elements spaces.
+     * @param nums
+     * @param k
+     * @return
+     */
+    public List<Integer> topKFrequentV2(int[] nums, int k) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int n: nums) {
+            map.put(n, map.getOrDefault(n,0)+1);
+        }
+
+        PriorityQueue<Map.Entry<Integer, Integer>> maxHeap = new PriorityQueue<>((a, b) -> (b.getValue() - a.getValue()));
+        for (Map.Entry<Integer,Integer> entry: map.entrySet()) {
+            maxHeap.add(entry);
+        }
+
+        List<Integer> res = new ArrayList<>();
+        while (res.size() < k) {
+            Map.Entry<Integer, Integer> entry = maxHeap.poll();
+            res.add(entry.getKey());
+        }
+        return res;
+    }
+    
     public int[] topKFrequent(int[] nums, int k) {
         /**
          * Count frequency of each number in the array.
