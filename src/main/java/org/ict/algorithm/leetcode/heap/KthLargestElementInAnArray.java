@@ -32,6 +32,13 @@ import java.util.PriorityQueue;
  */
 public class KthLargestElementInAnArray {
 
+    public static void main(String[] args) {
+        int[] nums = {3,2,1,5,6,4};
+        int k = 2;
+        int result = findKthLargestV1(nums, k) ;
+        System.out.println(result);
+    }
+
 
 
     /**
@@ -141,6 +148,16 @@ public class KthLargestElementInAnArray {
      * The root of heap is the minimum of the k numbers.
      * It's also the k'th-largest element in the heap.
      *
+     * Input: nums = [3,2,1,5,6,4], k = 2
+     * i:0, minHeap: 3
+     * i:1, minHeap: 2, 3
+     * i:2, minHeap: 1, 3, 2, size > 2, poll 1 from the heap, minHeap: 2, 3
+     * i:3, minHeap: 2, 3, 5, size > 2, poll 2 from the heap, minHeap: 3, 5
+     * i:4, minHeap: 3, 5, 6, size > 2, poll 3 from the heap, minHeap: 5, 6
+     * i:5, minHeap: 4, 6, 5, size > 2, poll 4 from the heap, minHeap: 5, 6
+     * for-loop-end
+     * peek top of the heap: 5
+     *
      * Time Complexity O(N.log(k)).
      *
      * The real running time is 152ms
@@ -149,7 +166,7 @@ public class KthLargestElementInAnArray {
      * @param k
      * @return
      */
-    public int findKthLargestV1(int[] nums, int k) {
+    public static int findKthLargestV1(int[] nums, int k) {
         PriorityQueue<Integer> minHeap = new PriorityQueue<>(k);
         for (int num : nums) {
             minHeap.offer(num);
