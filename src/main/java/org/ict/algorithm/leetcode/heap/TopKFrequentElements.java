@@ -75,7 +75,7 @@ public class TopKFrequentElements {
 
         /**
          * 1. build hash map : character and how often it appears.
-         *  O(N) time.
+         * O(N) time.
          */
         Map<Integer, Integer> freq = new HashMap();
         for (int num: nums) {
@@ -88,11 +88,11 @@ public class TopKFrequentElements {
          */
         Queue<Integer> minHeap = new PriorityQueue<>(Comparator.comparingInt(freq::get));
         //Queue<Integer> minHeap = new PriorityQueue<>((n1, n2) -> count.get(n1) - count.get(n2));
-        
+
         /**
-         *  2. keep k top frequent elements in the minHeap.
-         *  O(N log k) < O(N log N) time.
-         *  Notice here using count.keySet() other than the nums array itself.
+         * 2. keep k top frequent elements in the minHeap.
+         * O(N log k) < O(N log N) time.
+         * Notice here using count.keySet() other than the nums array itself.
          */
         for (int num: freq.keySet()) {
             minHeap.add(num);
@@ -105,8 +105,9 @@ public class TopKFrequentElements {
         }
 
         /**
-         *  3. build an output array and put the kth-biggest at the end position in the array.
-         *   O(k log k) time.
+         * 3. build an output array and put the kth-biggest at the end position in the array.
+         * You may return the answer in any order.
+         * O(k log k) time.
          */
         int[] top = new int[k];
         for(int i = k - 1; i >= 0; --i) {
