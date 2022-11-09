@@ -52,6 +52,14 @@ public class WordBreak {
         return wordBreak(s, memo, dict);
     }
 
+    /**
+     * The most confused thing is that it allows multiple splits and words in the dict can be used repeatedly.
+     * How can we split? from left to right? If we split at the first place, then how to deal with the rest part?
+     * @param s
+     * @param memo
+     * @param dict
+     * @return
+     */
     public boolean wordBreak(String s, Map<String, Boolean> memo, Set<String> dict) {
         /**
          * Return directly if s has existed in memo.
