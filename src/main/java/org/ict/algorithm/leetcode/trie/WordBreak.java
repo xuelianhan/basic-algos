@@ -3,7 +3,8 @@ package org.ict.algorithm.leetcode.trie;
 import java.util.*;
 
 /**
- * Given a string s and a dictionary of strings wordDict, return true if s can be segmented into a space-separated sequence of one or more dictionary words.
+ * Given a string s and a dictionary of strings wordDict,
+ * return true if s can be segmented into a space-separated sequence of one or more dictionary words.
  *
  * Note that the same word in the dictionary may be reused multiple times in the segmentation.
  *
@@ -69,7 +70,9 @@ public class WordBreak {
          * Split string from left to right.
          */
         for (int i = 1; i < s.length(); i++) {
-            if (dict.contains(s.substring(i)) && wordBreak(s.substring(0, i), memo, dict)) {
+            String left = s.substring(0, i);
+            String right = s.substring(i);
+            if (dict.contains(right) && wordBreak(left, memo, dict)) {
                 memo.put(s, true);
                 return true;
             }
