@@ -54,7 +54,7 @@ public class KthLargestElementInAnArray {
          * Build a Max-Heap with PriorityQueue.
          * Notice the comparator defined is reversed with default natural order PriorityQueue.
          */
-        PriorityQueue<Integer> queue = new PriorityQueue<>(((o1, o2) -> {
+        PriorityQueue<Integer> maxHeap = new PriorityQueue<>(((o1, o2) -> {
             if (o1 < o2) {
                 return 1;
             } else if (o1 > o2) {
@@ -68,13 +68,13 @@ public class KthLargestElementInAnArray {
          * Add all elements into the heap.
          */
         for (int num : nums) {
-            queue.offer(num);
+            maxHeap.offer(num);
         }
 
         int i = 0;
         int res = 0;
-        while (!queue.isEmpty()) {
-            res = queue.poll();
+        while (!maxHeap.isEmpty()) {
+            res = maxHeap.poll();
             if (i == k - 1) {
                 return res;
             }
@@ -118,22 +118,22 @@ public class KthLargestElementInAnArray {
      */
 
     public int findKthLargestV2(int[] nums, int k) {
-        PriorityQueue<Integer> queue = new PriorityQueue<>();
+        PriorityQueue<Integer> minHeap = new PriorityQueue<>();
         for (int i = 0; i < k; i++) {
-            queue.offer(nums[i]);
+            minHeap.offer(nums[i]);
         }
 
         for (int i = k; i < nums.length; i++) {
-            int root = queue.peek();
+            int root = minHeap.peek();
             if (nums[i] > root) {
                 /**
                  * dequeue root and add the current element, heap will heapify automatically.
                  */
-                queue.poll();
-                queue.offer(nums[i]);
+                minHeap.poll();
+                minHeap.offer(nums[i]);
             }
         }
-        return queue.peek();
+        return minHeap.peek();
     }
 
     /**
@@ -150,14 +150,14 @@ public class KthLargestElementInAnArray {
      * @return
      */
     public int findKthLargestV1(int[] nums, int k) {
-        PriorityQueue<Integer> queue = new PriorityQueue<>(k);
+        PriorityQueue<Integer> minHeap = new PriorityQueue<>(k);
         for (int num : nums) {
-            queue.offer(num);
-            if (queue.size() > k) {
-                queue.poll();
+            minHeap.offer(num);
+            if (minHeap.size() > k) {
+                minHeap.poll();
             }
         }
-        return queue.peek();
+        return minHeap.peek();
     }
 
     /**

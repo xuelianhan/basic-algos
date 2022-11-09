@@ -36,36 +36,101 @@ import java.util.*;
  * LC692
  */
 public class TopKFrequentWords {
-    public List<String> topKFrequent(String[] words, int k) {
-        List<String> result = new ArrayList<>();
-        if (k == words.length) {
-            result.addAll(Arrays.asList(words));
-            return result;
-        }
 
+    public static void main(String[] args) {
+        //expected: ["i","love"]
+        //String[] words = {"i","love","leetcode","i","love","coding"};
+        //int k = 2;
+
+        //expected: ["the", "is", "sunny", "day"]
+        String[] words = {"the","day","is","sunny","the","the","the","sunny","is","is"};
+        int k = 4;
+
+        //expected: ["a","aa","aaa"]
+        //String[] words = {"aaa","aa","a"};
+        //int k = 3;
+
+        List<String> result = topKFrequent(words, k);
+        System.out.println(result);
+    }
+
+    public static List<String> topKFrequentV1(String[] words, int k) {
+        List<String> result = new ArrayList<>();
+        //todo
+        return result;
+    }
+
+
+    /**
+     * Min-Heap Solution
+     * @param words
+     * @param k
+     * @return
+     */
+    public static List<String> topKFrequent(String[] words, int k) {
+        List<String> result = new ArrayList<>();
+        /**
+         * Notice here using hashmap may lead case failed. Why?
+         * Because there are some constraints:
+         * 1.Return the answer sorted by the frequency from highest to lowest.
+         * 2.Sort the words with the same frequency by their lexicographical order
+         */
         Map<String, Integer> freq = new HashMap<>();
         for (String word : words) {
             freq.put(word, freq.getOrDefault(word, 0) + 1);
         }
+        Set<Map.Entry<String, Integer>> set = freq.entrySet();
+        List<Map.Entry<String, Integer>> list = new ArrayList<>(set);
+        Collections.sort(list, (b1, b2) -> {
+            /**
+             * sort list by frequency from lowest to highest
+             */
+            if (b1.getValue() < b2.getValue()) {
+                return -1;
+            } else if(b1.getValue() > b2.getValue()) {
+                return 1;
+            } else {
+                /**
+                 * sort by the reverse dictionary order
+                 */
+                return b2.getKey().compareTo(b1.getKey());
+            }
+        });
 
         /**
-         * init heap 'the less frequent element first'.
+         * init minHeap 'the less frequent element first'.
          * create a MinPQ here.
+         * some constraints:
+         * 1.Return the answer sorted by the frequency from highest to lowest.
+         * 2.Sort the words with the same frequency by their lexicographical order
          */
-        Queue<String> heap = new PriorityQueue<>((w1, w2) -> (freq.get(w1) - freq.get(w2)));
-        //Queue<String> heap = new PriorityQueue<>(Comparator.comparingInt(freq::get));
+        Queue<String> minHeap = new PriorityQueue<>((w1, w2) -> {
+            /**
+             * sort list by frequency from lowest to highest
+             */
+            if (freq.get(w1) < freq.get(w2)) {
+                return -1;
+            } else if (freq.get(w1) > freq.get(w2)) {
+                return 1;
+            } else {
+                /**
+                 * sort by the reverse dictionary order
+                 */
+                return w2.compareTo(w1);
+            }
+        });
 
         /**
-         *  2. keep k top frequent elements in the heap.
+         *  2. keep k top frequent elements in the minHeap.
          *  O(N log k) < O(N log N) time.
          */
-        for (String word: freq.keySet()) {
-            heap.add(word);
-            if (heap.size() > k) {
+        for (Map.Entry<String, Integer> entry : list) {
+            minHeap.offer(entry.getKey());
+            if (minHeap.size() > k) {
                 /**
-                 * heap will poll the top element(smallest) out.
+                 * minHeap will poll the top element(smallest) out.
                  */
-                heap.poll();
+                minHeap.poll();
             }
         }
 
@@ -75,7 +140,7 @@ public class TopKFrequentWords {
          */
         int i = 0;
         while (i < k) {
-            result.add(heap.poll());
+            result.add(0, minHeap.poll());
             i++;
         }
 

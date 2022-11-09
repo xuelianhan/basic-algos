@@ -1,9 +1,6 @@
 package org.ict.algorithm.leetcode.heap;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.PriorityQueue;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * Given an integer array nums and an integer k, return the k most frequent elements.
@@ -37,6 +34,34 @@ import java.util.Queue;
 public class TopKFrequentElements {
 
     /**
+     * Use Max-Heap can also solve problems like Top-K series, but it needs to add all the elements to the heap.
+     * Conversely, Min-Heap will save more spaces, min-heap needs only at most k elements spaces.
+     * @param nums
+     * @param k
+     * @return
+     */
+    public List<Integer> topKFrequentV3(int[] nums, int k) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int n: nums) {
+            map.put(n, map.getOrDefault(n,0)+1);
+        }
+
+        PriorityQueue<Map.Entry<Integer, Integer>> maxHeap = new PriorityQueue<>((a, b) -> (b.getValue() - a.getValue()));
+        for (Map.Entry<Integer,Integer> entry: map.entrySet()) {
+            maxHeap.add(entry);
+        }
+
+        List<Integer> res = new ArrayList<>();
+        while (res.size() < k) {
+            Map.Entry<Integer, Integer> entry = maxHeap.poll();
+            res.add(entry.getKey());
+        }
+        return res;
+    }
+
+
+
+    /**
      * A simplified version of topKFrequent
      *
      * @param nums
@@ -52,30 +77,32 @@ public class TopKFrequentElements {
          * 1. build hash map : character and how often it appears.
          *  O(N) time.
          */
-        Map<Integer, Integer> count = new HashMap();
+        Map<Integer, Integer> freq = new HashMap();
         for (int n: nums) {
-            count.put(n, count.getOrDefault(n, 0) + 1);
+            freq.put(n, freq.getOrDefault(n, 0) + 1);
         }
 
         /**
-         * init heap 'the less frequent element first'.
+         * init minHeap 'the less frequent element first'.
          * create a MinPQ here.
          */
-        Queue<Integer> heap = new PriorityQueue<>(
-                (n1, n2) -> count.get(n1) - count.get(n2));
+        Queue<Integer> minHeap = new PriorityQueue<>(Comparator.comparingInt(freq::get));
+        //Queue<Integer> minHeap = new PriorityQueue<>((n1, n2) -> count.get(n1) - count.get(n2));
+
 
 
         /**
-         *  2. keep k top frequent elements in the heap.
+         *  2. keep k top frequent elements in the minHeap.
          *  O(N log k) < O(N log N) time.
+         *  Notice here using count.keySet() other than the nums array itself.
          */
-        for (int n: count.keySet()) {
-            heap.add(n);
-            if (heap.size() > k) {
+        for (int n: freq.keySet()) {
+            minHeap.add(n);
+            if (minHeap.size() > k) {
                 /**
-                 * heap will poll the top element(smallest) out.
+                 * minHeap will poll the top element(smallest) out.
                  */
-                heap.poll();
+                minHeap.poll();
             }
         }
 
@@ -85,7 +112,7 @@ public class TopKFrequentElements {
          */
         int[] top = new int[k];
         for(int i = k - 1; i >= 0; --i) {
-            top[i] = heap.poll();
+            top[i] = minHeap.poll();
         }
         return top;
     }
@@ -102,7 +129,7 @@ public class TopKFrequentElements {
         /**
          * Create a MinPQ with natural-order comparator.
          */
-        PriorityQueue<Element> pq = new PriorityQueue<>(((o1, o2) -> {
+        PriorityQueue<Element> minHeap = new PriorityQueue<>(((o1, o2) -> {
             if (o1.cnt < o2.cnt) {
                 return -1;
             } else if (o1.cnt > o2.cnt) {
@@ -117,10 +144,10 @@ public class TopKFrequentElements {
          */
         frequency.forEach((num, cnt) -> {
             Element ele = new Element(num, cnt);
-            pq.offer(ele);
+            minHeap.offer(ele);
 
-            if (pq.size() > k) {
-                pq.poll();
+            if (minHeap.size() > k) {
+                minHeap.poll();
             }
         });
 
@@ -129,8 +156,8 @@ public class TopKFrequentElements {
          */
         int i = 0;
         int[] res = new int[k];
-        while (!pq.isEmpty()) {
-            res[i] = pq.poll().num;
+        while (!minHeap.isEmpty()) {
+            res[i] = minHeap.poll().num;
             i++;
         }
         return res;
