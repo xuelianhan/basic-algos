@@ -78,8 +78,8 @@ public class TopKFrequentElements {
          *  O(N) time.
          */
         Map<Integer, Integer> freq = new HashMap();
-        for (int n: nums) {
-            freq.put(n, freq.getOrDefault(n, 0) + 1);
+        for (int num: nums) {
+            freq.put(num, freq.getOrDefault(num, 0) + 1);
         }
 
         /**
@@ -88,16 +88,14 @@ public class TopKFrequentElements {
          */
         Queue<Integer> minHeap = new PriorityQueue<>(Comparator.comparingInt(freq::get));
         //Queue<Integer> minHeap = new PriorityQueue<>((n1, n2) -> count.get(n1) - count.get(n2));
-
-
-
+        
         /**
          *  2. keep k top frequent elements in the minHeap.
          *  O(N log k) < O(N log N) time.
          *  Notice here using count.keySet() other than the nums array itself.
          */
-        for (int n: freq.keySet()) {
-            minHeap.add(n);
+        for (int num: freq.keySet()) {
+            minHeap.add(num);
             if (minHeap.size() > k) {
                 /**
                  * minHeap will poll the top element(smallest) out.
