@@ -113,7 +113,7 @@ public class TopKFrequentElements {
         }
         return res;
     }
-    
+
     public int[] topKFrequent(int[] nums, int k) {
         /**
          * Count frequency of each number in the array.

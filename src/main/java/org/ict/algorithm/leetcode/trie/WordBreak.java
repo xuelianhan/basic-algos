@@ -1,6 +1,6 @@
 package org.ict.algorithm.leetcode.trie;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * Given a string s and a dictionary of strings wordDict, return true if s can be segmented into a space-separated sequence of one or more dictionary words.
@@ -40,8 +40,42 @@ import java.util.List;
  */
 public class WordBreak {
 
+    /**
+     * Recursive solution with Memorization.
+     * You can subscribe Huahua's channel on YT.
+     * @author Huahua
+     */
     public boolean wordBreak(String s, List<String> wordDict) {
-        //todo
+        Set<String> dict = new HashSet<>(wordDict);
+        Map<String, Boolean> memo = new HashMap<>();
+        return wordBreak(s, memo, dict);
+    }
+
+    public boolean wordBreak(String s, Map<String, Boolean> memo, Set<String> dict) {
+        /**
+         * Return directly if s has existed in memo.
+         */
+        if (memo.containsKey(s)) {
+            return memo.get(s);
+        }
+        /**
+         * If dict contains s, we can set s as found in the memo, then return true.
+         */
+        if (dict.contains(s)) {
+            memo.put(s, true);
+            return true;
+        }
+        /**
+         * Split string from left to right.
+         */
+        for (int i = 1; i < s.length(); i++) {
+            if (dict.contains(s.substring(i)) && wordBreak(s.substring(0, i), memo, dict)) {
+                memo.put(s, true);
+                return true;
+            }
+        }
+
+        memo.put(s, false);
         return false;
     }
 }

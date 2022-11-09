@@ -5,7 +5,8 @@ import java.util.*;
 /**
  * Given an array of strings words and an integer k, return the k most frequent strings.
  *
- * Return the answer sorted by the frequency from highest to lowest. Sort the words with the same frequency by their lexicographical order.
+ * Return the answer sorted by the frequency from highest to lowest.
+ * Sort the words with the same frequency by their lexicographical order.
  *
  *
  *
@@ -54,9 +55,59 @@ public class TopKFrequentWords {
         System.out.println(result);
     }
 
+    /**
+     * Time Cost 11ms
+     * Time Complexity: O(N*logK)
+     * Space Complexity: O(N)
+     * @param words
+     * @param k
+     * @return
+     */
     public static List<String> topKFrequentV1(String[] words, int k) {
         List<String> result = new ArrayList<>();
-        //todo
+        /**
+         * 1. we calculate the frequency for each word.
+         */
+        Map<String, Integer> freq = new HashMap<>();
+        for (String word : words) {
+            freq.put(word, freq.getOrDefault(word, 0) + 1);
+        }
+
+        /**
+         * Return the answer sorted by the frequency from highest to lowest.
+         * Sort the words with the same frequency by their lexicographical order.
+         *
+         * 2.we do the reverse order of above constraints, because we use Min-Heap.
+         */
+        Queue<Map.Entry<String, Integer>> minHeap = new PriorityQueue<>((e1, e2) -> {
+            /**
+             * Firstly, we sort entry by frequency from lowest to highest
+             * Secondly, while the frequency count of two entries are equal, we
+             * sort the entry by the reverse-dictionary-order.
+             */
+            if (e1.getValue() < e2.getValue()) {
+                return -1;
+            } else if (e1.getValue() > e2.getValue()) {
+                return 1;
+            } else {
+                return e2.getKey().compareTo(e1.getKey());
+            }
+        });
+
+        for (Map.Entry<String, Integer> entry : freq.entrySet()) {
+            minHeap.offer(entry);
+            if (minHeap.size() > k) {
+                minHeap.poll();
+            }
+        }
+
+        /**
+         * Because we use minHeap, so the root is the minimum,
+         * we should add items at the head of list because we need the reverse order.
+         */
+        while (!minHeap.isEmpty()) {
+            result.add(0, minHeap.poll().getKey());
+        }
         return result;
     }
 
