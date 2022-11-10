@@ -55,7 +55,7 @@ public class WordBreak {
     public static boolean wordBreak(String s, List<String> wordDict) {
         Set<String> dict = new HashSet<>(wordDict);
         Map<String, Boolean> memo = new HashMap<>();
-        return wordBreak(s, memo, dict);
+        return wordBreakV2(s, memo, dict);
     }
 
     /**
@@ -64,6 +64,11 @@ public class WordBreak {
      *
      * The most confused thing is that it allows multiple splits and words in the dict can be used repeatedly.
      * How can we split? from left to right? If we split at the first place, then how to deal with the rest part?
+     * When we encounter this situation that we don't know how to go on, one workable option is to using recursion in for-loop.
+     * One little tricky technique using here is to check the longer right part in the dict firstly, then we recursively invoke
+     * the break function. If we check the shorter left in the dict firstly, then we invoke the break function, in this situation,
+     * we need deeper recursive invoke. But it's still working.
+     *
      *
      * e.g. s = "catsandog", dict = ["cats","dog","sand","and","cat"]
      *
@@ -78,9 +83,11 @@ public class WordBreak {
      *                  inDict("san") && wordBreak("cat"); --> false, because "san" is not in the dict
      *                  inDict("an") && wordBreak("cats"); --> false, because "an" is not in the dict
      *                  inDict("n") && wordBreak("catsa"); --> false, because "n" is not in the dict
+     *                  put ("catsan", false) into the memo;
      *                  return wordBreak("catsan"); --> false
      * inDict("og") && wordBreak("catsand"); --> false, because "og" is not in the dict
      * inDict("g") && wordBreak("catsando"); --> false, because "g" is not in the dict
+     * put ("catsandog", false) into the memo;
      * return wordBreak("catsandog");
      *
      * @param s
@@ -88,7 +95,7 @@ public class WordBreak {
      * @param dict
      * @return
      */
-    public static boolean wordBreak(String s, Map<String, Boolean> memo, Set<String> dict) {
+    public static boolean wordBreakV2(String s, Map<String, Boolean> memo, Set<String> dict) {
         /**
          * Return directly if s has existed in the memo.
          */
@@ -108,14 +115,59 @@ public class WordBreak {
         for (int i = 1; i < s.length(); i++) {
             String left = s.substring(0, i);
             String right = s.substring(i);
-            System.out.println("inDict(" + right + ") && wordBreak(" + left + ")");
-            if (dict.contains(right) && wordBreak(left, memo, dict)) {
+            /**
+             * both checking right or left firstly are ok.
+             * If we check the longer one(the right part) firstly,
+             * so the recursive wordBreak will need less times to run,
+             * because the right part at first is shorter than left part.
+             */
+            if (dict.contains(right) && wordBreakV2(left, memo, dict)) {
+            //if (dict.contains(left) && wordBreakV2(right, memo, dict)) {
                 memo.put(s, true);
                 return true;
             }
         }
 
         memo.put(s, false);
+        System.out.println("memo:" + memo);
+        return false;
+    }
+
+    public static boolean wordBreakV1(String s, Map<String, Boolean> memo, Set<String> dict) {
+        /**
+         * Return directly if s has existed in the memo.
+         */
+        if (memo.containsKey(s)) {
+            return memo.get(s);
+        }
+        /**
+         * If dict contains s, we can set s as found in the memo, then return true.
+         */
+        if (dict.contains(s)) {
+            memo.put(s, true);
+            return true;
+        }
+        /**
+         * Split string from left to right.
+         */
+        for (int i = 1; i < s.length(); i++) {
+            String left = s.substring(0, i);
+            String right = s.substring(i);
+            /**
+             * both checking right or left firstly are ok.
+             * If we check the longer one(the right part) firstly,
+             * so the recursive wordBreak will need less times to run,
+             * because the right part at first is shorter than left part.
+             */
+            //if (dict.contains(right) && wordBreakV1(left, memo, dict)) {
+            if (dict.contains(left) && wordBreakV1(right, memo, dict)) {
+                memo.put(s, true);
+                return true;
+            }
+        }
+
+        memo.put(s, false);
+        System.out.println("memo:" + memo);
         return false;
     }
 }
