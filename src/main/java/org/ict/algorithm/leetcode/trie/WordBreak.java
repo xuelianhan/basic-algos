@@ -53,8 +53,22 @@ public class WordBreak {
     }
 
     /**
+     * Time Complexity O(2^N)
+     * Space Complexity O(2^N)
+     *
      * The most confused thing is that it allows multiple splits and words in the dict can be used repeatedly.
      * How can we split? from left to right? If we split at the first place, then how to deal with the rest part?
+     *
+     * e.g. s = "catsandog", dict = ["cats","dog","sand","and","cat"]
+     * inDict("atsandog") && wordBreak("c"); --> false, because "atsandog" is not in the dict
+     * inDict("tsandog") && wordBreak("ca"); --> false, because "tsandog" is not in the dict
+     * inDict("sandog") && wordBreak("cat"); --> false, because "sandog" is not in the dict
+     * inDict("andog") && wordBreak("cats"); --> false, because "andog" is not in the dict
+     * inDict("ndog") && wordBreak("catsa"); --> false, because "ndog" is not in the dict
+     * inDict("dog") && wordBreak("catsan"); --> "dog" in the dict, recursive to break "catsan"
+     * inDict("og") && wordBreak("catsand"); --> false, because "og" is not in the dict
+     * inDict("g") && wordBreak("catsando"); --> false, because "g" is not in the dict
+     * inDict("") && wordBreak("catsandog"); --> repeat the above steps.
      * @param s
      * @param memo
      * @param dict
