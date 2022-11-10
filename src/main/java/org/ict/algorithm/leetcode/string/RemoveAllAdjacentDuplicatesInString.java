@@ -50,7 +50,7 @@ public class RemoveAllAdjacentDuplicatesInString {
      * i refers to the index to set next character in the output string.
      * j refers to the index of current iteration in the input string.
      *
-     * Iterate characters of S one by one by increasing j.
+     * Iterate characters of S one by one while increasing j.
      *
      * If S[j] is same as the current last character S[i - 1],
      * we remove duplicates by doing i -= 2.
@@ -60,6 +60,18 @@ public class RemoveAllAdjacentDuplicatesInString {
      *
      * You can easily update this solution to remove more duplicates.
      * Now it's a special case where we only remove replicates k = 2.
+     *
+     * e.g. s = abbaca
+     * 0 1 2 3 4 5
+     * a b b a c a
+     * j:0, i:0, res=[a]
+     * j:1, i:1, res=[a, b]
+     * j:2, i:2, res=[a, b, b], res[1]==res[2], i-=2, i:0, i++, i:1
+     * j:3, i:1, res=[a, a, b], res[1]==res[0], i-=2, i:-1,i++, i:0
+     * j:4, i:0, res=[c, a, b], i++, i:1
+     * j:5, i:1, res=[c, a, b], i++, i:2
+     * for-loop-end
+     *
      * @param s
      * @return
      */
