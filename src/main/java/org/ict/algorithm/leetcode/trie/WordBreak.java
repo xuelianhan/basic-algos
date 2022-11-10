@@ -69,10 +69,10 @@ public class WordBreak {
     }
 
     /**
-     *
      * Trie-DFS Solution
      * Time cost 5ms
-     *
+     * The basic idea is building a trie tree with all the words in the dict, then we
+     * use depth-first-search strategy in the trie tree for each partition.
      * @param s
      * @param wordDict
      * @return
@@ -85,6 +85,15 @@ public class WordBreak {
         return wordBreakV3(s.toCharArray(), memo, root, 0);
     }
 
+    /**
+     * Trie-Tree-Depth-First-Search
+     * 
+     * @param arr
+     * @param memo
+     * @param root
+     * @param pos
+     * @return
+     */
     public boolean wordBreakV3(char[] arr, Map<Integer, Boolean> memo, TrieNode root, int pos) {
         if (pos == arr.length) {
             return true;
@@ -186,6 +195,11 @@ public class WordBreak {
      * In the worst case, we need to check all the possibilities, which become the 2^(N-1)
      * e.g. s = "abc", there are 4 nodes in total. 4 = 2^(N-1) = 2^(3-1)
      * So time complexity is O(2^N), N is the length of the string.
+     *
+     * @see <a href="https://www.mathsisfun.com/algebra/sequences-sums-geometric.html"></a>
+     * Geometric Sum Formula:
+     * Sum = a(1 - q^n)/(1 - q), for the array: a, a*r, a*r^2, ..., a*r^(n-1).
+     * 1 + 2^1 + 2^2 + ... + 2^(n-1) = (1-2^n)/(1-2) = 2^n - 1
      *
      * @param s
      * @param memo
