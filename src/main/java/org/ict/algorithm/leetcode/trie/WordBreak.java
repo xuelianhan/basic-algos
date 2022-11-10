@@ -68,19 +68,54 @@ public class WordBreak {
         return root;
     }
 
+    /**
+     *
+     * Trie-DFS Solution
+     * Time cost 5ms
+     *
+     * @param s
+     * @param wordDict
+     * @return
+     */
     public boolean wordBreakV3(String s, List<String> wordDict) {
         Set<String> dict = new HashSet<>(wordDict);
-        Map<String, Boolean> memo = new HashMap<>();
+        Map<Integer, Boolean> memo = new HashMap<>();
+        TrieNode root = buildTrie(dict);
 
-        return wordBreakV3(s, memo, dict);
+        return wordBreakV3(s.toCharArray(), memo, root, 0);
     }
 
-    public boolean wordBreakV3(String s, Map<String, Boolean> memo, Set<String> dict) {
+    public boolean wordBreakV3(char[] arr, Map<Integer, Boolean> memo, TrieNode root, int pos) {
+        if (pos == arr.length) {
+            return true;
+        }
+        if (memo.containsKey(pos)) {
+            return memo.get(pos);
+        }
+
+        TrieNode p = root;
+        boolean found = false;
+        for (int i = pos; i < arr.length; i++) {
+            p = p.children[arr[i] - 'a'];
+            if (null == p) {
+                break;
+            }
+            if (p.end) {
+                found = wordBreakV3(arr, memo, root, i + 1);
+            }
+
+            if (found) {
+                memo.put(pos, true);
+                return true;
+            }
+        }
+        memo.put(pos, false);
         return false;
     }
 
 
     /**
+     * Time cost 10ms
      * Recursive solution with Memorization.
      * You can subscribe Huahua's channel on YT.
      * @author Huahua
@@ -92,6 +127,12 @@ public class WordBreak {
     }
 
 
+    /**
+     * Time cost 15ms
+     * @param s
+     * @param wordDict
+     * @return
+     */
     public static boolean wordBreakV1(String s, List<String> wordDict) {
         Set<String> dict = new HashSet<>(wordDict);
         Map<String, Boolean> memo = new HashMap<>();
@@ -129,6 +170,22 @@ public class WordBreak {
      * inDict("g") && wordBreak("catsando"); --> false, because "g" is not in the dict
      * put ("catsandog", false) into the memo;
      * return wordBreak("catsandog");
+     *
+     * The time complexity depends on how many nodes the recursion tree has.
+     * In the worst case, let's take an example to see the complexity.
+     * e.g. s = "abc"
+     *              abc
+     *             / |
+     *            bc c
+     *           /
+     *          c
+     * if dict contains a, then only bc left for choice, if dict contains b, then only c left.
+     * if dict contains ab, then only c left for choice
+     * Given an array of length N , there are N - 1 ways/intervals to split it into two parts.
+     * Each interval has two choices--split or not.
+     * In the worst case, we need to check all the possibilities, which become the 2^(N-1)
+     * e.g. s = "abc", there are 4 nodes in total. 4 = 2^(N-1) = 2^(3-1)
+     * So time complexity is O(2^N), N is the length of the string.
      *
      * @param s
      * @param memo
@@ -169,7 +226,7 @@ public class WordBreak {
         }
 
         memo.put(s, false);
-        System.out.println("memo:" + memo);
+        //System.out.println("memo:" + memo);
         return false;
     }
 
@@ -207,7 +264,7 @@ public class WordBreak {
         }
 
         memo.put(s, false);
-        System.out.println("memo:" + memo);
+        //System.out.println("memo:" + memo);
         return false;
     }
 }
