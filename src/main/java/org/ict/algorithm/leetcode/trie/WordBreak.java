@@ -44,7 +44,7 @@ public class WordBreak {
     public static void main(String[] args) {
         String s = "catsandog";
         String[] dict = {"cats","dog","sand","and","cat"};
-        wordBreak(s, new ArrayList<>(Arrays.asList(dict)));
+        wordBreakV2(s, new ArrayList<>(Arrays.asList(dict)));
     }
 
     /**
@@ -52,10 +52,17 @@ public class WordBreak {
      * You can subscribe Huahua's channel on YT.
      * @author Huahua
      */
-    public static boolean wordBreak(String s, List<String> wordDict) {
+    public static boolean wordBreakV2(String s, List<String> wordDict) {
         Set<String> dict = new HashSet<>(wordDict);
         Map<String, Boolean> memo = new HashMap<>();
         return wordBreakV2(s, memo, dict);
+    }
+
+
+    public static boolean wordBreakV1(String s, List<String> wordDict) {
+        Set<String> dict = new HashSet<>(wordDict);
+        Map<String, Boolean> memo = new HashMap<>();
+        return wordBreakV1(s, memo, dict);
     }
 
     /**
