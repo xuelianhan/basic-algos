@@ -47,6 +47,39 @@ public class WordBreak {
         wordBreakV2(s, new ArrayList<>(Arrays.asList(dict)));
     }
 
+    class TrieNode {
+        TrieNode[] children = new TrieNode[26];
+        boolean end;
+    }
+
+    public TrieNode buildTrie(Set<String> dict) {
+        TrieNode root = new TrieNode();
+        for (String word : dict) {
+            TrieNode p = root;
+            for (char ch : word.toCharArray()) {
+                int i = ch - 'a';
+                if (p.children[i] == null) {
+                    p.children[i] = new TrieNode();
+                }
+                p = p.children[i];
+            }
+            p.end = true;
+        }
+        return root;
+    }
+
+    public boolean wordBreakV3(String s, List<String> wordDict) {
+        Set<String> dict = new HashSet<>(wordDict);
+        Map<String, Boolean> memo = new HashMap<>();
+
+        return wordBreakV3(s, memo, dict);
+    }
+
+    public boolean wordBreakV3(String s, Map<String, Boolean> memo, Set<String> dict) {
+        return false;
+    }
+
+
     /**
      * Recursive solution with Memorization.
      * You can subscribe Huahua's channel on YT.
