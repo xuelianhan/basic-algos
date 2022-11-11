@@ -44,12 +44,14 @@ public class WordBreak {
     public static void main(String[] args) {
         String s = "catsandog";
         String[] dict = {"cats","dog","sand","and","cat"};
-        wordBreakV2(s, new ArrayList<>(Arrays.asList(dict)));
+        WordBreak instance = new  WordBreak();
+        instance.wordBreakV3(s, new ArrayList<>(Arrays.asList(dict)));
     }
 
-    class TrieNode {
+    static class TrieNode {
         TrieNode[] children = new TrieNode[26];
         boolean end;
+        char cur;
     }
 
     public TrieNode buildTrie(Set<String> dict) {
@@ -87,17 +89,47 @@ public class WordBreak {
 
     /**
      * Trie-Tree-Depth-First-Search
+     * 0 1 2 3 4 5 6 7 8
+     * c a t s a n d o g
      * e.g. s = "catsandog", dict = ["cats","dog","sand","and","cat"]
-     *                root
-     *              ---------
-     *             / |  |  | \
-     *            c  d  s  a  c
-     *           /   |  |  |   \
-     *          a    o  a  n    a
-     *         /     |  |  |     \
-     *        t      g  n  d      t
-     *       /          |
-     *      s           d
+     *                 root
+     *              ----------
+     *             / |   |   |
+     *            c  d   s   a
+     *           /   |   |   |
+     *          a    o   a   n
+     *         /     |   |   |
+     *       t(Y)   g(Y) n  d(Y)
+     *       /           |
+     *      s(Y)        d(Y)
+     *
+     * pos:0
+     *   i:0, find 'c' in trie, i++
+     *   i:1, find 'a' in trie, i++
+     *   i:2, find 't' in trie,
+     *        't' is the end, dfs invoke wordBreak(arr, memo, root, 2+1) --> 'cat' branch
+     *         pos:3
+     *         i:3, find 's' in trie, i++
+     *         i:4, find 'a' in trie, i++
+     *         i:5, find 'n' in trie, i++
+     *         i:6, find 'd' in trie,
+     *              'd' is the end, dfs invoke wordBreak(arr, memo, root, 6+1) --> 'sand' branch
+     *              pos:7
+     *              i:7, the node 'o' is null in root, for-loop-break
+     *              put (7, false) in the memo
+     *         put(3, false) in the memo.
+     *   i++,
+     *   i:3, find 's' in trie,
+     *        's' is the end, dfs invoke wordBreak(arr, memo, root, 3+1)
+     *         pos:4
+     *         i:4, find 'a' in trie, i++
+     *         i:5, find 'n' in trie, i++
+     *         i:6, find 'd' in trie,
+     *              'd' is the end, dfs invoke wordBreak(arr, memo, root, 6+1)
+     *               pos:7
+     *               i:7, return memo(7, false)
+     *         put (4, false) in memo
+     * put (0, false) in memo
      *
      *
      * @param arr
@@ -122,15 +154,17 @@ public class WordBreak {
                 break;
             }
             if (p.end) {
+                System.out.println("dfs invoke wordBreak:" + (i + 1));
                 found = wordBreakV3(arr, memo, root, i + 1);
             }
-
             if (found) {
                 memo.put(pos, true);
+                System.out.println("arr[" + pos + "]:" + arr[pos] +", pos:" + pos + ", found:" + true);
                 return true;
             }
         }
         memo.put(pos, false);
+        System.out.println("arr[" + pos + "]:" + arr[pos] +", pos:" + pos + ", found:" + false);
         return false;
     }
 
