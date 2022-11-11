@@ -53,8 +53,12 @@ public class WordBreak {
     }
 
     /**
+     * Time Complexity
+     * 1 + 2 + 3 + 4 + ... + n = n(1 + n)/2.
+     * So the time complexity is O(N^2)
+     *
      * dp[i] stands for whether chars in [0, i) can be segmented into words from the dictionary.
-     * dp[0] means the empty string.
+     * dp[0] means the empty string, empty no need to segmented, so it's true.
      *
      * e.g. s = "leetcode", wordDict = ["leet","code"]
      * 0 1 2 3 4 5 6 7
@@ -62,35 +66,46 @@ public class WordBreak {
      *
      * i:1:
      *   j:0, dp[0]:true, str(0, 1)=l, "l" not in the dict, j++
-     *   j:1, inner-for-loop-end, i++
      * i:2:
      *   j:0, dp[0]:true, str(0, 2)=le, "le" not in the dict, j++
      *   j:1, dp[1]:false, j++
-     *   j:2, inner-for-loop-end, i++
      * i:3:
      *   j:0, dp[0]:true, str(0, 3)=lee, "lee" not in the dict, j++
      *   j:1, dp[1]:false, j++
      *   j:2, dp[2]:false, j++
-     *   j:3, inner-for-loop-end, i++
      * i:4:
      *   j:0, dp[0]:true, str(0, 4)=leet, "leet" in the dict, dp[4] = true,
-     *   break-inner-for-loop, i++
+     *   break-inner-for-loop
      * i:5:
      *   j:0, dp[0]:true, str(0,5)=leetc, "leetc" not in the dict, j++
      *   j:1, dp[1]:false, j++
      *   j:2, dp[2]:false, j++
      *   j:3, dp[3]:false, j++
      *   j:4, dp[4]:true, str(4,5)=c, "c" not in the dict, j++
-     *   j:5: inner-for-loop-end, i++
      * i:6:
-     *   j:0, dp[0]:true, str(0,6)=leetcd, "leetcd" not in the dict, j++
+     *   j:0, dp[0]:true, str(0,6)=leetco, "leetco" not in the dict, j++
      *   j:1, dp[1]:false, j++
      *   j:2, dp[2]:false, j++
      *   j:3, dp[3]:false, j++
-     *   j:4, dp[4]:true, str(4,6)=cd, "cd" not in the dict, j++
+     *   j:4, dp[4]:true, str(4,6)=co, "co" not in the dict, j++
      *   j:5: dp[5]:false, j++
-     *   j:6, inner-for-loop-end, i++
-     * ...
+     * i:7:
+     *   j:0, dp[0]:true, str(0,7)=leetcod, "leetcod" not in the dict, j++
+     *   j:1, dp[1]:false, j++
+     *   j:2, dp[2]:false, j++
+     *   j:3, dp[3]:false, j++
+     *   j:4, dp[4]:true, str(4,7)=cod, "cod" not in the dict, j++
+     *   j:5, dp[5]:false, j++
+     *   j:6, dp[6]:false, j++
+     * i:8:
+     *   j:0, dp[0]:true, str(0,8)=leetcode, "leetcode" not in the dict, j++
+     *   j:1, dp[1]:false, j++
+     *   j:2, dp[2]:false, j++
+     *   j:3, dp[3]:false, j++
+     *   j:4, dp[4]:true, str(4,8)="code", code in the dict, dp[8] = true,
+     *   break-inner-for-loop
+     *
+     * return dp[8]:true
      *
      * @param s
      * @param wordDict
@@ -116,7 +131,6 @@ public class WordBreak {
                  */
                 if (dp[j] && dict.contains(s.substring(j, i))) {
                     dp[i] = true;
-                    //System.out.println("dp[" + j + "]:" + dp[j] + ",dp[" + i  + "]:" + dp[i]);
                     break;
                 }
             }
