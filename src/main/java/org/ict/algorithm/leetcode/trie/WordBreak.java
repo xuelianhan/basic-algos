@@ -107,25 +107,25 @@ public class WordBreak {
      *   i:0, find 'c' in trie, i++
      *   i:1, find 'a' in trie, i++
      *   i:2, find 't' in trie,
-     *        't' is the end, dfs invoke wordBreak(arr, memo, root, 2+1) --> 'cat' branch
+     *        't' is the end, dfs invoke wordBreak(arr, memo, root, 2+1) --> 'cat' branch, dfs
      *         pos:3
      *         i:3, find 's' in trie, i++
      *         i:4, find 'a' in trie, i++
      *         i:5, find 'n' in trie, i++
      *         i:6, find 'd' in trie,
-     *              'd' is the end, dfs invoke wordBreak(arr, memo, root, 6+1) --> 'sand' branch
+     *              'd' is the end, dfs invoke wordBreak(arr, memo, root, 6+1) --> 'sand' branch, dfs
      *              pos:7
      *              i:7, the node 'o' is null in root, for-loop-break
      *              put (7, false) in the memo
      *         put(3, false) in the memo.
      *   i++,
      *   i:3, find 's' in trie,
-     *        's' is the end, dfs invoke wordBreak(arr, memo, root, 3+1)
+     *        's' is the end, dfs invoke wordBreak(arr, memo, root, 3+1) --> 'cats' branch, dfs
      *         pos:4
      *         i:4, find 'a' in trie, i++
      *         i:5, find 'n' in trie, i++
      *         i:6, find 'd' in trie,
-     *              'd' is the end, dfs invoke wordBreak(arr, memo, root, 6+1)
+     *              'd' is the end, dfs invoke wordBreak(arr, memo, root, 6+1) --> 'and' branch, dfs
      *               pos:7
      *               i:7, return memo(7, false)
      *         put (4, false) in memo
