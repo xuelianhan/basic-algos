@@ -179,6 +179,9 @@ public class WordBreak {
 
     /**
      * Trie-Tree-Depth-First-Search
+     * Time Complexity is the nodes in the trie-tree
+     * 
+     *
      * 0 1 2 3 4 5 6 7 8
      * c a t s a n d o g
      * e.g. s = "catsandog", dict = ["cats","dog","sand","and","cat"]
