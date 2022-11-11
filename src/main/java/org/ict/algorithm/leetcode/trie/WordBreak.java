@@ -48,6 +48,41 @@ public class WordBreak {
         instance.wordBreakV3(s, new ArrayList<>(Arrays.asList(dict)));
     }
 
+    /**
+     * dp[i] stands for whether chars in [0, i) can be segmented into words from the dictionary.
+     * dp[0] means the empty string.
+     *
+     * @param s
+     * @param wordDict
+     * @return
+     */
+    public boolean wordBreakV4(String s, List<String> wordDict) {
+        int n = s.length();
+        boolean[] dp = new boolean[n + 1];
+        dp[0] = true;
+
+        Set<String> dict = new HashSet<>(wordDict);
+        for (int i = 1; i < dp.length; i++) {
+            for (int j = 0; j < i; j++) {
+                /**
+                 * use j to split range[0, i) into two parts:
+                 * 1.[0, j): this is the dp[j]
+                 * 2.[j, i): this is the substring(j, i)
+                 * we have already got dp[j] from previous steps,
+                 * so we need only to search substring(j, i) whether in the dict or not.
+                 * If both dp[j] and substring(j, i) in dict, then dp[i] is true.
+                 * It means range[0, i) can be segmented.
+                 * we can move to the next i-loop.
+                 */
+                if (dp[j] && dict.contains(s.substring(j, i))) {
+                    dp[i] = true;
+                    break;
+                }
+            }
+        }
+        return dp[n];
+    }
+
     static class TrieNode {
         TrieNode[] children = new TrieNode[26];
         boolean end;
@@ -71,7 +106,7 @@ public class WordBreak {
     }
 
     /**
-     * Trie-DFS Solution
+     * Trie-Tree DFS Solution
      * Time cost 5ms
      * The basic idea is building a trie tree with all the words in the dict, then we
      * use depth-first-search strategy in the trie tree for each partition.
