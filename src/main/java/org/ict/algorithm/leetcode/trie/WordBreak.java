@@ -42,21 +42,61 @@ import java.util.*;
 public class WordBreak {
 
     public static void main(String[] args) {
-        String s = "catsandog";
-        String[] dict = {"cats","dog","sand","and","cat"};
+        //String s = "catsandog";
+        //String[] dict = {"cats","dog","sand","and","cat"};
+
+        String s = "leetcode";
+        String[] dict = {"leet","code"};
+
         WordBreak instance = new  WordBreak();
-        instance.wordBreakV3(s, new ArrayList<>(Arrays.asList(dict)));
+        instance.wordBreakV4(s, new ArrayList<>(Arrays.asList(dict)));
     }
 
     /**
      * dp[i] stands for whether chars in [0, i) can be segmented into words from the dictionary.
      * dp[0] means the empty string.
      *
+     * e.g. s = "leetcode", wordDict = ["leet","code"]
+     * 0 1 2 3 4 5 6 7
+     * l e e t c o d e
+     *
+     * i:1:
+     *   j:0, dp[0]:true, str(0, 1)=l, "l" not in the dict, j++
+     *   j:1, inner-for-loop-end, i++
+     * i:2:
+     *   j:0, dp[0]:true, str(0, 2)=le, "le" not in the dict, j++
+     *   j:1, dp[1]:false, j++
+     *   j:2, inner-for-loop-end, i++
+     * i:3:
+     *   j:0, dp[0]:true, str(0, 3)=lee, "lee" not in the dict, j++
+     *   j:1, dp[1]:false, j++
+     *   j:2, dp[2]:false, j++
+     *   j:3, inner-for-loop-end, i++
+     * i:4:
+     *   j:0, dp[0]:true, str(0, 4)=leet, "leet" in the dict, dp[4] = true,
+     *   break-inner-for-loop, i++
+     * i:5:
+     *   j:0, dp[0]:true, str(0,5)=leetc, "leetc" not in the dict, j++
+     *   j:1, dp[1]:false, j++
+     *   j:2, dp[2]:false, j++
+     *   j:3, dp[3]:false, j++
+     *   j:4, dp[4]:true, str(4,5)=c, "c" not in the dict, j++
+     *   j:5: inner-for-loop-end, i++
+     * i:6:
+     *   j:0, dp[0]:true, str(0,6)=leetcd, "leetcd" not in the dict, j++
+     *   j:1, dp[1]:false, j++
+     *   j:2, dp[2]:false, j++
+     *   j:3, dp[3]:false, j++
+     *   j:4, dp[4]:true, str(4,6)=cd, "cd" not in the dict, j++
+     *   j:5: dp[5]:false, j++
+     *   j:6, inner-for-loop-end, i++
+     * ...
+     *
      * @param s
      * @param wordDict
      * @return
      */
-    public boolean wordBreakV4(String s, List<String> wordDict) {
+    public static boolean wordBreakV4(String s, List<String> wordDict) {
         int n = s.length();
         boolean[] dp = new boolean[n + 1];
         dp[0] = true;
@@ -76,6 +116,7 @@ public class WordBreak {
                  */
                 if (dp[j] && dict.contains(s.substring(j, i))) {
                     dp[i] = true;
+                    //System.out.println("dp[" + j + "]:" + dp[j] + ",dp[" + i  + "]:" + dp[i]);
                     break;
                 }
             }
