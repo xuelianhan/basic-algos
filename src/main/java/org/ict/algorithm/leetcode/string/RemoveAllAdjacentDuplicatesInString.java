@@ -40,8 +40,22 @@ public class RemoveAllAdjacentDuplicatesInString {
 
     public static void main(String[] args) {
         String s = "azxxzy";
-        String result = removeDuplicatesV1(s);
+        String result = removeDuplicatesV4(s);
         System.out.println(result);
+    }
+
+    public static String removeDuplicatesV4(String s) {
+        int i = 0;
+        int n = s.length();
+        char[] arr = s.toCharArray();
+        for (int j = 0; j < n; j++) {
+            arr[i] = arr[j];
+            if (i > 0 && arr[i-1] == arr[i]) {
+                i -= 2;
+            }
+            i++;
+        }
+        return new String(arr, 0, i);
     }
 
     /**
@@ -86,6 +100,7 @@ public class RemoveAllAdjacentDuplicatesInString {
         }
         return new String(res, 0, i);
     }
+
 
     /**
      * String Stack Solution is provided by lee215.

@@ -87,6 +87,18 @@ public class WordBreak {
 
     /**
      * Trie-Tree-Depth-First-Search
+     * e.g. s = "catsandog", dict = ["cats","dog","sand","and","cat"]
+     *                root
+     *              ---------
+     *             / |  |  | \
+     *            c  d  s  a  c
+     *           /   |  |  |   \
+     *          a    o  a  n    a
+     *         /     |  |  |     \
+     *        t      g  n  d      t
+     *       /          |
+     *      s           d
+     *
      *
      * @param arr
      * @param memo
