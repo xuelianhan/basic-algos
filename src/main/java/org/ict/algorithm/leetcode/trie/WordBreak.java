@@ -107,25 +107,25 @@ public class WordBreak {
      *   i:0, find 'c' in trie, i++
      *   i:1, find 'a' in trie, i++
      *   i:2, find 't' in trie,
-     *        't' is the end, dfs invoke wordBreak(arr, memo, root, 2+1) --> 'cat' branch, dfs
+     *        't' is the end, dfs invoke wordBreak(arr, memo, root, 2+1) --> 'cat' branch, dfs 3
      *         pos:3
      *         i:3, find 's' in trie, i++
      *         i:4, find 'a' in trie, i++
      *         i:5, find 'n' in trie, i++
      *         i:6, find 'd' in trie,
-     *              'd' is the end, dfs invoke wordBreak(arr, memo, root, 6+1) --> 'sand' branch, dfs
+     *              'd' is the end, dfs invoke wordBreak(arr, memo, root, 6+1) --> 'sand' branch, dfs 7
      *              pos:7
      *              i:7, the node 'o' is null in root, for-loop-break
      *              put (7, false) in the memo
      *         put(3, false) in the memo.
      *   i++,
      *   i:3, find 's' in trie,
-     *        's' is the end, dfs invoke wordBreak(arr, memo, root, 3+1) --> 'cats' branch, dfs
+     *        's' is the end, dfs invoke wordBreak(arr, memo, root, 3+1) --> 'cats' branch, dfs 4
      *         pos:4
      *         i:4, find 'a' in trie, i++
      *         i:5, find 'n' in trie, i++
      *         i:6, find 'd' in trie,
-     *              'd' is the end, dfs invoke wordBreak(arr, memo, root, 6+1) --> 'and' branch, dfs
+     *              'd' is the end, dfs invoke wordBreak(arr, memo, root, 6+1) --> 'and' branch, dfs 7
      *               pos:7
      *               i:7, return memo(7, false)
      *         put (4, false) in memo
@@ -142,6 +142,7 @@ public class WordBreak {
         if (pos == arr.length) {
             return true;
         }
+
         if (memo.containsKey(pos)) {
             return memo.get(pos);
         }
@@ -154,17 +155,14 @@ public class WordBreak {
                 break;
             }
             if (p.end) {
-                System.out.println("dfs invoke wordBreak:" + (i + 1));
                 found = wordBreakV3(arr, memo, root, i + 1);
             }
             if (found) {
                 memo.put(pos, true);
-                System.out.println("arr[" + pos + "]:" + arr[pos] +", pos:" + pos + ", found:" + true);
                 return true;
             }
         }
         memo.put(pos, false);
-        System.out.println("arr[" + pos + "]:" + arr[pos] +", pos:" + pos + ", found:" + false);
         return false;
     }
 
@@ -286,7 +284,6 @@ public class WordBreak {
         }
 
         memo.put(s, false);
-        //System.out.println("memo:" + memo);
         return false;
     }
 
@@ -324,7 +321,6 @@ public class WordBreak {
         }
 
         memo.put(s, false);
-        //System.out.println("memo:" + memo);
         return false;
     }
 }
