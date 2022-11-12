@@ -57,21 +57,24 @@ public class WordBreakII {
     }
 
     public void backtrack(List<String> result, LinkedList<String> track, Set<String> dict, String s, int start) {
-        for (int i = start + 1; i <= s.length(); i++) {
-            String sub = s.substring(start, i);
+        for (int end = start + 1; end <= s.length(); end++) {
+            String sub = s.substring(start, end);
             if (!dict.contains(sub)) {
                 continue;
             }
             track.add(sub);
-            if (i == s.length()) {
+            if (end == s.length()) {
                 String[] arr = new String[track.size()];
                 track.toArray(arr);
                 result.add(String.join(" ", arr));
                 /**
-                 * Don't return here!
+                 * Don't return here! Otherwise, it will generate duplicated items.
+                 * e.g.
+                 * output: ["cat sand dog","cat cats and dog"]
+                 * expected: ["cats and dog","cat sand dog"]
                  */
             }
-            backtrack(result, track, dict, s, i);
+            backtrack(result, track, dict, s, end);
             track.removeLast();
         }
     }
