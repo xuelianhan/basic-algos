@@ -1,6 +1,7 @@
 package org.ict.algorithm.leetcode.trie;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Given a string s and a dictionary of strings wordDict,
@@ -55,6 +56,7 @@ public class WordBreakII {
         Map<String, LinkedList<String>> memo = new HashMap<>();
         return dfsV1(memo, dict, s);
         //return dfsV2(memo, dict, s);
+        //return dfsV3(memo, dict, s);
     }
 
     public List<String> dfsV3(Map<String, LinkedList<String>> memo, Set<String> dict, String s) {
@@ -134,6 +136,36 @@ public class WordBreakII {
         LinkedList<String> track = new LinkedList<>();
         backtrack(result, track, dict, s, 0);
         return result;
+    }
+
+    public void backtrackV1(List<String> result, LinkedList<String> track, Set<String> dict, String s, int start) {
+        for (int end = start + 1; end <= s.length(); end++) {
+            String sub = s.substring(start, end);
+            if (!dict.contains(sub)) {
+                continue;
+            }
+            track.add(sub);
+            if (end == s.length()) {
+                /*String[] arr = new String[track.size()];
+                track.toArray(arr);
+                result.add(String.join(" ", arr));*/
+                /*result.add(String.join(" ", track));*/
+                result.add(track.stream().collect(Collectors.joining(" ")));
+                //Notice! Don't add return here.
+                //return;
+                /**
+                 * Input: s = "catsanddog", dict = ["cat","cats","and","sand","dog"], expected: ["cats and dog","cat sand dog"]
+                 * Don't return here! Otherwise, it will generate unexpected results like the following:
+                 * e.g.
+                 * output: ["cat sand dog","cat cats and dog"], if you add return statement,
+                 * then backtrack return directly when end==s.length, it will not execute removeLast operation,
+                 * you can seem recursive invoke as push/pop in stack.
+                 *
+                 */
+            }
+            backtrackV1(result, track, dict, s, end);
+            track.removeLast();
+        }
     }
 
     /**
@@ -224,6 +256,9 @@ public class WordBreakII {
                 String[] arr = new String[track.size()];
                 track.toArray(arr);
                 result.add(String.join(" ", arr));
+                /*result.add(String.join(" ", track));*/
+                /*result.add(track.stream().collect(Collectors.joining(" ")));*/
+
                 //Notice! Don't add return here.
                 //return;
                 /**
