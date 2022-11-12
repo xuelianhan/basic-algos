@@ -56,6 +56,24 @@ public class WordBreakII {
         return result;
     }
 
+    /**
+     * Input: s = "catsanddog", dict = ["cat","cats","and","sand","dog"]
+     *                   catsanddog
+     *                   ----------
+     *                 /     |
+     *            cat /      | cats
+     *               /       |
+     *            sanddog    anddog
+     *             /         |
+     *        sand/          |and
+     *           /           |
+     *        dog           dog
+     * @param result
+     * @param track
+     * @param dict
+     * @param s
+     * @param start
+     */
     public void backtrack(List<String> result, LinkedList<String> track, Set<String> dict, String s, int start) {
         for (int end = start + 1; end <= s.length(); end++) {
             String sub = s.substring(start, end);
