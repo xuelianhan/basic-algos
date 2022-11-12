@@ -50,6 +50,17 @@ public class WordBreakII {
         System.out.println(result);
     }
 
+    public List<String> wordBreakV1(String s, List<String> wordDict) {
+        Set<String> dict = new HashSet<>(wordDict);
+        List<String> result = new ArrayList<>();
+
+        return result;
+    }
+
+    public void backtrackV1(List<String> result, LinkedList<String> track, Set<String> dict, String s, int end) {
+
+    }
+
     public List<String> wordBreak(String s, List<String> wordDict) {
         Set<String> dict = new HashSet<>(wordDict);
         List<String> result = new ArrayList<>();
@@ -142,12 +153,10 @@ public class WordBreakII {
                 continue;
             }
             track.add(sub);
-            //System.out.println("track:" + track);
             if (end == s.length()) {
                 String[] arr = new String[track.size()];
                 track.toArray(arr);
                 result.add(String.join(" ", arr));
-                //System.out.println("result:" + result);
                 //Notice! Don't add return here.
                 //return;
                 /**
@@ -161,9 +170,7 @@ public class WordBreakII {
                  */
             }
             backtrack(result, track, dict, s, end);
-            //System.out.println("start to remove last for range:(" + start + ", " + end + "), track:" + track);
             track.removeLast();
-            //System.out.println("end to remove last for range:(" + start + ", " + end + "), track:" + track);
         }
     }
 
