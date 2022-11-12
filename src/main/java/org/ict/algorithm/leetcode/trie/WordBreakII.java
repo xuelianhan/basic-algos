@@ -42,6 +42,8 @@ public class WordBreakII {
     public static void main(String[] args) {
         String s = "catsanddog";
         String[] dict = {"cat","cats","and","sand","dog"};
+        //String s = "abc";
+        //String[] dict = {"a", "b", "c"};
         List<String> wordDict = new ArrayList<>(Arrays.asList(dict));
         WordBreakII instance = new WordBreakII();
         List<String>  result = instance.wordBreak(s, wordDict);
@@ -68,6 +70,65 @@ public class WordBreakII {
      *        sand/          |and
      *           /           |
      *        dog           dog
+     * 0 1 2 3 4 5 6 7 8 9
+     * c a t s a n d d o g
+     * If not adding return:
+     *
+     * start:2:
+     *   substring(0, 3), sub:cat, track:cat, backtrack(3)
+     *   substring(3, 7), sub:sand, track:cat,sand, backtrack(7)
+     *   substring(7, 10), sub:dog, track:cat,sand,dog, end==s.length, add the track into result;
+     *   remove dog
+     *   remove sand
+     *   remove cat
+     * start:3:
+     *   substring(0, 4), sub:cats, track:cats, backtrack(4)
+     *   substring(4, 7), sub:and, track:cats,and, backtrack(7)
+     *   substring(7, 10), sub:dog, track:cats,and,dog, end==s.length, add the track into result;
+     *   remove dog
+     *   remove and
+     *   remove cats
+     *
+     * track:[cat]
+     *     track:[cat, sand]
+     *         track:[cat, sand, dog]
+     *         result:[cat sand dog]
+     *         start to remove last for range:(7, 10), track:[cat, sand, dog]
+     *         end to remove last for range:(7, 10), track:[cat, sand]
+     *     start to remove last for range:(3, 7), track:[cat, sand]
+     *     end to remove last for range:(3, 7), track:[cat]
+     * start to remove last for range:(0, 3), track:[cat]
+     * end to remove last for range:(0, 3), track:[]
+     * track:[cats]
+     *     track:[cats, and]
+     *         track:[cats, and, dog]
+     *         result:[cat sand dog, cats and dog]
+     *         start to remove last for range:(7, 10), track:[cats, and, dog]
+     *         end to remove last for range:(7, 10), track:[cats, and]
+     *     start to remove last for range:(4, 7), track:[cats, and]
+     *     end to remove last for range:(4, 7), track:[cats]
+     * start to remove last for range:(0, 4), track:[cats]
+     * end to remove last for range:(0, 4), track:[]
+     * [cat sand dog, cats and dog]
+     * ==================Add return, you will get the wrong answer================
+     * track:[cat]
+     *     track:[cat, sand]
+     *         track:[cat, sand, dog]
+     *         result:[cat sand dog]
+     *         start to remove last for range:(3, 7), track:[cat, sand, dog]
+     *         end to remove last for range:(3, 7), track:[cat, sand]
+     *     start to remove last for range:(0, 3), track:[cat, sand]
+     *     end to remove last for range:(0, 3), track:[cat]
+     * track:[cat, cats]
+     *     track:[cat, cats, and]
+     *         track:[cat, cats, and, dog]
+     *         result:[cat sand dog, cat cats and dog]
+     *         start to remove last for range:(4, 7), track:[cat, cats, and, dog]
+     *         end to remove last for range:(4, 7), track:[cat, cats, and]
+     *     start to remove last for range:(0, 4), track:[cat, cats, and]
+     *     end to remove last for range:(0, 4), track:[cat, cats]
+     * [cat sand dog, cat cats and dog]
+     *
      * @param result
      * @param track
      * @param dict
@@ -81,22 +142,28 @@ public class WordBreakII {
                 continue;
             }
             track.add(sub);
+            //System.out.println("track:" + track);
             if (end == s.length()) {
                 String[] arr = new String[track.size()];
                 track.toArray(arr);
                 result.add(String.join(" ", arr));
+                //System.out.println("result:" + result);
                 //Notice! Don't add return here.
                 //return;
                 /**
-                 * Input: s = "catsanddog", dict = ["cat","cats","and","sand","dog"]
-                 * Don't return here! Otherwise, it will generate duplicated items.
+                 * Input: s = "catsanddog", dict = ["cat","cats","and","sand","dog"], expected: ["cats and dog","cat sand dog"]
+                 * Don't return here! Otherwise, it will generate unexpected results like the following:
                  * e.g.
-                 * output: ["cat sand dog","cat cats and dog"]
-                 * expected: ["cats and dog","cat sand dog"]
+                 * output: ["cat sand dog","cat cats and dog"], if you add return statement,
+                 * then backtrack return directly when end==s.length, it will not execute removeLast operation,
+                 * you can seem recursive invoke as push/pop in stack.
+                 *
                  */
             }
             backtrack(result, track, dict, s, end);
+            //System.out.println("start to remove last for range:(" + start + ", " + end + "), track:" + track);
             track.removeLast();
+            //System.out.println("end to remove last for range:(" + start + ", " + end + "), track:" + track);
         }
     }
 
