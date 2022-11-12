@@ -67,6 +67,9 @@ public class WordBreakII {
                 String[] arr = new String[track.size()];
                 track.toArray(arr);
                 result.add(String.join(" ", arr));
+                /**
+                 * Don't return here!
+                 */
             }
             backtrack(result, track, dict, s, i);
             track.removeLast();
