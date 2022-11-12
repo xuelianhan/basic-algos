@@ -52,13 +52,80 @@ public class WordBreakII {
 
     public List<String> wordBreakV1(String s, List<String> wordDict) {
         Set<String> dict = new HashSet<>(wordDict);
-        List<String> result = new ArrayList<>();
-
-        return result;
+        Map<String, LinkedList<String>> memo = new HashMap<>();
+        return dfsV1(memo, dict, s);
+        //return dfsV2(memo, dict, s);
     }
 
-    public void backtrackV1(List<String> result, LinkedList<String> track, Set<String> dict, String s, int end) {
+    public List<String> dfsV3(Map<String, LinkedList<String>> memo, Set<String> dict, String s) {
+        if (memo.containsKey(s)) {
+            return memo.get(s);
+        }
+        LinkedList<String> list = new LinkedList<>();
+        for (String word : dict) {
+            if (!s.startsWith(word)) {
+                continue;
+            }
+            String next = s.substring(word.length());
+            if (next.length() == 0) {
+                list.add(word);
+                continue;
+            }
+            for (String sub : dfsV3(memo, dict, next)) {
+                list.add(word + " " + sub);
+            }
+        }
+        memo.put(s, list);
+        return list;
+    }
 
+    public List<String> dfsV2(Map<String, LinkedList<String>> memo, Set<String> dict, String s) {
+        if (memo.containsKey(s)) {
+            return memo.get(s);
+        }
+        LinkedList<String> list = new LinkedList<>();
+        /**
+         * s may be empty when recursively invoke dfsV1
+         */
+        if (s.length() == 0) {
+            list.add("");
+            return list;
+        }
+        for (String word : dict) {
+            if (!s.startsWith(word)) {
+               continue;
+            }
+            List<String> subList = dfsV2(memo, dict, s.substring(word.length()));
+            for (String sub : subList) {
+                list.add(word + (sub.isEmpty() ? "": " " + sub));
+            }
+        }
+        memo.put(s, list);
+        return list;
+    }
+
+    public List<String> dfsV1(Map<String, LinkedList<String>> memo, Set<String> dict, String s) {
+        if (memo.containsKey(s)) {
+            return memo.get(s);
+        }
+        LinkedList<String> list = new LinkedList<>();
+        /**
+         * s may be empty when recursively invoke dfsV1
+         */
+        if (s.length() == 0) {
+            list.add("");
+            return list;
+        }
+        for (String word : dict) {
+            if (s.startsWith(word)) {
+                List<String> subList = dfsV1(memo, dict, s.substring(word.length()));
+                for (String sub : subList) {
+                    list.add(word + (sub.isEmpty() ? "": " " + sub));
+                }
+            }
+        }
+        memo.put(s, list);
+        return list;
     }
 
     public List<String> wordBreak(String s, List<String> wordDict) {
