@@ -85,7 +85,7 @@ public class WordBreakII {
                 String[] arr = new String[track.size()];
                 track.toArray(arr);
                 result.add(String.join(" ", arr));
-                //Notice! No need return here.
+                //Notice! Don't add return here.
                 //return;
                 /**
                  * Input: s = "catsanddog", dict = ["cat","cats","and","sand","dog"]
