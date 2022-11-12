@@ -1,4 +1,4 @@
-package org.ict.algorithm.leetcode.trie;
+package org.ict.algorithm.leetcode.dynamicprogramming;
 
 import java.util.*;
 
@@ -48,13 +48,11 @@ public class WordBreak {
         String s = "leetcode";
         String[] dict = {"leet","code"};
 
-        WordBreak instance = new  WordBreak();
+        WordBreak instance = new WordBreak();
         instance.wordBreakV4(s, new ArrayList<>(Arrays.asList(dict)));
     }
 
     /**
-     * Dynamic Programming Solution
-     *
      * Time Complexity
      * 1 + 2 + 3 + 4 + ... + n = n(1 + n)/2.
      * So the time complexity is O(N^2)
@@ -262,7 +260,6 @@ public class WordBreak {
 
 
     /**
-     * Time Complexity O(2^N)
      * Time cost 10ms
      * Recursive solution with Memorization.
      * You can subscribe Huahua's channel on YT.
@@ -276,7 +273,6 @@ public class WordBreak {
 
 
     /**
-     * Time Complexity O(2^N)
      * Time cost 15ms
      * @param s
      * @param wordDict
@@ -290,6 +286,7 @@ public class WordBreak {
 
     /**
      * Time Complexity O(2^N)
+     * Space Complexity O(2^N)
      *
      * The most confused thing is that it allows multiple splits and words in the dict can be used repeatedly.
      * How can we split? from left to right? If we split at the first place, then how to deal with the rest part?
