@@ -67,6 +67,8 @@ public class WordBreakII {
                 String[] arr = new String[track.size()];
                 track.toArray(arr);
                 result.add(String.join(" ", arr));
+                //Notice! No need return here.
+                //return;
                 /**
                  * Don't return here! Otherwise, it will generate duplicated items.
                  * e.g.
