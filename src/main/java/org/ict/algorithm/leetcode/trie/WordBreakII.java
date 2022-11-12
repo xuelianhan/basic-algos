@@ -70,6 +70,7 @@ public class WordBreakII {
                 //Notice! No need return here.
                 //return;
                 /**
+                 * Input: s = "catsanddog", dict = ["cat","cats","and","sand","dog"]
                  * Don't return here! Otherwise, it will generate duplicated items.
                  * e.g.
                  * output: ["cat sand dog","cat cats and dog"]
