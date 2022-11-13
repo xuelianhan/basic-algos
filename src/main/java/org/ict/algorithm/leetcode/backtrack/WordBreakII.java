@@ -1,4 +1,4 @@
-package org.ict.algorithm.leetcode.trie;
+package org.ict.algorithm.leetcode.backtrack;
 
 import java.util.*;
 import java.util.stream.Collectors;
