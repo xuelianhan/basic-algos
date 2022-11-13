@@ -59,6 +59,33 @@ public class WordBreakII {
         //return dfsV3(memo, dict, s);
     }
 
+
+    public List<String> wordBreak(String s, List<String> wordDict) {
+        Set<String> dict = new HashSet<>(wordDict);
+        List<String> result = new ArrayList<>();
+        LinkedList<String> track = new LinkedList<>();
+        backtrack(result, track, dict, s, 0);
+        //backtrackV1(result, track, dict, s, 0);
+        //backtrackV2(result, track, dict, s, 0);
+        return result;
+    }
+
+    /**
+     * It's similar with backtracking on Set.
+     * @param s
+     * @param wordDict
+     * @return
+     */
+    public List<String>  wordBreakTrie(String s, List<String> wordDict) {
+        List<String> result = new ArrayList<>();
+        LinkedList<String> track = new LinkedList<>();
+        Set<String> dict = new HashSet<>(wordDict);
+        TrieNode root = buildTrie(dict);
+        backtrackOnTrie(result, track, root, s, 0);
+        return result;
+    }
+
+
     public List<String> dfsV3(Map<String, LinkedList<String>> memo, Set<String> dict, String s) {
         if (memo.containsKey(s)) {
             return memo.get(s);
@@ -130,12 +157,36 @@ public class WordBreakII {
         return list;
     }
 
-    public List<String> wordBreak(String s, List<String> wordDict) {
-        Set<String> dict = new HashSet<>(wordDict);
-        List<String> result = new ArrayList<>();
-        LinkedList<String> track = new LinkedList<>();
-        backtrack(result, track, dict, s, 0);
-        return result;
+
+    public void backtrackV2(List<String> result, LinkedList<String> track, Set<String> dict, String s, int start) {
+        for (int end = start + 1; end <= s.length(); end++) {
+            String sub = s.substring(start, end);
+            if (!dict.contains(sub)) {
+                continue;
+            }
+            track.add(sub);
+            if (end == s.length()) {
+                /*String[] arr = new String[track.size()];
+                track.toArray(arr);
+                result.add(String.join(" ", arr));*/
+                result.add(String.join(" ", track));
+                /*result.add(track.stream().collect(Collectors.joining(" ")));*/
+
+                //Notice! Don't add return here.
+                //return;
+                /**
+                 * Input: s = "catsanddog", dict = ["cat","cats","and","sand","dog"], expected: ["cats and dog","cat sand dog"]
+                 * Don't return here! Otherwise, it will generate unexpected results like the following:
+                 * e.g.
+                 * output: ["cat sand dog","cat cats and dog"], if you add return statement,
+                 * then backtrack return directly when end==s.length, it will not execute removeLast operation,
+                 * you can seem recursive invoke as push/pop in stack.
+                 *
+                 */
+            }
+            backtrackV2(result, track, dict, s, end);
+            track.removeLast();
+        }
     }
 
     public void backtrackV1(List<String> result, LinkedList<String> track, Set<String> dict, String s, int start) {
@@ -151,6 +202,7 @@ public class WordBreakII {
                 result.add(String.join(" ", arr));*/
                 /*result.add(String.join(" ", track));*/
                 result.add(track.stream().collect(Collectors.joining(" ")));
+
                 //Notice! Don't add return here.
                 //return;
                 /**
@@ -276,56 +328,31 @@ public class WordBreakII {
         }
     }
 
-    /**
-     * Not right
-     * todo
-     * @param s
-     * @param wordDict
-     * @return
-     */
-    public List<String> wordBreakV3(String s, List<String> wordDict) {
-        Set<String> dict = new HashSet<>(wordDict);
-        Map<Integer, Boolean> memo = new HashMap<>();
-        List<String> result = new ArrayList<>();
-        TrieNode root = buildTrie(dict);
 
-        boolean exist = wordBreakV3(s.toCharArray(), memo, result, root, 0);
-        return (exist ? result : new ArrayList<>());
-    }
 
-    public boolean wordBreakV3(char[] arr, Map<Integer, Boolean> memo, List<String> result, TrieNode root, int pos) {
-        if (pos == arr.length) {
-            return true;
-        }
 
-        if (memo.containsKey(pos)) {
-            return memo.get(pos);
-        }
 
-        TrieNode p = root;
-        boolean found = false;
-        for (int i = pos; i < arr.length; i++) {
-            p = p.children[arr[i] - 'a'];
-            if (null == p) {
-                break;
+    public void backtrackOnTrie(List<String> result, LinkedList<String> track, TrieNode root, String s, int start) {
+        for (int end = start + 1; end <= s.length(); end++) {
+            String sub = s.substring(start, end);
+            if (!searchTrie(sub, root)) {
+                continue;
             }
-            if (p.end) {
-                result.add(p.word);
-                found = wordBreakV3(arr, memo, result, root, i + 1);
+            track.add(sub);
+            if (end == s.length()) {
+                result.add(String.join(" ", track));
             }
-            if (found) {
-                memo.put(pos, true);
-                return true;
-            }
+            backtrackOnTrie(result, track, root, s, end);
+            track.removeLast();
         }
-        memo.put(pos, false);
-        return false;
     }
 
     static class TrieNode {
         TrieNode[] children = new TrieNode[26];
+        /**
+         * The mark current node is the end of a word.
+         */
         boolean end;
-        String word;
     }
 
     public TrieNode buildTrie(Set<String> dict) {
@@ -340,8 +367,19 @@ public class WordBreakII {
                 p = p.children[i];
             }
             p.end = true;
-            p.word = word;
         }
         return root;
+    }
+
+    public boolean searchTrie(String word, TrieNode root) {
+        TrieNode p = root;
+        for (char ch : word.toCharArray()) {
+            int idx = ch - 'a';
+            if (p.children[idx] == null) {
+                return false;
+            }
+            p = p.children[idx];
+        }
+        return p.end;
     }
 }
