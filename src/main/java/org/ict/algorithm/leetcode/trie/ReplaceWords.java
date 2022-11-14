@@ -56,7 +56,7 @@ public class ReplaceWords {
     public String replaceWords(List<String> dictionary, String sentence) {
         Set<String> dict = new HashSet<>(dictionary);
         TrieNode root = buildTrie(dict);
-        String[] arr = sentence.split(" ");
+        String[] arr = sentence.split("\\s+");
         for (int i = 0; i < arr.length; i++) {
             String prefix = findPrefix(arr[i], root);
             if (!prefix.isEmpty()) {
