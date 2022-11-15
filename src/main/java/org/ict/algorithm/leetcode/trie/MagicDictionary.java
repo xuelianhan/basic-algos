@@ -1,5 +1,10 @@
 package org.ict.algorithm.leetcode.trie;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 /**
  * Design a data structure that is initialized with a list of different words.
  * Provided a string, you should determine if you can change exactly one character in this string to match any word in the data structure.
@@ -54,6 +59,14 @@ public class MagicDictionary {
     TrieNode root;
 
     /**
+     * An easier and better solution using HashMap.
+     * Use word length as key, and save all the words with same length in a set as value to the key.
+     * @param searchWord
+     * @return
+     */
+    Map<Integer, Set<String>> map;
+
+    /**
      * Your MagicDictionary object will be instantiated and called as such:
      * MagicDictionary obj = new MagicDictionary();
      * obj.buildDict(dictionary);
@@ -61,6 +74,7 @@ public class MagicDictionary {
      */
     public MagicDictionary() {
         root = new TrieNode();
+        map = new HashMap<>();
     }
 
     public void buildDict(String[] dictionary) {
@@ -77,6 +91,16 @@ public class MagicDictionary {
         }
     }
 
+    public void buildDictWithMap(String[] dictionary) {
+        for (String word : dictionary) {
+            int len = word.length();
+            if (!map.containsKey(len)) {
+                map.put(len, new HashSet<>());
+            }
+            map.get(len).add(word);
+        }
+    }
+
 
     public boolean searchTrie(TrieNode root, String word) {
         TrieNode p = root;
@@ -89,6 +113,31 @@ public class MagicDictionary {
         }
         return p.end;
     }
+
+
+    public boolean searchV2(String word) {
+        int len = word.length();
+        if (!map.containsKey(len)) {
+            return false;
+        }
+        for (String s : map.get(len)) {
+            int count = 0;
+            for (int i = 0; i < len; i++) {
+                if (word.charAt(i) != s.charAt(i)) {
+                    count++;
+                }
+                /**
+                 * If word's length equals the string's length in the dictionary,
+                 * then we check whether two strings has only one different char.
+                 */
+                if (count == 1) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 
     public boolean searchV1(String searchWord) {
         return dfsOnTrie(searchWord, root, 0, 0);
@@ -185,7 +234,7 @@ public class MagicDictionary {
     }
 
     /**
-     * Very slow.
+     * Very slow but clear.
      * @param searchWord
      * @return
      */
