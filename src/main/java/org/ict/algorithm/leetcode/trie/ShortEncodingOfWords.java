@@ -47,45 +47,61 @@ public class ShortEncodingOfWords {
         //String[] words = {"p","grah","qwosp"};//expected: qwosp#grah#
         //String[] words = {"ctxdic","c"};
         ShortEncodingOfWords instance = new ShortEncodingOfWords();
-        int result = instance.minimumLengthEncoding(words);
+        int result = instance.minimumLengthEncodingV1(words);
         System.out.println(result);
     }
 
+    /**
+     * words = ["time", "me", "bell"];
+     * 1.Reverse each word in words array and sort by lexicographical order.
+     * words = ["em", "emit", "lleb" ]
+     * 2.Check current word is the prefix of the step-on word.
+     * If current word is prefix: result-length add 0
+     * If current word is not prefix: result-length add the length of current word + 1( plus one is the #'s length)
+     * @param words
+     * @return
+     */
     public int minimumLengthEncodingV1(String[] words) {
         if (words.length == 1) {
             return words[0].length() + 1;
         }
+
+        int n = words.length;
+        for (int i = 0; i < n; i++) {
+            String reversed = reverseString(words[i]);
+            words[i] = reversed;
+        }
         /**
-         * Sort words in descend order by their length.
+         * Sort words in dictionary order.
          */
-        Arrays.sort(words, (s1, s2) -> {
-            if (s1.length() < s2.length()) {
-                return 1;
-            } else if (s1.length() > s2.length()) {
-                return -1;
+        Arrays.sort(words);
+        int result = 0;
+        for (int i = 0; i < n - 1; i++) {
+            if (words[i + 1].startsWith(words[i])) {
+                result += 0;
             } else {
-                return 0;
-            }
-        });
-        StringBuilder result = new StringBuilder();
-        for (String word : words) {
-            /**
-             * Notice here use lastIndexOf instead other than indexOf
-             * For each word, we search it in the result string and check
-             * current word exists in it or not.
-             * If we don't find the word, we can append it directly.
-             * If we have found the word, we check whether it has string "#" step after it.
-             * If there is no # step after the word, we also append this word.
-             * plus 1 means the #
-             */
-            int found = result.lastIndexOf(word);
-            if (found < 0 || !"#".equals(result.substring((found + word.length()), (found + word.length() + 1)))) {
-                result.append(word);
-                result.append("#");
+                result += (words[i].length() + 1);
             }
         }
-        return result.length();
+        /**
+         * Above index i only goes to n - 2, the end word at index n - 1 needs to be added too.
+         */
+        result += words[n - 1].length() + 1;
+        return result;
     }
+
+    public String reverseString(String s) {
+        char[] arr = s.toCharArray();
+        int i = 0, j = arr.length - 1;
+        while ( i < j) {
+            char temp = arr[i];
+            arr[i++] = arr[j];
+            arr[j--] = temp;
+        }
+        return new String(arr);
+    }
+
+
 
     /**
      * e.g.words = {"ctxdic", "dictionary", "d", "c"}
@@ -105,7 +121,7 @@ public class ShortEncodingOfWords {
      * If we have found the word, we check whether it has string "#" step after it.
      * If there is no # step after the word, we also append this word.
      * plus 1 means the #
-     * 
+     *
      * @param words
      * @return
      */
