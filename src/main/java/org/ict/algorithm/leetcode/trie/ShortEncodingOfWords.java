@@ -98,6 +98,14 @@ public class ShortEncodingOfWords {
      * i:3, "c" is in right side of the result:"c#", and it steps after with "#", so we skip it.
      * The final result:dictionary#ctxdic#d#
      *
+     * Notice here use lastIndexOf instead other than indexOf
+     * For each word, we search it in the result string and check
+     * current word exists in it or not.
+     * If we don't find the word, we can append it directly.
+     * If we have found the word, we check whether it has string "#" step after it.
+     * If there is no # step after the word, we also append this word.
+     * plus 1 means the #
+     * 
      * @param words
      * @return
      */
@@ -119,15 +127,6 @@ public class ShortEncodingOfWords {
         });
         StringBuilder result = new StringBuilder();
         for (String word : words) {
-            /**
-             * Notice here use lastIndexOf instead other than indexOf
-             * For each word, we search it in the result string and check
-             * current word exists in it or not.
-             * If we don't find the word, we can append it directly.
-             * If we have found the word, we check whether it has string "#" step after it.
-             * If there is no # step after the word, we also append this word.
-             * plus 1 means the #
-             */
             int found = result.lastIndexOf(word);
             if (found < 0 || !"#".equals(result.substring((found + word.length()), (found + word.length() + 1)))) {
                 result.append(word);
