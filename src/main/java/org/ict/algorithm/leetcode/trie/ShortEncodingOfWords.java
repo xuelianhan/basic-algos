@@ -149,7 +149,6 @@ public class ShortEncodingOfWords {
 
     static class TrieNode {
         TrieNode[] children = new TrieNode[26];
-        int wordLength;
     }
 
     public TrieNode buildTrie(Set<String> dict) {
