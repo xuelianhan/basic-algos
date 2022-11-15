@@ -1,8 +1,8 @@
 package org.ict.algorithm.leetcode.trie;
 
-import java.util.ArrayDeque;
-import java.util.Arrays;
-import java.util.Deque;
+import sun.text.normalizer.Trie;
+
+import java.util.*;
 
 /**
  * A valid encoding of an array of words is any reference string s and array of indices indices such that:
@@ -49,6 +49,152 @@ public class ShortEncodingOfWords {
         ShortEncodingOfWords instance = new ShortEncodingOfWords();
         int result = instance.minimumLengthEncodingV1(words);
         System.out.println(result);
+    }
+
+    /**
+     * Improvement of Trie-DFS Solution.
+     *
+     * @param words
+     * @return
+     */
+    public int minimumLengthEncodingV4(String[] words) {
+        if (words.length == 1) {
+            return words[0].length() + 1;
+        }
+
+        int result = 0;
+        return result;
+    }
+
+    /**
+     * Trie with Depth First Search Solution
+     * e.g.1 words = ["bat", "cat", "at"]
+     *              root depth==1
+     *               |
+     *               t   depth==2
+     *               |
+     *               a   depth==3
+     *              / \
+     *              b c  depth==4
+     * e.g.2 words = ["time", "me", "bell"]
+     *              root
+     *              /  \
+     *             e    l
+     *             |    |
+     *             m    l
+     *             |    |
+     *             i    e
+     *             |    |
+     *             t    b
+     *
+     * @param words
+     * @return
+     */
+    public int minimumLengthEncodingV3(String[] words) {
+        if (words.length == 1) {
+            return words[0].length() + 1;
+        }
+        Set<String> dict = new HashSet<>(Arrays.asList(words));
+        /**
+         * Build Trie-Tree in word's reverse order.
+         */
+        TrieNode root = buildTrie(dict);
+        int[] result = new int[] {0};
+        /**
+         * Because we reverse the words and add # at the first place of the reversed words,
+         * so the length starts from 1(root node has only one character #).
+         */
+        dfsTrie(root, 1, result);
+        return result[0];
+    }
+
+    /**
+     *
+     * e.g.1 words = ["bat", "cat", "at"]
+     *              root length==1(#)
+     *               |
+     *               t   length==2(#t)
+     *               |
+     *               a   length==3(#ta)
+     *              / \
+     *              b c  length==4(#tab or #tac, both of them's length is 4.
+     * dfsTrie(root, 1, result), isLeaf: false, length: 1
+     *   dfsTrie(node-t, 2, result), isLeaf: false, length: 2
+     *     dfsTrie(node-a, 3, result), isLeaf: false, length: 3
+     *       dfsTrie(node-b, 4, result), isLeaf: true, length: 4
+     *       result: 0 + 4 = 4
+     *       dfsTrie(node-c, 4, result), isLeaf: true, length: 4
+     *       result: 4 + 4 = 4
+     *
+     * @param parent
+     * @param length
+     * @param result
+     */
+    public void dfsTrie(TrieNode parent, int length, int[] result) {
+        /**
+         * isLeaf is used to mark the parent node whether is a leaf or not.
+         */
+        boolean isLeaf = true;
+        for (TrieNode child : parent.children) {
+            if (null != child) {
+                isLeaf = false;
+                dfsTrie(child, length + 1, result);
+            }
+        }
+        if (isLeaf) {
+            result[0] += length;
+        }
+    }
+
+
+    static class TrieNode {
+        TrieNode[] children = new TrieNode[26];
+        int wordLength;
+    }
+
+    public TrieNode buildTrie(Set<String> dict) {
+        TrieNode root = new TrieNode();
+        for (String word : dict) {
+            TrieNode p = root;
+            char[] arr = word.toCharArray();
+            /**
+             * Build Trie-Tree in word's reverse order.
+             */
+            for (int i = arr.length - 1; i >= 0; i--) {
+                char ch = arr[i];
+                int idx = ch - 'a';
+                if (p.children[idx] == null) {
+                    p.children[idx] = new TrieNode();
+                }
+                p = p.children[idx];
+            }
+        }
+        return root;
+    }
+
+    /**
+     * Use HashSet to remove all suffix-matched words.
+     * @param words
+     * @return
+     */
+    public int minimumLengthEncodingV2(String[] words) {
+        if (words.length == 1) {
+            return words[0].length() + 1;
+        }
+        Set<String> set = new HashSet<>(Arrays.asList(words));
+        for (String word : words) {
+            for (int i = 1; i < word.length(); i++) {
+                String suffix = word.substring(i);
+                if (set.contains(suffix)) {
+                    set.remove(suffix);
+                }
+            }
+        }
+        int result = 0;
+        for (String word : set) {
+            result += word.length() + 1;
+        }
+        return result;
     }
 
     /**
