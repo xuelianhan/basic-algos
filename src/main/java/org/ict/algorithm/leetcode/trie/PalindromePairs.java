@@ -47,4 +47,16 @@ public class PalindromePairs {
     public List<List<Integer>> palindromePairs(String[] words) {
         return null;
     }
+
+    public boolean isPalindrome(String s, int lo, int hi) {
+        while (lo < hi) {
+            if (s.charAt(lo) != s.charAt(hi)) {
+                return false;
+            } else {
+                lo++;
+                hi--;
+            }
+        }
+        return true;
+    }
 }

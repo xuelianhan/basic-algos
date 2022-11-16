@@ -104,8 +104,8 @@ public class CountCompleteTreeNodes {
         /**
          * todo
          * why?
-         * If rightTreeHight is not h-1, it means the right-sub-tree is perfect tree with height of h-1.
-         * So the total number of nodes is 2^(h-1) - 1, plus the current node ,the result is (1 <<(h-1)).
+         * If rightTreeHight is not h-1, it means the right-sub-tree is perfect tree with height of h-2.
+         * So the total number of nodes is 2^(h-1) - 1, plus the root node ,the result is (1 <<(h-1)).
          */
         int rightSubTreeCnt = (1 << (h - 1));
         return rightSubTreeCnt + countNodesV3(root.left);
