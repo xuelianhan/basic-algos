@@ -1,7 +1,5 @@
 package org.ict.algorithm.leetcode.trie;
 
-import sun.text.normalizer.Trie;
-
 import java.util.*;
 
 /**
@@ -41,19 +39,21 @@ import java.util.*;
 public class ShortEncodingOfWords {
 
     public static void main(String[] args) {
-        String[] words = {"time", "me", "bell"};
+        //String[] words = {"time", "me", "bell"};
         //String[] words = {"feipyxx","e"};
         //String[] words = {"me","time"};
         //String[] words = {"p","grah","qwosp"};//expected: qwosp#grah#
         //String[] words = {"ctxdic","c"};
+        String[] words = {"time","time","time","time"};
         ShortEncodingOfWords instance = new ShortEncodingOfWords();
-        int result = instance.minimumLengthEncodingV1(words);
+        int result = instance.minimumLengthEncodingV4(words);
         System.out.println(result);
     }
 
     /**
      * Improvement of Trie-DFS Solution.
      *
+     * @author lee215
      * @param words
      * @return
      */
@@ -61,8 +61,43 @@ public class ShortEncodingOfWords {
         if (words.length == 1) {
             return words[0].length() + 1;
         }
+        List<TrieNode> leaves = new ArrayList<>();
+        TrieNode root = new TrieNode();
+        /**
+         * Notice! Remove duplicated words very important!
+         * Although Trie-Tree will not be affected, the statistic of counting operations will be affected.
+         */
+        Set<String> dict = new HashSet<>(Arrays.asList(words));
+        for (String word : dict) {
+            TrieNode p = root;
+            char[] arr = word.toCharArray();
+            for (int i = arr.length - 1; i >= 0; i--) {
+                int idx = arr[i] - 'a';
+                if (p.children[idx] == null) {
+                    p.children[idx] = new TrieNode();
+                }
+                p = p.children[idx];
+            }
+            /**
+             * Plus 1 means the character '#'
+             * If we don't remove duplicated words, here will calculate repeatedly, and the final result will be wrong.
+             */
+            p.wordLength = word.length() + 1;
+            leaves.add(p);
+        }
 
         int result = 0;
+        for (TrieNode p : leaves) {
+            boolean isLeaf = true;
+            for (int i = 0; i < 26; i++) {
+                if (p.children[i] != null) {
+                    isLeaf = false;
+                }
+            }
+            if (isLeaf) {
+                result += p.wordLength;
+            }
+        }
         return result;
     }
 
@@ -149,6 +184,11 @@ public class ShortEncodingOfWords {
 
     static class TrieNode {
         TrieNode[] children = new TrieNode[26];
+
+        /**
+         * Only used for minimumLengthEncodingV4
+         */
+        int wordLength;
     }
 
     public TrieNode buildTrie(Set<String> dict) {
