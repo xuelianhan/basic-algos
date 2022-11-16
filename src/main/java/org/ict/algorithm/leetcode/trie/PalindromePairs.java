@@ -1,6 +1,8 @@
 package org.ict.algorithm.leetcode.trie;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * You are given a 0-indexed array of unique strings words.
@@ -45,6 +47,11 @@ import java.util.List;
 public class PalindromePairs {
 
     public List<List<Integer>> palindromePairs(String[] words) {
+        Map<String, Integer> wordIdxMap = new HashMap<>();
+        for (int i = 0; i < words.length; i++) {
+            wordIdxMap.put(words[i], i);
+        }
+        
         return null;
     }
 
