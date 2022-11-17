@@ -47,7 +47,8 @@ import java.util.Map;
 public class PalindromePairs {
 
     /**
-     * The following is the thought from GraceMeng, you can see the original post by the href-link.
+     * The following is the thought from GraceMeng, you can see the original post by the href-link below.
+     * I have added some descriptions with decomposed cases to help understand her thought.
      * -----------------------------------------------------------------
      * We want to concatenate string B to string A to make AB palindrome.
      * How could AB be palindrome?
@@ -60,12 +61,14 @@ public class PalindromePairs {
      * 	(B:abc - cba           A:cbaooo,   AB:cbaooo|abc), the rest of A:(ooo)
      *
      * Each word in words can be B. We put all reversed words in a trie.
-     * Each word in words can be A. So we search A in trie,
-     * In this way,
+     * (cba, oooabc) ---> reversed: (abc, cbaooo)
+     * (cbaooo, abc) ---> reversed: (oooabc, cba)
+     * Each word in words can be A, so we search A in trie, In this way,
      *   Case 1. if we found A in trie, and the branch under the end node is a palindrome, we found it!
      *   Case 2. if we reach a leaf of trie, and the rest of A is palindrome, we found it!
      *
-     *   For Case 1., we modify TrieNode data structure by adding belowPalindromeWordIds - list of word indices such that nodes below can construct a palindrome.
+     *   For Case 1., we modify TrieNode data structure by adding belowPalindromeWordIds.
+     *   the belowPalindromeWordIds is a list of word indices such that nodes below can construct a palindrome.
      *   For Case 2., we create a method isPalindrome(str, start, end) .
      *
      * Please take care of corner cases of empty string.
@@ -81,6 +84,21 @@ public class PalindromePairs {
      * case1 can be combined into case2 or case3.
      * So there are three cases in total need to be considered.
      *
+     * We build the trie-tree with all the words reversed from the input.
+     *              root
+     *           ----------------
+     *          / | \  \   \  \  \
+     *         a  l  s  d   o  c
+     *        /   |   \  \   \  \
+     *       b    l    l  c   o  b
+     *      /     |     \  \   \  \
+     *     c      s      l  b   o  a
+     *    /       |          \   \  \
+     *   d        s           a   a  o
+     *            |                \  \
+     *            s                 b  o
+     *                               \  \
+     *                                c  o
      * @see <a href="https://leetcode.com/problems/palindrome-pairs/solutions/176205/beats-80-trie-java-with-explanations"></a>
      * @author GraceMeng
      * @param words
