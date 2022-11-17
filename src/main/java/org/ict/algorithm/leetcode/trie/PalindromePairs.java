@@ -46,12 +46,52 @@ import java.util.Map;
  */
 public class PalindromePairs {
 
+    /**
+     * The following is the thought from GraceMeng, you can see the original post by the href-link.
+     * -----------------------------------------------------------------
+     * We want to concatenate string B to string A to make AB palindrome.
+     * How could AB be palindrome?
+     * If B ends with x, then A must starts with x.
+     * If the second character of B is y, then the second last character of A is y...
+     * That is,
+     *   Case 1. A must be prefix of reversed B, and the rest of reversed B should be palindrome. For example,
+     * 	(B:oooabc - cbaooo,    A:cba       AB:cba|oooabc), the rest of reversed B:(ooo)
+     *   Case 2. Or, reversed B must be prefix of A, and the rest of A should be palindrome. For example,
+     * 	(B:abc - cba           A:cbaooo,   AB:cbaooo|abc), the rest of A:(ooo)
+     *
+     * Each word in words can be B. We put all reversed words in a trie.
+     * Each word in words can be A. So we search A in trie,
+     * In this way,
+     *   Case 1. if we found A in trie, and the branch under the end node is a palindrome, we found it!
+     *   Case 2. if we reach a leaf of trie, and the rest of A is palindrome, we found it!
+     *
+     *   For Case 1., we modify TrieNode data structure by adding belowPalindromeWordIds - list of word indices such that nodes below can construct a palindrome.
+     *   For Case 2., we create a method isPalindrome(str, start, end) .
+     *
+     * Please take care of corner cases of empty string.
+     * Both ("", self-palindrome) and (self-palindrome, "") are still palindrome.
+     * -------------------------------------------------------------------
+     * Let's take some examples to understand the above thoughts of GraceMeng.
+     * case forms:(A, B), the first element in case pair is A, the second one is B:
+     * case 1. ("abcd","dcba"), ("bat","tab"), A is the prefix of reversed-B, B is the prefix of reversed-A.
+     * case 2. ("s", "lls"), A is the prefix of reversed-B.
+     * case 3. ("sssll", "lls"), B is the prefix of reversed-A.
+     * case 4. ("a",""), ("", "ccc"), empty string combined with palindrome string already, this is the corner case.
+     *
+     * case1 can be combined into case2 or case3.
+     * So there are three cases in total need to be considered.
+     *
+     * @see <a href="https://leetcode.com/problems/palindrome-pairs/solutions/176205/beats-80-trie-java-with-explanations"></a>
+     * @author GraceMeng
+     * @param words
+     * @return
+     */
     public List<List<Integer>> palindromePairs(String[] words) {
         Map<String, Integer> wordIdxMap = new HashMap<>();
         for (int i = 0; i < words.length; i++) {
             wordIdxMap.put(words[i], i);
         }
-        
+
         return null;
     }
 
