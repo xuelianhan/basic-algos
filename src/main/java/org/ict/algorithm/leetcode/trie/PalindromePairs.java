@@ -1,9 +1,6 @@
 package org.ict.algorithm.leetcode.trie;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * You are given a 0-indexed array of unique strings words.
@@ -44,8 +41,19 @@ import java.util.Map;
  * @author sniper
  * @date 16 Nov, 2022
  * LC336
+ * 1.communication
+ * 2.problem solving
+ * 3.coding
+ * 4.testing
  */
 public class PalindromePairs {
+
+    public static void main(String[] args) {
+        String[] words = {"abcd","dcba","lls","s","sssll"};
+        PalindromePairs instance = new PalindromePairs();
+        List<List<Integer>> result = instance.palindromePairs(words);
+        System.out.println(result);
+    }
 
     /**
      * The following is the thought from GraceMeng, you can see the original post by the href-link below.
@@ -113,13 +121,67 @@ public class PalindromePairs {
         if (null == words || words.length == 0) {
             return new ArrayList<>();
         }
-        
 
-        return null;
+        int n = words.length;
+        TrieNode root = new TrieNode();
+        List<List<Integer>> finalResult = new ArrayList<>();
+        for (int i = 0; i < n; i ++) {
+            /**
+             * Empty string can be composed with self-palindrome string.
+             * e.g. "" and "ooo" --> "ooo".
+             * Another reason is the Trie-Tree don't care the empty string.
+             * So we must deal with empty string in separated switch.
+             */
+            if (words[i].isEmpty()) {
+                List<Integer> selfPalindromeWordIndices = getSelfPalindrome(words);
+                for (int pairId : selfPalindromeWordIndices) {
+                    finalResult.add(new ArrayList<>(Arrays.asList(i, pairId)));
+                    finalResult.add(new ArrayList<>(Arrays.asList(pairId, i)));
+                }
+            } else {
+                buildTrie(root, reverse(words[i]), i);
+            }
+        }
+
+        /**
+         * Search in the Trie-Tree.
+         */
+        for (int i = 0; i < n; i++) {
+            List<Integer> wordIndices = search(root, words[i], i);
+            for (int pairId : wordIndices) {
+                finalResult.add(new ArrayList<>(Arrays.asList(i, pairId)));
+            }
+        }
+        return finalResult;
     }
 
-    public TrieNode buildTrie(String word, int index) {
-        TrieNode root = new TrieNode();
+    public List<Integer>  search(TrieNode root, String word, int index) {
+        List<Integer> wordIndices = new ArrayList<>();
+        TrieNode p = root;
+        int n = word.length();
+        char[] arr = word.toCharArray();
+        for (int i = 0; i < n; i++) {
+            int idx = arr[i] - 'a';
+            if (p.endIndex > -1 && isPalindrome(word, i, n - 1)) {
+                wordIndices.add(p.endIndex);
+            }
+
+            if (p.children[idx] == null) {
+                return wordIndices;
+            }
+            p = p.children[idx];
+        }
+        if (p.endIndex > -1 && p.endIndex != index) {
+            wordIndices.add(p.endIndex);
+        }
+        if (!p.belowPalindromeWordIds.isEmpty()) {
+            wordIndices.addAll(p.belowPalindromeWordIds);
+        }
+        return wordIndices;
+    }
+
+
+    public void buildTrie(TrieNode root, String word, int index) {
         TrieNode p = root;
         int n = word.length();
         char[] arr = word.toCharArray();
@@ -134,7 +196,6 @@ public class PalindromePairs {
             }
         }
         p.endIndex = index;
-        return root;
     }
 
 
