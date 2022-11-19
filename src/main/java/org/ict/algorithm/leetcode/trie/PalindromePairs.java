@@ -58,6 +58,15 @@ public class PalindromePairs {
         System.out.println(result);
     }
 
+    /**
+     * 1.communication
+     * 2.problem solving
+     * 3.coding
+     * 4.testing
+     *
+     * @param words
+     * @return
+     */
     public List<List<Integer>> palindromePairsV1(String[] words) {
         if (null == words || words.length == 0) {
             return new ArrayList<>();
@@ -67,8 +76,8 @@ public class PalindromePairs {
         List<Integer> selfPalindromeWordIndices = new ArrayList<>();
         List<List<Integer>> finalResult = new ArrayList<>();
         for (int i = 0; i < n; i ++) {
-            addSelfPalindromeIndices(words[i], i, selfPalindromeWordIndices);
             if (!words[i].isEmpty()) {
+                addSelfPalindromeIndices(words[i], i, selfPalindromeWordIndices);
                 buildTrie(root, reverse(words[i]), i);
             }
         }
