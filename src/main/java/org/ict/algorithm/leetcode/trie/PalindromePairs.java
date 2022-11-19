@@ -233,7 +233,7 @@ public class PalindromePairs {
         char[] arr = word.toCharArray();
         for (int i = 0; i < n; i++) {
             boolean flag = isPalindrome(word, i, n - 1);
-            System.out.println("word:" + word + ", i:" + i + ", n-1:" + (n-1) + ", isPalindrom:" + flag + ", p.endIndex:" + p.endIndex);
+            //System.out.println("word:" + word + ", i:" + i + ", n-1:" + (n-1) + ", isPalindrom:" + flag + ", p.endIndex:" + p.endIndex);
             if (p.endIndex > -1 && flag) {
                 wordIndices.add(p.endIndex);
             }
@@ -249,7 +249,7 @@ public class PalindromePairs {
         if (!p.belowPalindromeWordIds.isEmpty()) {
             wordIndices.addAll(p.belowPalindromeWordIds);
         }
-        System.out.println("search word:" + word + ", wordIndices:" + wordIndices);
+        //System.out.println("search word:" + word + ", wordIndices:" + wordIndices);
         return wordIndices;
     }
 
@@ -282,7 +282,7 @@ public class PalindromePairs {
             }
         }
         p.endIndex = index;
-        System.out.println("buildTrie word:" + word + ", index:" + index + ", endIndex:" + p.endIndex + ", belowPalindromeWordIds:" + p.belowPalindromeWordIds);
+        //System.out.println("buildTrie word:" + word + ", index:" + index + ", endIndex:" + p.endIndex + ", belowPalindromeWordIds:" + p.belowPalindromeWordIds);
     }
 
     public void buildTrie(TrieNode root, String word, int index) {
@@ -305,7 +305,7 @@ public class PalindromePairs {
             }
         }
         p.endIndex = index;
-        System.out.println("buildTrie word:" + word + ", index:" + index + ", endIndex:" + p.endIndex + ", belowPalindromeWordIds:" + p.belowPalindromeWordIds);
+        //System.out.println("buildTrie word:" + word + ", index:" + index + ", endIndex:" + p.endIndex + ", belowPalindromeWordIds:" + p.belowPalindromeWordIds);
     }
 
 
