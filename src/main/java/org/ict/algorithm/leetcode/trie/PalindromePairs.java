@@ -60,10 +60,14 @@ public class PalindromePairs {
 
     /**
      * 1.communication
-     * Does all the words contain lowercase letters only?
+     * Does all the words contain lowercase letters only? Yes
+     * Does the words contain empty string word? Yes
+     *
      * 2.problem solving
      * Trie-tree.
+     *
      * 3.coding
+     *  Write a template firstly, and then communicate with the interviewer to describe what are you doing while writing each line of code.
      * 4.testing
      *
      * @param words
