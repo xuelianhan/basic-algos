@@ -60,7 +60,9 @@ public class PalindromePairs {
 
     /**
      * 1.communication
+     * Does all the words contain lowercase letters only?
      * 2.problem solving
+     * Trie-tree.
      * 3.coding
      * 4.testing
      *
@@ -76,19 +78,36 @@ public class PalindromePairs {
         List<Integer> selfPalindromeWordIndices = new ArrayList<>();
         List<List<Integer>> finalResult = new ArrayList<>();
         for (int i = 0; i < n; i ++) {
+            /**
+             * Only preprocess non-empty strings
+             */
             if (!words[i].isEmpty()) {
+                /**
+                 * 1.Collect self-palindrome words, e.g. "aaa", "b", "abba".
+                 */
                 addSelfPalindromeIndices(words[i], i, selfPalindromeWordIndices);
-                buildTrie(root, reverse(words[i]), i);
+                /**
+                 * 2.Reverse each word and add the reversed word into the Trie-Tree.
+                 */
+                //buildTrie(root, reverse(words[i]), i);
+                buildTrieV1(root, words[i], i);
             }
         }
 
         for (int i = 0; i < n; i++) {
             if (words[i].isEmpty()) {
+                /**
+                 * 3.For empty string, we concat it directly with self-palindrome word,
+                 * e.g. "" and "aaa", "" and "b", "" and "bbb";
+                 */
                 for (int pairId : selfPalindromeWordIndices) {
                     finalResult.add(new ArrayList<>(Arrays.asList(i, pairId)));
                     finalResult.add(new ArrayList<>(Arrays.asList(pairId, i)));
                 }
             } else {
+                /**
+                 * 4.For non-empty string, we search the palindrome word pairs in the Trie-Tree.
+                 */
                 List<Integer> wordIndices = search(root, words[i], i);
                 for (int pairId : wordIndices) {
                     finalResult.add(new ArrayList<>(Arrays.asList(i, pairId)));
@@ -227,15 +246,45 @@ public class PalindromePairs {
 
 
     /**
-     *
+     * abcd --> dcba
+     *           cba
+     *            ba
+     *             a
      * @param root
      * @param word reversed form of the word in the array
      * @param index the index of the word in the array
      */
+    public void buildTrieV1(TrieNode root, String word, int index) {
+        TrieNode p = root;
+        int n = word.length();
+        char[] arr = word.toCharArray();
+        /**
+         * Build Trie-Tree with the reversed word.
+         * We can iterate each word from the end to the beginning.
+         */
+        for (int i = n - 1; i >= 0; i--) {
+            int idx = arr[i] - 'a';
+            if (p.children[idx] == null) {
+                p.children[idx] = new TrieNode();
+            }
+            p = p.children[idx];
+            if (isPalindrome(word, 0, i - 1)) {
+                p.belowPalindromeWordIds.add(index);
+            }
+        }
+        p.endIndex = index;
+        System.out.println("buildTrie word:" + word + ", index:" + index + ", endIndex:" + p.endIndex + ", belowPalindromeWordIds:" + p.belowPalindromeWordIds);
+    }
+
     public void buildTrie(TrieNode root, String word, int index) {
         TrieNode p = root;
         int n = word.length();
         char[] arr = word.toCharArray();
+        /**
+         * Build Trie-Tree with the reversed word.
+         * We can iterate each word from the end to the beginning.
+         * See the method of buildTrieV1.
+         */
         for (int i = 0; i < n; i++) {
             int idx = arr[i] - 'a';
             if (p.children[idx] == null) {
@@ -284,6 +333,11 @@ public class PalindromePairs {
         return wordIndices;
     }
 
+    /**
+     * No need to use this method, because we can iterate the word from end to beginning.
+     * @param str
+     * @return
+     */
     public String reverse(String str) {
         return new StringBuilder(str).reverse().toString();
     }
