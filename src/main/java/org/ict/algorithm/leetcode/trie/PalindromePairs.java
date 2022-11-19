@@ -62,9 +62,14 @@ public class PalindromePairs {
      * 1.communication
      * Does all the words contain lowercase letters only? Yes
      * Does the words contain empty string word? Yes
+     * Does the words are unique in the array? Yes.
      *
      * 2.problem solving
-     * Trie-tree.
+     * Tell your own thoughts about the question to the interviewer, and how do you going to solve the problem.
+     * A whole idea and the data structure that you will to use.
+     * we can separate the words into two classes:
+     * i.empty-string word and self-palindrome words,
+     * e.g.Trie-tree.
      *
      * 3.coding
      *  Write a template firstly, and then communicate with the interviewer to describe what are you doing while writing each line of code.
