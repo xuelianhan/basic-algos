@@ -1,5 +1,7 @@
 package org.ict.algorithm.leetcode.trie;
 
+import sun.security.util.PendingException;
+
 import java.util.*;
 
 /**
@@ -49,10 +51,42 @@ import java.util.*;
 public class PalindromePairs {
 
     public static void main(String[] args) {
-        String[] words = {"abcd","dcba","lls","s","sssll"};
+        //String[] words = {"abcd","dcba","lls","s","sssll"};
+        String[] words = {"a", ""};
         PalindromePairs instance = new PalindromePairs();
-        List<List<Integer>> result = instance.palindromePairs(words);
+        List<List<Integer>> result = instance.palindromePairsV1(words);
         System.out.println(result);
+    }
+
+    public List<List<Integer>> palindromePairsV1(String[] words) {
+        if (null == words || words.length == 0) {
+            return new ArrayList<>();
+        }
+        int n = words.length;
+        TrieNode root = new TrieNode();
+        List<Integer> selfPalindromeWordIndices = new ArrayList<>();
+        List<List<Integer>> finalResult = new ArrayList<>();
+        for (int i = 0; i < n; i ++) {
+            addSelfPalindromeIndices(words[i], i, selfPalindromeWordIndices);
+            if (!words[i].isEmpty()) {
+                buildTrie(root, reverse(words[i]), i);
+            }
+        }
+
+        for (int i = 0; i < n; i++) {
+            if (words[i].isEmpty()) {
+                for (int pairId : selfPalindromeWordIndices) {
+                    finalResult.add(new ArrayList<>(Arrays.asList(i, pairId)));
+                    finalResult.add(new ArrayList<>(Arrays.asList(pairId, i)));
+                }
+            } else {
+                List<Integer> wordIndices = search(root, words[i], i);
+                for (int pairId : wordIndices) {
+                    finalResult.add(new ArrayList<>(Arrays.asList(i, pairId)));
+                }
+            }
+        }
+        return finalResult;
     }
 
     /**
@@ -155,17 +189,18 @@ public class PalindromePairs {
         return finalResult;
     }
 
-    public List<Integer>  search(TrieNode root, String word, int index) {
+    public List<Integer> search(TrieNode root, String word, int index) {
         List<Integer> wordIndices = new ArrayList<>();
         TrieNode p = root;
         int n = word.length();
         char[] arr = word.toCharArray();
         for (int i = 0; i < n; i++) {
-            int idx = arr[i] - 'a';
-            if (p.endIndex > -1 && isPalindrome(word, i, n - 1)) {
+            boolean flag = isPalindrome(word, i, n - 1);
+            System.out.println("word:" + word + ", i:" + i + ", n-1:" + (n-1) + ", isPalindrom:" + flag + ", p.endIndex:" + p.endIndex);
+            if (p.endIndex > -1 && flag) {
                 wordIndices.add(p.endIndex);
             }
-
+            int idx = arr[i] - 'a';
             if (p.children[idx] == null) {
                 return wordIndices;
             }
@@ -177,10 +212,17 @@ public class PalindromePairs {
         if (!p.belowPalindromeWordIds.isEmpty()) {
             wordIndices.addAll(p.belowPalindromeWordIds);
         }
+        System.out.println("search word:" + word + ", wordIndices:" + wordIndices);
         return wordIndices;
     }
 
 
+    /**
+     *
+     * @param root
+     * @param word reversed form of the word in the array
+     * @param index the index of the word in the array
+     */
     public void buildTrie(TrieNode root, String word, int index) {
         TrieNode p = root;
         int n = word.length();
@@ -196,6 +238,7 @@ public class PalindromePairs {
             }
         }
         p.endIndex = index;
+        System.out.println("buildTrie word:" + word + ", index:" + index + ", endIndex:" + p.endIndex + ", belowPalindromeWordIds:" + p.belowPalindromeWordIds);
     }
 
 
@@ -212,6 +255,12 @@ public class PalindromePairs {
          *  e.g.
          */
         List<Integer> belowPalindromeWordIds = new ArrayList<>();
+    }
+
+    public void addSelfPalindromeIndices(String word, int index,  List<Integer> wordIndices) {
+        if (isPalindrome(word, 0, word.length() - 1)) {
+            wordIndices.add(index);
+        }
     }
 
     public List<Integer> getSelfPalindrome(String[] words) {
