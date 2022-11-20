@@ -58,6 +58,25 @@ public class PalindromePairs {
         System.out.println(result);
     }
 
+    public List<List<Integer>> palindromePairsV2(String[] words) {
+
+        return null;
+    }
+
+    static class TrieNodeV2 {
+        TrieNodeV2[] children = new TrieNodeV2[26];
+        /**
+         * Equals to -1 in default.
+         * If it is a word's end, it is the index of the word.
+         */
+        int endIndex = -1;
+        /**
+         *  List of word indices such that nodes below can construct a palindrome
+         *  e.g.
+         */
+        List<Integer> list = new ArrayList<>();
+    }
+
     /**
      * 1.communication
      * Does all the words contain lowercase letters only? Yes
@@ -285,6 +304,12 @@ public class PalindromePairs {
         //System.out.println("buildTrie word:" + word + ", index:" + index + ", endIndex:" + p.endIndex + ", belowPalindromeWordIds:" + p.belowPalindromeWordIds);
     }
 
+    /**
+     *
+     * @param root
+     * @param word
+     * @param index
+     */
     public void buildTrie(TrieNode root, String word, int index) {
         TrieNode p = root;
         int n = word.length();
@@ -319,7 +344,19 @@ public class PalindromePairs {
         int endIndex = -1;
         /**
          *  List of word indices such that nodes below can construct a palindrome
-         *  e.g.
+         *  e.g. words=["lls", "sssll"]
+         *  "sssll" --> "llsss"
+         *  root
+         *    |
+         *    l   list:[], Does "lsss" can be palindrome? NO
+         *    |
+         *    l   list:[1], Does "sss" can be palindrome? YES
+         *    |
+         *    s   list:[1], Does "ss" can be palindrome? YES
+         *    |
+         *    s   list:[1], Does "s" can be palindrome? YES
+         *    |
+         *    s   list:[], i=n-1, i+1=n, lo=n, hi=n-1, lo > hi, NO
          */
         List<Integer> belowPalindromeWordIds = new ArrayList<>();
     }
