@@ -50,156 +50,11 @@ import java.util.*;
 public class PalindromePairs {
 
     public static void main(String[] args) {
-        //String[] words = {"abcd","dcba","lls","s","sssll"};
-        String[] words = {"a", ""};
+        String[] words = {"abcd","dcba","lls","s","sssll"};
+        //String[] words = {"a", ""};
         PalindromePairs instance = new PalindromePairs();
-        List<List<Integer>> result = instance.palindromePairsV1(words);
+        List<List<Integer>> result = instance.palindromePairsV3(words);
         System.out.println(result);
-    }
-
-    /**
-     * 1.Store each word with its index into a HashMap.
-     * 2.For each word, we split it into two parts, s1 and s2.
-     * We check that s1 or s2 whether is palindrome string or not.
-     * If s1 is a palindrome string, we can put s1 as the middle part, s2 as the right part,
-     * then we check the reversed s2 whether in the HashMap or not.
-     * If the HashMap contains the reversed s2, then we find a new palindrome pair.
-     * reversed-s2 + s1 + s2
-     * 3.We can do the same steps for s2 like s1 above.
-     *
-     * Consider test case: ["a", ""]
-     *
-     * it actually deals with empty strings very elegantly, consider the case {"a", ""}
-     * when i = 0, j = 0, str1 = "", str2 = "a",
-     * --> isPalindrome(str1) is true, but i = map.get(""), no result is added
-     * --> isPalindrome(str2) is true, i != map.get(""), solution [0, 1] is added to result
-     *
-     * when i = 0, j = 1, str1="a", str2=""
-     * --> isPalindrome(str1) is true, i!= map.get(""), solution [1,0] is added to result
-     * --> str2 is empty, loop skipped
-     * @param words
-     * @return
-     */
-    public List<List<Integer>> palindromePairsV4(String[] words) {
-        List<List<Integer>> res = new ArrayList<>();
-        if (words == null || words.length < 2) {
-            return res;
-        }
-
-        Map<String, Integer> map = new HashMap<>();
-        for (int i = 0; i < words.length; i++) {
-            map.put(words[i], i);
-        }
-
-        for (int i = 0; i < words.length; i++) {
-            /**
-             * Notice "<=" here!
-             * Because substring upper excluded,
-             * here j should be less than and equal to words[i].length();
-             * This can handle empty string input.
-             */
-            for (int j = 0; j <= words[i].length(); j++) {
-                String s1 = words[i].substring(0, j);
-                String s2 = words[i].substring(j);
-
-                if (isPalindrome(s1)) {
-                    String reversedS2 = new StringBuilder(s2).reverse().toString();
-                    /**
-                     * s1.length() != 0 to process the empty string to avoid duplicated results.
-                     * Consider test case: ["a", ""]
-                     */
-                    if (map.containsKey(reversedS2) && map.get(reversedS2) != i && s1.length() != 0) {
-                        List<Integer> newPair = new ArrayList<>();
-                        newPair.add(map.get(reversedS2));
-                        newPair.add(i);
-                        res.add(newPair);
-                    }
-                }
-
-                if (isPalindrome(s2)) {
-                    String reversedS1 = new StringBuilder(s1).reverse().toString();
-                    if (map.containsKey(reversedS1) && map.get(reversedS1) != i) {
-                        List<Integer> newPair = new ArrayList<>();
-                        newPair.add(i);
-                        newPair.add(map.get(reversedS1));
-                        res.add(newPair);
-                    }
-                }
-            }
-        }
-        return res;
-    }
-
-    /**
-     * 1.Store each word with its index into a HashMap.
-     * 2.For each word, we split it into two parts, s1 and s2.
-     * We check that s1 or s2 whether is palindrome string or not.
-     * If s1 is a palindrome string, we can put s1 as the middle part, s2 as the right part,
-     * then we check the reversed s2 whether in the HashMap or not.
-     * If the HashMap contains the reversed s2, then we find a new palindrome pair.
-     * reversed-s2 + s1 + s2
-     * 3.We can do the same steps for s2 like s1 above.
-     *
-     * Consider test case: ["a", ""]
-     * it actually deals with empty strings very elegantly, consider the case {"a", ""}
-     * when i = 0, j = 0, str1 = "", str2 = "a",
-     * --> isPalindrome(str1) is true, but i = map.get(""), no result is added
-     * --> isPalindrome(str2) is true, i != map.get(""), solution [0, 1] is added to result
-     *
-     * when i = 0, j = 1, str1="a", str2=""
-     * --> isPalindrome(str1) is true, i!= map.get(""), solution [1,0] is added to result
-     * --> str2 is empty, loop skipped
-     * @param words
-     * @return
-     */
-    public List<List<Integer>> palindromePairsV3(String[] words) {
-        List<List<Integer>> res = new ArrayList<>();
-        if (words == null || words.length < 2) {
-            return res;
-        }
-
-        Map<String, Integer> map = new HashMap<>();
-        for (int i = 0; i < words.length; i++) {
-            map.put(words[i], i);
-        }
-
-        for (int i = 0; i < words.length; i++) {
-            /**
-             * Notice "<=" here!
-             * Because substring upper excluded,
-             * here j should be less than and equal to words[i].length();
-             * This can handle empty string input.
-             */
-            for (int j = 0; j <= words[i].length(); j++) {
-                String s1 = words[i].substring(0, j);
-                String s2 = words[i].substring(j);
-
-                if (isPalindrome(s1)) {
-                    String reversedS2 = new StringBuilder(s2).reverse().toString();
-                    if (map.containsKey(reversedS2) && map.get(reversedS2) != i) {
-                        List<Integer> newPair = new ArrayList<>();
-                        newPair.add(map.get(reversedS2));
-                        newPair.add(i);
-                        res.add(newPair);
-                    }
-                }
-
-                if (isPalindrome(s2)) {
-                    String reversedS1 = new StringBuilder(s1).reverse().toString();
-                    /**
-                     * s2.length() != 0 to process the empty string to avoid duplicated results.
-                     * Consider test case: ["a", ""]
-                     */
-                    if (map.containsKey(reversedS1) && map.get(reversedS1) != i && s2.length() != 0) {
-                        List<Integer> newPair = new ArrayList<>();
-                        newPair.add(i);
-                        newPair.add(map.get(reversedS1));
-                        res.add(newPair);
-                    }
-                }
-            }
-        }
-        return res;
     }
 
 
@@ -608,13 +463,15 @@ public class PalindromePairs {
     public String reverse(String str) {
         return new StringBuilder(str).reverse().toString();
     }
-
-    public boolean isPalindrome(String s) {
-        int lo = 0;
-        int hi = s.length() - 1;
-        return isPalindrome(s, lo, hi);
-    }
-
+    
+    /**
+     * Empty string "" in this method will return false;
+     * because hi = -1, lo = 0, lo > hi, so return false.
+     * @param s
+     * @param lo
+     * @param hi
+     * @return
+     */
     public boolean isPalindrome(String s, int lo, int hi) {
         if (lo > hi) {
             return false;
@@ -628,6 +485,172 @@ public class PalindromePairs {
         }
         return true;
     }
+
+    /**
+     * Empty string "" in this method will return true;
+     * lo = 0, hi = -1, lo > hi, so return true.
+     * @param s
+     * @return
+     */
+    public boolean isPalindrome(String s) {
+        int lo = 0;
+        int hi = s.length() - 1;
+        while (lo <= hi) {
+            if (s.charAt(lo++) != s.charAt(hi--)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Time Limit Exceed.
+     * 1.Store each word with its index into a HashMap.
+     * 2.For each word, we split it into two parts, s1 and s2.
+     * We check that s1 or s2 whether is palindrome string or not.
+     * If s1 is a palindrome string, we can put s1 as the middle part, s2 as the right part,
+     * then we check the reversed s2 whether in the HashMap or not.
+     * If the HashMap contains the reversed s2, then we find a new palindrome pair.
+     * reversed-s2 + s1 + s2
+     * 3.We can do the same steps for s2 like s1 above.
+     *
+     * Consider test case: ["a", ""]
+     *
+     * it actually deals with empty strings very elegantly, consider the case {"a", ""}
+     * when i = 0, j = 0, str1 = "", str2 = "a",
+     * --> isPalindrome(str1) is true, but i = map.get(""), no result is added
+     * --> isPalindrome(str2) is true, i != map.get(""), solution [0, 1] is added to result
+     *
+     * when i = 0, j = 1, str1="a", str2=""
+     * --> isPalindrome(str1) is true, i!= map.get(""), solution [1,0] is added to result
+     * --> str2 is empty, loop skipped
+     * @param words
+     * @return
+     */
+    public List<List<Integer>> palindromePairsV4(String[] words) {
+        List<List<Integer>> res = new ArrayList<>();
+        if (words == null || words.length < 2) {
+            return res;
+        }
+
+        Map<String, Integer> map = new HashMap<>();
+        for (int i = 0; i < words.length; i++) {
+            map.put(words[i], i);
+        }
+
+        for (int i = 0; i < words.length; i++) {
+            /**
+             * Notice "<=" here!
+             * Because substring upper excluded,
+             * here j should be less than and equal to words[i].length();
+             * This can handle empty string input.
+             */
+            for (int j = 0; j <= words[i].length(); j++) {
+                String s1 = words[i].substring(0, j);
+                String s2 = words[i].substring(j);
+
+                if (isPalindrome(s1)) {
+                    String reversedS2 = new StringBuilder(s2).reverse().toString();
+                    /**
+                     * s1.length() != 0 to process the empty string to avoid duplicated results.
+                     * Consider test case: ["a", ""]
+                     */
+                    if (map.containsKey(reversedS2) && map.get(reversedS2) != i && s1.length() != 0) {
+                        List<Integer> newPair = new ArrayList<>();
+                        newPair.add(map.get(reversedS2));
+                        newPair.add(i);
+                        res.add(newPair);
+                    }
+                }
+
+                if (isPalindrome(s2)) {
+                    String reversedS1 = new StringBuilder(s1).reverse().toString();
+                    if (map.containsKey(reversedS1) && map.get(reversedS1) != i) {
+                        List<Integer> newPair = new ArrayList<>();
+                        newPair.add(i);
+                        newPair.add(map.get(reversedS1));
+                        res.add(newPair);
+                    }
+                }
+            }
+        }
+        return res;
+    }
+
+    /**
+     * Time Limit Exceed.
+     * 1.Store each word with its index into a HashMap.
+     * 2.For each word, we split it into two parts, s1 and s2.
+     * We check that s1 or s2 whether is palindrome string or not.
+     * If s1 is a palindrome string, we can put s1 as the middle part, s2 as the right part,
+     * then we check the reversed s2 whether in the HashMap or not.
+     * If the HashMap contains the reversed s2, then we find a new palindrome pair.
+     * reversed-s2 + s1 + s2
+     * 3.We can do the same steps for s2 like s1 above.
+     *
+     * Consider test case: ["a", ""]
+     * it actually deals with empty strings very elegantly, consider the case {"a", ""}
+     * when i = 0, j = 0, str1 = "", str2 = "a",
+     * --> isPalindrome(str1) is true, but i = map.get(""), no result is added
+     * --> isPalindrome(str2) is true, i != map.get(""), solution [0, 1] is added to result
+     *
+     * when i = 0, j = 1, str1="a", str2=""
+     * --> isPalindrome(str1) is true, i!= map.get(""), solution [1,0] is added to result
+     * --> str2 is empty, loop skipped
+     * @param words
+     * @return
+     */
+    public List<List<Integer>> palindromePairsV3(String[] words) {
+        List<List<Integer>> res = new ArrayList<>();
+        if (words == null || words.length < 2) {
+            return res;
+        }
+
+        Map<String, Integer> map = new HashMap<>();
+        for (int i = 0; i < words.length; i++) {
+            map.put(words[i], i);
+        }
+
+        for (int i = 0; i < words.length; i++) {
+            /**
+             * Notice "<=" here!
+             * Because substring upper excluded,
+             * here j should be less than and equal to words[i].length();
+             * This can handle empty string input.
+             */
+            for (int j = 0; j <= words[i].length(); j++) {
+                String s1 = words[i].substring(0, j);
+                String s2 = words[i].substring(j);
+
+                if (isPalindrome(s1)) {
+                    String reversedS2 = new StringBuilder(s2).reverse().toString();
+                    if (map.containsKey(reversedS2) && map.get(reversedS2) != i) {
+                        List<Integer> newPair = new ArrayList<>();
+                        newPair.add(map.get(reversedS2));
+                        newPair.add(i);
+                        res.add(newPair);
+                    }
+                }
+
+                if (isPalindrome(s2)) {
+                    String reversedS1 = new StringBuilder(s1).reverse().toString();
+                    /**
+                     * s2.length() != 0 to process the empty string to avoid duplicated results.
+                     * Consider test case: ["a", ""]
+                     */
+                    if (map.containsKey(reversedS1) && map.get(reversedS1) != i && s2.length() != 0) {
+                        List<Integer> newPair = new ArrayList<>();
+                        newPair.add(i);
+                        newPair.add(map.get(reversedS1));
+                        res.add(newPair);
+                    }
+                }
+            }
+        }
+        return res;
+    }
+
+
 
 
 }
