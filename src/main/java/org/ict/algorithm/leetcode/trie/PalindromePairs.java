@@ -1,6 +1,5 @@
 package org.ict.algorithm.leetcode.trie;
 
-import sun.security.util.PendingException;
 
 import java.util.*;
 
@@ -58,9 +57,231 @@ public class PalindromePairs {
         System.out.println(result);
     }
 
-    public List<List<Integer>> palindromePairsV2(String[] words) {
+    /**
+     * 1.Store each word with its index into a HashMap.
+     * 2.For each word, we split it into two parts, s1 and s2.
+     * We check that s1 or s2 whether is palindrome string or not.
+     * If s1 is a palindrome string, we can put s1 as the middle part, s2 as the right part,
+     * then we check the reversed s2 whether in the HashMap or not.
+     * If the HashMap contains the reversed s2, then we find a new palindrome pair.
+     * reversed-s2 + s1 + s2
+     * 3.We can do the same steps for s2 like s1 above.
+     *
+     * Consider test case: ["a", ""]
+     *
+     * it actually deals with empty strings very elegantly, consider the case {"a", ""}
+     * when i = 0, j = 0, str1 = "", str2 = "a",
+     * --> isPalindrome(str1) is true, but i = map.get(""), no result is added
+     * --> isPalindrome(str2) is true, i != map.get(""), solution [0, 1] is added to result
+     *
+     * when i = 0, j = 1, str1="a", str2=""
+     * --> isPalindrome(str1) is true, i!= map.get(""), solution [1,0] is added to result
+     * --> str2 is empty, loop skipped
+     * @param words
+     * @return
+     */
+    public List<List<Integer>> palindromePairsV4(String[] words) {
+        List<List<Integer>> res = new ArrayList<>();
+        if (words == null || words.length < 2) {
+            return res;
+        }
 
-        return null;
+        Map<String, Integer> map = new HashMap<>();
+        for (int i = 0; i < words.length; i++) {
+            map.put(words[i], i);
+        }
+
+        for (int i = 0; i < words.length; i++) {
+            /**
+             * Notice "<=" here!
+             * Because substring upper excluded,
+             * here j should be less than and equal to words[i].length();
+             * This can handle empty string input.
+             */
+            for (int j = 0; j <= words[i].length(); j++) {
+                String s1 = words[i].substring(0, j);
+                String s2 = words[i].substring(j);
+
+                if (isPalindrome(s1)) {
+                    String reversedS2 = new StringBuilder(s2).reverse().toString();
+                    /**
+                     * s1.length() != 0 to process the empty string to avoid duplicated results.
+                     * Consider test case: ["a", ""]
+                     */
+                    if (map.containsKey(reversedS2) && map.get(reversedS2) != i && s1.length() != 0) {
+                        List<Integer> newPair = new ArrayList<>();
+                        newPair.add(map.get(reversedS2));
+                        newPair.add(i);
+                        res.add(newPair);
+                    }
+                }
+
+                if (isPalindrome(s2)) {
+                    String reversedS1 = new StringBuilder(s1).reverse().toString();
+                    if (map.containsKey(reversedS1) && map.get(reversedS1) != i) {
+                        List<Integer> newPair = new ArrayList<>();
+                        newPair.add(i);
+                        newPair.add(map.get(reversedS1));
+                        res.add(newPair);
+                    }
+                }
+            }
+        }
+        return res;
+    }
+
+    /**
+     * 1.Store each word with its index into a HashMap.
+     * 2.For each word, we split it into two parts, s1 and s2.
+     * We check that s1 or s2 whether is palindrome string or not.
+     * If s1 is a palindrome string, we can put s1 as the middle part, s2 as the right part,
+     * then we check the reversed s2 whether in the HashMap or not.
+     * If the HashMap contains the reversed s2, then we find a new palindrome pair.
+     * reversed-s2 + s1 + s2
+     * 3.We can do the same steps for s2 like s1 above.
+     *
+     * Consider test case: ["a", ""]
+     * it actually deals with empty strings very elegantly, consider the case {"a", ""}
+     * when i = 0, j = 0, str1 = "", str2 = "a",
+     * --> isPalindrome(str1) is true, but i = map.get(""), no result is added
+     * --> isPalindrome(str2) is true, i != map.get(""), solution [0, 1] is added to result
+     *
+     * when i = 0, j = 1, str1="a", str2=""
+     * --> isPalindrome(str1) is true, i!= map.get(""), solution [1,0] is added to result
+     * --> str2 is empty, loop skipped
+     * @param words
+     * @return
+     */
+    public List<List<Integer>> palindromePairsV3(String[] words) {
+        List<List<Integer>> res = new ArrayList<>();
+        if (words == null || words.length < 2) {
+            return res;
+        }
+
+        Map<String, Integer> map = new HashMap<>();
+        for (int i = 0; i < words.length; i++) {
+            map.put(words[i], i);
+        }
+
+        for (int i = 0; i < words.length; i++) {
+            /**
+             * Notice "<=" here!
+             * Because substring upper excluded,
+             * here j should be less than and equal to words[i].length();
+             * This can handle empty string input.
+             */
+            for (int j = 0; j <= words[i].length(); j++) {
+                String s1 = words[i].substring(0, j);
+                String s2 = words[i].substring(j);
+
+                if (isPalindrome(s1)) {
+                    String reversedS2 = new StringBuilder(s2).reverse().toString();
+                    if (map.containsKey(reversedS2) && map.get(reversedS2) != i) {
+                        List<Integer> newPair = new ArrayList<>();
+                        newPair.add(map.get(reversedS2));
+                        newPair.add(i);
+                        res.add(newPair);
+                    }
+                }
+
+                if (isPalindrome(s2)) {
+                    String reversedS1 = new StringBuilder(s1).reverse().toString();
+                    /**
+                     * s2.length() != 0 to process the empty string to avoid duplicated results.
+                     * Consider test case: ["a", ""]
+                     */
+                    if (map.containsKey(reversedS1) && map.get(reversedS1) != i && s2.length() != 0) {
+                        List<Integer> newPair = new ArrayList<>();
+                        newPair.add(i);
+                        newPair.add(map.get(reversedS1));
+                        res.add(newPair);
+                    }
+                }
+            }
+        }
+        return res;
+    }
+
+
+
+    /**
+     * @see <a href="https://leetcode.com/problems/palindrome-pairs/solutions/79195/o-n-k-2-java-solution-with-trie-structure"></a>
+     * @author fun4LeetCode
+     * @param words
+     * @return
+     */
+    public List<List<Integer>> palindromePairsV2(String[] words) {
+        List<List<Integer>> res = new ArrayList<>();
+        TrieNodeV2 root = new TrieNodeV2();
+
+        for (int i = 0; i < words.length; i++) {
+            buildTrieV2(root, words[i], i);
+        }
+
+        for (int i = 0; i < words.length; i++) {
+            searchTrieV2(words, i, root, res);
+        }
+        return res;
+    }
+
+
+    /**
+     * words = ["abcd","dcba","lls","s","sssll"]
+     *                  root
+     *               -----------
+     *              /  |    |   \
+     *             d   a    s    l
+     *            /    |    |     \
+     *           c     b   l,[2]   l
+     *          /      |    |       \
+     *         b       c  2,l,[2]    s,[4]
+     *        /        |              \
+     *     0,a,[0]   1,d,[1]          s,[4]
+     *                                  \
+     *                                4,s,[4]
+     * @param root
+     * @param word
+     * @param index
+     */
+    public void buildTrieV2(TrieNodeV2 root, String word, int index) {
+        TrieNodeV2 p = root;
+        char[] arr = word.toCharArray();
+        for (int i = arr.length - 1; i >= 0; i--) {
+            int idx = arr[i] - 'a';
+            if (p.children[idx] == null) {
+                p.children[idx] = new TrieNodeV2();
+            }
+            /**
+             * Notice here we invoke isPalindrome firstly, then move the pointer p to the next node.
+             */
+            if (isPalindrome(word, 0, i)) {
+                p.list.add(index);
+            }
+            p = p.children[idx];
+        }
+        p.list.add(index);
+        p.endIndex = index;
+    }
+
+    public void searchTrieV2(String[] words, int index, TrieNodeV2 root, List<List<Integer>> res) {
+        TrieNodeV2 p = root;
+        int n =  words[index].length();
+        for (int i = 0; i < n; i++) {
+            if (p.endIndex >= 0 && p.endIndex != index && isPalindrome(words[index], i, n - 1)) {
+                res.add(Arrays.asList(index, p.endIndex));
+            }
+            int idx = words[index].charAt(i) - 'a';
+            p = p.children[idx];
+            if (p == null) {
+                return;
+            }
+        }
+        for (int j : p.list) {
+            if (index == j) {
+                continue;
+            }
+            res.add(Arrays.asList(index, j));
+        }
     }
 
     static class TrieNodeV2 {
@@ -71,7 +292,7 @@ public class PalindromePairs {
          */
         int endIndex = -1;
         /**
-         *  List of word indices such that nodes below can construct a palindrome
+         *  List of word indices such that nodes can construct a palindrome
          *  e.g.
          */
         List<Integer> list = new ArrayList<>();
@@ -388,6 +609,12 @@ public class PalindromePairs {
         return new StringBuilder(str).reverse().toString();
     }
 
+    public boolean isPalindrome(String s) {
+        int lo = 0;
+        int hi = s.length() - 1;
+        return isPalindrome(s, lo, hi);
+    }
+
     public boolean isPalindrome(String s, int lo, int hi) {
         if (lo > hi) {
             return false;
@@ -395,10 +622,9 @@ public class PalindromePairs {
         while (lo < hi) {
             if (s.charAt(lo) != s.charAt(hi)) {
                 return false;
-            } else {
-                lo++;
-                hi--;
             }
+            lo++;
+            hi--;
         }
         return true;
     }
