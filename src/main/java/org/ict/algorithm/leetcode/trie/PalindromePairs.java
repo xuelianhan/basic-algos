@@ -57,6 +57,76 @@ public class PalindromePairs {
         System.out.println(result);
     }
 
+    /**
+     * It's OK.
+     * Time Cost 152ms.
+     *
+     * Descriptions provided by chamrc.
+     * Using the unique length of all the words is really a nice trick to cut the useless palindrome check. Thanks.
+     * BTW, is the time complexity O(nul)? n is the words count,
+     * u is the count of unique length of the words,
+     * l is the average length of the word.
+     * Even though after Java 7 update 6, substring operation got updated as of memory leak issues,
+     * and the time complexity became O(k),
+     * where k is the length of the word of the substring.
+     * But since the isPalindrome check only walks through the part (length - 1 - k),
+     * the added up time would still be O(l).
+     * This is would be the reason why the current solution is much faster than the TrieTree solution with time complexity of O(nll),
+     * as there are unnecessary palindrome checks.
+     *
+     * @author sagnik_20
+     * @param words
+     * @return
+     */
+    public List<List<Integer>> palindromePairsV5(String[] words) {
+        List<List<Integer>> res = new ArrayList<>();
+        if (words == null || words.length < 2) {
+            return res;
+        }
+
+        TreeSet<Integer> set = new TreeSet<>();
+        Map<String, Integer> map = new HashMap<>();
+        for (int i = 0; i < words.length; i++) {
+            map.put(words[i], i);
+            set.add(words[i].length());
+        }
+
+        for (int i = 0; i < words.length; i++) {
+            int curLength = words[i].length();
+            /**
+             * Find the reversed string directly in the HashMap
+             */
+            String reversed = new StringBuilder(words[i]).reverse().toString();
+            if (map.containsKey(reversed) && map.get(reversed) != i) {
+                res.add(Arrays.asList(i, map.get(reversed)));
+            }
+
+            /**
+             * Iterate the length less than curLength, because set has sorted already.
+             * This is a smart trick to make fewer iterations.
+             */
+            for (Integer k : set) {
+                if (k == curLength) {
+                    break;
+                }
+                if (isPalindrome(reversed, 0, curLength - 1 - k)) {
+                    String s1 = reversed.substring(curLength - k);
+                    if (map.containsKey(s1)) {
+                        res.add(Arrays.asList(i, map.get(s1)));
+                    }
+                }
+
+                if (isPalindrome(reversed, k, curLength - 1)) {
+                    String s2 = reversed.substring(0, k);
+                    if (map.containsKey(s2)) {
+                        res.add(Arrays.asList(map.get(s2), i));
+                    }
+                }
+            }
+        }
+        return res;
+    }
+
 
 
     /**
@@ -513,6 +583,8 @@ public class PalindromePairs {
         }
         return true;
     }
+
+
 
     /**
      * Time Limit Exceed.
