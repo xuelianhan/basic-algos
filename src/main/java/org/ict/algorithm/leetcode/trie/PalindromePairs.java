@@ -119,6 +119,8 @@ public class PalindromePairs {
          * the arr's length is zero, for-loop won't run, and root-node will
          * add the empty string's index to its list, and mark the endIndex value
          * to the empty string's index.
+         * For root-node, all the palindrome words index will store in this list.
+         * empty string word index is include, and it also exists in endIndex variable.
          */
         p.list.add(index);
         p.endIndex = index;
