@@ -50,10 +50,10 @@ import java.util.*;
 public class PalindromePairs {
 
     public static void main(String[] args) {
-        String[] words = {"abcd","dcba","lls","s","sssll"};
-        //String[] words = {"a", ""};
+        //String[] words = {"abcd","dcba","lls","s","sssll"};
+        String[] words = {"a", ""};
         PalindromePairs instance = new PalindromePairs();
-        List<List<Integer>> result = instance.palindromePairsV3(words);
+        List<List<Integer>> result = instance.palindromePairsV2(words);
         System.out.println(result);
     }
 
@@ -114,6 +114,12 @@ public class PalindromePairs {
             }
             p = p.children[idx];
         }
+        /**
+         * If input word is an empty string "",
+         * the arr's length is zero, for-loop won't run, and root-node will
+         * add the empty string's index to its list, and mark the endIndex value
+         * to the empty string's index.
+         */
         p.list.add(index);
         p.endIndex = index;
     }
@@ -131,6 +137,9 @@ public class PalindromePairs {
                 return;
             }
         }
+        /**
+         * For empty string input, this for-loop assure the "" can be concat with other palindrome string.
+         */
         for (int j : p.list) {
             if (index == j) {
                 continue;
@@ -463,7 +472,7 @@ public class PalindromePairs {
     public String reverse(String str) {
         return new StringBuilder(str).reverse().toString();
     }
-    
+
     /**
      * Empty string "" in this method will return false;
      * because hi = -1, lo = 0, lo > hi, so return false.
@@ -526,6 +535,7 @@ public class PalindromePairs {
      * --> str2 is empty, loop skipped
      * @param words
      * @return
+     * @deprecated
      */
     public List<List<Integer>> palindromePairsV4(String[] words) {
         List<List<Integer>> res = new ArrayList<>();
@@ -597,6 +607,7 @@ public class PalindromePairs {
      * when i = 0, j = 1, str1="a", str2=""
      * --> isPalindrome(str1) is true, i!= map.get(""), solution [1,0] is added to result
      * --> str2 is empty, loop skipped
+     * @deprecated
      * @param words
      * @return
      */
