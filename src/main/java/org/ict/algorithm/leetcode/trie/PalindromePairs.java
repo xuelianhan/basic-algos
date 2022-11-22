@@ -1,7 +1,13 @@
 package org.ict.algorithm.leetcode.trie;
 
 
-import java.util.*;
+import java.util.List;
+import java.util.TreeSet;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Arrays;
+
 
 /**
  * You are given a 0-indexed array of unique strings words.
@@ -59,7 +65,7 @@ public class PalindromePairs {
 
     /**
      * It's OK.
-     * Time Cost 152ms.
+     * Time Cost 152ms faster than Trie-Tree Solution.
      *
      * Descriptions provided by chamrc.
      * Using the unique length of all the words is really a nice trick to cut the useless palindrome check. Thanks.
@@ -95,6 +101,10 @@ public class PalindromePairs {
             int curLength = words[i].length();
             /**
              * Find the reversed string directly in the HashMap
+             * Because isPalindrome has already processed the empty string.
+             * we don't need to consider the case curLength==1 separated.
+             * e.g.
+             * words=["a", "abcd", "dcba"]
              */
             String reversed = new StringBuilder(words[i]).reverse().toString();
             if (map.containsKey(reversed) && map.get(reversed) != i) {
@@ -109,6 +119,9 @@ public class PalindromePairs {
                 if (k == curLength) {
                     break;
                 }
+                /**
+                 * 0,...,curLength-1-k, curLength-k,...,curLength
+                 */
                 if (isPalindrome(reversed, 0, curLength - 1 - k)) {
                     String s1 = reversed.substring(curLength - k);
                     if (map.containsKey(s1)) {
