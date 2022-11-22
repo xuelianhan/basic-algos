@@ -56,10 +56,10 @@ import java.util.Arrays;
 public class PalindromePairs {
 
     public static void main(String[] args) {
-        //String[] words = {"abcd","dcba","lls","s","sssll"};
-        String[] words = {"a", ""};
+        String[] words = {"abcd","dcba","lls","s","sssll"};
+        //String[] words = {"a", ""};
         PalindromePairs instance = new PalindromePairs();
-        List<List<Integer>> result = instance.palindromePairsV2(words);
+        List<List<Integer>> result = instance.palindromePairsV5(words);
         System.out.println(result);
     }
 
@@ -113,14 +113,22 @@ public class PalindromePairs {
             /**
              * Iterate the length less than curLength, because set has sorted already.
              * This is a smart trick to make fewer iterations.
+             * We split words only by length less than current word's length, other than split one by one in palindromePairsV3 and palindromePairsV4.
+             * This technique avoids many invalid check.
              */
             int curLength = words[i].length();
             for (Integer k : set) {
+                /**
+                 * split words only by length less than current word's length
+                 */
                 if (k == curLength) {
                     break;
                 }
                 /**
-                 * 0,...,curLength-1-k, curLength-k,...,curLength
+                 * Check left part:
+                 * 0,...,curLength-1-k, curLength-k,...,curLength-1
+                 * words = ["abcd","dcba","lls","s","sssll"]
+                 * sll, (0, 3-1-1), "sl" is not a palindrome.
                  */
                 if (isPalindrome(reversed, 0, curLength - 1 - k)) {
                     String s1 = reversed.substring(curLength - k);
@@ -129,6 +137,13 @@ public class PalindromePairs {
                     }
                 }
 
+                /**
+                 * Check right part:
+                 * 0,...,curLength-1-k, curLength-k,...,curLength
+                 * words = ["abcd","dcba","lls","s","sssll"]
+                 * sll, (1, 3-1), "ll" is a palindrome.
+                 * check substring(0, 1)="s", "s" exists in the map.
+                 */
                 if (isPalindrome(reversed, k, curLength - 1)) {
                     String s2 = reversed.substring(0, k);
                     if (map.containsKey(s2)) {
