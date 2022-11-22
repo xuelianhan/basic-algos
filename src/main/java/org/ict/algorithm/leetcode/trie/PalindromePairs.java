@@ -98,7 +98,6 @@ public class PalindromePairs {
         }
 
         for (int i = 0; i < words.length; i++) {
-            int curLength = words[i].length();
             /**
              * Find the reversed string directly in the HashMap
              * Because isPalindrome has already processed the empty string.
@@ -115,6 +114,7 @@ public class PalindromePairs {
              * Iterate the length less than curLength, because set has sorted already.
              * This is a smart trick to make fewer iterations.
              */
+            int curLength = words[i].length();
             for (Integer k : set) {
                 if (k == curLength) {
                     break;
