@@ -128,7 +128,14 @@ public class PalindromePairs {
                  * Check left part:
                  * 0,...,curLength-1-k, curLength-k,...,curLength-1
                  * words = ["abcd","dcba","lls","s","sssll"]
-                 * sll, (0, 3-1-1), "sl" is not a palindrome.
+                 * -------------------------------------------
+                 * k:1, sll, (0, 3-1-1), "sl" is not a palindrome.
+                 * -------------------------------------------
+                 * k:1, llsss, (0, 5-1-1), "llss" is not a palindrome.
+                 * k:3, llsss, (0, 5-1-3), "ll" is a palindrome.
+                 *    check substring(5-3)="sss", "sss" doesn't exist in the map.
+                 * k:4, llsss, (0, 5-1-4)="l", "l" is a palindrome.
+                 *    check substring(5-4)="lsss", "lsss" doesn't exist in the map.
                  */
                 if (isPalindrome(reversed, 0, curLength - 1 - k)) {
                     String s1 = reversed.substring(curLength - k);
@@ -140,9 +147,20 @@ public class PalindromePairs {
                 /**
                  * Check right part:
                  * 0,...,curLength-1-k, curLength-k,...,curLength
+                 * ...........0.......1.....2....3......4...
                  * words = ["abcd","dcba","lls","s","sssll"]
-                 * sll, (1, 3-1), "ll" is a palindrome.
-                 * check substring(0, 1)="s", "s" exists in the map.
+                 * ------------------------------------------------
+                 * k:1, sll, (1, 3-1), "ll" is a palindrome.
+                 *    check substring(0, 1)="s", "s" exists in the map.
+                 *    add(3, 2) into the result, (3, 2) means words[3]+words[2] concat a palindrome.
+                 * ------------------------------------------------
+                 * k:1, llsss, (1, 5-1), "lsss" is not a palindrome.
+                 * k:3, llsss, (3, 5-1), "ss" is a palindrome.
+                 *    check substring(0, 3)="lls", "lls" exists in the map.
+                 *    add(2, 4) into the result, (2, 4) means words[2]+words[4] concat a palindrome.
+                 * k:4, llsss, (4, 5-1), "s" is a palindrome.
+                 *    check substring(0, 4)="llss", "llss" doesn't exist in the map.
+                 *
                  */
                 if (isPalindrome(reversed, k, curLength - 1)) {
                     String s2 = reversed.substring(0, k);
