@@ -31,6 +31,10 @@ package org.ict.algorithm.leetcode.math;
  * @author sniper
  * @date 06 Nov, 2022
  * LC899
+ * 1.communication
+ * 2.problem solving
+ * 3.coding
+ * 4.testing
  */
 public class OrderlyQueue {
 

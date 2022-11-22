@@ -125,7 +125,12 @@ public class PalindromePairs {
                     break;
                 }
                 /**
-                 * Check left part:
+                 * Check two parts:
+                 * Count down k numbers from the tail, put split point at this position:
+                 * (0,.........len-k-1, .... len)
+                 * If the front-part is palindrome, then we check the count-down-k part whether exist in map or not.
+                 *
+                 * (0, curLength-1-k), (curLength-k, curLength-1)
                  * 0,...,curLength-1-k, curLength-k,...,curLength-1
                  * words = ["abcd","dcba","lls","s","sssll"]
                  * -------------------------------------------
@@ -145,8 +150,12 @@ public class PalindromePairs {
                 }
 
                 /**
-                 * Check right part:
-                 * 0,...,curLength-1-k, curLength-k,...,curLength
+                 * Check tow parts:
+                 * Count head k numbers from the head, put split point at this position:
+                 * (0,....,k,...,len-1)
+                 * if the tail-part is a palindrome, then we check the count-head-k part whether exist in map or not.
+                 * (0, k-1), (k, curLength-1)
+                 * 0,...,k,...,curLength-1
                  * ...........0.......1.....2....3......4...
                  * words = ["abcd","dcba","lls","s","sssll"]
                  * ------------------------------------------------
