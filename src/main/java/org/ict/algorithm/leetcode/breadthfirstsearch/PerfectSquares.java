@@ -46,6 +46,43 @@ public class PerfectSquares {
     public int numSquares(int n) {
         return numSquaresDP(n);        
     }
+
+    /**
+     * Same as bfsV3
+     * @param n
+     * @return
+     */
+    public int numSquaresV4(int n) {
+        if (n <= 0) {
+            return 0;
+        }
+        Queue<Integer> queue = new LinkedList<>();
+        Set<Integer> visited = new HashSet<>();
+        queue.offer(n);
+        visited.add(n);
+        int depth = 0;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            depth++;
+            for (int i = 0; i < size; i++) {
+                int cur = queue.poll();
+                for (int k = 1; n - k*k >= 0; k++) {
+                    int target = cur - k*k;
+                    if (target == 0) {
+                        return depth;
+                    }
+                    if (target < 0) {
+                        break;
+                    }
+                    if (!visited.contains(target)) {
+                        queue.offer(target);
+                        visited.add(target);
+                    }
+                }
+            }
+        }
+        return depth;
+    }
     
     /**
      * Start from node n in queue, and keep pushing in (current - perfect square),
@@ -204,8 +241,8 @@ public class PerfectSquares {
      *
      * Below is a O(√n) time solution using the above math based solution.
      * 
-     * @see https://planetmath.org/ProofOfLagrangesFourSquareTheorem
-     * @see http://www.zrzahid.com/least-number-of-perfect-squares-that-sums-to-n/
+     * @see <a href="https://planetmath.org/ProofOfLagrangesFourSquareTheorem"></a>
+     * @see <a href="http://www.zrzahid.com/least-number-of-perfect-squares-that-sums-to-n/"></a>
      */
     public int numSquaresLagrange(int n) {
     	if (n < 0) {// negative number has no perfect squares.
@@ -277,10 +314,10 @@ public class PerfectSquares {
      * Let, PSN(i) is minimum number of perfect squares that sum to i
      * PSN(i) = min{1+PSN(i-j*j)}, for all j, 1≤j≤√i
      * 
-     * Below is a simple implementation of the above DP solution to the least
-     * number of perfect sum problem. This runs in O(n^2).
+     * Below is a simple implementation of the above DP solution to the least number of perfect sum problem.
+     * This runs in O(n^2).
      *
-     * @see http://www.zrzahid.com/least-number-of-perfect-squares-that-sums-to-n/
+     * @see <a href="http://www.zrzahid.com/least-number-of-perfect-squares-that-sums-to-n/"></a>
      *
      */ 
     public int numSquaresDP(int n) {
