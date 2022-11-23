@@ -77,7 +77,8 @@ public class GameOfLife {
      *
      * We collect all neighbors live status before transforming(status 1 and status 2) and count them,
      * and then we apply the rules.
-     * if board[i][j] is live(1) and (NLC == 2 || NLC == 3),
+     * if board[i][j] is live(1) and (NLC < 2 || NLC > 3), then we change board[i][j] from live(1) to dead(accord with status 2)
+     * if board[i][j] is dead(0) and NLC == 3, then we change board[i][j] from dead(0) to live(accord with status 3)
      *
      * @param board
      */
