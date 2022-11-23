@@ -11,7 +11,7 @@ package org.ict.algorithm.leetcode.tree;
  * Constraints:
  *
  * The number of nodes in the tree is in the range [2, 105].
- * -109 <= Node.val <= 109
+ * -10^9 <= Node.val <= 10^9
  * All Node.val are unique.
  * p != q
  * p and q will exist in the BST.
