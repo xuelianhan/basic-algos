@@ -74,6 +74,9 @@ public class GameOfLife {
      * We can observe the fact that the mod result matches the transformed status.
      * So we transform original status from 0, 1 to 0,1,2,3, then we apply modular on these transformed status,
      * we can get the final result without copying any auxiliary array.
+     * 0->0, 1->1, these two cases don't change status, we can skip them.
+     * 1->0, we need to change the first 1 to 2
+     * 0->1, we need to change the first 0 to 3
      *
      * We collect all neighbors live status before transforming(status 1 and status 2) and count them,
      * and then we apply the rules.
@@ -83,6 +86,42 @@ public class GameOfLife {
      * @param board
      */
     public void gameOfLife(int[][] board) {
+        int m = board.length;
+        int n = (board[0].length);
+        int[] dx = {-1, -1, -1, 0, 1, 1, 1, 0};
+        int[] dy = {-1, 0, 1, 1, 1, 0, -1, -1};
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                int cnt = 0;
+                /**
+                 * Count the neighbors with live status.
+                 */
+                for (int k = 0; i < 8; k++) {
+                    int x = i + dx[k], y = j + dy[k];
+                    if (x >= 0 && x < m && y >= 0 && y < n && (board[i][j] == 1 || board[i][j] == 2)) {
+                        cnt++;
+                    }
+                }
+                /**
+                 * From live to dead.
+                 */
+                if (board[i][j] == 1 && (cnt < 2 ||  cnt > 3)) {
+                    board[i][j] = 2;
+                }
+                /**
+                 * From dead to live
+                 */
+                if (board[i][j] == 0 && cnt == 3) {
+                    board[i][j] = 3;
+                }
+            }
+        }
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                board[i][j] %= 2;
+            }
+        }
 
     }
 }
