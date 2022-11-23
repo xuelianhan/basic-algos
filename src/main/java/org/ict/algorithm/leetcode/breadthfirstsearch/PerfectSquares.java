@@ -66,6 +66,10 @@ public class PerfectSquares {
             depth++;
             for (int i = 0; i < size; i++) {
                 int cur = queue.poll();
+                /**
+                 * Notice here the equal sign!
+                 * It's (n-i*i) >= 0 other than (n-i*i) > 0
+                 */
                 for (int k = 1; n - k*k >= 0; k++) {
                     int target = cur - k*k;
                     if (target == 0) {
@@ -103,6 +107,10 @@ public class PerfectSquares {
             depth++;
             while (size-- > 0) {
                 int cur = queue.poll();
+                /**
+                 * Notice here the equal sign!
+                 * It's (n-i*i) >= 0 other than (n-i*i) > 0
+                 */
                 for (int i = 1; n - i*i >= 0; i++) {
                     int target = cur - i*i;
                     System.out.println("cur:" + cur + ", target:" + target + ",queue:" + queue);
