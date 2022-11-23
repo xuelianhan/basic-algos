@@ -1,5 +1,7 @@
 package org.ict.algorithm.leetcode.simulation;
 
+import java.util.Arrays;
+
 /**
  * According to Wikipedia's article: "The Game of Life, also known simply as Life,
  * is a cellular automaton devised by the British mathematician John Horton Conway in 1970."
@@ -51,6 +53,12 @@ package org.ict.algorithm.leetcode.simulation;
  */
 public class GameOfLife {
 
+    public static void main(String[] args) {
+        int[][] board = {{0,1,0},{0,0,1},{1,1,1},{0,0,0}};
+        GameOfLife instance = new GameOfLife();
+        instance.gameOfLife(board);
+    }
+
     /**
      * In memory of John Horton Conway,
      * an English mathematician active in the theory of finite groups,
@@ -86,8 +94,9 @@ public class GameOfLife {
      * @param board
      */
     public void gameOfLife(int[][] board) {
+        System.out.println(Arrays.deepToString(board));
         int m = board.length;
-        int n = (board[0].length);
+        int n = ( m > 0 ? board[0].length : 0);
         int[] dx = {-1, -1, -1, 0, 1, 1, 1, 0};
         int[] dy = {-1, 0, 1, 1, 1, 0, -1, -1};
         for (int i = 0; i < m; i++) {
@@ -96,32 +105,33 @@ public class GameOfLife {
                 /**
                  * Count the neighbors with live status.
                  */
-                for (int k = 0; i < 8; k++) {
-                    int x = i + dx[k], y = j + dy[k];
+                for (int k = 0; k < 8; k++) {
+                    int x = i + dx[k];
+                    int y = j + dy[k];
                     if (x >= 0 && x < m && y >= 0 && y < n && (board[i][j] == 1 || board[i][j] == 2)) {
                         cnt++;
                     }
                 }
-                /**
-                 * From live to dead.
-                 */
                 if (board[i][j] == 1 && (cnt < 2 ||  cnt > 3)) {
+                    /**
+                     * From live to dead.
+                     */
                     board[i][j] = 2;
                 }
-                /**
-                 * From dead to live
-                 */
                 if (board[i][j] == 0 && cnt == 3) {
+                    /**
+                     * From dead to live
+                     */
                     board[i][j] = 3;
                 }
             }
         }
-
+        System.out.println(Arrays.deepToString(board));
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
                 board[i][j] %= 2;
             }
         }
-
+        System.out.println(Arrays.deepToString(board));
     }
 }
