@@ -57,6 +57,7 @@ public class GameOfLife {
         int[][] board = {{0,1,0},{0,0,1},{1,1,1},{0,0,0}};
         GameOfLife instance = new GameOfLife();
         instance.gameOfLife(board);
+        System.out.println(Arrays.deepToString(board));
     }
 
     /**
@@ -94,7 +95,6 @@ public class GameOfLife {
      * @param board
      */
     public void gameOfLife(int[][] board) {
-        System.out.println(Arrays.deepToString(board));
         int m = board.length;
         int n = ( m > 0 ? board[0].length : 0);
         int[] dx = {-1, -1, -1, 0, 1, 1, 1, 0};
@@ -108,7 +108,12 @@ public class GameOfLife {
                 for (int k = 0; k < 8; k++) {
                     int x = i + dx[k];
                     int y = j + dy[k];
-                    if (x >= 0 && x < m && y >= 0 && y < n && (board[i][j] == 1 || board[i][j] == 2)) {
+                    /**
+                     * Notice using board[x][y] here, not board[i][j]
+                     * The next state is created by applying the above rules simultaneously to every cell in the current state,
+                     * so we concern state==1 and state==2(both states indicate live)
+                     */
+                    if (x >= 0 && x < m && y >= 0 && y < n && (board[x][y] == 1 || board[x][y] == 2)) {
                         cnt++;
                     }
                 }
@@ -126,12 +131,13 @@ public class GameOfLife {
                 }
             }
         }
-        System.out.println(Arrays.deepToString(board));
+        /**
+         * Restore state back to 0 and 1.
+         */
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
                 board[i][j] %= 2;
             }
         }
-        System.out.println(Arrays.deepToString(board));
     }
 }
