@@ -1,7 +1,6 @@
 package org.ict.algorithm.leetcode.array;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Given an array of strings strs, group the anagrams together.
@@ -37,8 +36,30 @@ import java.util.List;
  */
 public class GroupAnagrams {
 
+    public static void main(String[] args) {
+        String[] strs = {"eat","tea","tan","ate","nat","bat"};
+        GroupAnagrams instance = new  GroupAnagrams();
+        List<List<String>> result = instance.groupAnagrams(strs);
+        System.out.println(result);
+    }
+
     public List<List<String>> groupAnagrams(String[] strs) {
         List<List<String>> result = new ArrayList<>();
+        Map<String, Integer> map = new HashMap<>();
+        for (String str : strs) {
+            char[] arr = str.toCharArray();
+            Arrays.sort(arr);
+            String temp = new String(arr);
+            if (!map.containsKey(temp)) {
+                /**
+                 * A trick here is we store the list size other than string itself,
+                 * this operation can avoid copy string from map to result list.
+                 */
+                map.put(temp, result.size());
+                result.add(new ArrayList<>());
+            }
+            result.get(map.get(temp)).add(str);
+        }
         return result;
     }
 }
