@@ -1,5 +1,7 @@
 package org.ict.algorithm.leetcode.dynamicprogramming;
 
+import java.util.Arrays;
+
 /**
  * There is a robot on an m x n grid.
  * The robot is initially located at the top-left corner (i.e., grid[0][0]).
@@ -33,8 +35,26 @@ package org.ict.algorithm.leetcode.dynamicprogramming;
  * @author sniper
  * @date 25 Nov, 2022
  * LC62
+ * This problem is similar with ClimbingStairs(LC70)
  */
 public class UniquePaths {
+
+    public static void main(String[] args) {
+        UniquePaths instance = new UniquePaths();
+        int res = instance.uniquePathsV1(3, 2);
+        System.out.println(res);
+    }
+
+    public int uniquePathsV1(int m, int n) {
+        int[] dp = new int[n];
+        Arrays.fill(dp, 1);
+        for (int i = 1; i < m; ++i) {
+            for (int j = 1; j < n; ++j) {
+                dp[j] += dp[j - 1];
+            }
+        }
+        return dp[n - 1];
+    }
 
     public int uniquePaths(int m, int n) {
         return 0;
