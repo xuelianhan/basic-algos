@@ -77,7 +77,48 @@ public class KthSmallestElementOfSortedMatrix {
     }
 
     /**
-     * Search from the left-down-corner of the matrix
+     * Search from the left-down-corner(i = m - 1, j = 0) of the matrix
+     * e.g.
+     * Input: matrix = [[1, 5, 9],
+     *                 [10,11,13],
+     *                 [12,13,15]], k = 8
+     * left:1, right:15, mid:8
+     * i = 3 - 1 = 2, j = 0
+     * we start searching target 8 from the element matrix[2][0] = 12,
+     * 12 > 8, so i--, i:1, j:0
+     * i:1, j:0, matrix[1][0] = 10
+     * 10 > 8, so i--, i:0, j:0
+     * i:0, j:0, matrix[0][0] = 1
+     * 1 < 8, res = 0 + 1 = 1, j++, j:0
+     * i:0, j:1, matrix[0][1] = 5
+     * 5 < 8, res = 1 + (0 + 1) = 2, j++, j:2
+     * i:0, j:2, matrix[0][2] = 9
+     * 9 > 8, i--, i:-1, break-while-loop, return search cnt:2
+     * 2 < 8, left: 8+1=9, left:9 < right:15, mid: 12
+     *
+     * i:2, j:0, target:12, matrix[2][0] = 12
+     * 12 <= 12, res = 2 + 1 = 3, j++, j:1
+     * i:2, j:1, matrix[2][1] = 13
+     * 13 > 12, i--, i:1, j:1
+     * i:1, j:1, matrix[1][1] = 11
+     * 11 < 12, res = 3 + (1+1) = 5, j++, j:2
+     * i:1, j:2, matrix[1][2] = 13
+     * 13 > 12, i--, i:0, j:2
+     * i:0, j:2, matrix[0][2] = 9
+     * 9 < 12, res = 5 + (0+1) = 6, j++, j:3, break-while-loop, return search cnt:6
+     *
+     * 6 < 8, left = mid + 1 = 12 + 1 = 13, left < right:15, mid = 14
+     *
+     * i:2, j:0, target:14, matrix[2][0] = 12
+     * 12 < 14, res = 2 + 1 = 3, j++, j:1
+     * i:2, j:1, matrix[2][1] = 13
+     * 13 < 14, res = 3 + (2+1) = 6, j++, j:2
+     * i:2, j:2, matrix[2][2] = 15
+     * 15 > 14, i--, i:1, j:2, matrix[1][2] = 13
+     * 13 < 14, res = 6 + (1+1) = 8, j++, j:3, break-while-loop, return search cnt:8
+     * cnt:8, 8 == k, right:14, left:13
+     *
+     *
      * @param matrix
      * @param target
      * @return
@@ -86,9 +127,15 @@ public class KthSmallestElementOfSortedMatrix {
         int m = matrix.length, i = m - 1, j = 0, res = 0;
         while (i >= 0 && j < m) {
             if (matrix[i][j] <= target) {
+                /**
+                 * move right
+                 */
                 res += i + 1;
                 ++j;
             } else {
+                /**
+                 * move up
+                 */
                 --i;
             }
         }
