@@ -48,9 +48,41 @@ import java.util.PriorityQueue;
  */
 public class KthSmallestElementOfSortedMatrix {
 
+    /**
+     * Binary-Search-Solution.
+     * @param matrix
+     * @param k
+     * @return
+     * @author GraceMeng
+     */
     public int kthSmallestV2(int[][] matrix, int k) {
+        int n = matrix.length, lo = matrix[0][0], hi = matrix[n - 1][n - 1];
 
-        return 0;
+        while (lo <= hi) {
+            int mi = lo + ((hi - lo) >> 1);
+            int count = countNonBiggerV2(matrix, mi);
+            if (count < k) {
+                lo = mi + 1;
+            } else {
+                hi = mi - 1;
+            }
+        }
+
+        return lo;
+    }
+
+    private static int countNonBiggerV2(int[][] matrix, int target) {
+        int m = matrix.length, i = m - 1, j = 0, cnt = 0;
+        while (i >= 0 && j < m) {
+            if (matrix[i][j] > target) {
+                i--;
+            } else {
+                cnt += i + 1;
+                j++;
+            }
+        }
+
+        return cnt;
     }
 
     /**
@@ -66,7 +98,7 @@ public class KthSmallestElementOfSortedMatrix {
         int right = matrix[m-1][n-1];
         while (left < right) {
             int mid = left + (right - left) / 2;
-            int cnt = searchLessEqual(matrix, mid);
+            int cnt = countNonBiggerV1(matrix, mid);
             if (cnt < k) {
                 left = mid + 1;
             } else {
@@ -123,7 +155,7 @@ public class KthSmallestElementOfSortedMatrix {
      * @param target
      * @return
      */
-    private int searchLessEqual(int[][] matrix, int target) {
+    private int countNonBiggerV1(int[][] matrix, int target) {
         int m = matrix.length, i = m - 1, j = 0, res = 0;
         while (i >= 0 && j < m) {
             if (matrix[i][j] <= target) {
