@@ -128,7 +128,7 @@ public class KthSmallestElementOfSortedMatrix {
         while (i >= 0 && j < m) {
             if (matrix[i][j] <= target) {
                 /**
-                 * move right
+                 * move right, ++j indicates the 1, and plus i to the current res.
                  */
                 res += i + 1;
                 ++j;
