@@ -71,8 +71,17 @@ public class KthSmallestElementOfSortedMatrix {
                 return 0;
             }
         }));
+        int m = matrix.length;
+        int n = matrix[0].length;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                maxHeap.offer(matrix[i][j]);
+                if (maxHeap.size() > k) {
+                    maxHeap.poll();
+                }
+            }
+        }
 
-
-        return 0;
+        return maxHeap.peek();
     }
 }
