@@ -14,7 +14,9 @@ import java.util.PriorityQueue;
  *
  * Example 1:
  *
- * Input: matrix = [[1,5,9],[10,11,13],[12,13,15]], k = 8
+ * Input: matrix = [[1, 5, 9],
+ *                  [10,11,13],
+ *                  [12,13,15]], k = 8
  * Output: 13
  * Explanation: The elements in the matrix are [1,5,9,10,11,12,13,13,15], and the 8th smallest number is 13
  * Example 2:
@@ -42,6 +44,7 @@ import java.util.PriorityQueue;
  * @author sniper
  * @date 25 Nov, 2022
  * LC378
+ * Tag:Heap, Binary-Search
  */
 public class KthSmallestElementOfSortedMatrix {
 
@@ -50,9 +53,46 @@ public class KthSmallestElementOfSortedMatrix {
         return 0;
     }
 
+    /**
+     * Binary-Search-Solution.
+     * @param matrix
+     * @param k
+     * @return
+     */
     public int kthSmallestV1(int[][] matrix, int k) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+        int left = matrix[0][0];
+        int right = matrix[m-1][n-1];
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            int cnt = searchLessEqual(matrix, mid);
+            if (cnt < k) {
+                left = mid + 1;
+            } else {
+                right = mid;
+            }
+        }
+        return left;
+    }
 
-        return 0;
+    /**
+     * Search from the left-down-corner of the matrix
+     * @param matrix
+     * @param target
+     * @return
+     */
+    private int searchLessEqual(int[][] matrix, int target) {
+        int m = matrix.length, i = m - 1, j = 0, res = 0;
+        while (i >= 0 && j < m) {
+            if (matrix[i][j] <= target) {
+                res += i + 1;
+                ++j;
+            } else {
+                --i;
+            }
+        }
+        return res;
     }
 
     /**
