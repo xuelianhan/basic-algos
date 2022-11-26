@@ -41,6 +41,7 @@ import java.util.PriorityQueue;
  * The solution may be too advanced for an interview but you may find reading this paper fun.
  * <a href="http://www.cse.yorku.ca/~andy/pubs/X+Y.pdf">this paper</a>
  *
+ * More Simple problem is LC1351
  * @author sniper
  * @date 25 Nov, 2022
  * LC378
