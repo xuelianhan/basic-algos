@@ -180,6 +180,28 @@ public class KthSmallestElementOfSortedMatrix {
      * @param k
      * @return
      */
+    public int kthSmallestV0(int[][] matrix, int k) {
+        PriorityQueue<Integer> maxHeap = new PriorityQueue<>(((o1, o2) -> Integer.compare(o2, o1)));
+        int m = matrix.length;
+        int n = matrix[0].length;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                maxHeap.offer(matrix[i][j]);
+                if (maxHeap.size() > k) {
+                    maxHeap.poll();
+                }
+            }
+        }
+
+        return maxHeap.peek();
+    }
+
+    /**
+     * Max-Heap Solution
+     * @param matrix
+     * @param k
+     * @return
+     */
     public int kthSmallest(int[][] matrix, int k) {
         PriorityQueue<Integer> maxHeap = new PriorityQueue<>(((o1, o2) -> {
             if (o1 < o2) {
