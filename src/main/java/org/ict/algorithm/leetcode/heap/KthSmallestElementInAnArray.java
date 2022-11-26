@@ -17,6 +17,7 @@ public class KthSmallestElementInAnArray {
 
 
     /**
+     * Understanding this solution.
      * Use a Max-Heap of priority queue, keep queue size to k.
      * The root of heap is the maximum of the k numbers.
      * It's also the k'th-smallest element in the heap.
@@ -36,7 +37,7 @@ public class KthSmallestElementInAnArray {
      * @param k
      * @return
      */
-    public static int findKthSmallest(int[] nums, int k) {
+    public static int findKthSmallestV1(int[] nums, int k) {
         PriorityQueue<Integer> maxHeap = new PriorityQueue<>(((o1, o2) -> {
             if (o1 < o2) {
                 return 1;
@@ -53,5 +54,27 @@ public class KthSmallestElementInAnArray {
             }
         }
         return maxHeap.peek();
+    }
+
+    /**
+     * Min-Heap solution.
+     * @param nums
+     * @param k
+     * @return
+     */
+    public static int findKthSmallest(int[] nums, int k) {
+        PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+        for (int num : nums) {
+            minHeap.offer(num);
+        }
+
+        int res = 0;
+        for (int i = 0; i < k; i++) {
+            res = minHeap.poll();
+            if (i == k-1) {
+                return res;
+            }
+        }
+        return res;
     }
 }

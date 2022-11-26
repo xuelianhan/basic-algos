@@ -50,12 +50,13 @@ public class KthSmallestElementOfSortedMatrix {
 
     /**
      * Binary-Search-Solution.
+     * Time Cost 1ms
      * @param matrix
      * @param k
      * @return
      * @author GraceMeng
      */
-    public int kthSmallestV2(int[][] matrix, int k) {
+    public int kthSmallestV3(int[][] matrix, int k) {
         int n = matrix.length, lo = matrix[0][0], hi = matrix[n - 1][n - 1];
 
         while (lo <= hi) {
@@ -71,7 +72,7 @@ public class KthSmallestElementOfSortedMatrix {
         return lo;
     }
 
-    private static int countNonBiggerV2(int[][] matrix, int target) {
+    private static int countNonBiggerV3(int[][] matrix, int target) {
         int m = matrix.length, i = m - 1, j = 0, cnt = 0;
         while (i >= 0 && j < m) {
             if (matrix[i][j] > target) {
@@ -87,18 +88,19 @@ public class KthSmallestElementOfSortedMatrix {
 
     /**
      * Binary-Search-Solution.
+     * Time Cost 0ms
      * @param matrix
      * @param k
      * @return
      */
-    public int kthSmallestV1(int[][] matrix, int k) {
+    public int kthSmallestV2(int[][] matrix, int k) {
         int m = matrix.length;
         int n = matrix[0].length;
         int left = matrix[0][0];
         int right = matrix[m-1][n-1];
         while (left < right) {
             int mid = left + (right - left) / 2;
-            int cnt = countNonBiggerV1(matrix, mid);
+            int cnt = countNonBiggerV2(matrix, mid);
             if (cnt < k) {
                 left = mid + 1;
             } else {
@@ -155,7 +157,7 @@ public class KthSmallestElementOfSortedMatrix {
      * @param target
      * @return
      */
-    private int countNonBiggerV1(int[][] matrix, int target) {
+    private int countNonBiggerV2(int[][] matrix, int target) {
         int m = matrix.length, i = m - 1, j = 0, res = 0;
         while (i >= 0 && j < m) {
             if (matrix[i][j] <= target) {
@@ -175,7 +177,22 @@ public class KthSmallestElementOfSortedMatrix {
     }
 
     /**
+     * Min-Heap Solution
+     * Input: matrix = [[1, 5, 9],
+     *                  [10,11,13],
+     *                  [12,13,15]], k = 8
+     * @param matrix
+     * @param k
+     * @return
+     */
+    public int kthSmallestV1(int[][] matrix, int k) {
+
+        return 0;
+    }
+
+    /**
      * Max-Heap Solution
+     * Time Cost 47ms
      * Time Complexity O(M * N * logK)
      * Space Complexity O(logK), space for the heap which stores up to k elements.
      * @param matrix
@@ -200,6 +217,7 @@ public class KthSmallestElementOfSortedMatrix {
 
     /**
      * Max-Heap Solution
+     * Time Cost 21ms
      * Time Complexity O(M * N * logK)
      * Space Complexity O(logK), space for the heap which stores up to k elements.
      * @param matrix
