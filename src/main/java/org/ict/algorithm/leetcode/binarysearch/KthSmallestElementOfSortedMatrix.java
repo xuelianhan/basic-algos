@@ -76,8 +76,14 @@ public class KthSmallestElementOfSortedMatrix {
         int m = matrix.length, i = m - 1, j = 0, cnt = 0;
         while (i >= 0 && j < m) {
             if (matrix[i][j] > target) {
+                /**
+                 * move up
+                 */
                 i--;
             } else {
+                /**
+                 * move right, ++j indicates the 1, and plus i to the current res.
+                 */
                 cnt += i + 1;
                 j++;
             }
@@ -98,6 +104,9 @@ public class KthSmallestElementOfSortedMatrix {
         int n = matrix[0].length;
         int left = matrix[0][0];
         int right = matrix[m-1][n-1];
+        /**
+         * Notice less than sign(<) here.
+         */
         while (left < right) {
             int mid = left + (right - left) / 2;
             int cnt = countNonBiggerV2(matrix, mid);
