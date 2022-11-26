@@ -176,6 +176,8 @@ public class KthSmallestElementOfSortedMatrix {
 
     /**
      * Max-Heap Solution
+     * Time Complexity O(M * N * logK)
+     * Space Complexity O(logK), space for the heap which stores up to k elements.
      * @param matrix
      * @param k
      * @return
@@ -198,6 +200,8 @@ public class KthSmallestElementOfSortedMatrix {
 
     /**
      * Max-Heap Solution
+     * Time Complexity O(M * N * logK)
+     * Space Complexity O(logK), space for the heap which stores up to k elements.
      * @param matrix
      * @param k
      * @return
