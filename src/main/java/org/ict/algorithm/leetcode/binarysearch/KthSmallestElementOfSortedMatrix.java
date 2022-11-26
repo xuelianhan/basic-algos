@@ -150,7 +150,16 @@ public class KthSmallestElementOfSortedMatrix {
      * i:2, j:2, matrix[2][2] = 15
      * 15 > 14, i--, i:1, j:2, matrix[1][2] = 13
      * 13 < 14, res = 6 + (1+1) = 8, j++, j:3, break-while-loop, return search cnt:8
-     * cnt:8, 8 == k, right:14, left:13
+     * cnt:8, 8 == k, right=mid:14, left:13, left < right, mid = 13
+     *
+     * i:2, j:0, target:13, matrix[2][0] = 12
+     * 12 < 13, res = 3, j++, j:1
+     * i:2, j:1, matrix[2][1] = 13
+     * 13 == 13, res = 3 + (2+1) = 6, j++, j:2
+     * i:2, j:2,  matrix[2][2] = 15
+     * 15 > 13, i--, i:1, j:2, matrix[1][2] = 13
+     * 13 == 13, res = 6 + (1+1) = 8, j++, j:3, break-while-loop, return search cnt:8
+     * cnt:8, 8 == k, right=mid:13, left:13, outer-while-loop-end, return left:13
      *
      *
      * @param matrix
@@ -177,20 +186,6 @@ public class KthSmallestElementOfSortedMatrix {
     }
 
     /**
-     * Min-Heap Solution
-     * Input: matrix = [[1, 5, 9],
-     *                  [10,11,13],
-     *                  [12,13,15]], k = 8
-     * @param matrix
-     * @param k
-     * @return
-     */
-    public int kthSmallestV1(int[][] matrix, int k) {
-
-        return 0;
-    }
-
-    /**
      * Max-Heap Solution
      * Time Cost 47ms
      * Time Complexity O(M * N * logK)
@@ -199,7 +194,7 @@ public class KthSmallestElementOfSortedMatrix {
      * @param k
      * @return
      */
-    public int kthSmallestV0(int[][] matrix, int k) {
+    public int kthSmallestV1(int[][] matrix, int k) {
         PriorityQueue<Integer> maxHeap = new PriorityQueue<>(((o1, o2) -> Integer.compare(o2, o1)));
         int m = matrix.length;
         int n = matrix[0].length;
