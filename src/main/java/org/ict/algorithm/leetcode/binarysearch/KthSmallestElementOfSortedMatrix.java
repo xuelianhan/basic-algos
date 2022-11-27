@@ -76,7 +76,7 @@ public class KthSmallestElementOfSortedMatrix {
         return lo;
     }
 
-    private static int countNonBiggerV3(int[][] matrix, int target) {
+    private int countNonBiggerV3(int[][] matrix, int target) {
         int m = matrix.length, i = m - 1, j = 0, cnt = 0;
         while (i >= 0 && j < m) {
             if (matrix[i][j] > target) {
