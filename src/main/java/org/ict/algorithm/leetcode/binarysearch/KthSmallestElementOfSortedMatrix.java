@@ -60,7 +60,8 @@ public class KthSmallestElementOfSortedMatrix {
     public int kthSmallestV3(int[][] matrix, int k) {
         int n = matrix.length, lo = matrix[0][0], hi = matrix[n - 1][n - 1];
         /**
-         *  Notice less than and equal sign(<=) here between lo and hi
+         * Notice less than and equal sign(<=) here between lo and hi
+         * This means the search space is two-closed range [left, right]
          */
         while (lo <= hi) {
             int mi = lo + ((hi - lo) >> 1);
@@ -160,6 +161,7 @@ public class KthSmallestElementOfSortedMatrix {
         int right = matrix[m-1][n-1];
         /**
          * Notice less than sign(<) here between left and right
+         * This means the search space is not include the right [left, right), it's a right-half-opened range.
          */
         while (left < right) {
             int mid = left + (right - left) / 2;
