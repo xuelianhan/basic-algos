@@ -1,6 +1,8 @@
 package org.ict.algorithm.leetcode.binarysearch;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Given an array of integers nums containing n + 1 integers where each integer is in the range [1, n] inclusive.
@@ -39,12 +41,63 @@ import java.util.Arrays;
  */
 public class FindTheDuplicateNumber {
 
-    public int findDuplicate(int[] nums) {
-        Arrays.sort(nums);
-        int low = 0, high = nums.length - 1;
-        while (low <= high) {
-
-        }
+    public int findDuplicateV4(int[] nums) {
         return 0;
+    }
+
+
+    public int findDuplicateV3(int[] nums) {
+        return 0;
+    }
+
+
+
+    public int findDuplicateV2(int[] nums) {
+        return 0;
+    }
+
+    /**
+     * Time Cost 84 ms
+     * Not Satisfy the constraint of using only constant extra space.
+     * @param nums
+     * @return
+     */
+    public int findDuplicateV1(int[] nums) {
+        int res = 0;
+        Map<Integer, Integer> freq = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            freq.put(nums[i], freq.getOrDefault(nums[i], 0) + 1);
+            if (freq.getOrDefault(nums[i], 0) > 1) {
+                res = nums[i];
+                break;
+            }
+        }
+        return res;
+    }
+
+
+    /**
+     * Time Cost 32ms
+     * Not Satisfy the constraint of using only constant extra space.
+     * @param nums
+     * @return
+     */
+    public int findDuplicate(int[] nums) {
+        int max = 0, sum = 0;
+        Map<Integer, Integer> freq = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            freq.put(nums[i], freq.getOrDefault(nums[i], 0) + 1);
+            if (freq.getOrDefault(nums[i], 0) > 1) {
+                return nums[i];
+            }
+            sum += nums[i];
+            if (nums[i] > max) {
+                max = nums[i];
+            }
+        }
+        for (int i = 1; i <= max; i++) {
+            sum -= i;
+        }
+        return sum;
     }
 }

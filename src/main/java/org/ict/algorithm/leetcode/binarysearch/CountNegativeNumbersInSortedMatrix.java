@@ -38,6 +38,11 @@ package org.ict.algorithm.leetcode.binarysearch;
 public class CountNegativeNumbersInSortedMatrix {
 
 
+    /**
+     * Time cost 0ms
+     * @param grid
+     * @return
+     */
     public int countNegativesV1(int[][] grid) {
         int m = grid.length, n = grid[0].length;
         if (grid[m-1][n-1] > 0) {
