@@ -4,11 +4,11 @@ import java.util.PriorityQueue;
 
 /**
  * Given an n x n matrix where each of the rows and columns is sorted in ascending order,
- * return the kth smallest element in the matrix.
+ * return the kth-smallest element in the matrix.
  *
- * Note that it is the kth smallest element in the sorted order, not the kth distinct element.
+ * Note that it is the kth-smallest element in the sorted order, not the kth distinct element.
  *
- * You must find a solution with a memory complexity better than O(n2).
+ * You must find a solution with a memory complexity better than O(n^2).
  *
  *
  *
@@ -41,6 +41,7 @@ import java.util.PriorityQueue;
  * The solution may be too advanced for an interview but you may find reading this paper fun.
  * <a href="http://www.cse.yorku.ca/~andy/pubs/X+Y.pdf">this paper</a>
  *
+ * More Simple problem is LC1351
  * @author sniper
  * @date 25 Nov, 2022
  * LC378
@@ -48,35 +49,58 @@ import java.util.PriorityQueue;
  */
 public class KthSmallestElementOfSortedMatrix {
 
-    public int kthSmallestV2(int[][] matrix, int k) {
+    /**
+     * Understanding this solution.
+     * Binary-Search-Solution.
+     * Time Cost 1ms
+     * @param matrix
+     * @param k
+     * @return
+     * @author GraceMeng
+     */
+    public int kthSmallestV3(int[][] matrix, int k) {
+        int n = matrix.length, lo = matrix[0][0], hi = matrix[n - 1][n - 1];
+        /**
+         * Notice less than and equal sign(<=) here between lo and hi
+         * This means the search space is two-closed range [lo, hi]
+         */
+        while (lo <= hi) {
+            int mi = lo + ((hi - lo) >> 1);
+            int count = countNonBiggerV2(matrix, mi);
+            if (count < k) {
+                lo = mi + 1;
+            } else {
+                hi = mi - 1;
+            }
+        }
 
-        return 0;
+        return lo;
+    }
+
+    private int countNonBiggerV3(int[][] matrix, int target) {
+        int m = matrix.length, i = m - 1, j = 0, cnt = 0;
+        while (i >= 0 && j < m) {
+            if (matrix[i][j] > target) {
+                /**
+                 * move up
+                 */
+                i--;
+            } else {
+                /**
+                 * j++, move right, use i + 1 because i is an index of array which starts from zero
+                 */
+                cnt += i + 1;
+                j++;
+            }
+        }
+
+        return cnt;
     }
 
     /**
      * Binary-Search-Solution.
-     * @param matrix
-     * @param k
-     * @return
-     */
-    public int kthSmallestV1(int[][] matrix, int k) {
-        int m = matrix.length;
-        int n = matrix[0].length;
-        int left = matrix[0][0];
-        int right = matrix[m-1][n-1];
-        while (left < right) {
-            int mid = left + (right - left) / 2;
-            int cnt = searchLessEqual(matrix, mid);
-            if (cnt < k) {
-                left = mid + 1;
-            } else {
-                right = mid;
-            }
-        }
-        return left;
-    }
-
-    /**
+     * Time Cost 0ms
+     *
      * Search from the left-down-corner(i = m - 1, j = 0) of the matrix
      * e.g.
      * Input: matrix = [[1, 5, 9],
@@ -116,19 +140,48 @@ public class KthSmallestElementOfSortedMatrix {
      * i:2, j:2, matrix[2][2] = 15
      * 15 > 14, i--, i:1, j:2, matrix[1][2] = 13
      * 13 < 14, res = 6 + (1+1) = 8, j++, j:3, break-while-loop, return search cnt:8
-     * cnt:8, 8 == k, right:14, left:13
+     * cnt:8, 8 == k, right=mid:14, left:13, left < right, mid = 13
      *
+     * i:2, j:0, target:13, matrix[2][0] = 12
+     * 12 < 13, res = 3, j++, j:1
+     * i:2, j:1, matrix[2][1] = 13
+     * 13 == 13, res = 3 + (2+1) = 6, j++, j:2
+     * i:2, j:2,  matrix[2][2] = 15
+     * 15 > 13, i--, i:1, j:2, matrix[1][2] = 13
+     * 13 == 13, res = 6 + (1+1) = 8, j++, j:3, break-while-loop, return search cnt:8
+     * cnt:8, 8 == k, right=mid:13, left:13, outer-while-loop-end, return left:13
      *
      * @param matrix
-     * @param target
+     * @param k
      * @return
      */
-    private int searchLessEqual(int[][] matrix, int target) {
+    public int kthSmallestV2(int[][] matrix, int k) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+        int left = matrix[0][0];
+        int right = matrix[m-1][n-1];
+        /**
+         * Notice less than sign(<) here between left and right
+         * This means the search space is not include the right [left, right), it's a right-half-opened range.
+         */
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            int cnt = countNonBiggerV2(matrix, mid);
+            if (cnt < k) {
+                left = mid + 1;
+            } else {
+                right = mid;
+            }
+        }
+        return left;
+    }
+
+    private int countNonBiggerV2(int[][] matrix, int target) {
         int m = matrix.length, i = m - 1, j = 0, res = 0;
         while (i >= 0 && j < m) {
             if (matrix[i][j] <= target) {
                 /**
-                 * move right, ++j indicates the 1, and plus i to the current res.
+                 * j++, move right, use i + 1 because i is an index of array which starts from zero
                  */
                 res += i + 1;
                 ++j;
@@ -144,6 +197,34 @@ public class KthSmallestElementOfSortedMatrix {
 
     /**
      * Max-Heap Solution
+     * Time Cost 47ms
+     * Time Complexity O(M * N * logK)
+     * Space Complexity O(logK), space for the heap which stores up to k elements.
+     * @param matrix
+     * @param k
+     * @return
+     */
+    public int kthSmallestV1(int[][] matrix, int k) {
+        PriorityQueue<Integer> maxHeap = new PriorityQueue<>(((o1, o2) -> Integer.compare(o2, o1)));
+        int m = matrix.length;
+        int n = matrix[0].length;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                maxHeap.offer(matrix[i][j]);
+                if (maxHeap.size() > k) {
+                    maxHeap.poll();
+                }
+            }
+        }
+
+        return maxHeap.peek();
+    }
+
+    /**
+     * Max-Heap Solution
+     * Time Cost 21ms
+     * Time Complexity O(M * N * logK)
+     * Space Complexity O(logK), space for the heap which stores up to k elements.
      * @param matrix
      * @param k
      * @return

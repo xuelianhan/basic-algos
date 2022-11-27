@@ -87,7 +87,7 @@ public class KthSmallestElementOfSortedMatrix {
                 i--;
             } else {
                 /**
-                 * move right, ++j indicates the 1, and plus i to the current res.
+                 * j++, move right, use i + 1 because i is an index of array which starts from zero
                  */
                 cnt += i + 1;
                 j++;
@@ -181,7 +181,7 @@ public class KthSmallestElementOfSortedMatrix {
         while (i >= 0 && j < m) {
             if (matrix[i][j] <= target) {
                 /**
-                 * move right, ++j indicates the 1, and plus i to the current res.
+                 * j++, move right, use i + 1 because i is an index of array which starts from zero
                  */
                 res += i + 1;
                 ++j;
