@@ -50,6 +50,7 @@ import java.util.PriorityQueue;
 public class KthSmallestElementOfSortedMatrix {
 
     /**
+     * Understanding this solution.
      * Binary-Search-Solution.
      * Time Cost 1ms
      * @param matrix
@@ -61,7 +62,7 @@ public class KthSmallestElementOfSortedMatrix {
         int n = matrix.length, lo = matrix[0][0], hi = matrix[n - 1][n - 1];
         /**
          * Notice less than and equal sign(<=) here between lo and hi
-         * This means the search space is two-closed range [left, right]
+         * This means the search space is two-closed range [lo, hi]
          */
         while (lo <= hi) {
             int mi = lo + ((hi - lo) >> 1);
