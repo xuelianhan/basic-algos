@@ -4,11 +4,11 @@ import java.util.PriorityQueue;
 
 /**
  * Given an n x n matrix where each of the rows and columns is sorted in ascending order,
- * return the kth smallest element in the matrix.
+ * return the kth-smallest element in the matrix.
  *
- * Note that it is the kth smallest element in the sorted order, not the kth distinct element.
+ * Note that it is the kth-smallest element in the sorted order, not the kth distinct element.
  *
- * You must find a solution with a memory complexity better than O(n2).
+ * You must find a solution with a memory complexity better than O(n^2).
  *
  *
  *
@@ -59,7 +59,9 @@ public class KthSmallestElementOfSortedMatrix {
      */
     public int kthSmallestV3(int[][] matrix, int k) {
         int n = matrix.length, lo = matrix[0][0], hi = matrix[n - 1][n - 1];
-
+        /**
+         *  Notice less than and equal sign(<=) here between lo and hi
+         */
         while (lo <= hi) {
             int mi = lo + ((hi - lo) >> 1);
             int count = countNonBiggerV2(matrix, mi);
@@ -96,31 +98,7 @@ public class KthSmallestElementOfSortedMatrix {
     /**
      * Binary-Search-Solution.
      * Time Cost 0ms
-     * @param matrix
-     * @param k
-     * @return
-     */
-    public int kthSmallestV2(int[][] matrix, int k) {
-        int m = matrix.length;
-        int n = matrix[0].length;
-        int left = matrix[0][0];
-        int right = matrix[m-1][n-1];
-        /**
-         * Notice less than sign(<) here.
-         */
-        while (left < right) {
-            int mid = left + (right - left) / 2;
-            int cnt = countNonBiggerV2(matrix, mid);
-            if (cnt < k) {
-                left = mid + 1;
-            } else {
-                right = mid;
-            }
-        }
-        return left;
-    }
-
-    /**
+     *
      * Search from the left-down-corner(i = m - 1, j = 0) of the matrix
      * e.g.
      * Input: matrix = [[1, 5, 9],
@@ -171,11 +149,30 @@ public class KthSmallestElementOfSortedMatrix {
      * 13 == 13, res = 6 + (1+1) = 8, j++, j:3, break-while-loop, return search cnt:8
      * cnt:8, 8 == k, right=mid:13, left:13, outer-while-loop-end, return left:13
      *
-     *
      * @param matrix
-     * @param target
+     * @param k
      * @return
      */
+    public int kthSmallestV2(int[][] matrix, int k) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+        int left = matrix[0][0];
+        int right = matrix[m-1][n-1];
+        /**
+         * Notice less than sign(<) here between left and right
+         */
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            int cnt = countNonBiggerV2(matrix, mid);
+            if (cnt < k) {
+                left = mid + 1;
+            } else {
+                right = mid;
+            }
+        }
+        return left;
+    }
+
     private int countNonBiggerV2(int[][] matrix, int target) {
         int m = matrix.length, i = m - 1, j = 0, res = 0;
         while (i >= 0 && j < m) {

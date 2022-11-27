@@ -27,16 +27,45 @@ package org.ict.algorithm.leetcode.binarysearch;
  * -104 < nums[i], target < 10^4
  * All the integers in nums are unique.
  * nums is sorted in ascending order.
+ *
+ * Binary Search: low <= high OR low < high ?
+ * The short answer is it depends on how you define your search space, is it two-closed ([l, r]) or half-opened ([l, r))?
+ * if it is closed, you should use l <= r, otherwise use l < r. I personally prefer the former.
+ * I recommend this article for more details about
+ * binary search
+ * @see <a href="https://leetcode.com/discuss/general-discussion/786126/Python-Powerful-Ultimate-Binary-Search-Template.-Solved-many-problems"></a>
+ * @see <a href="https://leetcode.com/explore/learn/card/binary-search/125/template-i/938/"></a>
  * @author sniper
  * @date 26 Nov, 2022
  * LC704
  */
 public class BinarySearch {
 
+    public static void main(String[] args) {
+        int[] nums = {1, 2, 3};
+        int target = 1;
+        BinarySearch instance = new BinarySearch();
+        instance.searchV1(nums, target);
+    }
+
+
+    /**
+     * Think about edge cases:
+     * when 'left' and 'right' are close enough and search space become small (like - size 3, 2,1)
+     *
+     * @param nums
+     * @param target
+     * @return
+     */
     public int searchV1(int[] nums, int target) {
+        if (nums == null || nums.length == 0) {
+            return -1;
+        }
         int low = 0, high = nums.length - 1;
         while (low <= high) {
+            //  Prevent (left + right) overflow
             int mid = low + (high - low) / 2;
+            System.out.println("low:"  + low +", high:" + high + ", mid:" + mid + ", nums[" + mid + "]:" + nums[mid]);
             if (nums[mid] < target) {
                 low = mid + 1;
             } else if(nums[mid] > target) {
@@ -45,13 +74,26 @@ public class BinarySearch {
                 return mid;
             }
         }
+        // End Condition: high > low
         return -1;
     }
 
+    /**
+     * Think about edge cases:
+     * when 'left' and 'right' are close enough and search space become small (like - size 3, 2,1)
+     * @param nums
+     * @param target
+     * @return
+     */
     public int search(int[] nums, int target) {
+        if (nums == null || nums.length == 0) {
+            return -1;
+        }
         int low = 0, high = nums.length - 1;
         while (low <= high) {
+            //  Prevent (left + right) overflow
             int mid = low + (high - low) / 2;
+            System.out.println("low:"  + low +", high:" + high + ", mid:" + mid + ", nums[" + mid + "]:" + nums[mid]);
             if (nums[mid] == target) {
                 return mid;
             } else if (nums[mid] < target) {
@@ -60,6 +102,7 @@ public class BinarySearch {
                 high = mid - 1;
             }
         }
+        // End Condition: high > low
         return -1;
     }
 }
