@@ -48,6 +48,18 @@ public class FindTheDuplicateNumber {
         //instance.findDuplicateV4(nums);
         //instance.findDuplicateV5(nums);
         //instance.findDuplicateV6(nums);
+        //instance.findDuplicateV7(nums);
+    }
+
+    /**
+     * Bit Manipulate Solution
+     * 
+     * @param nums
+     * @return
+     */
+    public int findDuplicateV7(int[] nums) {
+
+        return -1;
     }
 
     /**
