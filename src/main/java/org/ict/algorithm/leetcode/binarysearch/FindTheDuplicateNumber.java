@@ -47,6 +47,7 @@ public class FindTheDuplicateNumber {
         //instance.findDuplicateV3(nums);
         //instance.findDuplicateV4(nums);
         //instance.findDuplicateV5(nums);
+        //instance.findDuplicateV6(nums);
     }
 
     /**
@@ -167,7 +168,14 @@ public class FindTheDuplicateNumber {
      * e.g. nums=[1,3,4,2,2]
      * 0 1 2 3 4
      * 1 3 4 2 2
-     * left:1, right:
+     * left:1, right:5, mid = 6 / 2 = 3
+     * cnt:0 -> cnt:4, cnt > mid, right = mid - 1 = 3 - 1 = 2
+     * left:1, right:2, mid = 3 / 2 = 1
+     * cnt:0 -> cnt:1, cnt == mid, left = mid + 1 = 1 + 1 = 2
+     * left:2, right:2, mid = 4 / 2 = 2
+     * cnt:0 -> cnt:3, cnt > mid, right = mid - 1 = 2 - 1 = 1
+     * left:2, right:1,left > right, while-loop-end
+     * return left:2
      *
      * @param nums
      * @return
