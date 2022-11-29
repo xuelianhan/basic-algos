@@ -40,6 +40,15 @@ import java.util.Map;
  */
 public class FindTheDuplicateNumber {
 
+    public static void main(String[] args) {
+        FindTheDuplicateNumber instance = new FindTheDuplicateNumber();
+        int[] nums = {1,3,4,2,2 };
+        instance.findDuplicateV2(nums);
+        //instance.findDuplicateV3(nums);
+        //instance.findDuplicateV4(nums);
+        //instance.findDuplicateV5(nums);
+    }
+
     /**
      * Floyd's Tortoise and Hare Solution.
      * Time Cost 14ms
@@ -73,7 +82,7 @@ public class FindTheDuplicateNumber {
      * @param nums
      * @return
      */
-    public int findDuplicateV4(int[] nums) {
+    public int findDuplicateV6(int[] nums) {
         int slow = nums[0];
         int fast = nums[nums[0]];
         while (slow != fast) {
@@ -88,22 +97,62 @@ public class FindTheDuplicateNumber {
         return slow;
     }
 
-
     /**
-     * Time Cost 32ms
+     * Time Cost 34ms
+     * e.g. nums=[1,3,4,2,2]
+     * 0 1 2 3 4
+     * 1 3 4 2 2
      * @param nums
      * @return
      */
-    public int findDuplicateV3(int[] nums) {
-        int left = 0, right = nums.length;
+    public int findDuplicateV5(int[] nums) {
+        /**
+         * nums containing n + 1 integers where each integer is in the range [1, n] inclusive
+         */
+        int left = 1, right = nums.length - 1;
         while (left < right) {
             int mid = left + (right - left) / 2;
+            System.out.println("left:" + left + ", right:" + right + ", mid:" + mid);
             int cnt = 0;
             for (int num : nums) {
                 if (num <= mid) {
                     cnt++;
                 }
             }
+            System.out.println("cnt:" + cnt  + ", mid:" + mid);
+            if (cnt <= mid) {
+                left = mid + 1;
+            } else {
+                right = mid;
+            }
+        }
+        return left;
+    }
+
+
+    /**
+     * Time Cost 32ms
+     * e.g. nums=[1,3,4,2,2]
+     * 0 1 2 3 4
+     * 1 3 4 2 2
+     * @param nums
+     * @return
+     */
+    public int findDuplicateV4(int[] nums) {
+        /**
+         * nums containing n + 1 integers where each integer is in the range [1, n] inclusive
+         */
+        int left = 1, right = nums.length;
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            System.out.println("left:" + left + ", right:" + right + ", mid:" + mid);
+            int cnt = 0;
+            for (int num : nums) {
+                if (num <= mid) {
+                    cnt++;
+                }
+            }
+            System.out.println("cnt:" + cnt  + ", mid:" + mid);
             if (cnt <= mid) {
                 left = mid + 1;
             } else {
@@ -113,11 +162,83 @@ public class FindTheDuplicateNumber {
         return right;
     }
 
+    /**
+     * Time Cost 26ms
+     * e.g. nums=[1,3,4,2,2]
+     * 0 1 2 3 4
+     * 1 3 4 2 2
+     * left:1, right:
+     *
+     * @param nums
+     * @return
+     */
+    public int findDuplicateV3(int[] nums) {
+        /**
+         * nums containing n + 1 integers where each integer is in the range [1, n] inclusive
+         * You can start with zero: left=0, but this doesn't have any affect to the final result.
+         * The only affect may be adding more loops than starting from one.
+         */
+        int left = 1, right = nums.length;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            System.out.println("left:" + left + ", right:" + right + ", mid:" + mid);
+            int cnt = 0;
+            for (int num : nums) {
+                if (num <= mid) {
+                    cnt++;
+                }
+            }
+            System.out.println("cnt:" + cnt  + ", mid:" + mid);
+            if (cnt <= mid) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return left;
+    }
 
 
+    /**
+     * Time Cost 35ms
+     *
+     * e.g. nums=[1,3,4,2,2]
+     * 0 1 2 3 4
+     * 1 3 4 2 2
+     * left:1, right:5 - 1 = 4, mid = 5 / 2 = 2
+     * cnt:0 -> cnt:3, cnt > mid, right = mid - 1 = 2 - 1 = 1
+     * left:1, right:1, mid = 2 / 2 = 1
+     * cnt:0, cnt:1, cnt == mid, left = mid + 1 = 1 + 1 = 2
+     * left:2, right:1, left > right, while-loop-end
+     * return left:2
+     *
+     * @param nums
+     * @return
+     */
     public int findDuplicateV2(int[] nums) {
-
-        return 0;
+        /**
+         * nums containing n + 1 integers where each integer is in the range [1, n] inclusive
+         * You can start with zero: left=0, but this doesn't have any affect to the final result.
+         * The only affect may be adding more loops than starting from one.
+         */
+        int left = 1, right = nums.length - 1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            //System.out.println("left:" + left + ", right:" + right + ", mid:" + mid);
+            int cnt = 0;
+            for (int num : nums) {
+                if (num <= mid) {
+                    cnt++;
+                }
+            }
+            //System.out.println("cnt:" + cnt  + ", mid:" + mid);
+            if (cnt <= mid) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return left;
     }
 
     /**
