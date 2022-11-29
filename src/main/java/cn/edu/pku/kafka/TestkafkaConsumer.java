@@ -31,7 +31,7 @@ public class TestkafkaConsumer extends Thread {
         String topic = "test";*/
         
         String brokers = "10.90.168.157:9092";
-        String groupId = "hanxueliangroup01";
+        String groupId = "hxlgroup01";
         String topic = "qchat_api_java_qc1_topic";
         
         int numberOfThread = 3;
