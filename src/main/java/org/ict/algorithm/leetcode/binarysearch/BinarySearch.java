@@ -57,7 +57,7 @@ public class BinarySearch {
      * @param target
      * @return
      */
-    public int searchV1(int[] nums, int target) {
+    public int searchV4(int[] nums, int target) {
         if (nums == null || nums.length == 0) {
             return -1;
         }
@@ -65,7 +65,7 @@ public class BinarySearch {
         while (low <= high) {
             //  Prevent (left + right) overflow
             int mid = low + (high - low) / 2;
-            System.out.println("low:"  + low +", high:" + high + ", mid:" + mid + ", nums[" + mid + "]:" + nums[mid]);
+            //System.out.println("low:"  + low +", high:" + high + ", mid:" + mid + ", nums[" + mid + "]:" + nums[mid]);
             if (nums[mid] < target) {
                 low = mid + 1;
             } else if(nums[mid] > target) {
@@ -85,7 +85,7 @@ public class BinarySearch {
      * @param target
      * @return
      */
-    public int search(int[] nums, int target) {
+    public int searchV3(int[] nums, int target) {
         if (nums == null || nums.length == 0) {
             return -1;
         }
@@ -93,7 +93,7 @@ public class BinarySearch {
         while (low <= high) {
             //  Prevent (left + right) overflow
             int mid = low + (high - low) / 2;
-            System.out.println("low:"  + low +", high:" + high + ", mid:" + mid + ", nums[" + mid + "]:" + nums[mid]);
+            //System.out.println("low:"  + low +", high:" + high + ", mid:" + mid + ", nums[" + mid + "]:" + nums[mid]);
             if (nums[mid] == target) {
                 return mid;
             } else if (nums[mid] < target) {
@@ -105,4 +105,53 @@ public class BinarySearch {
         // End Condition: high > low
         return -1;
     }
+
+    public int searchV2(int[] nums, int target) {
+        if (nums == null || nums.length == 0) {
+            return -1;
+        }
+        int low = 0, high = nums.length - 1;
+        while (low + 1 < high) {
+            int mid = low + (high - low) / 2;
+            if (nums[mid] == target) {
+                return mid;
+            } else if (nums[mid] < target) {
+                low = mid;
+            } else {
+                high = mid;
+            }
+        }
+
+        if (nums[low] == target) {
+            return low;
+        }
+        if (nums[high] == target) {
+            return high;
+        }
+        return -1;
+    }
+
+
+    public int searchV1(int[] nums, int target) {
+        if (nums == null || nums.length == 0) {
+            return -1;
+        }
+        int low = 0, high = nums.length;
+        while (low < high) {
+            int mid = low + (high - low) / 2;
+            if (nums[mid] == target) {
+                return mid;
+            } else if (nums[mid] < target) {
+                low = mid + 1;
+            } else {
+                high = mid;
+            }
+        }
+        // End Condition: high == low
+        if (low != nums.length && nums[low] == target) {
+            return low;
+        }
+        return -1;
+    }
+
 }
