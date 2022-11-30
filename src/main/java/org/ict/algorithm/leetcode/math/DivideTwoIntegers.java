@@ -37,13 +37,11 @@ package org.ict.algorithm.leetcode.math;
 public class DivideTwoIntegers {
 
     public static void main(String[] args) {
-        DivideTwoIntegers instance = new DivideTwoIntegers();
-        int x =  0x80000000;
-        System.out.println(x);
-        System.out.println(Integer.MAX_VALUE);//0x7fffffff
-        System.out.println(Integer.MIN_VALUE);//0x80000000
+        System.out.println(Integer.MAX_VALUE);//0x7fffffff, 2147483647
+        System.out.println(Integer.MIN_VALUE);//0x80000000, -2147483648
         int dividend = -2147483648;
         int divisor = 2;
+        DivideTwoIntegers instance = new DivideTwoIntegers();
         int result = instance.divide(dividend, divisor);
         System.out.println(result);
     }
@@ -61,6 +59,26 @@ public class DivideTwoIntegers {
     }
 
     public int divide(int dividend, int divisor) {
+        if (dividend == 0x80000000 && divisor == -1) {
+            return Integer.MAX_VALUE;
+        }
+        int sign = (dividend < 0) ^ (divisor < 0) ? - 1 : 1;
+        
+        return 0;
+    }
+
+    /**
+     * Can't process case:
+     * dividend == 0x80000000 and divisor == -1
+     * dividend == 0x80000000 and divisor == 2
+     * @param dividend
+     * @param divisor
+     * @return
+     */
+    public int divideWrong(int dividend, int divisor) {
+        if (dividend == 0x80000000 && divisor == -1) {
+            return Integer.MAX_VALUE;
+        }
         int sign = (dividend < 0) ^ (divisor < 0) ? - 1 : 1;
 
         /**
