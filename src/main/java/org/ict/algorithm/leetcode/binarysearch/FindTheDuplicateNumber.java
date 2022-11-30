@@ -49,11 +49,24 @@ public class FindTheDuplicateNumber {
         //instance.findDuplicateV5(nums);
         //instance.findDuplicateV6(nums);
         //instance.findDuplicateV7(nums);
+        //instance.findDuplicateV8(nums);
     }
 
     /**
      * Bit Manipulate Solution
-     * 
+     *
+     * @param nums
+     * @return
+     */
+    public int findDuplicateV8(int[] nums) {
+
+        return -1;
+    }
+
+
+    /**
+     * Bit Manipulate Solution
+     *
      * @param nums
      * @return
      */
