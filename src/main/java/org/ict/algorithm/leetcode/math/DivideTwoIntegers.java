@@ -59,12 +59,50 @@ public class DivideTwoIntegers {
     }
 
     public int divide(int dividend, int divisor) {
-        if (dividend == 0x80000000 && divisor == -1) {
+        if (dividend == Integer.MIN_VALUE && divisor == -1) {
             return Integer.MAX_VALUE;
         }
+        /**
+         * Check sign
+         */
         int sign = (dividend < 0) ^ (divisor < 0) ? - 1 : 1;
-        
-        return 0;
+        /**
+         * Convert positive numbers to negative
+         * e.g. dividend = -2^31, divisor = 1
+         * If we convert -2^31 to positive, it will be overflow, because the biggest positive number is 2^31-1.
+         */
+        if (dividend > 0) {
+            dividend = - dividend;
+        }
+        if (divisor > 0) {
+            divisor = - divisor;
+        }
+        /**
+         * Notice here, the dividend and divisor are both negative numbers.
+         */
+        int result = divideHelper(dividend, divisor);
+        if (sign == -1) {
+            result = - result;
+        }
+        return result;
+    }
+
+    private int divideHelper(int dividend, int divisor) {
+        int result = 0;
+        /**
+         * e.g. dividend = -2^31, divisor = -1
+         */
+        while (dividend <= divisor) {
+            int value = divisor;
+            int quotient = 1;
+            while (dividend <= (value + value)) {
+                quotient += quotient;
+                value += value;
+            }
+            result += quotient;
+            dividend -= value;
+        }
+        return result;
     }
 
     /**
@@ -76,7 +114,7 @@ public class DivideTwoIntegers {
      * @return
      */
     public int divideWrong(int dividend, int divisor) {
-        if (dividend == 0x80000000 && divisor == -1) {
+        if (dividend == Integer.MIN_VALUE && divisor == -1) {
             return Integer.MAX_VALUE;
         }
         int sign = (dividend < 0) ^ (divisor < 0) ? - 1 : 1;
@@ -86,6 +124,7 @@ public class DivideTwoIntegers {
          * Integer.MIN_VALUE, the most negative representable
          * value, the result is that same value, which is
          * negative.
+         * e.g. Math.abs(-2^31) = -2^31
          */
         dividend = Math.abs(dividend);
         divisor = Math.abs(divisor);
