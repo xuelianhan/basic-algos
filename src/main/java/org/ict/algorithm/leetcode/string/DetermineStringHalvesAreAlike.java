@@ -3,6 +3,8 @@ package org.ict.algorithm.leetcode.string;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * You are given a string s of even length.
@@ -46,8 +48,24 @@ public class DetermineStringHalvesAreAlike {
         System.out.println(result);
     }
 
+    public static boolean halvesAreAlikeV1(String s) {
+        Set<Character> set = Stream.of('a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U').collect(Collectors.toSet());
+        int l = 0, r = 0, half = s.length() / 2;
+        int i = 0, j = half;
+        while (i < half) {
+            if (set.contains(s.charAt(i++))) {
+                l++;
+            }
+            if (set.contains(s.charAt(j++))) {
+                r++;
+            }
+        }
+        return l == r;
+    }
+
+
     public static boolean halvesAreAlike(String s) {
-        Set<Character> vowels = new HashSet<Character>(Arrays.asList(new Character[] {'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'}));
+        Set<Character> vowels = new HashSet<>(Arrays.asList(new Character[] {'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'}));
         int leftVowelCnt = 0;
         int rightVowelCnt = 0;
         int half = s.length() / 2;
@@ -59,8 +77,8 @@ public class DetermineStringHalvesAreAlike {
                 rightVowelCnt++;
             }
         }
-        System.out.println("leftVowelCnt:" + leftVowelCnt);
-        System.out.println("rightVowelCnt:" + rightVowelCnt);
+        //System.out.println("leftVowelCnt:" + leftVowelCnt);
+        //System.out.println("rightVowelCnt:" + rightVowelCnt);
         /**
          * No need to judge zero
          * <code>if (leftVowelCnt == 0 || rightVowelCnt == 0) </code>
