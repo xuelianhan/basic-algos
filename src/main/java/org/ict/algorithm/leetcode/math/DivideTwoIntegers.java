@@ -102,7 +102,10 @@ public class DivideTwoIntegers {
         while (dividend <= divisor) {
             int value = divisor;
             int quotient = 1;
-            while (dividend <= (value + value)) {
+            /**
+             * (-2^31) / (-1) = 2^31 lead to overflow, so we must control the lower bound of value.
+             */
+            while (value >= 0xc0000000 && dividend <= (value + value)) {
                 quotient += quotient;
                 value += value;
             }
