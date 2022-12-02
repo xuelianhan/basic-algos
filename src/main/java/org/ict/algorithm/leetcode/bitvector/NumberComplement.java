@@ -41,6 +41,9 @@ public class NumberComplement {
     }
 
     public int findComplementV10(int num) {
+        if (num == 0) {
+            return 1;
+        }
         int n = 0;
         while (n < num) {
             n = (n << 1) | 1;
@@ -48,7 +51,22 @@ public class NumberComplement {
         return n - num;
     }
 
+    /**
+     * e.g num = 5
+     * 5 -> 101
+     * 7 -> 111
+     * 2 -> 010
+     * 2 = 7 - 5
+     *
+     *
+     *
+     * @param num
+     * @return
+     */
     public int findComplementV9(int num) {
+        if (num == 0) {
+            return 1;
+        }
         int i = 0;
         int j = 0;
         while (i < num) {
@@ -110,6 +128,9 @@ public class NumberComplement {
 
 
     public int findComplementV2(int num) {
+        if (num == 0) {
+            return 1;
+        }
         int res = 0, x = 0;
         for (int i = 0; num > 0; i++) {
             if (num % 2 == 0) {
@@ -117,7 +138,7 @@ public class NumberComplement {
             } else {
                 x = 0;
             }
-            res += Math.pow(2, i)*x;
+            res += Math.pow(2, i) * x;
             num /= 2;
         }
         return res;
