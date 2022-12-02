@@ -37,13 +37,23 @@ package org.ict.algorithm.leetcode.math;
 public class DivideTwoIntegers {
 
     public static void main(String[] args) {
-        System.out.println(Integer.MAX_VALUE);//0x7fffffff, 2147483647
-        System.out.println(Integer.MIN_VALUE);//0x80000000, -2147483648
+        System.out.println(Integer.MAX_VALUE);//0x7fffffff, 2147483647 = 2^31-1
+        System.out.println(Integer.MIN_VALUE);//0x80000000, -2147483648 = -2^31
+        System.out.println(0xc0000000);//-1073741824 = -2^31 / 2 = -2^30
+
         int dividend = -2147483648;
         int divisor = 2;
         DivideTwoIntegers instance = new DivideTwoIntegers();
+        instance.toHexStr();
         int result = instance.divide(dividend, divisor);
         System.out.println(result);
+        System.out.println("result:" + result + " == " + 0xc0000000 + ":" + (result == 0xc0000000));
+    }
+
+    public void toHexStr() {
+        for (int i = -2; i > Integer.MIN_VALUE; i *= 2) {
+            System.out.println(Integer.toHexString(i));
+        }
     }
 
     public int divideV3(int dividend, int divisor) {
@@ -94,6 +104,28 @@ public class DivideTwoIntegers {
         return result;
     }
 
+    /**
+     * Java Integer range:-2^31 ~ 2^31-1
+     * hexadecimal
+     * 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15
+     * 0,1,2,3,4,5,6,7,8,9,A, B, C, D, E, F
+     * 2^31: 1000 0000 0000 0000 0000 0000 0000 0000
+     *       0111 1111 1111 1111 1111 1111 1111 1111
+     * -2^31 1000 0000 0000 0000 0000 0000 0000 0000
+     * -2^31 0x8   0    0    0    0   0    0    0
+     *
+     * 2^30: 0100 0000 0000 0000 0000 0000 0000 0000
+     *       1011 1111 1111 1111 1111 1111 1111 1111
+     * -2^30 1100 0000 0000 0000 0000 0000 0000 0000
+     * -2^30 0x C   0    0    0    0    0    0    0
+     * dividend:-2^31, divisor:-1
+     * value: -1, quotient:1, value > -2^30 and dividend < -2
+     * value: -2, quotient:1, value > -2^30 and dividend < -4
+     *
+     * @param dividend
+     * @param divisor
+     * @return
+     */
     private int divideHelper(int dividend, int divisor) {
         int result = 0;
         /**
@@ -104,6 +136,7 @@ public class DivideTwoIntegers {
             int quotient = 1;
             /**
              * (-2^31) / (-1) = 2^31 lead to overflow, so we must control the lower bound of value.
+             * If we don't do this, we will get Time Limit Exceed error.
              */
             while (value >= 0xc0000000 && dividend <= (value + value)) {
                 quotient += quotient;
