@@ -1,5 +1,8 @@
 package org.ict.algorithm.leetcode.string;
 
+import java.util.*;
+import java.util.stream.Collectors;
+
 /**
  * Two strings are considered close if you can attain one from the other using the following operations:
  *
@@ -45,6 +48,15 @@ package org.ict.algorithm.leetcode.string;
  */
 public class DetermineIfTwoStringsAreClose {
 
+    public static void main(String[] args) {
+        DetermineIfTwoStringsAreClose instance = new DetermineIfTwoStringsAreClose();
+        String word1 = "iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii";
+        String word2 = "iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii";
+        boolean result = instance.closeStringsV1(word1, word2);
+        System.out.println(result);
+        assert result == false;
+    }
+
     public boolean closeStringsV3(String word1, String word2) {
         return false;
     }
@@ -54,10 +66,63 @@ public class DetermineIfTwoStringsAreClose {
     }
 
     public boolean closeStringsV1(String word1, String word2) {
-        return false;
+        if (word1.length() != word2.length()) {
+            return false;
+        }
+        Map<Character, Integer> freq1 = new HashMap<>();
+        Map<Character, Integer> freq2 = new HashMap<>();
+        int n = word1.length();
+        for (int i = 0; i < n; i++) {
+            freq1.put(word1.charAt(i), freq1.getOrDefault(word1.charAt(i), 0) + 1);
+            freq2.put(word2.charAt(i), freq2.getOrDefault(word2.charAt(i), 0) + 1);
+        }
+        /**
+         * "uau", "ssx": expected false
+         */
+        if (!freq1.keySet().equals(freq2.keySet())) {
+            return false;
+        }
+
+        List<Integer> list1 = freq1.values().stream().collect(Collectors.toList());
+        List<Integer> list2 = freq2.values().stream().collect(Collectors.toList());
+        Collections.sort(list1);
+        Collections.sort(list2);
+        for (int i = 0; i < list1.size(); i++) {
+            if (!list1.get(i).equals(list2.get(i))) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public boolean closeStrings(String word1, String word2) {
-        return false;
+        if (word1.length() != word2.length()) {
+            return false;
+        }
+        Set<Character> set1 = new HashSet<Character>();
+        Set<Character> set2 = new HashSet<Character>();
+        int[] freq1 = new int[26];
+        int[] freq2 = new int[26];
+        int n = word1.length();
+        for (int i = 0; i < n; i++) {
+            freq1[word1.charAt(i) - 'a']++;
+            freq2[word2.charAt(i) - 'a']++;
+            set1.add(word1.charAt(i));
+            set2.add(word2.charAt(i));
+        }
+        /**
+         * "uau", "ssx": expected false
+         */
+        if (!set1.equals(set2)) {
+            return false;
+        }
+        Arrays.sort(freq1);
+        Arrays.sort(freq2);
+        for (int i = 0; i < 26; i++) {
+            if (freq1[i] != freq2[i]) {
+                return false;
+            }
+        }
+        return true;
     }
 }
