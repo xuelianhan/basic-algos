@@ -36,7 +36,28 @@ public class NumberComplement {
         int num = 5;
         long x = (long)Math.pow(2, 31);
         long t = num ^ x;
-        System.out.println(t);
+        String s = Long.toBinaryString(t);
+        System.out.println(s);
+    }
+
+    public int findComplementV9(int num) {
+        return 0;
+    }
+
+    public int findComplementV8(int num) {
+        return 0;
+    }
+
+    public int findComplementV7(int num) {
+        return 0;
+    }
+
+    public int findComplementV6(int num) {
+        return 0;
+    }
+
+    public int findComplementV5(int num) {
+        return 0;
     }
 
 
