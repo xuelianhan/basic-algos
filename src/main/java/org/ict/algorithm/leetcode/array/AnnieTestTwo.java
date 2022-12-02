@@ -4,7 +4,7 @@ public class AnnieTestTwo {
 
     /**
      * A non-empty zero-indexed array A consisting of N integers is given.
-     * Any integer k, such that 0<= k < N - 1, splits array A into two 
+     * Any integer k, such that 0 <= k < N - 1, splits array A into two
      * non-empty parts:A[0],...A[K], and A[K+1],...A[N-1]
      * The difference between the two parts is the value of 
      * abs(max{A[0],...A[K]} - max{A[K+1],...A[N-1]})

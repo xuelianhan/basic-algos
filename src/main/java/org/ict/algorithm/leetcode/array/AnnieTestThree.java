@@ -1,6 +1,5 @@
 package org.ict.algorithm.leetcode.array;
 
-import java.util.Arrays;
 import java.util.Map;
 import java.util.HashMap;
 import java.math.BigInteger;
@@ -51,10 +50,10 @@ public class AnnieTestThree {
     /**
      * The above solution may exceed the limit of Integer.
      * Take note of conditions of the problem, 3 * K can break down as
-     * (2 + 1) * K = 2 * K + K
+     * (2 + 1) * K = 2 * K + K,
      * K = power2(A[0]) + power2(A[1]) + ... + power2(A[N - 1]) 
      * e.g. K = power(1) + power(4) + power(5)
-     * We can calculate the 1's count: 3, because 1 , 4 ,5 is not duplicated 
+     * We can calculate the 1's count: 3, because 1 ,4 ,5 is not duplicated
      * numbers, So the solution is obvious: Use HashMap to storage the power number
      * power2(1) + power2(4) + power2(5)
      * + 2 * power2(1) + 2 * power2(4) + 2 * power2(5)
