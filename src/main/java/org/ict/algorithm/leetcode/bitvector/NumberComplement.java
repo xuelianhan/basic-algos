@@ -32,6 +32,13 @@ package org.ict.algorithm.leetcode.bitvector;
  */
 public class NumberComplement {
 
+    public static void main(String[] args) {
+        int num = 5;
+        long x = (long)Math.pow(2, 31);
+        long t = num ^ x;
+        System.out.println(t);
+    }
+
 
     public int findComplementV4(int num) {
         return 0;
@@ -44,8 +51,17 @@ public class NumberComplement {
 
 
     public int findComplementV2(int num) {
-        
-        return 0;
+        int res = 0, x = 0;
+        for (int i = 0; num > 0; i++) {
+            if (num % 2 == 0) {
+                x = 1;
+            } else {
+                x = 0;
+            }
+            res += Math.pow(2, i)*x;
+            num /= 2;
+        }
+        return res;
     }
 
     public int findComplementV1(int num) {
