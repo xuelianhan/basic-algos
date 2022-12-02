@@ -44,28 +44,62 @@ public class DivideTwoIntegers {
         int dividend = -2147483648;
         int divisor = 2;
         DivideTwoIntegers instance = new DivideTwoIntegers();
-        instance.toHexStr();
         int result = instance.divide(dividend, divisor);
         System.out.println(result);
         System.out.println("result:" + result + " == " + 0xc0000000 + ":" + (result == 0xc0000000));
     }
 
-    public void toHexStr() {
-        for (int i = -2; i > Integer.MIN_VALUE; i *= 2) {
-            System.out.println(Integer.toHexString(i));
-        }
-    }
+
 
     public int divideV3(int dividend, int divisor) {
+
         return 0;
     }
 
     public int divideV2(int dividend, int divisor) {
+
         return 0;
     }
 
     public int divideV1(int dividend, int divisor) {
-        return 0;
+        /**
+         * Corner case:
+         * e.g. dividend = -2^31, divisor = -1
+         */
+        if (dividend == Integer.MIN_VALUE && divisor == -1) {
+            return Integer.MAX_VALUE;
+        }
+        /**
+         * Check sign
+         */
+        int negative = 2;
+        /**
+         * Convert positive numbers to negative
+         * e.g. dividend = -2^31, divisor = 1
+         * If we convert -2^31 to positive, it will be overflow, because the biggest positive number is 2^31-1.
+         */
+        if (dividend > 0) {
+            dividend = - dividend;
+            negative--;
+        }
+        if (divisor > 0) {
+            divisor = - divisor;
+            negative--;
+        }
+        /**
+         * Notice here, the dividend and divisor are both negative numbers.
+         */
+        int result = divideHelper(dividend, divisor);
+        /**
+         * dividend:+, divisor:-, result:-
+         * dividend:-, divisor:+, result:-
+         * dividend:-, divisor:-, result:+
+         * dividend:+, divisor:+, result:+
+         */
+        if (negative == 1) {
+            result = - result;
+        }
+        return result;
     }
 
     /**
@@ -76,6 +110,10 @@ public class DivideTwoIntegers {
      * @return
      */
     public int divide(int dividend, int divisor) {
+        /**
+         * Corner case:
+         * e.g. dividend = -2^31, divisor = -1
+         */
         if (dividend == Integer.MIN_VALUE && divisor == -1) {
             return Integer.MAX_VALUE;
         }
@@ -146,9 +184,6 @@ public class DivideTwoIntegers {
      */
     private int divideHelper(int dividend, int divisor) {
         int result = 0;
-        /**
-         * e.g. dividend = -2^31, divisor = -1
-         */
         while (dividend <= divisor) {
             int value = divisor;
             int quotient = 1;
