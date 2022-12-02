@@ -122,6 +122,24 @@ public class DivideTwoIntegers {
      * value: -1, quotient:1, value > -2^30 and dividend < -2
      * value: -2, quotient:1, value > -2^30 and dividend < -4
      *
+     * e.g. dividend = -15, divisor = -2
+     * value:-2, value > -2^30 and dividend < (-2 + -2), value:-4, quotient:2
+     * value:-4, value > -2^30 and dividend < (-4 + -4), value:-8, quotient:4
+     * value:-8, value > -2^30 and dividend > (-8 + -8), inner-while-loop-end
+     * result: 0 + 4 = 4, dividend = dividend - (-8) = -15 + 8 = -7
+     *
+     * dividend:-7, -7 < -2
+     * value:-2, value > -2^30 and dividend < (-2 + -2), value:-4, quotient:2
+     * value:-4, value > -2^30 and dividend > (-4 + -4), inner-while-loop-end
+     * result: 4 + 2 = 6, dividend = dividend - (-4) = -7 + 4 = -3
+     *
+     * dividend:-3, -3 < -2
+     * value:-2, value > -2^30 and dividend > (-2 + -2), inner-while-loop-end
+     * result: 6 + 1 = 7, dividend = dividend - (-2) = -3 + 2 = -1
+     *
+     * dividend:-1 > divisor:-2, outer-while-loop-end
+     * result:7
+     *
      * @param dividend
      * @param divisor
      * @return
@@ -139,8 +157,8 @@ public class DivideTwoIntegers {
              * If we don't do this, we will get Time Limit Exceed error.
              */
             while (value >= 0xc0000000 && dividend <= (value + value)) {
-                quotient += quotient;
                 value += value;
+                quotient += quotient;
             }
             result += quotient;
             dividend -= value;
