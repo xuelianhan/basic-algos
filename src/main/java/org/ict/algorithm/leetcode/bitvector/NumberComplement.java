@@ -40,34 +40,72 @@ public class NumberComplement {
         System.out.println(s);
     }
 
+    public int findComplementV10(int num) {
+        int n = 0;
+        while (n < num) {
+            n = (n << 1) | 1;
+        }
+        return n - num;
+    }
+
     public int findComplementV9(int num) {
-        return 0;
+        int i = 0;
+        int j = 0;
+        while (i < num) {
+            i += Math.pow(2, j);
+            j++;
+        }
+        return i - num;
     }
 
     public int findComplementV8(int num) {
-        return 0;
+       return 0;
     }
 
     public int findComplementV7(int num) {
-        return 0;
+       return 0;
     }
 
     public int findComplementV6(int num) {
-        return 0;
+        int mask = num;
+        mask |= mask >> 1;
+        mask |= mask >> 2;
+        mask |= mask >> 4;
+        mask |= mask >> 8;
+        mask |= mask >> 16;
+        return num ^ mask;
     }
 
+    /**
+     * 0111 1111 1111 1111 1111 1111 1111 1111 // num
+     * 1000 0000 0000 0000 0000 0000 0000 0000 // ~num
+     * 0100 0000 0000 0000 0000 0000 0000 0000 // Integer.highestOneBit(num)
+     * 1000 0000 0000 0000 0000 0000 0000 0000 // Integer.highestOneBit(num) << 1
+     *
+     * Can someone explain the meaning of + operator here?
+     * If num = 5, ~5 would be -2147483648.
+     * I know highestOneBit is retrieving the highest bit,
+     * but why -2147483648 + 8 is equal to 2?
+     * because it overflows. Don't think it as signed number, look at the bits.
+     * @param num
+     * @return
+     */
     public int findComplementV5(int num) {
-        return 0;
+        return ~num & (Integer.highestOneBit(num) - 1);
     }
 
 
     public int findComplementV4(int num) {
-        return 0;
+        int mask = (Integer.highestOneBit(num) << 1) - 1;
+        num = ~num;
+        return num & mask;
     }
 
 
     public int findComplementV3(int num) {
-        return 0;
+        int mask = 1;
+        while (mask < num) mask = (mask << 1) | 1;
+        return ~num & mask;
     }
 
 
