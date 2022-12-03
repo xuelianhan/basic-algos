@@ -1,5 +1,8 @@
 package org.ict.algorithm.leetcode.bitvector;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * The XOR total of an array is defined as the bitwise XOR of all its elements, or 0 if the array is empty.
  *
@@ -53,11 +56,33 @@ package org.ict.algorithm.leetcode.bitvector;
  */
 public class SumOfAllSubsetXORTotals {
 
+    public int subsetXORSumV3(int[] nums) {
+        if (nums.length == 1) {
+            return nums[0];
+        }
+        return 0;
+    }
+
+    public int subsetXORSumV2(int[] nums) {
+        if (nums.length == 1) {
+            return nums[0];
+        }
+        return 0;
+    }
+
     public int subsetXORSumV1(int[] nums) {
+        if (nums.length == 1) {
+            return nums[0];
+        }
         return 0;
     }
 
     public int subsetXORSum(int[] nums) {
+        if (nums.length == 1) {
+            return nums[0];
+        }
+        List<List<Integer>> result = new ArrayList<>();
+
         return 0;
     }
 }
