@@ -42,6 +42,16 @@ import java.util.PriorityQueue;
  */
 public class SortCharactersByFrequency {
 
+
+    public String frequencySortV2(String s) {
+        return null;
+    }
+
+
+    public String frequencySortV1(String s) {
+        return null;
+    }
+
     /**
      * Heap-Sort Solution, similar with LC692 TopKFrequentWords
      * Time Cost 17ms
