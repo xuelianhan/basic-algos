@@ -59,6 +59,8 @@ public class TopKFrequentWords {
      * Time Cost 11ms
      * Time Complexity: O(N*logK)
      * Space Complexity: O(N)
+     *
+     * Solution is similar with LC451 SortCharactersByFrequency
      * @param words
      * @param k
      * @return

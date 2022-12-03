@@ -1,6 +1,7 @@
 package org.ict.algorithm.leetcode.bitvector;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -56,6 +57,13 @@ import java.util.List;
  */
 public class SumOfAllSubsetXORTotals {
 
+    public static void main(String[] args) {
+        int[] nums = {3, 4, 5, 6, 7, 8};
+        SumOfAllSubsetXORTotals instance = new SumOfAllSubsetXORTotals();
+        int result = instance.subsetXORSumV1(nums);
+        System.out.println(result);
+    }
+
     public int subsetXORSumV3(int[] nums) {
         if (nums.length == 1) {
             return nums[0];
@@ -70,19 +78,88 @@ public class SumOfAllSubsetXORTotals {
         return 0;
     }
 
+    /**
+     * Time Cost 12ms
+     * @param nums
+     * @return
+     */
     public int subsetXORSumV1(int[] nums) {
         if (nums.length == 1) {
             return nums[0];
         }
-        return 0;
+        /**
+         * 1.backtrack to get subsets and sum xor result in backtrack directly.
+         */
+        int[] result = new int[1];
+        LinkedList<Integer> track = new LinkedList<>();
+        backtrackXOR(nums, track, result, 0);
+        return result[0];
     }
 
+    public void backtrackXOR(int[] nums, LinkedList<Integer> track, int[] result, int k) {
+        if (track.size() == 1) {
+            result[0] += track.get(0);
+        } else if (track.size() > 1) {
+            int start = track.get(0);
+            for (int i = 1; i < track.size(); i++) {
+                start = start ^ track.get(i);
+            }
+            result[0] += start;
+        }
+        for (int i = k; i < nums.length; i++) {
+            track.add(nums[i]);
+            backtrackXOR(nums, track, result, i + 1);
+            track.removeLast();
+        }
+    }
+
+    /**
+     * Time Cost 52ms
+     * @param nums
+     * @return
+     */
     public int subsetXORSum(int[] nums) {
         if (nums.length == 1) {
             return nums[0];
         }
+        /**
+         * 1.backtrack to get subsets
+         */
         List<List<Integer>> result = new ArrayList<>();
+        LinkedList<Integer> track = new LinkedList<>();
+        backtrack(nums, track, result, 0);
+        /**
+         * 2.xor subsets
+         */
+        return xorList(result);
+    }
 
-        return 0;
+    public int xorList(List<List<Integer>> result) {
+        int res = 0;
+        for (List<Integer> list : result) {
+            if (null == list || list.size() == 0)  {
+                res += 0;
+                continue;
+            }
+            if (list.size() == 1) {
+                res += list.get(0);
+                continue;
+            }
+            int start = list.get(0);
+            for (int i = 1; i < list.size(); i++) {
+                start = start ^ list.get(i);
+            }
+            res += start;
+        }
+        return res;
+    }
+
+    public void backtrack(int[] nums, LinkedList<Integer> track, List<List<Integer>> result, int k) {
+        result.add(new ArrayList<>(track));
+        for (int i = k; i < nums.length; i++) {
+            track.add(nums[i]);
+            backtrack(nums, track, result, i + 1);
+            track.removeLast();
+        }
     }
 }
