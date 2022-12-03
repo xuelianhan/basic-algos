@@ -64,6 +64,7 @@ public class SortCharactersByFrequency {
         for (char ch : s.toCharArray()) {
             freq.put(ch, freq.getOrDefault(ch, 0) + 1);
         }
+
         PriorityQueue<Map.Entry<Character, Integer>> maxHeap = new PriorityQueue<>((e1, e2) -> {
             if (e1.getValue() < e2.getValue()) {
                 return 1;
@@ -73,6 +74,7 @@ public class SortCharactersByFrequency {
                 return 0;
             }
         });
+
         for (Map.Entry<Character, Integer> entry : freq.entrySet()) {
             maxHeap.offer(entry);
         }
