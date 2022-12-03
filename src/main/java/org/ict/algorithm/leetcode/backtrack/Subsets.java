@@ -128,7 +128,7 @@ public class Subsets {
         //System.out.println("result:" + result);
         for (int i = k; i < nums.length; i++) {
             track.add(nums[i]);
-            System.out.println("after track add, k:" + k + ", i:" + i + ", track:" + track);
+            //System.out.println("after track add, k:" + k + ", i:" + i + ", track:" + track);
             /**
              * Notice here, pass i + 1 into k, not k+1
              */
