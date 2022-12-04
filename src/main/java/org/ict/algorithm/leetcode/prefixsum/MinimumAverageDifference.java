@@ -47,34 +47,41 @@ package org.ict.algorithm.leetcode.prefixsum;
  */
 public class MinimumAverageDifference {
 
+    public static void main(String[] args) {
+        double x = Math.pow(10, 10);
+        //x:1.0E10 > 2147483647:true
+        System.out.println("x:" + x + " > " + Integer.MAX_VALUE + ":" + (x > Integer.MAX_VALUE));
+    }
+
 
     public int minimumAverageDifferenceV1(int[] nums) {
         return 0;
     }
 
     public int minimumAverageDifference(int[] nums) {
-        int ans = 0, n = nums.length, mi = Integer.MAX_VALUE;
-        // since we need the sum for first i + 1 and last n - i - 1 elements
-        // we can pre-calculate it first
-        // it is called prefix sum and suffix sum
-        int[] prefix = new int[n];
-        // prev[0] is the first element
+        int res = 0, n = nums.length;
+        long min = Long.MAX_VALUE;
+        /**
+         * Use long instead of int to prevent prefix sum overflow.
+         * e.g. 10^5*10^5 = 10^10 = (2^3 + 2)^10 > 2^31 - 1
+         */
+        long[] prefix = new long[n];
         prefix[0] = nums[0];
-        // starting from i = 1, pref[i] is the sum + the current element
+
         for (int i = 1; i < n; i++) {
-            prefix[i] = prefix[i - 1] + nums[i];
+            prefix[i] = nums[i] + prefix[i - 1];
         }
-        // then we can iterate each number
+
         for (int i = 0; i < n; i++) {
-            // now we know the prefix sum
-            // the suffix sum is simply pref[n - 1] - pref[i]
-            int k = Math.abs((prefix[i] / (i + 1)) - ((prefix[n - 1] - prefix[i]) / Math.max(n - i - 1, 1)));
-            // check the min and update ans
-            if (k < mi) {
-                mi = k;
-                ans = i;
+            /**
+             * suffix sum = prefix[n - 1] - prefix[i]
+             */
+            long k = Math.abs((prefix[i] / (i + 1)) - ((prefix[n - 1] - prefix[i]) / Math.max(n - i - 1, 1)));
+            if (k < min) {
+                min = k;
+                res = i;
             }
         }
-        return ans;
+        return res;
     }
 }
