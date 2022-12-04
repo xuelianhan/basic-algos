@@ -39,7 +39,7 @@ public class ConvertNumberToHexadecimal {
         String result = instance.toHex(num);
         System.out.println(result);
     }
-    
+
     /**
      * At each time, we take a look at the last four digits of
      * binary version of the input, and maps that to a hex char
