@@ -109,7 +109,7 @@ public class NumberOf1Bits {
      * @param n
      * @return
      */
-    public static int hammingWeightV4(int n) {
+    public int hammingWeightV4(int n) {
         int res = 0;
         while (n != 0) {
             /**
