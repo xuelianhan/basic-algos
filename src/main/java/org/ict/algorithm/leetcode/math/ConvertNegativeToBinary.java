@@ -37,9 +37,6 @@ public class ConvertNegativeToBinary {
     }
 
     /**
-     * For Java there is no unsigned int data type.
-     * So in case of java, convert number to long and make the 32 higher bits as all zeroes.
-     * Idea remains the same as above.
      * @param x
      * @return
      */
@@ -48,14 +45,20 @@ public class ConvertNegativeToBinary {
     }
 
     /**
-     * For Java there is no unsigned int data type.
-     * So in case of java, convert number to long and make the 32 higher bits as all zeroes.
-     * Idea remains the same as above.
      * @param x
      * @return
      */
     public static String toHex(int x) {
-        return null;
+        char[] map = {'0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f'};
+        if (x == 0) {
+            return "0";
+        }
+        StringBuilder res = new StringBuilder();
+        while (x != 0) {
+            res.append(map[x & 15]);
+            x = (x >>> 4);
+        }
+        return res.reverse().toString();
     }
 
 
