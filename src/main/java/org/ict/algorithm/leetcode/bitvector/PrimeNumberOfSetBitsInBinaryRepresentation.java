@@ -1,5 +1,8 @@
 package org.ict.algorithm.leetcode.bitvector;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Given two integers left and right,
  * return the count of numbers in the inclusive range [left, right] having a prime number of set bits in their binary representation.
@@ -64,28 +67,43 @@ public class PrimeNumberOfSetBitsInBinaryRepresentation {
         return 0;
     }
 
+    /**
+     * Time Cost 22ms
+     * @param left
+     * @param right
+     * @return
+     */
     public int countPrimeSetBits(int left, int right) {
-        int n = right - left + 1;
-        int[] bits = new int[n + 1];
-        for (int i = left; i <= right; i++) {
-            bits[i - left] = bits[i & (i - 1)] + 1;
-        }
         int res = 0;
-        for (int bit : bits) {
-            if (isPrime(bit)) {
+        Map<Integer, Boolean> memo = new HashMap<>();
+        for (int i = left; i <= right; i++) {
+            int cnt = hammingWeight(i);
+            if (memo.containsKey(cnt) && memo.get(cnt)) {
                 res++;
+                continue;
+            }
+            if (isPrime(cnt)) {
+                res++;
+                memo.put(cnt, true);
             }
         }
         return res;
     }
 
-    public int[] countBits(int left, int right) {
-        int n = right - left + 1;
-        int[] res = new int[n + 1];
-        for (int i = left; i <= right; i++) {
-            res[i - left] = res[i & (i - 1)] + 1;
+
+    public int hammingWeight(int n) {
+        int cnt = 0;
+        while (n != 0) {
+            /**
+             * if n = 1100, n-1=1011
+             * n & (n - 1) = 1000
+             * It set the right most 1 in to 0.
+             * final effect: 1100 --> 1000
+             */
+            n = n & (n - 1);
+            cnt++;
         }
-        return res;
+        return cnt;
     }
 
     public boolean isPrime(int num) {
@@ -100,4 +118,6 @@ public class PrimeNumberOfSetBitsInBinaryRepresentation {
         }
         return true;
     }
+
+
 }
