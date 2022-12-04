@@ -190,6 +190,10 @@ public class DivideTwoIntegers {
             /**
              * (-2^31) / (-1) = 2^31 lead to overflow, so we must control the lower bound of value.
              * If we don't do this, we will get Time Limit Exceed error.
+             * value >= -2^31 can't be written as value > Integer.MIN_VALUE, why?
+             * Consider case: dividend = 2147483647, divisor = 3, expected 715827882
+             * if using value > Integer.MIN_VALUE, then output 1073741824, not satisfy the expected value 715827882.
+             *
              */
             while (value >= 0xc0000000 && dividend <= (value + value)) {
                 value += value;
