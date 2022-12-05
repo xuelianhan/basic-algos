@@ -57,6 +57,14 @@ public class DivideTwoIntegers {
         System.out.println("result:" + result + " == " + 0xc0000000 + ":" + (result == 0xc0000000));
     }
 
+    public int divideV5(int dividend, int divisor) {
+        return 0;
+    }
+
+    public int divideV4(int dividend, int divisor) {
+        return 0;
+    }
+
 
     /**
      * Time Cost 2ms
@@ -290,8 +298,8 @@ public class DivideTwoIntegers {
                 value += value;
                 quotient += quotient;
             }
-            result += quotient;
             dividend -= value;
+            result += quotient;
         }
         return result;
     }

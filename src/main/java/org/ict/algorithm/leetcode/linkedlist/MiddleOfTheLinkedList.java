@@ -57,7 +57,44 @@ public class MiddleOfTheLinkedList {
     }
 
     /**
+     * Time Cost 0ms
+     * e.g.head = [1,2,3,4,5]
+     * slow:1, fast:1
+     * slow:2, fast:3
+     * slow:3, fast:5
+     * fast != null but fast.next == null, while-loop-end
+     * return slow
      *
+     * e.g.head = [1,2,3,4,5,6]
+     * slow:1, fast:1
+     * slow:2, fast:3
+     * slow:3, fast:5
+     * slow:4, fast:null
+     * return slow
+     *
+     * e.g. head = [1,2]
+     * slow:1, fast:1
+     * slow:2, fast:null
+     * return slow
+     *
+     * @param head
+     * @return
+     */
+    public ListNode middleNodeV1(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head;
+        /**
+         * Notice condition: fast != null and fast.next != null
+         */
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow;
+    }
+
+    /**
+     * Time Cost 11ms
      * @param head
      * @return
      */
