@@ -58,20 +58,66 @@ public class DivideTwoIntegers {
     }
 
 
-
+    /**
+     * Time Cost 2ms
+     * @param dividend
+     * @param divisor
+     * @return
+     */
     public int divideV3(int dividend, int divisor) {
-
-        return 0;
+        if (Integer.MIN_VALUE == dividend && -1 == divisor) {
+            return Integer.MAX_VALUE;
+        }
+        int result = 0;
+        int a = Math.abs(dividend);
+        int b = Math.abs(divisor);
+        /**
+         * e.g.1. a = 1, b = 1, so we need >= , other than >
+         * e.g.2. a = -2147483648, b = 1, so we need a - b >= 0, other than a >= b
+         */
+        while (a - b >= 0) {
+            int temp = b;
+            int quotient = 1;
+            while ((a - (temp << 1)) >= 0) {
+                temp <<= 1;
+                quotient <<= 1;
+            }
+            a -= temp;
+            result += quotient;
+        }
+        return (dividend > 0) == (divisor > 0) ? result : -result;
     }
 
+    /**
+     * Time Cost 1ms
+     * @param dividend
+     * @param divisor
+     * @return
+     */
     public int divideV2(int dividend, int divisor) {
         if (dividend == Integer.MIN_VALUE && divisor == -1) {
             return Integer.MAX_VALUE;
         }
-        int sign = (dividend < 0) ^ (divisor < 0) ? -1 : 1;
-
-        return 0;
+        boolean sign = (dividend < 0) == (divisor < 0);
+        dividend = (dividend > 0 ? - dividend : dividend);
+        divisor = (divisor > 0 ? - divisor : divisor);
+        int result = divideHelperV2(dividend, divisor);
+        return (sign ? result : - result);
     }
+
+    private int divideHelperV2(int dividend, int divisor) {
+        if (divisor < dividend) {
+            return 0;
+        }
+        int sum = divisor;
+        int quotient = 1;
+        while ((Integer.MIN_VALUE - sum) <= sum && dividend <= (sum + sum)) {
+            sum += sum;
+            quotient+= quotient;
+        }
+        return quotient + divideHelperV2(dividend - sum, divisor);
+    }
+
 
     /**
      * @param dividend
@@ -173,9 +219,6 @@ public class DivideTwoIntegers {
      *       1011 1111 1111 1111 1111 1111 1111 1111
      * -2^30 1100 0000 0000 0000 0000 0000 0000 0000
      * -2^30 0x C   0    0    0    0    0    0    0
-     * dividend:-2^31, divisor:-1
-     * value: -1, quotient:1, value > -2^30 and dividend < -2
-     * value: -2, quotient:1, value > -2^30 and dividend < -4
      *
      * e.g. dividend = -15, divisor = -2
      * value:-2, value > -2^30 and dividend < (-2 + -2), value:-4, quotient:2
