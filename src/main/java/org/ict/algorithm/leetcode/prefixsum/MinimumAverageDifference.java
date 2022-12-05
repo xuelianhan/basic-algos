@@ -7,7 +7,8 @@ package org.ict.algorithm.leetcode.prefixsum;
  * and the average of the last n - i - 1 elements.
  * Both averages should be rounded down to the nearest integer.
  *
- * Return the index with the minimum average difference. If there are multiple such indices, return the smallest one.
+ * Return the index with the minimum average difference.
+ * If there are multiple such indices, return the smallest one.
  *
  * Note:
  *
@@ -79,7 +80,8 @@ public class MinimumAverageDifference {
      * so, we can induce a formula of prefix sum:
      * prefix[i] = nums[i] + prefix[i-1]
      *
-     *
+     * suffix sum:
+     * suffix[i] = prefix[n-1] - prefix[i]
      *
      * @param nums
      * @return
@@ -98,9 +100,16 @@ public class MinimumAverageDifference {
             prefix[i] = nums[i] + prefix[i - 1];
         }
 
+        /**
+         * Return the index with the minimum average difference.
+         * If there are multiple such indices, return the smallest one.
+         * So we iterate from 0 to n-1, other than from n-1 to 0.
+         */
         for (int i = 0; i < n; i++) {
             /**
              * suffix sum = prefix[n - 1] - prefix[i]
+             * while i = n - 1, n - i - 1 = n - n + 1 - 1 = 0, divisor can't be zero,
+             * so we use Math.max(n - i - 1, 1) to prevent divide zero error.
              */
             long k = Math.abs((prefix[i] / (i + 1)) - ((prefix[n - 1] - prefix[i]) / Math.max(n - i - 1, 1)));
             if (k < min) {
