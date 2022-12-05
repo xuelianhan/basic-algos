@@ -81,6 +81,9 @@ public class BinaryGap {
         int length = s.length();
         int res = 0;
         for (int i = 0, j = 0; i < length && j < length;) {
+            /**
+             * Notice the following codes, the border checking should put before the charAt operation.
+             */
             while (i < length && s.charAt(i) != '1') {
                 i++;
             }
