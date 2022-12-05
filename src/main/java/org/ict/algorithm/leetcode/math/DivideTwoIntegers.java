@@ -45,8 +45,12 @@ public class DivideTwoIntegers {
         //int dividend = -2147483648;
         //int divisor = 2;
 
-        int dividend = 15;
-        int divisor = 2;
+        //int dividend = 15;
+        //int divisor = 2;
+
+        int dividend = 2147483647;
+        int divisor = 3;
+
         DivideTwoIntegers instance = new DivideTwoIntegers();
         int result = instance.divide(dividend, divisor);
         System.out.println(result);
@@ -61,10 +65,19 @@ public class DivideTwoIntegers {
     }
 
     public int divideV2(int dividend, int divisor) {
+        if (dividend == Integer.MIN_VALUE && divisor == -1) {
+            return Integer.MAX_VALUE;
+        }
+        int sign = (dividend < 0) ^ (divisor < 0) ? -1 : 1;
 
         return 0;
     }
 
+    /**
+     * @param dividend
+     * @param divisor
+     * @return
+     */
     public int divideV1(int dividend, int divisor) {
         /**
          * Corner case:
@@ -191,9 +204,14 @@ public class DivideTwoIntegers {
         while (dividend <= divisor) {
             int value = divisor;
             /**
-             * quotient initialized as 1
+             * quotient initialized as 1, min initialized as 0xc0000000.
+             * 0xc0000000 = Integer.MIN_VALUE / 2, we are not allowed to use divide here, so we use 0xc0000000 directly.
+             * Why 0xc0000000? because binary partition up to the half of the target is enough, among all the divisors,
+             * the 2 is the minimum, 1 has been considered as corner case at the beginning.
+             * So the value double limit is Integer.MIN_VALUE / 2, not Integer.MIN_VALUE / 3, or others.
              */
             int quotient = 1;
+            int min = 0xc0000000;
             /**
              * (-2^31) / (-1) = 2^31 lead to overflow, so we must control the lower bound of value.
              * If we don't do this, we will get Time Limit Exceed error.
@@ -202,15 +220,12 @@ public class DivideTwoIntegers {
              * if using value > Integer.MIN_VALUE, then output 1073741824, not satisfy the expected value 715827882.
              *
              */
-            System.out.println("value:" + value + " >= " + 0xc0000000 + ": " + (value >= 0xc0000000) + ", dividend <= " + (value + value) + ": " + (dividend <= (value + value)));
-            while (value >= 0xc0000000 && dividend <= (value + value)) {
+            while (value >= min && dividend <= (value + value)) {
                 value += value;
                 quotient += quotient;
-                System.out.println("value:" + value + ", quotient:" + quotient);
             }
             result += quotient;
             dividend -= value;
-            System.out.println("result:" + result + ", dividend:" + dividend);
         }
         return result;
     }
