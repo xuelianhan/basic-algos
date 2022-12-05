@@ -42,17 +42,17 @@ public class DivideTwoIntegers {
         System.out.println(Integer.MIN_VALUE);//0x80000000, -2147483648 = -2^31
         System.out.println(0xc0000000);//-1073741824 = -2^31 / 2 = -2^30
 
-        //int dividend = -2147483648;
-        //int divisor = 2;
+        //int[] arr = {-2147483648, 2};
+        //int[] arr = {15, 2};
+        //int[] arr = {2147483647, 3};
+        int[] arr = {-2147483648, 1};
+        System.out.println("arr[0] - arr[1]:" + (arr[0] - arr[1]));
 
-        //int dividend = 15;
-        //int divisor = 2;
-
-        int dividend = 2147483647;
-        int divisor = 3;
+        int dividend = arr[0];
+        int divisor = arr[1];
 
         DivideTwoIntegers instance = new DivideTwoIntegers();
-        int result = instance.divide(dividend, divisor);
+        int result = instance.divideV3(dividend, divisor);
         System.out.println(result);
         System.out.println("result:" + result + " == " + 0xc0000000 + ":" + (result == 0xc0000000));
     }
@@ -60,6 +60,25 @@ public class DivideTwoIntegers {
 
     /**
      * Time Cost 2ms
+     * Basic mathematical intuition:
+     * (dividend / divisor) = quotient + (remainder / divisor)
+     *
+     * Programmatic Rule:
+     * Left Shift (<<) shall be considered as multiplication by 2^N
+     * Similarly, Right Shift (>>) shall be considered as division by 2^N
+     * Since the environment only allows to accommodate integer data type,
+     * overflow cases are the corner cases.
+     *
+     * First of all, As we all know already the basic idea for solving the problem
+     * without the mod operator is simply identifying the number of times the divisor can fully
+     * SUBSTRACT the dividend as a whole but iterations are so costly and it will not work for large numbers.
+     * The obvious secret is to identify effective way to reduce the number of substractions.
+     *
+     * The java solution is very elegant and nicely handles the overflow!
+     * Didn't realize that a-b >= 0 is not the same as a >= b when overflow happens.
+     *
+     * @author pprabu49
+     * @see <a href="https://leetcode.com/problems/divide-two-integers/solutions/1327339/java-0ms-100-faster-obeys-all-conditions">pprabu49</a>
      * @param dividend
      * @param divisor
      * @return
@@ -74,6 +93,10 @@ public class DivideTwoIntegers {
         /**
          * e.g.1. a = 1, b = 1, so we need >= , other than >
          * e.g.2. a = -2147483648, b = 1, so we need a - b >= 0, other than a >= b
+         * Math.abs(-2147483648) = -2147483648, it's still a negative number due to overflow.
+         * so a >= b can represent as -2147483648 >= 1, it's not true, while-loop ends, and return 0;
+         * but if you use (a - b >= 0), x = a - b = -2147483648 - 1 = 2147483647, it's the overflow result.
+         * Integer.MIN_VALUE is 0x80000000, -2147483648, when it overflows, it turns out to be Integer.MAX_VALUE
          */
         while (a - b >= 0) {
             int temp = b;
