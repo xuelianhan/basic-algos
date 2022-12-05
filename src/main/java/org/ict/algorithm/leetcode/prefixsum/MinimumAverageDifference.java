@@ -58,6 +58,32 @@ public class MinimumAverageDifference {
         return 0;
     }
 
+    /**
+     * e.g. nums = [2,5,3,9,5,3]
+     * 0 1 2 3 4 5
+     * 2 5 3 9 5 3
+     *
+     * prefix:
+     * prefix[0] = nums[0]
+     * prefix[1] = nums[0] + nums[1]
+     *           = nums[1] + prefix[0]
+     * prefix[2] = nums[0] + nums[1] + nums[2]
+     *           = nums[2] + prefix[1]
+     * prefix[3] = nums[0] + nums[1] + nums[2] + nums[3]
+     *           = nums[3] = prefix[2]
+     * prefix[4] = nums[0] + nums[1] + nums[2] + nums[3] + nums[4]
+     *           = nums[4] + prefix[3]
+     * prefix[5] = nums[0] + nums[1] + nums[2] + nums[3] + nums[4] + nums[5]
+     *           = nums[5] + prefix[4]
+     *
+     * so, we can induce a formula of prefix sum:
+     * prefix[i] = nums[i] + prefix[i-1]
+     *
+     *
+     *
+     * @param nums
+     * @return
+     */
     public int minimumAverageDifference(int[] nums) {
         int res = 0, n = nums.length;
         long min = Long.MAX_VALUE;
