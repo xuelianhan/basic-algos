@@ -8,7 +8,8 @@ package org.ict.algorithm.leetcode.math;
  *
  * Return the quotient after dividing dividend by divisor.
  *
- * Note: Assume we are dealing with an environment that could only store integers within the 32-bit signed integer range: [−231, 231 − 1].
+ * Note:
+ * Assume we are dealing with an environment that could only store integers within the 32-bit signed integer range: [−231, 231 − 1].
  * For this problem, if the quotient is strictly greater than 2^31 - 1, then return 2^31 - 1,
  * and if the quotient is strictly less than -2^31, then return -2^31.
  *
@@ -41,7 +42,10 @@ public class DivideTwoIntegers {
         System.out.println(Integer.MIN_VALUE);//0x80000000, -2147483648 = -2^31
         System.out.println(0xc0000000);//-1073741824 = -2^31 / 2 = -2^30
 
-        int dividend = -2147483648;
+        //int dividend = -2147483648;
+        //int divisor = 2;
+
+        int dividend = 15;
         int divisor = 2;
         DivideTwoIntegers instance = new DivideTwoIntegers();
         int result = instance.divide(dividend, divisor);
@@ -186,6 +190,9 @@ public class DivideTwoIntegers {
         int result = 0;
         while (dividend <= divisor) {
             int value = divisor;
+            /**
+             * quotient initialized as 1
+             */
             int quotient = 1;
             /**
              * (-2^31) / (-1) = 2^31 lead to overflow, so we must control the lower bound of value.
@@ -195,12 +202,15 @@ public class DivideTwoIntegers {
              * if using value > Integer.MIN_VALUE, then output 1073741824, not satisfy the expected value 715827882.
              *
              */
+            System.out.println("value:" + value + " >= " + 0xc0000000 + ": " + (value >= 0xc0000000) + ", dividend <= " + (value + value) + ": " + (dividend <= (value + value)));
             while (value >= 0xc0000000 && dividend <= (value + value)) {
                 value += value;
                 quotient += quotient;
+                System.out.println("value:" + value + ", quotient:" + quotient);
             }
             result += quotient;
             dividend -= value;
+            System.out.println("result:" + result + ", dividend:" + dividend);
         }
         return result;
     }
