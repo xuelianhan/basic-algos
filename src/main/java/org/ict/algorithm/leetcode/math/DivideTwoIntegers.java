@@ -191,8 +191,10 @@ public class DivideTwoIntegers {
     /**
      * Time Cost 2ms
      *
-     * Understanding description provided by pprabu49:
+     * Understanding this solution.
      *
+     * The description provided by pprabu49:
+     * 
      * Basic mathematical intuition:
      * (dividend / divisor) = quotient + (remainder / divisor)
      *
