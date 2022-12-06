@@ -47,15 +47,30 @@ public class DivideTwoIntegers {
         System.out.println(Integer.MIN_VALUE);//0x80000000, -2147483648 = -2^31
         System.out.println(0xc0000000);//-1073741824 = -2^31 / 2 = -2^30
 
+        /**
+         * Validate the shift operator precedence and its associativity.
+         * e.g. (b << x << 1)
+         * At first it will calculate b << x, let's mark its result as middle:
+         * middle = b << x, and then we start to calculate middle << 1.
+         */
+        int b = 1;
+        int x = 2;
+        System.out.println("b << x:" + (b << x));
+        System.out.println("x << 1:" + (x << 1));
+        int y = (b << x << 1);
+        System.out.println("y:" + y);
+        System.out.println("1 << 4:" + (1 << 4));
+
         //int[] arr = {-2147483648, 2};
         //int[] arr = {15, 2};
         //int[] arr = {2147483647, 3};
-        int[] arr = {-2147483648, 1};
+        //int[] arr = {-2147483648, 1};
+        int[] arr = {1, 1};
         /**
          * -2147483648 - 1 = -2^31 - 1 = 2^31 - 1, because it occurs overflow.
          */
         System.out.println("arr[0] - arr[1]:" + (arr[0] - arr[1]));
-        int x = 1 << 31;
+        x = 1 << 31;
         /**
          * x:-2147483648 = -2^31
          */
@@ -65,14 +80,16 @@ public class DivideTwoIntegers {
          * Integer.MIN_VALUE - 1 = Integer.MAX_VALUE
          * Integer.MAX_VALUE + 1 = Integer.MIN_VALUE
          */
-        int y = Integer.MAX_VALUE + 1;
+        y = Integer.MAX_VALUE + 1;
         System.out.println("y:" + y);
+
+
 
         int dividend = arr[0];
         int divisor = arr[1];
 
         DivideTwoIntegers instance = new DivideTwoIntegers();
-        int result = instance.divideV3(dividend, divisor);
+        int result = 0;//instance.divideV4(dividend, divisor);
         System.out.println(result);
         System.out.println("result:" + result + " == " + 0xc0000000 + ":" + (result == 0xc0000000));
     }
@@ -145,7 +162,7 @@ public class DivideTwoIntegers {
         int a = Math.abs(dividend);
         int b = Math.abs(divisor);
         int res = 0;
-        int x;
+        int x = 0;
         /**
          * Utilize overflow the third time.
          * a - b >= 0, other than a >= b.
@@ -154,6 +171,14 @@ public class DivideTwoIntegers {
          *
          */
         while (a - b >= 0) {
+            /**
+             * calculate from left to right,
+             * b << x firstly, then its result << 1.
+             * when x == 0, b << x is still b, b << x << 1 turns out b << 1,
+             * 1 << x is 1, res = res + 1
+             * b << x is b, a = a - b.
+             *
+             */
             for (x = 0; a - (b << x << 1) >= 0; x++) {
                 res += 1 << x;
                 a -= b << x;
