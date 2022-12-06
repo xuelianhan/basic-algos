@@ -37,6 +37,11 @@ package org.ict.algorithm.leetcode.math;
  */
 public class DivideTwoIntegers {
 
+    /**
+     * Integer.MIN_VALUE - 1 = Integer.MAX_VALUE
+     * Integer.MAX_VALUE + 1 = Integer.MIN_VALUE
+     * @param args
+     */
     public static void main(String[] args) {
         System.out.println(Integer.MAX_VALUE);//0x7fffffff, 2147483647 = 2^31-1
         System.out.println(Integer.MIN_VALUE);//0x80000000, -2147483648 = -2^31
@@ -57,6 +62,8 @@ public class DivideTwoIntegers {
         System.out.println("x:" + x);
         /**
          * y:-2147483648 = -2^31 = 2^31 + 1
+         * Integer.MIN_VALUE - 1 = Integer.MAX_VALUE
+         * Integer.MAX_VALUE + 1 = Integer.MIN_VALUE
          */
         int y = Integer.MAX_VALUE + 1;
         System.out.println("y:" + y);
@@ -70,12 +77,45 @@ public class DivideTwoIntegers {
         System.out.println("result:" + result + " == " + 0xc0000000 + ":" + (result == 0xc0000000));
     }
 
+
+    /**
+     * Bit manipulation solution
+     * Time Complexity O(32)
+     *
+     * dividend = (quotient) * divisor + remainder
+     *
+     * a - b >= 0 will utilize the result of overflow, but a >= b won't do that. Let's consider an case:
+     * a = -2^31, b = 1
+     * a - b = -2^31 - 1 overflow to 2^31 - 1.
+     *
+     * On the other hand, Integer.MAX_VALUE = 0x7fffffff.
+     * 0x7fffffff - (-1) = 0x7fffffff + 1, the result will overflow to Integer.MIN_VALUE=0x80000000
+     * Based on above analysis, we can get an conclusion, overflow of Integer in Java can make a circle,
+     * MAX overflow result by 1 is MIN, MIN overflow result by 1 is MAX
+     *
+     * @author lee215
+     * @param dividend
+     * @param divisor
+     * @return
+     */
     public int divideV5(int dividend, int divisor) {
-        //todo
-        return 0;
+        if (dividend == Integer.MIN_VALUE && divisor == -1) {
+            return Integer.MAX_VALUE;
+        }
+        int a = Math.abs(dividend);
+        int b = Math.abs(divisor);
+        int res = 0;
+        for (int x = 31; x >= 0; x--) {
+            if ((a >>> x) - b >= 0) {
+                res += 1 << x;
+                a -= b <<x;
+            }
+        }
+        return (a > 0) == (b > 0) ? res : -res;
     }
 
     /**
+     *
      * The description note that:
      * "Assume we are dealing with an environment,
      * which could only store integers within the 32-bit signed integer range: [−2^31, 2^31 − 1]."
@@ -84,6 +124,7 @@ public class DivideTwoIntegers {
      * Only one corner case is -2^31 / 1 and I deal with it at the first line.
      * This solution has O(logN^2) time complexity.
      *
+     * dividend = (quotient) * divisor + remainder
      * @author lee215
      * @param dividend
      * @param divisor
@@ -103,7 +144,8 @@ public class DivideTwoIntegers {
          */
         int a = Math.abs(dividend);
         int b = Math.abs(divisor);
-        int res = 0, x = 0;
+        int res = 0;
+        int x;
         /**
          * Utilize overflow the third time.
          * a - b >= 0, other than a >= b.
@@ -123,6 +165,9 @@ public class DivideTwoIntegers {
 
     /**
      * Time Cost 2ms
+     *
+     * Understanding description provided by pprabu49:
+     *
      * Basic mathematical intuition:
      * (dividend / divisor) = quotient + (remainder / divisor)
      *
@@ -140,7 +185,7 @@ public class DivideTwoIntegers {
      * The java solution is very elegant and nicely handles the overflow!
      * Didn't realize that a-b >= 0 is not the same as a >= b when overflow happens.
      *
-     * @author pprabu49
+     * @author dontsovigor1
      * @see <a href="https://leetcode.com/problems/divide-two-integers/solutions/1327339/java-0ms-100-faster-obeys-all-conditions">pprabu49</a>
      * @param dividend
      * @param divisor
@@ -324,6 +369,7 @@ public class DivideTwoIntegers {
      * dividend:-1 > divisor:-2, outer-while-loop-end
      * result:7
      *
+     * Time Complexity O(LogN^2)
      * @param dividend
      * @param divisor
      * @return
@@ -363,6 +409,8 @@ public class DivideTwoIntegers {
      * Can't process case:
      * dividend == 0x80000000 and divisor == -1
      * dividend == 0x80000000 and divisor == 2
+     *
+     * Time Complexity O(LogN^2)
      * @param dividend
      * @param divisor
      * @return
