@@ -9,7 +9,7 @@ package org.ict.algorithm.leetcode.math;
  * Return the quotient after dividing dividend by divisor.
  *
  * Note:
- * Assume we are dealing with an environment that could only store integers within the 32-bit signed integer range: [−231, 231 − 1].
+ * Assume we are dealing with an environment that could only store integers within the 32-bit signed integer range: [−2^31, 2^31 − 1].
  * For this problem, if the quotient is strictly greater than 2^31 - 1, then return 2^31 - 1,
  * and if the quotient is strictly less than -2^31, then return -2^31.
  *
@@ -46,7 +46,20 @@ public class DivideTwoIntegers {
         //int[] arr = {15, 2};
         //int[] arr = {2147483647, 3};
         int[] arr = {-2147483648, 1};
+        /**
+         * -2147483648 - 1 = -2^31 - 1 = 2^31 - 1, because it occurs overflow.
+         */
         System.out.println("arr[0] - arr[1]:" + (arr[0] - arr[1]));
+        int x = 1 << 31;
+        /**
+         * x:-2147483648 = -2^31
+         */
+        System.out.println("x:" + x);
+        /**
+         * y:-2147483648 = -2^31 = 2^31 + 1
+         */
+        int y = Integer.MAX_VALUE + 1;
+        System.out.println("y:" + y);
 
         int dividend = arr[0];
         int divisor = arr[1];
@@ -62,9 +75,49 @@ public class DivideTwoIntegers {
         return 0;
     }
 
+    /**
+     * The description note that:
+     * "Assume we are dealing with an environment,
+     * which could only store integers within the 32-bit signed integer range: [−2^31, 2^31 − 1]."
+     * the most of the solutions use "long" integer, so I share my solution here.
+     *
+     * Only one corner case is -2^31 / 1 and I deal with it at the first line.
+     * This solution has O(logN^2) time complexity.
+     *
+     * @author lee215
+     * @param dividend
+     * @param divisor
+     * @return
+     */
     public int divideV4(int dividend, int divisor) {
-        //todo
-        return 0;
+        if (dividend == 1 << 31 && divisor == -1) {
+            /**
+             * Utilize the overflow here:
+             * (1 << 31) = -2^31
+             * (1 << 31) - 1 = -2^31 - 1 overflow to 2^31 - 1
+             */
+            return (1 << 31) - 1;
+        }
+        /**
+         * Utilize overflow again! because Math.abs(-2^31) = -2^31
+         */
+        int a = Math.abs(dividend);
+        int b = Math.abs(divisor);
+        int res = 0, x = 0;
+        /**
+         * Utilize overflow the third time.
+         * a - b >= 0, other than a >= b.
+         * e.g. -2^31 - 1 overflow to 2^31 - 1, which is greater than zero, so it can go into the while-loop.
+         * If being wrote as a >= b, -2^31 >= 1 is false, it never go into the while-loop.
+         *
+         */
+        while (a - b >= 0) {
+            for (x = 0; a - (b << x << 1) >= 0; x++) {
+                res += 1 << x;
+                a -= b << x;
+            }
+        }
+        return (a > 0) == (b > 0) ? res : -res;
     }
 
 
