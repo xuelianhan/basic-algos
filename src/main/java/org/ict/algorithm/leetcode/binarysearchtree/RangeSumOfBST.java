@@ -23,7 +23,7 @@ public class RangeSumOfBST {
      * @return
      */
     public int rangeSumBSTV1(TreeNode root, int low, int high) {
-        if (root == null) {
+        if (root == null || low > high) {
             return 0;
         }
         /**
