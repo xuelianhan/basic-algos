@@ -1,4 +1,4 @@
-package org.ict.algorithm.leetcode.tree;
+package org.ict.algorithm.leetcode.binarysearchtree;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -13,6 +13,7 @@ import java.util.List;
  * LC938
  */
 public class RangeSumOfBST {
+
 
     /**
      * Time cost 0ms
@@ -41,7 +42,7 @@ public class RangeSumOfBST {
     }
 
     /**
-     * Time Cost 15ms
+     * Time cost 15ms
      * @param root
      * @param low
      * @param high

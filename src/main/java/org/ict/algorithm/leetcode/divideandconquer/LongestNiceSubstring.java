@@ -1,4 +1,4 @@
-package org.ict.algorithm.leetcode.bitvector;
+package org.ict.algorithm.leetcode.divideandconquer;
 
 /**
  * A string s is nice if, for every letter of the alphabet that s contains,
@@ -64,6 +64,9 @@ public class LongestNiceSubstring {
     }
 
     public String longestNiceSubstring(String s) {
+        if (s.length() == 1) {
+            return "";
+        }
         return "";
     }
 }

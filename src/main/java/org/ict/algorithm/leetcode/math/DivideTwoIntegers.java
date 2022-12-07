@@ -194,7 +194,7 @@ public class DivideTwoIntegers {
      * Understanding this solution.
      *
      * The description provided by pprabu49:
-     * 
+     *
      * Basic mathematical intuition:
      * (dividend / divisor) = quotient + (remainder / divisor)
      *

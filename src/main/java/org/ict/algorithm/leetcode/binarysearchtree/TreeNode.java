@@ -1,4 +1,4 @@
-package org.ict.algorithm.leetcode.tree;
+package org.ict.algorithm.leetcode.binarysearchtree;
 
 /**
  * Definition for a binary tree node.
