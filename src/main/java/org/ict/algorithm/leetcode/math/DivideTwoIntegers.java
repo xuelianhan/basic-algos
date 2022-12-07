@@ -43,6 +43,25 @@ public class DivideTwoIntegers {
      * @param args
      */
     public static void main(String[] args) {
+        //int[] arr = {-2147483648, 2};
+        //int[] arr = {15, 2};
+        //int[] arr = {2147483647, 3};
+        //int[] arr = {-2147483648, 1};
+        int[] arr = {1, 1};
+        /**
+         * -2147483648 - 1 = -2^31 - 1 = 2^31 - 1, because it occurs overflow.
+         */
+        System.out.println("arr[0] - arr[1]:" + (arr[0] - arr[1]));
+        int dividend = arr[0];
+        int divisor = arr[1];
+
+        DivideTwoIntegers instance = new DivideTwoIntegers();
+        int result = instance.divideV4(dividend, divisor);
+        System.out.println(result);
+        testDemo();
+    }
+
+    public static void testDemo() {
         System.out.println(Integer.MAX_VALUE);//0x7fffffff, 2147483647 = 2^31-1
         System.out.println(Integer.MIN_VALUE);//0x80000000, -2147483648 = -2^31
         System.out.println(0xc0000000);//-1073741824 = -2^31 / 2 = -2^30
@@ -61,20 +80,12 @@ public class DivideTwoIntegers {
         System.out.println("y:" + y);
         System.out.println("1 << 4:" + (1 << 4));
 
-        //int[] arr = {-2147483648, 2};
-        //int[] arr = {15, 2};
-        //int[] arr = {2147483647, 3};
-        //int[] arr = {-2147483648, 1};
-        int[] arr = {1, 1};
-        /**
-         * -2147483648 - 1 = -2^31 - 1 = 2^31 - 1, because it occurs overflow.
-         */
-        System.out.println("arr[0] - arr[1]:" + (arr[0] - arr[1]));
         x = 1 << 31;
         /**
          * x:-2147483648 = -2^31
          */
         System.out.println("x:" + x);
+
         /**
          * y:-2147483648 = -2^31 = 2^31 + 1
          * Integer.MIN_VALUE - 1 = Integer.MAX_VALUE
@@ -82,20 +93,11 @@ public class DivideTwoIntegers {
          */
         y = Integer.MAX_VALUE + 1;
         System.out.println("y:" + y);
-
-
-
-        int dividend = arr[0];
-        int divisor = arr[1];
-
-        DivideTwoIntegers instance = new DivideTwoIntegers();
-        int result = 0;//instance.divideV4(dividend, divisor);
-        System.out.println(result);
-        System.out.println("result:" + result + " == " + 0xc0000000 + ":" + (result == 0xc0000000));
     }
 
 
     /**
+     * Time Cost 2ms
      * Bit manipulation solution
      * Time Complexity O(32)
      *
@@ -128,11 +130,11 @@ public class DivideTwoIntegers {
                 a -= b <<x;
             }
         }
-        return (a > 0) == (b > 0) ? res : -res;
+        return (dividend > 0) == (divisor > 0) ? res : -res;
     }
 
     /**
-     *
+     * Time Cost 3ms.
      * The description note that:
      * "Assume we are dealing with an environment,
      * which could only store integers within the 32-bit signed integer range: [−2^31, 2^31 − 1]."
@@ -162,7 +164,6 @@ public class DivideTwoIntegers {
         int a = Math.abs(dividend);
         int b = Math.abs(divisor);
         int res = 0;
-        int x = 0;
         /**
          * Utilize overflow the third time.
          * a - b >= 0, other than a >= b.
@@ -172,19 +173,21 @@ public class DivideTwoIntegers {
          */
         while (a - b >= 0) {
             /**
-             * calculate from left to right,
+             * operator << calculate from left to right,
              * b << x firstly, then its result << 1.
              * when x == 0, b << x is still b, b << x << 1 turns out b << 1,
              * 1 << x is 1, res = res + 1
              * b << x is b, a = a - b.
              *
              */
-            for (x = 0; a - (b << x << 1) >= 0; x++) {
-                res += 1 << x;
-                a -= b << x;
+            int x = 0;
+            while (a - (b << x << 1) >= 0) {
+                x++;
             }
+            res += 1 << x;
+            a -= b << x;
         }
-        return (a > 0) == (b > 0) ? res : -res;
+        return (dividend > 0) == (divisor > 0) ? res : -res;
     }
 
 
@@ -278,6 +281,7 @@ public class DivideTwoIntegers {
 
 
     /**
+     * Time Cost 2ms
      * @param dividend
      * @param divisor
      * @return
@@ -324,6 +328,7 @@ public class DivideTwoIntegers {
     }
 
     /**
+     * Time Cost 2ms
      * e.g.
      * dividend = -2147483648, divisor = 1
      * @param dividend
