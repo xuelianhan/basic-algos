@@ -21,7 +21,7 @@ public class RangeSumOfBST {
      * @param high
      * @return
      */
-    public int rangeSumBSTV1(TreeNode root, int low, int high) {
+    public int rangeSumBSTV3(TreeNode root, int low, int high) {
         if (root == null || low > high) {
             return 0;
         }
@@ -32,12 +32,76 @@ public class RangeSumOfBST {
          * 3.low <= root.val <= high, find in both left and right part of the bst.
          */
         if (root.val < low) {
-            return rangeSumBSTV1(root.right, low, high);
+            return rangeSumBSTV3(root.right, low, high);
         }
         if (root.val > high) {
-            return rangeSumBSTV1(root.left, low, high);
+            return rangeSumBSTV3(root.left, low, high);
         }
-        return root.val + rangeSumBSTV1(root.left, low, high) + rangeSumBSTV1(root.right, low, high);
+        return root.val + rangeSumBSTV3(root.left, low, high) + rangeSumBSTV3(root.right, low, high);
+    }
+
+    /**
+     * Time Cost 5ms
+     * @param root
+     * @param low
+     * @param high
+     * @return
+     */
+    public int rangeSumBSTV2(TreeNode root, int low, int high) {
+        if (root == null || low > high) {
+            return 0;
+        }
+        if (root.val < low) {
+            return inOrderV2(root.right, low, high);
+        }
+        if (root.val > high) {
+            return inOrderV2(root.left, low, high);
+        }
+        return root.val + inOrderV2(root.left, low, high) + inOrderV2(root.right, low, high);
+    }
+
+    public int inOrderV2(TreeNode root, int low, int high) {
+        int result = 0;
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        TreeNode cur = root;
+        while(!stack.isEmpty() || cur != null) {
+            if(cur != null) {
+                stack.push(cur);
+                cur = cur.left;
+            } else {
+                TreeNode node = stack.pop();
+                // Add after all left children
+                if (node.val >= low && node.val <= high) {
+                    result += node.val;
+                }
+                cur = node.right;
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Time cost 26ms
+     * @param root
+     * @param low
+     * @param high
+     * @return
+     */
+    public int rangeSumBSTV1(TreeNode root, int low, int high) {
+        if (root == null || low > high) {
+            return 0;
+        }
+        if (root.val < low) {
+            List<Integer> result = inOrder(root.right, low, high);
+            return sumList(result);
+        }
+        if (root.val > high) {
+            List<Integer> result = inOrder(root.left, low, high);
+            return sumList(result);
+        }
+        List<Integer> list1 = inOrder(root.left, low, high);
+        List<Integer> list2 = inOrder(root.right, low, high);
+        return root.val + sumList(list1) + sumList(list2);
     }
 
     /**
@@ -76,5 +140,12 @@ public class RangeSumOfBST {
             }
         }
         return result;
+    }
+
+    public int sumList(List<Integer> result) {
+        if (null == result) {
+            return 0;
+        }
+        return result.stream().mapToInt(i -> i).sum();
     }
 }
