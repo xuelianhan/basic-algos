@@ -118,7 +118,7 @@ public class DivideTwoIntegers {
      * @param divisor
      * @return
      */
-    public int divideV5(int dividend, int divisor) {
+    public int divideV6(int dividend, int divisor) {
         if (dividend == Integer.MIN_VALUE && divisor == -1) {
             return Integer.MAX_VALUE;
         }
@@ -131,6 +131,33 @@ public class DivideTwoIntegers {
                 a -= b <<x;
             }
         }
+        return (dividend > 0) == (divisor > 0) ? res : -res;
+    }
+
+    /**
+     * Time Cost 2ms.
+     * Solution same as divideV4, only difference is using for-loop to replace inner-while-loop.
+     *
+     * @param dividend
+     * @param divisor
+     * @return
+     */
+    public int divideV5(int dividend, int divisor) {
+        if (dividend == Integer.MIN_VALUE && divisor == -1) {
+            return Integer.MAX_VALUE;
+        }
+
+        int a = Math.abs(dividend);
+        int b = Math.abs(divisor);
+        int res = 0;
+
+        while (a - b >= 0) {
+            int x = 0;
+            for (;(a - (b << x << 1)) >= 0; x++);
+            a -= b << x;
+            res += 1 << x;
+        }
+
         return (dividend > 0) == (divisor > 0) ? res : -res;
     }
 
@@ -180,6 +207,8 @@ public class DivideTwoIntegers {
              * 1 << x is 1, res = res + 1
              * b << x is b, a = a - b.
              *
+             * (b << x << 1) effects equals b << (x + 1), because we are not allowed to use addition, so
+             * using (b << x << 1) to replace b << (x + 1)
              */
             int x = 0;
             while (a - (b << x << 1) >= 0) {
@@ -244,14 +273,16 @@ public class DivideTwoIntegers {
                 temp <<= 1;
                 quotient <<= 1;
             }
-            a -= temp;
             result += quotient;
+            a -= temp;
         }
         return (dividend > 0) == (divisor > 0) ? result : -result;
     }
 
     /**
      * Time Cost 1ms
+     * Understanding this solution.
+     *
      * @param dividend
      * @param divisor
      * @return
@@ -283,6 +314,8 @@ public class DivideTwoIntegers {
 
     /**
      * Time Cost 2ms
+     * Understanding this solution.
+     *
      * @param dividend
      * @param divisor
      * @return
@@ -330,6 +363,9 @@ public class DivideTwoIntegers {
 
     /**
      * Time Cost 2ms
+     *
+     * Understanding this solution.
+     *
      * e.g.
      * dividend = -2147483648, divisor = 1
      * @param dividend
