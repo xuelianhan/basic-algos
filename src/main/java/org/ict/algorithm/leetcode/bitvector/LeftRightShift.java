@@ -7,19 +7,62 @@ package org.ict.algorithm.leetcode.bitvector;
 public class LeftRightShift {
 
     public static void main(String[] args) {
-        testLeftShiftV2();
+        testSignedRightShift();
+        //testUnsignedRightShift();
+        //testLeftShiftV2();
         //testLeftShiftV1();
         //testLeftShift();
         //testRightShift();
     }
 
-
-    public static void testUnsignedRightShift() {
-
+    /**
+     * signed right shift res:1
+     */
+    public static void testSignedRightShift() {
+        int res = 0;
+        int a = -2147483648;
+        int b = 1;
+        for (int x = 31; x >= 0; x--) {
+            /**
+             * Use unsigned right shift, try from high bit to low bit.
+             * we can't use signed right shift >> in here. Why?
+             * Consider a case:
+             * dividend: -2147483648
+             * divisor:1
+             * expected: -2147483648, if you use >>, you will get -1 at last.
+             */
+            if ((a >> x) - b >= 0) {
+                System.out.println("(a >> " + x + "):" + (a >> x));
+                res += 1 << x;
+                a -= b <<x;
+            }
+        }
+        System.out.println("signed right shift res:" + res);
     }
 
-    public static void testSignedRightShift() {
-
+    /**
+     * unsigned right shift res:-2147483648
+     */
+    public static void testUnsignedRightShift() {
+        int res = 0;
+        int a = -2147483648;
+        int b = 1;
+        for (int x = 31; x >= 0; x--) {
+            /**
+             * Use unsigned right shift, try from high bit to low bit.
+             * we can't use signed right shift >> in here. Why?
+             * Consider a case:
+             * dividend: -2147483648
+             * divisor:1
+             * expected: -2147483648, if you use >>, you will get -1 at last.
+             */
+            if ((a >>> x) - b >= 0) {
+                System.out.println("(a >>> " + x + "):" + (a >>> x));
+                res += 1 << x;
+                a -= b <<x;
+            }
+        }
+        System.out.println("unsigned right shift res:" + res);
     }
 
     /**
