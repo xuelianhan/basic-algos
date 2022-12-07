@@ -52,6 +52,9 @@ public class LeftRightShift {
      * 2147483647 >>> 0:2147483647
      */
     public static void testUnsignedRightShiftOnDiffV2() {
+        /**
+         * 0x7fffffff
+         */
         int a = Integer.MAX_VALUE;
         for (int x = 31; x >= 0; x--) {
             int y = a >>> x;
@@ -95,6 +98,9 @@ public class LeftRightShift {
      * -2147483648 >>> 0:-2147483648
      */
     public static void testUnsignedRightShiftOnDiffV1() {
+        /**
+         * 0x80000000
+         */
         int a = Integer.MIN_VALUE;
         for (int x = 31; x >= 0; x--) {
             int y = a >>> x;
