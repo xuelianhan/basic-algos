@@ -13,6 +13,15 @@ public class LeftRightShift {
         //testRightShift();
     }
 
+
+    public static void testUnsignedRightShift() {
+
+    }
+
+    public static void testSignedRightShift() {
+
+    }
+
     /**
      * x: 0, (b << (x + 1)):2, x: 1
      * x: 1, (b << (x + 1)):4, x: 2

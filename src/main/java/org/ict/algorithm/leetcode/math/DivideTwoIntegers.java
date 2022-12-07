@@ -126,6 +126,14 @@ public class DivideTwoIntegers {
         int b = Math.abs(divisor);
         int res = 0;
         for (int x = 31; x >= 0; x--) {
+            /**
+             * Use unsigned right shift, try from high bit to low bit.
+             * we can't use signed right shift >> in here. Why?
+             * Consider a case:
+             * dividend: -2147483648
+             * divisor:1
+             * expected: -2147483648, if you use >>, you will get -1 at last.
+             */
             if ((a >>> x) - b >= 0) {
                 res += 1 << x;
                 a -= b <<x;
@@ -154,6 +162,7 @@ public class DivideTwoIntegers {
         while (a - b >= 0) {
             int x = 0;
             for (;(a - (b << x << 1)) >= 0; x++);
+
             a -= b << x;
             res += 1 << x;
         }
@@ -209,6 +218,7 @@ public class DivideTwoIntegers {
              *
              * (b << x << 1) effects equals b << (x + 1), because we are not allowed to use addition, so
              * using (b << x << 1) to replace b << (x + 1)
+             * x is the final maximum shift bits count which satisfy the (a - b << (x + 1));
              */
             int x = 0;
             while (a - (b << x << 1) >= 0) {
