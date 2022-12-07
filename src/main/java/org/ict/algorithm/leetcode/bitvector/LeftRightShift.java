@@ -7,8 +7,52 @@ package org.ict.algorithm.leetcode.bitvector;
 public class LeftRightShift {
 
     public static void main(String[] args) {
+        testLeftShiftV1();
         //testLeftShift();
-        testRightShift();
+        //testRightShift();
+    }
+
+    /**
+     * x: 0, (b << x << 1):2, x: 1
+     * x: 1, (b << x << 1):4, x: 2
+     * x: 2, (b << x << 1):8, x: 3
+     * x: 3, (b << x << 1):16, x: 4
+     * x: 4, (b << x << 1):32, x: 5
+     * x: 5, (b << x << 1):64, x: 6
+     * x: 6, (b << x << 1):128, x: 7
+     * x: 7, (b << x << 1):256, x: 8
+     * x: 8, (b << x << 1):512, x: 9
+     * x: 9, (b << x << 1):1024, x: 10
+     * x: 10, (b << x << 1):2048, x: 11
+     * x: 11, (b << x << 1):4096, x: 12
+     * x: 12, (b << x << 1):8192, x: 13
+     * x: 13, (b << x << 1):16384, x: 14
+     * x: 14, (b << x << 1):32768, x: 15
+     * x: 15, (b << x << 1):65536, x: 16
+     * x: 16, (b << x << 1):131072, x: 17
+     * x: 17, (b << x << 1):262144, x: 18
+     * x: 18, (b << x << 1):524288, x: 19
+     * x: 19, (b << x << 1):1048576, x: 20
+     * x: 20, (b << x << 1):2097152, x: 21
+     * x: 21, (b << x << 1):4194304, x: 22
+     * x: 22, (b << x << 1):8388608, x: 23
+     * x: 23, (b << x << 1):16777216, x: 24
+     * x: 24, (b << x << 1):33554432, x: 25
+     * x: 25, (b << x << 1):67108864, x: 26
+     * x: 26, (b << x << 1):134217728, x: 27
+     * x: 27, (b << x << 1):268435456, x: 28
+     * x: 28, (b << x << 1):536870912, x: 29
+     * x: 29, (b << x << 1):1073741824, x: 30
+     */
+    public static void testLeftShiftV1() {
+        int a = Integer.MAX_VALUE;
+        int b = 1;
+        int x = 0;
+        while (a - (b << x << 1) >= 0) {
+            System.out.print("x: " + x + ", (b << x << 1):" + (b << x << 1) + ", ");
+            x++;
+            System.out.println("x: " + x);
+        }
     }
 
     /**
