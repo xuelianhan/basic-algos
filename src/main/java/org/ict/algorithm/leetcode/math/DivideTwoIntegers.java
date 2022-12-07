@@ -58,8 +58,9 @@ public class DivideTwoIntegers {
         DivideTwoIntegers instance = new DivideTwoIntegers();
         int result = instance.divideV4(dividend, divisor);
         System.out.println(result);
-        testDemo();
+        //testDemo();
     }
+
 
     public static void testDemo() {
         System.out.println(Integer.MAX_VALUE);//0x7fffffff, 2147483647 = 2^31-1
