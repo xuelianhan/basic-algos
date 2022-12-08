@@ -46,15 +46,82 @@ import java.util.*;
  */
 public class LeafSimilarTrees {
 
-
+    /**
+     * Recursive-InOrder-Solution.
+     * Time Cost 1ms
+     * @param root1
+     * @param root2
+     * @return
+     */
     public boolean leafSimilarV2(TreeNode root1, TreeNode root2) {
-        return true;
+        StringBuilder leaf1 = new StringBuilder();
+        StringBuilder leaf2 = new StringBuilder();
+
+        inOrderHelperV2(root1, leaf1);
+        inOrderHelperV2(root2, leaf2);
+
+
+        return leaf1.toString().equals(leaf2.toString());
     }
 
+    public void inOrderHelperV2(TreeNode node, StringBuilder sb) {
+        if (node == null) {
+            return;
+        }
+        if (node.left == null && node.right == null) {
+            sb.append(node.val);
+            sb.append(",");
+        }
+        inOrderHelperV2(node.left, sb);
+        inOrderHelperV2(node.right, sb);
+    }
+
+
+    /**
+     * Recursive-InOrder-Solution.
+     * Time Cost 0ms
+     * @param root1
+     * @param root2
+     * @return
+     */
     public boolean leafSimilarV1(TreeNode root1, TreeNode root2) {
+        List<Integer> list1 = new ArrayList<>();
+        List<Integer> list2 = new ArrayList<>();
+
+        inOrderHelper(root1, list1);
+        inOrderHelper(root2, list2);
+
+        if (list1.size() != list2.size()) {
+            return false;
+        }
+        for(int i = 0; i < list1.size(); i++) {
+            int x = list1.get(i);
+            int y = list2.get(i);
+            if (x != y) {
+                return false;
+            }
+        }
         return true;
     }
 
+    public void inOrderHelper(TreeNode node, List<Integer> list) {
+        if (node == null) {
+            return;
+        }
+        if (node.left == null && node.right == null) {
+            list.add(node.val);
+        }
+        inOrderHelper(node.left, list);
+        inOrderHelper(node.right, list);
+    }
+
+    /**
+     * Iterative-InOrder-Solution.
+     * Time Cost 1ms
+     * @param root1
+     * @param root2
+     * @return
+     */
     public boolean leafSimilar(TreeNode root1, TreeNode root2) {
         List<Integer> list1 = inOrder(root1);
         List<Integer> list2 = inOrder(root2);
