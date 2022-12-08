@@ -127,6 +127,12 @@ public class FindTheDuplicateNumber {
 
     /**
      * Bit Manipulate Solution
+     * e.g. nums = [1,3,4,2,2]
+     * 00000000 00000000 00000000 00000001
+     * 00000000 00000000 00000000 00000011
+     * 00000000 00000000 00000000 00000100
+     * 00000000 00000000 00000000 00000010
+     * 00000000 00000000 00000000 00000010
      *
      * @param nums
      * @return
@@ -138,7 +144,7 @@ public class FindTheDuplicateNumber {
             int cnt1 = 0;
             int cnt2 = 0;
 
-            for (int k = 0; i < nums.length; k++) {
+            for (int k = 0; k < nums.length; k++) {
                 if ((k & bit) > 0) {
                     cnt1++;
                 }
