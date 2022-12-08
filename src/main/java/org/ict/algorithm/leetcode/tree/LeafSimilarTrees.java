@@ -46,6 +46,15 @@ import java.util.*;
  */
 public class LeafSimilarTrees {
 
+
+    public boolean leafSimilarV2(TreeNode root1, TreeNode root2) {
+        return true;
+    }
+
+    public boolean leafSimilarV1(TreeNode root1, TreeNode root2) {
+        return true;
+    }
+
     public boolean leafSimilar(TreeNode root1, TreeNode root2) {
         List<Integer> list1 = inOrder(root1);
         List<Integer> list2 = inOrder(root2);

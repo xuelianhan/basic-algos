@@ -1,7 +1,9 @@
 package org.ict.algorithm.leetcode.binarysearch;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Given an array of integers nums containing n + 1 integers where each integer is in the range [1, n] inclusive.
@@ -53,29 +55,6 @@ public class FindTheDuplicateNumber {
     }
 
     /**
-     * Bit Manipulate Solution
-     *
-     * @param nums
-     * @return
-     */
-    public int findDuplicateV8(int[] nums) {
-
-        return -1;
-    }
-
-
-    /**
-     * Bit Manipulate Solution
-     *
-     * @param nums
-     * @return
-     */
-    public int findDuplicateV7(int[] nums) {
-
-        return -1;
-    }
-
-    /**
      * Floyd's Tortoise and Hare Solution.
      * Time Cost 14ms
      *
@@ -108,7 +87,7 @@ public class FindTheDuplicateNumber {
      * @param nums
      * @return
      */
-    public int findDuplicateV6(int[] nums) {
+    public int findDuplicateV9(int[] nums) {
         int slow = nums[0];
         int fast = nums[nums[0]];
         while (slow != fast) {
@@ -122,6 +101,60 @@ public class FindTheDuplicateNumber {
         }
         return slow;
     }
+
+    /**
+     * Bit Manipulate Solution
+     *
+     * @param nums
+     * @return
+     */
+    public int findDuplicateV8(int[] nums) {
+
+        return -1;
+    }
+
+    /**
+     * Bit Manipulate Solution
+     *
+     * @param nums
+     * @return
+     */
+    public int findDuplicateV7(int[] nums) {
+
+        return -1;
+    }
+
+
+    /**
+     * Bit Manipulate Solution
+     *
+     * @param nums
+     * @return
+     */
+    public int findDuplicateV6(int[] nums) {
+        int res = 0;
+        for (int i = 0; i < 32; i++) {
+            int bit = (1 << i);
+            int cnt1 = 0;
+            int cnt2 = 0;
+
+            for (int k = 0; i < nums.length; k++) {
+                if ((k & bit) > 0) {
+                    cnt1++;
+                }
+                if ((nums[k] & bit) > 0) {
+                    cnt2++;
+                }
+            }
+
+            if (cnt2 > cnt1) {
+                res += bit;
+            }
+        }
+        return res;
+    }
+
+
 
     /**
      * Time Cost 34ms
@@ -138,14 +171,14 @@ public class FindTheDuplicateNumber {
         int left = 1, right = nums.length - 1;
         while (left < right) {
             int mid = left + (right - left) / 2;
-            System.out.println("left:" + left + ", right:" + right + ", mid:" + mid);
+            //System.out.println("left:" + left + ", right:" + right + ", mid:" + mid);
             int cnt = 0;
             for (int num : nums) {
                 if (num <= mid) {
                     cnt++;
                 }
             }
-            System.out.println("cnt:" + cnt  + ", mid:" + mid);
+            //System.out.println("cnt:" + cnt  + ", mid:" + mid);
             if (cnt <= mid) {
                 left = mid + 1;
             } else {
@@ -171,14 +204,14 @@ public class FindTheDuplicateNumber {
         int left = 1, right = nums.length;
         while (left < right) {
             int mid = left + (right - left) / 2;
-            System.out.println("left:" + left + ", right:" + right + ", mid:" + mid);
+            //System.out.println("left:" + left + ", right:" + right + ", mid:" + mid);
             int cnt = 0;
             for (int num : nums) {
                 if (num <= mid) {
                     cnt++;
                 }
             }
-            System.out.println("cnt:" + cnt  + ", mid:" + mid);
+            //System.out.println("cnt:" + cnt  + ", mid:" + mid);
             if (cnt <= mid) {
                 left = mid + 1;
             } else {
@@ -214,14 +247,14 @@ public class FindTheDuplicateNumber {
         int left = 1, right = nums.length;
         while (left <= right) {
             int mid = left + (right - left) / 2;
-            System.out.println("left:" + left + ", right:" + right + ", mid:" + mid);
+            //System.out.println("left:" + left + ", right:" + right + ", mid:" + mid);
             int cnt = 0;
             for (int num : nums) {
                 if (num <= mid) {
                     cnt++;
                 }
             }
-            System.out.println("cnt:" + cnt  + ", mid:" + mid);
+            //System.out.println("cnt:" + cnt  + ", mid:" + mid);
             if (cnt <= mid) {
                 left = mid + 1;
             } else {
@@ -291,6 +324,22 @@ public class FindTheDuplicateNumber {
             }
         }
         return res;
+    }
+
+    /**
+     * Time Cost 47ms
+     * Not Satisfy the constraint of using only constant extra space.
+     * @param nums
+     * @return
+     */
+    public int findDuplicateV0(int[] nums) {
+        Set<Integer> set = new HashSet<>();
+        for (int i = 0; i < nums.length; i++) {
+            if (!set.add(nums[i])) {
+                return nums[i];
+            }
+        }
+        return 0;
     }
 
 
