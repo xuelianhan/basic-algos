@@ -56,6 +56,9 @@ public class FindTheDuplicateNumber {
 
     /**
      * Floyd's Tortoise and Hare Solution.
+     * Time Complexity O(N)
+     * Space Complexity O(1)
+     *
      * Time Cost 14ms
      *
      * The main idea is the same with problem
@@ -126,6 +129,7 @@ public class FindTheDuplicateNumber {
 
 
     /**
+     * Time Cost 84ms
      * Bit Manipulate Solution
      * e.g. nums = [1,3,4,2,2]
      * 00000000 00000000 00000000 00000001
@@ -164,9 +168,13 @@ public class FindTheDuplicateNumber {
 
     /**
      * Time Cost 34ms
+     * Time Complexity O(N*logN)
+     *
      * e.g. nums=[1,3,4,2,2]
      * 0 1 2 3 4
      * 1 3 4 2 2
+     *
+     *
      * @param nums
      * @return
      */
@@ -197,6 +205,8 @@ public class FindTheDuplicateNumber {
 
     /**
      * Time Cost 32ms
+     * Time Complexity O(N*logN)
+     *
      * e.g. nums=[1,3,4,2,2]
      * 0 1 2 3 4
      * 1 3 4 2 2
@@ -229,6 +239,8 @@ public class FindTheDuplicateNumber {
 
     /**
      * Time Cost 26ms
+     * Time Complexity O(N*logN)
+     *
      * e.g. nums=[1,3,4,2,2]
      * 0 1 2 3 4
      * 1 3 4 2 2
@@ -273,6 +285,7 @@ public class FindTheDuplicateNumber {
 
     /**
      * Time Cost 35ms
+     * Time Complexity O(N*logN)
      *
      * e.g. nums=[1,3,4,2,2]
      * 0 1 2 3 4
