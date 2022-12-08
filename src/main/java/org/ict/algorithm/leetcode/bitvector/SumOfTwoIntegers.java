@@ -25,8 +25,9 @@ package org.ict.algorithm.leetcode.bitvector;
  */
 public class SumOfTwoIntegers {
 
+
     public int getSumV5(int a, int b) {
-        return 0;
+       return 0;
     }
 
     public int getSumV4(int a, int b) {
@@ -45,7 +46,19 @@ public class SumOfTwoIntegers {
         return 0;
     }
 
+    /**
+     * Time Cost 0ms
+     * @param a
+     * @param b
+     * @return
+     */
     public int getSum(int a, int b) {
-        return 0;
+        int res = a;
+        while (b != 0) {
+            res = a ^ b;
+            b = (a & b) << 1;
+            a = res;
+        }
+        return res;
     }
 }
