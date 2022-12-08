@@ -132,7 +132,11 @@ public class DivideTwoIntegers {
              * Consider a case:
              * dividend: -2147483648
              * divisor:1
-             * expected: -2147483648, if you use >>, you will get -1 at last.
+             * expected: -2147483648, if you use >>, you will get -1 at last. Why?
+             * when x > 0 and x <= 31, the result ((a >> x) - b)is a negative.
+             * when x == 0, ((a >> x) - b) = (-2147483648 >> 0 - 1) = -2147483648 - 1, it overflows to 2147483647.
+             * res = 0 + (1 << 0) = 1, a = a - b << 0 = a - b = -2147483648 - 1, it's also 2147483647.
+             * because the sign is negative, so finally return -res, that's -1 we get.
              */
             if ((a >>> x) - b >= 0) {
                 res += 1 << x;
