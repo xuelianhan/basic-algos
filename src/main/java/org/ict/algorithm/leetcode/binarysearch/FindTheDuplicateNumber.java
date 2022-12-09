@@ -155,11 +155,11 @@ public class FindTheDuplicateNumber {
      * i:1, bit:1, cnt1:2, cnt2:3, cnt1 < cnt3, res = 0 + bit = 2
      * -----------------------------------------------------------------------
      * i:2, bit:4, k:0, k & bit = 0, cnt1:0, nums[0] & bit = 1 & 4 = 0, cnt2:0
-     * i:2, bit:4, k:1, k & bit = 0, cnt1:0, nums[1] & bit = 3 & 4 = 4, cnt2:1
-     * i:2, bit:4, k:2, k & bit = 0, cnt1:0, nums[2] & bit = 4 & 4 = 4, cnt2:2
-     * i:2, bit:4, k:3, k & bit = 4, cnt1:1, nums[3] & bit = 2 & 4 = 0, cnt2:2
-     * i:2, bit:4, k:4, k & bit = 4, cnt1:2, nums[4] & bit = 2 & 4 = 0, cnt2:2
-     * i:2, bit:4, cnt1:2, cnt2:2, cnt1 == cnt2
+     * i:2, bit:4, k:1, k & bit = 0, cnt1:0, nums[1] & bit = 3 & 4 = 0, cnt2:0
+     * i:2, bit:4, k:2, k & bit = 0, cnt1:0, nums[2] & bit = 4 & 4 = 4, cnt2:1
+     * i:2, bit:4, k:3, k & bit = 0, cnt1:0, nums[3] & bit = 2 & 4 = 0, cnt2:1
+     * i:2, bit:4, k:4, k & bit = 4, cnt1:1, nums[4] & bit = 2 & 4 = 0, cnt2:1
+     * i:2, bit:4, cnt1:1, cnt2:1, cnt1 == cnt2
      * -----------------------------------------------------------------------
      * i from 3 to 31, cnt1 == cnt2 == 0, for-loop run 29 times for waste.
      * -----------------------------------------------------------------------
@@ -181,6 +181,7 @@ public class FindTheDuplicateNumber {
                 if ((nums[k] & bit) > 0) {
                     cnt2++;
                 }
+                //System.out.println("i:" + i + ", bit:" + bit + ", k:" + k + ", cnt1:" + cnt1 + ", cnt2:" + cnt2);
             }
 
             if (cnt2 > cnt1) {
