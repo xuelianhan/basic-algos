@@ -133,6 +133,8 @@ public class FindTheDuplicateNumber {
     /**
      * Time Cost 84ms
      * Bit Manipulate Solution
+     *
+     * System.out.println("i:" + i + ", bit:" + bit + ", k:" + k + ", cnt1:" + cnt1 + ", cnt2:" + cnt2);
      * e.g. nums = [1,3,4,2,2]
      * 00000000 00000000 00000000 00000001
      * 00000000 00000000 00000000 00000011
@@ -181,7 +183,6 @@ public class FindTheDuplicateNumber {
                 if ((nums[k] & bit) > 0) {
                     cnt2++;
                 }
-                //System.out.println("i:" + i + ", bit:" + bit + ", k:" + k + ", cnt1:" + cnt1 + ", cnt2:" + cnt2);
             }
 
             if (cnt2 > cnt1) {
