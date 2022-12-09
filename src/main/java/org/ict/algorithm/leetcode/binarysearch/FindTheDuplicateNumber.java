@@ -45,7 +45,7 @@ public class FindTheDuplicateNumber {
     public static void main(String[] args) {
         FindTheDuplicateNumber instance = new FindTheDuplicateNumber();
         int[] nums = {1,3,4,2,2 };
-        instance.findDuplicateV2(nums);
+        instance.findDuplicateV6(nums);
         //instance.findDuplicateV3(nums);
         //instance.findDuplicateV4(nums);
         //instance.findDuplicateV5(nums);
@@ -55,6 +55,8 @@ public class FindTheDuplicateNumber {
     }
 
     /**
+     * Understanding the following method.
+     *
      * Floyd's Tortoise and Hare Solution.
      * Time Complexity O(N)
      * Space Complexity O(1)
@@ -138,6 +140,30 @@ public class FindTheDuplicateNumber {
      * 00000000 00000000 00000000 00000010
      * 00000000 00000000 00000000 00000010
      *
+     * i:0, bit:1, k:0, k & bit = 0, cnt1:0, nums[0] & bit = 1 & 1 = 1, cnt2:1
+     * i:0, bit:1, k:1, k & bit = 1, cnt1:1, nums[1] & bit = 3 & 1 = 1, cnt2:2
+     * i:0, bit:1, k:2, k & bit = 0, cnt1:1, nums[2] & bit = 4 & 1 = 0, cnt2:2
+     * i:0, bit:1, k:3, k & bit = 1, cnt1:2, nums[3] & bit = 2 & 1 = 0, cnt2:2
+     * i:0, bit:1, k:4, k & bit = 0, cnt1:2, nums[4] & bit = 2 & 1 = 0, cnt2:2
+     * i:0, bit:1, cnt1 == cnt2 == 2, res:0
+     * -----------------------------------------------------------------------
+     * i:1, bit:2, k:0, k & bit = 0, cnt1:0, nums[0] & bit = 1 & 2 = 0, cnt2:0
+     * i:1, bit:2, k:1, k & bit = 0, cnt1:0, nums[1] & bit = 3 & 2 = 2, cnt2:1
+     * i:1, bit:2, k:2, k & bit = 2, cnt1:1, nums[2] & bit = 4 & 2 = 0, cnt2:1
+     * i:1, bit:2, k:3, k & bit = 2, cnt1:2, nums[3] & bit = 2 & 2 = 2, cnt2:2
+     * i:1, bit:2, k:4, k & bit = 0, cnt1:2, nums[4] & bit = 2 & 2 = 2, cnt2:3
+     * i:1, bit:1, cnt1:2, cnt2:3, cnt1 < cnt3, res = 0 + bit = 2
+     * -----------------------------------------------------------------------
+     * i:2, bit:4, k:0, k & bit = 0, cnt1:0, nums[0] & bit = 1 & 4 = 0, cnt2:0
+     * i:2, bit:4, k:1, k & bit = 0, cnt1:0, nums[1] & bit = 3 & 4 = 4, cnt2:1
+     * i:2, bit:4, k:2, k & bit = 0, cnt1:0, nums[2] & bit = 4 & 4 = 4, cnt2:2
+     * i:2, bit:4, k:3, k & bit = 4, cnt1:1, nums[3] & bit = 2 & 4 = 0, cnt2:2
+     * i:2, bit:4, k:4, k & bit = 4, cnt1:2, nums[4] & bit = 2 & 4 = 0, cnt2:2
+     * i:2, bit:4, cnt1:2, cnt2:2, cnt1 == cnt2
+     * -----------------------------------------------------------------------
+     * i from 3 to 31, cnt1 == cnt2 == 0, for-loop run 29 times for waste.
+     * -----------------------------------------------------------------------
+     * return res:2
      * @param nums
      * @return
      */
@@ -167,6 +193,8 @@ public class FindTheDuplicateNumber {
 
 
     /**
+     * Understanding the following method.
+     *
      * Time Cost 34ms
      * Time Complexity O(N*logN)
      *
@@ -204,6 +232,8 @@ public class FindTheDuplicateNumber {
 
 
     /**
+     * Understanding the following method.
+     *
      * Time Cost 32ms
      * Time Complexity O(N*logN)
      *
@@ -238,6 +268,8 @@ public class FindTheDuplicateNumber {
     }
 
     /**
+     * Understanding the following method.
+     *
      * Time Cost 26ms
      * Time Complexity O(N*logN)
      *
@@ -284,6 +316,7 @@ public class FindTheDuplicateNumber {
 
 
     /**
+     * Understanding the following method.
      * Time Cost 35ms
      * Time Complexity O(N*logN)
      *
