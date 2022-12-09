@@ -65,7 +65,7 @@ public class FindTheDuplicateNumber {
      *
      * The main idea is the same with problem
      * <a href="https://leetcode.com/problems/linked-list-cycle-ii/">LC142</a>
-     * Use two pointers the fast and the slow.
+     * Use two pointers fast and slow.
      * The fast one goes forward two steps each time, while the slow one goes only step each time.
      * They must meet the same item when slow==fast.
      * In fact, they meet in a circle, the duplicate number must be the entry point of the circle when visiting the array from nums[0].
@@ -107,28 +107,6 @@ public class FindTheDuplicateNumber {
         return slow;
     }
 
-    /**
-     * Bit Manipulate Solution
-     *
-     * @param nums
-     * @return
-     */
-    public int findDuplicateV8(int[] nums) {
-
-        return -1;
-    }
-
-    /**
-     * Bit Manipulate Solution
-     *
-     * @param nums
-     * @return
-     */
-    public int findDuplicateV7(int[] nums) {
-
-        return -1;
-    }
-
 
     /**
      * Time Cost 84ms
@@ -141,6 +119,7 @@ public class FindTheDuplicateNumber {
      * 00000000 00000000 00000000 00000100
      * 00000000 00000000 00000000 00000010
      * 00000000 00000000 00000000 00000010
+     *
      *
      * i:0, bit:1, k:0, k & bit = 0, cnt1:0, nums[0] & bit = 1 & 1 = 1, cnt2:1
      * i:0, bit:1, k:1, k & bit = 1, cnt1:1, nums[1] & bit = 3 & 1 = 1, cnt2:2
