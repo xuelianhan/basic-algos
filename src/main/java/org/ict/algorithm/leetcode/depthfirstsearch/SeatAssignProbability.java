@@ -25,7 +25,7 @@ package org.ict.algorithm.leetcode.depthfirstsearch;
  * Constraints:
  * 1 <= n <= 10^5
  *
- * lc1227
+ * LC1227
  * @author sniper
  * @date 2021/7/7 11:37 AM
  */

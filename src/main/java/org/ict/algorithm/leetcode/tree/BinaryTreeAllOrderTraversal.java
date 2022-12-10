@@ -4,7 +4,7 @@ import java.util.*;
 
 public class BinaryTreeAllOrderTraversal {
 
-    public List<Integer> preorderTraversal(TreeNode root) {
+    public List<Integer> preOrderTraversal(TreeNode root) {
         List<Integer> result = new ArrayList<>();
         Deque<TreeNode> stack = new ArrayDeque<>();
         TreeNode cur = root;
@@ -22,7 +22,7 @@ public class BinaryTreeAllOrderTraversal {
         return result;
     }
 
-    public List<Integer> inorderTraversal(TreeNode root) {
+    public List<Integer> inOrderTraversal(TreeNode root) {
         List<Integer> result = new ArrayList<>();
         Deque<TreeNode> stack = new ArrayDeque<>();
         TreeNode cur = root;
@@ -40,7 +40,7 @@ public class BinaryTreeAllOrderTraversal {
         return result;
     }
 
-    public List<Integer> postorderTraversal(TreeNode root) {
+    public List<Integer> postOrderTraversal(TreeNode root) {
         LinkedList<Integer> result = new LinkedList<>();
         Deque<TreeNode> stack = new ArrayDeque<>();
         TreeNode cur = root;

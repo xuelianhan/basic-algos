@@ -107,6 +107,15 @@ public class FindTheDuplicateNumber {
         return slow;
     }
 
+    public int findDuplicateV8(int[] nums) {
+        return 0;
+    }
+
+
+    public int findDuplicateV7(int[] nums) {
+        return 0;
+    }
+
 
     /**
      * Time Cost 84ms
