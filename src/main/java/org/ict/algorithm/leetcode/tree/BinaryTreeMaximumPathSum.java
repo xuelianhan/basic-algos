@@ -72,7 +72,7 @@ public class BinaryTreeMaximumPathSum {
      * Time Cost 0ms
      * Time Complexity O(N)
      * Space Complexity O(N)
-     * 
+     *
      * @param root
      * @return
      */
