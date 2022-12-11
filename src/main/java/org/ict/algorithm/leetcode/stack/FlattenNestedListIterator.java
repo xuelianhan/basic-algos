@@ -56,6 +56,11 @@ public class FlattenNestedListIterator {
         public NestedIterator(List<NestedInteger> nestedList) {
             /**
              * Push into the stack from end to front.
+             * e.g.[[1,2],3,[4,5]]
+             * stack:
+             * [1,2]
+             * 3
+             * [4,5]
              */
             for (int i = nestedList.size() - 1; i >= 0; i--) {
                 stack.push(nestedList.get(i));
@@ -78,6 +83,19 @@ public class FlattenNestedListIterator {
                 /**
                  * If current element is not integer,
                  * then remove this element from the stack.
+                 * e.g.[[1,2],3,[4,5]]
+                 * stack:
+                 * [1,2]
+                 * 3
+                 * [4,5]
+                 * ----------
+                 * peek:[1,2], peek is not Integer
+                 * pop:[1,2], push 2 into the stack, push 1 into the stack.
+                 * stack:
+                 * 1
+                 * 2
+                 * 3
+                 * [4,5]
                  */
                 stack.pop();
                 for (int i = item.getList().size() - 1; i >= 0; i--) {
@@ -88,13 +106,19 @@ public class FlattenNestedListIterator {
         }
     }
 
+    /**
+     * Time Cost 6ms
+     */
     class NestedIteratorV1 implements Iterator<Integer> {
 
         public NestedIteratorV1(List<NestedInteger> nestedList) {
             /**
              * Add elements from start to end of the nestedList, appending them to
              * the tail of queue one by one.
-             * e.g.[[1,1],2,[1,1]]
+             * e.g.[[1,2],3,[4,5]]
+             * queue:
+             * head-------tail
+             * [1,2], 3, [4,5]
              */
             for (int i = 0; i < nestedList.size(); i++) {
                 queue.offer(nestedList.get(i));
@@ -108,7 +132,13 @@ public class FlattenNestedListIterator {
         }
 
         /**
-         * e.g.[[1,1],2,[1,1]]
+         * e.g.[[1,2],3,[4,5]]
+         * queue:
+         * head-------tail
+         * [1,2], 3, [4,5]
+         * ---------------
+         * 
+         *
          * @return
          */
         @Override
@@ -116,13 +146,11 @@ public class FlattenNestedListIterator {
             while (!queue.isEmpty()) {
                 NestedInteger item = queue.peek();
                 if (item.isInteger()) {
-                    System.out.println("integer:" + item.getInteger());
                     return true;
                 }
                 queue.poll();
-                for (int i = 0; i < item.getList().size(); i++) {
-
-                    queue.offer(item.getList().get(i));
+                for (int i = item.getList().size() - 1; i >= 0 ; i--) {
+                    queue.offerFirst(item.getList().get(i));
                 }
             }
             return false;
