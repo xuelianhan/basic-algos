@@ -31,6 +31,7 @@ package org.ict.algorithm.leetcode.stack;
  * s consists of digits, square brackets "[]", negative sign '-', and commas ','.
  * s is the serialization of valid NestedInteger.
  * All the values in the input are in the range [-10^6, 10^6].
+ * Amazon, Meta, AirBnb
  * @author sniper
  * @date 11 Dec, 2022
  * LC385
@@ -38,6 +39,7 @@ package org.ict.algorithm.leetcode.stack;
 public class MiniParser {
 
     public NestedInteger deserialize(String s) {
+        //todo
         return null;
     }
 }

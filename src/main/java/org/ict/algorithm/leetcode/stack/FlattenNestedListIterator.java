@@ -73,6 +73,26 @@ public class FlattenNestedListIterator {
             return item.getInteger();
         }
 
+        /**
+         * If current element is not integer,
+         * then remove this element from the stack.
+         * e.g.[[1,2],3,[4,5]]
+         * stack:
+         * [1,2]
+         * 3
+         * [4,5]
+         * ----------
+         * peek:[1,2], peek is not Integer
+         * pop:[1,2], push 2 into the stack, push 1 into the stack.
+         * stack:
+         * 1
+         * 2
+         * 3
+         * [4,5]
+         * ---------
+         * stack is not empty
+         * peek:1, 1 is an Integer, return true.
+         */
         @Override
         public boolean hasNext() {
             while (!stack.isEmpty()) {
@@ -80,23 +100,7 @@ public class FlattenNestedListIterator {
                 if (item.isInteger()) {
                     return true;
                 }
-                /**
-                 * If current element is not integer,
-                 * then remove this element from the stack.
-                 * e.g.[[1,2],3,[4,5]]
-                 * stack:
-                 * [1,2]
-                 * 3
-                 * [4,5]
-                 * ----------
-                 * peek:[1,2], peek is not Integer
-                 * pop:[1,2], push 2 into the stack, push 1 into the stack.
-                 * stack:
-                 * 1
-                 * 2
-                 * 3
-                 * [4,5]
-                 */
+
                 stack.pop();
                 for (int i = item.getList().size() - 1; i >= 0; i--) {
                     stack.push(item.getList().get(i));
@@ -137,7 +141,13 @@ public class FlattenNestedListIterator {
          * head-------tail
          * [1,2], 3, [4,5]
          * ---------------
-         * 
+         * peek:[1,2], peek is not Integer
+         * poll:[1,2], offer 2 into first place, offer 1 into the first place
+         * queue:1, 2, 3, [4, 5]
+         * ---------------------
+         * queue is not empty
+         * peek:1, 1 is an Integer
+         * return true
          *
          * @return
          */
@@ -157,20 +167,34 @@ public class FlattenNestedListIterator {
         }
     }
 
+    /**
+     * Time Cost 5ms
+     */
     class NestedIteratorV2 implements Iterator<Integer> {
 
         public NestedIteratorV2(List<NestedInteger> nestedList) {
-
+            flatToQueue(nestedList);
         }
 
         @Override
         public Integer next() {
-            return null;
+            NestedInteger item = queue.poll();
+            return item.getInteger();
         }
 
         @Override
         public boolean hasNext() {
-            return true;
+            return !queue.isEmpty();
+        }
+    }
+
+    public void flatToQueue(List<NestedInteger> nestedList) {
+        for (NestedInteger item : nestedList) {
+            if (item.isInteger()) {
+                queue.offer(item);
+            } else {
+                flatToQueue(item.getList());
+            }
         }
     }
 
