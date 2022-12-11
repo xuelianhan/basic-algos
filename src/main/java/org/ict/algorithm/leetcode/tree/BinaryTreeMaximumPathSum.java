@@ -45,6 +45,7 @@ public class BinaryTreeMaximumPathSum {
 
     /**
      * Time Cost 1ms
+     * Recursive Solution without Global Variable.
      * @param root
      * @return
      */
@@ -70,6 +71,7 @@ public class BinaryTreeMaximumPathSum {
 
     /**
      * Time Cost 0ms
+     * Recursive Solution with Global Variable.
      * Time Complexity O(N)
      * Space Complexity O(N)
      *
