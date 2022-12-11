@@ -1,5 +1,10 @@
 package org.ict.algorithm.leetcode.tree;
 
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Deque;
+import java.util.List;
+
 /**
  * A path in a binary tree is a sequence of nodes where each pair of adjacent nodes in the sequence has an edge connecting them.
  * A node can only appear in the sequence at most once.
@@ -41,6 +46,38 @@ public class BinaryTreeMaximumPathSum {
         root.right = right;
         BinaryTreeMaximumPathSum instance = new BinaryTreeMaximumPathSum();
         instance.maxPathSum(root);
+    }
+
+    public int maxPathSumV2(TreeNode root) {
+        List<Integer> list = preOrder(root);
+        int n = list.size();
+        int[] dp = new int[n];//dp[i] means the maximum subarray ending with A[i];
+        dp[0] = list.get(0);
+        int max = dp[0];
+
+        for(int i = 1; i < n; i++){
+            dp[i] = list.get(i) + Math.max(dp[i - 1], 0);
+            max = Math.max(max, dp[i]);
+        }
+
+        return max;
+    }
+
+    public List<Integer> preOrder(TreeNode root) {
+        List<Integer> list = new ArrayList<>();
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        TreeNode cur = root;
+        while (!stack.isEmpty() || cur != null) {
+            if (cur != null) {
+                stack.push(cur);
+                list.add(cur.val);
+                cur = cur.left;
+            } else {
+                cur = stack.pop();
+                cur = cur.right;
+            }
+        }
+        return list;
     }
 
     /**
