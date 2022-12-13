@@ -36,10 +36,130 @@ import java.util.*;
 public class BinaryTreeMaximumPathSum {
 
     public static void main(String[] args) {
-        TreeNode root = test3();
+        TreeNode root = test1();
         BinaryTreeMaximumPathSum instance = new BinaryTreeMaximumPathSum();
-        int result = instance.maxPathSumWrong(root);
+        int result = instance.maxPathSumV1(root);
         System.out.println(result);
+    }
+
+
+
+
+    /**
+     * Time Cost 1ms
+     * Recursive Solution without Global Variable.
+     * @param root
+     * @return
+     */
+    public int maxPathSumV1(TreeNode root) {
+        int[] res = new int[1];
+        res[0] = Integer.MIN_VALUE;
+        helperV1(root, res);
+        return res[0];
+    }
+
+    /**
+     *    1
+     *   / \
+     *  2   3
+     * @return max
+     */
+    public int helperV1(TreeNode root, int[] res) {
+        if (null == root) {
+            return 0;
+        }
+        int left = Math.max(0, helperV1(root.left, res));
+        int right = Math.max(0, helperV1(root.right, res));
+        res[0] = Math.max(res[0], left + right + root.val);
+        /**
+         * At most one child can be used.
+         */
+        return Math.max(left, right) + root.val;
+    }
+
+
+    private int ans;
+
+    /**
+     * Time Cost 0ms
+     * Recursive Solution with Global Variable.
+     * Time Complexity O(N)
+     * Space Complexity O(N)
+     *
+     * @param root
+     * @return
+     */
+    public int maxPathSum(TreeNode root) {
+        ans = Integer.MIN_VALUE;
+        helper(root);
+        return ans;
+    }
+
+    public int helper(TreeNode root) {
+         if (null == root) {//1
+             return 0;
+         }
+         int left = Math.max(0, helper(root.left));//2
+         int right = Math.max(0, helper(root.right));//3
+        /**
+         * compare branch-sum(ans) with full-sum(left + right + root.val)
+         */
+        ans = Math.max(ans, left + right + root.val);//4
+        /**
+         * choose only left or right to add with root
+         */
+        return Math.max(left, right) + root.val;//used in 2 and 3
+    }
+
+    /**
+     * [5,4,8,11,null,13,4,7,2,null,null,null,1]
+     *               5
+     *             /   \
+     *           4      8
+     *          /      / \
+     *         11     13  4
+     *        / \          \
+     *       7   2          1
+     *
+     * if you sum children value to parent, you will get this:
+     *               55
+     *             /   \
+     *           24    26
+     *          /      / \
+     *         20     13  5
+     *        / \          \
+     *       7   2          1
+     *
+     *  but the path definition is that
+     *  each pair of adjacent nodes in the sequence has an edge connecting them.
+     *  So the path is like this
+     *  7--11--4--5--8--13
+     *
+     *
+     * @return
+     */
+    public static TreeNode test5() {
+        return null;
+    }
+
+    /**
+     *    1
+     *   / \
+     * -2   3
+     *
+     *
+     *    2
+     *   / \
+     * -2   3
+     * @return
+     */
+    public static TreeNode test4() {
+        TreeNode root = new TreeNode(1);
+        TreeNode left = new TreeNode(-2);
+        TreeNode right = new TreeNode(3);
+        root.left = left;
+        root.right = right;
+        return root;
     }
 
     public static TreeNode test3() {
@@ -59,7 +179,7 @@ public class BinaryTreeMaximumPathSum {
      *     1  3  -2
      *    /
      *   -1
-     *   
+     *
      *  After sum the children value to the root:
      *
      *           -3
@@ -88,6 +208,12 @@ public class BinaryTreeMaximumPathSum {
         return root;
     }
 
+    /**
+     *    1
+     *   / \
+     *  2   3
+     * @return
+     */
     public static TreeNode test1() {
         TreeNode root = new TreeNode(1);
         TreeNode left = new TreeNode(2);
@@ -96,82 +222,5 @@ public class BinaryTreeMaximumPathSum {
         root.right = right;
         return root;
     }
-
-
-
-    /**
-     * nums = [1,-2,-3,1,3,-2,null,-1]
-     * @param root
-     * @return
-     */
-    public int maxPathSumWrong(TreeNode root) {
-        List<Integer> list = new ArrayList<>();
-        dfs(root, list);
-        System.out.println(list);
-        return list.stream().max((i, j) -> i.compareTo(j)).get();
-    }
-
-    public int dfs(TreeNode node, List<Integer> list) {
-        if (null == node) {
-            return 0;
-        }
-        node.val += dfs(node.left, list);
-        node.val += dfs(node.right, list);
-        list.add(node.val);
-        return node.val;
-    }
-
-    /**
-     * Time Cost 1ms
-     * Recursive Solution without Global Variable.
-     * @param root
-     * @return
-     */
-    public int maxPathSumV1(TreeNode root) {
-        int[] res = new int[1];
-        res[0] = Integer.MIN_VALUE;
-        helperV1(root, res);
-        return res[0];
-    }
-
-    public int helperV1(TreeNode root, int[] res) {
-        if (null == root) {//1
-            return 0;
-        }
-        int left = Math.max(0, helperV1(root.left, res));//2
-        int right = Math.max(0, helperV1(root.right, res));//3
-        res[0] = Math.max(res[0], left + right + root.val);//4
-        return Math.max(left, right) + root.val;//used in 2 and 3
-    }
-
-
-    private int ans;
-
-    /**
-     * Time Cost 0ms
-     * Recursive Solution with Global Variable.
-     * Time Complexity O(N)
-     * Space Complexity O(N)
-     *
-     * @param root
-     * @return
-     */
-    public int maxPathSum(TreeNode root) {
-        ans = Integer.MIN_VALUE;
-        helper(root);
-        return ans;
-    }
-
-    public int helper(TreeNode root) {
-         if (null == root) {//1
-             return 0;
-         }
-         int left = Math.max(0, helper(root.left));//2
-         int right = Math.max(0, helper(root.right));//3
-         ans = Math.max(ans, left + right + root.val);//4
-         return Math.max(left, right) + root.val;//used in 2 and 3
-    }
-
-
 
 }
