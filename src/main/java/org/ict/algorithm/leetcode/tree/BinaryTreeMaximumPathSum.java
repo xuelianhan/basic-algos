@@ -1,9 +1,6 @@
 package org.ict.algorithm.leetcode.tree;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.List;
+import java.util.*;
 
 /**
  * A path in a binary tree is a sequence of nodes where each pair of adjacent nodes in the sequence has an edge connecting them.
@@ -39,19 +36,39 @@ import java.util.List;
 public class BinaryTreeMaximumPathSum {
 
     public static void main(String[] args) {
+        TreeNode root = test1();
+        BinaryTreeMaximumPathSum instance = new BinaryTreeMaximumPathSum();
+        int result = instance.maxPathSumWrong(root);
+        System.out.println(result);
+    }
+
+    public static TreeNode test2(int[] nums) {
+        return null;
+    }
+
+    public static TreeNode test1() {
         TreeNode root = new TreeNode(1);
         TreeNode left = new TreeNode(2);
         TreeNode right = new TreeNode(3);
         root.left = left;
         root.right = right;
-        BinaryTreeMaximumPathSum instance = new BinaryTreeMaximumPathSum();
-        instance.maxPathSum(root);
+        return root;
     }
 
-    public int maxPathSumV2(TreeNode root) {
-        List<Integer> list = preOrder(root);
+
+
+    /**
+     * nums = [1,-2,-3,1,3,-2,null,-1]
+     * @param root
+     * @return
+     */
+    public int maxPathSumWrong(TreeNode root) {
+        List<Integer> list = inOrder(root);
         int n = list.size();
-        int[] dp = new int[n];//dp[i] means the maximum subarray ending with A[i];
+        /**
+         * dp[i] means the maximum sub-array ending with nums[i];
+         */
+        int[] dp = new int[n];
         dp[0] = list.get(0);
         int max = dp[0];
 
@@ -63,17 +80,17 @@ public class BinaryTreeMaximumPathSum {
         return max;
     }
 
-    public List<Integer> preOrder(TreeNode root) {
+    public List<Integer> inOrder(TreeNode root) {
         List<Integer> list = new ArrayList<>();
         Deque<TreeNode> stack = new ArrayDeque<>();
         TreeNode cur = root;
         while (!stack.isEmpty() || cur != null) {
             if (cur != null) {
                 stack.push(cur);
-                list.add(cur.val);
                 cur = cur.left;
             } else {
                 cur = stack.pop();
+                list.add(cur.val);
                 cur = cur.right;
             }
         }
