@@ -36,11 +36,19 @@ import java.util.*;
 public class BinaryTreeMaximumPathSum {
 
     public static void main(String[] args) {
-        TreeNode root = test2();
+        TreeNode root = test3();
         BinaryTreeMaximumPathSum instance = new BinaryTreeMaximumPathSum();
         int result = instance.maxPathSumWrong(root);
         System.out.println(result);
     }
+
+    public static TreeNode test3() {
+        TreeNode root = new TreeNode(2);
+        TreeNode left = new TreeNode(-1);
+        root.left = left;
+        return root;
+    }
+
 
     /**
      * nums = [1,-2,-3,1,3,-2,null,-1]
@@ -51,6 +59,8 @@ public class BinaryTreeMaximumPathSum {
      *     1  3  -2
      *    /
      *   -1
+     *   
+     *  After sum the children value to the root:
      *
      *           -3
      *         /   \
@@ -95,38 +105,20 @@ public class BinaryTreeMaximumPathSum {
      * @return
      */
     public int maxPathSumWrong(TreeNode root) {
-        List<Integer> list = inOrder(root);
-        int n = list.size();
-        /**
-         * dp[i] means the maximum sub-array ending with nums[i];
-         */
-        int[] dp = new int[n];
-        dp[0] = list.get(0);
-        int max = dp[0];
-
-        for(int i = 1; i < n; i++){
-            dp[i] = list.get(i) + Math.max(dp[i - 1], 0);
-            max = Math.max(max, dp[i]);
-        }
-
-        return max;
+        List<Integer> list = new ArrayList<>();
+        dfs(root, list);
+        System.out.println(list);
+        return list.stream().max((i, j) -> i.compareTo(j)).get();
     }
 
-    public List<Integer> inOrder(TreeNode root) {
-        List<Integer> list = new ArrayList<>();
-        Deque<TreeNode> stack = new ArrayDeque<>();
-        TreeNode cur = root;
-        while (!stack.isEmpty() || cur != null) {
-            if (cur != null) {
-                stack.push(cur);
-                cur = cur.left;
-            } else {
-                cur = stack.pop();
-                list.add(cur.val);
-                cur = cur.right;
-            }
+    public int dfs(TreeNode node, List<Integer> list) {
+        if (null == node) {
+            return 0;
         }
-        return list;
+        node.val += dfs(node.left, list);
+        node.val += dfs(node.right, list);
+        list.add(node.val);
+        return node.val;
     }
 
     /**
