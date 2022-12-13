@@ -5,17 +5,17 @@ package org.ict.algorithm.leetcode.tree;
  * @author lc
  */
 public class TreeNode {
-    int val;
+    Integer val;
     TreeNode left;
     TreeNode right;
 
     public TreeNode() {}
 
-    public TreeNode(int val) {
+    public TreeNode(Integer val) {
         this.val = val;
     }
 
-    public TreeNode(int val, TreeNode left, TreeNode right) {
+    public TreeNode(Integer val, TreeNode left, TreeNode right) {
         this.val = val;
         this.left = left;
         this.right = right;

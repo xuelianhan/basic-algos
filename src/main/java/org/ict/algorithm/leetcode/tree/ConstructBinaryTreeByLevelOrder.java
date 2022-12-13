@@ -17,20 +17,17 @@ public class ConstructBinaryTreeByLevelOrder {
         printLevelOrder(root);
     }
 
+
     public static TreeNode insertLevelOrder(Integer[] arr, int i) {
         TreeNode root = null;
         if (i < arr.length) {
             if (arr[i] != null) {
                 root = new TreeNode(arr[i]);
+                root.left = insertLevelOrder(arr, 2 * i + 1);
+                root.right = insertLevelOrder(arr, 2 * i + 2);
             } else {
-                /**
-                 * Use Integer.MIN_VALUE to represent null val
-                 */
-                root = new TreeNode(Integer.MIN_VALUE);
+                root = new TreeNode();
             }
-
-            root.left = insertLevelOrder(arr, 2 * i + 1);
-            root.right = insertLevelOrder(arr, 2 * i + 2);
         }
         return root;
     }
@@ -46,15 +43,7 @@ public class ConstructBinaryTreeByLevelOrder {
                 if (cur == null) {
                     continue;
                 }
-                if (cur.val == Integer.MIN_VALUE) {
-                    /**
-                     * Convert Integer.MIN_VALUE back to null
-                     */
-                    result.add(null);
-                } else {
-                    result.add(cur.val);
-                }
-
+                result.add(cur.val);
                 if (cur.left != null) {
                     queue.offer(cur.left);
                 }

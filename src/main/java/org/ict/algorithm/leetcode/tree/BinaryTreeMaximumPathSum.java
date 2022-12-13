@@ -36,14 +36,46 @@ import java.util.*;
 public class BinaryTreeMaximumPathSum {
 
     public static void main(String[] args) {
-        TreeNode root = test1();
+        TreeNode root = test2();
         BinaryTreeMaximumPathSum instance = new BinaryTreeMaximumPathSum();
         int result = instance.maxPathSumWrong(root);
         System.out.println(result);
     }
 
-    public static TreeNode test2(int[] nums) {
-        return null;
+    /**
+     * nums = [1,-2,-3,1,3,-2,null,-1]
+     *           1
+     *         /   \
+     *       -2    -3
+     *      / \    /
+     *     1  3  -2
+     *    /
+     *   -1
+     *
+     *           -3
+     *         /   \
+     *       1    -5
+     *      / \    /
+     *     0  3  -2
+     *    /
+     *   -1
+     * @return
+     */
+    public static TreeNode test2() {
+        TreeNode root = new TreeNode(1);
+        TreeNode left = new TreeNode(-2);
+        TreeNode l1 = new TreeNode(1);
+        TreeNode r1 = new TreeNode(3);
+        left.left = l1;
+        left.right = r1;
+        TreeNode l3 = new TreeNode(-1);
+        l1.left = l3;
+        TreeNode right = new TreeNode(-3);
+        TreeNode l2 = new TreeNode(-2);
+        right.left = l2;
+        root.left = left;
+        root.right = right;
+        return root;
     }
 
     public static TreeNode test1() {
