@@ -33,7 +33,10 @@ public class MaximumSubArray {
 
 	public int maxSubArrayV6(int[] nums) {
 		int n = nums.length;
-		int[] dp = new int[n];//dp[i] means the maximum subarray ending with A[i];
+		/**
+		 * dp[i] means the maximum sub-array ending with nums[i];
+		 */
+		int[] dp = new int[n];
 		dp[0] = nums[0];
 		int max = dp[0];
 
