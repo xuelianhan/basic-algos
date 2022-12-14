@@ -33,6 +33,13 @@ package org.ict.algorithm.leetcode.dynamicprogramming;
  */
 public class MinimumFallingPathSum {
 
+    public static void main(String[] args) {
+        int[][] matrix = {{-19, 57}, {-40, -5}};
+        MinimumFallingPathSum instance = new MinimumFallingPathSum();
+        int result = instance.minFallingPathSum(matrix);
+        System.out.println(result);
+    }
+
     public int minFallingPathSumV3(int[][] matrix) {
         return 0;
     }
@@ -48,6 +55,57 @@ public class MinimumFallingPathSum {
 
     /**
      * Time Cost 35ms
+     * matrix = [[2, 1, 3],
+     *           [6, 5, 4],
+     *           [7, 8, 9]]
+     * i:1, j:0, pre = matrix[i-1][j] = matrix[0][0] = 2
+     * j < 2, pre = min(pre, matrix[i-1][j+1]) = min(2, 1) = 1
+     * matrix[1][0] = 6 + 1 = 7
+     * matrix = [[2, 1, 3],
+     *           [7, 5, 4],
+     *           [7, 8, 9]]
+     * -------------------------------------------------------
+     * i:1, j:1, pre = matrix[i-1][j] = matrix[0][1] = 1
+     * j > 0, pre = min(pre, matrix[i-1][j-1]) = min(1, 2) = 1
+     * j < 2, pre = min(pre, matrix[i-1][j+1]) = min(1, 3) = 1
+     * matrix[1][1] = 5 + 1 = 6
+     * matrix = [[2, 1, 3],
+     *           [7, 6, 4],
+     *           [7, 8, 9]]
+     * --------------------------------------------------------
+     * i:1, j:2, pre = matrix[i-1][j] = matrix[0][2] = 3
+     * j > 0, pre = min(pre, matrix[i-1][j-1]) = min(3, 1) = 1
+     * matrix[1][2] = 4 + 1 = 5
+     * matrix = [[2, 1, 3],
+     *           [7, 6, 5],
+     *           [7, 8, 9]]
+     * --------------------------------------------------------
+     * i:2, j:0, pre = matrix[i-1][j] = matrix[1][0] = 7
+     * j < 2, pre = min(pre, matrix[i-1][j+1]) = min(7, 6) = 6
+     * matrix[2][0] = 7 + 6 = 13
+     * matrix = [[2, 1, 3],
+     *           [7, 6, 5],
+     *           [13, 8, 9]]
+     * i = n - 1 = 2, res = min(res, matrix[2][0]) = 13
+     * --------------------------------------------------------
+     * i:2, j:1, pre = matrix[i-1][j] = matrix[1][1] = 6
+     * j > 0, pre = min(pre, matrix[i-1][j-1]) = min(6, 7) = 6
+     * j < 2, pre = min(pre, matrix[i-1][j+1]) = min(6, 5) = 5
+     * matrix[2][1] = 8 + 5 = 13
+     * matrix = [[ 2, 1, 3],
+     *           [ 7, 6, 5],
+     *           [13, 13, 9]]
+     * i = n - 1 = 2, res = min(res, matrix[2][1]) = min(13, 13) = 13
+     * --------------------------------------------------------
+     * i:2, j:2, pre = matrix[i-1][j] = matrix[1][2] = 5
+     * j > 0, pre = min(pre, matrix[i-1][j-1]) = min(5, 6) = 5
+     * matrix[2][2] = 9 + 5 = 14
+     * matrix = [[ 2, 1, 3],
+     *           [ 7, 6, 5],
+     *           [13, 13, 13]]
+     * i = n - 1 = 2, res = min(res, matrix[2][2]) = min(13, 13) = 13
+     * --------------------------------------------------------
+     * return res:13
      * @param matrix
      * @return
      */
