@@ -106,6 +106,26 @@ public class MinimumFallingPathSum {
      * i = n - 1 = 2, res = min(res, matrix[2][2]) = min(13, 13) = 13
      * --------------------------------------------------------
      * return res:13
+     * --------------------------------------------------------
+     * This question gives a two-dimensional array of equal length and width,
+     * and says that it is to find a column path so that the distance between the numbers in two adjacent positions does not exceed 1.
+     * You can understand the meaning of the problem by looking at the example given in the question.
+     * Since the cumulative value at each position determined by the smaller one of the three positions in the previous row,
+     * this is a typical dynamic programming problem,
+     * in order to save space, we directly use the array matrix itself as a dp array,
+     * where matrix[i][j] means the last position in the (i, j) of the smallest descent path,
+     * then eventually just find the smallest value in the last row is what is required.
+     * Since we have to look at the value of the previous row,
+     * we have to iterate from the second row,
+     * so we first determine whether there is only one row in the array,
+     * and if so, we can return the unique number directly.
+     * Otherwise, if we start from the second row, the number that must exist is matrix[i-1][j],
+     * and the two numbers around it(matrix[i-1][j-1], matrix[i-1][j+1]) need to be judged,
+     * and if they exist, we will compare them to get the smaller value and add the final minimum value to the current matrix[i][j].
+     * In order to avoid reopening a new for-loop to get the minimum,
+     * we check whether the current line is the last one(n-1), if so, we update the final result res.
+     *
+     *
      * @param matrix
      * @return
      */
