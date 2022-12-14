@@ -40,19 +40,6 @@ public class MinimumFallingPathSum {
         System.out.println(result);
     }
 
-    public int minFallingPathSumV3(int[][] matrix) {
-        return 0;
-    }
-
-    public int minFallingPathSumV2(int[][] matrix) {
-        return 0;
-    }
-
-
-    public int minFallingPathSumV1(int[][] matrix) {
-        return 0;
-    }
-
     /**
      * Time Cost 35ms
      * Time Complexity O(M*N)
