@@ -63,7 +63,7 @@ public class ConstructBinaryTreeByPreorderInorder {
 
     /**
      * Understand the following Solution
-     * 
+     *
      * Time Cost 3ms
      * preorder = [3,9,20,15,7], inorder = [9,3,15,20,7]
      * root:3, left:9, right:15, 20, 7
@@ -105,3 +105,5 @@ public class ConstructBinaryTreeByPreorderInorder {
         return cur;
     }
 }
+
+
