@@ -1,6 +1,5 @@
 package org.ict.algorithm.leetcode.tree;
 
-import java.util.*;
 
 /**
  * A path in a binary tree is a sequence of nodes where each pair of adjacent nodes in the sequence has an edge connecting them.
