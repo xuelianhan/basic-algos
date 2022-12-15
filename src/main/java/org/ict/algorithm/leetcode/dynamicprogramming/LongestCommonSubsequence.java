@@ -4,7 +4,8 @@ package org.ict.algorithm.leetcode.dynamicprogramming;
  * Given two strings text1 and text2, return the length of their longest common subsequence.
  * If there is no common subsequence, return 0.
  *
- * A subsequence of a string is a new string generated from the original string with some characters (can be none) deleted without changing the relative order of the remaining characters.
+ * A subsequence of a string is a new string generated from the original string with some characters (can be none)
+ * deleted without changing the relative order of the remaining characters.
  *
  * For example, "ace" is a subsequence of "abcde".
  * A common subsequence of two strings is a subsequence that is common to both strings.
@@ -41,7 +42,28 @@ public class LongestCommonSubsequence {
 
 
     /**
+     * Fixed length dp
+     * Time Cost 34ms
+     * @param text1
+     * @param text2
+     * @return
+     */
+    public int longestCommonSubsequenceV2(String text1, String text2) {
+        int[][] dp = new int[1001][1001];
+        int m = text1.length();
+        int n = text2.length();
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                dp[i + 1][j + 1] = text1.charAt(i) == text2.charAt(j) ? dp[i][j] + 1 : Math.max(dp[i + 1][j], dp[i][j + 1]);
+            }
+        }
+        return dp[m][n];
+    }
+
+
+    /**
      * Solution provided by votrubac
+     * Time Cost 21ms
      *
      * LCS is a well-known problem, and there are similar problems here:
      *
@@ -81,11 +103,20 @@ public class LongestCommonSubsequence {
     /**
      * Bottom-up DP
      *
+     * Time Cost 32ms
+     *
      * dp[i][j] definition:
      * for string text1[0...i-1] and string text2[0...j-1],
      * dp[i][j] is the length of the longest common subsequence.
      * dp[i][0]=0
      * dp[0][j]=0
+     * e.g.text1 = "xabccde", text2 = "ace".
+     *      x a b c c d e
+     *    0 0 0 0 0 0 0 0
+     *  a 0 0 1 1 1 1 1 1
+     *  c 0 0 1 1 2 2 2 2
+     *  e 0 0 1 1 2 2 2 3
+     * int[][] dp = new dp[3+1][7+1];
      *
      * @param text1
      * @param text2
