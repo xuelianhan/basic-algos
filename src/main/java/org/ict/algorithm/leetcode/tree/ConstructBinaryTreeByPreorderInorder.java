@@ -159,8 +159,7 @@ public class ConstructBinaryTreeByPreorderInorder {
         }
         /**
          * preorder = [3,9,20,15,7], inorder = [9,3,15,20,7]
-         * pStart:0, i:1, iStart:0,
-         *
+         * pStart:0, i:1, iStart:0, (i - iStart) is the size of the cur's left subtree.
          */
         TreeNode cur = new TreeNode(preorder[pStart]);
         cur.left = helper(preorder, pStart + 1, pStart + i - iStart, inorder, iStart, i - 1);
