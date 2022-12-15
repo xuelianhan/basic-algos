@@ -39,17 +39,92 @@ import java.util.Arrays;
 public class HouseRobber {
 
 
+    /**
+     * Dynamic Programming
+     * Time Complexity O(N)
+     * Space Complexity O(1)
+     *
+     * e.g.nums = [2,7,9,3,1]
+     *
+     * -----------------------------------------------------
+     * e.g.nums = [3, 2, 1, 5]
+     * i:0, choose1:0, choose2:0, choose = max(0 + 3, 0) = 3
+     *      choose2 = choose1 = 0, choose1 = choose = 3
+     * i:1, choose1:3, choose2:0, choose = max(0 + 2, 3) = 3
+     *      choose2 = choose1 = 3, choose1 = choose = 3
+     * i:2, choose1:3, choose2:3, choose = max(3 + 1, 3) = 4
+     *      choose2 = choose1 = 3, choose1 = choose = 4
+     * i:3, choose1:4, choose2:3, choose = max(3 + 5, 4) = 8
+     *      choose2 = choose1 = 4, choose1 = choose = 8
+     * return choose1:8
+     *
+     * @param nums
+     * @return
+     */
     public int robV3(int[] nums) {
-        return 0;
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+        int n = nums.length;
+        int choose1 = 0;
+        int choose2 = 0;
+        for (int i = 0; i < n; i++) {
+            int choose = Math.max(choose2 + nums[i], choose1);
+            choose2 = choose1;
+            choose1 = choose;
+        }
+        return choose1;
     }
 
+    /**
+     * Dynamic Programming
+     * Time Complexity O(N)
+     * Space Complexity O(N)
+     * @param nums
+     * @return
+     */
     public int robV2(int[] nums) {
-        return 0;
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+        int n = nums.length;
+        int[] dp = new int[n];
+        for (int i = 0; i < n; i++) {
+            int choose1 =  (i > 0 ? dp[i - 1] : 0);
+            int choose2 = ((i > 1 ? dp[i - 2] : 0) + nums[i]);
+            dp[i] = Math.max(choose1, choose2);
+        }
+        return dp[n - 1];
     }
 
 
+    /**
+     * Dynamic Programming
+     *
+     * Time Complexity O(N)
+     * Space Complexity O(N)
+     * dp[i] means the maximum robber result of range from [0, i]
+     * @param nums
+     * @return
+     */
     public int robV1(int[] nums) {
-        return 0;
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+        int n = nums.length;
+        int[] dp = new int[n];
+        for (int i = 0; i < n; i++) {
+            int choose1 = 0;
+            int choose2 = nums[i];
+            if (i > 0) {
+                choose1 = dp[i - 1];
+                if (i > 1) {
+                    choose2 += dp[i - 2];
+                }
+            }
+            dp[i] = Math.max(choose1, choose2);
+        }
+        return dp[n - 1];
     }
 
     /**
@@ -57,7 +132,8 @@ public class HouseRobber {
      * For each given house i, we have two choices:
      * 1.Take the money if we didn't robber house i-1.
      * 2.Skip the current house i.
-     *
+     * Time Complexity O(N)
+     * Space Complexity O(N)
      * @param nums
      * @return
      */
@@ -76,13 +152,14 @@ public class HouseRobber {
             return memo[i];
         }
         /**
-         * Take the money of house i and add moneys of recursion from house i-2.
-         */
-        int choose1 = rob(nums, i - 2, memo) + nums[i];
-        /**
          * skip the current house i, choose last recursion result from house i-1.
          */
-        int choose2 = rob(nums, i - 1, memo);
+        int choose1 = rob(nums, i - 1, memo);
+        /**
+         * Take the money of house i and add moneys of recursion from house i-2.
+         */
+        int choose2 = rob(nums, i - 2, memo) + nums[i];
+
         memo[i] = Math.max(choose1, choose2);
         return memo[i];
     }
