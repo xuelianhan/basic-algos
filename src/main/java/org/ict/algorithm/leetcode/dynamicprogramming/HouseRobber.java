@@ -45,7 +45,17 @@ public class HouseRobber {
      * Space Complexity O(1)
      *
      * e.g.nums = [2,7,9,3,1]
-     *
+     * i:0, choose1:0, choose2:0, choose = max(0 + 2, 0) = 2
+     *      choose2 = choose1 = 0, choose1 = choose = 2
+     * i:1, choose1:2, choose2:0, choose = max(0 + 7, 2) = 7
+     *      choose2 = choose1 = 2, choose1 = choose = 7
+     * i:2, choose1:7, choose2:2, choose = max(9 + 2, 7) = 11
+     *      choose2 = choose1 = 7, choose1 = choose = 11
+     * i:3, choose1:11, choose2:7, choose = max(7 + 3, 11) = 11
+     *      choose2 = choose1 = 11, choose1 = choose = 11
+     * i:4, choose1:11, choose2:11, choose = max(11 + 1, 11) = 12
+     *      choose2 = choose1 = 11, choose1 = choose = 12
+     * return choose1:12
      * -----------------------------------------------------
      * e.g.nums = [3, 2, 1, 5]
      * i:0, choose1:0, choose2:0, choose = max(0 + 3, 0) = 3
