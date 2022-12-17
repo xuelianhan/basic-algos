@@ -58,21 +58,27 @@ public class ImplementQueueUsingStacks {
      * int param_2 = obj.pop();
      * int param_3 = obj.peek();
      * boolean param_4 = obj.empty();
+     * e.g.
+     * push 1, newStack:1
+     * push 2, newStack:2,1
+     * push 3, newStack:3,2,1
+     *
+     *
      */
-    class MyQueue {
+    class MyQueueV1 {
 
         private Stack<Integer> oldStack = new Stack<>();
 
         private Stack<Integer> newStack = new Stack<>();
 
-        public MyQueue() {}
+        public MyQueueV1() {}
 
         /**
          * Newly elements all being pushed into newStack.
          * @param x
          */
         public void push(int x) {
-           newStack.push(x);
+            newStack.push(x);
         }
 
         public int pop() {
@@ -101,4 +107,42 @@ public class ImplementQueueUsingStacks {
             }
         }
     }
+
+    class MyQueue {
+
+        private Stack<Integer> stack = new Stack<>();
+
+        private Stack<Integer> temp = new Stack<>();
+
+        public MyQueue() {}
+
+        /**
+         * Using temp stack to store the existed elements,
+         * and push the new element into the
+         * @param x
+         */
+        public void push(int x) {
+            while (!stack.isEmpty()) {
+                temp.push(stack.pop());
+            }
+            temp.push(x);
+            while (!temp.isEmpty()) {
+                stack.push(temp.pop());
+            }
+        }
+
+        public int pop() {
+            return stack.pop();
+        }
+
+        public int peek() {
+
+            return stack.peek();
+        }
+
+        public boolean empty() {
+            return stack.isEmpty();
+        }
+    }
+
 }
