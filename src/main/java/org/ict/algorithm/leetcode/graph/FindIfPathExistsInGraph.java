@@ -57,14 +57,14 @@ public class FindIfPathExistsInGraph {
         System.out.println(result);
     }
 
-    public boolean validPathV2(int n, int[][] edges, int source, int destination) {
-        return false;
-    }
-
-    public boolean validPathV1(int n, int[][] edges, int source, int destination) {
-        return false;
-    }
-
+    /**
+     * Union-Find Solution
+     * @param n
+     * @param edges
+     * @param source
+     * @param destination
+     * @return
+     */
     public boolean validPath(int n, int[][] edges, int source, int destination) {
         int rows = edges.length;
         UnionFind uf = new UnionFind(n);
@@ -114,5 +114,13 @@ public class FindIfPathExistsInGraph {
         public boolean connected(int p, int q) {
             return find(p) == find(q);
         }
+    }
+
+    public boolean validPathV2(int n, int[][] edges, int source, int destination) {
+        return false;
+    }
+
+    public boolean validPathV1(int n, int[][] edges, int source, int destination) {
+        return false;
     }
 }
