@@ -68,7 +68,7 @@ public class FindIfPathExistsInGraph {
     public boolean validPath(int n, int[][] edges, int source, int destination) {
         int rows = edges.length;
         UnionFind uf = new UnionFind(n);
-        System.out.println(Arrays.toString(uf.parent));
+        //System.out.println(Arrays.toString(uf.parent));
         for (int i = 0; i < rows; i++) {
             int[] arr = edges[i];
             int p = arr[0];
@@ -78,7 +78,7 @@ public class FindIfPathExistsInGraph {
             }
             uf.union(p, q);
         }
-        System.out.println(Arrays.toString(uf.parent));
+        //System.out.println(Arrays.toString(uf.parent));
         return uf.connected(source, destination);
     }
 
