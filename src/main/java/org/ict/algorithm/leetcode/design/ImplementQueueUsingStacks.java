@@ -119,6 +119,16 @@ public class ImplementQueueUsingStacks {
         /**
          * Using temp stack to store the existed elements,
          * and push the new element into the
+         * stack:    temp:||
+         * |3|
+         * |2|
+         * |1|
+         * push 4
+         * temp:     stack:
+         * |1|
+         * |2|
+         * |3|
+         *
          * @param x
          */
         public void push(int x) {
