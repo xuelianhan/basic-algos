@@ -9,7 +9,11 @@ public class PrimeChecker {
 
     /**
      * If a positive integer is a composite number,
-     * then there exists a number T that is divisible by N, where 2 <= T <= sqrt(N)
+     * then there exists a number T that is divisible by N, where 2 <= T <= sqrt(N).
+     * While N <= 10^12, we can use the following method to check whether a number is a prime or not.
+     *  However, using Miller-Rabin instead while N > 10^12.
+     *
+     * Time Complexity O(sqrt(N))
      * @param num
      * @return
      */
