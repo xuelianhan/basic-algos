@@ -1,6 +1,8 @@
 package org.ict.algorithm.leetcode.graph;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * There is a bi-directional graph with n vertices, where each vertex is labeled from 0 to n - 1 (inclusive).
@@ -116,11 +118,30 @@ public class FindIfPathExistsInGraph {
         }
     }
 
+    /**
+     * Depth-First-Search Solution
+     * @param n
+     * @param edges
+     * @param source
+     * @param destination
+     * @return
+     */
     public boolean validPathV2(int n, int[][] edges, int source, int destination) {
+        boolean[] visited = new boolean[n];
+        Set<Integer> graph = new HashSet<>(n);
         return false;
     }
 
+    /**
+     * Breadth-First-Search Solution
+     * @param n
+     * @param edges
+     * @param source
+     * @param destination
+     * @return
+     */
     public boolean validPathV1(int n, int[][] edges, int source, int destination) {
+        //todo
         return false;
     }
 }

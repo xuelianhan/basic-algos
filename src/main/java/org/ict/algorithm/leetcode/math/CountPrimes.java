@@ -38,7 +38,8 @@ public class CountPrimes {
      * An efficient solution is to use Sieve of Eratosthenes to find all primes up to the given limit.
      * Then we compute a prefix array to store counts till every value before limit.
      * Once we have a prefix array,
-     * we can answer queries in O(1) time. We just need to return prefix[R] – prefix[L-1].
+     * we can answer queries in O(1) time.
+     * We just need to return prefix[R] – prefix[L-1].
      *
      * @param n
      * @return
