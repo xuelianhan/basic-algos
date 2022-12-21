@@ -62,6 +62,23 @@ public class PossibleBipartition {
     /**
      * Time Cost 65ms
      * Union-Find Solution
+     * e.g.n = 3, dislikes = [[1,2],[1,3],[2,3]]
+     * 1----2, 3
+     * 2----1, 3
+     * 3----1, 2
+     * -------------------------------------------
+     * parent:
+     * 0 1 2 3
+     * 0 1 2 3
+     * -------------------------------------------
+     * i:1, graph.get(i) = [2, 3]
+     * x = find(1) = 1
+     * y = find(2) = 2
+     * x != y, j = 1, p = graph.get(i).get(j) = 3
+     * x != p, parent[3] = 2
+     * parent:
+     * 0 1 2 3
+     * 0 1 2 2
      *
      * @param n
      * @param dislikes
@@ -70,6 +87,7 @@ public class PossibleBipartition {
     public boolean possibleBipartition(int n, int[][] dislikes) {
         Map<Integer, List<Integer>> graph = createGraph(dislikes);
         UnionFind uf = new UnionFind(1, n + 1);
+
         for (int i = 1; i < n + 1; i++) {
             /**
              * Skip the node-i if it has no neighbors
@@ -77,11 +95,19 @@ public class PossibleBipartition {
             if (graph.get(i) == null || graph.get(i).size() == 0) {
                 continue;
             }
+            /**
+             * check node-i with its first neighbor
+             * if they have the same parent value, the graph cannot be bipartite.
+             */
             int x = uf.find(i);
             int y = uf.find(graph.get(i).get(0));
             if (x == y) {
                 return false;
             }
+            /**
+             * check node-i's other neighbors, and union these neighbors parent
+             * to node-i's first neighbor.
+             */
             for (int j = 1; j < graph.get(i).size(); j++) {
                 int p = uf.find(graph.get(i).get(j));
                 if (x == p) {
