@@ -1,5 +1,8 @@
 package org.ict.algorithm.leetcode.math;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * You are given a positive integer n.
  *
@@ -36,8 +39,44 @@ package org.ict.algorithm.leetcode.math;
  */
 public class SmallestValueAfterReplacingWithSumOfPrimeFactors {
 
+    /**
+     * Time Cost 324ms
+     * @param n
+     * @return
+     */
     public int smallestValue(int n) {
-        int res = 0;
+        int size = 100001;
+        boolean[] notPrime = new boolean[size];
+        List<Integer> prime = new ArrayList<>();
+
+        for (int i = 2; i < size; i++) {
+            if (notPrime[i] == false) {
+                prime.add(i);
+                for (int j = i * 2; j < size; j += i) {
+                    notPrime[j] = true;
+                }
+            }
+        }
+        int res = n;
+        int temp = 0;
+        while (true) {
+            temp = 0;
+            int cur = n;
+            while (n > 1) {
+                for (int x : prime) {
+                    while (n % x == 0) {
+                        n = n / x;
+                        temp += x;
+                    }
+                }
+            }
+
+            if (cur == temp) {
+                break;
+            }
+            n = temp;
+            res = Math.min(res, temp);
+        }
         return res;
     }
 }
