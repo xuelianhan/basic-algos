@@ -67,7 +67,7 @@ public class IsGraphBipartite {
     }
 
     /**
-     * Time Cost 3ms
+     * Time Cost 1ms
      * For each node, if it has not been colored(status 0):
      * color its neighbors with a different color,
      * Red(status 1), Black(status -1).
@@ -98,15 +98,24 @@ public class IsGraphBipartite {
      * check graph is bipartite or not
      * @param graph
      * @param colors
-     * @param color
+     * @param color assigned color for the node
      * @param node
      * @return if graph is bipartite, return true, otherwise return false
      */
     private boolean dfs(int[][] graph, int[] colors, int color, int node) {
-        if (colors[node] == 1) {
+        /**
+         * if node has been colored, check its color is same with the color to be painted.
+         */
+        if (colors[node] != 0) {
             return colors[node] == color;
         }
+        /**
+         * if node has not been colored, painted it with the assigned color.
+         */
         colors[node] = color;
+        /**
+         * painted all neighbors with reversed color
+         */
         for (int neighbor: graph[node]) {
             if (!dfs(graph, colors, -color, neighbor)) {
                 return false;
