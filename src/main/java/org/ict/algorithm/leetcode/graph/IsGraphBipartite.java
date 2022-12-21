@@ -58,16 +58,28 @@ public class IsGraphBipartite {
     }
 
 
+    /**
+     * Union-Find Solution
+     * @param graph
+     * @return
+     */
     public boolean isBipartiteV2(int[][] graph) {
         return false;
     }
 
+    /**
+     * Breadth-First-Search Solution
+     * @param graph
+     * @return
+     */
     public boolean isBipartiteV1(int[][] graph) {
         return false;
     }
 
     /**
      * Time Cost 1ms
+     * Depth-First-Search Solution
+     *
      * For each node, if it has not been colored(status 0):
      * color its neighbors with a different color,
      * Red(status 1), Black(status -1).

@@ -1,5 +1,7 @@
 package org.ict.algorithm.leetcode.graph;
 
+import java.util.*;
+
 /**
  * We want to split a group of n people (labeled from 1 to n) into two groups of any size.
  * Each person may dislike some other people, and they should not go into the same group.
@@ -28,7 +30,7 @@ package org.ict.algorithm.leetcode.graph;
  * Constraints:
  *
  * 1 <= n <= 2000
- * 0 <= dislikes.length <= 104
+ * 0 <= dislikes.length <= 10^4
  * dislikes[i].length == 2
  * 1 <= dislikes[i][j] <= n
  * ai < bi
@@ -39,9 +41,71 @@ package org.ict.algorithm.leetcode.graph;
  */
 public class PossibleBipartition {
 
-    public boolean possibleBipartition(int n, int[][] dislikes) {
+    public static void main(String[] args) {
+        int n = 3;
+        int[][] dislikes = {{1, 2}, {1, 3}, {2, 3}};
+        PossibleBipartition instance = new PossibleBipartition();
+        boolean result = instance.possibleBipartition(n, dislikes);
+        System.out.println(result);
+    }
+
+    public boolean possibleBipartitionV2(int n, int[][] dislikes) {
 
         return false;
+    }
+
+    public boolean possibleBipartitionV1(int n, int[][] dislikes) {
+
+        return false;
+    }
+
+    /**
+     * Time Cost 65ms
+     * Union-Find Solution
+     *
+     * @param n
+     * @param dislikes
+     * @return
+     */
+    public boolean possibleBipartition(int n, int[][] dislikes) {
+        Map<Integer, List<Integer>> graph = createGraph(dislikes);
+        UnionFind uf = new UnionFind(1, n + 1);
+        for (int i = 1; i < n + 1; i++) {
+            /**
+             * Skip the node-i if it has no neighbors
+             */
+            if (graph.get(i) == null || graph.get(i).size() == 0) {
+                continue;
+            }
+            int x = uf.find(i);
+            int y = uf.find(graph.get(i).get(0));
+            if (x == y) {
+                return false;
+            }
+            for (int j = 1; j < graph.get(i).size(); j++) {
+                int p = uf.find(graph.get(i).get(j));
+                if (x == p) {
+                    return false;
+                }
+                uf.parent[p] = y;
+            }
+        }
+        return true;
+    }
+
+    private Map<Integer, List<Integer>> createGraph(int[][] dislikes) {
+        Map<Integer, List<Integer>> graph = new HashMap<>();
+        for (int[] edge : dislikes) {
+            if (graph.get(edge[0]) == null) {
+                graph.put(edge[0],  new ArrayList<>());
+            }
+            graph.get(edge[0]).add(edge[1]);
+            if (graph.get(edge[1]) == null) {
+                graph.put(edge[1],  new ArrayList<>());
+            }
+            graph.get(edge[1]).add(edge[0]);
+        }
+        return graph;
     }
 
     class UnionFind {
@@ -52,6 +116,14 @@ public class PossibleBipartition {
             count = n;
             parent = new int[n];
             for (int i = 0; i < n; i++) {
+                parent[i] = i;
+            }
+        }
+
+        public UnionFind(int start, int end) {
+            count = end - start;
+            parent = new int[end];
+            for (int i = start; i < end; i++) {
                 parent[i] = i;
             }
         }
