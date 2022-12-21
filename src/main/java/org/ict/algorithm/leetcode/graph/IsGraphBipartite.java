@@ -74,7 +74,10 @@ public class IsGraphBipartite {
      * Can the vertices of a given graph be assigned one of two colors
      * in such a way that no edge connects vertices with the same color?
      * If we can finish all the nodes coloring in this way, then the graph is bipartite.
-     *
+     * The following solution combine visited array and colored array into one array colors.
+     * colors[i] == 0 indicates the i-th node has not been accessed.
+     * colors[i] == -1 indicates the i-th node has been colored with black.
+     * colors[i] == 1 indicates the i-th node has been colored with red.
      * @param graph
      * @return
      */
