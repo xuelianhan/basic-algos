@@ -1,8 +1,8 @@
 package org.ict.algorithm.leetcode.graph;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 /**
  * There is an undirected graph with n nodes, where each node is numbered between 0 and n - 1.
@@ -45,6 +45,7 @@ import java.util.Map;
  * If graph[u] contains v, then graph[v] contains u.
  * @author sniper
  * @date 21 Dec, 2022
+ *
  * LC785
  */
 public class IsGraphBipartite {
@@ -64,16 +65,131 @@ public class IsGraphBipartite {
      * @return
      */
     public boolean isBipartiteV2(int[][] graph) {
-        return false;
+        int n = graph.length;
+        UnionFind uf = new UnionFind(n);
+        for (int i = 0; i < n; i++) {
+            /**
+             * Skip the node-i if it has no neighbors
+             */
+            if (graph[i] == null || graph[i].length == 0) {
+                continue;
+            }
+            /**
+             * check node-i with its first neighbor
+             * if they have the same parent value, the graph cannot be bipartite.
+             */
+            int x = uf.find(i);
+            int y = uf.find(graph[i][0]);
+            if (x == y) {
+                return false;
+            }
+            /**
+             * check node-i's other neighbors, and union these neighbors parent
+             * to node-i's first neighbor.
+             */
+            for (int j = 1; j < graph[i].length; j++) {
+                int p = uf.find(graph[i][j]);
+                if (x == p) {
+                    return false;
+                }
+                uf.parent[p] = y;
+            }
+        }
+        return true;
+    }
+
+    class UnionFind {
+        int[] parent;
+        private int count;
+
+        public UnionFind(int n) {
+            count = n;
+            parent = new int[n];
+            for (int i = 0; i < n; i++) {
+                parent[i] = i;
+            }
+        }
+
+        public UnionFind(int start, int end) {
+            count = end - start;
+            parent = new int[end];
+            for (int i = start; i < end; i++) {
+                parent[i] = i;
+            }
+        }
+
+        public int find (int p) {
+            while (p != parent[p]) {
+                p = parent[p];
+            }
+            return p;
+        }
+
+        public void union(int p, int q) {
+            int i = find(p);
+            int j = find(q);
+            if (i == j) {
+                return;
+            }
+            parent[i] = j;
+            count--;
+        }
+
+        public boolean connected(int p, int q) {
+            return find(p) == find(q);
+        }
     }
 
     /**
      * Breadth-First-Search Solution
+     * Time Cost 1ms
      * @param graph
      * @return
      */
     public boolean isBipartiteV1(int[][] graph) {
-        return false;
+        int n = graph.length;
+        /**
+         *  0:not colored
+         *  1:color red
+         * -1:color black
+         */
+        int[] colors = new int[n];
+        Deque<Integer> queue = new ArrayDeque<>();
+        for (int i = 0; i < n; i++) {
+            /**
+             * Skip colored node(This means the node has been visited)
+             */
+            if (colors[i] != 0) {
+                continue;
+            }
+            /**
+             * colored current node-i with 1-red(This operation equals marking node-i to visited status)
+             */
+            colors[i] = 1;
+            queue.offer(i);
+            while (!queue.isEmpty()) {
+                /**
+                 * check current node's neighbors color(whether it has been visited)
+                 */
+                int cur = queue.poll();
+                for (int neighbor : graph[cur]) {
+                    /**
+                     * if neighbor color is same as node-i's, return false
+                     */
+                    if (colors[neighbor] == colors[cur]) {
+                        return false;
+                    }
+                    /**
+                     * if neighbor has not been colored, colored it with the reverse code.
+                     */
+                    if (colors[neighbor] == 0) {
+                        colors[neighbor] = - colors[cur];
+                        queue.offer(neighbor);
+                    }
+                }
+            }
+        }
+        return true;
     }
 
     /**

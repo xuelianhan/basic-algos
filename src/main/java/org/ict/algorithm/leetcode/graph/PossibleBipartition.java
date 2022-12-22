@@ -41,6 +41,10 @@ import java.util.*;
  */
 public class PossibleBipartition {
 
+    /**
+     * This problem is similar with LC785 {@link IsGraphBipartite}
+     * @param args
+     */
     public static void main(String[] args) {
         int n = 3;
         int[][] dislikes = {{1, 2}, {1, 3}, {2, 3}};
@@ -49,13 +53,14 @@ public class PossibleBipartition {
         System.out.println(result);
     }
 
-    public boolean possibleBipartitionV2(int n, int[][] dislikes) {
-
-        return false;
-    }
-
-    public boolean possibleBipartitionV1(int n, int[][] dislikes) {
-
+    /**
+     * Breadth-First-Search Solution
+     * @param n
+     * @param dislikes
+     * @return
+     */
+    public boolean possibleBipartitionV3(int n, int[][] dislikes) {
+        //todo
         return false;
     }
 
@@ -84,10 +89,9 @@ public class PossibleBipartition {
      * @param dislikes
      * @return
      */
-    public boolean possibleBipartition(int n, int[][] dislikes) {
+    public boolean possibleBipartitionV2(int n, int[][] dislikes) {
         Map<Integer, List<Integer>> graph = createGraph(dislikes);
         UnionFind uf = new UnionFind(1, n + 1);
-
         for (int i = 1; i < n + 1; i++) {
             /**
              * Skip the node-i if it has no neighbors
@@ -175,4 +179,123 @@ public class PossibleBipartition {
             return find(p) == find(q);
         }
     }
+
+    /**
+     * Depth-First-Search Solution with Adjacent-Lists Graph
+     * Time Cost 11ms
+     *  0:not colored
+     *  1:color red
+     * -1:color black
+     * @param n
+     * @param dislikes
+     * @return
+     */
+    public boolean possibleBipartitionV1(int n, int[][] dislikes) {
+        /**
+         * graph with adjacent-list storage.
+         */
+        List<Integer>[] graph = new List[n + 1];
+        for (int i = 1; i <= n; i++) {
+            graph[i] = new ArrayList<>();
+        }
+        for (int[] edge : dislikes) {
+            graph[edge[0]].add(edge[1]);
+            graph[edge[1]].add(edge[0]);
+        }
+        /**
+         * 1 <= dislikes[i][j] <= n,
+         * so we use [1,n], and leave colors[0] not used,
+         * this can assure the index consistent with [1, n]
+         */
+        int[] colors = new int[n + 1];
+        for (int i = 1; i <= n; i++) {
+            if (colors[i] == 0 && !dfsV1(graph, colors, 1, i)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean dfsV1(List<Integer>[] graph, int[] colors, int color, int node) {
+        colors[node] = color;
+        /**
+         * painted all neighbors with reversed color
+         * Notice graph stored as adjacent-list structure.
+         */
+        for (int neighbor : graph[node]) {
+            if (colors[neighbor] == color) {
+                return false;
+            }
+            if (colors[neighbor] == 0 && !dfsV1(graph, colors, -color, neighbor)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Depth-First-Search Solution with Adjacent-Matrix Graph
+     * Time Cost 86ms
+     *
+     *  0:not colored
+     *  1:color red
+     * -1:color black
+     * @param n
+     * @param dislikes
+     * @return
+     */
+    public boolean possibleBipartition(int n, int[][] dislikes) {
+        int[][] graph = new int[n + 1][n + 1];
+        for (int[] edge : dislikes) {
+            graph[edge[0]][edge[1]] = 1;
+            graph[edge[1]][edge[0]] = 1;
+        }
+        /**
+         * 1 <= dislikes[i][j] <= n,
+         * so we use [1,n], and leave colors[0] not used,
+         * this can assure the index consistent with [1, n]
+         */
+        int[] colors = new int[n + 1];
+        for (int i = 1; i <= n; i++) {
+            if (colors[i] == 0 && !dfs(graph, colors, 1, i)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean dfs(int[][] graph, int[] colors, int color, int node) {
+        /**
+         * if node has been colored, check its color is same with the color to be painted.
+         * This line is not necessary.
+         */
+        /*if (colors[node] != 0) {
+            return colors[node] == color;
+        }*/
+        /**
+         * if node has not been colored, painted it with the assigned color.
+         */
+        colors[node] = color;
+        /**
+         * painted all neighbors with reversed color
+         * Notice graph stored as adjacent-matrix structure.
+         */
+        for (int j = 1; j < graph.length; j++) {
+            /**
+             * Only access the valid element(graph[i][j] == 1) in the graph.
+             */
+            if (graph[node][j] == 1) {
+                if (colors[j] == color) {
+                    return false;
+                }
+                if (colors[j] == 0 && !dfs(graph, colors, -color, j)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+
+
 }
