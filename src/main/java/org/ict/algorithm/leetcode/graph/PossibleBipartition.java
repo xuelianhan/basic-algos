@@ -55,13 +55,62 @@ public class PossibleBipartition {
 
     /**
      * Breadth-First-Search Solution
+     * Time Cost 12ms
+     *
      * @param n
      * @param dislikes
      * @return
      */
     public boolean possibleBipartitionV3(int n, int[][] dislikes) {
-        //todo
-        return false;
+        /**
+         * graph with adjacent-list storage.
+         */
+        List<Integer>[] graph = new List[n + 1];
+        for (int i = 1; i <= n; i++) {
+            graph[i] = new ArrayList<>();
+        }
+        for (int[] edge : dislikes) {
+            graph[edge[0]].add(edge[1]);
+            graph[edge[1]].add(edge[0]);
+        }
+
+        int[] colors = new int[n + 1];
+        Deque<Integer> queue = new ArrayDeque<>();
+        for (int i = 1; i <= n; i++) {
+            /**
+             * Skip colored node(This means the node has been visited)
+             */
+            if (colors[i] != 0) {
+                continue;
+            }
+            /**
+             * colored current node-i with 1-red(This operation equals marking node-i to visited status)
+             */
+            colors[i] = 1;
+            queue.offer(i);
+            while (!queue.isEmpty()) {
+                /**
+                 * check current node's neighbors color(whether it has been visited)
+                 */
+                int cur = queue.poll();
+                for (int neighbor : graph[cur]) {
+                    /**
+                     * if neighbor color is same as node-i's, return false
+                     */
+                    if (colors[neighbor] == colors[cur]) {
+                        return false;
+                    }
+                    /**
+                     * if neighbor has not been colored, colored it with the reverse code.
+                     */
+                    if (colors[neighbor] == 0) {
+                        colors[neighbor] = - colors[cur];
+                        queue.offer(neighbor);
+                    }
+                }
+            }
+        }
+        return true;
     }
 
     /**
