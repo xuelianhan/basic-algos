@@ -37,15 +37,6 @@ import java.util.Map;
  */
 public class ConstructBinaryTreeByPreorderInorder {
 
-    /**
-     * Stack Iterative Solution
-     * @param preorder
-     * @param inorder
-     * @return
-     */
-    public TreeNode buildTreeV4(int[] preorder, int[] inorder) {
-        return null;
-    }
 
     /**
      * Stack Iterative Solution
@@ -59,6 +50,8 @@ public class ConstructBinaryTreeByPreorderInorder {
 
 
     /**
+     * Understanding the following solution
+     *
      * Time Cost 2ms
      * After converting inorder[] to the HashMap,
      * we don't need inorder[] anymore in the helper function.
