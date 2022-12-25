@@ -56,6 +56,7 @@ public class LongestSubsequenceWithLimitedSum {
 
     /**
      * Time Cost 4ms
+     * @author lee215
      * @param nums
      * @param queries
      * @return
