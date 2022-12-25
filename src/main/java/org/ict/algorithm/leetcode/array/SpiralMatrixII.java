@@ -28,6 +28,22 @@ import java.util.Arrays;
 public class SpiralMatrixII {
 
     /**
+     * x:0, y:1,
+     * x:0, y:2,
+     * x:0, y:3
+     * x:1, y:3
+     * x:2, y:3
+     * x:3, y:3
+     * x:3, y:2
+     * x:3, y:1
+     * x:3, y:0
+     * x:2, y:0
+     * x:1, y:0
+     * x:1, y:1
+     * x:1, y:2
+     * x:2, y:2
+     * x:2, y:1
+     * x:1, y:1
      * [[1,  2, 3, 4],
      * [12, 13, 14, 5],
      * [11, 16, 15, 6],
@@ -56,6 +72,31 @@ public class SpiralMatrixII {
      * Note, that matrix[y][x] is cell with coordinates (x,y), which is not completely obvious.
      *
      * Complexity: time complexity is O(n^2), we process each element once. Space complexity is O(n^2) as well.
+     * @see <a href="https://leetcode.com/problems/spiral-matrix-ii/solutions/963128/python-rotate-when-need-explained"></a>
+     * @author DBabichev
+     * @param n
+     * @return
+     */
+    public int[][] generateMatrixV1(int n) {
+        int[][] res = new int[n][n];
+        int i = 0, j = 0, di = 0, dj = 1;
+        for (int k = 0; k < n * n; k++) {
+            res[i][j] = k + 1;
+            int x = (i + di) % n;
+            int y = (j + dj) % n;
+            if (x < 0 || x >= n || y < 0 || y >= n || res[x][y] > 0) {
+                int temp = di;
+                di = dj;
+                dj = -temp;
+            }
+            i += di;
+            j += dj;
+        }
+        return res;
+    }
+
+    /**
+     * Time Cost 0ms
      * @author DBabichev
      * @see <a href="https://leetcode.com/problems/spiral-matrix-ii/solutions/963128/python-rotate-when-need-explained"></a>
      * @param n
@@ -68,9 +109,11 @@ public class SpiralMatrixII {
          * (1,0) means move left (x + 1, y)
          * (0,-1) means move up (x, y - 1)
          * (-1,0) means move right (x - 1, y)
-         * the sequence of dir won't affect the final result.
+         * the sequence of dir will affect the final result.
+         * e.g. you cannot arrange (0, 1) first, then put {-1, 0} afterward.
+         * this may incur overflow at res[x][y]
          */
-        int[][] dir = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+        int[][] dir = {{-1, 0} ,{0, 1}, {1, 0}, {0, -1}};
         int d = 0;
         int start = 1;
         int x = 0, y = 0;
@@ -81,7 +124,6 @@ public class SpiralMatrixII {
              */
             int nx = x + dir[d][0];
             int ny = y + dir[d][1];
-            System.out.println("nx:" + nx + ", ny:" + ny);
             /**
              * if over the boarder or position has been filled with valid value,
              * we need to change the direction.
@@ -97,6 +139,7 @@ public class SpiralMatrixII {
             }
             x = nx;
             y = ny;
+            System.out.println("x:" + x + ", y:" + y);
         }
         return res;
     }
