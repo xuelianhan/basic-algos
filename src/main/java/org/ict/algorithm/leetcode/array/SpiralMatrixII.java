@@ -56,6 +56,10 @@ public class SpiralMatrixII {
         System.out.println(Arrays.deepToString(res));
     }
 
+    public int[][] generateMatrixV2(int n) {
+        return null;
+    }
+
     /**
      * Let us notice one clue property about our spiral matrix:
      * first we need to go to the right and rotate clockwise 90 degrees,
