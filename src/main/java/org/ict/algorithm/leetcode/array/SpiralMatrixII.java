@@ -120,7 +120,7 @@ public class SpiralMatrixII {
         for (int i = 0; i < n * n; i++) {
             res[x][y] = start++;
             /**
-             * Next number waiting to fill.
+             * Next position waiting to fill.
              */
             int nx = x + dir[d][0];
             int ny = y + dir[d][1];
@@ -139,7 +139,6 @@ public class SpiralMatrixII {
             }
             x = nx;
             y = ny;
-            System.out.println("x:" + x + ", y:" + y);
         }
         return res;
     }
