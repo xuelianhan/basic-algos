@@ -63,7 +63,6 @@ public class LongestSubsequenceWithLimitedSum {
     public int[] answerQueriesV3(int[] nums, int[] queries) {
         Arrays.sort(nums);
         int n = nums.length;
-        int m = queries.length;
         for (int i = 1; i < n; i++) {
             nums[i] += nums[i - 1];
         }
