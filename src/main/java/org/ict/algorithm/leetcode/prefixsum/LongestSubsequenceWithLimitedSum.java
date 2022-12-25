@@ -54,8 +54,24 @@ public class LongestSubsequenceWithLimitedSum {
         System.out.println(Arrays.toString(res));
     }
 
+    /**
+     * Time Cost 4ms
+     * @param nums
+     * @param queries
+     * @return
+     */
     public int[] answerQueriesV3(int[] nums, int[] queries) {
-        return null;
+        Arrays.sort(nums);
+        int n = nums.length;
+        int m = queries.length;
+        for (int i = 1; i < n; i++) {
+            nums[i] += nums[i - 1];
+        }
+        for (int i = 0; i < queries.length; i++) {
+            int pos = Arrays.binarySearch(nums, queries[i]);
+            queries[i] = Math.abs(pos + 1);
+        }
+        return queries;
     }
 
     /**
@@ -83,6 +99,17 @@ public class LongestSubsequenceWithLimitedSum {
         }
 
         for (int i = 0; i < m; ++i) {
+            /**
+             * binarySearch return the index of the search key,
+             * if it is contained in the array;
+             *
+             * otherwise, <tt>(-(<i>insertion point</i>) - 1)</tt>.
+             * The <i>insertion point</i> is defined as the point at which the
+             * key would be inserted into the array:
+             * the index of the first element greater than the key,
+             * or <tt>a.length</tt> if all elements in the array are less than the specified key.
+             * Note that this guarantees that the return value will be &gt;= 0 if and only if the key is found.
+             */
             int j = Arrays.binarySearch(nums, queries[i]);
             res[i] = Math.abs(j + 1);
         }
@@ -97,6 +124,7 @@ public class LongestSubsequenceWithLimitedSum {
      * Then, we apply prefix sum so that the array i-th element of the array contains the minimal sum of i elements.
      *
      * Finally, we use a binary search to find the maximum number of elements for each query.
+     *
      * @see <a href="https://leetcode.com/problems/longest-subsequence-with-limited-sum/solutions/2492737/prefix-sum"></a>
      * @author votrubac
      * @param nums
@@ -108,6 +136,18 @@ public class LongestSubsequenceWithLimitedSum {
         Arrays.parallelPrefix(nums, Integer::sum);
         for (int i = 0; i < queries.length; i++) {
             int pos = Arrays.binarySearch(nums, queries[i] + 1);
+            /**
+             * Java's binary search function is a weird hybrid of lower and upper bound.
+             * If the element n exists in the array, it returns it's index.
+             * Otherwise, it returns -i - 1, where i is the 'insertion point' or,
+             * in other words, an index of the first element larger than n.
+             * I guess it negates the result so we can distinguish between two cases.
+             * It also subtract 1 to handle the zero index.
+             * Pretty complicated, IMHO.
+             * The ~i operator is the same as doing -i - 1 while i is negative.
+             * It's called bitwise compliment,
+             * and used in this case (handling binary search results) by convention.
+             */
             queries[i] = pos < 0 ? ~pos : pos;
         }
         return queries;
