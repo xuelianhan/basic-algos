@@ -56,8 +56,28 @@ public class SpiralMatrixII {
         System.out.println(Arrays.deepToString(res));
     }
 
+    /**
+     * Time Cost 0ms
+     * @param n
+     * @return
+     */
     public int[][] generateMatrixV2(int n) {
-        return null;
+        int[][] res = new int[n][n];
+        int start = 1;
+        int[][] dir = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+        int d = 0;
+        int x = 0, y = 0;
+        while (start <= n * n) {
+            res[x][y] = start++;
+            int nx = Math.floorMod(x + dir[d][0], n);
+            int ny = Math.floorMod(y + dir[d][1], n);
+            if (res[nx][ny] != 0) {
+                d = (d + 1) % 4;
+            }
+            x += dir[d][0];
+            y += dir[d][1];
+        }
+        return res;
     }
 
     /**
