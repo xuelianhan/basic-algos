@@ -1,5 +1,7 @@
 package org.ict.algorithm.leetcode.math;
 
+import java.util.Random;
+
 /**
  * Given an integer array nums, design an algorithm to randomly shuffle the array.
  * All permutations of the array should be equally likely as a result of the shuffling.
@@ -44,7 +46,7 @@ public class ShuffleAnArray {
     /**
      * Actually this code is for Fisher-Yates with indexes from lowest to highest,
      * classical one is in opposite direction,
-     * but this one a bit easirer to code.
+     * but this one a bit easier to code.
      * It is not obvious why this algorithm will generate all shuffles with the same probability,
      * but it can be solved by induction,
      * see wikipedia for more details.
@@ -56,16 +58,50 @@ public class ShuffleAnArray {
      *
      */
     class Solution {
-        public Solution(int[] nums) {
 
+        private int[] nums;
+        private Random random;
+
+        public Solution(int[] nums) {
+            this.nums = nums;
+            random = new Random();
         }
 
         public int[] reset() {
-            return null;
+            return nums;
         }
 
         public int[] shuffle() {
-            return null;
+            if (nums == null) {
+                return null;
+            }
+            /**
+             * copy of original array nums, other than use it directly.
+             * because reset() needs to return original array nums.
+             */
+            int[] copy = nums.clone();
+            /**
+             * Why i starts at 1, not 0?
+             * If i starts at 0, random.nextInt(i+1) = random.nextInt(1)
+             * due to bound is exclusive, random.nextInt(1) always return 0.
+             * Tt makes no sense to call random.nextInt(1), so i starts at 1 instead of 0.
+             */
+            for (int i = 1; i < copy.length; i++) {
+                /**
+                 * the next pseudorandom, uniformly distributed
+                 * value between zero (inclusive) and bound (exclusive)
+                 * return j: 0 <= j <= i;
+                 */
+                int j = random.nextInt(i + 1);
+                swap(copy, i, j);
+            }
+            return copy;
+        }
+
+        private void swap(int[] copy, int i, int j) {
+            int t = copy[i];
+            copy[i] = copy[j];
+            copy[j] = t;
         }
     }
 
