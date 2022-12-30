@@ -158,17 +158,33 @@ public class SingleThreadedCPU {
      * After Arrays sort by enqueueTime:
      * [[0,1,2],[1,2,4],[2,3,2],[3,4,1]]
      *
-     * ri:0, ti:0, ri < 4, time:0, ti < 4, enqueueTime:1, enqueueTime > time
-     *     minHeap is empty, time = enqueueTime = 1, continue
-     * ri:0, ti:0, ri < 4, time:1, ti < 4, enqueueTime:1, enqueueTime == time
-     *     minHeap offer [0, 1, 2], ti++ --> ti:1
-     *     ti < 4, [1,2,4]'s enqueueTime:2, 2 > time
-     *     minHeap poll [0,1,2], res[0] = ri = 0, ri++ --> ri:1
-     *     time = 1 + 2 = 3
-     * ri:1, ti:1, ri < 4, time:3, ti < 4, enqueueTime:2, 2 < time
+     * ri:0, ti:0, ri < 4, time:0, ti < 4, task:[0,1,2], enqueueTime:1, enqueueTime > time:0
+     *    minHeap is empty, time = enqueueTime = 1, continue
+     * ri:0, ti:0, ri < 4, time:1, ti < 4, task:[0,1,2], enqueueTime:1, enqueueTime == time:1
+     *    minHeap offer [0, 1, 2], ti++ --> ti:1
+     *    ti < 4, task:[1,2,4], enqueueTime:2, 2 > time:1
+     *    minHeap poll [0,1,2], res[0] = 0, ri = 0, ri++ --> ri:1
+     *    time = 1 + 2 = 3
+     * ri:1, ti:1, ri < 4, time:3, ti < 4, task:[1,2,4], enqueueTime:2, 2 < time:3
      *    minHeap offer [1,2,4], ti++ --> ti:2
-     *
-     *
+     *    ti:2, ti < 4, task:[2,3,2], enqueueTime:3, 3 = time:3
+     *    minHeap offer [2,3,3], ti++ --> ti:3
+     *    ti:3, ti < 4, task:[3,4,1], enqueueTime:4, 4 > time:3
+     *    minHeap is not empty, minHeap: [2,3,3], [1,2,4]
+     *    minHeap poll [2,3,3], minHeap:[1,2,4], res[1] = 2, ri = 1, ri++ --> ri:2
+     *    time = 3 + 3 = 6
+     * ri:2, ti:3, ri < 4, time:6, ti < 4, task:[3,4,1], enqueueTime:4, 4 < time:6
+     *    minHeap offer[3,4,1], ti++ --> ti:4
+     *    minHeap is not empty, minHeap:[3,4,1], [1,2,4]
+     *    minHeap poll [3,4,1], minHeap:[1,2,4], res[2] = 3, ri = 2, ri++ --> ri:3
+     *    time = 6 + 1 = 7
+     * ri:3, ti:4, ri < 4, time:7, ti = 4, no task need to enqueue.
+     *    minHeap is not empty, minHeap:[1,2,4]
+     *    minHeap poll [1,2,4], minHeap:empty.
+     *    res[3] = 1, ri = 3, ri++ --> ri:4
+     *    time = 7 + 4 = 11
+     * ri:4, ri == 4, end-outer-while-loop.
+     * return res:[0, 2, 3, 1]
      *
      * @see <a href="https://leetcode.com/problems/single-threaded-cpu/solutions/1164102/java-sort-by-time-and-use-pq"></a>
      * @author Alena Korney, an engineer in Google of Switzerland.
