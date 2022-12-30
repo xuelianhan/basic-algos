@@ -65,9 +65,83 @@ public class SingleThreadedCPU {
         System.out.println(Arrays.toString(res));
     }
 
-    public int[] getOrderV2(int[][] tasks) {
+    /**
+     * Time Cost 138ms
+     * @param tasks
+     * @return
+     */
+    public int[] getOrderV5(int[][] tasks) {
+        int n = tasks.length;
+        Task[] list = new Task[n];
+        for (int i = 0; i < n; i++) {
+            list[i] = new Task(i, tasks[i][0], tasks[i][1]);
+        }
+        Arrays.sort(list, Comparator.comparingInt(t -> t.enqueueTime));
 
-        return null;
+        PriorityQueue<Task> minHeap = new PriorityQueue<>(
+                (t1, t2) -> t1.processTime == t2.processTime
+                        ? Integer.compare(t1.index, t2.index)
+                        : Integer.compare(t1.processTime, t2.processTime));
+        int ri = 0;
+        int ti = 0;
+        int time = list[0].enqueueTime;
+        int[] res = new int[n];
+        while (ri < n) {
+            while (ti < n && time >= list[ti].enqueueTime) {
+                Task task = list[ti];
+                minHeap.offer(task);
+                ti++;
+            }
+
+            if (minHeap.isEmpty()) {
+                time = list[ti].enqueueTime;
+                continue;
+            }
+            Task top = minHeap.poll();
+            res[ri++] = top.index;
+            time += top.processTime;
+        }
+        return res;
+    }
+
+    /**
+     * Time Cost 137ms
+     * Using ArrayList and MinHeap
+     * @param tasks
+     * @return
+     */
+    public int[] getOrderV4(int[][] tasks) {
+        int n = tasks.length;
+        List<Task> list = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            Task t = new Task(i, tasks[i][0], tasks[i][1]);
+            list.add(t);
+        }
+        list.sort(Comparator.comparingInt(t -> t.enqueueTime));
+        PriorityQueue<Task> minHeap = new PriorityQueue<>(
+                (t1, t2) -> t1.processTime == t2.processTime
+                        ? Integer.compare(t1.index, t2.index)
+                        : Integer.compare(t1.processTime, t2.processTime));
+        int ri = 0;
+        int ti = 0;
+        int time = list.get(0).enqueueTime;
+        int[] res = new int[n];
+        while (ri < n) {
+            while (ti < n && time >= list.get(ti).enqueueTime) {
+                Task task = list.get(ti);
+                minHeap.offer(task);
+                ti++;
+            }
+
+            if (minHeap.isEmpty()) {
+                time = list.get(ti).enqueueTime;
+                continue;
+            }
+            Task top = minHeap.poll();
+            res[ri++] = top.index;
+            time += top.processTime;
+        }
+        return res;
     }
 
     class Task implements Comparable<Task> {
@@ -88,6 +162,122 @@ public class SingleThreadedCPU {
             }
             return Integer.compare(this.processTime, that.processTime);
         }
+    }
+
+    /**
+     * Time Cost 140ms
+     * @param tasks
+     * @return
+     */
+    public int[] getOrderV3(int[][] tasks) {
+        int n = tasks.length;
+        int[][] extTasks = new int[n][3];
+        for (int i = 0; i < n; i++) {
+            extTasks[i][0] = i;
+            extTasks[i][1] = tasks[i][0];
+            extTasks[i][2] = tasks[i][1];
+        }
+
+        /**
+         * Sort by enqueueTime,
+         * Always try to use compare method instead of subtracting cause it might overflow.
+         */
+        Arrays.sort(extTasks, Comparator.comparingInt(a -> a[1]));
+        /**
+         * Sort by processingTime first, if processingTime equals, then sort by the index.
+         * Always try to use compare method instead of subtracting cause it might overflow.
+         */
+        PriorityQueue<int[]> minHeap = new PriorityQueue<>((a, b) -> a[2] == b[2] ? Integer.compare(a[0], b[0]) : Integer.compare(a[2], b[2]));
+        int ri = 0;//result index pointer
+        int ti = 0;//task index pointer
+        int time = 0;//time upper limit allows task enqueue
+        int[] res = new int[n];
+        while (ri < n) {
+            /**
+             * If minHeap is empty, this means the CPU is idle,
+             * so we can update the time upper to allow more tasks in range to step into the task queue.
+             */
+            if (minHeap.isEmpty()) {
+                time = Math.max(time, extTasks[ti][1]);
+            }
+
+            /**
+             * If enqueueTime is less than or equal to time upper, push the current task into the minHeap.
+             * Notice extTasks[ti][1] <= time here, not extTasks[ti][1] < time.
+             */
+            while (ti < n && extTasks[ti][1] <= time) {
+                minHeap.offer(extTasks[ti++]);
+            }
+
+            /**
+             * when cpu finished processing task, poll task from the task queue.
+             * Mark the index of finished task into the result,
+             * and expand the time upper to let more tasks step in.
+             */
+            int[] bestFit = minHeap.poll();
+            time += bestFit[2];
+            res[ri++] = bestFit[0];
+        }
+
+        return res;
+    }
+
+
+    /**
+     * Time Cost 144ms
+     * @param tasks
+     * @return
+     */
+    public int[] getOrderV2(int[][] tasks) {
+        int n = tasks.length;
+        int[][] extTasks = new int[n][3];
+        for (int i = 0; i < n; i++) {
+            extTasks[i][0] = i;
+            extTasks[i][1] = tasks[i][0];
+            extTasks[i][2] = tasks[i][1];
+        }
+
+        /**
+         * Sort by enqueueTime,
+         * Always try to use compare method instead of subtracting cause it might overflow.
+         */
+        Arrays.sort(extTasks, Comparator.comparingInt(a -> a[1]));
+        /**
+         * Sort by processingTime first, if processingTime equals, then sort by the index.
+         * Always try to use compare method instead of subtracting cause it might overflow.
+         */
+        PriorityQueue<int[]> minHeap = new PriorityQueue<>((a, b) -> a[2] == b[2] ? Integer.compare(a[0], b[0]) : Integer.compare(a[2], b[2]));
+        int ri = 0;//result index pointer
+        int ti = 0;//task index pointer
+        int time = extTasks[0][1];//time upper limit allows task enqueue
+        int[] res = new int[n];
+        while (ri < n) {
+            /**
+             * If enqueueTime is less than or equal to time upper, push the current task into the minHeap.
+             * Notice extTasks[ti][1] <= time here, not extTasks[ti][1] < time.
+             */
+            while (ti < n && extTasks[ti][1] <= time) {
+                minHeap.offer(extTasks[ti++]);
+            }
+            /**
+             * If minHeap is empty, this means the CPU is idle,
+             * so we can update the time upper to allow more tasks in range to step into the task queue.
+             */
+            if (minHeap.isEmpty()) {
+                time = extTasks[ti][1];
+                continue;
+            }
+            /**
+             * when cpu finished processing task, poll task from the task queue.
+             * Mark the index of finished task into the result,
+             * and expand the time upper to let more tasks step in.
+             */
+            int[] bestFit = minHeap.poll();
+            time += bestFit[2];
+            res[ri++] = bestFit[0];
+        }
+
+        return res;
     }
 
 
