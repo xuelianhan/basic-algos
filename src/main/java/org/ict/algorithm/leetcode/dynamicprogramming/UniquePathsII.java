@@ -47,15 +47,66 @@ public class UniquePathsII {
         return 0;
     }
 
+    /**
+     * Using One-Dimension Array
+     * Time Cost 0ms
+     * @param obstacleGrid
+     * @return
+     */
     public int uniquePathsWithObstaclesV1(int[][] obstacleGrid) {
-        return 0;
-    }
-
-    public int uniquePathsWithObstacles(int[][] obstacleGrid) {
-        int n = obstacleGrid.length;
-        if (n == 0) {
+        if (obstacleGrid == null || obstacleGrid.length == 0 || obstacleGrid[0].length == 0 || obstacleGrid[0][0] == 1) {
             return 0;
         }
-        return 0;
+        int m = obstacleGrid.length;
+        int n = obstacleGrid[0].length;
+        int[] dp = new int[n];
+        dp[0] = 1;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (obstacleGrid[i][j] == 1) {
+                    dp[j] = 0;
+                } else if (j > 0) {
+                    dp[j] += dp[j - 1];
+                }
+            }
+        }
+        return dp[n - 1];
+    }
+
+    /**
+     * Understanding the following Solution.
+     * Time Cost 0ms
+     * @param obstacleGrid
+     * @return
+     */
+    public int uniquePathsWithObstacles(int[][] obstacleGrid) {
+        if (obstacleGrid == null || obstacleGrid.length == 0 || obstacleGrid[0].length == 0 || obstacleGrid[0][0] == 1) {
+            return 0;
+        }
+        int m = obstacleGrid.length;
+        int n = obstacleGrid[0].length;
+        /**
+         * dp[i][j] means the number of different paths can arrive at (i - 1, j - 1)
+         * so the pointer-i is in [0, m], the pointer-j is in [0, n].
+         * The state transfer equotation is same as {@link UniquePaths.java}
+         * dp[i][j] = dp[i - 1][j] + dp[i][j - 1]
+         * The only different point is that we need to skip to obstacle(grid[i][j] == 1).
+         */
+        int[][] dp = new int[m + 1][n + 1];
+        /**
+         * dp[1][1] = dp[0][1] + dp[1][0] = 1,
+         * So we need only to initialize dp[0][1] or dp[1][0] to 1, the other remains 0.
+         * In here, we initialize dp[0][1] with 1.
+         */
+        dp[0][1] = 1;
+        for (int i = 1; i <= m; i++) {
+            for (int j = 1; j <= n; j++) {
+                if (obstacleGrid[i - 1][j - 1] == 1) {
+                    continue;
+                }
+                dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
+            }
+        }
+        return dp[m][n];
     }
 }
