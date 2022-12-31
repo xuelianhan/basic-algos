@@ -65,6 +65,7 @@ public class SingleThreadedCPU {
         System.out.println(Arrays.toString(res));
     }
 
+
     /**
      * Time Cost 138ms
      * @param tasks
