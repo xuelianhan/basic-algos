@@ -43,9 +43,6 @@ package org.ict.algorithm.leetcode.dynamicprogramming;
  */
 public class UniquePathsII {
 
-    public int uniquePathsWithObstaclesV2(int[][] obstacleGrid) {
-        return 0;
-    }
 
     /**
      * Using One-Dimension Array
