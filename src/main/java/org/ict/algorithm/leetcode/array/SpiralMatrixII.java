@@ -72,6 +72,9 @@ public class SpiralMatrixII {
         int start = 1;
         while (start <= n * n) {
             res[x][y] = start++;
+            /**
+             * todo
+             */
             int nx = Math.floorMod(x + dir[d][0], n);
             int ny = Math.floorMod(y + dir[d][1], n);
             if (res[nx][ny] != 0) {
