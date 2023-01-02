@@ -64,7 +64,7 @@ public class SpiralMatrixII {
      * @param n
      * @return
      */
-    public int[][] generateMatrixV2(int n) {
+    public int[][] generateMatrixV3(int n) {
         int[][] res = new int[n][n];
         int start = 1;
         int[][] dir = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
@@ -106,9 +106,12 @@ public class SpiralMatrixII {
      * @param n
      * @return
      */
-    public int[][] generateMatrixV1(int n) {
+    public int[][] generateMatrixV2(int n) {
         int[][] res = new int[n][n];
-        int i = 0, j = 0, di = 0, dj = 1;
+        int i = 0;
+        int j = 0;
+        int di = 0;
+        int dj = 1;
         for (int k = 0; k < n * n; k++) {
             res[i][j] = k + 1;
             int x = (i + di) % n;
@@ -123,6 +126,60 @@ public class SpiralMatrixII {
             }
             i += di;
             j += dj;
+        }
+        return res;
+    }
+
+    /**
+     * Understanding the following Solution.
+     * @param n
+     * @return
+     */
+    public int[][] generateMatrixV1(int n) {
+        int[][] res = new int[n][n];
+        /**
+         * (0,1) means move down (x, y + 1)
+         * (1,0) means move left (x + 1, y)
+         * (0,-1) means move up (x, y - 1)
+         * (-1,0) means move right (x - 1, y)
+         * the sequence of dir will affect the final result.
+         * e.g. you cannot arrange (0, 1) first, then put {-1, 0} afterward.
+         * this may incur overflow at res[x][y].
+         * Why? the transfer must rotate 90 degrees.
+         * (0, 1) --> (-1, 0) is not a clockwise 90 degrees rotate.
+         */
+        int[][] dir = {{-1, 0} ,{0, 1}, {1, 0}, {0, -1}};
+        /**
+         * index of which element to choose.
+         */
+        int d = 0;
+        int x = 0, y = 0;
+        for (int i = 0; i < n * n; i++) {
+            /**
+             * Use the index-i directly.
+             */
+            res[x][y] = i + 1;
+            /**
+             * Next position waiting to fill.
+             */
+            int nx = x + dir[d][0];
+            int ny = y + dir[d][1];
+            /**
+             * if over the boarder or position has been filled with valid value,
+             * we need to change the direction.
+             */
+            if (nx < 0 || nx >= n || ny < 0 || ny >= n || res[nx][ny] > 0) {
+                /**
+                 * Change next move direction, and mod can
+                 * prevent overflow and reset to zero.
+                 * d + 1 means to move to the next position.
+                 */
+                d = (d + 1) % 4;
+                nx = x + dir[d][0];
+                ny = y + dir[d][1];
+            }
+            x = nx;
+            y = ny;
         }
         return res;
     }
