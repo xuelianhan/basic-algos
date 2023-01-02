@@ -56,7 +56,7 @@ public class ShuffleAnArray {
      * @author DBabichev
      * @see <a href="https://www.geeksforgeeks.org/shuffle-a-given-array-using-fisher-yates-shuffle-algorithm/"></a>
      * Following is the detailed algorithm:
-     * To shuffle an array a of n elements (indices 0..n-1):
+     * To shuffle an array a of n elements (indices 0...n-1):
      *   for i from n - 1 downto 1 do
      *        j = random integer with 0 <= j <= i
      *        exchange a[j] and a[i]
@@ -83,13 +83,13 @@ public class ShuffleAnArray {
          *
          * Proof: Suppose this algorithm works,
          * i.e. for each position j (starting from 0),
-         * the probability of any number in the range[0, j] to be at position j is 1/(1+j).
+         * the probability of any number in the range [0, j] to be at position j is 1/(1 + j).
          *
          * Let's look at int i = random.nextInt(j + 1):
-         * (1) If i == j, nums[j] does not need to change its position, which has probability 1/(1+j).
+         * (1) If i == j, nums[j] does not need to change its position, which has probability 1/(1 + j).
          * (2) if i != j, nums[j] needs to be swapped with nums[i].
-         * The probability of any number x in the range [0, j-1] to be at position j = nums[j] changes its position
-         * * x is at position i = (1 - 1 /(1 + j)) * (1 / j) = 1 / (1 + j)
+         * The probability of any number x in the range [0, j - 1] to be at position j = nums[j] changes its position
+         * * x is at position i: (1 - 1 /(1 + j)) * (1 / j) = 1 / (1 + j)
          *
          * Each number has equal probability to be at any position.
          *
@@ -98,9 +98,9 @@ public class ShuffleAnArray {
          * each number has equal chance to be put at index 0, which is 1/n.
          *
          * For second iteration, we pick any number with index range 1 - 6 and put it at index 1.
-         * the prob of number from index 1-6 is not picked in the first iteration is:1 - 1/n,
-         * and the prob of number from index 1-6 getting picked in the second iteration is: 1 /(n - 1),
-         * so, each number in index 1-6 has equal chance to be put at index 1,
+         * the prob of number from index 1~6 is not picked in the first iteration is:1 - 1/n,
+         * and the prob of number from index 1~6 getting picked in the second iteration is: 1 /(n - 1),
+         * so, each number in index 1~6 has equal chance to be put at index 1,
          * which is (1 - 1/n) * 1 /(n - 1) = 1/n.
          *
          * For 3rd iteration: we pick any number with index range 2 - 6 and put it at index 2.

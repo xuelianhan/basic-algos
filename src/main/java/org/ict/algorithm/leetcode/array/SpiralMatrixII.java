@@ -11,7 +11,9 @@ import java.util.Arrays;
  *
  *
  * Input: n = 3
- * Output: [[1,2,3],[8,9,4],[7,6,5]]
+ * Output: [[1,2,3],
+ *          [8,9,4],
+ *          [7,6,5]]
  * Example 2:
  *
  * Input: n = 1
@@ -57,6 +59,7 @@ public class SpiralMatrixII {
     }
 
     /**
+     * Understanding the following Solution.
      * Time Cost 0ms
      * @param n
      * @return
@@ -81,6 +84,8 @@ public class SpiralMatrixII {
     }
 
     /**
+     * Understanding the following Solution.
+     * Time Cost 0ms
      * Let us notice one clue property about our spiral matrix:
      * first we need to go to the right and rotate clockwise 90 degrees,
      * then we go down and again when we reached bottom,
@@ -91,8 +96,8 @@ public class SpiralMatrixII {
      * When we reached cell which is already filled.
      *
      * Let x, y be coordinates on our grid and dx, dy is current direction we need to move.
-     * In geometrical sense, rotate by 90 degrees clockwise is written as dx, dy = -dy, dx.
-     *
+     * In geometrical sense, rotate by 90 degrees clockwise is written as dx, dy = -dy, dx in the python.
+     * (x, y) --> rotate 90 degrees --> (y, -x)
      * Note, that matrix[y][x] is cell with coordinates (x,y), which is not completely obvious.
      *
      * Complexity: time complexity is O(n^2), we process each element once. Space complexity is O(n^2) as well.
@@ -109,6 +114,9 @@ public class SpiralMatrixII {
             int x = (i + di) % n;
             int y = (j + dj) % n;
             if (x < 0 || x >= n || y < 0 || y >= n || res[x][y] > 0) {
+                /**
+                 * Rotate 90 degrees:(x, y) = (y, -x)
+                 */
                 int temp = di;
                 di = dj;
                 dj = -temp;
@@ -120,6 +128,7 @@ public class SpiralMatrixII {
     }
 
     /**
+     * Understanding the following Solution.
      * Time Cost 0ms
      * @author DBabichev
      * @see <a href="https://leetcode.com/problems/spiral-matrix-ii/solutions/963128/python-rotate-when-need-explained"></a>
@@ -135,9 +144,14 @@ public class SpiralMatrixII {
          * (-1,0) means move right (x - 1, y)
          * the sequence of dir will affect the final result.
          * e.g. you cannot arrange (0, 1) first, then put {-1, 0} afterward.
-         * this may incur overflow at res[x][y]
+         * this may incur overflow at res[x][y].
+         * Why? the transfer must rotate 90 degrees.
+         * (0, 1) --> (-1, 0) is not a clockwise 90 degrees rotate.
          */
         int[][] dir = {{-1, 0} ,{0, 1}, {1, 0}, {0, -1}};
+        /**
+         * index of which element to choose.
+         */
         int d = 0;
         int start = 1;
         int x = 0, y = 0;
@@ -148,7 +162,7 @@ public class SpiralMatrixII {
              */
             int nx = x + dir[d][0];
             int ny = y + dir[d][1];
-            /**
+             /**
              * if over the boarder or position has been filled with valid value,
              * we need to change the direction.
              */
@@ -156,6 +170,7 @@ public class SpiralMatrixII {
                 /**
                  * Change next move direction, and mod can
                  * prevent overflow and reset to zero.
+                 * d + 1 means to move to the next position.
                  */
                 d = (d + 1) % 4;
                 nx = x + dir[d][0];
