@@ -31,7 +31,16 @@ package org.ict.algorithm.leetcode.string;
 public class DetectCapital {
 
     /**
-     *
+     * Time Cost 7ms
+     * @param word
+     * @return
+     */
+    public boolean detectCapitalUseV1(String word) {
+        return word.matches("[A-Z]+|[a-z]+|[A-Z][a-z]+");
+    }
+
+    /**
+     * Time Cost 2ms
      * @param word
      * @return
      */
