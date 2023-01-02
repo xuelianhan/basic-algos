@@ -59,17 +59,17 @@ public class SpiralMatrixII {
     }
 
     /**
-     * Understanding the following Solution.
      * Time Cost 0ms
      * @param n
      * @return
      */
     public int[][] generateMatrixV4(int n) {
         int[][] res = new int[n][n];
-        int start = 1;
         int[][] dir = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
         int d = 0;
-        int x = 0, y = 0;
+        int x = 0;
+        int y = 0;
+        int start = 1;
         while (start <= n * n) {
             res[x][y] = start++;
             int nx = Math.floorMod(x + dir[d][0], n);
@@ -84,6 +84,7 @@ public class SpiralMatrixII {
     }
 
     /**
+     * Understanding the following Solution.
      * Time Cost 0ms
      * @param n
      * @return
