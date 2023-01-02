@@ -64,7 +64,7 @@ public class SpiralMatrixII {
      * @param n
      * @return
      */
-    public int[][] generateMatrixV3(int n) {
+    public int[][] generateMatrixV4(int n) {
         int[][] res = new int[n][n];
         int start = 1;
         int[][] dir = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
@@ -79,6 +79,39 @@ public class SpiralMatrixII {
             }
             x += dir[d][0];
             y += dir[d][1];
+        }
+        return res;
+    }
+
+    /**
+     * Time Cost 0ms
+     * @param n
+     * @return
+     */
+    public int[][] generateMatrixV3(int n) {
+        int[][] res = new int[n][n];
+        //int[][] dir = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+        //int d = 0;
+        int x = 0;
+        int y = 0;
+        /**
+         * start point (0, 1)
+         */
+        int dx = 0;
+        int dy = 1;
+        for (int i = 0; i < n * n; i++) {
+            res[x][y] = i + 1;
+            int nx = (x + dx) % n;
+            int ny = (y + dy) % n;
+            if (nx < 0 || nx >= n || ny < 0 || ny >= n || res[nx][ny] != 0) {
+                int temp = dx;
+                dx = dy;
+                dy = -temp;
+                nx = (x + dx) % n;
+                ny = (y + dy) % n;
+            }
+            x = nx;
+            y = ny;
         }
         return res;
     }
@@ -108,24 +141,27 @@ public class SpiralMatrixII {
      */
     public int[][] generateMatrixV2(int n) {
         int[][] res = new int[n][n];
-        int i = 0;
-        int j = 0;
-        int di = 0;
-        int dj = 1;
+        int x = 0;
+        int y = 0;
+        /**
+         * start point (0, 1)
+         */
+        int dx = 0;
+        int dy = 1;
         for (int k = 0; k < n * n; k++) {
-            res[i][j] = k + 1;
-            int x = (i + di) % n;
-            int y = (j + dj) % n;
-            if (x < 0 || x >= n || y < 0 || y >= n || res[x][y] > 0) {
+            res[x][y] = k + 1;
+            int nx = (x + dx) % n;
+            int ny = (y + dy) % n;
+            if (nx < 0 || nx >= n || ny < 0 || ny >= n || res[nx][ny] > 0) {
                 /**
                  * Rotate 90 degrees:(x, y) = (y, -x)
                  */
-                int temp = di;
-                di = dj;
-                dj = -temp;
+                int temp = dx;
+                dx = dy;
+                dy = -temp;
             }
-            i += di;
-            j += dj;
+            x += dx;
+            y += dy;
         }
         return res;
     }
