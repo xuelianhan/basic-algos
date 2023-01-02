@@ -83,13 +83,13 @@ public class ShuffleAnArray {
          *
          * Proof: Suppose this algorithm works,
          * i.e. for each position j (starting from 0),
-         * the probability of any number in the range[0,j] to be at position j is 1/(1+j).
+         * the probability of any number in the range[0, j] to be at position j is 1/(1+j).
          *
          * Let's look at int i = random.nextInt(j + 1):
          * (1) If i == j, nums[j] does not need to change its position, which has probability 1/(1+j).
-         * (2) if i !=j, nums[j] needs to be swapped with nums[i].
-         * The probability of any number x in the range [0,j-1] to be at position j = nums[j] changes its position * x is at position i
-         * = (1-1/(1+j)) * (1/j) = 1/(1+j)
+         * (2) if i != j, nums[j] needs to be swapped with nums[i].
+         * The probability of any number x in the range [0, j-1] to be at position j = nums[j] changes its position
+         * * x is at position i = (1 - 1 /(1 + j)) * (1 / j) = 1 / (1 + j)
          *
          * Each number has equal probability to be at any position.
          *

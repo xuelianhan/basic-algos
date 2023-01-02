@@ -52,6 +52,12 @@ public class WordPattern {
         System.out.println(flag);
     }
 
+    /**
+     * Understanding the following Solution.
+     * @param pattern
+     * @param s
+     * @return
+     */
     public boolean wordPatternV4(String pattern, String s) {
         Map<Character, String> map = new HashMap<>();
         String[] animals = s.split(" ");
