@@ -53,7 +53,7 @@ public class SumOfDistancesInTree {
      * Tree View provided by kklov369
      * # First DFS
      *         [TREE] |      [COUNT]     [RET]
-     *            0   |       10          [ ] = (1+0) + (7+10) +(1+0)  = 19
+     *            0   |       10          [ ] = (1+0) + (7+10) +(1+0) = 19
      *          / | \ |      / | \       / | \
      *         1  2  3|     1  7  1     0  10 0
      *           /|\  |       /|\         /|\

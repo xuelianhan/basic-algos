@@ -1,5 +1,7 @@
 package org.ict.algorithm.leetcode.array;
 
+
+
 /**
  * Determine if a 9 x 9 Sudoku board is valid.
  * Only the filled cells need to be validated according to the following rules:
@@ -55,7 +57,68 @@ package org.ict.algorithm.leetcode.array;
  */
 public class ValidSudoku {
 
-    public boolean isValidSudoku(char[][] board) {
+    public static void main(String[] args) {
+        char[][] board =
+                {
+                        {'5', '3', '.', '.', '7', '.', '.', '.', '.'},
+                        {'6', '.', '.', '1', '9', '5', '.', '.', '.'},
+                        {'.', '9', '8', '.', '.', '.', '.', '6', '.'},
+                        {'8', '.', '.', '.', '6', '.', '.', '.', '3'},
+                        {'4', '.', '.', '8', '.', '3', '.', '.', '1'},
+                        {'7', '.', '.', '.', '2', '.', '.', '.', '6'},
+                        {'.', '6', '.', '.', '.', '.', '2', '8', '.'},
+                        {'.', '.', '.', '4', '1', '9', '.', '.', '5'},
+                        {'.', '.', '.', '.', '8', '.', '.', '7', '9'}
+                };
+        ValidSudoku instance = new ValidSudoku();
+        instance.isValidSudoku(board);
+    }
+
+    public boolean isValidSudokuV2(char[][] board) {
         return false;
+    }
+
+    public boolean isValidSudokuV1(char[][] board) {
+        return false;
+    }
+
+    /**
+     * Time Cost 4ms
+     * Time Complexity O(N^2)
+     * Space Complexity O(3*N^2)
+     * @param board
+     * @return
+     */
+    public boolean isValidSudoku(char[][] board) {
+        int n = 9;
+        boolean[][] rowFlag = new boolean[n][n];
+        boolean[][] colFlag = new boolean[n][n];
+        boolean[][] cellFlag = new boolean[n][n];
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (board[i][j] == '.') {
+                    continue;
+                }
+                /**
+                 * Convert char '1'~'9' to int 0~8, which is the range of the array index.
+                 */
+                int c = board[i][j] - '1';
+                /**
+                 * Calculate 3 x 3 sub-boxes row coordinate.
+                 */
+                int r = 3 * (i / 3) + j / 3;
+                /**
+                 * If the number has been appeared before, return false.
+                 */
+                if (rowFlag[i][c] || colFlag[c][j] || cellFlag[r][c]) {
+                    return false;
+                }
+                rowFlag[i][c] = true;
+                colFlag[c][j] = true;
+                cellFlag[r][c] = true;
+            }
+        }
+        return true;
     }
 }
