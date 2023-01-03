@@ -50,7 +50,41 @@ public class SumOfDistancesInTree {
 
     /**
      * Solution provided by lee215
-     * @see <a href="https://leetcode.com/problems/sum-of-distances-in-tree/solutions/130583/c-java-python-pre-order-and-post-order-dfs-o-n"></a>
+     * Tree View provided by kklov369
+     *  # First DFS
+     *          [TREE] |      [COUNT]     [RET]
+     *             0   |       10          [ ] = (1+0) + (7+10) +(1+0)  = 19
+     *           / | \ |      / | \       / | \
+     *          1  2  3|     1  7  1     0  10 0       <--- ret[root] = sum(count[child])+sum(count[child])
+     *            /|\  |       /|\         /|\                        sum(count[child]) = travel again 「count[child]」 many times of path root->child
+     *           4 5 6 |      4 1 1       4 0 0                       sum(count[child]) = prev traveled paths sum
+     *          /|     |     /|          /|
+     *         7 8     |    1 2         0 1
+     *          /      |     /           /
+     *         9       |    1           0
+     *
+     *    # Second DFS
+     *          [RET]  |                  |
+     *             19  |           19     |       19
+     *           / | \ |          / | \   |      / | \
+     *          0  10 0| [19-1+10-1] 10 0 |  28 [19-7+10-7] 0       <---  = parent.ret - root.count
+     *            /|\  |           /|\    |       /|\                      + (N - root.count)*1
+     *           4 0 0 |          4 0 0   |      4 0 0                       Eveny node other than it's subtree node: become 1 step more far away
+     *          /|     |         /|       |     /|
+     *         0 1     |        0 1       |    0 1
+     *          /      |         /        |     /
+     *         0       |        0         |    0
+     *
+     *     # Ans = [19,27,15,27,17,23,23,25,23,31]
+     *     --------------Example--------------------------------------------
+     *
+     *         Count         Ret         Dfs update ret...
+     *           6            8            8              8
+     *          / \          / \          /  \           / \
+     *         1   4        0   3    [8-1+N-1] 3       12   6
+     *            /|\          /|\          /|\            /|\
+     *           1 1 1        0 0 0        0 0 0        10 10 [6-1+N-1]   N=6
+     *
      * Preword
      * Well, another long solution.
      * what I am always trying is to:
@@ -92,6 +126,7 @@ public class SumOfDistancesInTree {
      *
      * return res, done.
      * @author lee215
+     * @see <a href="https://leetcode.com/problems/sum-of-distances-in-tree/solutions/130583/c-java-python-pre-order-and-post-order-dfs-o-n"></a>
      * @param n
      * @param edges
      * @return
