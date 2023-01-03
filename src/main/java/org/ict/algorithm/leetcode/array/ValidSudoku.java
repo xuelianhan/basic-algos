@@ -9,8 +9,8 @@ package org.ict.algorithm.leetcode.array;
  * Each row must contain the digits 1-9 without repetition.
  * Each column must contain the digits 1-9 without repetition.
  * Each of the nine 3 x 3 sub-boxes of the grid must contain the digits 1-9 without repetition.
- * Note:
  *
+ * Note:
  * A Sudoku board (partially filled) could be valid but is not necessarily solvable.
  * Only the filled cells need to be validated according to the mentioned rules.
  *
@@ -107,6 +107,7 @@ public class ValidSudoku {
                 };
         ValidSudoku instance = new ValidSudoku();
         instance.isValidSudoku(board);
+        instance.printSubBoxOfMatrix();
     }
 
     public boolean isValidSudokuV2(char[][] board) {
@@ -118,6 +119,8 @@ public class ValidSudoku {
     }
 
     /**
+     *
+     *
      * Time Cost 4ms
      * Time Complexity O(N^2)
      * Space Complexity O(3*N^2)
@@ -128,7 +131,7 @@ public class ValidSudoku {
         int n = 9;
         boolean[][] rowFlag = new boolean[n][n];
         boolean[][] colFlag = new boolean[n][n];
-        boolean[][] cellFlag = new boolean[n][n];
+        boolean[][] boxFlag = new boolean[n][n];
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
@@ -146,14 +149,36 @@ public class ValidSudoku {
                 /**
                  * If the number has been appeared before, return false.
                  */
-                if (rowFlag[i][c] || colFlag[c][j] || cellFlag[r][c]) {
+                if (rowFlag[i][c] || colFlag[c][j] || boxFlag[r][c]) {
                     return false;
                 }
                 rowFlag[i][c] = true;
                 colFlag[c][j] = true;
-                cellFlag[r][c] = true;
+                boxFlag[r][c] = true;
             }
         }
         return true;
+    }
+
+    /**
+     * the matrix of r = 3 * (i / 3) + j / 3 is following:
+     * 0 0 0 1 1 1 2 2 2
+     * 0 0 0 1 1 1 2 2 2
+     * 0 0 0 1 1 1 2 2 2
+     * 3 3 3 4 4 4 5 5 5
+     * 3 3 3 4 4 4 5 5 5
+     * 3 3 3 4 4 4 5 5 5
+     * 6 6 6 7 7 7 8 8 8
+     * 6 6 6 7 7 7 8 8 8
+     * 6 6 6 7 7 7 8 8 8
+     */
+    private void printSubBoxOfMatrix() {
+        int n = 9;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                int r = 3 * (i / 3) + j / 3;
+                System.out.println("i:" + i + ", j:" + j + ", r:" + r);
+            }
+        }
     }
 }
