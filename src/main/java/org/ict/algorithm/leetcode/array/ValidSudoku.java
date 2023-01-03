@@ -57,6 +57,41 @@ package org.ict.algorithm.leetcode.array;
  */
 public class ValidSudoku {
 
+    /**
+     * rowFlag:[
+     * [false, false, true, false, true, false, true, false, false],
+     * [true, false, false, false, true, true, false, false, true],
+     * [false, false, false, false, false, true, false, true, true],
+     * [false, false, true, false, false, true, false, true, false],
+     * [true, false, true, true, false, false, false, true, false],
+     * [false, true, false, false, false, true, true, false, false],
+     * [false, true, false, false, false, true, false, true, false],
+     * [true, false, false, true, true, false, false, false, true],
+     * [false, false, false, false, false, false, true, true, true]]
+     *
+     * colFlag:[
+     * [false, false, false, true, true, false, false, false, true],
+     * [false, false, false, false, true, false, true, false, false],
+     * [false, true, false, false, false, true, false, false, true],
+     * [true, false, false, true, false, false, false, false, false],
+     * [true, false, false, false, false, true, false, false, true],
+     * [true, true, false, false, true, false, false, true, true],
+     * [true, false, false, false, true, false, false, true, false],
+     * [true, false, true, true, true, false, false, true, false],
+     * [false, true, false, false, true, true, false, false, true]]
+     *
+     * cellFlag:[
+     * [false, false, true, false, true, true, false, true, true],
+     * [true, false, false, false, true, false, true, false, true],
+     * [false, false, false, false, false, true, false, false, false],
+     * [false, false, false, true, false, false, true, true, false],
+     * [false, true, true, false, false, true, false, true, false],
+     * [true, false, true, false, false, true, false, false, false],
+     * [false, false, false, false, false, true, false, false, false],
+     * [true, false, false, true, false, false, false, true, true],
+     * [false, true, false, false, true, false, true, true, true]]
+     * @param args
+     */
     public static void main(String[] args) {
         char[][] board =
                 {
