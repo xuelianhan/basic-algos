@@ -1,6 +1,8 @@
 package org.ict.algorithm.leetcode.array;
 
 
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Determine if a 9 x 9 Sudoku board is valid.
@@ -110,17 +112,37 @@ public class ValidSudoku {
         instance.printSubBoxOfMatrix();
     }
 
-    public boolean isValidSudokuV2(char[][] board) {
-        return false;
-    }
 
+    /**
+     * Time Cost 34 ms
+     * This solution is more readable.
+     * @param board
+     * @return
+     */
     public boolean isValidSudokuV1(char[][] board) {
-        return false;
+        int n = 9;
+        Set<String> set = new HashSet<>();
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (board[i][j] == '.') {
+                    continue;
+                }
+                char number = board[i][j];
+                /**
+                 * return true if this set did not already contain the specified element.
+                 */
+                boolean f1 = set.add(number + " in row " + i);
+                boolean f2 = set.add(number + " in col " + j);
+                boolean f3 = set.add(number + " in box " + i / 3 + "~" + j / 3);
+                if (!f1 || !f2 || !f3) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     /**
-     *
-     *
      * Time Cost 4ms
      * Time Complexity O(N^2)
      * Space Complexity O(3*N^2)
