@@ -55,9 +55,9 @@ public class SumOfDistancesInTree {
      *         [TREE] |      [COUNT]     [RET]
      *            0   |       10          [ ] = (1+0) + (7+10) +(1+0)  = 19
      *          / | \ |      / | \       / | \
-     *         1  2  3|     1  7  1     0  10 0       <--- ret[root] = sum(count[child])+sum(count[child])
-     *           /|\  |       /|\         /|\                        sum(count[child]) = travel again 「count[child]」 many times of path root->child
-     *          4 5 6 |      4 1 1       4 0 0                       sum(count[child]) = prev traveled paths sum
+     *         1  2  3|     1  7  1     0  10 0
+     *           /|\  |       /|\         /|\
+     *          4 5 6 |      4 1 1       4 0 0
      *         /|     |     /|          /|
      *        7 8     |    1 2         0 1
      *         /      |     /           /
@@ -67,9 +67,9 @@ public class SumOfDistancesInTree {
      *       [RET]  |                  |
      *          19  |           19     |       19
      *        / | \ |          / | \   |      / | \
-     *       0  10 0| [19-1+10-1] 10 0 |  28 [19-7+10-7] 0       <---  = parent.ret - root.count
-     *         /|\  |           /|\    |       /|\                      + (N - root.count)*1
-     *        4 0 0 |          4 0 0   |      4 0 0                       Eveny node other than it's subtree node: become 1 step more far away
+     *       0  10 0| [19-1+10-1] 10 0 |  28 [19-7+10-7] 0
+     *         /|\  |           /|\    |       /|\
+     *        4 0 0 |          4 0 0   |      4 0 0
      *       /|     |         /|       |     /|
      *      0 1     |        0 1       |    0 1
      *       /      |         /        |     /
@@ -154,7 +154,7 @@ public class SumOfDistancesInTree {
     }
 
     /**
-     * Post-Order-Traversal
+     * Post-Order-DFS-Traversal
      * @param root
      * @param pre
      * @param tree
@@ -174,7 +174,7 @@ public class SumOfDistancesInTree {
     }
 
     /**
-     * Pre-Order-Traversal
+     * Pre-Order-DFS-Traversal
      * @param root
      * @param pre
      * @param tree
