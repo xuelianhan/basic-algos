@@ -46,23 +46,9 @@ public class SerializeAndDeserializeBinaryTree {
      * TreeNode ans = deser.deserialize(ser.serialize(root));
      */
 
-    /**
-     *
-     */
-    public class CodecV2 {
-
-        // Encodes a tree to a single string.
-        public String serialize(TreeNode root) {
-            return null;
-        }
-
-        // Decodes your encoded data to tree.
-        public TreeNode deserialize(String data) {
-            return null;
-        }
-    }
 
     /**
+     * Time Cost 63ms
      * Breadth-First-Search Solution.
      * Time Complexity
      */

@@ -1,4 +1,4 @@
-package org.ict.algorithm.leetcode.random;
+package org.ict.algorithm.leetcode.randomized;
 
 import java.util.Arrays;
 import java.util.Random;
