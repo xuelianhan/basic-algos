@@ -88,6 +88,9 @@ public class InsertDeleteGetRandomO1 {
          * @return
          */
         public boolean insert(int val) {
+            /**
+             * If val has existed, no need to insert.
+             */
             if (map.containsKey(val)) {
                 return false;
             }
@@ -121,13 +124,17 @@ public class InsertDeleteGetRandomO1 {
          * @return
          */
         public boolean remove(int val) {
+            /**
+             * If val not exist, no need to remove.
+             */
             if (!map.containsKey(val)) {
                 return false;
             }
             int idx = map.get(val);
             /**
-             * if val is not the last element in nums, then we
-             * swap val with the last element in nums.
+             * if val is not the last element in nums,
+             * then we copy the last element to val's index in nums, bind the val's index with the last element in map.
+             * At last, we remove val's binding relation in map, and remove the last element in the nums array.
              */
             if (idx < nums.size() - 1) {
                 int last = nums.get(nums.size() - 1);
