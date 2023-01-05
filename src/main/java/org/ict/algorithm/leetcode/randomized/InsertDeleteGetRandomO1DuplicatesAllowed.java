@@ -163,6 +163,9 @@ public class InsertDeleteGetRandomO1DuplicatesAllowed {
             if (map.get(val).isEmpty()) {
                 map.remove(val);
             }
+            /**
+             * Remove duplicated last element in the array.
+             */
             nums.remove(nums.size() - 1);
             return true;
         }

@@ -153,7 +153,13 @@ public class InsertDeleteGetRandomO1 {
                 nums.set(idx, last);
                 map.put(last, idx);
             }
+            /**
+             * Remove binding relationship of val and idx.
+             */
             map.remove(val);
+            /**
+             * Remove duplicated last element in the array.
+             */
             nums.remove(nums.size() - 1);
             return true;
         }
