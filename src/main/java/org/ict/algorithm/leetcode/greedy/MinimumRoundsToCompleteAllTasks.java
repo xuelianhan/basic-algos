@@ -1,5 +1,8 @@
 package org.ict.algorithm.leetcode.greedy;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * You are given a 0-indexed integer array tasks,
  * where tasks[i] represents the difficulty level of a task.
@@ -39,8 +42,102 @@ package org.ict.algorithm.leetcode.greedy;
  */
 public class MinimumRoundsToCompleteAllTasks {
 
+    public static void main(String[] args) {
+        int[] tasks = {2, 2, 3, 3, 2, 4, 4, 4, 4, 4};
+        MinimumRoundsToCompleteAllTasks instance = new MinimumRoundsToCompleteAllTasks();
+        int res = instance.minimumRoundsV3(tasks);
+        System.out.println(res);
+    }
+
+    /**
+     * Understanding the following Solution.
+     * Time Cost 96ms
+     * @param tasks
+     * @return
+     */
+    public int minimumRoundsV3(int[] tasks) {
+        Map<Integer, Integer> freq = new HashMap<>();
+        for (int task : tasks) {
+            freq.put(task, freq.getOrDefault(task, 0) + 1);
+        }
+        int res = 0;
+        for (Integer v : freq.values()) {
+            if (v == 1) {
+                return -1;
+            }
+            res += Math.ceil(v / 3.0);
+        }
+        return res;
+    }
+
+    /**
+     * Understanding the following Solution.
+     * Time Cost 59ms
+     * @param tasks
+     * @return
+     */
+    public int minimumRoundsV2(int[] tasks) {
+        Map<Integer, Integer> freq = new HashMap<>();
+        for (int task : tasks) {
+            freq.put(task, freq.getOrDefault(task, 0) + 1);
+        }
+        int res = 0;
+        for (Integer v : freq.values()) {
+            if (v == 1) {
+                return -1;
+            }
+            res += (v + 2) / 3;
+        }
+        return res;
+    }
+
+    /**
+     * Understanding the following Solution.
+     * Time Cost 90ms
+     * @param tasks
+     * @return
+     */
+    public int minimumRoundsV1(int[] tasks) {
+        Map<Integer, Integer> freq = new HashMap<>();
+        for (int task : tasks) {
+            freq.put(task, freq.getOrDefault(task, 0) + 1);
+        }
+        int res = 0;
+        for (Integer v : freq.values()) {
+            if (v == 1) {
+                return -1;
+            }
+            res += v / 3 + (v % 3 == 0 ? 0 : 1);
+        }
+        return res;
+    }
+
+    /**
+     * Understanding the following Solution.
+     * Time Cost 58ms
+     * e.g.tasks = [2, 3, 3], expect: -1
+     * e.g.tasks = [1, 1, 1, 1, 1], expect: 2
+     * e.g.tasks = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1], expect: 4
+     * e.g.tasks = [2, 2, 3, 3, 2, 4, 4, 4, 4, 4], expect:4
+     * @param tasks
+     * @return
+     */
     public int minimumRounds(int[] tasks) {
-        //todo
-        return 0;
+        Map<Integer, Integer> freq = new HashMap<>();
+        for (int task : tasks) {
+            freq.put(task, freq.getOrDefault(task, 0) + 1);
+        }
+        int res = 0;
+        for (Integer v : freq.values()) {
+            if (v == 1) {
+                return -1;
+            }
+            if (v % 3 == 0) {
+                res += v / 3;
+            } else {
+                res += v / 3 + 1;
+            }
+        }
+        return res;
     }
 }
