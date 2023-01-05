@@ -1,5 +1,6 @@
 package org.ict.algorithm.leetcode.greedy;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -47,6 +48,39 @@ public class MinimumRoundsToCompleteAllTasks {
         MinimumRoundsToCompleteAllTasks instance = new MinimumRoundsToCompleteAllTasks();
         int res = instance.minimumRoundsV3(tasks);
         System.out.println(res);
+    }
+
+    /**
+     * todo
+     * Time Cost 9ms
+     * @param tasks
+     * @return
+     */
+    public int minimumRoundsV4(int[] tasks) {
+        Arrays.sort(tasks);
+        int res = 0;
+        for (int i = 0; i < tasks.length;) {
+            int j = i + 1;
+            while (j < tasks.length && tasks[j] == tasks[i]) {
+                j++;
+            }
+            if (j == i + 1) {
+                return -1;
+            }
+            res += compute(j - i);
+            i = j;
+        }
+        return res;
+    }
+
+    private int compute(int i) {
+        if (i % 3 == 0) {
+            return i / 3;
+        }
+        if (i % 3 == 2) {
+            return (i - 2) / 3 + 1;
+        }
+        return (i - 4) / 3 + 2;
     }
 
     /**
