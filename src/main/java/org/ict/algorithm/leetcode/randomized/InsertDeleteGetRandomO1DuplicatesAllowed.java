@@ -162,6 +162,9 @@ public class InsertDeleteGetRandomO1DuplicatesAllowed {
                  */
                 map.get(last).remove(nums.size() - 1);
             }
+            /**
+             * If delete val has no index set, remove the key entry of val directly.
+             */
             if (map.get(val).isEmpty()) {
                 map.remove(val);
             }
