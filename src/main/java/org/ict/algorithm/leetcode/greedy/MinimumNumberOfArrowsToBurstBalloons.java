@@ -1,5 +1,8 @@
 package org.ict.algorithm.leetcode.greedy;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
 /**
  * There are some spherical balloons taped onto a flat wall that represents the XY-plane.
  * The balloons are represented as a 2D integer array points
@@ -47,19 +50,58 @@ package org.ict.algorithm.leetcode.greedy;
  */
 public class MinimumNumberOfArrowsToBurstBalloons {
 
+    public int findMinArrowShotsV2(int[][] points) {
+        return 0;
+    }
+
     public int findMinArrowShotsV1(int[][] points) {
         return 0;
     }
 
     /**
+     * Greedy Solution.
      * Overlapping Interval Problem
+     * {@link LC56 LC435 LC453 LC252 LC253 }
+     * Time Cost 121 ms
+     * 1.Sort intervals/pairs in increasing order of the start position.
+     *
+     * 2.Scan the sorted intervals, and maintain an "active set" for overlapping intervals.
+     * At most times, we do not need to use an explicit set to store them.
+     * Instead, we just need to maintain several key parameters,
+     * e.g. the number of overlapping intervals (count),
+     * the minimum ending point among all overlapping intervals (minEnd).
+     *
+     * 3.If the interval that we are currently checking overlaps with the active set,
+     * which can be characterized by cur.start > minEnd,
+     * we need to renew those key parameters or change some states.
+     *
+     * 4.If the current interval does not overlap with the active set,
+     * we just drop current active set,
+     * record some parameters,
+     * and create a new active set that contains the current interval.
+     *
      * @author wangxinbo
      * @see <a href="https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/solutions/93735/a-concise-template-for-overlapping-interval-problem"></a>
      * @param points
      * @return
      */
     public int findMinArrowShots(int[][] points) {
-        return 0;
+        if (points == null || points[0].length == 0) {
+            return 0;
+        }
+        int res = 0;
+        int minEnd = Integer.MAX_VALUE;
+        Arrays.sort(points, Comparator.comparingInt(a -> a[0]));
+        for (int[] point : points) {
+            if (point[0] > minEnd) {
+                res++;
+                minEnd = point[1];
+            } else {
+                minEnd = Math.min(minEnd, point[1]);
+            }
+        }
+
+        return res + 1;
     }
 
 }
