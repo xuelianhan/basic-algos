@@ -94,6 +94,12 @@ public class InsertDeleteGetRandomO1 {
             if (map.containsKey(val)) {
                 return false;
             }
+            /**
+             * A little tricky here, we put (val, nums.size()) first, then add val into list.
+             * Or you can write as following:
+             * nums.add(val);
+             * map.put(val, nums.size() - 1);
+             */
             map.put(val, nums.size());
             nums.add(val);
             return true;
