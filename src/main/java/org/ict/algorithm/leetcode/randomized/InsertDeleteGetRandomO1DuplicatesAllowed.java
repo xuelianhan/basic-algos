@@ -144,6 +144,17 @@ public class InsertDeleteGetRandomO1DuplicatesAllowed {
             int idx = map.get(val).iterator().next();
             map.get(val).remove(idx);
             /**
+             * There two cases here:
+             * 1. the val to delete is the last element,
+             *    remove the val and index directly.
+             *    Notice we need to remove key of val, if val has no index in its value set.
+             * 2. the val to delete is not the last element,
+             *    using last element to overwrite the val to delete,
+             *    adding new binding relationship of last element,
+             *    removing old binding relationship of last element.
+             *    remove the val and index directly.
+             *
+             *
              * If val is not the last element, overwrite val at val's index of nums with the last element.
              * Add new binding relationship of last element in the map.
              * Remove old binding relationship of last element in the map.
