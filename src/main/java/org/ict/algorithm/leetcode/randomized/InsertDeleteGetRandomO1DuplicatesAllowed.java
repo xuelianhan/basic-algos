@@ -65,7 +65,12 @@ public class InsertDeleteGetRandomO1DuplicatesAllowed {
      * boolean param_1 = obj.insert(val);
      * boolean param_2 = obj.remove(val);
      * int param_3 = obj.getRandom();
-     * Time Cost 86ms
+     *
+     * Intuition:
+     * This problem requires each function works in average O(1) time complexity.
+     * Which data structure provides O(1) on an insert, delete, and get operation?
+     * Array, ArrayList, Map, Set.
+     * we use ArrayList, HashMap and HashSet here to solve this problem.
      */
     class RandomizedCollection {
 
@@ -131,6 +136,9 @@ public class InsertDeleteGetRandomO1DuplicatesAllowed {
             if (!map.containsKey(val)) {
                 return false;
             }
+            /**
+             * Find one index of the val, remove binding relation of val with this index.
+             */
             int idx = map.get(val).iterator().next();
             map.get(val).remove(idx);
             /**
@@ -139,10 +147,17 @@ public class InsertDeleteGetRandomO1DuplicatesAllowed {
              * Remove old binding relationship of last element in the map.
              */
             if (idx < nums.size() - 1) {
+                /**
+                 * overwrite val with last element at val's idx
+                 * Add new binding relationship of last element at idx
+                 */
                 int last = nums.get(nums.size() - 1);
                 nums.set(idx, last);
                 map.get(last).add(idx);
 
+                /**
+                 * Remove old binding relationship of last element at last position.
+                 */
                 map.get(last).remove(nums.size() - 1);
             }
             if (map.get(val).isEmpty()) {

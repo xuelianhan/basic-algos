@@ -52,6 +52,12 @@ public class InsertDeleteGetRandomO1 {
      * boolean param_1 = obj.insert(val);
      * boolean param_2 = obj.remove(val);
      * int param_3 = obj.getRandom();
+     *
+     * Intuition:
+     * This problem requires each function works in average O(1) time complexity.
+     * Which data structure provides O(1) on an insert, delete, and get operation?
+     * Array, ArrayList, Map, Set.
+     * we use ArrayList and HashMap here to solve this problem.
      */
 
     class RandomizedSet {
