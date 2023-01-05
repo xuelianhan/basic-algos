@@ -4,7 +4,8 @@ import java.util.*;
 
 /**
  * RandomizedCollection is a data structure that contains a collection of numbers,
- * possibly duplicates (i.e., a multiset). It should support inserting and removing specific elements and also removing a random element.
+ * possibly duplicates (i.e., a multiset). It should support inserting and removing specific elements,
+ * and removing a random element.
  *
  * Implement the RandomizedCollection class:
  *
@@ -137,7 +138,8 @@ public class InsertDeleteGetRandomO1DuplicatesAllowed {
                 return false;
             }
             /**
-             * Find one index of the val, remove binding relation of val with this index.
+             * Find one index of the val,
+             * remove binding relation of val with this index.
              */
             int idx = map.get(val).iterator().next();
             map.get(val).remove(idx);
