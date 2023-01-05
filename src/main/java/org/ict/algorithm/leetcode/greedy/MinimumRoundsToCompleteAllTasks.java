@@ -46,13 +46,55 @@ public class MinimumRoundsToCompleteAllTasks {
     public static void main(String[] args) {
         int[] tasks = {2, 2, 3, 3, 2, 4, 4, 4, 4, 4};
         MinimumRoundsToCompleteAllTasks instance = new MinimumRoundsToCompleteAllTasks();
-        int res = instance.minimumRoundsV3(tasks);
+        int res = instance.minimumRoundsV4(tasks);
         System.out.println(res);
     }
 
     /**
-     * todo
-     * Time Cost 9ms
+     * Understanding the following Solution.
+     * Time Cost 19ms
+     * @param tasks
+     * @return
+     */
+    public int minimumRoundsV5(int[] tasks) {
+        Arrays.sort(tasks);
+        int res = 0;
+        int i = 0;
+        while (i < tasks.length) {
+            int j = i + 1;
+            while (j < tasks.length && tasks[j] == tasks[i]) {
+                j++;
+            }
+            if (j == i + 1) {
+                return -1;
+            }
+            res += computeV5(j - i);
+            i = j;
+        }
+        return res;
+    }
+
+    private int computeV5(int k) {
+        if (k % 3 == 0) {
+            return k / 3;
+        }
+        if (k % 3 == 2) {
+            return (k - 2) / 3 + 1;
+        }
+        /**
+         * e.g.i=10
+         * 10 = 3 + 3 + 2 + 2, so number count is 4
+         * 10 - 4 = 6
+         * 6 / 3 = 2
+         * 2 + 2 = 4
+         * 10 / 3 + 1
+         */
+        return (k - 4) / 3 + 2;
+    }
+
+    /**
+     * Understanding the following Solution.
+     * Time Cost 21ms
      * @param tasks
      * @return
      */
@@ -61,26 +103,24 @@ public class MinimumRoundsToCompleteAllTasks {
         int res = 0;
         for (int i = 0; i < tasks.length;) {
             int j = i + 1;
-            while (j < tasks.length && tasks[j] == tasks[i]) {
+            while (j < tasks.length && tasks[i] == tasks[j]) {
                 j++;
             }
             if (j == i + 1) {
                 return -1;
             }
-            res += compute(j - i);
+            res += computeV4(j - i);
             i = j;
         }
         return res;
     }
 
-    private int compute(int i) {
-        if (i % 3 == 0) {
-            return i / 3;
+    private int computeV4(int k) {
+        if (k % 3 == 0) {
+            return k / 3;
+        } else {
+            return k / 3 + 1;
         }
-        if (i % 3 == 2) {
-            return (i - 2) / 3 + 1;
-        }
-        return (i - 4) / 3 + 2;
     }
 
     /**
