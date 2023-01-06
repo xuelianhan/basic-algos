@@ -55,14 +55,18 @@ public class MinimumNumberOfArrowsToBurstBalloons {
     }
 
     public int findMinArrowShotsV1(int[][] points) {
+        //todo
         return 0;
     }
 
     /**
+     * Understanding the following solution.
+     *
      * Greedy Solution.
      * Overlapping Interval Problem
      * {@link LC56 LC435 LC453 LC252 LC253 LC1094}
      * Time Cost 121 ms
+     *
      * 1.Sort intervals/pairs in increasing order of the start position.
      *
      * 2.Scan the sorted intervals, and maintain an "active set" for overlapping intervals.
@@ -86,13 +90,13 @@ public class MinimumNumberOfArrowsToBurstBalloons {
      *   - - - - - - -
      *             - - - - - -
      *                   - - - - - - -
-     * point:[1,6], minEnd:Integer.MAX_VALUE, point[0]:1, 1 < minEnd, minEnd = min(minEnd, 6) = 6
-     * point:[2,8], minEnd:6, point[0]:2, 2 < 6, minEnd = min(6, 8) = 6
-     * point:[7,12], minEnd:6, point[0]:7, 7 > 6, res++ --> res:1, minEnd = point[1] = 12
-     * point:[10, 16], minEnd:12, point[0]:10, 10 < 12, minEnd = min(12, 16) = 12
+     * point:[1,6], minEnd:Integer.MAX_VALUE, point[0]:1, 1 < minEnd, minEnd = min(minEnd, 6) = 6, intersect range:[]
+     * point:[2,8], minEnd:6, point[0]:2, 2 < 6, minEnd = min(6, 8) = 6, intersect range:[2, 6]
+     * point:[7,12], minEnd:6, point[0]:7, 7 > 6, res++ --> res:1, minEnd = point[1] = 12, intersect range:[]
+     * point:[10, 16], minEnd:12, point[0]:10, 10 < 12, minEnd = min(12, 16) = 12, intersect range:[10, 12]
      * for-loop-end
      * return res + 1 = 1 + 1 = 2
-     * 
+     *
      * @author wangxinbo
      * @see <a href="https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/solutions/93735/a-concise-template-for-overlapping-interval-problem"></a>
      * @param points
@@ -104,16 +108,28 @@ public class MinimumNumberOfArrowsToBurstBalloons {
         }
         int res = 0;
         int minEnd = Integer.MAX_VALUE;
+        /**
+         * point = (head, tail)
+         * Sort points by the head of each point.
+         */
         Arrays.sort(points, Comparator.comparingInt(a -> a[0]));
         for (int[] point : points) {
             if (point[0] > minEnd) {
                 res++;
                 minEnd = point[1];
             } else {
+                /**
+                 * because we find the intersection with the current interval,
+                 * so we choose min function.
+                 */
                 minEnd = Math.min(minEnd, point[1]);
             }
         }
-
+        /**
+         * [1, 6] and [2, 8], intersect range:[2, 6]
+         * [2, 6] and [7, 12] no intersect
+         * [7, 12] and [10, 16] intersect range:[10, 12]
+         */
         return res + 1;
     }
 
