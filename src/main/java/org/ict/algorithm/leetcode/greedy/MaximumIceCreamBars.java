@@ -1,5 +1,7 @@
 package org.ict.algorithm.leetcode.greedy;
 
+import java.util.Arrays;
+
 /**
  * It is a sweltering summer day,
  * and a boy wants to buy some ice cream bars.
@@ -43,15 +45,64 @@ package org.ict.algorithm.leetcode.greedy;
  */
 public class MaximumIceCreamBars {
 
+    /**
+     * Time Cost 37ms
+     * @param costs
+     * @param coins
+     * @return
+     */
     public int maxIceCreamV2(int[] costs, int coins) {
-        return 0;
+        Arrays.sort(costs);
+        int res = 0;
+        for (int cost : costs) {
+            if (cost > coins) {
+                break;
+            }
+            coins -= cost;
+            res++;
+        }
+        return res;
     }
 
+    /**
+     * Time Cost 39ms
+     * @param costs
+     * @param coins
+     * @return
+     */
     public int maxIceCreamV1(int[] costs, int coins) {
-        return 0;
+        Arrays.sort(costs);
+        for (int i = 0; i < costs.length; i++) {
+            coins -= costs[i];
+            if (coins < 0) {
+                return i;
+            }
+        }
+        return costs.length;
     }
 
+    /**
+     * Time Cost 37ms
+     * It is always optimal to buy the least expensive ice cream bar first.
+     * So we sort the prices so that the cheapest ice cream bar comes first.
+     * @param costs
+     * @param coins
+     * @return
+     */
     public int maxIceCream(int[] costs, int coins) {
-        return 0;
+        Arrays.sort(costs);
+        if (coins < costs[0]) {
+            return 0;
+        }
+        int res = 0;
+        for (int cost : costs) {
+            if (coins >= cost) {
+                coins -= cost;
+                res++;
+            } else {
+                break;
+            }
+        }
+        return res;
     }
 }
