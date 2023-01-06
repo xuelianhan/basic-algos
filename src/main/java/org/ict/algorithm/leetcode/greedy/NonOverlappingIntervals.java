@@ -37,11 +37,16 @@ import java.util.Comparator;
  */
 public class NonOverlappingIntervals {
 
+    public int eraseOverlapIntervalsV2(int[][] intervals) {
+        return 0;
+    }
+
     public int eraseOverlapIntervalsV1(int[][] intervals) {
         return 0;
     }
 
     /**
+     * Time Cost 130ms
      * Greedy Solution.
      * Overlapping Interval Problem
      * {@link MinimumNumberOfArrowsToBurstBalloons}
@@ -57,7 +62,8 @@ public class NonOverlappingIntervals {
         Arrays.sort(intervals, Comparator.comparingInt(a -> a[0]));
         for (int[] interval : intervals) {
             /**
-             * Notice here we use greater than or equal to(>=) instead of greater than(>)
+             * Notice here we use greater than or equal to(>=) instead of greater than(>).
+             * Why?
              */
             if (interval[0] >= minEnd) {
                 res++;

@@ -115,6 +115,9 @@ public class MinimumNumberOfArrowsToBurstBalloons {
          */
         Arrays.sort(points, Comparator.comparingInt(a -> a[0]));
         for (int[] point : points) {
+            /**
+             * Notice here we use > instead of >=. Why?
+             */
             if (point[0] > minEnd) {
                 res++;
                 minEnd = point[1];
