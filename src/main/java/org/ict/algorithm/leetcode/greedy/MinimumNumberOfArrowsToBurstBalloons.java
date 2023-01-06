@@ -80,6 +80,19 @@ public class MinimumNumberOfArrowsToBurstBalloons {
      * record some parameters,
      * and create a new active set that contains the current interval.
      *
+     * e.g.points = [[10, 16], [2, 8], [1, 6], [7, 12]]
+     * sort:[[1, 6], [2, 8], [7, 12], [10, 16]]
+     * - - - - - -
+     *   - - - - - - -
+     *             - - - - - -
+     *                   - - - - - - -
+     * point:[1,6], minEnd:Integer.MAX_VALUE, point[0]:1, 1 < minEnd, minEnd = min(minEnd, 6) = 6
+     * point:[2,8], minEnd:6, point[0]:2, 2 < 6, minEnd = min(6, 8) = 6
+     * point:[7,12], minEnd:6, point[0]:7, 7 > 6, res++ --> res:1, minEnd = point[1] = 12
+     * point:[10, 16], minEnd:12, point[0]:10, 10 < 12, minEnd = min(12, 16) = 12
+     * for-loop-end
+     * return res + 1 = 1 + 1 = 2
+     * 
      * @author wangxinbo
      * @see <a href="https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/solutions/93735/a-concise-template-for-overlapping-interval-problem"></a>
      * @param points
