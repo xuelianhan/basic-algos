@@ -1,5 +1,8 @@
 package org.ict.algorithm.leetcode.greedy;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
 /**
  * Given an array of intervals intervals where intervals[i] = [starti, endi],
  * return the minimum number of intervals you need to remove to make the rest of the intervals non-overlapping.
@@ -33,4 +36,37 @@ package org.ict.algorithm.leetcode.greedy;
  * LC435
  */
 public class NonOverlappingIntervals {
+
+    public int eraseOverlapIntervalsV1(int[][] intervals) {
+        return 0;
+    }
+
+    /**
+     * Greedy Solution.
+     * Overlapping Interval Problem
+     * {@link MinimumNumberOfArrowsToBurstBalloons}
+     * @param intervals
+     * @return
+     */
+    public int eraseOverlapIntervals(int[][] intervals) {
+        if (null == intervals || intervals[0].length == 0) {
+            return 0;
+        }
+        int res = 0;
+        int minEnd = Integer.MAX_VALUE;
+        Arrays.sort(intervals, Comparator.comparingInt(a -> a[0]));
+        for (int[] interval : intervals) {
+            /**
+             * Notice here we use greater than or equal to(>=) instead of greater than(>)
+             */
+            if (interval[0] >= minEnd) {
+                res++;
+                minEnd = interval[1];
+            } else {
+                minEnd = Math.min(minEnd, interval[1]);
+            }
+        }
+
+        return intervals.length - (res + 1);
+    }
 }
