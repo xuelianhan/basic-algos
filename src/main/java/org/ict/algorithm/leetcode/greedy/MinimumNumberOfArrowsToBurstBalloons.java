@@ -64,8 +64,9 @@ public class MinimumNumberOfArrowsToBurstBalloons {
      *
      * Greedy Solution.
      * Overlapping Interval Problem
-     * {@link NonOverlappingIntervals} LC435
-     * {@link LC56 LC435 LC453 LC252 LC253 LC1094}
+     * {@link org.ict.algorithm.leetcode.greedy.NonOverlappingIntervals} LC435
+     * {@link org.ict.algorithm.leetcode.array.MergeIntervals } LC56
+     * {@link LC453 LC252 LC253 LC1094}
      * Time Cost 121 ms
      *
      * 1.Sort intervals/pairs in increasing order of the start position.

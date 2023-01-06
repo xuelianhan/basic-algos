@@ -49,7 +49,7 @@ public class NonOverlappingIntervals {
      * Time Cost 130ms
      * Greedy Solution.
      * Overlapping Interval Problem
-     * {@link MinimumNumberOfArrowsToBurstBalloons}
+     * {@link MinimumNumberOfArrowsToBurstBalloons} LC452
      * @param intervals
      * @return
      */
