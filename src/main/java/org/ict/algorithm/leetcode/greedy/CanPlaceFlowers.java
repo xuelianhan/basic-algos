@@ -43,6 +43,10 @@ public class CanPlaceFlowers {
         System.out.println("flag:" + flag);
     }
 
+    public boolean canPlaceFlowersV5(int[] flowerbed, int n) {
+        return false;
+    }
+
     /**
      * We can find out the extra maximum number of flowers, count,
      * that can be planted for the given flowerbed arrangement.
@@ -58,7 +62,7 @@ public class CanPlaceFlowers {
      * @param n
      * @return
      */
-    public boolean canPlaceFlowersV3(int[] flowerbed, int n) {
+    public boolean canPlaceFlowersV4(int[] flowerbed, int n) {
         int count = 0;
         for (int i = 0; i < flowerbed.length; i++) {
             /**
@@ -77,6 +81,32 @@ public class CanPlaceFlowers {
             }
         }
         return count >= n;
+    }
+
+    /**
+     * Similar as canPlaceFlowersV2, but combine i += 2 and i++ in if-else-switch.
+     * @param flowerbed
+     * @param n
+     * @return
+     */
+    public boolean canPlaceFlowersV3(int[] flowerbed, int n) {
+        int[] copy = new int[flowerbed.length + 2];
+        /**
+         * Add zero at the start, and the end place of copied array
+         */
+        copy[0] = 0;
+        copy[copy.length - 1] = 0;
+        for (int i = 1; i < copy.length - 1; i++) {
+            copy[i] = flowerbed[i - 1];
+        }
+        int res = 0;
+        for (int i = 1; i + 1 < copy.length; i++) {
+            if (copy[i - 1] == 0 && copy[i] == 0 && copy[i + 1] == 0) {
+                res++;
+                i++;
+            }
+        }
+        return res >= n;
     }
 
     /**
