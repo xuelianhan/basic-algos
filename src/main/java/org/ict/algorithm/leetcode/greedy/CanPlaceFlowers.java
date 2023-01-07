@@ -43,9 +43,6 @@ public class CanPlaceFlowers {
         System.out.println("flag:" + flag);
     }
 
-    public boolean canPlaceFlowersV5(int[] flowerbed, int n) {
-        return false;
-    }
 
     /**
      * We can find out the extra maximum number of flowers, count,
@@ -62,7 +59,7 @@ public class CanPlaceFlowers {
      * @param n
      * @return
      */
-    public boolean canPlaceFlowersV4(int[] flowerbed, int n) {
+    public boolean canPlaceFlowersV5(int[] flowerbed, int n) {
         int count = 0;
         for (int i = 0; i < flowerbed.length; i++) {
             /**
@@ -81,6 +78,37 @@ public class CanPlaceFlowers {
             }
         }
         return count >= n;
+    }
+
+    /**
+     * Time Cost 1ms
+     * Time Complexity O(N)
+     * Space Complexity O(1)
+     * @param flowerbed
+     * @param n
+     * @return
+     */
+    public boolean canPlaceFlowersV4(int[] flowerbed, int n) {
+        if (n == 0) {
+            return true;
+        }
+        int i = 0;
+        int res = 0;
+        while (i < flowerbed.length) {
+            if (flowerbed[i] == 1) {
+                i += 2;
+            } else if ((flowerbed[i] == 0) &&
+                    (i == 0 || flowerbed[i - 1] == 0) &&
+                    (i == flowerbed.length - 1 || flowerbed[i + 1] == 0)) {
+                if (++res == n) {
+                    return true;
+                }
+                i += 2;
+            } else {
+                i++;
+            }
+        }
+        return false;
     }
 
     /**
