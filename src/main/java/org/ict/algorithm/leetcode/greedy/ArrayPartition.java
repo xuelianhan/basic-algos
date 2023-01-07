@@ -1,5 +1,7 @@
 package org.ict.algorithm.leetcode.greedy;
 
+import java.util.Arrays;
+
 /**
  * Given an integer array nums of 2n integers,
  * group these integers into n pairs (a1, b1), (a2, b2), ..., (an, bn) such that the sum of min(ai, bi) for all i is maximized.
@@ -33,19 +35,45 @@ package org.ict.algorithm.leetcode.greedy;
  * LC561
  */
 public class ArrayPartition {
-
-    public int arrayPairSumV2(int[] nums) {
-        int res = 0;
-        return res;
-    }
     
+
+    /**
+     * Time Cost 12ms
+     * e.g.nums = [6,2,6,5,1,2]
+     * nums:[1, 2, 2, 5, 6, 6]
+     * expect: 1 + 2 + 6 = 9
+     *
+     * e.g.nums = [1,4,3,2]
+     * nums:[1, 2, 3, 4]
+     * expect:1 + 3 = 4
+     * @param nums
+     * @return
+     */
     public int arrayPairSumV1(int[] nums) {
+        Arrays.sort(nums);
+        int n = nums.length;
         int res = 0;
+        for (int i = 0; i < n;) {
+            res += nums[i];
+            i += 2;
+        }
         return res;
     }
 
+    /**
+     * Time Cost 14ms
+     * @param nums
+     * @return
+     */
     public int arrayPairSum(int[] nums) {
+        Arrays.sort(nums);
+        int n = nums.length;
         int res = 0;
+        for (int i = n - 1, j = i - 1; j >= 0;) {
+            res += Math.min(nums[i], nums[j]);
+            i -= 2;
+            j -= 2;
+        }
         return res;
     }
 }
