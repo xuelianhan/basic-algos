@@ -32,10 +32,10 @@ import java.util.Arrays;
  * -10^4 <= nums[i] <= 10^4
  * @author sniper
  * @date 07 Jan, 2023
- * LC561
+ * LC561, Easy
  */
 public class ArrayPartition {
-    
+
 
     /**
      * Time Cost 12ms
