@@ -43,7 +43,8 @@ public class MaxPointsOnALine {
     }
 
     /**
-     * Similar with maxPoints, but making improvement at area calculate function, and corner-case of points.length <= 2.
+     * Similar with maxPoints, but making improvement at area calculate function,
+     * and corner-case of points.length <= 2.
      * Time Cost 16ms
      * @param points
      * @return
@@ -74,6 +75,17 @@ public class MaxPointsOnALine {
         return res;
     }
 
+    /**
+     * No using Math.abs and the coefficient number of 0.5
+     * and calculate (x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2)) directly.
+     * @param x1
+     * @param y1
+     * @param x2
+     * @param y2
+     * @param x3
+     * @param y3
+     * @return
+     */
     public int areaV1(int x1, int y1, int x2, int y2, int x3, int y3) {
         return (x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2));
     }

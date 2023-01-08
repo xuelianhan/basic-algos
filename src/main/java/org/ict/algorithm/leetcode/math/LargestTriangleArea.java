@@ -76,7 +76,7 @@ public class LargestTriangleArea {
      * A function to calculate the area of triangle
      * formed by (x1, y1), (x2, y2) and (x3, y3) coordinates
      *
-     * 0.5*Math.abs(x1*y2 + x2*y3 + x3*y1 - x1*y3 - x2*y1 - x3*y2);
+     * 0.5*Math.abs(x1 * y2 + x2 * y3 + x3 * y1 - x1 * y3 - x2 * y1 - x3 * y2);
      * @param x1
      * @param y1
      * @param x2
