@@ -49,17 +49,101 @@ package org.ict.algorithm.leetcode.greedy;
  */
 public class GasStation {
 
+
+    public int canCompleteCircuitV9(int[] gas, int[] cost) {
+        int res = -1;
+
+        return res;
+    }
+
+    public int canCompleteCircuitV8(int[] gas, int[] cost) {
+        int res = -1;
+
+        return res;
+    }
+
+
+    public int canCompleteCircuitV7(int[] gas, int[] cost) {
+        int res = -1;
+
+        return res;
+    }
+
+
+    public int canCompleteCircuitV6(int[] gas, int[] cost) {
+        int res = -1;
+
+        return res;
+    }
+
+
+    public int canCompleteCircuitV5(int[] gas, int[] cost) {
+        int res = -1;
+
+        return res;
+    }
+
+
+
+    public int canCompleteCircuitV4(int[] gas, int[] cost) {
+        int res = -1;
+
+        return res;
+    }
+
+
+    public int canCompleteCircuitV3(int[] gas, int[] cost) {
+        int res = -1;
+
+        return res;
+    }
+
+
     public int canCompleteCircuitV2(int[] gas, int[] cost) {
-        return 0;
+        int res = -1;
+
+        return res;
     }
 
     public int canCompleteCircuitV1(int[] gas, int[] cost) {
-        return 0;
+        int res = -1;
+
+        return res;
     }
 
-
+    /**
+     * Time Cost 1ms
+     * Time Complexity O(2*N)
+     * Space Complexity O(1)
+     * @author kvmial
+     * @param gas
+     * @param cost
+     * @return
+     */
     public int canCompleteCircuit(int[] gas, int[] cost) {
-        int res = 0;
-        return res;
+        /**
+         * Use the first pass to determine if we have a solution
+         */
+        int total = 0;
+        int n = gas.length;
+        for (int i = 0; i < n; i++) {
+            total += gas[i] - cost[i];
+        }
+        if (total < 0) {
+            return -1;
+        }
+        /**
+         * Use the second pass to find out the start position
+         */
+        int start = 0;
+        int tank = 0;
+        for (int i = 0; i < n; i++) {
+            tank += gas[i] - cost[i];
+            if (tank < 0) {
+                start = i + 1;
+                tank = 0;
+            }
+        }
+        return start;
     }
 }
