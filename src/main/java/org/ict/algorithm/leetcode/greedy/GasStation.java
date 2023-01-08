@@ -99,16 +99,35 @@ public class GasStation {
     }
 
 
+    /**
+     * Time Cost 4ms
+     * Intuition likes {@link org.ict.algorithm.leetcode.monotonicstack.NextGreaterElementII}
+     * Loop twice, we can make a circle.
+     * This solution is very easy to understand.
+     * @param gas
+     * @param cost
+     * @return
+     */
     public int canCompleteCircuitV2(int[] gas, int[] cost) {
-        int res = -1;
-
-        return res;
+        int start = 0;
+        int n = gas.length;
+        int total = 0;
+        for (int i = 0; i < 2 * n; i++) {
+            int cyclicPos = i % n;
+            total += gas[cyclicPos] - cost[cyclicPos];
+            if (total < 0) {
+                start = i + 1;
+                total = 0;
+            }
+            if (i - start + 1 > n) {
+                return start;
+            }
+        }
+        return -1;
     }
 
     public int canCompleteCircuitV1(int[] gas, int[] cost) {
-        int res = -1;
-
-        return res;
+        return -1;
     }
 
     /**
