@@ -50,54 +50,67 @@ package org.ict.algorithm.leetcode.greedy;
 public class GasStation {
 
 
-    public int canCompleteCircuitV9(int[] gas, int[] cost) {
-        int res = -1;
-
-        return res;
+    /**
+     * Time Cost 1ms
+     * Whenever the tank is negative, reset tank and let the car start from next point(i + 1).
+     * In the meantime, add up all the left gas to total. If total is negative finally, return -1 since it's impossible to finish.
+     * If it's non-negative, return the last point saved in start;
+     * @author clubmaster
+     * @param gas
+     * @param cost
+     * @return
+     */
+    public int canCompleteCircuitV2(int[] gas, int[] cost) {
+        int start = 0;
+        int tank = 0;
+        int total = 0;
+        for (int i = 0; i < gas.length; i++) {
+            int diff = gas[i] - cost[i];
+            tank += diff;
+            total += diff;
+            if (tank < 0) {
+                tank = 0;
+                start = i + 1;
+            }
+        }
+        return (total < 0 ? -1 : start);
     }
 
-    public int canCompleteCircuitV8(int[] gas, int[] cost) {
-        int res = -1;
-
-        return res;
+    /**
+     * Time Cost 1ms
+     * Time Complexity O(2*N)
+     * Space Complexity O(1)
+     * @author Sarthak Singh
+     * @param gas
+     * @param cost
+     * @return
+     */
+    public int canCompleteCircuitV1(int[] gas, int[] cost) {
+        /**
+         * Use the first pass to determine if we have a solution
+         */
+        int remain = 0;
+        int n = gas.length;
+        for (int i = 0; i < n; i++) {
+            remain += gas[i] - cost[i];
+        }
+        if (remain < 0) {
+            return -1;
+        }
+        /**
+         * Use the second pass to find out the start position
+         */
+        int start = 0;
+        int tank = 0;
+        for (int i = 0; i < n; i++) {
+            tank += gas[i] - cost[i];
+            if (tank < 0) {
+                start = i + 1;
+                tank = 0;
+            }
+        }
+        return start;
     }
-
-
-    public int canCompleteCircuitV7(int[] gas, int[] cost) {
-        int res = -1;
-
-        return res;
-    }
-
-
-    public int canCompleteCircuitV6(int[] gas, int[] cost) {
-        int res = -1;
-
-        return res;
-    }
-
-
-    public int canCompleteCircuitV5(int[] gas, int[] cost) {
-        int res = -1;
-
-        return res;
-    }
-
-
-
-    public int canCompleteCircuitV4(int[] gas, int[] cost) {
-        int res = -1;
-
-        return res;
-    }
-
-
-    public int canCompleteCircuitV3(int[] gas, int[] cost) {
-        int res = -1;
-
-        return res;
-    }
-
 
     /**
      * Time Cost 4ms
@@ -108,7 +121,7 @@ public class GasStation {
      * @param cost
      * @return
      */
-    public int canCompleteCircuitV2(int[] gas, int[] cost) {
+    public int canCompleteCircuit(int[] gas, int[] cost) {
         int start = 0;
         int n = gas.length;
         int total = 0;
@@ -126,43 +139,4 @@ public class GasStation {
         return -1;
     }
 
-    public int canCompleteCircuitV1(int[] gas, int[] cost) {
-        return -1;
-    }
-
-    /**
-     * Time Cost 1ms
-     * Time Complexity O(2*N)
-     * Space Complexity O(1)
-     * @author kvmial
-     * @param gas
-     * @param cost
-     * @return
-     */
-    public int canCompleteCircuit(int[] gas, int[] cost) {
-        /**
-         * Use the first pass to determine if we have a solution
-         */
-        int total = 0;
-        int n = gas.length;
-        for (int i = 0; i < n; i++) {
-            total += gas[i] - cost[i];
-        }
-        if (total < 0) {
-            return -1;
-        }
-        /**
-         * Use the second pass to find out the start position
-         */
-        int start = 0;
-        int tank = 0;
-        for (int i = 0; i < n; i++) {
-            tank += gas[i] - cost[i];
-            if (tank < 0) {
-                start = i + 1;
-                tank = 0;
-            }
-        }
-        return start;
-    }
 }
