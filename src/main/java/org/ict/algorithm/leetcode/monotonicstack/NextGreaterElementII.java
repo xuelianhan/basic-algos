@@ -79,6 +79,7 @@ public class NextGreaterElementII {
      *      for-loop-end
      *                   stack:1,1,2
      *
+     * Same strategy used in {@link org.ict.algorithm.leetcode.greedy.GasStation}
      * @author lee215
      * @param nums
      * @return
