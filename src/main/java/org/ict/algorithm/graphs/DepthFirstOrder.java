@@ -150,7 +150,7 @@ public class DepthFirstOrder {
 	 * @return the vertices in reverse postorder, as an iterable of vertices
 	 */
 	public Iterable<Integer> reversePost() {
-		Stack<Integer> reverse = new Stack<Integer>();
+		Stack<Integer> reverse = new Stack<>();
 		for (int v : postorder) {
 			reverse.push(v);
 		}
