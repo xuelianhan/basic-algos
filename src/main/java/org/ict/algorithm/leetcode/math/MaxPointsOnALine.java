@@ -38,9 +38,10 @@ public class MaxPointsOnALine {
      * @return
      */
     public int maxPointsV2(int[][] points) {
-
+        //todo
         return 0;
     }
+
 
     /**
      * Similar with maxPoints, but making improvement at area calculate function,
