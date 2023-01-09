@@ -152,7 +152,7 @@ public class Digraph {
         }
         for (int v = 0; v < G.V(); v++) {
             // reverse so that adjacency list is in same order as original
-            Stack<Integer> reverse = new Stack<Integer>();
+            Stack<Integer> reverse = new Stack<>();
             for (int w : G.adj[v]) {
                 reverse.push(w);
             }

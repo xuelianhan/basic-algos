@@ -36,12 +36,48 @@ public class TopologicalX {
     //ranks[v] = order where vertex v appears in order
     private int[] ranks;
 
+    /**
+     * Determines whether the digraph {@code G} has a topological order and,
+     * if so, finds such a topological order.
+     * @param G
+     */
     public TopologicalX(Digraph G) {
+        int[] indegree = new int[G.V()];
+        for (int v = 0; v < G.V(); v++) {
+            indegree[v] = G.indegree(v);
+        }
+        ranks = new int[G.V()];
+        order = new Queue<>();
+        int count = 0;
 
+        // initialize Queue to contain all vertices with in-degree == 0.
+        Queue<Integer> queue = new Queue<>();
+        for (int v = 0; v < G.V(); v++) {
+            if (indegree[v] == 0) {
+                queue.enqueue(v);
+            }
+        }
+
+        while (!queue.isEmpty()) {
+            int v = queue.dequeue();
+            order.enqueue(v);
+            ranks[v] = count++;
+            for (int w : G.adj(v)) {
+                indegree[w]--;
+                if (indegree[w] == 0) {
+                    queue.enqueue(w);
+                }
+            }
+        }
+        // there is a directed cycle in subgraph of vertices with indegree >= 1.
+        if (count != G.V()) {
+            order = null;
+        }
+        //todo
     }
 
     public TopologicalX(EdgeWeightedDigraph G) {
-
+        //todo
     }
 
     public Iterable<Integer> order() {
