@@ -64,6 +64,7 @@ public class LongestIncreasingPathInMatrix {
 
     /**
      * Topological Sort Solution.
+     * Kahn Algorithm
      * The Longest Path in DAG
      * Time Cost 17 ms
      *
@@ -108,7 +109,9 @@ public class LongestIncreasingPathInMatrix {
                 }
             }
         }
-
+        /**
+         * Initialize the queue with all the nodes that their in-degree are zero.
+         */
         Deque<int[]> queue = new ArrayDeque<>();
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
