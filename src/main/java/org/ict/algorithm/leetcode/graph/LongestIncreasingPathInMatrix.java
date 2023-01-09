@@ -99,6 +99,9 @@ public class LongestIncreasingPathInMatrix {
                     int y = j + dir[1];
                     if (x >= 0 && x < m && y >= 0 && y < n) {
                         if (matrix[x][y] > matrix[i][j]) {
+                            /**
+                             * Node(i, j) ---> Node(x, y)
+                             */
                             indegree[x][y] += 1;
                         }
                     }
@@ -128,6 +131,9 @@ public class LongestIncreasingPathInMatrix {
                     int nx = x + dir[0];
                     int ny = y + dir[1];
                     if (nx >= 0 && nx < m && ny >= 0 && ny < n) {
+                        /**
+                         * Node(x, y) ---> Node(nx, ny)
+                         */
                         if (matrix[nx][ny] > matrix[x][y]) {
                             indegree[nx][ny] -= 1;
                             if (indegree[nx][ny] == 0) {
