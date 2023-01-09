@@ -42,6 +42,7 @@ public class TopologicalX {
      * @param G
      */
     public TopologicalX(Digraph G) {
+        // Calculate the in-degree for each node in graph.
         int[] indegree = new int[G.V()];
         for (int v = 0; v < G.V(); v++) {
             indegree[v] = G.indegree(v);
