@@ -92,7 +92,7 @@ public class SortColors {
         int count0 = 0;//red
         int count1 = 0;//white
         int count2 = nums.length - 1;//blue
-
+        //todo
         while (count1 <= count2) {
             if (nums[count1] == 0) {
                 swap(nums, count0++, count1++);

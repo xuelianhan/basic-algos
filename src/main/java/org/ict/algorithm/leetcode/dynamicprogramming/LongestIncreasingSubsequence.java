@@ -1,5 +1,7 @@
 package org.ict.algorithm.leetcode.dynamicprogramming;
 
+import java.util.Arrays;
+
 /**
  * Given an integer array nums, return the length of the longest strictly increasing-subsequence
  * .
@@ -34,15 +36,57 @@ package org.ict.algorithm.leetcode.dynamicprogramming;
  */
 public class LongestIncreasingSubsequence {
 
+    public int lengthOfLISV5(int[] nums) {
+        return 0;
+    }
+
+    public int lengthOfLISV4(int[] nums) {
+        return 0;
+    }
+
+    public int lengthOfLISV3(int[] nums) {
+        return 0;
+    }
+
     public int lengthOfLISV2(int[] nums) {
         return 0;
     }
 
     public int lengthOfLISV1(int[] nums) {
+        //todo
         return 0;
     }
 
+    /**
+     * Brute-Forth Dynamic Programming Solution.
+     * Time Cost 74ms
+     * Time Complexity O(N^2)
+     *
+     * @param nums
+     * @return
+     */
     public int lengthOfLIS(int[] nums) {
-        return 0;
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+        int n = nums.length;
+        /**
+         * dp[i] means length of LIS end with nums[i]
+         */
+        int[] dp = new int[n];
+        Arrays.fill(dp, 1);
+        int res = 0;
+        /**
+         * e.g. nums = [0], expect output 1
+         */
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < i; j++) {
+                if (nums[i] > nums[j]) {
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
+                }
+            }
+            res = Math.max(res, dp[i]);
+        }
+        return res;
     }
 }

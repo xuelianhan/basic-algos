@@ -10,7 +10,7 @@ import org.ict.algorithm.fundamentals.Queue;
  *  a topological order, and if so, the <em>order</em> operation
  *  returns one.
  *  <p>
- *  This implementation uses a nonrecursive, queue-based algorithm.
+ *  This implementation uses a non recursive, queue-based algorithm.
  *  The constructor takes &Theta;(<em>V</em> + <em>E</em>) time in the worst
  *  case, where <em>V</em> is the number of vertices and <em>E</em>
  *  is the number of edges.

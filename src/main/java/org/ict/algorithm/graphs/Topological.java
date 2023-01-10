@@ -47,7 +47,7 @@ public class Topological {
 	
 	/**
 	 * Determines whether the digraph {@code G} has a topologial order and, if so,
-	 * finds such a topologial order.
+	 * finds such a topologial order
 	 * 
 	 * @param G the digraph
 	 */
@@ -65,8 +65,8 @@ public class Topological {
 	}
 	
 	/**
-	 * Determines whether the edge-weighted digraph {@code G} has a topological
-	 * order and, if so, finds such an order.
+	 * Determines whether the edge-weighted digraph {@code G} has a topological order,
+     * and if so, finds such an order
 	 * @param G the edge-weighted digraph
 	 */
 	public Topological(EdgeWeightedDigraph G) {

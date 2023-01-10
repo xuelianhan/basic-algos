@@ -45,20 +45,9 @@ import java.util.Deque;
  */
 public class LongestIncreasingPathInMatrix {
 
-    public int longestIncreasingPathV5(int[][] matrix) {
-        return 0;
-    }
-
-    public int longestIncreasingPathV4(int[][] matrix) {
-        return 0;
-    }
-
-    public int longestIncreasingPathV3(int[][] matrix) {
-        return 0;
-    }
-
-
     public int longestIncreasingPathV2(int[][] matrix) {
+        //todo
+        //use dfs-topological-order.
         return 0;
     }
 
