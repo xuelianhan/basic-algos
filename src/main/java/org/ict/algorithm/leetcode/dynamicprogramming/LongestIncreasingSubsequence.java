@@ -1,6 +1,9 @@
 package org.ict.algorithm.leetcode.dynamicprogramming;
 
+
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Given an integer array nums, return the length of the longest strictly increasing-subsequence
@@ -36,6 +39,17 @@ import java.util.Arrays;
  */
 public class LongestIncreasingSubsequence {
 
+    public static void main(String[] args) {
+        int[] nums = {10,9,2,5,3,7,101,18};
+        LongestIncreasingSubsequence instance = new  LongestIncreasingSubsequence();
+        int result = instance.lengthOfLISV2(nums);
+        System.out.println(result);
+    }
+
+    public int lengthOfLISV6(int[] nums) {
+        return 0;
+    }
+
     public int lengthOfLISV5(int[] nums) {
         return 0;
     }
@@ -48,13 +62,90 @@ public class LongestIncreasingSubsequence {
         return 0;
     }
 
+    /**
+     * DP + Binary Search Solution
+     * @author monkeyGoCrazy
+     * @see <a href="https://leetcode.com/problems/longest-increasing-subsequence/solutions/74897/fast-java-binary-search-solution-with-detailed-explanation"></a>
+     * @param nums
+     * @return
+     */
     public int lengthOfLISV2(int[] nums) {
-        return 0;
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+        int n = nums.length;
+        int[] dp = new int[n];
+        dp[0] = nums[0];
+        int len = 0;
+        for (int i = 1; i < n; i++) {
+            int pos = binarySearchV2(dp, len, nums[i]);
+            if (nums[i] < dp[pos]) {
+                dp[pos] = nums[i];
+            }
+            if (pos > len) {
+                len = pos;
+                dp[len] = nums[i];
+            }
+        }
+        return len + 1;
     }
 
+    private int binarySearchV2(int[] dp, int len, int val) {
+        int left = 0;
+        int right = len;
+        while (left + 1 < right) {
+            int mid = left + (right - left) / 2;
+            if (dp[mid] == val) {
+                return mid;
+            } else if (dp[mid] < val) {
+                left = mid;
+            } else {
+                right = mid;
+            }
+        }
+        if (dp[right] < val) {
+            return len + 1;
+        } else if (dp[left] >= val) {
+            return left;
+        } else {
+            return right;
+        }
+    }
+
+
+
+    /**
+     * DP + Binary-Search Solution
+     * Time Complexity O(N*LogN)
+     * @param nums
+     * @return
+     */
     public int lengthOfLISV1(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+        List<Integer> dp = new ArrayList<>();
+        int n = nums.length;
+        for (int i = 0; i < n; i++) {
+            int left = 0;
+            int right = dp.size();
+            while (left < right) {
+                int mid = left + (right - left) / 2;
+                if (dp.get(mid) < nums[i]) {
+                    left = mid + 1;
+                } else {
+                    right = mid;
+                }
+
+                if (right >= dp.size()) {
+                    dp.add(nums[i]);
+                } else {
+                    dp.add(right, nums[i]);
+                }
+            }
+        }
         //todo
-        return 0;
+        return dp.size();
     }
 
     /**
@@ -74,6 +165,9 @@ public class LongestIncreasingSubsequence {
          * dp[i] means length of LIS end with nums[i]
          */
         int[] dp = new int[n];
+        /**
+         * Each element itself occupies length of 1
+         */
         Arrays.fill(dp, 1);
         int res = 0;
         /**
