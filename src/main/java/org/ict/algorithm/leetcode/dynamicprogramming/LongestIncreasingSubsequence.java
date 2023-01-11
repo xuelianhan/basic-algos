@@ -124,28 +124,30 @@ public class LongestIncreasingSubsequence {
         if (nums == null || nums.length == 0) {
             return 0;
         }
-        List<Integer> dp = new ArrayList<>();
+        //todo
         int n = nums.length;
+        int[] dp = new int[n];
+        int len = 0;
         for (int i = 0; i < n; i++) {
             int left = 0;
-            int right = dp.size();
+            int right = len;
             while (left < right) {
                 int mid = left + (right - left) / 2;
-                if (dp.get(mid) < nums[i]) {
+                if (dp[mid] < nums[i]) {
                     left = mid + 1;
                 } else {
                     right = mid;
                 }
 
-                if (right >= dp.size()) {
-                    dp.add(nums[i]);
+                if (right >= len) {
+                    dp[len] = nums[i];
+                    len++;
                 } else {
-                    dp.add(right, nums[i]);
+                    dp[right] = nums[i];
                 }
             }
         }
-        //todo
-        return dp.size();
+        return len;
     }
 
     /**
