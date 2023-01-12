@@ -99,6 +99,32 @@ public class NumberOfNodesInSubTreeWithSameLabel {
         return res;
     }
 
+    /**
+     * e.g.
+     * n = 5, edges = [[0,1],[0,2],[1,3],[0,4]], labels = "aabab"
+     *       0-a
+     *     /  |  \
+     *   1-a 2-b 4-b
+     *   /
+     * 3-a
+     *
+     * dfs(0) --> count[0]=0
+     *   dfs(1)
+     *     dfs(3) --> count[0]++ --> count[0] = 1
+     *     return --> count[0]++ --> count[0] = 2
+     *   dfs(2) --> count[1]++ --> count[1] = 1
+     *   dfs(4) --> count[1]++ --> count[1] = 2
+     * return --> count[0]++ --> count[0] = 3
+     *        --> count[1] --> count[1] = 2
+     *        --> res =[3, 2, 1, 1, 1]
+     *
+     * @param node
+     * @param tree
+     * @param labels
+     * @param visited
+     * @param count
+     * @param res
+     */
     private void dfs(int node, List<HashSet<Integer>> tree, String labels, boolean[] visited, int[] count, int[] res) {
         if (visited[node]) {
             return;
