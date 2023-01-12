@@ -94,8 +94,9 @@ public class MinimumTimeToCollectAllApplesInATree {
         /**
          * the res represent the time used to gather all the apples from current node's child nodes.
          * If res > 0, it means the current node has at least one child which contains apple.
-         * It doesn't matter if the current node has apple or not cause we have to go all the way down to its child node and come up.
-         * So we use the OR condition.
+         * It doesn't matter if the current node has apple or not,
+         * so we have to go all the way down to its child node and come up,
+         * and use the OR condition.
          */
         if (root != 0 && (res > 0 || hasApple.get(root))) {
             res += 2;
