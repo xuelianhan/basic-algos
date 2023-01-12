@@ -1,8 +1,6 @@
 package org.ict.algorithm.leetcode.graph;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 /**
  * You are given a tree (i.e. a connected, undirected graph that has no cycles) consisting of n nodes numbered from 0 to n - 1 and exactly n - 1 edges.
@@ -57,6 +55,16 @@ import java.util.List;
  */
 public class NumberOfNodesInSubTreeWithSameLabel {
 
+    public static void main(String[] args) {
+        int n = 5;
+        int[][] edges = {{0, 1},{0, 2},{1, 3},{0, 4}};
+        String labels = "aabab";
+
+        NumberOfNodesInSubTreeWithSameLabel instance = new NumberOfNodesInSubTreeWithSameLabel();
+        int[] res = instance.countSubTrees(n, edges, labels);
+        System.out.println(Arrays.toString(res));
+    }
+
     public int[] countSubTreesV2(int n, int[][] edges, String labels) {
         return null;
     }
@@ -65,6 +73,14 @@ public class NumberOfNodesInSubTreeWithSameLabel {
         return null;
     }
 
+    /**
+     * Post-Order traversal + HashMap
+     * Time Cost 122ms
+     * @param n
+     * @param edges
+     * @param labels
+     * @return
+     */
     public int[] countSubTrees(int n, int[][] edges, String labels) {
         List<HashSet<Integer>> tree = new ArrayList<>();
         for (int i = 0; i < n; i++) {
@@ -74,11 +90,26 @@ public class NumberOfNodesInSubTreeWithSameLabel {
             tree.get(edge[0]).add(edge[1]);
             tree.get(edge[1]).add(edge[0]);
         }
-        //todo
-        return null;
+
+        int[] res = new int[n];
+        int[] count = new int[26];
+        boolean[] visited = new boolean[n];
+
+        dfs(0, tree, labels, visited, count, res);
+        return res;
     }
 
-    private void dfs() {
-
+    private void dfs(int node, List<HashSet<Integer>> tree, String labels, boolean[] visited, int[] count, int[] res) {
+        if (visited[node]) {
+            return;
+        }
+        visited[node] = true;
+        int before = count[labels.charAt(node) - 'a'];
+        for (int neighbor : tree.get(node)) {
+            dfs(neighbor, tree, labels, visited, count, res);
+        }
+        count[labels.charAt(node) - 'a']++;
+        int after = count[labels.charAt(node) - 'a'];
+        res[node] = after - before;
     }
 }
