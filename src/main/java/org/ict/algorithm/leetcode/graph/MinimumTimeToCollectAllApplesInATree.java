@@ -63,8 +63,43 @@ public class MinimumTimeToCollectAllApplesInATree {
         instance.minTime(n, edges, hasApple);
     }
 
+    public int minTimeV2(int n, int[][] edges, List<Boolean> hasApple) {
+        //todo
+        return 0;
+    }
+
     public int minTimeV1(int n, int[][] edges, List<Boolean> hasApple) {
+        boolean[] visited = new boolean[n];
+        List<HashSet<Integer>> tree = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            tree.add(new HashSet<>());
+        }
+        for (int[] edge : edges) {
+            tree.get(edge[0]).add(edge[1]);
+            tree.get(edge[1]).add(edge[0]);
+        }
+        visited[0] = true;
+        return dfsV1(0, tree, visited, hasApple);
+    }
+
+    public int dfsV1(int root, List<HashSet<Integer>> tree, boolean[] visited, List<Boolean> hasApple) {
         int res = 0;
+        for (int neighbor : tree.get(root)) {
+            if (visited[neighbor]) {
+                continue;
+            }
+            visited[neighbor] = true;
+            res += dfsV1(neighbor, tree, visited, hasApple);
+        }
+        /**
+         * the res represent the time used to gather all the apples from current node's child nodes.
+         * If res > 0, it means the current node has at least one child which contains apple.
+         * It doesn't matter if the current node has apple or not cause we have to go all the way down to its child node and come up.
+         * So we use the OR condition.
+         */
+        if ((res > 0 || hasApple.get(root)) && root != 0) {
+            res += 2;
+        }
         return res;
     }
 
@@ -94,6 +129,19 @@ public class MinimumTimeToCollectAllApplesInATree {
     }
 
     /**
+     * Understanding the following Solution.
+     * Let’s consider we are at a node, say p,
+     * we will collect all apples in p’s subtree before returning back to the original root.
+     * This will avoid traveling the same path multiple times.
+     * Say, the root is where we start,
+     * p is a node in the tree and p has two children – child1, child2 – and both of them have an apple each.
+     *
+     * So the path we need to follow is :
+     *
+     * root –> p –> child1 –> p –> child2 –> p —> root
+     *
+     * Thus, seeing the above pattern we can infer that it’s a simple DFS traversal,
+     * but we need to add the cost of traversal two times for any edge e because we also need to come back to it after collecting the apples.
      * e.g.
      * n = 7, edges = [[0,1],[0,2],[1,4],[1,5],[2,3],[2,6]], hasApple = [false,false,true,false,true,true,false]
      *      0
@@ -144,11 +192,9 @@ public class MinimumTimeToCollectAllApplesInATree {
              */
             childrenCost += dfs(neighbor, 2, tree, visited, hasApple);
         }
-        //System.out.println("dfs("+root + ", " + cost +") --> childrenCost:" + childrenCost);
         if (childrenCost == 0 && hasApple.get(root) == false) {
             return 0;
         }
-        //System.out.println("dfs("+root + ", " + cost +") --> totalCost:" + (childrenCost + cost));
         return (childrenCost + cost);
     }
 }
