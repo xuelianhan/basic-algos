@@ -97,7 +97,7 @@ public class MinimumTimeToCollectAllApplesInATree {
          * It doesn't matter if the current node has apple or not cause we have to go all the way down to its child node and come up.
          * So we use the OR condition.
          */
-        if ((res > 0 || hasApple.get(root)) && root != 0) {
+        if (root != 0 && (res > 0 || hasApple.get(root))) {
             res += 2;
         }
         return res;
