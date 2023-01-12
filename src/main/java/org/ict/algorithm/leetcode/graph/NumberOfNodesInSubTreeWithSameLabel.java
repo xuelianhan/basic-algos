@@ -108,16 +108,17 @@ public class NumberOfNodesInSubTreeWithSameLabel {
      *   /
      * 3-a
      *
-     * dfs(0) --> count[0]=0
-     *   dfs(1)
-     *     dfs(3) --> count[0]++ --> count[0] = 1
-     *     return --> count[0]++ --> count[0] = 2
-     *   dfs(2) --> count[1]++ --> count[1] = 1
-     *   dfs(4) --> count[1]++ --> count[1] = 2
-     * return --> count[0]++ --> count[0] = 3
-     *        --> count[1] --> count[1] = 2
-     *        --> res =[3, 2, 1, 1, 1]
-     *
+     * dfs(0), before:0
+     *     dfs(1), before:0
+     *         dfs(3), before:0
+     *         dfs(3), after:1, res[3]:1
+     *     dfs(1), after:2, res[1]:2
+     *     dfs(2), before:0
+     *     dfs(2), after:1, res[2]:1
+     *     dfs(4), before:1
+     *     dfs(4), after:2, res[4]:1
+     * dfs(0), after:3, res[0]:3
+     * -----------------------------------
      * @param node
      * @param tree
      * @param labels
@@ -131,11 +132,13 @@ public class NumberOfNodesInSubTreeWithSameLabel {
         }
         visited[node] = true;
         int before = count[labels.charAt(node) - 'a'];
+        //System.out.println("dfs(" + node + "), before:" + before);
         for (int neighbor : tree.get(node)) {
             dfs(neighbor, tree, labels, visited, count, res);
         }
         count[labels.charAt(node) - 'a']++;
         int after = count[labels.charAt(node) - 'a'];
+        //System.out.println("dfs(" + node + "), after:" + after + ", res[" + node + "]:" + (after -before));
         res[node] = after - before;
     }
 }
