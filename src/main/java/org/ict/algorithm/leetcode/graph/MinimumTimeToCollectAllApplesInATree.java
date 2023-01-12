@@ -106,10 +106,25 @@ public class MinimumTimeToCollectAllApplesInATree {
      *     dfs(4, 2) --> return 2
      *     dfs(5, 2) --> return 2
      *     --> return 4
+     *   --> 4 + 2
      *   dfs(2, 2)
-     *     dfs(3, 2)
-     *     dfs(6, 2)
-     *
+     *     dfs(3, 2) --> return 0
+     *     dfs(6, 2) --> return 0
+     *   --> return 2 + 0
+     * --> return 6 + 2
+     *----------------------------
+     *     dfs(4, 2) --> childrenCost:0
+     *     dfs(4, 2) --> totalCost:2
+     *     dfs(5, 2) --> childrenCost:0
+     *     dfs(5, 2) --> totalCost:2
+     *   dfs(1, 2) --> childrenCost:4
+     *   dfs(1, 2) --> totalCost:6
+     *     dfs(3, 2) --> childrenCost:0
+     *     dfs(6, 2) --> childrenCost:0
+     *   dfs(2, 2) --> childrenCost:0
+     *   dfs(2, 2) --> totalCost:2
+     * dfs(0, 0) --> childrenCost:8
+     * dfs(0, 0) --> totalCost:8
      * @param root
      * @param cost
      * @param tree
@@ -129,9 +144,11 @@ public class MinimumTimeToCollectAllApplesInATree {
              */
             childrenCost += dfs(neighbor, 2, tree, visited, hasApple);
         }
+        //System.out.println("dfs("+root + ", " + cost +") --> childrenCost:" + childrenCost);
         if (childrenCost == 0 && hasApple.get(root) == false) {
             return 0;
         }
+        //System.out.println("dfs("+root + ", " + cost +") --> totalCost:" + (childrenCost + cost));
         return (childrenCost + cost);
     }
 }
