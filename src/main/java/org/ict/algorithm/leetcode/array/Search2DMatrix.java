@@ -51,25 +51,61 @@ public class Search2DMatrix {
     }
 
     public boolean searchMatrixV4(int[][] matrix, int target) {
+        //todo
         return false;
     }
 
     public boolean searchMatrixV3(int[][] matrix, int target) {
-        return false;
-    }
-
-
-    public boolean searchMatrixV2(int[][] matrix, int target) {
+        //todo
         return false;
     }
 
     /**
+     * Treat the 2D-array as 1D-array, we access every element in S-curve.
+     * Time Complexity O(M*N)
+     * Space Complexity O(1)
+     *
+     * @param matrix
+     * @param target
+     * @return
+     */
+    public boolean searchMatrixV2(int[][] matrix, int target) {
+        if (matrix == null || matrix[0].length == 0) {
+            return false;
+        }
+        int m = matrix.length;
+        int n = matrix[0].length;
+        int low = 0;
+        int high = m * n;
+        while (low < high) {
+            int mid = low + (high - low) / 2;
+            int r = mid / n;
+            int c = mid % n;
+            if (matrix[r][c] == target) {
+                return true;
+            } else if (matrix[r][c] < target) {
+                low = mid + 1;
+            } else {
+                high = mid;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Understanding the Following Solution.
+     *
+     * Iterate row by row, using binary search for each row.
      * Time Complexity M*logN
+     *
      * @param matrix
      * @param target
      * @return
      */
     public boolean searchMatrixV1(int[][] matrix, int target) {
+        if (matrix == null || matrix[0].length == 0) {
+            return false;
+        }
         int m = matrix.length;
         for (int i = 0; i < m; i++) {
             int low = 0;
@@ -99,6 +135,9 @@ public class Search2DMatrix {
      * @return
      */
     public boolean searchMatrix(int[][] matrix, int target) {
+        if (matrix == null || matrix[0].length == 0) {
+            return false;
+        }
         int m = matrix.length;
         int n = matrix[0].length;
         int row = 0;
