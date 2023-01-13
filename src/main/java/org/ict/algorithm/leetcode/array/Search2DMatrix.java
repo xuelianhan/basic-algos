@@ -50,17 +50,36 @@ public class Search2DMatrix {
         System.out.println(res);
     }
 
-    public boolean searchMatrixV4(int[][] matrix, int target) {
-        //todo
-        return false;
-    }
 
+    /**
+     * Two-Pointer Solution.
+     * Search from the top-right corner.
+     * @param matrix
+     * @param target
+     * @return
+     */
     public boolean searchMatrixV3(int[][] matrix, int target) {
-        //todo
+        if (matrix == null || matrix[0].length == 0) {
+            return false;
+        }
+        int m = matrix.length;
+        int n = matrix[0].length;
+        int left = 0;
+        int right = n - 1;
+        while (left < m && right >= 0) {
+            if (matrix[left][right] == target) {
+                return true;
+            } else if (matrix[left][right] > target) {
+                right--;
+            } else {
+                left++;
+            }
+        }
         return false;
     }
 
     /**
+     * Understanding the Following Solution.
      * Treat the 2D-array as 1D-array, we access every element in S-curve.
      * Time Complexity O(M*N)
      * Space Complexity O(1)
