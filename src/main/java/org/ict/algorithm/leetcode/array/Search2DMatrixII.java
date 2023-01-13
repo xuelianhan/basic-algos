@@ -36,16 +36,35 @@ public class Search2DMatrixII {
 
 
     public boolean searchMatrixV2(int[][] matrix, int target) {
+        //todo
         return false;
     }
 
 
     public boolean searchMatrixV1(int[][] matrix, int target) {
+        //todo
         return false;
     }
 
 
+    /**
+     * Brute-Forth Solution.
+     * Time Complexity O(M*N)
+     * Time Cost 12ms
+     * @param matrix
+     * @param target
+     * @return
+     */
     public boolean searchMatrix(int[][] matrix, int target) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (matrix[i][j] == target) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 }
