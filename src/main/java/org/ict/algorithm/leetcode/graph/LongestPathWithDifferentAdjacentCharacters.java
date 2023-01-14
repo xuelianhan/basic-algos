@@ -56,7 +56,10 @@ public class LongestPathWithDifferentAdjacentCharacters {
     }
 
     /**
+     * Time Complexity O(N)
+     * Space Complexity O(N)
      * Time Cost 189ms
+     * @see <a href="https://offcampusphodenge.com/leetcode-daily-challenge/longest-path-with-different-adjacent-characters-leetcode-solution/"></a>
      * @param parent
      * @param s
      * @return
@@ -98,6 +101,13 @@ public class LongestPathWithDifferentAdjacentCharacters {
      *       2-a  1-b
      *       /    / \
      *     5-e  3-c 4-b
+     * dfs(0-a)
+     *     dfs(2-a)
+     *         dfs(5-e)
+     *     dfs(1-b)
+     *         dfs(3-c)
+     *         dfs(4-b)
+     *
      * @param curNode
      * @param tree
      * @param labels
