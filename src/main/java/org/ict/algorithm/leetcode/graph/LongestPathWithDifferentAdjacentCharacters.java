@@ -91,6 +91,19 @@ public class LongestPathWithDifferentAdjacentCharacters {
         return res[0];
     }
 
+    /**
+     * e.g.parent = [-1,0,0,1,1,2], s = "abacbe"
+     *          0-a
+     *         /  \
+     *       2-a  1-b
+     *       /    / \
+     *     5-e  3-c 4-b
+     * @param curNode
+     * @param tree
+     * @param labels
+     * @param res
+     * @return
+     */
     private int dfs(int curNode, List<HashSet<Integer>> tree, String labels, int[] res) {
         int currentMax = 0;
         int secondMax = 0;
