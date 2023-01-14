@@ -109,6 +109,9 @@ public class LongestPathWithDifferentAdjacentCharacters {
         int secondMax = 0;
         for (int neighbor : tree.get(curNode)) {
             int result = dfs(neighbor, tree, labels, res);
+            /**
+             * Skip neighbor of the same label with the current node.
+             */
             if (labels.charAt(curNode) == labels.charAt(neighbor)) {
                 continue;
             }
@@ -119,6 +122,11 @@ public class LongestPathWithDifferentAdjacentCharacters {
                 secondMax = result;
             }
         }
+        /**
+         * The path we are looking for
+         * can be the concatenation of two paths
+         * that we found while traversing the tree
+         */
         res[0] = Math.max(res[0], 1 + currentMax + secondMax);
         return 1 + currentMax;
     }
