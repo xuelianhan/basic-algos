@@ -117,14 +117,18 @@ public class DiameterOfBinaryTree {
             } else if (node.right != null && !visited.containsKey(node.right)) {
                 stack.push(node.right);
             } else {
-                // cur is the start node of post order
+                /**
+                 * cur is the start node of post order
+                 */
                 TreeNode cur = stack.pop();
                 int leftDepth  = visited.getOrDefault(cur.left, 0);
                 int rightDepth = visited.getOrDefault(cur.right, 0);
-                // the layer height (depth) of node cur.
-                // leaf node's layer height is 1(leaf itself).
-                // non-leaf node's layer height as following:
-                // Max(sub_left, sub_right) + 1
+                /**
+                 * the layer height (depth) of node cur,
+                 * leaf node's layer height is 1(leaf itself).
+                 * non-leaf node's layer height as following:
+                 * Max(sub_left, sub_right) + 1
+                 */
                 int curNodeDepth = Math.max(leftDepth, rightDepth) + 1;
                 visited.put(cur, curNodeDepth);
                 globalDiameter = Math.max(globalDiameter, leftDepth + rightDepth);
@@ -167,7 +171,10 @@ public class DiameterOfBinaryTree {
         int count = 0;
         while (!queue.isEmpty()) {
             int size = queue.size();
-            // here control the save level element push into the queue, can be replaced with while(size-- > 0) loop.
+            /**
+             * We control the save level element push into the queue,
+             * which can be replaced with while(size-- > 0) loop.
+             */
             for (int i = 0; i < size; i++) {
                 TreeNode cur = queue.poll();
                 if (cur.left != null) {
