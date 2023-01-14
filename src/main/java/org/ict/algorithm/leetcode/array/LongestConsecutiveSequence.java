@@ -38,6 +38,7 @@ public class LongestConsecutiveSequence {
     }
 
     public int longestConsecutive(int[] nums) {
+        //todo
         return 0;
     }
 }
