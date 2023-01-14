@@ -56,6 +56,7 @@ public class LongestPathWithDifferentAdjacentCharacters {
     }
 
     /**
+     * This problem is similar to Diameter of tree problem {@link org.ict.algorithm.leetcode.tree.DiameterOfBinaryTree}
      * Time Complexity O(N)
      * Space Complexity O(N)
      * Time Cost 189ms
