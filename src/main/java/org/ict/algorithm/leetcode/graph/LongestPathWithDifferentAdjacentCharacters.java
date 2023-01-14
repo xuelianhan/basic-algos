@@ -1,5 +1,9 @@
 package org.ict.algorithm.leetcode.graph;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+
 /**
  * You are given a tree (i.e. a connected, undirected graph that has no cycles) rooted at node 0 consisting of n nodes numbered from 0 to n - 1.
  * The tree is represented by a 0-indexed array parent of size n,
@@ -51,7 +55,59 @@ public class LongestPathWithDifferentAdjacentCharacters {
         return 0;
     }
 
+    /**
+     * Time Cost 189ms
+     * @param parent
+     * @param s
+     * @return
+     */
     public int longestPath(int[] parent, String s) {
-        return 0;
+        int n = parent.length;
+        List<HashSet<Integer>> tree = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            tree.add(new HashSet<>());
+        }
+
+        /**
+         * 1.Why we start from 1 other than 0?
+         * 2.Why not add tree.get(i).add(parent[i]);?
+         * Create an adjacency list adj of size n to represent the tree.
+         * For each node, i starts from 1 to n - 1,
+         * add i as a child of the parent node parent[i] in the adjacency list
+         */
+        for (int i = 1; i < n; i++) {
+            tree.get(parent[i]).add(i);
+        }
+        int[] res = new int[1];
+        /**
+         * The minimum longest path that can be guaranteed is the node itself,
+         * which has a length of 1.
+         */
+        res[0] = 1;
+        /**
+         * Traverse from the root(0) with DFS.
+         */
+        dfs(0, tree, s, res);
+        return res[0];
     }
+
+    private int dfs(int curNode, List<HashSet<Integer>> tree, String labels, int[] res) {
+        int currentMax = 0;
+        int secondMax = 0;
+        for (int neighbor : tree.get(curNode)) {
+            int result = dfs(neighbor, tree, labels, res);
+            if (labels.charAt(curNode) == labels.charAt(neighbor)) {
+                continue;
+            }
+            if (result > currentMax) {
+                secondMax = currentMax;
+                currentMax = result;
+            } else if (result > secondMax) {
+                secondMax = result;
+            }
+        }
+        res[0] = Math.max(res[0], 1 + currentMax + secondMax);
+        return 1 + currentMax;
+    }
+
 }
