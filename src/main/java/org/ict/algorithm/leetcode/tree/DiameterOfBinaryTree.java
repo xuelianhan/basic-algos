@@ -55,7 +55,8 @@ public class DiameterOfBinaryTree {
         root.val = 1;
         root.left = two;
         root.right = three;
-        int depth = diameterOfBinaryTree(root);
+        DiameterOfBinaryTree instance = new DiameterOfBinaryTree();
+        int depth = instance.diameterOfBinaryTree(root);
         System.out.println(depth);
 
 
@@ -69,6 +70,29 @@ public class DiameterOfBinaryTree {
     }
 
     /**
+     * Time Cost 0ms
+     * @param root
+     * @return
+     */
+    public int diameterOfBinaryTreeV2(TreeNode root) {
+        int[] res = new int[1];
+        maxDepthV2(root, res);
+        return res[0];
+    }
+
+    public int maxDepthV2(TreeNode root, int[] res) {
+        if (null == root) {
+            return 0;
+        }
+        int left = maxDepthV2(root.left, res);
+        int right = maxDepthV2(root.right, res);
+        res[0] = Math.max(res[0], left + right);
+        // plus 1 due to current root node
+        return Math.max(left, right) + 1;
+    }
+
+
+    /**
      * Iterative solution with post-order traversal
      * The idea is to use Post order traversal which means make sure the node is there
      * till the left and right children are processed
@@ -78,7 +102,7 @@ public class DiameterOfBinaryTree {
      * @param root
      * @return
      */
-    public static int diameterOfBinaryTreeIterative(TreeNode root) {
+    public int diameterOfBinaryTreeV1(TreeNode root) {
         if (null == root) {
             return 0;
         }
@@ -127,14 +151,14 @@ public class DiameterOfBinaryTree {
      * @param root
      * @return
      */
-    public static int diameterOfBinaryTree(TreeNode root) {
+    public int diameterOfBinaryTree(TreeNode root) {
         List<Integer> list = new ArrayList<>();
         list.add(0);
         maxDepth(root, list);
         return list.get(0);
     }
 
-    public static int maxDepthBFS(TreeNode root) {
+    public int maxDepthBFS(TreeNode root) {
         if (null == root) {
             return 0;
         }
@@ -166,7 +190,7 @@ public class DiameterOfBinaryTree {
      * @param root
      * @return
      */
-    public static int maxDepth(TreeNode root, List<Integer> list) {
+    public int maxDepth(TreeNode root, List<Integer> list) {
         if (null == root) {
             return 0;
         }
