@@ -1,5 +1,7 @@
 package org.ict.algorithm.leetcode.array;
 
+import java.util.HashMap;
+
 /**
  * Given an unsorted array of integers nums, return the length of the longest consecutive elements sequence.
  *
@@ -30,15 +32,46 @@ public class LongestConsecutiveSequence {
 
 
     public int longestConsecutiveV2(int[] nums) {
+        //todo
         return 0;
     }
 
     public int longestConsecutiveV1(int[] nums) {
+        //todo
         return 0;
     }
 
+    /**
+     * Time Cost 44ms
+     * e.g.nums = [100,100,4,200,1,3,2], expected 4
+     * 100, left:0, right:0, sum:1, map.put(100, 1), res = max(0, 1) = 1, map.put(100, 1), map.put(100, 1)
+     * 100, map.containsKey(100), continue.
+     * 4, left:0, right:0, sum:1, map.put(4, 1), res = max(1, 1) = 1, map.put(4, 1), map.put(4, 1)
+     * 200, left:0, right:0, sum:1, map.put(200, 1), res = max(1, 1) = 1, map.put(200, 1), map.put(200, 1)
+     * 1, left:0, right:0, sum:1, map.put(1, 1), res = max(1, 1) = 1, map.put(1, 1), map.put(1, 1)
+     * 3, left:0, right:1, sum:2, map.put(3, 2), res = max(1, 2) = 2, map.put(3, 2), map.put(4, 2)
+     * 2, left:1, right:2, sum:4, map.put(2, 4), res = max(2, 4) = 4, map.put(1, 4), map.put(4, 4).
+     * @param nums
+     * @return
+     */
     public int longestConsecutive(int[] nums) {
-        //todo
-        return 0;
+        HashMap<Integer, Integer> map = new HashMap<>();
+        /**
+         * nums = [], so res is zero.
+         */
+        int res = 0;
+        for (int num : nums) {
+           if (map.containsKey(num)) {
+               continue;
+           }
+           int left = map.containsKey(num - 1) ? map.get(num - 1) : 0;
+           int right = map.containsKey(num + 1) ? map.get(num + 1) : 0;
+           int sum = left + right + 1;
+           map.put(num, sum);
+           res = Math.max(res, sum);
+           map.put(num - left, sum);
+           map.put(num + right, sum);
+        }
+        return res;
     }
 }
