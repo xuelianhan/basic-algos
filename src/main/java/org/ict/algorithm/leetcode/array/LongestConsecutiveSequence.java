@@ -56,6 +56,10 @@ public class LongestConsecutiveSequence {
 
     /**
      * HashSet Solution
+     * Using a set to collect all elements that hasn't been visited,
+     * search element will be O(1) and eliminates the visited element again.
+     * @author Tracy123
+     * @see <a href="https://leetcode.com/problems/longest-consecutive-sequence/solutions/41067/simple-fast-java-solution-using-set"></a>
      * @param nums
      * @return
      */
