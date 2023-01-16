@@ -41,12 +41,40 @@ import java.util.List;
  */
 public class InsertInterval {
 
-    public int[][] insertV2(int[][] intervals, int[] newInterval) {
-        return null;
-    }
-
+    /**
+     * Improvement of insert without creating new int array.
+     * Time Cost 1ms
+     * @param intervals
+     * @param newInterval
+     * @return
+     */
     public int[][] insertV1(int[][] intervals, int[] newInterval) {
-        return null;
+        List<int[]> list = new ArrayList<>();
+        int m = intervals.length;
+        int start = newInterval[0];
+        int end = newInterval[1];
+
+        int i = 0;
+        while (i < m && intervals[i][1] < start) {
+            list.add(intervals[i++]);
+        }
+
+        /**
+         * Notice condition "intervals[i][0] <= end"
+         */
+        while (i < m && intervals[i][0] <= end) {
+            start = Math.min(start, intervals[i][0]);
+            end = Math.max(end, intervals[i][1]);
+            i++;
+        }
+        newInterval[0] = start;
+        newInterval[1] = end;
+        list.add(newInterval);
+
+        while (i < m) {
+            list.add(intervals[i++]);
+        }
+        return list.toArray(new int[list.size()][]);
     }
 
     /**
