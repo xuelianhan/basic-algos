@@ -36,14 +36,6 @@ package org.ict.algorithm.leetcode.dynamicprogramming;
  */
 public class FlipStringToMonotoneIncreasing {
 
-    public int minFlipsMonoIncrV2(String s) {
-        return 0;
-    }
-
-    public int minFlipsMonoIncrV1(String s) {
-        return 0;
-    }
-
     /**
      * Time Cost 9ms
      * e.g.s = "10"

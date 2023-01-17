@@ -1,6 +1,5 @@
 package org.ict.algorithm.leetcode.binarysearch;
 
-import java.util.Arrays;
 
 /**
  * A peak element is an element that is strictly greater than its neighbors.
@@ -46,14 +45,40 @@ public class FindPeakElement {
         System.out.println(result);
     }
 
+
+    /**
+     * Time Complexity O(logN)
+     * Space Complexity O(1)
+     * @param nums
+     * @return
+     */
     public int findPeakElementV2(int[] nums) {
-        int res = -1;
-        return res;
+       int low = 0;
+       int high = nums.length - 1;
+       while (low < high) {
+           int mid = low + (high - low) / 2;
+           if (nums[mid] < nums[mid + 1]) {
+               low = mid + 1;
+           } else {
+               high = mid;
+           }
+       }
+       return high;
     }
 
+    /**
+     * Time Complexity O(N)
+     * Space Complexity O(1)
+     * @param nums
+     * @return
+     */
     public int findPeakElementV1(int[] nums) {
-        int res = -1;
-        return res;
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i - 1] > nums[i]) {
+                return i - 1;
+            }
+        }
+        return nums.length - 1;
     }
 
     /**
