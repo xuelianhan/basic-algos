@@ -90,11 +90,18 @@ public class FindPeakElement {
 
         /**
          * Check the remained in the array
+         * Notice here start initializes as 1, end as n - 2, if we still use
+         * start = 0, end = n - 1, then nums[mid - 1] will trigger index out of bound exception.
          */
         int start = 1;
         int end = n - 2;
         while (start <= end) {
             int mid = start + (end - start) / 2;
+            /**
+             * e.g.nums = [1], nums = [2, 1]
+             * mid - 1 will lead to index out of bound, so
+             * we must process corner case like nums.length == 1
+             */
             if (nums[mid] > nums[mid - 1] && nums[mid] > nums[mid + 1]) {
                 return mid;
             } else if (nums[mid] < nums[mid - 1]) {
