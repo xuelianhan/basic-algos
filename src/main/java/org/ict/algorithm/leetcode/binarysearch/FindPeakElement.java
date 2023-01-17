@@ -47,6 +47,7 @@ public class FindPeakElement {
 
 
     /**
+     * Understanding the following solution.
      * Time Complexity O(logN)
      * Space Complexity O(1)
      * @param nums
@@ -67,6 +68,7 @@ public class FindPeakElement {
     }
 
     /**
+     *
      * Time Complexity O(N)
      * Space Complexity O(1)
      * @param nums
@@ -82,6 +84,7 @@ public class FindPeakElement {
     }
 
     /**
+     * Not recommend.
      * Time Complexity O(N)
      * Space Complexity O(N)
      * e.g. nums = [1, 2], expected 1
