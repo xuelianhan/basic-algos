@@ -52,6 +52,7 @@ public class IncreasingTripletSubsequence {
      * @author Simranjot Singh Sandhu
      * @see <a href="https://leetcode.com/problems/increasing-triplet-subsequence/solutions/79004/concise-java-solution-with-comments"></a>
      *
+     * test case and comments provided by gcarrillo
      * e.g. nums = [1, 0, 2, 0, -1, 3]
      * i:0, m1 > 1 --> m1:1
      * i:1, m1 > 0 --> m1:0
@@ -60,9 +61,16 @@ public class IncreasingTripletSubsequence {
      * i:4, m1 > -1, --> m1:-1
      * i:5, m1:-1, m2:2, 3 > m1 and 3 > m2, return true.
      * Although (2, -1, 3) not matches the nums[i] < nums[j] < nums[k] and i < j < k, but it also works.
-     * Why?
+     * Why? m2:2 means there existed a value that previously smaller than 2.
+     * Now if you find any value greater than 2 that we know their exist in an increasing triplet sub-sequence.
      *
-     * e.g. nums = [1, 3, 0, 5]
+     * Although notice if we had a test case like this [1,0,2,0,-1,0,1],
+     * we now could see the importance of the updated lower bound for first = -1,
+     * so we can have a correct lower bound for second = 0, and note this answer ask for existence, not to construct the triplet,
+     * as this solution wouldn't be able to in its current form.
+     * e.g. nums = [1, 0, 2, 0, -1, 0, 1]
+     * i:0, m1 > 1 --> m1:1
+     * i:1, m1 > 0 --> m1:0
      *
      * @param nums
      * @return
