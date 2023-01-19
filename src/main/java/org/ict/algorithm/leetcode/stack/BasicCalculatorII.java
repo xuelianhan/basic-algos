@@ -72,7 +72,7 @@ public class BasicCalculatorII {
      * operand:1
      * pop 1, res = 0 + 1 = 1
      * return res:1
-     * 
+     *
      * @author abner
      * @see <a href="https://leetcode.com/problems/basic-calculator-ii/solutions/63003/share-my-java-solution"></a>
      * @param s
