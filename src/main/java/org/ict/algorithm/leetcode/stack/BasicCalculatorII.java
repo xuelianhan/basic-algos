@@ -42,7 +42,13 @@ import java.util.Deque;
 public class BasicCalculatorII {
 
     public static void main(String[] args) {
-        String s = "0-2147483647";
+        //String s = "0-2147483647";
+        //String s = "1*2-1";
+        //String s = "1-1*2";
+        //String s = "1-1*2*3";
+        //String s = "1-1+1";
+        String s = " 36/2 ";
+
         BasicCalculatorII instance = new BasicCalculatorII();
         int result = instance.calculate(s);
         System.out.println(result);
@@ -52,58 +58,71 @@ public class BasicCalculatorII {
         return 0;
     }
 
+    /**
+     * Using One stack to store the operand,
+     * and we process * and / first,
+     * then we process remained number in the stack with addition "+"
+     * e.g. s = " 3/2 "
+     * i:0, arr[0] = ' ', num:0, prevSign:'+', arr[0] is neither digit nor sign, and not the last element, do nothing.
+     * i:1, arr[1] = '3', num:0 --> num = 10 * 0 + '3' - '0' = 3, prevSign:'+'
+     * i:2, arr[2] = '/', num:3, prevSign:'+', operand.push(3), operand:3, preSign = '/', num = 0
+     * i:3, arr[3] = '2', num:0 --> num = 2
+     * i:4, arr[4] = ' ', num:2, i == n - 1, prevSign = '/', operand.pop() = 3, num = 2, operand.push(3 / 2), operand: 1, preSign = ' ', num = 0
+     *
+     * operand:1
+     * pop 1, res = 0 + 1 = 1
+     * return res:1
+     * 
+     * @author abner
+     * @see <a href="https://leetcode.com/problems/basic-calculator-ii/solutions/63003/share-my-java-solution"></a>
+     * @param s
+     * @return
+     */
     public int calculate(String s) {
-        boolean allDigit = true;
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < s.length(); i++) {
-            char ch = s.charAt(i);
-            if (Character.isDigit(ch)) {
-                sb.append(ch);
-                continue;
-            } else if (ch == ' ') {
-                continue;
-            } else {
-                allDigit = false;
-                break;
-            }
-        }
-        if (allDigit) {
-            return Integer.valueOf(sb.toString());
-        }
+        int num = 0;
+        int n = s.length();
+        char prevSign = '+';
         Deque<Integer> operand = new ArrayDeque<>();
-        Deque<Character> operator = new ArrayDeque<>();
+        char[] arr = s.toCharArray();
+        for (int i = 0; i < n; i++) {
+            /**
+             * Don't add the following skip code, Think about case: s = " 3/2 "
+             * if (arr[i] == ' ') {
+             *   continue;
+             * }
+             */
+            /**
+             * e.g. s = "0-2147483647"
+             */
+            if (Character.isDigit(arr[i])) {
+                num = 10 * num + arr[i] - '0';
+            }
+            /**
+             * e.g. s = "1-1+1"
+             * e.g. s = " 3/2 "
+             */
+            if (arr[i] == '+' || arr[i] == '-' || arr[i] == '*' || arr[i] == '/' || i == (n - 1)) {
+                if (prevSign == '+') {
+                    operand.push(num);
+                }
+                if (prevSign == '-') {
+                    operand.push(-num);
+                }
+                if (prevSign == '*') {
+                    operand.push(operand.pop() * num);
+                }
+                if (prevSign == '/') {
+                    operand.push(operand.pop() / num);
+                }
+                prevSign = arr[i];
+                num = 0;
+            }
+        }
 
-        for (char c : s.toCharArray()) {
-            if (c == ' ') {
-                continue;
-            }
-            if (Character.isDigit(c)) {
-                operand.push(c - '0');
-            } else {
-                operator.push(c);
-            }
+        int res = 0;
+        while (!operand.isEmpty()) {
+            res += operand.pop();
         }
-        //todo
-        while (!operator.isEmpty()) {
-            char op = operator.pop();
-            if (op == '*') {
-                int x1 = operand.pop();
-                int x2 = operand.pop();
-                operand.push(x1 * x2);
-            } else if (op == '/') {
-                int x1 = operand.pop();
-                int x2 = operand.pop();
-                operand.push(x2 / x1);
-            } else if (op == '+') {
-                int x1 = operand.pop();
-                int x2 = operand.pop();
-                operand.push(x1 + x2);
-            } else if (op == '-') {
-                int x1 = operand.pop();
-                int x2 = operand.pop();
-                operand.push(x2 - x1);
-            }
-        }
-        return operand.pop();
+        return res;
     }
 }
