@@ -1,9 +1,6 @@
 package org.ict.algorithm.leetcode.backtrack;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Given an integer array nums,
@@ -29,13 +26,16 @@ import java.util.Set;
  * @author sniper
  * @date 20 Jan, 2023
  * LC491, Medium
+ *
+ * Similar Question
+ * {@link SubsetsII}
  */
 public class NonDecreasingSubSequences {
 
     public static void main(String[] args) {
         int[] nums = {4,4,3,2,1};
         NonDecreasingSubSequences instance = new NonDecreasingSubSequences();
-        List<List<Integer>> result = instance.findSubsequences(nums);
+        List<List<Integer>> result = instance.findSubsequencesV1(nums);
         System.out.println(result);
     }
 
@@ -43,8 +43,46 @@ public class NonDecreasingSubSequences {
         return null;
     }
 
+    /**
+     * Time Cost 6ms
+     * @param nums
+     * @return
+     */
     public List<List<Integer>> findSubsequencesV1(int[] nums) {
-        return null;
+        List<List<Integer>> result = new ArrayList<>();
+        LinkedList<Integer> track = new LinkedList<>();
+        backtrackV1(nums, track, result, 0);
+        return result;
+    }
+
+    public void backtrackV1(int[] nums, LinkedList<Integer> track, List<List<Integer>> result, int k) {
+        /**
+         * Make a deep copy of track, don't add the track directly
+         * At least two elements in track, so using track.size() > 1 or track.size() >= 2
+         */
+        if (track.size() > 1) {
+            result.add(new ArrayList<>(track));
+        }
+        Set<Integer> visited = new HashSet<>();
+        for (int i = k; i < nums.length; i++) {
+            if (visited.contains(nums[i])) {
+                continue;
+            }
+
+            if (track.size() == 0 || nums[i] >= track.getLast()) {
+                /**
+                 * Mark nums[i] as visited.
+                 */
+                visited.add(nums[i]);
+
+                track.add(nums[i]);
+                /**
+                 * Notice here, pass i + 1 into k, not k+1
+                 */
+                backtrackV1(nums, track, result, i + 1);
+                track.removeLast();
+            }
+        }
     }
 
     /**
