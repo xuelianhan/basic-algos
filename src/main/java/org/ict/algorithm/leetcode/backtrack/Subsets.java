@@ -57,7 +57,7 @@ public class Subsets {
             /**
              * Notice here, pass i + 1 into k, not k+1
              */
-            backtrackV1(nums, track, result, i+1);
+            backtrackV1(nums, track, result, i + 1);
             track.remove(track.size() - 1);
         }
     }
@@ -132,7 +132,7 @@ public class Subsets {
             /**
              * Notice here, pass i + 1 into k, not k+1
              */
-            backtrack(nums, track, result, i+1);
+            backtrack(nums, track, result, i + 1);
             track.removeLast();
             //System.out.println("after track del, k:" + k + ", i:" + i + ", track:" + track);
         }
