@@ -57,6 +57,10 @@ public class BasicCalculatorII {
     /**
      * Understanding the following solution.
      * Time Cost 5ms
+     *
+     * e.g. s = " 3/2 "
+     * i:0, c = ' ',
+     *
      * @param s
      * @return
      */
