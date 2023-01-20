@@ -32,7 +32,7 @@ import java.util.Map;
  * @date 20 Jan, 2023
  * LC974, Medium
  */
-public class SubarraySumsDivisibleByK {
+public class SubArraySumsDivisibleByK {
 
 
     /**
@@ -46,7 +46,7 @@ public class SubarraySumsDivisibleByK {
      * @param k
      * @return
      */
-    public int subarraysDivByKV1(int[] nums, int k) {
+    public int subArraysDivByKV1(int[] nums, int k) {
         int[] map = new int[k];
         /**
          * Deal with "remainder = 0" situation.
@@ -82,7 +82,7 @@ public class SubarraySumsDivisibleByK {
      * @param k
      * @return
      */
-    public int subarraysDivByK(int[] nums, int k) {
+    public int subArraysDivByK(int[] nums, int k) {
         Map<Integer, Integer> map = new HashMap<>();
         /**
          * Deal with "remainder = 0" situation.
