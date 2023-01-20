@@ -56,6 +56,8 @@ public class BasicCalculatorII {
 
     /**
      * Understanding the following solution.
+     * Iteration Solution without Stack.
+     *
      * Time Cost 5ms
      *
      * e.g. s = " 3/2 "
@@ -64,7 +66,7 @@ public class BasicCalculatorII {
      * @param s
      * @return
      */
-    public int calculateV1(String s) {
+    public int calculateV2(String s) {
         int num = 0;
         int n = s.length();
         char prevSign = '+';
@@ -109,6 +111,11 @@ public class BasicCalculatorII {
         return res;
     }
 
+    public int calculateV1(String s) {
+        //todo
+        return 0;
+    }
+
     /**
      * Using One stack to store the operand,
      * and we process * and / first,
@@ -136,6 +143,7 @@ public class BasicCalculatorII {
         Deque<Integer> operand = new ArrayDeque<>();
         char[] arr = s.toCharArray();
         for (int i = 0; i < n; i++) {
+            char c = arr[i];
             /**
              * Don't add the following skip code, Think about case: s = " 3/2 "
              * if (arr[i] == ' ') {
@@ -145,14 +153,14 @@ public class BasicCalculatorII {
             /**
              * e.g. s = "0-2147483647"
              */
-            if (Character.isDigit(arr[i])) {
-                num = 10 * num + arr[i] - '0';
+            if (Character.isDigit(c)) {
+                num = 10 * num + c - '0';
             }
             /**
              * e.g. s = "1-1+1"
              * e.g. s = " 3/2 "
              */
-            if (arr[i] == '+' || arr[i] == '-' || arr[i] == '*' || arr[i] == '/' || i == (n - 1)) {
+            if (c == '+' || c == '-' || c == '*' || c == '/' || i == (n - 1)) {
                 if (prevSign == '+') {
                     operand.push(num);
                 }
@@ -165,7 +173,7 @@ public class BasicCalculatorII {
                 if (prevSign == '/') {
                     operand.push(operand.pop() / num);
                 }
-                prevSign = arr[i];
+                prevSign = c;
                 num = 0;
             }
         }
