@@ -26,7 +26,7 @@ import java.util.List;
  * s contains only lowercase English letters.
  * @author sniper
  * @date 01 Nov, 2022
- * LC131
+ * LC131, Medium
  */
 public class PalindromePartitioning {
 
@@ -34,6 +34,21 @@ public class PalindromePartitioning {
         List<List<String>> result = new ArrayList<>();
         backtrack(result, new LinkedList<>(), s, 0);
         return result;
+    }
+
+    public void backtrackV1(List<List<String>> result, LinkedList<String> track, String s, int start) {
+        if (start == s.length()) {
+            result.add(new ArrayList<>(track));
+            return;
+        }
+        for (int i = start; i < s.length(); i++) {
+            if (!isPalindrome(s, start, i)) {
+                continue;
+            }
+            track.add(s.substring(start, i + 1));
+            backtrackV1(result, track, s, i + 1);
+            track.removeLast();
+        }
     }
 
     public void backtrack(List<List<String>> result, LinkedList<String> track, String s, int start) {
