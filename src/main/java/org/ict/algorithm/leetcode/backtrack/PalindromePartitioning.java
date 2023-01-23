@@ -30,12 +30,58 @@ import java.util.List;
  */
 public class PalindromePartitioning {
 
-    public List<List<String>> partition(String s) {
+    public static void main(String[] args) {
+        String s = "aab";
+        PalindromePartitioning instance = new PalindromePartitioning();
+        instance.partitionV1(s);
+    }
+
+    public List<List<String>> partitionV1(String s) {
         List<List<String>> result = new ArrayList<>();
-        backtrack(result, new LinkedList<>(), s, 0);
+        backtrackV1(result, new LinkedList<>(), s, 0);
         return result;
     }
 
+    /**
+     * e.g. s = "aab"
+     * backtrack(0)
+     *   i:0, i < 3, start:0, s[0] = "a" is a palindrome, track add "a", track:["a"]
+     *     backtrack(1):
+     *       i:1, i < 3, start:1, s[1] = "a" is a palindrome, track add "a", track:["a", "a"]
+     *         backtrack(2):
+     *           i:2, i < 3, start:2, s[2] = "b" is a palindrome, track add "b", track:["a", "a", "b"]
+     *             backtrack(3):
+     *               start:3, start == s.length
+     *               result:["a", "a", "b"]
+     *             backtrack(3) return
+     *             track.removeLast, track:["a", "a"]
+     *           i:3, not match for-loop condition
+     *         backtrack(2) return
+     *         track.removeLast, track:["a"]
+     *       i:2, i < 3, start:1, s[1]~s[2] = "ab" is not palindrome, continue
+     *       i:3, not match for-loop condition
+     *     backtrack(1) return
+     *     track.removeLast, track:[]
+     *   i:1, i < 3, start:0, s[0]~s[1] = "aa" is a palindrome, track add "aa", track:["aa"], i:1 --> i:2
+     *     backtrack(2):
+     *       i:2, i < 3, start:2, s[2] = "b" is a palindrome, track add "b", track:["aa", "b"]
+     *         backtrack(3):
+     *           start:3, start == s.length
+     *           result:[["a", "a", "b"], ["aa", b]]
+     *         backtrack(3) return
+     *         track.removeLast, track:["aa"]
+     *     backtrack(2) return
+     *     track.removeLast, track:[]
+     *   i:2, i < 3, start:0, s[0]~s[2] = "aab" is not palindrome, continue
+     *   i:3, not match for-loop condition
+     * backtrack(0) return
+     * result: [["a", "a", "b"], ["aa", b]]
+     * 
+     * @param result
+     * @param track
+     * @param s
+     * @param start
+     */
     public void backtrackV1(List<List<String>> result, LinkedList<String> track, String s, int start) {
         if (start == s.length()) {
             result.add(new ArrayList<>(track));
@@ -49,6 +95,12 @@ public class PalindromePartitioning {
             backtrackV1(result, track, s, i + 1);
             track.removeLast();
         }
+    }
+
+    public List<List<String>> partition(String s) {
+        List<List<String>> result = new ArrayList<>();
+        backtrack(result, new LinkedList<>(), s, 0);
+        return result;
     }
 
     public void backtrack(List<List<String>> result, LinkedList<String> track, String s, int start) {
