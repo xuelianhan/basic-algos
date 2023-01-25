@@ -1,9 +1,6 @@
 package org.ict.algorithm.leetcode.depthfirstsearch;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
 
 /**
  * You are given a directed graph of n nodes numbered from 0 to n - 1, where each node has at most one outgoing edge.
@@ -65,6 +62,15 @@ public class FindClosestNodeToGivenTwoNodes {
      * dist1:[0, MAX, MAX]
      * dist2:[MAX, MAX, 0]
      *
+     * After DFS:
+     * dist1:[0, 1, 2]
+     * dist2:[MAX, MAX, 0]
+     *
+     * Iteration:
+     * i:0, max(dist1[0], dist2[0]) = MAX, res:-1
+     * i:1, max(dist1[1], dist2[1]) = MAX, res:-1
+     * i:2, max(dist1[2], dist2[1]) = 2, res:-1 --> res:2
+     * return res:2
      *
      * Each node has at most one outgoing edge.
      * So we can use Depth-First-Search to calculate length of path to node1 and node2.
@@ -113,6 +119,7 @@ public class FindClosestNodeToGivenTwoNodes {
         /**
          * edge: from u to v
          * u --> v
+         * e.g.edges = [1,2,-1]
          */
         visited[u] = true;
         int v = edges[u];
