@@ -54,6 +54,50 @@ public class BasicCalculatorII {
         System.out.println(result);
     }
 
+    public int calculateV3(String s) {
+        int num = 0;
+        int n = s.length();
+        char prevSign = '+';
+        int res = 0;
+        int curRes = 0;
+        char[] arr = s.toCharArray();
+        for (int i = 0; i < n; i++) {
+            char c = arr[i];
+            if (Character.isDigit(c)) {
+                num = 10 * num + c - '0';
+            }
+            if (c == '+' || c == '-' || c == '*' || c == '/' || i == (n - 1)) {
+                switch (prevSign) {
+                    case '+':
+                        curRes += num;
+                        break;
+                    case '-':
+                        curRes -= num;
+                        break;
+                    case '*':
+                        curRes *= num;
+                        break;
+                    case '/':
+                        curRes /= num;
+                        break;
+                }
+                if (c == '+' || c == '-' || i == (n - 1)) {
+                    res += curRes;
+                    /**
+                     * A little tricky here.
+                     */
+                    curRes = 0;
+                }
+                /**
+                 * Same little tricky.
+                 */
+                prevSign = c;
+                num = 0;
+            }
+        }
+        return res;
+    }
+
     /**
      * Understanding the following solution.
      * Iteration Solution without Stack.

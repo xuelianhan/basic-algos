@@ -76,7 +76,7 @@ public class PalindromePartitioning {
      *   i:3, not match for-loop condition
      * backtrack(0) return
      * result: [["a", "a", "b"], ["aa", b]]
-     * 
+     *
      * @param result
      * @param track
      * @param s
