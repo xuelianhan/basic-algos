@@ -8,7 +8,8 @@ import java.util.Deque;
  *
  * The integer division should truncate toward zero.
  *
- * You may assume that the given expression is always valid. All intermediate results will be in the range of [-231, 231 - 1].
+ * You may assume that the given expression is always valid.
+ * All intermediate results will be in the range of [-2^31, 2^31 - 1].
  *
  * Note: You are not allowed to use any built-in function which evaluates strings as mathematical expressions, such as eval().
  *
@@ -47,16 +48,76 @@ public class BasicCalculatorII {
         //String s = "1-1*2";
         //String s = "1-1*2*3";
         //String s = "1-1+1";
-        String s = " 36/2 ";
+        //String s = " 36/2 ";
+        String s = "3+2*2";
 
         BasicCalculatorII instance = new BasicCalculatorII();
-        int result = instance.calculate(s);
+        int result = instance.calculateV1(s);
         System.out.println(result);
     }
 
+    /**
+     * e.g. s = "1*2 + 3/2 "
+     *
+     * @param s
+     * @return
+     */
+    public int calculateV4(String s) {
+        if (s == null || s.length() == 0) {
+            return 0;
+        }
+        char prevSign = '+';
+        int num = 0;
+        int curRes = 0;
+        int res = 0;
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (Character.isDigit(c)) {
+                num = 10 * num + c - '0';
+            }
+
+            if (i == s.length() - 1 || !Character.isDigit(c) && c != ' ') {
+                switch (prevSign) {
+                    case '+':
+                        res += curRes;
+                        curRes = num;
+                        break;
+                    case '-':
+                        res += curRes;
+                        curRes = -num;
+                        break;
+                    case '*':
+                        curRes *= num;
+                        break;
+                    case '/':
+                        curRes /= num;
+                        break;
+                }
+                prevSign = c;
+                num = 0;
+            }
+        }
+        res += curRes;
+        return res;
+    }
+
+    /**
+     * e.g. s = "1*2 + 3/2 "
+     *
+     * e.g. s = "3/2 "
+     *
+     * @param s
+     * @return
+     */
     public int calculateV3(String s) {
+        if (s == null || s.length() == 0) {
+            return 0;
+        }
         int num = 0;
         int n = s.length();
+        /**
+         * Initialize previous sign with "+"
+         */
         char prevSign = '+';
         int res = 0;
         int curRes = 0;
@@ -111,8 +172,14 @@ public class BasicCalculatorII {
      * @return
      */
     public int calculateV2(String s) {
+        if (s == null || s.length() == 0) {
+            return 0;
+        }
         int num = 0;
         int n = s.length();
+        /**
+         * Initialize previous sign with "+"
+         */
         char prevSign = '+';
         int res = 0;
         int curRes = 0;
@@ -122,7 +189,6 @@ public class BasicCalculatorII {
             if (c >= '0' && c <= '9') {
                 num = 10 * num + c - '0';
             }
-
             if (c == '+' || c == '-' || c == '*' || c == '/' || i == (n - 1)) {
                 switch (prevSign) {
                     case '+':
@@ -155,9 +221,66 @@ public class BasicCalculatorII {
         return res;
     }
 
+    /**
+     * Similar with calculate, the only difference is to append "+" to the original input string.
+     * e.g. s = "3+2*2 "
+     * s = "3+2*2 +"
+     * i:0, c:'3', num:0 --> num:3, preSign:'+', push 3 into the stack, stack:3, preSign:'3', num:0
+     * i:1, c:'+', num:0, preSign:'3' --> preSign:'+', num:0
+     * i:2, c:'2', num:0 --> num:2, preSign:'+', push 2 into the stack, stack:2,3, preSign:'2', num:0
+     * i:3, c:'*', num:0, preSign:'2' --> preSign:'*', num:0
+     * i:4, c:'2', num:0 --> num:2, preSign:'*', pop 2 from the stack, 2 * num = 4, push 4 into the stack, stack:4,3, preSign:'2', num:0
+     * i:5, c:' ', num:0, skip
+     * i:6, c:'+', num:0, preSign:'2' --> preSign:'+', num:0
+     * for-loop-end
+     * stack:4,3
+     * res = 4 + 3 = 7
+     * return 7
+     *
+     * @param s
+     * @return
+     */
     public int calculateV1(String s) {
-        //todo
-        return 0;
+        if (s == null || s.length() == 0) {
+            return 0;
+        }
+        /**
+         * Append "+" to the original input string.
+         */
+        s += "+";
+        /**
+         * Initialize previous sign with "+"
+         */
+        char preSign = '+';
+        int num = 0;
+        Deque<Integer> stack = new ArrayDeque<>();
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (c >= '0' && c <= '9') {
+                num = num * 10 + c - '0';
+                continue;
+            }
+            if (c == ' ') {
+                continue;
+            }
+            if (preSign == '+') {
+                stack.push(num);
+            } else if (preSign == '-') {
+                stack.push(-num);
+            } else if (preSign == '*') {
+                stack.push(stack.pop() * num);
+            } else if (preSign == '/') {
+                stack.push(stack.pop() / num);
+            }
+            preSign = c;
+            num = 0;
+        }
+
+        int res = 0;
+        while (!stack.isEmpty()) {
+            res += stack.pop();
+        }
+        return res;
     }
 
     /**
@@ -181,11 +304,17 @@ public class BasicCalculatorII {
      * @return
      */
     public int calculate(String s) {
+        if (s == null || s.length() == 0) {
+            return 0;
+        }
         int num = 0;
-        int n = s.length();
+        /**
+         * Initialize previous sign with "+"
+         */
         char prevSign = '+';
-        Deque<Integer> operand = new ArrayDeque<>();
+        int n = s.length();
         char[] arr = s.toCharArray();
+        Deque<Integer> operandStack = new ArrayDeque<>();
         for (int i = 0; i < n; i++) {
             char c = arr[i];
             /**
@@ -206,16 +335,16 @@ public class BasicCalculatorII {
              */
             if (c == '+' || c == '-' || c == '*' || c == '/' || i == (n - 1)) {
                 if (prevSign == '+') {
-                    operand.push(num);
+                    operandStack.push(num);
                 }
                 if (prevSign == '-') {
-                    operand.push(-num);
+                    operandStack.push(-num);
                 }
                 if (prevSign == '*') {
-                    operand.push(operand.pop() * num);
+                    operandStack.push(operandStack.pop() * num);
                 }
                 if (prevSign == '/') {
-                    operand.push(operand.pop() / num);
+                    operandStack.push(operandStack.pop() / num);
                 }
                 prevSign = c;
                 num = 0;
@@ -223,8 +352,8 @@ public class BasicCalculatorII {
         }
 
         int res = 0;
-        while (!operand.isEmpty()) {
-            res += operand.pop();
+        while (!operandStack.isEmpty()) {
+            res += operandStack.pop();
         }
         return res;
     }
