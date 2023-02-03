@@ -96,12 +96,13 @@ public class BasicCalculatorII {
                 prevSign = c;
                 num = 0;
             }
-        }
+        }//end-for-loop 
         res += curRes;
         return res;
     }
 
     /**
+     * Same as calculateV2
      * e.g. s = "1*2 + 3/2 "
      *
      * e.g. s = "3/2 "
@@ -273,7 +274,7 @@ public class BasicCalculatorII {
              * e.g. s = " 3+5 / 2 "
              * e.g. s = " 3/2 "
              * If no following line, you will get java.lang.ArithmeticException divide by zero
-             * at stack.pop() / num.
+             * at stack.pop() / num.1234567890
              */
             if (c == ' ') {
                 continue;
