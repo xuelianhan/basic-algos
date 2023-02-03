@@ -225,17 +225,19 @@ public class BasicCalculatorII {
      * Similar with calculate, the only difference is to append "+" to the original input string.
      * e.g. s = "3+2*2 "
      * s = "3+2*2 +"
-     * i:0, c:'3', num:0 --> num:3, preSign:'+', push 3 into the stack, stack:3, preSign:'3', num:0
-     * i:1, c:'+', num:0, preSign:'3' --> preSign:'+', num:0
-     * i:2, c:'2', num:0 --> num:2, preSign:'+', push 2 into the stack, stack:2,3, preSign:'2', num:0
-     * i:3, c:'*', num:0, preSign:'2' --> preSign:'*', num:0
-     * i:4, c:'2', num:0 --> num:2, preSign:'*', pop 2 from the stack, 2 * num = 4, push 4 into the stack, stack:4,3, preSign:'2', num:0
-     * i:5, c:' ', num:0, skip
-     * i:6, c:'+', num:0, preSign:'2' --> preSign:'+', num:0
+     * i:0, c:'3', num:0 --> num:3, skip to next loop
+     * i:1, c:'+', num:3, preSign:'+', push 3 into the stack, stack:3, preSign:'+' --> preSign:'+', num:0
+     * i:2, c:'2', num:0 --> num:2, skip to next loop
+     * i:3, c:'*', num:2, preSign:'+', push 2 into the stack, stack:2,3, preSign:'+' --> preSign:'*', num:0
+     * i:4, c:'2', num:0 --> num:2, skip to next loop
+     * i:5, c:' ', num:0, skip to next loop
+     * i:6, c:'+', num:2, preSign:'*', pop 2 from the stack, 2 * num = 4, push 4 into the stack, stack:4,3
      * for-loop-end
      * stack:4,3
      * res = 4 + 3 = 7
      * return 7
+     *
+     * e.g. s = "42"
      *
      * @param s
      * @return
@@ -246,6 +248,8 @@ public class BasicCalculatorII {
         }
         /**
          * Append "+" to the original input string.
+         * Why? Because we skip to the next round loop while c is a number
+         * Consider a case: s = "3+2*2"
          */
         s += "+";
         /**
@@ -258,8 +262,19 @@ public class BasicCalculatorII {
             char c = s.charAt(i);
             if (c >= '0' && c <= '9') {
                 num = num * 10 + c - '0';
+                /**
+                 * Very important
+                 * e.g. s = "42"
+                 */
                 continue;
             }
+            /**
+             * Very important
+             * e.g. s = " 3+5 / 2 "
+             * e.g. s = " 3/2 "
+             * If no following line, you will get java.lang.ArithmeticException divide by zero
+             * at stack.pop() / num.
+             */
             if (c == ' ') {
                 continue;
             }
@@ -318,7 +333,7 @@ public class BasicCalculatorII {
         for (int i = 0; i < n; i++) {
             char c = arr[i];
             /**
-             * Don't add the following skip code, Think about case: s = " 3/2 "
+             * If you add the following skip code, Think about case: s = " 3/2 "
              * if (arr[i] == ' ') {
              *   continue;
              * }
@@ -332,6 +347,7 @@ public class BasicCalculatorII {
             /**
              * e.g. s = "1-1+1"
              * e.g. s = " 3/2 "
+             * e.g. s = "3+2*2"
              */
             if (c == '+' || c == '-' || c == '*' || c == '/' || i == (n - 1)) {
                 if (prevSign == '+') {
