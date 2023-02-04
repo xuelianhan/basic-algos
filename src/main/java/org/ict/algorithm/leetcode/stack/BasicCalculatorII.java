@@ -96,7 +96,7 @@ public class BasicCalculatorII {
                 prevSign = c;
                 num = 0;
             }
-        }//end-for-loop 
+        }//end-for-loop
         res += curRes;
         return res;
     }
@@ -166,8 +166,13 @@ public class BasicCalculatorII {
      *
      * Time Cost 5ms
      *
-     * e.g. s = " 3/2 "
-     * i:0, c = ' ',
+     * e.g. s = "13+2*2 "
+     * i:0, c:'1', num:0 --> num:1, preSign:'+', curRes:0, res:0
+     * i:1, c:'3', num:10*1+3=13, preSign:'+', curRes:0, res:0
+     * i:2, c:'+', num:13, preSign:'+', curRes:0 --> curRes:13, res:0 --> res:13, curRes:13 --> curRes:0, preSign:'+', num:0
+     * i:3, c:'2', num:2, preSign:'+'
+     * i:4, c:'*', num:2, preSign:'+', curRes:0 --> curRes:2,
+     * todo
      *
      * @param s
      * @return
