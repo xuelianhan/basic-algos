@@ -171,8 +171,10 @@ public class BasicCalculatorII {
      * i:1, c:'3', num:10*1+3=13, preSign:'+', curRes:0, res:0
      * i:2, c:'+', num:13, preSign:'+', curRes:0 --> curRes:13, res:0 --> res:13, curRes:13 --> curRes:0, preSign:'+', num:0
      * i:3, c:'2', num:2, preSign:'+'
-     * i:4, c:'*', num:2, preSign:'+', curRes:0 --> curRes:2,
-     * todo
+     * i:4, c:'*', num:2, preSign:'+', curRes:0 --> curRes:2, preSign:'+' --> preSign:'*', num:0
+     * i:5, c:'2', num:2, preSign:'*',
+     * i:6, c:' ', num:2, preSign:'*', i == (7-1), curRes:2 --> curRes:4, res:13 --> res:15, curRes:4 --> curRes:0
+     * return res:15
      *
      * @param s
      * @return
@@ -193,6 +195,9 @@ public class BasicCalculatorII {
         for (int i = 0; i < n; i++) {
             char c = arr[i];
             if (c >= '0' && c <= '9') {
+                /**
+                 * Process case such as "1234/2 "
+                 */
                 num = 10 * num + c - '0';
             }
             if (c == '+' || c == '-' || c == '*' || c == '/' || i == (n - 1)) {
@@ -214,11 +219,14 @@ public class BasicCalculatorII {
                     res += curRes;
                     /**
                      * A little tricky here.
+                     * we collect current result to final result, and
+                     * reset current result to zero.
                      */
                     curRes = 0;
                 }
                 /**
                  * Same little tricky.
+                 * we record the previous sign character and reset num to zero.
                  */
                 prevSign = c;
                 num = 0;
