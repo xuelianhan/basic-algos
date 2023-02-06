@@ -59,6 +59,10 @@ public class BasicCalculatorII {
     /**
      * e.g. s = "1*2 + 3/2 "
      *
+     * e.g. s = "13+2*2 "
+     * i:0, c:'1', prevSign:'+', num:0 --> num:1
+     * i:1, c:'3', prevSign:''
+     *
      * @param s
      * @return
      */
@@ -68,36 +72,35 @@ public class BasicCalculatorII {
         }
         char prevSign = '+';
         int num = 0;
-        int curRes = 0;
+        int prevRes = 0;
         int res = 0;
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
             if (Character.isDigit(c)) {
                 num = 10 * num + c - '0';
             }
-
             if (i == s.length() - 1 || !Character.isDigit(c) && c != ' ') {
                 switch (prevSign) {
                     case '+':
-                        res += curRes;
-                        curRes = num;
+                        res += prevRes;
+                        prevRes = num;
                         break;
                     case '-':
-                        res += curRes;
-                        curRes = -num;
+                        res += prevRes;
+                        prevRes = -num;
                         break;
                     case '*':
-                        curRes *= num;
+                        prevRes *= num;
                         break;
                     case '/':
-                        curRes /= num;
+                        prevRes /= num;
                         break;
                 }
                 prevSign = c;
                 num = 0;
             }
         }//end-for-loop
-        res += curRes;
+        res += prevRes;
         return res;
     }
 
@@ -121,7 +124,7 @@ public class BasicCalculatorII {
          */
         char prevSign = '+';
         int res = 0;
-        int curRes = 0;
+        int prevRes = 0;
         char[] arr = s.toCharArray();
         for (int i = 0; i < n; i++) {
             char c = arr[i];
@@ -131,24 +134,24 @@ public class BasicCalculatorII {
             if (c == '+' || c == '-' || c == '*' || c == '/' || i == (n - 1)) {
                 switch (prevSign) {
                     case '+':
-                        curRes += num;
+                        prevRes += num;
                         break;
                     case '-':
-                        curRes -= num;
+                        prevRes -= num;
                         break;
                     case '*':
-                        curRes *= num;
+                        prevRes *= num;
                         break;
                     case '/':
-                        curRes /= num;
+                        prevRes /= num;
                         break;
                 }
                 if (c == '+' || c == '-' || i == (n - 1)) {
-                    res += curRes;
+                    res += prevRes;
                     /**
                      * A little tricky here.
                      */
-                    curRes = 0;
+                    prevRes = 0;
                 }
                 /**
                  * Same little tricky.
@@ -167,13 +170,13 @@ public class BasicCalculatorII {
      * Time Cost 5ms
      *
      * e.g. s = "13+2*2 "
-     * i:0, c:'1', num:0 --> num:1, preSign:'+', curRes:0, res:0
-     * i:1, c:'3', num:10*1+3=13, preSign:'+', curRes:0, res:0
-     * i:2, c:'+', num:13, preSign:'+', curRes:0 --> curRes:13, res:0 --> res:13, curRes:13 --> curRes:0, preSign:'+', num:0
-     * i:3, c:'2', num:2, preSign:'+'
-     * i:4, c:'*', num:2, preSign:'+', curRes:0 --> curRes:2, preSign:'+' --> preSign:'*', num:0
-     * i:5, c:'2', num:2, preSign:'*',
-     * i:6, c:' ', num:2, preSign:'*', i == (7-1), curRes:2 --> curRes:4, res:13 --> res:15, curRes:4 --> curRes:0
+     * i:0, c:'1', num:0 --> num:1, prevSign:'+', prevRes:0, res:0
+     * i:1, c:'3', num:10*1+3=13, prevSign:'+', prevRes:0, res:0
+     * i:2, c:'+', num:13, prevSign:'+', prevRes:0 --> prevRes:13, res:0 --> res:13, prevRes:13 --> prevRes:0, prevSign:'+', num:0
+     * i:3, c:'2', num:2, prevSign:'+'
+     * i:4, c:'*', num:2, prevSign:'+', prevRes:0 --> prevRes:2, prevSign:'+' --> prevSign:'*', num:0
+     * i:5, c:'2', num:2, prevSign:'*',
+     * i:6, c:' ', num:2, prevSign:'*', i == (7-1), prevRes:2 --> prevRes:4, res:13 --> res:15, prevRes:4 --> prevRes:0
      * return res:15
      *
      * @param s
@@ -190,7 +193,7 @@ public class BasicCalculatorII {
          */
         char prevSign = '+';
         int res = 0;
-        int curRes = 0;
+        int prevRes = 0;
         char[] arr = s.toCharArray();
         for (int i = 0; i < n; i++) {
             char c = arr[i];
@@ -203,26 +206,26 @@ public class BasicCalculatorII {
             if (c == '+' || c == '-' || c == '*' || c == '/' || i == (n - 1)) {
                 switch (prevSign) {
                     case '+':
-                        curRes += num;
+                        prevRes += num;
                         break;
                     case '-':
-                        curRes -= num;
+                        prevRes -= num;
                         break;
                     case '*':
-                        curRes *= num;
+                        prevRes *= num;
                         break;
                     case '/':
-                        curRes /= num;
+                        prevRes /= num;
                         break;
                 }
                 if (c == '+' || c == '-' || i == (n - 1)) {
-                    res += curRes;
+                    res += prevRes;
                     /**
                      * A little tricky here.
-                     * we collect current result to final result, and
-                     * reset current result to zero.
+                     * we collect previous result to final result, and
+                     * reset previous result to zero.
                      */
-                    curRes = 0;
+                    prevRes = 0;
                 }
                 /**
                  * Same little tricky.
@@ -240,12 +243,12 @@ public class BasicCalculatorII {
      * e.g. s = "3+2*2 "
      * s = "3+2*2 +"
      * i:0, c:'3', num:0 --> num:3, skip to next loop
-     * i:1, c:'+', num:3, preSign:'+', push 3 into the stack, stack:3, preSign:'+' --> preSign:'+', num:0
+     * i:1, c:'+', num:3, prevSign:'+', push 3 into the stack, stack:3, prevSign:'+' --> prevSign:'+', num:0
      * i:2, c:'2', num:0 --> num:2, skip to next loop
-     * i:3, c:'*', num:2, preSign:'+', push 2 into the stack, stack:2,3, preSign:'+' --> preSign:'*', num:0
+     * i:3, c:'*', num:2, prevSign:'+', push 2 into the stack, stack:2,3, prevSign:'+' --> prevSign:'*', num:0
      * i:4, c:'2', num:0 --> num:2, skip to next loop
      * i:5, c:' ', num:0, skip to next loop
-     * i:6, c:'+', num:2, preSign:'*', pop 2 from the stack, 2 * num = 4, push 4 into the stack, stack:4,3
+     * i:6, c:'+', num:2, prevSign:'*', pop 2 from the stack, 2 * num = 4, push 4 into the stack, stack:4,3
      * for-loop-end
      * stack:4,3
      * res = 4 + 3 = 7
@@ -269,7 +272,7 @@ public class BasicCalculatorII {
         /**
          * Initialize previous sign with "+"
          */
-        char preSign = '+';
+        char prevSign = '+';
         int num = 0;
         Deque<Integer> stack = new ArrayDeque<>();
         for (int i = 0; i < s.length(); i++) {
@@ -292,16 +295,16 @@ public class BasicCalculatorII {
             if (c == ' ') {
                 continue;
             }
-            if (preSign == '+') {
+            if (prevSign == '+') {
                 stack.push(num);
-            } else if (preSign == '-') {
+            } else if (prevSign == '-') {
                 stack.push(-num);
-            } else if (preSign == '*') {
+            } else if (prevSign == '*') {
                 stack.push(stack.pop() * num);
-            } else if (preSign == '/') {
+            } else if (prevSign == '/') {
                 stack.push(stack.pop() / num);
             }
-            preSign = c;
+            prevSign = c;
             num = 0;
         }
 
