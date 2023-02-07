@@ -57,11 +57,19 @@ public class BasicCalculatorII {
     }
 
     /**
+     * Understanding the following solution
      * e.g. s = "1*2 + 3/2 "
      *
      * e.g. s = "13+2*2 "
-     * i:0, c:'1', prevSign:'+', num:0 --> num:1
-     * i:1, c:'3', prevSign:''
+     * i:0, c:'1', prevSign:'+', num:0 --> num:1, prevRes:0, res:0
+     * i:1, c:'3', prevSign:'+', num:1 --> num:13, prevRes:0, res:0
+     * i:2, c:'+', prevSign:'+', res=res+prevRes=0, prevRes=num=13, prevSign:'+', num:0
+     * i:3, c:'2', prevSign:'+', num:0 --> num:2
+     * i:4, c:'*', prevSign:'+', res=res+prevRes=0+13=13, prevRes=num=2, prevSign:'*', num:0
+     * i:5, c:'2', prevSign:'*', num:0 --> num:2, prevRes=prevRes*num=2*2=4, prevSign:'2', num:0
+     * for-loop-end
+     * res=res+prevRes=13+4=17
+     * return res:17
      *
      * @param s
      * @return
@@ -105,6 +113,7 @@ public class BasicCalculatorII {
     }
 
     /**
+     * Understanding the following solution
      * Same as calculateV2
      * e.g. s = "1*2 + 3/2 "
      *
@@ -316,6 +325,8 @@ public class BasicCalculatorII {
     }
 
     /**
+     * Understanding the following solution
+     * 
      * Using One stack to store the operand,
      * and we process * and / first,
      * then we process remained number in the stack with addition "+"
