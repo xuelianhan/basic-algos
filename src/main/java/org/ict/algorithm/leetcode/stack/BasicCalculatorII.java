@@ -326,7 +326,7 @@ public class BasicCalculatorII {
 
     /**
      * Understanding the following solution
-     * 
+     *
      * Using One stack to store the operand,
      * and we process * and / first,
      * then we process remained number in the stack with addition "+"
