@@ -52,14 +52,62 @@ public class BasicCalculator {
         return 0;
     }
 
+    /**
+     * Time Cost 5ms
+     * e.g s = "-(12 + (2+1))"
+     * i:0, c:'-', res:0, sign:-1, stack:-1,0
+     * i:1, c:'('
+     * @param s
+     * @return
+     */
     public int calculateV1(String s) {
-        return 0;
+        int res = 0;
+        int num = 0;
+        int sign = 1;
+        int n = s.length();
+        Deque<Integer> stack = new ArrayDeque<>();
+        for (int i = 0; i < n; i++) {
+            char c = s.charAt(i);
+            if (c >= '0' && c <= '9') {
+                num = 10 * num + c - '0';
+            } else if (c == '+' || c == '-') {
+                res += sign * num;
+                num = 0;
+                sign = (c == '+' ? 1 : -1);
+            } else if (c == '(') {
+                stack.push(res);
+                stack.push(sign);
+                res = 0;
+                sign = 1;
+            } else if (c == ')') {
+                res += sign * num;
+                num = 0;
+                res *= stack.pop();
+                res += stack.pop();
+            }
+        }
+        res += sign * num;
+        return res;
     }
 
 
     /**
      * Time Cost 6ms
-     * e.g.s = "1 + 1"
+     * e.g. s = "-(12 + (2+1))"
+     * i:0, c:'-', sign:-1
+     * i:1, c:'(', res:0, sign:-1, stack:-1,0, res:0, sign:1
+     * i:2, c:'1', res:0, num:1, i:2 --> i:3, num:12, i:3 --> i:4, res=sign*num=1*12=12, i-- --> i:3, i++ --> i:4
+     * i:4, c:' '
+     * i:5, c:'+', sign:1
+     * i:6, c:' '
+     * i:7, c:'(', res:12, sign:1, stack:1,12,-1,0, res:0, sign:1
+     * i:8, c:'2', num:2, i:9, res=res+sign*num=0+2=2, i-- --> i:8, i++ --> i:9
+     * i:9, c:'+', sign:1
+     * i:10,c:'1', num:1, i:11, res=res+sign*num=2+1=3, i-- -->i:10, i++ --> i:11
+     * i:11,c:')', stack:1,12,-1,0, res=res*pop=3*1=3, res=res+pop=3+12=15, stack:-1,0
+     * i:12,c:')', stack:-1,0, res=res*pop=15*(-1)=-15, res=res+pop=-15+0=-15
+     * return res:-15
+     * 
      * @param s
      * @return
      */
@@ -90,6 +138,9 @@ public class BasicCalculator {
                 res = 0;
                 sign = 1;
             } else if (c == ')') {
+                /**
+                 * Multiply significant first, then add number to result.
+                 */
                 res *= stack.pop();
                 res += stack.pop();
             } else if (c == '+') {
