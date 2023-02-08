@@ -96,7 +96,7 @@ public class BasicCalculator {
      * e.g. s = "-(12 + (2+1))"
      * i:0, c:'-', sign:-1
      * i:1, c:'(', res:0, sign:-1, stack:-1,0, res:0, sign:1
-     * i:2, c:'1', res:0, num:1, i:2 --> i:3, num:12, i:3 --> i:4, res=sign*num=1*12=12, i-- --> i:3, i++ --> i:4
+     * i:2, c:'1', res:0, num:1, i:2 --> i:3, num:12, i:3 --> i:4, res=res+sign*num=0+1*12=12, i-- --> i:3, i++ --> i:4
      * i:4, c:' '
      * i:5, c:'+', sign:1
      * i:6, c:' '
@@ -107,7 +107,7 @@ public class BasicCalculator {
      * i:11,c:')', stack:1,12,-1,0, res=res*pop=3*1=3, res=res+pop=3+12=15, stack:-1,0
      * i:12,c:')', stack:-1,0, res=res*pop=15*(-1)=-15, res=res+pop=-15+0=-15
      * return res:-15
-     * 
+     *
      * @param s
      * @return
      */
@@ -133,6 +133,9 @@ public class BasicCalculator {
                 res += sign * num;
                 i--;
             } else if (c == '(') {
+                /**
+                 * Store current result first, then save significant.
+                 */
                 stack.push(res);
                 stack.push(sign);
                 res = 0;
