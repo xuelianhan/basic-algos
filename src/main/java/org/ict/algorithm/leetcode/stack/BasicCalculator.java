@@ -74,7 +74,16 @@ public class BasicCalculator {
      * end-for-loop
      * res=res+sign*num=-15+1*0=-15
      * return res:-15
-     *
+     * -----------------------------------------------------
+     * e.g. s = "1 + 1"
+     * i:0, c:'1', num:1
+     * i:1, c:' '
+     * i:2, c:'+', res=res+sign*num=0+1*1=1, num:0, sign:1
+     * i:3, c:' '
+     * i:4, c:'1', num:1
+     * for-loop-end
+     * num==1, res=res+sign*num=1+1*1=2
+     * return res:2
      *
      * @param s
      * @return
@@ -106,6 +115,9 @@ public class BasicCalculator {
             }
         }
         if (num != 0) {
+            /**
+             * e.g. s = "1 + 1"
+             */
             res += sign * num;
         }
         return res;
