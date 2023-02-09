@@ -53,7 +53,7 @@ public class BasicCalculator {
     }
 
     /**
-     * Understanding the following solution.
+     *
      *
      * Time Cost 5ms
      *
@@ -113,8 +113,12 @@ public class BasicCalculator {
 
     /**
      * Understanding the following solution.
+     *
+     *
      * @param s
      * @return
+     * @author HelloWorld123456
+     * @see <a href="https://leetcode.com/problems/basic-calculator/solutions/62362/java-easy-version-to-understand/"></a>
      */
     public int calculateV1(String s) {
         int n = s.length();
@@ -125,19 +129,26 @@ public class BasicCalculator {
         for (int i = 0; i < n; i++) {
             if (Character.isDigit(s.charAt(i))) {
                 int num = s.charAt(i) - '0';
+                /**
+                 * A little trick here, so we don't need backward pointer-i,
+                 * please compare it in method calculate.
+                 */
                 while ((i + 1) < n && Character.isDigit(s.charAt(i + 1))) {
                     num = 10 * num + s.charAt(i + 1) - '0';
                     i++;
                 }
                 res += sign * num;
             } else if ('+' == s.charAt(i)) {
-                
+                sign = 1;
             } else if ('-' == s.charAt(i)) {
-
+                sign = -1;
             } else if ('(' == s.charAt(i)) {
-
+                stack.push(res);
+                stack.push(sign);
+                res = 0;
+                sign = 1;
             } else if (')' == s.charAt(i)) {
-
+                res = res* stack.pop() + stack.pop();
             }
         }
 
