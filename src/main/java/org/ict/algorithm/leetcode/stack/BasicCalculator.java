@@ -55,8 +55,23 @@ public class BasicCalculator {
     /**
      * Time Cost 5ms
      * e.g s = "-(12 + (2+1))"
-     * i:0, c:'-', res:0, sign:-1, stack:-1,0
-     * i:1, c:'('
+     * i:0, c:'-', res=res+sign*num=0, sign:-1, num:0, sign:-1
+     * i:1, c:'(', stack:-1,0, res:0, sign:1
+     * i:2, c:'1', num:1
+     * i:3, c:'2', num:12
+     * i:4, c:' '
+     * i:5, c:'+', res=res+sign*num=0+1*12=12, num:0, sign:1
+     * i:6, c:' '
+     * i:7, c:'(', stack:1,12,-1,0, res:0, sign:1
+     * i:8, c:'2', num:2
+     * i:9, c:'+', res=res+sign*num=0+1*2=2, num:0, sign:1
+     * i:10,c:'1', num:1
+     * i:11,c:')', res=res+sign*num=2+1=3, num:0, stack:1,12,-1,0, res=res*pop=3*1=3, stack:12,-1,0, res=res+pop=3+12=15, stack:-1,0
+     * i:12,c:')', res=res+sign*num=15+1*0=15, num:0, stack:-1,0, res=res*pop=15*(-1)=-15, res=res+pop=-15+0=-15, stack:empty
+     * end-for-loop
+     * res=res+sign*num=-15+1*0=-15
+     * return res:-15
+     * 
      * @param s
      * @return
      */
