@@ -125,7 +125,7 @@ public class BasicCalculator {
 
     /**
      * Understanding the following solution.
-     *
+     * Similar with calculate, but it is easier to understand than calculate.
      *
      * @param s
      * @return
@@ -144,6 +144,7 @@ public class BasicCalculator {
                 /**
                  * A little trick here, so we don't need backward pointer-i,
                  * please compare it in method calculate.
+                 * (i + 1) < n represents the boarder check, it should be always placed at the first.
                  */
                 while ((i + 1) < n && Character.isDigit(s.charAt(i + 1))) {
                     num = 10 * num + s.charAt(i + 1) - '0';
