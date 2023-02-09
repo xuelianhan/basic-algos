@@ -48,12 +48,15 @@ public class BasicCalculator {
         System.out.println(res);
     }
 
-    public int calculateV2(String s) {
+    public int calculateV3(String s) {
         return 0;
     }
 
     /**
+     * Understanding the following solution.
+     *
      * Time Cost 5ms
+     *
      * e.g s = "-(12 + (2+1))"
      * i:0, c:'-', res=res+sign*num=0, sign:-1, num:0, sign:-1
      * i:1, c:'(', stack:-1,0, res:0, sign:1
@@ -71,11 +74,12 @@ public class BasicCalculator {
      * end-for-loop
      * res=res+sign*num=-15+1*0=-15
      * return res:-15
-     * 
+     *
+     *
      * @param s
      * @return
      */
-    public int calculateV1(String s) {
+    public int calculateV2(String s) {
         int res = 0;
         int num = 0;
         int sign = 1;
@@ -101,13 +105,51 @@ public class BasicCalculator {
                 res += stack.pop();
             }
         }
-        res += sign * num;
+        if (num != 0) {
+            res += sign * num;
+        }
+        return res;
+    }
+
+    /**
+     * Understanding the following solution.
+     * @param s
+     * @return
+     */
+    public int calculateV1(String s) {
+        int n = s.length();
+        int sign = 1;
+        int res = 0;
+
+        Deque<Integer> stack = new ArrayDeque<>();
+        for (int i = 0; i < n; i++) {
+            if (Character.isDigit(s.charAt(i))) {
+                int num = s.charAt(i) - '0';
+                while ((i + 1) < n && Character.isDigit(s.charAt(i + 1))) {
+                    num = 10 * num + s.charAt(i + 1) - '0';
+                    i++;
+                }
+                res += sign * num;
+            } else if ('+' == s.charAt(i)) {
+                
+            } else if ('-' == s.charAt(i)) {
+
+            } else if ('(' == s.charAt(i)) {
+
+            } else if (')' == s.charAt(i)) {
+
+            }
+        }
+
         return res;
     }
 
 
     /**
+     * Understanding the following solution.
+     *
      * Time Cost 6ms
+     *
      * e.g. s = "-(12 + (2+1))"
      * i:0, c:'-', sign:-1
      * i:1, c:'(', res:0, sign:-1, stack:-1,0, res:0, sign:1
@@ -146,6 +188,9 @@ public class BasicCalculator {
                  * store current number addition into the result, then backward one step.
                  */
                 res += sign * num;
+                /**
+                 * Be sure to backward one step of pointer-i
+                 */
                 i--;
             } else if (c == '(') {
                 /**
