@@ -48,9 +48,6 @@ public class BasicCalculator {
         System.out.println(res);
     }
 
-    public int calculateV3(String s) {
-        return 0;
-    }
 
     /**
      *
