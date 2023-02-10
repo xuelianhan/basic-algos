@@ -36,18 +36,29 @@ public class SubArraySumsDivisibleByK {
 
     /**
      * Understanding the following solution
+     *
+     * (a % k + k) takes care of the cases where a < 0
+     *
      * @author lee215
      * @param nums
      * @param k
      * @return
      */
     public int subArraysDivByKV4(int[] nums, int k) {
+        /**
+         * If k = 2, then the remainder is 0,1
+         * If k = 5, then the remainder is 0,1,2,3,4
+         * So a frequency array with length-k is just what we need.
+         */
         int[] freq = new int[k];
         freq[0] = 1;
         int prefix = 0;
         int res = 0;
         for (int a : nums) {
             prefix = (prefix + a % k + k) % k;
+            /**
+             * Store the frequency of each remainder.
+             */
             res += freq[prefix]++;
         }
         return res;
@@ -78,6 +89,9 @@ public class SubArraySumsDivisibleByK {
                 remainder += k;
             }
             res += freq[remainder];
+            /**
+             * Store the frequency of each remainder.
+             */
             freq[remainder]++;
         }
         return res;
@@ -107,6 +121,9 @@ public class SubArraySumsDivisibleByK {
                 sum += k;
             }
             res += freq.getOrDefault(sum, 0);
+            /**
+             * Store the frequency of each remainder.
+             */
             freq.put(sum, freq.getOrDefault(sum, 0) + 1);
         }
         return res;
@@ -119,6 +136,7 @@ public class SubArraySumsDivisibleByK {
      * Time Complexity: O(N)
      * Space Complexity: O(K)
      *
+     * @author GeorgeChryso
      * @see <a href="https://leetcode.com/problems/subarray-sums-divisible-by-k/solutions/413234/whiteboard-explanation"></a>
      * @see <a href="https://leetcode.com/problems/subarray-sums-divisible-by-k/solutions/217980/java-o-n-with-hashmap-and-prefix-sum"></a>
      * @see <a href="https://leetcode.com/problems/subarray-sums-divisible-by-k/solutions/217985/java-c-python-prefix-sum"></a>
@@ -145,6 +163,9 @@ public class SubArraySumsDivisibleByK {
                 remainder += k;
             }
             res += freq[remainder];
+            /**
+             * Store the frequency of each remainder.
+             */
             freq[remainder]++;
         }
         return res;
@@ -175,6 +196,7 @@ public class SubArraySumsDivisibleByK {
      *
      * e.g.nums = [4,5,0,-2,-3,1], k = 5
      *
+     * @author GeorgeChryso
      * @see <a href="https://leetcode.com/problems/subarray-sums-divisible-by-k/solutions/413234/whiteboard-explanation"></a>
      * @see <a href="https://leetcode.com/problems/subarray-sums-divisible-by-k/solutions/217980/java-o-n-with-hashmap-and-prefix-sum"></a>
      * @see <a href="https://leetcode.com/problems/subarray-sums-divisible-by-k/solutions/217985/java-c-python-prefix-sum"></a>
@@ -201,6 +223,9 @@ public class SubArraySumsDivisibleByK {
             if(remainder < 0) {
                 remainder += k;
             }
+            /**
+             * Store the frequency of each remainder.
+             */
             res += freq.getOrDefault(remainder, 0);
             freq.put(remainder, freq.getOrDefault(remainder, 0) + 1);
         }
