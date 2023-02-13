@@ -68,6 +68,41 @@ public class SubArraySumsDivisibleByK {
     }
 
 
+
+
+    /**
+     * Understanding the following solution
+     * @author CanDong
+     * @param nums
+     * @param k
+     * @return
+     */
+    public int subArraysDivByKV3(int[] nums, int k) {
+        Map<Integer, Integer> freq = new HashMap<>();
+        /**
+         * Deal with first time "remainder == 0" situation.
+         */
+        freq.put(0, 1);
+        int res = 0;
+        int sum = 0;
+        for(int a : nums) {
+            sum = (sum + a) % k;
+            /**
+             * e.g. -1 % 5 = -1, but we need the positive mod 4
+             * This make mod always positive.
+             */
+            if(sum < 0) {
+                sum += k;
+            }
+            res += freq.getOrDefault(sum, 0);
+            /**
+             * Store the frequency of each remainder.
+             */
+            freq.put(sum, freq.getOrDefault(sum, 0) + 1);
+        }
+        return res;
+    }
+
     /**
      * Understanding the following solution
      * @param nums
@@ -96,38 +131,6 @@ public class SubArraySumsDivisibleByK {
              * Store the frequency of each remainder.
              */
             freq[remainder]++;
-        }
-        return res;
-    }
-
-    /**
-     * Understanding the following solution
-     * @param nums
-     * @param k
-     * @return
-     */
-    public int subArraysDivByKV3(int[] nums, int k) {
-        Map<Integer, Integer> freq = new HashMap<>();
-        /**
-         * Deal with first time "remainder == 0" situation.
-         */
-        freq.put(0, 1);
-        int res = 0;
-        int sum = 0;
-        for(int a : nums) {
-            sum = (sum + a) % k;
-            /**
-             * e.g. -1 % 5 = -1, but we need the positive mod 4
-             * This make mod always positive.
-             */
-            if(sum < 0) {
-                sum += k;
-            }
-            res += freq.getOrDefault(sum, 0);
-            /**
-             * Store the frequency of each remainder.
-             */
-            freq.put(sum, freq.getOrDefault(sum, 0) + 1);
         }
         return res;
     }
@@ -252,7 +255,9 @@ public class SubArraySumsDivisibleByK {
      * Just from that information alone we easily get a O(n^2) solution.
      * Compute all prefix sums, then check all pair to see if k divides the difference between them.
      *
-     * However, if we just exploit some information w.r.t to the remainder of each prefix sum we can manipulate this into a linear algorithm. Here's how.
+     * However, if we just exploit some information w.r.t(With Regard To)
+     * to the remainder of each prefix sum we can manipulate this into a linear algorithm.
+     * Here's how.
      *
      * Number Theory Part
      * I noted above that we need to find all prefix sum pairs (i,j) such tha (p[j] - p[i]) % K == 0.
