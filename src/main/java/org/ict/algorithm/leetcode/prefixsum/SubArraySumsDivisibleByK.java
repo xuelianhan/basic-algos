@@ -276,7 +276,18 @@ public class SubArraySumsDivisibleByK {
      * namely those that are divisible by K(for example,
      * k = 5, nums=[-5, 5, 1], then -5 and 5 is divided by k==5, they both match the condition).
      * That's why I add mod[0] at the end.
+     *
      * So counting pairs => N choose 2 = > n*(n-1) / 2.
+     * As for the formula for 'n choose 2'.
+     * We have n ways of selecting the first element,
+     * and (n - 1) ways of selecting the second element,
+     * as we cannot repeat the same element we already selected.
+     * So, it looks like the formula should be n(n - 1).
+     * However, this way, every subset would be counted twice over.
+     * That is, {A, B} and {B, A} would be counted separately,
+     * though are equivalent.
+     *
+     * So, 'n choose 2' is half this number: n(n - 1)/2
      *
      * @author EddieCarrillo
      * @see <a href="https://leetcode.com/problems/subarray-sums-divisible-by-k/solutions/217962/Java-Clean-O(n)-Number-Theory-+-Prefix-Sums/"></a>
