@@ -271,12 +271,13 @@ public class SubArraySumsDivisibleByK {
      * Then p[j] - p[i] = (b*K + r0) - (a*K + r1)
      * = b*K - a*K + r0 - r1 = K*(b-a) + r0 - r1
      * Again: p[j] - p[i] = K*(b-a) + (r0-r1), in other words
-     * K only divides p[j] - p[i] iff r0-r1 = 0 <-> r0 = r1 QED
+     * K only divides p[j] - p[i] iff r0-r1 = 0 <-> r0 = r1
+     * QED(written or said after an argument to show that you have proved something that you wanted to prove)
      *
-     * But we should not forget about elements in the array that do not need a pairing,
+     * However, we should not forget about elements in the array that do not need a pairing,
      * namely those that are divisible by K.
      * That's why I add mod[0] at the end.
-     * Also counting pairs => N choose 2 = > n*(n-1) / 2.
+     * So counting pairs => N choose 2 = > n*(n-1) / 2.
      *
      * @author EddieCarrillo
      * @see <a href="https://leetcode.com/problems/subarray-sums-divisible-by-k/solutions/217962/Java-Clean-O(n)-Number-Theory-+-Prefix-Sums/"></a>
