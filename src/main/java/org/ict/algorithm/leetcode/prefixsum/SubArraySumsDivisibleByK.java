@@ -68,8 +68,6 @@ public class SubArraySumsDivisibleByK {
     }
 
 
-
-
     /**
      * Understanding the following solution
      * @author CanDong
@@ -312,7 +310,7 @@ public class SubArraySumsDivisibleByK {
             }
         }
         /**
-         * Don't forget all numbers that divide K
+         * Don't forget all numbers that divide K (that's modGroups[0])
          */
         res += modGroups[0];
         return res;
