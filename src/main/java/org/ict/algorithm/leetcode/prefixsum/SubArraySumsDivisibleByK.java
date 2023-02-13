@@ -275,7 +275,8 @@ public class SubArraySumsDivisibleByK {
      * QED(written or said after an argument to show that you have proved something that you wanted to prove)
      *
      * However, we should not forget about elements in the array that do not need a pairing,
-     * namely those that are divisible by K.
+     * namely those that are divisible by K(for example,
+     * k = 5, nums=[-5, 5, 1], then -5 and 5 is divided by k==5, they both match the condition).
      * That's why I add mod[0] at the end.
      * So counting pairs => N choose 2 = > n*(n-1) / 2.
      *
