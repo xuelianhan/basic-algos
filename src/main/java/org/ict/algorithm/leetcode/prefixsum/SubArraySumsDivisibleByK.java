@@ -264,12 +264,12 @@ public class SubArraySumsDivisibleByK {
      *
      * According the division algorithm we can express p[j] and p[i] in the following way.
      * p[j] = bK + r0 where 0 <= r0 < K
-     * p[i] = aK + r1 where 0<= r1 < K
+     * p[i] = aK + r1 where 0 <= r1 < K
      *
      * Then p[j] - p[i] = (b*K + r0) - (a*K + r1)
      * = b*K - a*K + r0 - r1 = K*(b-a) + r0 - r1
      * Again: p[j] - p[i] = K*(b-a) + (r0-r1), in other words
-     * K only divides p[j] - p[i] iff r0-r1 = 0 <-> r0 = r1
+     * K only divides p[j] - p[i] if r0-r1 = 0 <-> r0 = r1
      * QED(written or said after an argument to show that you have proved something that you wanted to prove)
      *
      * However, we should not forget about elements in the array that do not need a pairing,
@@ -278,6 +278,10 @@ public class SubArraySumsDivisibleByK {
      * That's why I add mod[0] at the end.
      *
      * So counting pairs => N choose 2 = > n*(n-1) / 2.
+     * In short, it is the number of ways to choose two elements out of n elements.
+     * For example, '4 choose 2' is 6.
+     * If I have four elements - A, B, C and D.
+     * I can select two elements in the following ways: {A, B}, {A, C}, {A, D}, {B, C}, {B, D} and {C, D}.
      * As for the formula for 'n choose 2'.
      * We have n ways of selecting the first element,
      * and (n - 1) ways of selecting the second element,
@@ -299,6 +303,7 @@ public class SubArraySumsDivisibleByK {
         int n = nums.length;
         /**
          * There are k mod groups:0,...,k-1
+         * We classify all the prefix-sums into groups by the mod.
          */
         int[] modGroups = new int[k];
         int sum = 0;
