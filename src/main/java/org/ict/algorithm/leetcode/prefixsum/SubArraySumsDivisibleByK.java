@@ -45,7 +45,7 @@ public class SubArraySumsDivisibleByK {
      * @param k
      * @return
      */
-    public int subArraysDivByKV5(int[] nums, int k) {
+    public int subArraysDivByKV4(int[] nums, int k) {
         /**
          * If k = 2, then the remainder is 0,1
          * If k = 5, then the remainder is 0,1,2,3,4
@@ -101,39 +101,6 @@ public class SubArraySumsDivisibleByK {
         }
         return res;
     }
-
-    /**
-     * Understanding the following solution
-     * @param nums
-     * @param k
-     * @return
-     */
-    public int subArraysDivByKV4(int[] nums, int k) {
-        int[] freq = new int[k];
-        /**
-         * Deal with first time "remainder == 0" situation.
-         */
-        freq[0] = 1;
-        int res = 0;
-        int sum = 0;
-        for(int a : nums) {
-            sum += a;
-            int remainder = sum % k;
-            /**
-             * e.g. -1 % 5 = -1, but we need the positive mod 4
-             */
-            if(remainder < 0) {
-                remainder += k;
-            }
-            res += freq[remainder];
-            /**
-             * Store the frequency of each remainder.
-             */
-            freq[remainder]++;
-        }
-        return res;
-    }
-
 
     /**
      * Understanding the following solution
@@ -222,6 +189,9 @@ public class SubArraySumsDivisibleByK {
         int res = 0;
         int sum = 0;
         for(int a : nums) {
+            /**
+             * prefix-sum
+             */
             sum = sum + a;
             int remainder = sum % k;
             /**
@@ -324,6 +294,9 @@ public class SubArraySumsDivisibleByK {
         /**
          * Each item in the mod array means the number of same mod via prefix-sum mod k.
          * For every mod group, we choose two numbers from x.
+         * Each prefix sum represents a possible start and end of a possible interval.
+         * If there are N different prefix sums that have a certain reminder,
+         * then you can uniquely pair them up in N choose 2 ways (n(n-1) / 2).
          */
         int res = 0;
         for (int x : modGroups) {
