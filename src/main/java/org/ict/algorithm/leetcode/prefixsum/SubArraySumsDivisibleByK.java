@@ -63,7 +63,8 @@ public class SubArraySumsDivisibleByK {
         for (int a : nums) {
             prefix = (prefix + a % k + k) % k;
             /**
-             * Store the frequency of each remainder.
+             * Collect frequency firstly, then increment the frequency of each remainder.
+             * Don't reverse the order of the two operations.
              */
             res += freq[prefix]++;
         }
@@ -97,10 +98,11 @@ public class SubArraySumsDivisibleByK {
             if(sum < 0) {
                 sum += k;
             }
-            res += freq.getOrDefault(sum, 0);
             /**
-             * Store the frequency of each remainder.
+             * Collect frequency firstly, then increment the frequency of each remainder.
+             * Don't reverse the order of the two operations.
              */
+            res += freq.getOrDefault(sum, 0);
             freq.put(sum, freq.getOrDefault(sum, 0) + 1);
         }
         return res;
@@ -142,10 +144,11 @@ public class SubArraySumsDivisibleByK {
             if(remainder < 0) {
                 remainder += k;
             }
-            res += freq[remainder];
             /**
-             * Store the frequency of each remainder.
+             * Collect frequency firstly, then increment the frequency of each remainder.
+             * Don't reverse the order of the two operations.
              */
+            res += freq[remainder];
             freq[remainder]++;
         }
         return res;
@@ -213,7 +216,8 @@ public class SubArraySumsDivisibleByK {
                 remainder += k;
             }
             /**
-             * Store the frequency of each remainder.
+             * Collect frequency firstly, then increment the frequency of each remainder.
+             * Don't reverse the order of the two operations.
              */
             res += freq.getOrDefault(remainder, 0);
             freq.put(remainder, freq.getOrDefault(remainder, 0) + 1);
@@ -223,7 +227,7 @@ public class SubArraySumsDivisibleByK {
 
     /**
      * Understanding the following solution
-     * 
+     *
      * Logic:
      * I am already going to assume that you know about prefix sums before you read this.
      * We can all agree that for an array int[] A, where N = len(A), that there are N prefix sums.
@@ -294,8 +298,9 @@ public class SubArraySumsDivisibleByK {
             sum += nums[i];
             int group = sum % k;
             /**
-             * Correct negative modulus
+             * Correct negative modulus, otherwise, the negative number will cause index out of bound exception.
              * e.g. -5 % 5 = -1, -1 + 5 = 4
+             *
              */
             if (group < 0) {
                 group += k;
