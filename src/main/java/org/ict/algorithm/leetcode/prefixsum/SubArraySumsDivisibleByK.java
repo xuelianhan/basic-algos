@@ -54,6 +54,8 @@ public class SubArraySumsDivisibleByK {
         int[] freq = new int[k];
         /**
          * Deal with first time "remainder == 0" situation.
+         * If you forget to initialize the freq[0] to 1, but using the default value zero,
+         * then the final result will be less one than the correct value.
          */
         freq[0] = 1;
         int prefix = 0;
@@ -80,6 +82,8 @@ public class SubArraySumsDivisibleByK {
         Map<Integer, Integer> freq = new HashMap<>();
         /**
          * Deal with first time "remainder == 0" situation.
+         * If you forget to initialize the freq[0] to 1, but using the default value zero,
+         * then the final result will be less one than the correct value.
          */
         freq.put(0, 1);
         int res = 0;
@@ -188,6 +192,8 @@ public class SubArraySumsDivisibleByK {
         /**
          * Deal with first time "remainder == 0" situation.
          * "remainder == 0" means the prefix sum of current array is divisible by k.
+         * If you forget to initialize the freq[0] to 1, but using the default value zero,
+         * then the final result will be less one than the correct value.
          */
         freq.put(0, 1);
         int res = 0;
@@ -216,6 +222,8 @@ public class SubArraySumsDivisibleByK {
     }
 
     /**
+     * Understanding the following solution
+     * 
      * Logic:
      * I am already going to assume that you know about prefix sums before you read this.
      * We can all agree that for an array int[] A, where N = len(A), that there are N prefix sums.
