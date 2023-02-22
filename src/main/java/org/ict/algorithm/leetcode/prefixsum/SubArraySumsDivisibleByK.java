@@ -4,7 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Given an integer array nums and an integer k, return the number of non-empty subarrays that have a sum divisible by k.
+ * Given an integer array nums and an integer k,
+ * return the number of non-empty sub-arrays that have a sum divisible by k.
  *
  * A subarray is a contiguous part of an array.
  *
@@ -258,7 +259,7 @@ public class SubArraySumsDivisibleByK {
      * Here's how.
      *
      * Number Theory Part
-     * I noted above that we need to find all prefix sum pairs (i,j) such tha (p[j] - p[i]) % K == 0.
+     * I noted above we need to find all prefix sum pairs (i,j) such tha (p[j] - p[i]) % K == 0.
      * But this is only true, if and only if p[j] % K == p[i] % K
      * Why is this?
      *
@@ -269,7 +270,7 @@ public class SubArraySumsDivisibleByK {
      * Then p[j] - p[i] = (b*K + r0) - (a*K + r1)
      * = b*K - a*K + r0 - r1 = K*(b-a) + r0 - r1
      * Again: p[j] - p[i] = K*(b-a) + (r0-r1), in other words
-     * K only divides p[j] - p[i] if r0-r1 = 0 <-> r0 = r1
+     * K only divides p[j] - p[i] if r0 - r1 = 0 <-> r0 = r1
      * QED(written or said after an argument to show that you have proved something that you wanted to prove)
      *
      * However, we should not forget about elements in the array that do not need a pairing,
@@ -312,6 +313,7 @@ public class SubArraySumsDivisibleByK {
             int group = sum % k;
             /**
              * Correct negative modulus
+             * e.g. -5 % 5 = -1, -1 + 5 = 4
              */
             if (group < 0) {
                 group += k;
@@ -319,6 +321,10 @@ public class SubArraySumsDivisibleByK {
             modGroups[group]++;
         }
 
+        /**
+         * Each item in the mod array means the number of same mod via prefix-sum mod k.
+         * For every mod group, we choose two numbers from x.
+         */
         int res = 0;
         for (int x : modGroups) {
             if (x > 1) {
@@ -327,6 +333,8 @@ public class SubArraySumsDivisibleByK {
         }
         /**
          * Don't forget all numbers that divide K (that's modGroups[0])
+         * Above code, we use x > 1 to exclude case of x == 0,
+         * so we need to add case x == 0 here.
          */
         res += modGroups[0];
         return res;
