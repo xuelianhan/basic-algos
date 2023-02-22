@@ -108,6 +108,8 @@ public class SubArraySumsDivisibleByK {
      * Time Complexity: O(N)
      * Space Complexity: O(K)
      *
+     *
+     *
      * @author GeorgeChryso
      * @see <a href="https://leetcode.com/problems/subarray-sums-divisible-by-k/solutions/413234/whiteboard-explanation"></a>
      * @see <a href="https://leetcode.com/problems/subarray-sums-divisible-by-k/solutions/217980/java-o-n-with-hashmap-and-prefix-sum"></a>
@@ -121,6 +123,8 @@ public class SubArraySumsDivisibleByK {
         int[] freq = new int[k];
         /**
          * Deal with first time "remainder == 0" situation.
+         * If you forget to initialize the freq[0] to 1, but using the default value zero,
+         * then the final result will be less one than the correct value.
          */
         freq[0] = 1;
         int res = 0;
