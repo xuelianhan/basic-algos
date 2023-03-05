@@ -196,7 +196,7 @@ public class SubArraySumsDivisibleByK {
      * i:2, [5], [0], [5, 0], there has three arrays.
      * i:3, [5], [0], [5, 0], there has three arrays too.
      * i:4, [5], [0], [5, 0], [-2, -3], [0, -2, -3], [5, 0, -2, -3], there has six arrays.
-     * i:5, [5], [0], [5, 0], [-2, -3], [0, -2, -3], [5, 0, -2, -3], [4,5,0,-2,-3,1], there has seven arrays.
+     * i:5, [5], [0], [5, 0], [-2, -3], [0, -2, -3], [5, 0, -2, -3], [4, 5, 0, -2, -3, 1], there has seven arrays.
      *
      * @author GeorgeChryso
      * @see <a href="https://leetcode.com/problems/subarray-sums-divisible-by-k/solutions/413234/whiteboard-explanation"></a>
