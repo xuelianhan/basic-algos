@@ -7,7 +7,7 @@ import java.util.Map;
  * Given an integer array nums and an integer k,
  * return the number of non-empty sub-arrays that have a sum divisible by k.
  *
- * A subarray is a contiguous part of an array.
+ * A sub-array is a contiguous part of an array.
  *
  *
  *
@@ -15,7 +15,7 @@ import java.util.Map;
  *
  * Input: nums = [4,5,0,-2,-3,1], k = 5
  * Output: 7
- * Explanation: There are 7 subarrays with a sum divisible by k = 5:
+ * Explanation: There are 7 sub-arrays with a sum divisible by k = 5:
  * [4, 5, 0, -2, -3, 1], [5], [5, 0], [5, 0, -2, -3], [0], [0, -2, -3], [-2, -3]
  * Example 2:
  *
@@ -189,6 +189,14 @@ public class SubArraySumsDivisibleByK {
      * i:4, sum = 7 - 3 = 4, remainder:4 % 5 = 4, freq(4)=3, res = 3 + 3 = 6, freq(4)=4
      * i:5, sum = 4 + 1 = 5, remainder:5 % 5 = 0, freq(0)=1, res = 6 + 1 = 7, freq(0)=2
      * return res:7
+     *
+     * let's see the sub-arrays:
+     * i:0, [], there is no array that have a sum divisible by 5
+     * i:1, [5], there has one array.
+     * i:2, [5], [0], [5, 0], there has three arrays.
+     * i:3, [5], [0], [5, 0], there has three arrays too.
+     * i:4, [5], [0], [5, 0], [-2, -3], [0, -2, -3], [5, 0, -2, -3], there has six arrays.
+     * i:5, [5], [0], [5, 0], [-2, -3], [0, -2, -3], [5, 0, -2, -3], [4,5,0,-2,-3,1], there has seven arrays.
      *
      * @author GeorgeChryso
      * @see <a href="https://leetcode.com/problems/subarray-sums-divisible-by-k/solutions/413234/whiteboard-explanation"></a>
