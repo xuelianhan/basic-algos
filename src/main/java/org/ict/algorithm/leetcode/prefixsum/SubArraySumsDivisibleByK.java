@@ -191,7 +191,7 @@ public class SubArraySumsDivisibleByK {
      * return res:7
      *
      * let's see the sub-arrays:
-     * i:0, [], there is no array that have a sum divisible by 5
+     * i:0, [], there is no array that having a sum divisible by 5
      * i:1, [5], there has one array.
      * i:2, [5], [0], [5, 0], there has three arrays.
      * i:3, [5], [0], [5, 0], there has three arrays too.
@@ -235,7 +235,6 @@ public class SubArraySumsDivisibleByK {
             /**
              * Collect frequency in the previous step firstly, then increment the frequency of each remainder.
              * Don't reverse the order of the two operations.
-             * Why? sub-array is a range, we collect range
              */
             res += freq.getOrDefault(remainder, 0);
             freq.put(remainder, freq.getOrDefault(remainder, 0) + 1);
