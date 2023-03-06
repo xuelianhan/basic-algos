@@ -63,7 +63,7 @@ public class SubArraySumsDivisibleByK {
         for (int a : nums) {
             prefix = (prefix + a % k + k) % k;
             /**
-             * Collect frequency firstly, then increment the frequency of each remainder.
+             * Collect frequency in the previous step firstly, then increment the frequency of each remainder.
              * Don't reverse the order of the two operations.
              */
             res += freq[prefix]++;
@@ -99,7 +99,7 @@ public class SubArraySumsDivisibleByK {
                 sum += k;
             }
             /**
-             * Collect frequency firstly, then increment the frequency of each remainder.
+             * Collect frequency in the previous step firstly, then increment the frequency of each remainder.
              * Don't reverse the order of the two operations.
              */
             res += freq.getOrDefault(sum, 0);
@@ -149,7 +149,7 @@ public class SubArraySumsDivisibleByK {
                 remainder += k;
             }
             /**
-             * Collect frequency firstly, then increment the frequency of each remainder.
+             * Collect frequency in the previous step firstly, then increment the frequency of each remainder.
              * Don't reverse the order of the two operations.
              */
             res += freq[remainder];
@@ -233,8 +233,9 @@ public class SubArraySumsDivisibleByK {
                 remainder += k;
             }
             /**
-             * Collect frequency firstly, then increment the frequency of each remainder.
+             * Collect frequency in the previous step firstly, then increment the frequency of each remainder.
              * Don't reverse the order of the two operations.
+             * Why? sub-array is a range, we collect range
              */
             res += freq.getOrDefault(remainder, 0);
             freq.put(remainder, freq.getOrDefault(remainder, 0) + 1);
