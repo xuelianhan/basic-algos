@@ -88,22 +88,22 @@ public class SubArraySumsDivisibleByK {
          */
         freq.put(0, 1);
         int res = 0;
-        int sum = 0;
+        int remainder = 0;
         for(int a : nums) {
-            sum = (sum + a) % k;
+            remainder = (remainder + a) % k;
             /**
              * e.g. -1 % 5 = -1, but we need the positive mod 4
              * This make mod always positive.
              */
-            if(sum < 0) {
-                sum += k;
+            if(remainder < 0) {
+                remainder += k;
             }
             /**
              * Collect frequency in the previous step firstly, then increment the frequency of each remainder.
              * Don't reverse the order of the two operations.
              */
-            res += freq.getOrDefault(sum, 0);
-            freq.put(sum, freq.getOrDefault(sum, 0) + 1);
+            res += freq.getOrDefault(remainder, 0);
+            freq.put(remainder, freq.getOrDefault(remainder, 0) + 1);
         }
         return res;
     }
