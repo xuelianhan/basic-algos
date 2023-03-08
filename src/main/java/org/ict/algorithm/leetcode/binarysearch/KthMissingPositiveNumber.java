@@ -84,6 +84,22 @@ public class KthMissingPositiveNumber {
      * Time O(logN)
      * Space O(1)
      *
+     * e.g. arr = [2,3,4,7,11], k = 5, expect 9
+     * left:0, right:5, 0 < 5, m = (0 + 5) / 2 = 2, arr[2] - 2 - 1 = 4 - 3 = 1, 1 < 5, left = m + 1 = 3
+     * left:3, right:5, 3 < 5, m = (3 + 5) / 2 = 4, arr[4] - 4 - 1 = 11 - 5= 6, 6 > 5, right = m = 4
+     * left:3, right:4, 3 < 4, m = (3 + 4) / 2 = 3, arr[3] - 3 - 1 = 7 - 4 = 3, 3 < 5, left = m + 1 = 3 + 1 = 4
+     * left:4, right:4, left == right, while-loop ended.
+     * -------------------------------------------------
+     * the index of left-1 is the target index we found, but this problem requires return the k-th missing number
+     * instead of index.
+     * (arr[left-1] - left) means the count of missing numbers before the arr[left-1].
+     * So the k-th missing number equals arr[left-1] + (k - (arr[left-1] - left)).
+     * arr[left-1] + (k - (arr[left-1] - left)) = arr[left-1] + k - arr[left-1] + left = k + left.
+     * -------------------------------------------------
+     * left + k = 4 + 5 = 9
+     * return (left + k):9
+     *
+     *
      * @see <a href="https://leetcode.com/problems/kth-missing-positive-number/solutions/779999/java-c-python-o-logn"></a>
      * @author lee215
      * @param arr
