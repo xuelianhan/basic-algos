@@ -50,7 +50,7 @@ public class KthMissingPositiveNumber {
 
     /**
      * Understanding the following solution.
-     * 
+     *
      * e.g. arr = [2,3,4,7,11], k = 5, expect 9
      * 1 2 3 4 5
      * 2 3 4 7 11
