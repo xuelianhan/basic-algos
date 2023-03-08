@@ -95,11 +95,11 @@ public class KthMissingPositiveNumber {
         int left = 0;
         int right = n;
         while (left < right) {
-            int mid = (left + right) / 2;
-            if (arr[mid] - mid - 1 < k) {
-                left = mid + 1;
+            int m = (left + right) / 2;
+            if (arr[m] - m - 1 < k) {
+                left = m + 1;
             } else {
-                right = mid;
+                right = m;
             }
         }
         return left + k;
