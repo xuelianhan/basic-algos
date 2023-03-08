@@ -141,6 +141,8 @@ public class KokoEatingBananas {
     }
 
     /**
+     * Binary search between [1, 10^9] or [1, max(piles)] to find the result.
+     * Time complexity: O(NlogM)
      * e.g. piles = [3,6,7,11], h = 8, expected 4
      *
      * @author lee215
