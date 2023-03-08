@@ -70,9 +70,9 @@ public class KthMissingPositiveNumber {
      *
      * If there are m number not missing,
      * that is A[0], A[1] ... A[m-1],
-     * the number of missing under A[m] is A[m] - 1 - m.
+     * the number of missing under A[m] is A[m] - 1 - m, or you can see it as A[m] - (m + 1).
      *
-     * If A[m] - 1 - m < k, m is too small, we update left = m.
+     * If A[m] - 1 - m < k, m is too small, we update left = m + 1.
      * If A[m] - 1 - m >= k, m is big enough, we update right = m.
      *
      * Note that, we exit the while-loop, l = r,
