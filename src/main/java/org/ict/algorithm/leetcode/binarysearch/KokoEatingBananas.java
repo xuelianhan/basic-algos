@@ -103,7 +103,8 @@ public class KokoEatingBananas {
      * e.g.
      * piles = [312884470], h = 968709470
      *
-     *
+     * @author lee215
+     * @see <a href="https://leetcode.com/problems/koko-eating-bananas/solutions/152324/java-c-python-binary-search/?orderBy=most_votes"></a>
      * @param piles
      * @param h
      * @return
