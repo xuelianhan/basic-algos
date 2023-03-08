@@ -62,10 +62,10 @@ public class KthMissingPositiveNumber {
      * At here, we get 6, 6 is the first element greater than k=5, and the index of 6 is 4.
      * After that, we go back to the original array:[2,3,4,7,11], the value at index 4 is 11.
      * So, we know that our answer is between 7 and 11.
-     *
+     * -----------------------------------------------------
      * Explanation
      * Let's assume the final result is x, A is the original array.
-     * And there are m number not missing in the range of [1, x].
+     * There are m number not missing in the range of [1, x].
      * Binary search the m in range [0, A.size()].
      *
      * If there are m number not missing,
