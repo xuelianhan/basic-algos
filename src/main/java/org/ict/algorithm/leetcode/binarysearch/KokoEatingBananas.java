@@ -1,5 +1,7 @@
 package org.ict.algorithm.leetcode.binarysearch;
 
+import java.util.Arrays;
+
 /**
  * Koko loves to eat bananas.
  * There are n piles of bananas, the i-th pile has piles[i] bananas.
@@ -38,25 +40,140 @@ package org.ict.algorithm.leetcode.binarysearch;
  * @author sniper
  * @date 08 Mar, 2023
  * LC875, Medium
+ * TikTok
  */
 public class KokoEatingBananas {
 
+    public static void main(String[] args) {
+        KokoEatingBananas instance = new KokoEatingBananas();
+        int[] piles = {312884470};
+        int h = 968709470;
+        instance.minEatingSpeedV1(piles, h);
+    }
 
     /**
      * e.g.piles = [3,6,7,11], h = 8
-     * k:3, piles = [3,3,3,3,3,1,3,3,3,2], the size is greater than 8.
-     * k:4, piles = [3,4,2,4,3,4,4,3], the size is equal to 8, k:4 is the minimum number
-     * k:5, piles = [3,5,1,5,2,5,5,1], the size is equal to 8, but k:5 is not the minimum number
+     * k:3, piles = [3,3,3,3,3,1,3,3,3,2], the size of piles is greater than 8.
+     * k:4, piles = [3,4,2,4,3,4,4,3], the size of piles is equal to 8, k:4 is the minimum number.
+     * k:5, piles = [3,5,1,5,2,5,5,1], the size of piles is equal to 8, but k:5 is not the minimum number.
+     * @author zhijun_liao
+     * @see <a href="https://leetcode.com/problems/koko-eating-bananas/solutions/769702/python-clear-explanation-powerful-ultimate-binary-search-template-solved-many-problems/?orderBy=most_votes"></a>
+     * @param piles
+     * @param h
+     * @return
+     */
+    public int minEatingSpeedV3(int[] piles, int h) {
+        int n = piles.length;
+        Arrays.sort(piles);
+        if (n == h) {
+            return piles[n - 1];
+        }
+        //todo
+        return 0;
+    }
+
+
+    /**
+     *
+     * @author GraceMeng
+     * @see <a href="https://leetcode.com/problems/koko-eating-bananas/solutions/152506/binary-search-java-python-with-explanations/?orderBy=most_votes"></a>
+     * @param piles
+     * @param h
+     * @return
+     */
+    public int minEatingSpeedV2(int[] piles, int h) {
+        int n = piles.length;
+        Arrays.sort(piles);
+        if (n == h) {
+            return piles[n - 1];
+        }
+
+        return 0;
+    }
+
+    /**
+     * Binary search between [1, 10^9] or [1, max(piles)] to find the result.
+     * Time complexity: O(NlogM)
+     *
+     * (p + m - 1) / m equal to ceil(p / m) (just personal behavior)
+     *
+     * Here you find another similar problem.
+     * {@link MinimizeMaxDistanceToGasStation}
+     *
+     * e.g.
+     * piles = [312884470], h = 968709470
+     *
      *
      * @param piles
      * @param h
      * @return
      */
-    public int minEatingSpeed(int[] piles, int h) {
-        //3,6,7,11
+    public int minEatingSpeedV1(int[] piles, int h) {
+        /**
+         * 1 <= piles[i] <= 10^9
+         * So left start from 1 other than zero.
+         * If left starts with zero, so the statement
+         * (pile + mid - 1) / lead to java.lang.ArithmeticException: / by zero.
+         */
+        int left = 1;
+        int right = 1000000000;
+        while (left < right) {
+            int mid = (left + right) / 2;
+            int len = 0;
+            for (int pile : piles) {
+                /**
+                 * Notice here using pile * 1.0 instead of pile itself,
+                 * because ceil need double parameter.
+                 * If you miss the 1.0, divide operator would lose the accuracy and less than or equal to int.
+                 * Math.ceil: greater than or equal to
+                 * Math.floor: less than or equal to
+                 */
+                len += (pile + mid - 1) / mid;
+            }
+            if (len > h) {
+                left = mid + 1;
+            } else {
+                right = mid;
+            }
+        }
+        return left;
+    }
 
-        //3,4,2,4,3,4,4,3
-        //todo
-        return 0;
+    /**
+     * e.g. piles = [3,6,7,11], h = 8, expected 4
+     *
+     * @author lee215
+     * @see <a href="https://leetcode.com/problems/koko-eating-bananas/solutions/152324/java-c-python-binary-search/?orderBy=most_votes"></a>
+     * @param piles
+     * @param h
+     * @return
+     */
+    public int minEatingSpeed(int[] piles, int h) {
+        /**
+         * 1 <= piles[i] <= 10^9
+         * So left start from 1 other than zero.
+         */
+        int left = 1;
+        int right = 1000000000;
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            int len = 0;
+            for (int pile : piles) {
+                /**
+                 * Notice here using pile * 1.0 instead of pile itself,
+                 * because ceil need double parameter.
+                 * If you miss the 1.0, divide operator would lose the accuracy and less than or equal to int.
+                 * Math.ceil: greater than or equal to
+                 * Math.floor: less than or equal to
+                 */
+                len += Math.ceil(pile * 1.0 / mid);
+            }
+            if (len > h) {
+                left = mid + 1;
+            } else {
+                right = mid;
+            }
+        }
+        return left;
     }
 }
