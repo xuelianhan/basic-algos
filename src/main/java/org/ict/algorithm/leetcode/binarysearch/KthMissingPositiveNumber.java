@@ -128,8 +128,8 @@ public class KthMissingPositiveNumber {
      * Note that the array is in strictly increasing order and hence there is no repetition.
      *
      * Think of this case,
-     * if every element in the array greater than k , the answer would be k.
-     * So, for every element <= k ,
+     * if every element in the array greater than k, the answer would be k.
+     * So, for every element <= k,
      * you need to increment k. (i.e. when you iterate from left to right).
      * Since the array is in increasing order,
      * you can break out of the loop on the first instance this condition fails.
