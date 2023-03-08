@@ -49,6 +49,8 @@ public class KthMissingPositiveNumber {
     }
 
     /**
+     * Understanding the following solution.
+     * 
      * e.g. arr = [2,3,4,7,11], k = 5, expect 9
      * 1 2 3 4 5
      * 2 3 4 7 11
@@ -124,6 +126,7 @@ public class KthMissingPositiveNumber {
     }
 
     /**
+     * Understanding the following solution.
      *
      * Note that the array is in strictly increasing order and hence there is no repetition.
      *
@@ -157,6 +160,8 @@ public class KthMissingPositiveNumber {
     }
 
     /**
+     * Understanding the following solution.
+     *
      * Using HashSet to store all the elements in the array.
      *
      * e.g. arr = [2,3,4,7,11], k = 5, expect 9
