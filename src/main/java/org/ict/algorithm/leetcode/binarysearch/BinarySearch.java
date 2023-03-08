@@ -51,7 +51,7 @@ public class BinarySearch {
 
     /**
      * Think about edge cases:
-     * when 'left' and 'right' are close enough and search space become small (like - size 3, 2,1)
+     * when 'left' and 'right' are close enough and search space become small(like size 3,2,1)
      *
      * @param nums
      * @param target
@@ -80,7 +80,7 @@ public class BinarySearch {
 
     /**
      * Think about edge cases:
-     * when 'left' and 'right' are close enough and search space become small (like - size 3, 2,1)
+     * when 'left' and 'right' are close enough and search space become small(like size 3,2,1)
      * @param nums
      * @param target
      * @return

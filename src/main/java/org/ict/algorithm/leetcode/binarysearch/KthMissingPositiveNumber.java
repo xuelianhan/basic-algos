@@ -76,7 +76,8 @@ public class KthMissingPositiveNumber {
      * If A[m] - 1 - m >= k, m is big enough, we update right = m.
      *
      * Note that, we exit the while-loop, l = r,
-     * which equals to the number of missing number used.
+     * which equals to the count of missing number used.
+     *
      * So the Kth positive number will be l + k.
      *
      *
@@ -89,6 +90,7 @@ public class KthMissingPositiveNumber {
      * left:3, right:5, 3 < 5, m = (3 + 5) / 2 = 4, arr[4] - 4 - 1 = 11 - 5= 6, 6 > 5, right = m = 4
      * left:3, right:4, 3 < 4, m = (3 + 4) / 2 = 3, arr[3] - 3 - 1 = 7 - 4 = 3, 3 < 5, left = m + 1 = 3 + 1 = 4
      * left:4, right:4, left == right, while-loop ended.
+     *
      * -------------------------------------------------
      * the index of left-1 is the target index we found, but this problem requires return the k-th missing number
      * instead of index.
