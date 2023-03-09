@@ -114,7 +114,7 @@ public class KokoEatingBananas {
          */
         while (lo < hi) {
             int k = lo + ((hi - lo) >> 1);
-            if (canEatAll(piles, k, h)) {
+            if (canEatAllV2(piles, k, h)) {
                 /**
                  * Can eat all bananas within h hours,
                  * so we slow the eating speed k, and we assign k to hi.
@@ -129,6 +129,28 @@ public class KokoEatingBananas {
             }
         }
         return lo;
+    }
+
+    private boolean canEatAllV2(int[] piles, int k, int h) {
+        /**
+         * hours take to eat all bananas at speed k.
+         */
+        int countHours = 0;
+        for (int pile : piles) {
+            countHours += (pile + k - 1) / k;
+        }
+        return countHours <= h;
+    }
+
+    private boolean canEatAllV1(int[] piles, int k, int h) {
+        /**
+         * hours take to eat all bananas at speed k.
+         */
+        int countHours = 0;
+        for (int pile : piles) {
+            countHours += Math.ceil(pile * 1.0 / k);
+        }
+        return countHours <= h;
     }
 
     /**
