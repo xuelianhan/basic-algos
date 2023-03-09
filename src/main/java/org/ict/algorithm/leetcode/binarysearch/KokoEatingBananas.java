@@ -110,9 +110,9 @@ public class KokoEatingBananas {
          * Notice here:
          * 1.lo < hi, not (lo <= hi).
          * 2.countHours <= h, then (hi = k), not (hi = k - 1)
+         * 3.((hi - lo) >> 1), don't forget the outer-brace!
          */
         while (lo < hi) {
-
             int k = lo + ((hi - lo) >> 1);
             if (canEatAll(piles, k, h)) {
                 hi = k;
