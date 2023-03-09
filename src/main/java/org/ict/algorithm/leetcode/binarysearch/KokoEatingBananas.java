@@ -105,7 +105,7 @@ public class KokoEatingBananas {
             return piles[n - 1];
         }
         /**
-         *  1 <= piles[i] <= 10^9
+         * 1 <= piles[i] <= 10^9
          */
         int lo = 1;
         int hi = piles[n - 1];
