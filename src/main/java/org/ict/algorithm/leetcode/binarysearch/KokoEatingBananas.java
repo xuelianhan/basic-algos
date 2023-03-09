@@ -46,9 +46,11 @@ public class KokoEatingBananas {
 
     public static void main(String[] args) {
         KokoEatingBananas instance = new KokoEatingBananas();
-        int[] piles = {312884470};
-        int h = 968709470;
-        instance.minEatingSpeedV1(piles, h);
+        //int[] piles = {3,6,7,11};
+        //int h = 8;
+        int[] piles = {805306368,805306368,805306368};
+        int h = 1000000000;
+        instance.minEatingSpeedV2(piles, h);
     }
 
     /**
@@ -74,6 +76,18 @@ public class KokoEatingBananas {
 
 
     /**
+     * e.g. piles = [805306368,805306368,805306368], h = 1000000000, expected 3
+     *
+     * Each hour, Koko chooses some pile of bananas, and eats K bananas from that pile.
+     * Due to (1 <= piles[i] <= 10^9), K is limited to range:[lo, hi], lo:1, hi:max(piles[i]),
+     * Or setting 10^9 to hi brute-force.
+     * We need to find K that satisfied the following conditions:
+     *   1.For any K, K can enable Koko to eat all the bananas within h hours.
+     * Let's mark total sum as totalSum,
+     * for each pile[i] in piles array:
+     *     totalSum = totalSum + Math.ceil(pile[i]/K);
+     * totalSum <= h;
+     *   2.In range from lo to hi, we need to find the minimum K' from all the K-set.
      *
      * @author GraceMeng
      * @see <a href="https://leetcode.com/problems/koko-eating-bananas/solutions/152506/binary-search-java-python-with-explanations/?orderBy=most_votes"></a>
@@ -87,9 +101,51 @@ public class KokoEatingBananas {
         if (n == h) {
             return piles[n - 1];
         }
+        /**
+         *  1 <= piles[i] <= 10^9
+         */
+        int lo = 1;
+        int hi = piles[n - 1];
+        /**
+         * Notice here:
+         * 1.lo < hi, not (lo <= hi).
+         * 2.countHours <= h, then (hi = k), not (hi = k - 1)
+         */
+        while (lo < hi) {
 
-        return 0;
+            int k = lo + ((hi - lo) >> 1);
+            if (canEatAll(piles, k, h)) {
+                hi = k;
+            } else {
+                lo = k + 1;
+            }
+        }
+        return lo;
     }
+
+    /**
+     * e.g. piles = [805306368,805306368,805306368], h = 1000000000
+     *
+     *
+     * @param piles
+     * @param k
+     * @param h
+     * @return
+     */
+    private boolean canEatAll(int[] piles, int k, int h) {
+        /**
+         * hours take to eat all bananas at speed k.
+         */
+        int countHours = 0;
+        for (int pile : piles) {
+            countHours += pile / k;
+            if (pile % k != 0) {
+                countHours++;
+            }
+        }
+        return countHours <= h;
+    }
+
 
     /**
      * Binary search between [1, 10^9] or [1, max(piles)] to find the result.
