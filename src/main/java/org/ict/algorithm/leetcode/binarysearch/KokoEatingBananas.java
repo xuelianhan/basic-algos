@@ -97,6 +97,9 @@ public class KokoEatingBananas {
      */
     public int minEatingSpeedV2(int[] piles, int h) {
         int n = piles.length;
+        /**
+         * We need to use the maximum value later, so sorting at here.
+         */
         Arrays.sort(piles);
         if (n == h) {
             return piles[n - 1];
@@ -116,7 +119,7 @@ public class KokoEatingBananas {
             int k = lo + ((hi - lo) >> 1);
             if (canEatAllV2(piles, k, h)) {
                 /**
-                 * Can eat all bananas within h hours,
+                 * Koko can eat all bananas within h hours,
                  * so we slow the eating speed k, and we assign k to hi.
                  */
                 hi = k;
@@ -131,12 +134,20 @@ public class KokoEatingBananas {
         return lo;
     }
 
+    /**
+     * Whether Koko can eat all bananas within h hours at speed k of each hour.
+     * @param piles
+     * @param k
+     * @param h
+     * @return
+     */
     private boolean canEatAllV2(int[] piles, int k, int h) {
         /**
          * hours take to eat all bananas at speed k.
          */
         int countHours = 0;
         for (int pile : piles) {
+            // The effect is same as countHours += Math.ceil(pile * 1.0 / k) but more fast.
             countHours += (pile + k - 1) / k;
         }
         return countHours <= h;
