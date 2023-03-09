@@ -115,8 +115,16 @@ public class KokoEatingBananas {
         while (lo < hi) {
             int k = lo + ((hi - lo) >> 1);
             if (canEatAll(piles, k, h)) {
+                /**
+                 * Can eat all bananas within h hours,
+                 * so we slow the eating speed k, and we assign k to hi.
+                 */
                 hi = k;
             } else {
+                /**
+                 * Koko cannot eat all bananas within h hours,
+                 * so we need to speed up k, and let lo to be k + 1.
+                 */
                 lo = k + 1;
             }
         }
@@ -124,9 +132,8 @@ public class KokoEatingBananas {
     }
 
     /**
+     * Whether Koko can eat all bananas within h hours at speed k of each hour.
      * e.g. piles = [805306368,805306368,805306368], h = 1000000000
-     *
-     *
      * @param piles
      * @param k
      * @param h
