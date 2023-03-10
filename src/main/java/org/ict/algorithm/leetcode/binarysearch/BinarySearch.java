@@ -81,7 +81,6 @@ public class BinarySearch {
         while (low <= high) {
             //  Prevent (left + right) overflow
             int mid = low + (high - low) / 2;
-            //System.out.println("low:"  + low +", high:" + high + ", mid:" + mid + ", nums[" + mid + "]:" + nums[mid]);
             if (nums[mid] < target) {
                 low = mid + 1;
             } else if(nums[mid] > target) {
@@ -109,7 +108,6 @@ public class BinarySearch {
         while (low <= high) {
             //  Prevent (left + right) overflow
             int mid = low + (high - low) / 2;
-            //System.out.println("low:"  + low +", high:" + high + ", mid:" + mid + ", nums[" + mid + "]:" + nums[mid]);
             if (nums[mid] == target) {
                 return mid;
             } else if (nums[mid] < target) {
