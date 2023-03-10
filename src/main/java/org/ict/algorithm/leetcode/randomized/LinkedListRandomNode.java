@@ -47,11 +47,33 @@ package org.ict.algorithm.leetcode.randomized;
  */
 public class LinkedListRandomNode {
 
-    public LinkedListRandomNode(ListNode head) {
+    private ListNode head;
 
+    public LinkedListRandomNode(ListNode head) {
+        this.head = head;
     }
 
+    /**
+     * The first N Data kept, and the later Data kept with probability N/i.
+     * The i is the current Data number,
+     * and if kept, one of the original N Data is being randomly eliminated.
+     * Finally, we can return these N data.
+     *
+     * Requirement:
+     * The probability that the N numbers left being selected remains at N/L,
+     * L keeps increasing for N < i <= L,
+     * so that N/L is associated with i in all processes
+     * N/L = N/(N+1) * (N+1)/(N+2) *... * (L-1)/L
+     *
+     * How to make the remaining N experience (i-1)/i,
+     * so that the new i has 1/i probability to challenge each member in N,
+     * 1/i = 1/N * N/i,
+     * do N/i for i = (1-1/N *N/(N+1)) * (1-1/(N+2))*... *(1-1/L)
+     *
+     * @return
+     */
     public int getRandom() {
+
         return 0;
     }
 
