@@ -57,7 +57,8 @@ public class LinkedListRandomNode {
     }
 
     /**
-     * The i is the current Data number,
+     * todo
+     * Assume i is the current Data number,
      * The first N Data kept, and then later Data kept with probability N/i,
      * and if it being kept, one of the original N Data is being randomly eliminated.
      * Finally, we can return these N data.

@@ -50,6 +50,8 @@ public class BinarySearch {
 
     /**
      * Find the maximum number that satisfy with <= x(x or precursor of x)
+     * mid = (l + r)>>1, mid doesn't get value of r
+     * mid = (l + r + 1)>>1, mid doesn't get value of l
      * @param nums
      * @param x
      * @return
@@ -73,6 +75,8 @@ public class BinarySearch {
 
     /**
      * Find the minimum number that satisfy with >= x(x or successor of x)
+     * mid = (l + r)>>1, mid doesn't get value of r
+     * mid = (l + r + 1)>>1, mid doesn't get value of l
      * @param nums
      * @param x
      * @return
