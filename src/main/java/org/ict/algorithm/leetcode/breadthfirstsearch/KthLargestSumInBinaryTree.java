@@ -44,6 +44,12 @@ import java.util.*;
  */
 public class KthLargestSumInBinaryTree {
 
+    /**
+     * Breadth-First-Search + Sort
+     * @param root
+     * @param k
+     * @return
+     */
     public long kthLargestLevelSumV1(TreeNode root, int k) {
         Queue<TreeNode> queue = new LinkedList<>();
         queue.add(root);
@@ -73,6 +79,12 @@ public class KthLargestSumInBinaryTree {
     }
 
 
+    /**
+     * Breadth-First-Search + MinHeap
+     * @param root
+     * @param k
+     * @return
+     */
     public long kthLargestLevelSum(TreeNode root, int k) {
         Queue<TreeNode> queue = new LinkedList<>();
         queue.add(root);
