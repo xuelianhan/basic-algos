@@ -120,13 +120,13 @@ public class KokoEatingBananas {
             if (canEatAllV2(piles, k, h)) {
                 /**
                  * Koko can eat all bananas within h hours,
-                 * so we slow the eating speed k, and we assign k to hi.
+                 * so we slow the eating speed k, that is why we assign k to hi.
                  */
                 hi = k;
             } else {
                 /**
                  * Koko cannot eat all bananas within h hours,
-                 * so we need to speed up k, and let lo to be k + 1.
+                 * so we need to speed up k, and we let lo to be k + 1.
                  */
                 lo = k + 1;
             }
