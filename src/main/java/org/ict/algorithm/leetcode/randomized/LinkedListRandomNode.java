@@ -1,5 +1,7 @@
 package org.ict.algorithm.leetcode.randomized;
 
+import java.util.Random;
+
 /**
  * Given a singly linked list, return a random node's value from the linked list.
  * Each node must have the same probability of being chosen.
@@ -34,7 +36,7 @@ package org.ict.algorithm.leetcode.randomized;
  *
  * The number of nodes in the linked list will be in the range [1, 10^4].
  * -10^4 <= Node.val <= 10^4
- * At most 104 calls will be made to getRandom.
+ * At most 10^4 calls will be made to getRandom.
  *
  *
  * Follow up:
@@ -44,6 +46,7 @@ package org.ict.algorithm.leetcode.randomized;
  * @author sniper
  * @date 10 Mar, 2023
  * LC382, Medium
+ * Google
  */
 public class LinkedListRandomNode {
 
@@ -54,9 +57,9 @@ public class LinkedListRandomNode {
     }
 
     /**
-     * The first N Data kept, and the later Data kept with probability N/i.
      * The i is the current Data number,
-     * and if kept, one of the original N Data is being randomly eliminated.
+     * The first N Data kept, and then later Data kept with probability N/i,
+     * and if it being kept, one of the original N Data is being randomly eliminated.
      * Finally, we can return these N data.
      *
      * Requirement:
@@ -73,8 +76,22 @@ public class LinkedListRandomNode {
      * @return
      */
     public int getRandom() {
-
-        return 0;
+        int res = head.val;
+        int i = 2;
+        ListNode cur = head.next;
+        Random r = new Random();
+        while (cur != null) {
+            /**
+             * Choose one number in [0, i - 1]
+             */
+            int j = r.nextInt(i);
+            if (j == 0) {
+                res = cur.val;
+            }
+            i++;
+            cur = cur.next;
+        }
+        return res;
     }
 
     /**
