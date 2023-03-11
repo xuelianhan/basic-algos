@@ -62,6 +62,9 @@ public class KokoEatingBananas {
      * k:3, piles = [3,3,3,3,3,1,3,3,3,2], the size of piles is greater than 8.
      * k:4, piles = [3,4,2,4,3,4,4,3], the size of piles is equal to 8, k:4 is the minimum number.
      * k:5, piles = [3,5,1,5,2,5,5,1], the size of piles is equal to 8, but k:5 is not the minimum number.
+     *
+     * e.g.piles = [312884470], h = 968709470
+     *
      * @author zhijun_liao
      * @author GraceMeng
      * @see <a href="https://leetcode.com/problems/koko-eating-bananas/solutions/769702/python-clear-explanation-powerful-ultimate-binary-search-template-solved-many-problems/?orderBy=most_votes"></a>
@@ -70,8 +73,18 @@ public class KokoEatingBananas {
      * @return
      */
     public int minEatingSpeedV3(int[] piles, int h) {
-        int l = 0;
+        /**
+         * Notice here l start from 1, not zero.
+         * because 1 <= piles[i] <= 10^9
+         */
+        int l = 1;
         int r = getMaxPile(piles);
+        /**
+         * Deal with case e.g. piles = [2,2], h=2
+         */
+        if (r == piles.length) {
+            return r;
+        }
         while (l < r) {
             int speed = l + (r - l) / 2;
             if (canEatAllV2(piles, speed, h)) {
