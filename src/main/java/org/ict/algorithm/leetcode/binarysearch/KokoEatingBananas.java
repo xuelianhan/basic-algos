@@ -77,23 +77,27 @@ public class KokoEatingBananas {
          * Notice here l start from 1, not zero.
          * because 1 <= piles[i] <= 10^9
          */
-        int l = 1;
-        int r = getMaxPile(piles);
+        int lo = 1;
+        int hi = getMaxPile(piles);
         /**
          * Deal with case e.g. piles = [2,2], h=2
          */
-        if (r == piles.length) {
-            return r;
+        if (hi == piles.length) {
+            return hi;
         }
-        while (l < r) {
-            int speed = l + (r - l) / 2;
+        while (lo < hi) {
+            int speed = lo + (hi - lo) / 2;
             if (canEatAllV2(piles, speed, h)) {
-                r = speed;
+                /**
+                 * If Koko can eat all piles of banana with speed in h hours,
+                 * she can slow down her eating speed.
+                 */
+                hi = speed;
             } else {
-                l = speed + 1;
+                lo = speed + 1;
             }
         }
-        return l;
+        return lo;
     }
 
     private int getMaxPile(int[] piles) {
