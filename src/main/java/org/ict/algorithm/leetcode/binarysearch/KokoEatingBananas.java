@@ -54,29 +54,47 @@ public class KokoEatingBananas {
     }
 
     /**
+     * A rather common misunderstanding of binary search is that people often think this technique could only be used in simple scenario
+     * like "Given a sorted array, find a specific value in it".
+     * As a matter of fact, it can be applied to much more complicated situations.
+     *
      * e.g.piles = [3,6,7,11], h = 8
      * k:3, piles = [3,3,3,3,3,1,3,3,3,2], the size of piles is greater than 8.
      * k:4, piles = [3,4,2,4,3,4,4,3], the size of piles is equal to 8, k:4 is the minimum number.
      * k:5, piles = [3,5,1,5,2,5,5,1], the size of piles is equal to 8, but k:5 is not the minimum number.
      * @author zhijun_liao
+     * @author GraceMeng
      * @see <a href="https://leetcode.com/problems/koko-eating-bananas/solutions/769702/python-clear-explanation-powerful-ultimate-binary-search-template-solved-many-problems/?orderBy=most_votes"></a>
      * @param piles
      * @param h
      * @return
      */
     public int minEatingSpeedV3(int[] piles, int h) {
-        int n = piles.length;
-        Arrays.sort(piles);
-        if (n == h) {
-            return piles[n - 1];
+        int l = 0;
+        int r = getMaxPile(piles);
+        while (l < r) {
+            int speed = l + (r - l) / 2;
+            if (canEatAllV2(piles, speed, h)) {
+                r = speed;
+            } else {
+                l = speed + 1;
+            }
         }
-        //todo
-        return 0;
+        return l;
+    }
+
+    private int getMaxPile(int[] piles) {
+        int maxPile = Integer.MIN_VALUE;
+        for (int pile : piles) {
+            maxPile = Math.max(pile, maxPile);
+        }
+        return maxPile;
     }
 
 
     /**
      * e.g. piles = [805306368,805306368,805306368], h = 1000000000, expected 3
+     * e.g. piles = [2, 2], h = 2, expected 2
      *
      * Each hour, Koko chooses some pile of bananas, and eats K bananas from that pile.
      * Due to (1 <= piles[i] <= 10^9), K is limited to range:[lo, hi], lo:1, hi:max(piles[i]),
@@ -99,8 +117,15 @@ public class KokoEatingBananas {
         int n = piles.length;
         /**
          * We need to use the maximum value later, so sorting at here.
+         * Actually, we don't need the piles sorted, we only need its maximum.
+         * So the following lines can be replaced with getMaxPile method.
+         * Please see the details in minEatingSpeedV3.
          */
         Arrays.sort(piles);
+        /**
+         * Deal with case:
+         * e.g piles = [2, 2], h = 2
+         */
         if (n == h) {
             return piles[n - 1];
         }
