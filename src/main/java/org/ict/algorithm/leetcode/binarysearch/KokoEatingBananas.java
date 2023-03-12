@@ -78,7 +78,7 @@ public class KokoEatingBananas {
          * because 1 <= piles[i] <= 10^9
          */
         int lo = 1;
-        int hi = getMaxPile(piles);
+        int hi = getMaxPileV1(piles);
         /**
          * Deal with case e.g. piles = [2,2], h=2
          */
