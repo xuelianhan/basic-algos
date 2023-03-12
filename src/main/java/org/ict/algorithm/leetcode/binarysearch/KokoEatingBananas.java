@@ -100,6 +100,10 @@ public class KokoEatingBananas {
         return lo;
     }
 
+    private int getMaxPileV1(int[] piles) {
+        return Arrays.stream(piles).max().getAsInt();
+    }
+
     private int getMaxPile(int[] piles) {
         int maxPile = Integer.MIN_VALUE;
         for (int pile : piles) {
