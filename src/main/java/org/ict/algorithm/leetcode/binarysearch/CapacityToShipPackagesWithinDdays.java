@@ -52,6 +52,7 @@ import java.util.Arrays;
  * @author sniper
  * @date 12 Mar, 2023
  * LC1011, Medium
+ * This problem is similar with {@link KokoEatingBananas}
  */
 public class CapacityToShipPackagesWithinDdays {
 
@@ -66,7 +67,12 @@ public class CapacityToShipPackagesWithinDdays {
         //instance.canShipAll(weights, 14, 5);
         System.out.println(res);
     }
-    
+
+    public int shipWithinDaysV1(int[] weights, int days) {
+        //todo
+        return 0;
+    }
+
     public int shipWithinDays(int[] weights, int days) {
         int lo = Arrays.stream(weights).max().getAsInt();
         int hi = Arrays.stream(weights).sum();
