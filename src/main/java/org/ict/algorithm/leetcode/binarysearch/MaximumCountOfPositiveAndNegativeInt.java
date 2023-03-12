@@ -40,7 +40,9 @@ package org.ict.algorithm.leetcode.binarysearch;
 public class MaximumCountOfPositiveAndNegativeInt {
 
     public int maximumCountV1(int[] nums) {
-        return 0;
+        int negativeIdx = binarySearch(nums, 0);
+        int positiveIdx = binarySearch(nums, 1);
+        return Math.max(negativeIdx, nums.length - positiveIdx);
     }
 
     public int maximumCount(int[] nums) {
