@@ -36,7 +36,14 @@ public class MinimizeMaxDistanceToGasStation {
 
 
     /**
+     * Please note that the new k station may add at any position between current stations
      * e.g. stations = [10, 19, 25, 27, 56, 63, 70, 87, 96, 97], k = 3
+     * The distance array: [9, 6, 2, 29, 7, 7, 17, 9, 1]
+     * We can put partition point at any gap of stations, let's take an example:
+     * [10, 19, 25, 27-p1-p2-56, 63, 70-p3-87, 96, 97]
+     * We can use two-points p1, p2 to split 27-56 into three parts with equal length,
+     * then we use one-point p3 to split 70-87 into two halves.
+     *
      *
      * @param stations
      * @param k add k more gas stations
