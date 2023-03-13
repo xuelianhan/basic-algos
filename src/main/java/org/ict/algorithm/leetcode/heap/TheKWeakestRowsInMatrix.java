@@ -165,7 +165,7 @@ public class TheKWeakestRowsInMatrix {
     }
 
     /**
-     * Find the first position of zero
+     * Find the first position of zero using sequence-search
      * @param nums
      * @param x
      * @return
