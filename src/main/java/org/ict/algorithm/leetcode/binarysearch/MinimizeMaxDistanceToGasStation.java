@@ -5,8 +5,7 @@ package org.ict.algorithm.leetcode.binarysearch;
  * we have gas stations at positions stations[0], stations[1], ..., stations[N-1],
  * where N = stations.length.
  *
- * Now, we add K more gas stations so that D,
- * the maximum distance between adjacent gas stations, is minimized.
+ * Now, we add K more gas stations so that D, the maximum distance between adjacent gas stations, is minimized.
  *
  * Return the smallest possible value of D.
  *
@@ -27,8 +26,25 @@ package org.ict.algorithm.leetcode.binarysearch;
 public class MinimizeMaxDistanceToGasStation {
 
     public static void main(String[] args) {
-        int[] stations = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-        int k = 9;
+        //int[] stations = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        //int k = 9;
+
+        /**
+         * The distance between two stations marked as D,
+         * D(1,2):1
+         * D(2,5):3
+         * The maximum D is 3
+         * k:1, so we put the newly station at the half point between 2 and 5,
+         * then the gas stations develop like this:
+         * 1_2__P__5
+         * D(1,2):1
+         * D(2,P):1.5
+         * D(P,5):1.5
+         * The maximum D change from 3 to 1.5
+         */
+        int[] stations = {1, 2, 5};
+        int k = 1;
+
         MinimizeMaxDistanceToGasStation instance = new MinimizeMaxDistanceToGasStation();
         double res = instance.minMaxGasDist(stations, k);
         System.out.println(res);
