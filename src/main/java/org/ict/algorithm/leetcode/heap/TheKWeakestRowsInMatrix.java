@@ -65,6 +65,15 @@ import java.util.PriorityQueue;
  */
 public class TheKWeakestRowsInMatrix {
 
+    public static void main(String[] args) {
+        int[][] mat = {{1, 0}, {0, 0}, {1, 0}};
+        int k = 2;
+        TheKWeakestRowsInMatrix instance = new TheKWeakestRowsInMatrix();
+        int oneCount = instance.countOne(mat[1]);
+        System.out.println(oneCount);
+        //instance.kWeakestRowsV1(mat, k);
+    }
+
     public int[] kWeakestRowsV1(int[][] mat, int k) {
         PriorityQueue<int[]> maxHeap = new PriorityQueue<>(((o1, o2) -> {
             if (o1[0] < o2[0]) {
@@ -80,6 +89,7 @@ public class TheKWeakestRowsInMatrix {
              * [OneCounts, row index]
              */
             int[] pair = new int[] {countOne(mat[i]), i};
+            //System.out.println(pair);
             maxHeap.offer(pair);
             if (maxHeap.size() > k) {
                 maxHeap.poll();
@@ -93,8 +103,16 @@ public class TheKWeakestRowsInMatrix {
         return res;
     }
 
+    /**
+     * Using binary search to find the count of one.
+     * @param nums
+     * @return
+     */
     private int countOne(int[] nums) {
-        int lo = 1;
+        /**
+         * Notice here lo starts from zero, hi starts from nums.length
+         */
+        int lo = 0;
         int hi = nums.length;
         while (lo < hi) {
             int mid = lo + (hi - lo) / 2;
