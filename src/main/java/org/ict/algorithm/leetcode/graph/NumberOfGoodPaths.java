@@ -1,8 +1,6 @@
 package org.ict.algorithm.leetcode.graph;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 /**
  * There is a tree (i.e. a connected, undirected graph with no cycles) consisting of n nodes numbered from 0 to n - 1 and exactly n - 1 edges.
@@ -80,19 +78,46 @@ public class NumberOfGoodPaths {
      * @return
      */
     public int numberOfGoodPaths(int[] vals, int[][] edges) {
-        int n = vals.length;
-        List<HashSet<Integer>> tree = new ArrayList<>();
-        for (int i = 0; i < n; i++) {
-            tree.add(new HashSet<>());
-        }
+        final int n = vals.length;
+        int ans = n;
+        UnionFind uf = new UnionFind(n);
+        List<Integer>[] graph = new List[n];
+        Map<Integer, List<Integer>> valToNodes = new TreeMap<>();
+
+        for (int i = 0; i < n; ++i)
+            graph[i] = new ArrayList<>();
         for (int[] edge : edges) {
-            tree.get(edge[0]).add(edge[1]);
-            tree.get(edge[1]).add(edge[0]);
+            final int u = edge[0];
+            final int v = edge[1];
+            if (vals[v] <= vals[u]) {
+                graph[u].add(v);
+            }
+
+            if (vals[u] <= vals[v]) {
+                graph[v].add(u);
+            }
         }
 
-        int res = n;
-        //todo
-        return res;
+        for (int i = 0; i < vals.length; ++i) {
+            valToNodes.putIfAbsent(vals[i], new ArrayList<>());
+            valToNodes.get(vals[i]).add(i);
+        }
+
+        for (Map.Entry<Integer, List<Integer>> entry : valToNodes.entrySet()) {
+            final int val = entry.getKey();
+            List<Integer> nodes = entry.getValue();
+            for (final int u : nodes)
+                for (final int v : graph[u])
+                    uf.unionByRank(u, v);
+            Map<Integer, Integer> rootCount = new HashMap<>();
+            for (final int u : nodes)
+                rootCount.merge(uf.find(u), 1, Integer::sum);
+            // For each group, C(count, 2) := count * (count - 1) / 2
+            for (final int count : rootCount.values())
+                ans += count * (count - 1) / 2;
+        }
+
+        return ans;
     }
 
     class UnionFind {
