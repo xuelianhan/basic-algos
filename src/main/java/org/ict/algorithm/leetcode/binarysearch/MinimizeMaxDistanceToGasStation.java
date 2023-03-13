@@ -11,15 +11,15 @@ package org.ict.algorithm.leetcode.binarysearch;
  * Return the smallest possible value of D.
  *
  * Example:
- *
  * Input: stations = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], K = 9
  * Output: 0.500000
- * Note:
  *
+ * Note:
  * stations.length will be an integer in range [10, 2000].
  * stations[i] will be an integer in range [0, 10^8].
  * K will be an integer in range [1, 10^6].
  * Answers within 10^-6 of the true value will be accepted as correct.
+ *
  * @author sniper
  * @date 08 Mar, 2023
  * LC774, Hard
@@ -37,7 +37,7 @@ public class MinimizeMaxDistanceToGasStation {
 
     /**
      * e.g. stations = [10, 19, 25, 27, 56, 63, 70, 87, 96, 97], k = 3
-     * 
+     *
      * @param stations
      * @param k add k more gas stations
      * @return
