@@ -111,6 +111,8 @@ public class TheKWeakestRowsInMatrix {
     private int countOne(int[] nums) {
         /**
          * Notice here lo starts from zero, hi starts from nums.length
+         * because the count of one in the array-nums may not exist(zero in this case),
+         * or all one of nums(nums.length in this case).
          */
         int lo = 0;
         int hi = nums.length;
