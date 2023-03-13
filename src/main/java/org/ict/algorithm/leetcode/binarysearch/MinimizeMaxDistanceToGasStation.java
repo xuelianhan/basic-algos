@@ -60,7 +60,7 @@ public class MinimizeMaxDistanceToGasStation {
          */
         while (hi - lo > 1e-6) {
             double mid = lo + (hi - lo) / 2;
-            if (feasible(stations, mid, k)) {
+            if (feasible(stations, k, mid)) {
                 hi = mid;
             } else {
                 lo = mid;
@@ -69,7 +69,7 @@ public class MinimizeMaxDistanceToGasStation {
         return lo;
     }
 
-    private boolean feasible(int[] stations, double mid, int k) {
+    private boolean feasible(int[] stations, int k, double mid) {
         int cnt = 0;
         int n = stations.length;
         for (int i = 0; i < n - 1; i++) {
