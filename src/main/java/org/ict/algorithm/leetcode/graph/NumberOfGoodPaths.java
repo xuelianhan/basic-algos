@@ -104,7 +104,6 @@ public class NumberOfGoodPaths {
         }
 
         for (Map.Entry<Integer, List<Integer>> entry : valToNodes.entrySet()) {
-            final int val = entry.getKey();
             List<Integer> nodes = entry.getValue();
             for (final int u : nodes)
                 for (final int v : graph[u])
@@ -121,7 +120,7 @@ public class NumberOfGoodPaths {
     }
 
     class UnionFind {
-        
+
         public UnionFind(int n) {
             id = new int[n];
             rank = new int[n];
