@@ -1,5 +1,7 @@
 package org.ict.algorithm.leetcode.heap;
 
+import java.util.PriorityQueue;
+
 /**
  * You are given an m x n binary matrix mat of 1's (representing soldiers) and 0's (representing civilians).
  * The soldiers are positioned in front of the civilians.
@@ -9,6 +11,7 @@ package org.ict.algorithm.leetcode.heap;
  *
  * The number of soldiers in row i is less than the number of soldiers in row j.
  * Both rows have the same number of soldiers and i < j.
+ *
  * Return the indices of the k weakest rows in the matrix ordered from weakest to strongest.
  *
  *
@@ -63,13 +66,99 @@ package org.ict.algorithm.leetcode.heap;
 public class TheKWeakestRowsInMatrix {
 
     public int[] kWeakestRowsV1(int[][] mat, int k) {
-        return null;
+        PriorityQueue<int[]> maxHeap = new PriorityQueue<>(((o1, o2) -> {
+            if (o1[0] < o2[0]) {
+                return 1;
+            } else if (o1[0] > o2[0]) {
+                return -1;
+            } else {
+                return (o1[1] < o2[1] ? 1 : -1);
+            }
+        }));
+        for (int i = 0; i < mat.length; i++) {
+            /**
+             * [OneCounts, row index]
+             */
+            int[] pair = new int[] {countOne(mat[i]), i};
+            maxHeap.offer(pair);
+            if (maxHeap.size() > k) {
+                maxHeap.poll();
+            }
+        }
+
+        int[] res = new int[k];
+        while (k > 0) {
+            res[--k] = maxHeap.poll()[1];
+        }
+        return res;
+    }
+
+    private int countOne(int[] nums) {
+        int lo = 1;
+        int hi = nums.length;
+        while (lo < hi) {
+            int mid = lo + (hi - lo) / 2;
+            if (nums[mid] == 1) {
+                lo = mid + 1;
+            } else {
+                hi = mid;
+            }
+        }
+        return lo;
     }
 
 
+    /**
+     * Time Cost 1ms
+     * @param mat
+     * @param k
+     * @return
+     */
     public int[] kWeakestRows(int[][] mat, int k) {
+        int m = mat.length;
+        PriorityQueue<int[]> maxHeap = new PriorityQueue<>(((o1, o2) -> {
+            if (o1[0] < o2[0]) {
+                return 1;
+            } else if (o1[0] > o2[0]) {
+                return -1;
+            } else {
+                return (o1[1] < o2[1] ? 1 : -1);
+            }
+        }));
+
+        for (int i = 0; i < m; i++) {
+            int pos = findZero(mat[i], 0);
+            int[] pair = new int[] {pos, i};
+            maxHeap.offer(pair);
+            if (maxHeap.size() > k) {
+                maxHeap.poll();
+            }
+        }
+
         int[] res = new int[k];
+        int i = k - 1;
+        while (!maxHeap.isEmpty()) {
+            res[i] = maxHeap.poll()[1];
+            i--;
+        }
         return res;
+    }
+
+    /**
+     * Find the first position of zero
+     * @param nums
+     * @param x
+     * @return
+     */
+    private int findZero(int[] nums, int x) {
+        int pos = -1;
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] == 0) {
+                pos = i;
+                break;
+            }
+        }
+        return (pos == -1 ? nums.length : pos);
     }
 
 }
