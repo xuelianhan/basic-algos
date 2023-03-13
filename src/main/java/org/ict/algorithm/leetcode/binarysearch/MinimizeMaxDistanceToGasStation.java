@@ -72,10 +72,12 @@ public class MinimizeMaxDistanceToGasStation {
         double lo = 0.0;
         double hi = 1e8;
         /**
-         * Answers within 10^-6 of the true value will be accepted as correct
+         * Answers within 10^-6 of the true value will be accepted as correct.
+         * The word within used here is not accurate.
+         * I think it refers the smallest gap(gap lower-bound)
          */
         while (hi - lo > 1e-6) {
-            double mid = lo + (hi - lo) / 2;
+            double mid = lo + (hi - lo) / 2.0;
             if (feasible(stations, k, mid)) {
                 hi = mid;
             } else {
