@@ -26,10 +26,30 @@ package org.ict.algorithm.leetcode.binarysearch;
  */
 public class MinimizeMaxDistanceToGasStation {
 
+    public static void main(String[] args) {
+        int[] stations = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        int k = 9;
+        MinimizeMaxDistanceToGasStation instance = new MinimizeMaxDistanceToGasStation();
+        double res = instance.minMaxGasDist(stations, k);
+        System.out.println(res);
+    }
 
+
+    /**
+     *
+     * @param stations
+     * @param k add k more gas stations
+     * @return
+     */
     public double minMaxGasDist(int[] stations, int k) {
+        /**
+         * stations[i] will be an integer in range [0, 10^8]
+         */
         double lo = 0.0;
         double hi = 1e8;
+        /**
+         * Answers within 10^-6 of the true value will be accepted as correct
+         */
         while (hi - lo > 1e-6) {
             double mid = lo + (hi - lo) / 2;
             if (feasible(stations, mid, k)) {
