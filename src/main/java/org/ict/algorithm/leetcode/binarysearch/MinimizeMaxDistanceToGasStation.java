@@ -60,6 +60,13 @@ public class MinimizeMaxDistanceToGasStation {
      * We can use two-points p1, p2 to split 27-56 into three parts with equal length,
      * then we use one-point p3 to split 70-87 into two halves.
      *
+     * Sort stations and initialize low to 0 and high to the difference between the maximum element in stations,
+     * and the minimum element in stations.
+     * While high - low > 1e-6, do binary search.
+     * Each time set mid to be the average of low and high and use mid as a candidate of D to calculate the minimum number of gas stations to be added.
+     * If the minimum number of gas stations to be added is less than or equal to K,
+     * then set high = mid.
+     * Otherwise, set low = mid. Finally, return low.
      *
      * @param stations
      * @param k add k more gas stations
