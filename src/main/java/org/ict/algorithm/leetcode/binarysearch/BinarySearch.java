@@ -49,6 +49,33 @@ public class BinarySearch {
     }
 
     /**
+     * Binary Search in Real Numbers
+     * @param nums
+     * @param eps
+     * @param lowerBound
+     * @param upperBound
+     * @return
+     */
+    public double searchV7(double[] nums, double eps, double lowerBound, double upperBound) {
+        double lo = 0;
+        double hi = upperBound;
+        while (hi -lo > eps) {
+            double mid = lo + (hi - lo) / 2.0;
+            if (calc(mid)) {
+                hi = mid;
+            } else {
+                lo = mid;
+            }
+        }
+        return lo;
+    }
+
+    private boolean calc(double mid) {
+        //function to decide how to search
+        return true;
+    }
+
+    /**
      * Find the maximum number that satisfy with <= x(x or precursor of x)
      * mid = (l + r)>>1, mid doesn't get value of r
      * mid = (l + r + 1)>>1, mid doesn't get value of l
