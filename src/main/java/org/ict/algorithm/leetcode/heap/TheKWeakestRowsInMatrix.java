@@ -71,7 +71,7 @@ public class TheKWeakestRowsInMatrix {
         TheKWeakestRowsInMatrix instance = new TheKWeakestRowsInMatrix();
         int oneCount = instance.countOne(mat[1]);
         System.out.println(oneCount);
-        //instance.kWeakestRowsV1(mat, k);
+        instance.kWeakestRowsV1(mat, k);
     }
 
     public int[] kWeakestRowsV1(int[][] mat, int k) {

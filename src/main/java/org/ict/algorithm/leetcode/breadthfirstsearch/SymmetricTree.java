@@ -22,9 +22,9 @@ import java.util.Queue;
  *Note:
  *Bonus points if you could solve it both recursively and iteratively.
  * LC101
- * @see https://www.geeksforgeeks.org/check-symmetric-binary-tree-iterative-approach/
- * @see https://www.geeksforgeeks.org/symmetric-tree-tree-which-is-mirror-image-of-itself/
- * @see https://stackoverflow.com/questions/8436623/check-if-a-binary-tree-is-a-mirror-image-or-symmetric
+ * @see <a href="https://www.geeksforgeeks.org/check-symmetric-binary-tree-iterative-approach/"></a>
+ * @see <a href="https://www.geeksforgeeks.org/symmetric-tree-tree-which-is-mirror-image-of-itself/"></a>
+ * @see <a href="https://stackoverflow.com/questions/8436623/check-if-a-binary-tree-is-a-mirror-image-or-symmetric"></a>
  *
  */
 public class SymmetricTree {
@@ -41,8 +41,23 @@ public class SymmetricTree {
 		boolean result = isSymmetric(root);
 		System.out.println(result);
 	}
-	
-	
+
+	public boolean isSymmetricV2(TreeNode root) {
+		return root == null || isSymmetricRecursive(root.left, root.right);
+	}
+
+	public boolean isSymmetricRecursive(TreeNode left, TreeNode right) {
+		if (left == null || right == null) {
+			return left == right;
+		}
+		if (left.val != right.val) {
+			return false;
+		}
+		return (isSymmetricRecursive(left.left, right.right)
+				&& isSymmetricRecursive(left.right, right.left));
+	}
+
+
 	/**
 	 * In this post, iterative approach is discussed.We use queue here.
 	 * Note that for a symmetric tree whose elements at every level are palindromic.
@@ -55,8 +70,8 @@ public class SymmetricTree {
 	 * Similarly, if we insert the right child of left subtree followed by the left child of right subtree
 	 * in the queue, we also need to ensure there values are equal too.
 	 * 
-	 * @see https://www.geeksforgeeks.org/check-symmetric-binary-tree-iterative-approach/
-	 * @see https://stackoverflow.com/questions/8436623/check-if-a-binary-tree-is-a-mirror-image-or-symmetric
+	 * @see <a href="https://www.geeksforgeeks.org/check-symmetric-binary-tree-iterative-approach/"></a>
+	 * @see <a href="https://stackoverflow.com/questions/8436623/check-if-a-binary-tree-is-a-mirror-image-or-symmetric"></a>
 	 * @param root
 	 * @return
 	 */
@@ -95,21 +110,7 @@ public class SymmetricTree {
 		/* if the flow reaches here, return true*/
         return true;
     }
-	
-	public static boolean isSymmetricV2(TreeNode root) {
-		return isSymmetricRecursive(root, root);
-	}
-	
-	public static boolean isSymmetricRecursive(TreeNode left, TreeNode right) {
-		if (left == null || right == null) {
-			return (left == null && right == null);
-		}
-		return ((left.val == right.val) 
-				&& (isSymmetricRecursive(left.left, left.right))
-				&& (isSymmetricRecursive(right.left, right.right)));
-	}
-	
-	
+
 
 	/**
 	 * Definition for a binary tree node.
