@@ -27,4 +27,26 @@ package org.ict.algorithm.leetcode.binarysearch;
 public class MinimizeMaxDistanceToGasStation {
 
 
+    public double minMaxGasDist(int[] stations, int k) {
+        double lo = 0.0;
+        double hi = 1e8;
+        while (hi - lo > 1e-6) {
+            double mid = lo + (hi - lo) / 2;
+            if (feasible(stations, mid, k)) {
+                hi = mid;
+            } else {
+                lo = mid;
+            }
+        }
+        return lo;
+    }
+
+    private boolean feasible(int[] stations, double mid, int k) {
+        int cnt = 0;
+        int n = stations.length;
+        for (int i = 0; i < n - 1; i++) {
+            cnt += (stations[i + 1] - stations[i]) / mid;
+        }
+        return cnt <= k;
+    }
 }
