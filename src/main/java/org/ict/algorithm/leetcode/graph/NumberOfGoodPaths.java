@@ -121,25 +121,19 @@ public class NumberOfGoodPaths {
     }
 
     class UnionFind {
-
-        private int[] id;
-
-        private int[] rank;
-
+        
         public UnionFind(int n) {
             id = new int[n];
             rank = new int[n];
-            for (int i = 0; i < n; ++i) {
+            for (int i = 0; i < n; ++i)
                 id[i] = i;
-            }
         }
 
         public void unionByRank(int u, int v) {
             final int i = find(u);
             final int j = find(v);
-            if (i == j) {
+            if (i == j)
                 return;
-            }
             if (rank[i] < rank[j]) {
                 id[i] = id[j];
             } else if (rank[i] > rank[j]) {
@@ -153,6 +147,9 @@ public class NumberOfGoodPaths {
         public int find(int u) {
             return id[u] == u ? u : (id[u] = find(id[u]));
         }
+
+        private int[] id;
+        private int[] rank;
 
     }
 }
