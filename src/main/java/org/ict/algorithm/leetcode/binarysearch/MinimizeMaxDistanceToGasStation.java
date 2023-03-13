@@ -36,7 +36,8 @@ public class MinimizeMaxDistanceToGasStation {
 
 
     /**
-     *
+     * e.g. stations = [10, 19, 25, 27, 56, 63, 70, 87, 96, 97], k = 3
+     * 
      * @param stations
      * @param k add k more gas stations
      * @return
