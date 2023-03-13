@@ -81,7 +81,7 @@ public class BinarySearch {
     public double searchV7(double[] nums, double eps, double lowerBound, double upperBound) {
         double lo = lowerBound;
         double hi = upperBound;
-        while (hi -lo > eps) {
+        while (lo + eps < hi) {
             double mid = lo + (hi - lo) / 2.0;
             if (calc(mid)) {
                 hi = mid;
