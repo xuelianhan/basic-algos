@@ -50,14 +50,36 @@ public class BinarySearch {
 
     /**
      * Binary Search in Real Numbers
+     * When precision is not assure, using the fixed-times to replace.
      * @param nums
-     * @param eps
+     * @param lowerBound
+     * @param upperBound
+     * @return
+     */
+    public double searchV8(double[] nums, double lowerBound, double upperBound) {
+        double lo = lowerBound;
+        double hi = upperBound;
+        for (int i = 0; i < 100; i++) {
+            double mid = lo + (hi - lo) / 2.0;
+            if (calc(mid)) {
+                hi = mid;
+            } else {
+                lo = mid;
+            }
+        }
+        return lo;
+    }
+
+    /**
+     * Binary Search in Real Numbers
+     * @param nums
+     * @param eps precision of result
      * @param lowerBound
      * @param upperBound
      * @return
      */
     public double searchV7(double[] nums, double eps, double lowerBound, double upperBound) {
-        double lo = 0;
+        double lo = lowerBound;
         double hi = upperBound;
         while (hi -lo > eps) {
             double mid = lo + (hi - lo) / 2.0;
