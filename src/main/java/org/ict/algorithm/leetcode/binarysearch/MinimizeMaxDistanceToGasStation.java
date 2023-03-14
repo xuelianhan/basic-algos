@@ -95,7 +95,16 @@ public class MinimizeMaxDistanceToGasStation {
         return lo;
     }
 
-    private boolean feasible(int[] stations, int k, double mid) {
+    /**
+     * Similar with {@link KokoEatingBananas}
+     * Each distance of two adjacent stations is the number of banana.
+     * Now we need to check eating speed mid of each hour is under the
+     * threshold of k-hours.
+     * @param stations
+     * @param k
+     * @param mid
+     * @return
+     */private boolean feasible(int[] stations, int k, double mid) {
         int cnt = 0;
         int n = stations.length;
         for (int i = 0; i < n - 1; i++) {
