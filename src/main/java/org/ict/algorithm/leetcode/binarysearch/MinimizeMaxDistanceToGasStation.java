@@ -52,6 +52,9 @@ public class MinimizeMaxDistanceToGasStation {
 
 
     /**
+     * What we want?
+     * Return the smallest possible value of the maximum distance between adjacent gas stations after inserting k stations.
+     *
      * Please note that the new k station may add at any position between current stations
      * e.g. stations = [10, 19, 25, 27, 56, 63, 70, 87, 96, 97], k = 3
      * The distance array: [9, 6, 2, 29, 7, 7, 17, 9, 1]

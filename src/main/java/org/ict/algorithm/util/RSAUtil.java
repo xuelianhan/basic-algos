@@ -1,16 +1,12 @@
 package org.ict.algorithm.util;
 
 import com.google.common.collect.Maps;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import java.io.*;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -243,7 +239,7 @@ public class RSAUtil {
 
     public static String getKeyString(Key key) throws Exception {
         byte[] keyBytes = key.getEncoded();
-        return (new BASE64Encoder()).encode(keyBytes);
+        return (Base64.getEncoder().encodeToString(keyBytes));
     }
 
     public static Map<String,String> generateKeyPair(String filePath){
@@ -319,7 +315,7 @@ public class RSAUtil {
         try {
             cipher.init(Cipher.ENCRYPT_MODE, publicKey);
             byte[] enBytes = cipher.doFinal(plainText.getBytes());
-            return (new BASE64Encoder()).encode(enBytes);
+            return (Base64.getEncoder().encodeToString(enBytes));
         } catch (InvalidKeyException e) {
             e.printStackTrace();
         } catch (IllegalBlockSizeException e) {
@@ -343,7 +339,7 @@ public class RSAUtil {
             fr.close();
             cipher.init(Cipher.ENCRYPT_MODE,getPublicKey(publicKeyString));
             byte[] enBytes = cipher.doFinal(plainText.getBytes());
-            return (new BASE64Encoder()).encode(enBytes);
+            return (Base64.getEncoder().encodeToString(enBytes));
         } catch (InvalidKeyException e) {
             e.printStackTrace();
         } catch (IllegalBlockSizeException e) {
@@ -360,7 +356,7 @@ public class RSAUtil {
         try {
             cipher.init(Cipher.ENCRYPT_MODE,getPublicKey(publicKey));
             byte[] enBytes = cipher.doFinal(plainText.getBytes());
-            return (new BASE64Encoder()).encode(enBytes);
+            return (Base64.getEncoder().encodeToString(enBytes));
         } catch (InvalidKeyException e) {
             e.printStackTrace();
         } catch (IllegalBlockSizeException e) {
@@ -376,15 +372,13 @@ public class RSAUtil {
     public static String decrypt(PrivateKey privateKey, String enStr){
         try {
             cipher.init(Cipher.DECRYPT_MODE, privateKey);
-            byte[] deBytes = cipher.doFinal((new BASE64Decoder()).decodeBuffer(enStr));
+            byte[] deBytes = cipher.doFinal(Base64.getDecoder().decode(enStr));
             return new String(deBytes);
         } catch (InvalidKeyException e) {
             e.printStackTrace();
         } catch (IllegalBlockSizeException e) {
             e.printStackTrace();
         } catch (BadPaddingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
             e.printStackTrace();
         }
         return null;
@@ -393,15 +387,13 @@ public class RSAUtil {
     public static String decrypt(String privateKey, String enStr){
         try {
             cipher.init(Cipher.DECRYPT_MODE, getPrivateKey(privateKey));
-            byte[] deBytes = cipher.doFinal((new BASE64Decoder()).decodeBuffer(enStr));
+            byte[] deBytes = cipher.doFinal(Base64.getDecoder().decode(enStr));
             return new String(deBytes);
         } catch (InvalidKeyException e) {
             e.printStackTrace();
         } catch (IllegalBlockSizeException e) {
             e.printStackTrace();
         } catch (BadPaddingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
@@ -421,7 +413,7 @@ public class RSAUtil {
             br.close();
             fr.close();
             cipher.init(Cipher.DECRYPT_MODE, getPrivateKey(privateKeyString));
-            byte[] deBytes = cipher.doFinal((new BASE64Decoder()).decodeBuffer(enStr));
+            byte[] deBytes = cipher.doFinal(Base64.getDecoder().decode(enStr));
             return new String(deBytes);
         } catch (InvalidKeyException e) {
             e.printStackTrace();
