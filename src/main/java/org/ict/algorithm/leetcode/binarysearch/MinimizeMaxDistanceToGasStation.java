@@ -96,6 +96,7 @@ public class MinimizeMaxDistanceToGasStation {
     }
 
     /**
+     * git rebase -r <8bdf9eb7365ebd501f7680b9b8fd58824f079605> --exec 'git commit --amend --no-edit --reset-author'
      * Similar with {@link KokoEatingBananas}
      * Each distance of two adjacent stations is the number of banana.
      * Now we need to check eating speed mid of each hour is under the
