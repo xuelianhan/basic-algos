@@ -40,8 +40,8 @@ package org.ict.algorithm.leetcode.binarysearch;
 public class PeakIndexInMountainArray {
 
     public static void main(String[] args) {
-        //int[] arr = {0, 1, 0};
-        int[] arr = {3, 4, 5, 1};
+        //int[] arr = {0, 1, 0}; //expected 1
+        int[] arr = {3, 4, 5, 1};//expected 2
         PeakIndexInMountainArray instance = new PeakIndexInMountainArray();
         instance.peakIndexInMountainArray(arr);
     }
@@ -49,11 +49,12 @@ public class PeakIndexInMountainArray {
     /**
      * Golden-section search
      * @see <a href="https://en.wikipedia.org/wiki/Golden-section_search"></a>
+     * @see <a href="https://medium.datadriveninvestor.com/golden-section-search-method-peak-index-in-a-mountain-array-leetcode-852-a00f53ed4076"></a>
      * @param arr
      * @return
      */
     public int peakIndexInMountainArray(int[] arr) {
-        double goldenRatio = (Math.sqrt(5) + 1) / 2;
+        double goldenRatio = (Math.sqrt(5) + 1) / 2.0;
         int left = 0;
         int right = arr.length - 1;
         int lmid = cal_lo(left, right, goldenRatio);
