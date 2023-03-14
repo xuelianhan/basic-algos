@@ -66,7 +66,7 @@ public class SearchSortedArrayOfUnknownSize {
         return -1;
     }
 
-    public interface ArrayReader{
+    public interface ArrayReader {
         int get(int k);
     }
 }
