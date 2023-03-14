@@ -34,7 +34,7 @@ public class MinimizeMaxDistanceToGasStation {
          * D(1,2):1
          * D(2,5):3
          * The maximum D is 3
-         * k:1, so we put the newly station at the half point between 2 and 5,
+         * k:1, so we put the new station at the half point between 2 and 5,
          * then the gas stations develop like this:
          * 1_2__P__5
          * D(1,2):1
