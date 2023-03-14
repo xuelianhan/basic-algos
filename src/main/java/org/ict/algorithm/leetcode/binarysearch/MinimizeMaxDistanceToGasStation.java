@@ -81,6 +81,8 @@ public class MinimizeMaxDistanceToGasStation {
          * Answers within 10^-6 of the true value will be accepted as correct.
          * The word within used here is not accurate.
          * I think it refers the smallest gap(gap lower-bound)
+         * mid here refers the possible smallest gap(you can seem it as a candidate gap,
+         * because we need to check it is possible to split stations with k parts)
          */
         while (hi - lo > 1e-6) {
             double mid = lo + (hi - lo) / 2.0;
