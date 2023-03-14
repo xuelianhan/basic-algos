@@ -1,6 +1,5 @@
 package org.ict.algorithm.leetcode.backtrack;
 
-import sun.applet.AppletResourceLoader;
 
 import java.util.*;
 
