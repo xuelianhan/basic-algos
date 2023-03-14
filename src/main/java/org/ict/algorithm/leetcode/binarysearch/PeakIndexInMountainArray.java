@@ -47,38 +47,67 @@ public class PeakIndexInMountainArray {
     }
 
     /**
-     * Golden-section search
+     * Golden-Section Search
      * @see <a href="https://en.wikipedia.org/wiki/Golden-section_search"></a>
      * @see <a href="https://medium.datadriveninvestor.com/golden-section-search-method-peak-index-in-a-mountain-array-leetcode-852-a00f53ed4076"></a>
      * @param arr
      * @return
      */
-    public int peakIndexInMountainArray(int[] arr) {
+    public int peakIndexInMountainArrayV2(int[] arr) {
         double goldenRatio = (Math.sqrt(5) + 1) / 2.0;
         int left = 0;
         int right = arr.length - 1;
-        int lmid = cal_lo(left, right, goldenRatio);
-        int rmid = cal_hi(left, right, goldenRatio);
-        while (lmid < rmid) {
-            if (arr[lmid] < arr[rmid]) {
-                left = lmid;
-                lmid = rmid;
-                rmid = cal_hi(left, right, goldenRatio);
+        int midLeft = cal_left(left, right, goldenRatio);
+        int midRight = cal_right(left, right, goldenRatio);
+        while (midLeft < midRight) {
+            if (arr[midLeft] < arr[midRight]) {
+                left = midLeft;
+                midLeft = midRight;
+                midRight = cal_right(left, right, goldenRatio);
             } else {
-                right = rmid;
-                rmid = lmid;
-                lmid = cal_lo(left, right, goldenRatio);
+                right = midRight;
+                midRight = midLeft;
+                midLeft = cal_left(left, right, goldenRatio);
             }
         }
-        return lmid;
+        return midLeft;
     }
 
-    private int cal_lo(int l, int r, double goldenRatio) {
+    private int cal_left(int l, int r, double goldenRatio) {
         return (int)(r - Math.ceil((r - l) / goldenRatio));
     }
 
-    private int cal_hi(int l, int r, double goldenRatio) {
+    private int cal_right(int l, int r, double goldenRatio) {
         return (int)(l + (r - l) / goldenRatio);
+    }
+
+    public int peakIndexInMountainArrayV1(int[] arr) {
+        for (int i = 0; i < arr.length - 1; i++) {
+            if (arr[i] > arr[i + 1]) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Time Cost 1ms
+     * Sequence Search
+     * Time Complexity O(N)
+     * Space Complexity O(1)
+     * @param arr
+     * @return
+     */
+    public int peakIndexInMountainArray(int[] arr) {
+        int max = Integer.MIN_VALUE;
+        int res = 0;
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] > max) {
+                max = arr[i];
+                res = i;
+            }
+        }
+        return res;
     }
 
 
