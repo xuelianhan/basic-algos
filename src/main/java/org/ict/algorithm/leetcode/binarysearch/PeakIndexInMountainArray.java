@@ -53,6 +53,24 @@ public class PeakIndexInMountainArray {
      * If the function is not strictly monotonic, i.e.,
      * there is an equal segment in the image of the function,
      * then the three-equivalence method can not be used.
+     *
+     * Our target is to find the peak. In the closed interval[left, right],
+     * we firstly locate two golden split points: x1, x2, which would split
+     * function-F into three parts: left---x1---x2---right.
+     * 1.if F(x1) < F(x2), both x1 and x2 are on the left hand of peak, or on the
+     * two sides of peak:
+     * left---x1---x2---peak---right
+     * left---x1----peak---x2---right
+     * Whatever, the peak would be on the right side of x1, so we can let left = x1
+     * 2.if F(x1) > F(x2), both x1 and x2 are on the right hand of peak, or on the two sides of peak:
+     * left---peak----x1---x2---right
+     * left---x1----peak---x2---right
+     * The peak would be on the left side of x2, so we can let right = x2
+     * 
+     * Search space would shrink to nearly 1/3 of original interval every time.
+     * Let's see the golden split point formula, we mark golden split point as G.
+     * Assume that there is a line segment with length of 1, the length on the left side of G is a, the length on the right side of G is b.
+     *
      *          G
      *          |
      *          V
