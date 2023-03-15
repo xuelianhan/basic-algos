@@ -46,6 +46,20 @@ public class PeakIndexInMountainArray {
         instance.peakIndexInMountainArray(arr);
     }
 
+    public int peakIndexInMountainArrayV3(int[] arr) {
+        int lo = 0;
+        int hi = arr.length - 1;
+        while (lo < hi) {
+            int mid = lo + (hi - lo) / 2;
+            if (arr[mid] < arr[mid + 1]) {
+                lo = mid + 1;
+            } else {
+                hi = mid;
+            }
+        }
+        return lo;
+    }
+
     /**
      * Golden-Section Search
      *
@@ -66,7 +80,7 @@ public class PeakIndexInMountainArray {
      * left---peak----x1---x2---right
      * left---x1----peak---x2---right
      * The peak would be on the left side of x2, so we can let right = x2
-     * 
+     *
      * Search space would shrink to nearly 1/3 of original interval every time.
      * Let's see the golden split point formula, we mark golden split point as G.
      * Assume that there is a line segment with length of 1, the length on the left side of G is a, the length on the right side of G is b.
