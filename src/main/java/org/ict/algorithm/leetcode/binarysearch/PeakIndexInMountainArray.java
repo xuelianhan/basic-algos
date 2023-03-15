@@ -48,9 +48,34 @@ public class PeakIndexInMountainArray {
 
     /**
      * Golden-Section Search
-     * c^2 + c = 1
-     * c + 1 = 1/c --> (sqrt(5)-1)/2 + 1 = (sqrt(5)+1)/2 = the golden ratio
-     * c equals approximately 0.6180
+     *
+     * The three-equivalence method is applicable to strictly monotonic single-peaked functions or single-valley functions.
+     * If the function is not strictly monotonic, i.e.,
+     * there is an equal segment in the image of the function,
+     * then the three-equivalence method can not be used.
+     *          G
+     *          |
+     *          V
+     * -----------------
+     * |<---a-->|<--b-->
+     *  a + b = 1
+     * (a + b) / a = a / b = G
+     * ==> 1 + b/a = G ==> 1 + 1/G = G
+     * ==> G^2 - G - 1 = 0
+     * ==> G^2 - G + (1/2)^2 - (1/2)^2 - 1 = 0
+     * ==> (G - 1/2)^2 = 1 + (1/2)^2 = 5/4
+     * ==> (G - 1/2)^2 = 5/4
+     * Because G is a positive number, then G - 1/2 = sqrt(5)/2
+     * ==> G = 1/2 + sqrt(5)/2 = (sqrt(5) + 1) / 2 = the golden ratio
+     * G equals approximately 1.6180
+     * l-----x1--------x2------r
+     * x2-l = r-x1
+     * (r-l) / (x2-l) = (x2-l) / (x1-l) = G
+     * ==> x2 = l + (r - l)/G
+     * r - x1 = x2 - l
+     * ==> x1 = r + l - x2 = r + l - (l + (r - l)/G)
+     * ==> x1 = r + l - l - (r -l)/G = r - (r-l)/G
+     *
      * The golden-section search is a technique for finding an extreme (minimum or maximum) of a function inside a specified interval.
      * For a strictly uni-modal function with an extreme inside the interval,
      * it will find that extreme, while for an interval containing multiple extrema (possibly including the interval boundaries),
@@ -101,6 +126,13 @@ public class PeakIndexInMountainArray {
         }
     }
 
+    /**
+     * Math.ceil in here is necessary.
+     * @param l
+     * @param r
+     * @param goldenRatio
+     * @return
+     */
     private int cal_left(int l, int r, double goldenRatio) {
         return (int)Math.ceil((r - (r - l) / goldenRatio));
     }
