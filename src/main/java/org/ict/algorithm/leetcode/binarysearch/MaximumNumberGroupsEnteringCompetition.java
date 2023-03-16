@@ -40,8 +40,50 @@ package org.ict.algorithm.leetcode.binarysearch;
 public class MaximumNumberGroupsEnteringCompetition {
 
 
+    /**
+     * Math Solution
+     * 1 + 2 + ... + k <= n
+     * ==> k(k + 1) / 2 <= n
+     * ==> k^2 + k <= 2*n
+     * ==> k^2 + k + (1/2)^2 - (1/2)^2 <= 2*n
+     * ==> (k + 0.5)^2 <= 2*n + (1/2)^2
+     * ==> (k + 0.5)(k + 0.5) <= n * 2 + 0.25
+     * ==> k + 0.5 <= sqrt(n * 2 + 0.25)
+     * ==> k <= sqrt(n * 2 + 0.25) - 0.5
+     *
+     * Time O(1)
+     * Space O(1)
+     * @author lee215
+     * @see <a href="https://leetcode.com/problems/maximum-number-of-groups-entering-a-competition/solutions/2357789/java-c-python-one-line-o-1/?orderBy=most_votes"></a>
+     * @param grades
+     * @return
+     */
+    public int maximumGroupsV4(int[] grades) {
+        int N = grades.length;
+        return (int)(Math.sqrt(N * 2 + 0.25) - 0.5);
+    }
+
+    /**
+     * Find the maximum number k that satisfy with k * (k + 1) / 2 <= N
+     * @param grades
+     * @return
+     */
     public int maximumGroupsV3(int[] grades) {
-        return 0;
+        int lo = 0;
+        /**
+         * Any value greater than or equals to 447 is enough, e.g. hi = 1000
+         */
+        int hi = 447;
+        int N = grades.length;
+        while (lo < hi) {
+            int k = (lo + hi + 1) / 2;
+            if (k * (k + 1) / 2 <= N) {
+                lo = k;
+            } else {
+                hi = k - 1;
+            }
+        }
+        return lo;
     }
 
     /**
@@ -127,7 +169,7 @@ public class MaximumNumberGroupsEnteringCompetition {
      *
      * We don't need to care about the contents within the nums array, but only the length of array matters.
      * If you care about the numbers in the array, you will be stuck.
-     * 
+     *
      * e.g. grades = [10,6,12,7,3,5]
      * If we sort the array, we can pick up the smaller one from the array using greedy strategy.
      * 3
