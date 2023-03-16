@@ -105,8 +105,8 @@ public class BinarySearch {
 
     /**
      * Find the maximum number that satisfy with <= x(x or precursor of x)
-     * mid = (l + r)>>1, mid doesn't get value of r
-     * mid = (l + r + 1)>>1, mid doesn't get value of l
+     * mid = (l + r)>>1, mid doesn't get value of r, it means mid round down.
+     * mid = (l + r + 1)>>1, mid doesn't get value of l, it means mid round up.
      *
      * mid = low + (high - low + 1) / 2;
      *     = low + (high + 1)/2 - low/2
@@ -136,8 +136,8 @@ public class BinarySearch {
 
     /**
      * Find the minimum number that satisfy with >= x(x or successor of x)
-     * mid = (l + r)>>1, mid doesn't get value of r
-     * mid = (l + r + 1)>>1, mid doesn't get value of l
+     * mid = (l + r)>>1, mid doesn't get value of r, it means mid round down.
+     * mid = (l + r + 1)>>1, mid doesn't get value of l, it means mid round up.
      * @param nums
      * @param x
      * @return
