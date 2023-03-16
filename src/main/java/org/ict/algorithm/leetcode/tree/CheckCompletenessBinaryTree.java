@@ -2,6 +2,7 @@ package org.ict.algorithm.leetcode.tree;
 
 import java.util.ArrayDeque;
 import java.util.LinkedList;
+import java.util.Optional;
 import java.util.Queue;
 
 /**
@@ -39,10 +40,22 @@ import java.util.Queue;
  */
 public class CheckCompletenessBinaryTree {
 
-    public boolean isCompleteTree(TreeNode root) {
+    /**
+     * Intuition
+     * You can imagine tree flat into a linear container like queue:
+     * [1,2,3,4,5,null,7]
+     * [1,2,3,4,5,6]
+     * if we encountered null-element, afterwards we encounter no-null element, we could
+     * return false immediately. we could return true if all the nodes has been visited.
+     *
+     * @param root
+     * @return
+     */
+    public boolean isCompleteTreeV1(TreeNode root) {
         /**
          * Don't use ArrayDeque here, because ArrayDeque.offer(node)
          * not allow null-node.
+         * If you insist on using ArrayDeque, the TreeNode should be wrapper as Optional<TreeNode>
          */
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
@@ -60,5 +73,24 @@ public class CheckCompletenessBinaryTree {
             }
         }
         return found;
+    }
+
+    public boolean isCompleteTree(TreeNode root) {
+        Queue<Optional<TreeNode>> queue = new ArrayDeque<>();
+        queue.add(Optional.ofNullable(root));
+        boolean found = false;
+        while(!queue.isEmpty()) {
+            TreeNode cur = queue.poll().orElse(null);
+            if (cur == null) {
+                found = true;
+            } else {
+                if (found) {
+                    return false;
+                }
+                queue.add(Optional.ofNullable(cur.left));
+                queue.add(Optional.ofNullable(cur.right));
+            }
+        }
+        return true;
     }
 }
