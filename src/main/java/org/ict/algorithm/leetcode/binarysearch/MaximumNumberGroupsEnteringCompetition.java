@@ -44,8 +44,31 @@ public class MaximumNumberGroupsEnteringCompetition {
         return 0;
     }
 
+    /**
+     * 1 + 2 + ... + k <= n
+     * k(k + 1) / 2 <= n
+     * We can binary search the biggest k that k(k + 1) / 2 <= n
+     *
+     * Time O(log1000)
+     * Space O(1)
+     * @see <a href="https://leetcode.com/problems/maximum-number-of-groups-entering-a-competition/solutions/2357789/java-c-python-one-line-o-1/?orderBy=most_votes"></a>
+     * @author lee215
+     * @param grades
+     * @return
+     */
     public int maximumGroupsV2(int[] grades) {
-        return 0;
+        int lo = 0;
+        int hi = 1000;
+        int N = grades.length;
+        while (lo < hi) {
+            int k = (lo + hi + 1) / 2;
+            if (k * (k + 1) / 2 > N) {
+                hi = k - 1;
+            } else {
+                lo = k;
+            }
+        }
+        return lo;
     }
 
     /**
