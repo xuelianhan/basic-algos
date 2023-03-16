@@ -1,4 +1,4 @@
-package org.ict.algorithm.leetcode.greedy;
+package org.ict.algorithm.leetcode.binarysearch;
 
 /**
  * You are given a positive integer array grades which represents the grades of students in a university.
@@ -70,7 +70,23 @@ public class MaximumNumberGroupsEnteringCompetition {
      * @return
      */
     public int maximumGroupsV1(int[] grades) {
-        return 0;
+        /**
+         * e.g. grades = [8,8]
+         * Two points need to notice:
+         * 1. k starts with 0;
+         * 2. sum + k + 1 <= N, not sum + k + 1 < N, not sum <= N
+         * k represents the number of elements for each group, it's fixed value:1,2,3,...
+         *   it also means the k-th step.
+         * sum represents the total number of elements at the k-th step.
+         */
+        int k = 0;
+        int sum = 0;
+        int N = grades.length;
+        while (sum + k + 1 <= N) {
+            k++;
+            sum += k;
+        }
+        return k;
     }
 
     /**
