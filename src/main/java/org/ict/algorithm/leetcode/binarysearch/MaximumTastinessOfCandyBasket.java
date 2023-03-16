@@ -45,7 +45,20 @@ import java.util.Arrays;
 public class MaximumTastinessOfCandyBasket {
 
     /**
-     * We can change the idea to find whether positive integer mid could form k items with at least distance mid.
+     * 1.Find the maximum tastiness of a candy basket.
+     * 2.The tastiness of a candy basket is the smallest absolute difference of the prices of any two candies in the basket.
+     * 3.The store sells baskets of k distinct candies.
+     * 4.price[i] denotes the price of the ith candy
+     * What is the tastiness? It's absolute difference of two prices.
+     * tastiness = Math.abs(price[i] - price[j]), 1 <= price[i] <= 10^9
+     * So the minimum of tastiness is zero, the maximum of tastiness is Math.abs[max(price) - min(price)]
+     *
+     * Our target is to find the maximum minimum absolute difference of any two prices from at least k price items
+     * e.g.price = [13,5,1,8,21,2], k = 3
+     * we need to find 3 price items, p1, p2, p3,
+     * tastiness = min{abs(p1, p2), abs(p2, p3), abs(p1, p3)}
+     * Now we need to find the maximum of all the tastiness, that is what the binary search doing.
+     *
      * @param price
      * @param k
      * @return
@@ -55,10 +68,23 @@ public class MaximumTastinessOfCandyBasket {
 
         int n = price.length;
         int lo = 0;
+        /**
+         * while-loop ends condition is lo == hi,
+         * price[n - 1] - price[0] may be the answer,
+         * so we need plus one at last, in this way lo's value
+         * can stay on price[n - 1] - price[0].
+         */
         int hi = price[n - 1] - price[0] + 1;
 
         while (lo < hi) {
+            /**
+             * mid is one candidate,
+             */
             int mid = lo + (hi - lo + 1) / 2;
+            /**
+             * Now we check whether mid feasible or not.
+             * If feasible, lo is the maximum that satisfying the condition of greater than or equal to mid.
+             */
             if (feasible(price, k, mid)) {
                 lo = mid;
             } else {
@@ -69,7 +95,7 @@ public class MaximumTastinessOfCandyBasket {
     }
 
     /**
-     *
+     * We can change the idea to find whether positive integer mid could form k items with at least distance mid.
      * @param price
      * @param k
      * @param mid
