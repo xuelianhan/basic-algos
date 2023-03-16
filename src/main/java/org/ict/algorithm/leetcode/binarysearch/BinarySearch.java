@@ -35,6 +35,11 @@ package org.ict.algorithm.leetcode.binarysearch;
  * binary search
  * @see <a href="https://leetcode.com/discuss/general-discussion/786126/Python-Powerful-Ultimate-Binary-Search-Template.-Solved-many-problems"></a>
  * @see <a href="https://leetcode.com/explore/learn/card/binary-search/125/template-i/938/"></a>
+ *
+ * There are two steps for finding problem whether it is binary search or not
+ * step -> 1 ask for maximum and minimum(answer lies in a range)
+ * step ->2 at particular point left side of point is valid and right side is invalid situation and vice versa
+ *
  * @author sniper
  * @date 26 Nov, 2022
  * LC704

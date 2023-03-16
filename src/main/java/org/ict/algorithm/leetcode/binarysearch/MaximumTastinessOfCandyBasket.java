@@ -45,6 +45,10 @@ import java.util.Arrays;
 public class MaximumTastinessOfCandyBasket {
 
     /**
+     * there are two steps for finding problem whether it is binary search or not
+     * step -> 1 ask for maximum and minimum(answer lies in a range)
+     * step ->2 at particular point left side of point is valid and right side is invalid situation and vice versa
+     *
      * 1.Find the maximum tastiness of a candy basket.
      * 2.The tastiness of a candy basket is the smallest absolute difference of the prices of any two candies in the basket.
      * 3.The store sells baskets of k distinct candies.
@@ -98,7 +102,7 @@ public class MaximumTastinessOfCandyBasket {
      * We can change the idea to find whether positive integer mid could form k items with at least distance mid.
      * e.g.price = [13,5,1,8,21,2], k = 3
      * sort(price):[1,2,5,8,13,21], k = 3
-     * 
+     *
      * @param price
      * @param k
      * @param mid
