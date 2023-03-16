@@ -96,6 +96,9 @@ public class MaximumTastinessOfCandyBasket {
 
     /**
      * We can change the idea to find whether positive integer mid could form k items with at least distance mid.
+     * e.g.price = [13,5,1,8,21,2], k = 3
+     * sort(price):[1,2,5,8,13,21], k = 3
+     * 
      * @param price
      * @param k
      * @param mid
