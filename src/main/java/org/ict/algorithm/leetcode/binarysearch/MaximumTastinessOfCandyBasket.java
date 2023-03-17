@@ -60,7 +60,7 @@ public class MaximumTastinessOfCandyBasket {
      * @param k
      * @return
      */
-    public int maximumTastiness(int[] price, int k) {
+    public int maximumTastinessV1(int[] price, int k) {
         /**
          * Why we sort price here?
          * 1.we need to calculate the upper bound of tastiness;
@@ -70,12 +70,37 @@ public class MaximumTastinessOfCandyBasket {
         int n = price.length;
         int lo = 0;
         /**
-         * while-loop ends condition is lo == hi,
-         * price[n - 1] - price[0] may be the answer,
-         * so we need plus one at last, in this way lo's value
-         * can stay on price[n - 1] - price[0].
+         * while-loop ends condition is lo == hi, and price[n - 1] - price[0] may be the answer.
+         * hi >= (price[n - 1] - price[0]) is OK, e.g.int hi = 1000_000_000;
+         * but hi cannot less than (price[n - 1] - price[0]).
          */
-        int hi = price[n - 1] - price[0] + 1;
+        int hi = price[n - 1] - price[0];
+        while (lo < hi) {
+            /**
+             * mid is one candidate.
+             */
+            int mid = lo + (hi - lo + 1) / 2;
+            /**
+             * Now we check whether mid feasible or not.
+             * If feasible, lo is the maximum that satisfying the condition of greater than or equal to mid.
+             */
+            if (feasible(price, k, mid)) {
+                lo = mid;
+            } else {
+                hi = mid - 1;
+            }
+        }
+        return lo;
+    }
+
+    public int maximumTastiness(int[] price, int k) {
+        Arrays.sort(price);
+        int lo = 0;
+        /**
+         * while-loop ends condition is lo == hi, and price[n - 1] - price[0] may be the answer.
+         * hi >= (price[n - 1] - price[0]) is OK.
+         */
+        int hi = 1000_000_000;
         while (lo < hi) {
             /**
              * mid is one candidate.
@@ -119,4 +144,6 @@ public class MaximumTastinessOfCandyBasket {
         }
         return candy >= k;
     }
+
+
 }
