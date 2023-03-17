@@ -68,6 +68,11 @@ public class MaximumTastinessOfCandyBasket {
      * @return
      */
     public int maximumTastiness(int[] price, int k) {
+        /**
+         * Why we sort price here?
+         * 1.we need to calculate the upper bound of tastiness;
+         * 2.we need to calculate the smallest absolute difference of the prices of any two candies.
+         */
         Arrays.sort(price);
 
         int n = price.length;
@@ -82,7 +87,7 @@ public class MaximumTastinessOfCandyBasket {
 
         while (lo < hi) {
             /**
-             * mid is one candidate,
+             * mid is one candidate.
              */
             int mid = lo + (hi - lo + 1) / 2;
             /**
@@ -99,7 +104,7 @@ public class MaximumTastinessOfCandyBasket {
     }
 
     /**
-     * We can change the idea to find whether positive integer mid could form k items with at least distance mid.
+     * Find whether positive integer mid could form k items with at least distance mid.
      * e.g.price = [13,5,1,8,21,2], k = 3
      * sort(price):[1,2,5,8,13,21], k = 3
      *
@@ -111,7 +116,11 @@ public class MaximumTastinessOfCandyBasket {
     private boolean feasible(int[] price, int k, int mid) {
         int candy = 1;
         int last = price[0];
-        for (int i = 0; i < price.length; i++) {
+        /**
+         * The i start from 0 is unnecessary, so i start from 1,
+         * because last being initialized with price[0].
+         */
+        for (int i = 1; i < price.length; i++) {
             if ((price[i] - last) >= mid) {
                 candy += 1;
                 last = price[i];
