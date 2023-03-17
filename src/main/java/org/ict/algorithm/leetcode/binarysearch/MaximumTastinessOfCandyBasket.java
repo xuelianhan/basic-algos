@@ -127,9 +127,13 @@ public class MaximumTastinessOfCandyBasket {
      * e.g.price = [13,5,1,8,21,2], k = 3
      * sort(price):[1,2,5,8,13,21], k = 3
      * Suppose mid equals 1:
+     * i:1, 2-1=1, 1 = 1, candy=1+1=2, last=price[1]=2
+     * i:2, 5-2=3, 3 > 1, candy=2+1=3, last=price[2]=5
+     * i:3, 8-5=3, 3 > 1, candy=3+1=4, last=price[3]=8
+     * i:4,13-8=5, 5 > 1, candy=4+1=5, last=price[4]=13
+     * i:5,21-13=8,8 > 1, candy=5+1=6, last=price[5]=21
+     * candy:6, 6 > 3, return true.
      *
-     *
-     * 
      * @param price
      * @param k
      * @param mid The absolute difference of the prices of any two candies
