@@ -120,13 +120,19 @@ public class MaximumTastinessOfCandyBasket {
     }
 
     /**
-     * Find whether positive integer mid could form k items with at least distance mid.
+     * Find whether absolute difference mid could form at least k items.
+     * We need to search the smallest absolute difference of price pairs,
+     * these smallest absolute differences definitely come from the adjacent items in the sorted array.
+     * So we have to sort the array which will help us to calculate the absolute differences.
      * e.g.price = [13,5,1,8,21,2], k = 3
      * sort(price):[1,2,5,8,13,21], k = 3
+     * Suppose mid equals 1:
      *
+     *
+     * 
      * @param price
      * @param k
-     * @param mid
+     * @param mid The absolute difference of the prices of any two candies
      * @return
      */
     private boolean feasible(int[] price, int k, int mid) {
