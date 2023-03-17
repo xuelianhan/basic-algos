@@ -108,7 +108,7 @@ public class MaximumTastinessOfCandyBasket {
         int candy = 1;
         int last = price[0];
         /**
-         * The i start from 0 is unnecessary, so i start from 1,
+         * The i start from 0 is unnecessary, so i start from 1, and candy start from 1,
          * because last being initialized with price[0].
          */
         for (int i = 1; i < price.length; i++) {
