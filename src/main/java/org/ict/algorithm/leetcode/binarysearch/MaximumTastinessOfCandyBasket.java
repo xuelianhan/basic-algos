@@ -152,7 +152,7 @@ public class MaximumTastinessOfCandyBasket {
      * candy:6, 6 > 3, return true.
      *
      * @param price
-     * @param k
+     * @param k Choose k numbers from price array.
      * @param mid The absolute difference of the prices of any two candies
      * @return
      */
