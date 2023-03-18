@@ -55,7 +55,7 @@ public class MaximumTastinessOfCandyBasket {
      * that makes the score reach mid, given a value mid
      *
      *
-     * there are two steps for finding problem whether it is binary search or not
+     * There are two steps for finding problem whether it is binary search or not
      * step -> 1 ask for maximum and minimum(answer lies in a range)
      * step ->2 at particular point left side of point is valid and right side is invalid situation and vice versa
      *
