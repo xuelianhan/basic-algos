@@ -37,7 +37,24 @@ import java.util.Arrays;
  */
 public class MaximumTastinessOfCandyBasket {
 
+
     /**
+     * A macro optimization problem can be abstracted as a function whose definition domain is the feasible solutions under the problem,
+     * and the values obtained from the evaluation of these solutions constitute the value domain of the function,
+     * and the optimal solution is the solution with the best evaluation value,
+     * which may be set to be better the higher the rating is.
+     * Assuming that the optimal solution is scored as S,
+     * it is clear that for any x greater than S, there doesn't exist a legitimate program to reach x points,
+     * otherwise it contradicts the optimality of S.
+     * For any x less than or equal to S, there must be a legitimate program to reach or exceed x points,
+     * because the optimal solution itself satisfies this condition.
+     * The value domain of such problem has a special monotonicity---is legal on one side of S and not on the other side of S.
+     * This division point S can be found by binary search.
+     * With the help of binary search,
+     * we can transform the problem of finding an optimal solution into a problem of determining whether there is a feasible solution
+     * that makes the score reach mid, given a value mid
+     *
+     *
      * there are two steps for finding problem whether it is binary search or not
      * step -> 1 ask for maximum and minimum(answer lies in a range)
      * step ->2 at particular point left side of point is valid and right side is invalid situation and vice versa
