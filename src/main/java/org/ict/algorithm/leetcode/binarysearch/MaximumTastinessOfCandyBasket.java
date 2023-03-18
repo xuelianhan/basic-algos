@@ -94,7 +94,7 @@ public class MaximumTastinessOfCandyBasket {
         int hi = price[n - 1] - price[0];
         while (lo < hi) {
             /**
-             * mid is one candidate.
+             * mid is one candidate of absolute difference.
              */
             int mid = lo + (hi - lo + 1) / 2;
             /**
@@ -120,7 +120,7 @@ public class MaximumTastinessOfCandyBasket {
         int hi = 1000_000_000;
         while (lo < hi) {
             /**
-             * mid is one candidate.
+             * mid is one candidate of absolute difference.
              */
             int mid = lo + (hi - lo + 1) / 2;
             /**
