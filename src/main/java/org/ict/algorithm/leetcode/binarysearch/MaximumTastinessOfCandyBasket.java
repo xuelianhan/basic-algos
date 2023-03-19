@@ -115,7 +115,7 @@ public class MaximumTastinessOfCandyBasket {
         int lo = 0;
         /**
          * while-loop ends condition is lo == hi, and price[n - 1] - price[0] may be the answer.
-         * hi >= (price[n - 1] - price[0]) is OK.
+         * hi >= (price[n - 1] - price[0]) is OK, but it generates some invalid searches.
          */
         int hi = 1000_000_000;
         while (lo < hi) {
