@@ -41,11 +41,9 @@ public class MaximumTastinessOfCandyBasket {
     /**
      * A macro optimization problem can be abstracted as a function whose definition domain is the feasible solutions under the problem,
      * and the values obtained from the evaluation of these solutions constitute the value domain of the function,
-     * and the optimal solution is the solution with the best evaluation value,
-     * which may be set to be better the higher the rating is.
-     * Assuming that the optimal solution is scored as S,
-     * it is clear that for any x greater than S, there doesn't exist a legitimate program to reach x points,
-     * otherwise it contradicts the optimality of S.
+     * and the optimal solution is the solution with the best evaluation value, which may be set to be better the higher the rating is.
+     * Assuming that the optimal solution is scored as S, it is clear that for any x greater than S,
+     * there doesn't exist a legitimate program to reach x points, otherwise it contradicts the optimality of S.
      * For any x less than or equal to S, there must be a legitimate program to reach or exceed x points,
      * because the optimal solution itself satisfies this condition.
      * The value domain of such problem has a special monotonicity---is legal on one side of S and not on the other side of S.
@@ -72,6 +70,22 @@ public class MaximumTastinessOfCandyBasket {
      * we need to find 3 price items, p1, p2, p3,
      * tastiness = min{abs(p1, p2), abs(p2, p3), abs(p1, p3)}
      * Now we need to find the maximum of all the tastiness, that is what the binary search doing.
+     *
+     * This is a Java code that finds the maximum tastiness of candies that can be bought with a budget of k. The maximumTastiness function takes in an array of price of candies and an integer k.
+     * It first sorts the price array in ascending order.
+     *
+     * Then, it sets the lower bound lo to 0 and the upper bound hi to the difference between the highest and lowest price of candies.
+     * It then enters a while loop that continues until lo is greater than or equal to hi.
+     * In each iteration, it sets the mid to the middle value between lo and hi.
+     *
+     * The reason why the if statement uses >= instead of <= is because the feasible function is checking if
+     * the difference between the current element and the last element is greater than or equal to mid.
+     * If the difference is less than mid, then the current element and the last element are too close together to be considered as separate candies.
+     * Therefore, the candy variable should not be incremented, and the last variable should not be updated.
+     * If the difference is greater than or equal to mid,
+     * then the current element and the last element are far enough apart to be considered as separate candies.
+     * Therefore, the candy variable should be incremented, and the last variable should be updated to the current element.
+     * That’s why the if statement uses >= instead of <=.
      *
      * @param price
      * @param k
@@ -124,7 +138,7 @@ public class MaximumTastinessOfCandyBasket {
              */
             int mid = lo + (hi - lo + 1) / 2;
             /**
-             * Now we check whether mid feasible or not.
+             * Now we check whether mid feasible or not(if mid is too small, so we need to go bigger, otherwise, go smaller).
              * If feasible, lo is the maximum that satisfying the condition of greater than or equal to mid.
              */
             if (feasible(price, k, mid)) {

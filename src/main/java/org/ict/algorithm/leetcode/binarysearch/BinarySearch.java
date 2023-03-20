@@ -112,9 +112,6 @@ public class BinarySearch {
      * Find the maximum number that satisfy with <= x(x or precursor of x)
      * mid = (l + r)>>1, mid doesn't get value of r, it means mid round down.
      * mid = (l + r + 1)>>1, mid doesn't get value of l, it means mid round up.
-     * For instance,
-     * mid = (1 + 2) / 2 = 1, mid never get the value 2 of right.
-     * mid = (1 + 2 + 1) / 2 = 2, mid never get the value 1 of left.
      *
      * mid = low + (high - low + 1) / 2;
      *     = low + (high + 1)/2 - low/2
