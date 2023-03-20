@@ -35,6 +35,10 @@ public class DesignBrowserHistoryV2 {
     public String back(int steps) {
         /**
          * Notice here always keep at least one element in the history stack.
+         * Why?
+         * If you can only return x steps in the history and steps > x,
+         * you will return only x steps.
+         * Return the current url after moving back in history at most steps.
          */
         while (history.size() > 1 && steps > 0) {
             future.push(history.pop());
