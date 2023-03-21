@@ -43,6 +43,8 @@ public class MaxConsecutiveOnesIII {
     }
 
     /**
+     * Understanding the following Solution
+     *
      * Same as longestOnesV3, but more concise.
      * @param nums
      * @param k
@@ -63,6 +65,8 @@ public class MaxConsecutiveOnesIII {
     }
 
     /**
+     * Understanding the following Solution
+     *
      * Intuition
      * Translation:
      * Find the longest subarray with at most K zeros.
@@ -71,6 +75,21 @@ public class MaxConsecutiveOnesIII {
      * For each A[j], try to find the longest subarray.
      * If A[i] ~ A[j] has zeros <= K, we continue to increment j.
      * If A[i] ~ A[j] has zeros > K, we increment i (as well as j).
+     *
+     * e.g. nums = [1,1,1,0,0,0,1,1,1,1,0], k = 2, expected:6
+     * j:0, nums[0]:1, k:2, i:0
+     * j:1, nums[1]:1, k:2, i:0
+     * j:2, nums[2]:1, k:2, i:0
+     * j:3, nums[3]:0, k:1, i:0
+     * j:4, nums[4]:0, k:0, i:0
+     * j:5, nums[5]:0, k:-1, nums[0]:1, k:-1, i:1
+     * j:6, nums[6]:1, k:-1, nums[1]:1, k:-1, i:2
+     * j:7, nums[7]:1, k:-1, nums[2]:1, k:-1, i:3
+     * j:8, nums[8]:1, k:-1, nums[3]:0, k: 0, i:4
+     * j:9, nums[9]:1, k: 0,
+     * j:10,nums[10]:0,k: 1
+     * for-loop-end, j-i=10-4=6
+     * return 6
      *
      * @see <a href="https://leetcode.com/problems/max-consecutive-ones-iii/solutions/247564/java-c-python-sliding-window"></a>
      * @author lee215
@@ -81,7 +100,7 @@ public class MaxConsecutiveOnesIII {
     public int longestOnesV3(int[] nums, int k) {
         int i = 0;
         int j = 0;
-        for ( ;j < nums.length; j++) {
+        for (;j < nums.length; j++) {
             if (nums[j] == 0) {
                 k--;
             }
@@ -96,7 +115,40 @@ public class MaxConsecutiveOnesIII {
     }
 
     /**
-     * Understanding the follwing Solution
+     * Understanding the following Solution
+     * @param nums
+     * @param k
+     * @return
+     */
+    public int longestOnesV2(int[] nums, int k) {
+        int left = 0;
+        int cnt = 0;
+        int res = 0;
+        for (int right = 0; right < nums.length; right++) {
+            /**
+             * Count zero numbers.
+             */
+            if (nums[right] == 0) {
+                cnt++;
+            }
+            /**
+             * If zero counts greater than window k,
+             * we need to move on pointer left,
+             * this may decrease the cnt if nums[left] is zero before we update left pointer.
+             */
+            while (cnt > k) {
+                if (nums[left] == 0) {
+                    cnt--;
+                }
+                left++;
+            }
+            res = Math.max(res, right - left + 1);
+        }
+        return res;
+    }
+
+    /**
+     * Understanding the following Solution
      * Slide Window Solution
      * e.g. nums = [0,0,0,1], k = 4, expected 4
      * right:0, nums[0]:0, queue:0, queue.size < 4, left:0, res=max(0,0-0+1)=1
@@ -123,7 +175,7 @@ public class MaxConsecutiveOnesIII {
      * @param k
      * @return
      */
-    public int longestOnesV2(int[] nums, int k) {
+    public int longestOnes(int[] nums, int k) {
         int res = 0;
         int left = 0;
         /**
@@ -150,30 +202,5 @@ public class MaxConsecutiveOnesIII {
         return res;
     }
 
-    public int longestOnes(int[] nums, int k) {
-        int left = 0;
-        int cnt = 0;
-        int res = 0;
-        for (int right = 0; right < nums.length; right++) {
-            /**
-             * Count zero numbers.
-             */
-            if (nums[right] == 0) {
-                cnt++;
-            }
-            /**
-             * If zero counts greater than window k,
-             * we need to move on pointer left,
-             * this may decrease the cnt if nums[left] is zero before we update left pointer.
-             */
-            while (cnt > k) {
-                if (nums[left] == 0) {
-                    cnt--;
-                }
-                left++;
-            }
-            res = Math.max(res, right - left + 1);
-        }
-        return res;
-    }
+
 }
