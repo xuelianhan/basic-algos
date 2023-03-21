@@ -1,5 +1,8 @@
 package org.ict.algorithm.leetcode.binarysearch;
 
+import java.util.ArrayDeque;
+import java.util.Queue;
+
 /**
  * Given a binary array nums and an integer k, return the maximum number of consecutive 1's in the array if you can flip at most k 0's.
  *
@@ -31,7 +34,31 @@ package org.ict.algorithm.leetcode.binarysearch;
 public class MaxConsecutiveOnesIII {
 
 
+    /**
+     * e.g. nums = [0,0,0,1], k = 4, expected 4
+     * right:0, nums[0]:0, queue:0, queue.size < 4, left:0, res=right-left+1=0-0+1=1
+     * right:1, nums[1]:0, queue:0,1, queue.size < 4, left:0, res=right-left+1=1-0+1=2
+     * right:2, nums[2]:0, queue:0,1,2, queue.size < 4, left:0, res=right-left+1=2-0+1=3
+     * right:3, nums[3]:1, queue:0,1,2, queue.size < 4, left:0, res=right-left+1=3-0+1=4
+     * return res:4
+     * 
+     * @param nums
+     * @param k
+     * @return
+     */
     public int longestOnes(int[] nums, int k) {
-        return 0;
+        int res = 0;
+        int left = 0;
+        Queue<Integer> queue = new ArrayDeque<>();
+        for (int right = 0; right < nums.length; right++) {
+            if (nums[right] == 0) {
+                queue.offer(right);
+            }
+            if (queue.size() > k) {
+                left = queue.poll() + 1;
+            }
+            res = Math.max(res, right - left + 1);
+        }
+        return res;
     }
 }
