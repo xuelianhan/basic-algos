@@ -25,6 +25,12 @@ import java.util.Queue;
  */
 public class MaxConsecutiveOnesII {
 
+
+    /**
+     * Solution for Follow up
+     * @param nums
+     * @return
+     */
     public int findMaxConsecutiveOnes(int[] nums) {
         int res = 0;
         int left = 0;
