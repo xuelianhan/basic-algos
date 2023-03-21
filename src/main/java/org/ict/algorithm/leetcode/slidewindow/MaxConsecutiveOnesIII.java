@@ -1,10 +1,11 @@
-package org.ict.algorithm.leetcode.array;
+package org.ict.algorithm.leetcode.slidewindow;
 
 import java.util.ArrayDeque;
 import java.util.Queue;
 
 /**
- * Given a binary array nums and an integer k, return the maximum number of consecutive 1's in the array if you can flip at most k 0's.
+ * Given a binary array nums and an integer k,
+ * return the maximum number of consecutive 1's in the array if you can flip at most k 0's.
  *
  *
  *
@@ -41,6 +42,58 @@ public class MaxConsecutiveOnesIII {
         System.out.println(res);
     }
 
+    /**
+     * Same as longestOnesV3, but more concise.
+     * @param nums
+     * @param k
+     * @return
+     */
+    public int longestOnesV4(int[] nums, int k) {
+        int i = 0;
+        int j = 0;
+        for ( ;j < nums.length; j++) {
+            if (nums[j] == 0) {
+                k--;
+            }
+            if (k < 0 && nums[i++] == 0) {
+               k++;
+            }
+        }
+        return j - i;
+    }
+
+    /**
+     * Intuition
+     * Translation:
+     * Find the longest subarray with at most K zeros.
+     *
+     * Explanation
+     * For each A[j], try to find the longest subarray.
+     * If A[i] ~ A[j] has zeros <= K, we continue to increment j.
+     * If A[i] ~ A[j] has zeros > K, we increment i (as well as j).
+     *
+     * @see <a href="https://leetcode.com/problems/max-consecutive-ones-iii/solutions/247564/java-c-python-sliding-window"></a>
+     * @author lee215
+     * @param nums
+     * @param k
+     * @return
+     */
+    public int longestOnesV3(int[] nums, int k) {
+        int i = 0;
+        int j = 0;
+        for ( ;j < nums.length; j++) {
+            if (nums[j] == 0) {
+                k--;
+            }
+            if (k < 0) {
+                if (nums[i] == 0) {
+                    k++;
+                }
+                i++;
+            }
+        }
+        return j - i;
+    }
 
     /**
      * Understanding the follwing Solution
@@ -70,7 +123,7 @@ public class MaxConsecutiveOnesIII {
      * @param k
      * @return
      */
-    public int longestOnesV3(int[] nums, int k) {
+    public int longestOnesV2(int[] nums, int k) {
         int res = 0;
         int left = 0;
         /**
@@ -95,10 +148,6 @@ public class MaxConsecutiveOnesIII {
             res = Math.max(res, right - left + 1);
         }
         return res;
-    }
-
-    public int longestOnesV2(int[] nums, int k) {
-        return 0;
     }
 
     public int longestOnes(int[] nums, int k) {

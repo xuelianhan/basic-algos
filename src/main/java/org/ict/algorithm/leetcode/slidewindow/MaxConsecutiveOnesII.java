@@ -1,4 +1,4 @@
-package org.ict.algorithm.leetcode.array;
+package org.ict.algorithm.leetcode.slidewindow;
 
 import java.util.ArrayDeque;
 import java.util.Queue;
