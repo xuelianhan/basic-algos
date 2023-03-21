@@ -33,6 +33,26 @@ public class MaxConsecutiveOnes {
         System.out.println(res);
     }
 
+    public int findMaxConsecutiveOnesV2(int[] nums) {
+        int res = 0;
+        int cnt = 0;
+        for (int num : nums) {
+            cnt = (num == 0 ? 0 : ++cnt);
+            res = Math.max(cnt, res);
+        }
+        return res;
+    }
+
+    public int findMaxConsecutiveOnesV1(int[] nums) {
+        int res = 0;
+        int cnt = 0;
+        for (int num : nums) {
+            cnt = (num == 0 ? 0 : cnt + 1);
+            res = Math.max(cnt, res);
+        }
+        return res;
+    }
+
 
     public int findMaxConsecutiveOnes(int[] nums) {
         int res = 0;
