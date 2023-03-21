@@ -1,4 +1,4 @@
-package org.ict.algorithm.leetcode.binarysearch;
+package org.ict.algorithm.leetcode.array;
 
 import java.util.ArrayDeque;
 import java.util.Queue;
@@ -64,7 +64,7 @@ public class MaxConsecutiveOnesIII {
      * right:9, nums[9]:1, queue:4,5, queue.size=2, left:4, res=max(5,9-4+1)=6
      * right:10, nums[10]:0, queue:4,5,10, queue.size=3, left:5, res=max(6, 10-5+1)=6
      * return res:6
-     * 
+     *
      * @param nums
      * @param k
      * @return
