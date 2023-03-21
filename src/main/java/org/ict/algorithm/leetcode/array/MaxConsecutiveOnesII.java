@@ -27,7 +27,7 @@ public class MaxConsecutiveOnesII {
 
 
     /**
-     * Two-Pointers Solution for Follow up
+     * Slide Window Solution for Follow up
      * @param nums
      * @return
      */

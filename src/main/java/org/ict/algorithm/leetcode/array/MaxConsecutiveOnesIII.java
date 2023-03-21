@@ -43,7 +43,8 @@ public class MaxConsecutiveOnesIII {
 
 
     /**
-     * Two-Pointers Solution
+     * Understanding the follwing Solution
+     * Slide Window Solution
      * e.g. nums = [0,0,0,1], k = 4, expected 4
      * right:0, nums[0]:0, queue:0, queue.size < 4, left:0, res=max(0,0-0+1)=1
      * right:1, nums[1]:0, queue:0,1, queue.size < 4, left:0, res=max(0,1-0+1)=2
@@ -69,7 +70,7 @@ public class MaxConsecutiveOnesIII {
      * @param k
      * @return
      */
-    public int longestOnes(int[] nums, int k) {
+    public int longestOnesV3(int[] nums, int k) {
         int res = 0;
         int left = 0;
         /**
@@ -85,9 +86,42 @@ public class MaxConsecutiveOnesIII {
              * 1.left = queue.poll() + 1, not queue.poll()
              * 2.res = Math.max(res, right - left + 1), not Math.max(res, right - left);
              * e.g. nums = [1,1,1,0,0,0,1,1,1,1,0], k = 2, expected:6
+             * Why plus 1? because queue.size greater than k, so the front element of queue
+             * is just the previous location before the actual k-plots.
              */
             if (queue.size() > k) {
                 left = queue.poll() + 1;
+            }
+            res = Math.max(res, right - left + 1);
+        }
+        return res;
+    }
+
+    public int longestOnesV2(int[] nums, int k) {
+        return 0;
+    }
+
+    public int longestOnes(int[] nums, int k) {
+        int left = 0;
+        int cnt = 0;
+        int res = 0;
+        for (int right = 0; right < nums.length; right++) {
+            /**
+             * Count zero numbers.
+             */
+            if (nums[right] == 0) {
+                cnt++;
+            }
+            /**
+             * If zero counts greater than window k,
+             * we need to move on pointer left,
+             * this may decrease the cnt if nums[left] is zero before we update left pointer.
+             */
+            while (cnt > k) {
+                if (nums[left] == 0) {
+                    cnt--;
+                }
+                left++;
             }
             res = Math.max(res, right - left + 1);
         }
