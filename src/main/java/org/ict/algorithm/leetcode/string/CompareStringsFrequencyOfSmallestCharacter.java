@@ -56,6 +56,13 @@ public class CompareStringsFrequencyOfSmallestCharacter {
         return null;
     }
 
+    /**
+     * Time Complexity: O(M)+O(N)+O(M*N)
+     * Space Complexity: O(M)+O(N)
+     * @param queries
+     * @param words
+     * @return
+     */
     public int[] numSmallerByFrequency(String[] queries, String[] words) {
         int m = queries.length;
         int n = words.length;
