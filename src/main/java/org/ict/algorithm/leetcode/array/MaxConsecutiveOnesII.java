@@ -36,6 +36,7 @@ public class MaxConsecutiveOnesII {
         int left = 0;
         /**
          * You can flip at most k times of 0.
+         * For this Question, k is fixed one.
          */
         int k = 1;
         Queue<Integer> queue = new ArrayDeque<>();
@@ -44,7 +45,7 @@ public class MaxConsecutiveOnesII {
                 queue.offer(right);
             }
             if (queue.size() > k) {
-                left = queue.poll();
+                left = queue.poll() + 1;
             }
             res = Math.max(res, right - left + 1);
         }
