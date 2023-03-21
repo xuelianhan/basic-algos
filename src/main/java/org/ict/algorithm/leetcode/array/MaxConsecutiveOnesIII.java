@@ -45,10 +45,10 @@ public class MaxConsecutiveOnesIII {
     /**
      * Two-Pointers Solution
      * e.g. nums = [0,0,0,1], k = 4, expected 4
-     * right:0, nums[0]:0, queue:0, queue.size < 4, left:0, res=right-left+1=0-0+1=1
-     * right:1, nums[1]:0, queue:0,1, queue.size < 4, left:0, res=right-left+1=1-0+1=2
-     * right:2, nums[2]:0, queue:0,1,2, queue.size < 4, left:0, res=right-left+1=2-0+1=3
-     * right:3, nums[3]:1, queue:0,1,2, queue.size < 4, left:0, res=right-left+1=3-0+1=4
+     * right:0, nums[0]:0, queue:0, queue.size < 4, left:0, res=max(0,0-0+1)=1
+     * right:1, nums[1]:0, queue:0,1, queue.size < 4, left:0, res=max(0,1-0+1)=2
+     * right:2, nums[2]:0, queue:0,1,2, queue.size < 4, left:0, res=max(0,2-0+1)=3
+     * right:3, nums[3]:1, queue:0,1,2, queue.size < 4, left:0, res=max(0,3-0+1)=4
      * return res:4
      *
      * e.g. nums = [1,1,1,0,0,0,1,1,1,1,0], k = 2, expected:6
@@ -85,7 +85,6 @@ public class MaxConsecutiveOnesIII {
              * 1.left = queue.poll() + 1, not queue.poll()
              * 2.res = Math.max(res, right - left + 1), not Math.max(res, right - left);
              * e.g. nums = [1,1,1,0,0,0,1,1,1,1,0], k = 2, expected:6
-             *
              */
             if (queue.size() > k) {
                 left = queue.poll() + 1;

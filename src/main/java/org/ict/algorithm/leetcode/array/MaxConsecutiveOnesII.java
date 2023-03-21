@@ -27,7 +27,7 @@ public class MaxConsecutiveOnesII {
 
 
     /**
-     * Solution for Follow up
+     * Two-Pointers Solution for Follow up
      * @param nums
      * @return
      */
@@ -44,6 +44,12 @@ public class MaxConsecutiveOnesII {
             if (nums[right] == 0) {
                 queue.offer(right);
             }
+            /**
+             * Two important points:
+             * 1.left = queue.poll() + 1, not queue.poll()
+             * 2.res = Math.max(res, right - left + 1), not Math.max(res, right - left);
+             * e.g. nums = [1,1,1,0,0,0,1,1,1,1,0], k = 2, expected:6
+             */
             if (queue.size() > k) {
                 left = queue.poll() + 1;
             }
