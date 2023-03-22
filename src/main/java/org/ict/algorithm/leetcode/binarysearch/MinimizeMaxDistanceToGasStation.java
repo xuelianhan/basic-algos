@@ -48,7 +48,7 @@ public class MinimizeMaxDistanceToGasStation {
 
 
     /**
-     * What we want?
+     * What do we want?
      * Return the smallest possible value of the maximum distance between adjacent gas stations after inserting k stations.
      *
      * Please note that the new k station may add at any position between current stations
@@ -96,7 +96,6 @@ public class MinimizeMaxDistanceToGasStation {
     }
 
     /**
-     * git rebase -r <8bdf9eb7365ebd501f7680b9b8fd58824f079605> --exec 'git commit --amend --no-edit --reset-author'
      * Similar with {@link KokoEatingBananas}
      * Each distance of two adjacent stations is the number of banana.
      * Now we need to check eating speed mid of each hour is under the
