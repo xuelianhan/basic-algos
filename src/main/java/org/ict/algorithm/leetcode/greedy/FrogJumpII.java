@@ -38,10 +38,7 @@ package org.ict.algorithm.leetcode.greedy;
  */
 public class FrogJumpII {
 
-    public int maxJumpV1(int[] stones) {
-        //todo
-        return 0;
-    }
+
 
     /**
      * Intuition 1
@@ -76,15 +73,42 @@ public class FrogJumpII {
      * Complexity
      * Time O(n)
      * Space O(1)
-     * @see <a href="https://leetcode.com/problems/frog-jump-ii/solutions/2897948/java-c-python-max-a-i-a-i-2/?orderBy=most_votes"></a>
+     * @see <a href="https://leetcode.com/problems/frog-jump-ii/solutions/2897948/java-c-python-max-a-i-a-i-2"></a>
      * @author lee215
      * @param stones
      * @return
      */
-    public int maxJump(int[] stones) {
+    public int maxJumpV1(int[] stones) {
         int n = stones.length;
         int res = stones[1] - stones[0];
         for (int i = 2; i < n; i++) {
+            res = Math.max(res, stones[i] - stones[i - 2]);
+        }
+        return res;
+    }
+
+    /**
+     * Claim 1:
+     * It is optimal that we make use of all rocks: There is never a benefit of not including a rock in Path 1 or Path 2,
+     * it is always positive or neutral.
+     *
+     * Claim 2: It is never optimal to choose two consecutive rocks:
+     * If we choose rock_i, and rock_i+1, then rock_i+2 will have to do (rock_i+2)-(rock_i) work to return.
+     * Because the array is strictly increasing, it holds that (rock_i+2)-(rock_i) > (rock_i+1-rock_i)
+     * Therefore one path must lie on each even index and the other path must lie on each odd index.
+     * We iterate through them and find the maximum distance.
+     *
+     * @see <a href="https://leetcode.com/problems/frog-jump-ii/solutions/2897888/it-s-greedy-even-and-odd"></a>
+     * @author t747
+     * @param stones
+     * @return
+     */
+    public int maxJump(int[] stones) {
+        int res = stones[1] - stones[0];
+        for (int i = 3; i < stones.length; i += 2) {
+            res = Math.max(res, stones[i] - stones[i - 2]);
+        }
+        for (int i = 2; i < stones.length; i += 2) {
             res = Math.max(res, stones[i] - stones[i - 2]);
         }
         return res;
