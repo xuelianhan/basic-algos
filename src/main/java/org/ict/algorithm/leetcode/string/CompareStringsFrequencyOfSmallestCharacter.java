@@ -93,6 +93,7 @@ public class CompareStringsFrequencyOfSmallestCharacter {
 
     /**
      * Understanding the following solution
+     * It utilizes the index order of array.
      * Time Cost 2ms
      * @param queries
      * @param words
@@ -123,9 +124,18 @@ public class CompareStringsFrequencyOfSmallestCharacter {
             freqCnt[i] = freqCnt[i + 1] + freqCnt[i];
         }
 
+        /**
+         * For each query queries[i],
+         * count the number of words in words such that f(queries[i]) < f(W) for each W in words.
+         */
         int[] res = new int[queries.length];
         for (int i = 0; i < queries.length; i++) {
             int cnt = countFreq(queries[i]);
+            /**
+             * 1 <= queries[i].length, words[i].length <= 10
+             * While cnt == 10, it means this query has frequency 10, it's the maximum value,
+             * there is impossible to find relation pair that satisfy 10 < f(W).
+             */
             if (cnt == freqCnt.length - 1) {
                 res[i] = 0;
             } else {
