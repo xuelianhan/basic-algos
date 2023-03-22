@@ -46,6 +46,10 @@ package org.ict.algorithm.leetcode.greedy;
  */
 public class FrogJumpII {
 
+    public int maxJumpV1(int[] stones) {
+        return 0;
+    }
+
     /**
      * Intuition 1
      * "travel to the last stone and then return to the first stone."
@@ -54,9 +58,9 @@ public class FrogJumpII {
      * We can image there are two frog jump from first to the last.
      *
      * Intuition 2
-     * If one stone not in path one and path 2,
+     * If one stone not in path-1 and path-2,
      * we can greedily add it to either of the path.
-     * So it exists a best solution, that all stones are used.
+     * So it exists the best solution, that all stones are used.
      *
      *
      * Explanation
@@ -67,11 +71,11 @@ public class FrogJumpII {
      * If we assign them not alternatively like:
      * frog1 frog2 frog2 frog1
      *
-     * The distance for frog 1 is huge and it's no better than
+     * The distance for frog 1 is huge, and it's no better than
      * frog1 frog2 frog1 frog2
      *
      * So in this problem,
-     * we need to calculate the maximunm distance between A[i] - A[i-2].
+     * we need to calculate the maximum distance between A[i] - A[i-2].
      * Special case is only two stones, so we initial res = A[1] - A[0].
      *
      *
@@ -83,38 +87,12 @@ public class FrogJumpII {
      * @param stones
      * @return
      */
-    public int maxJumpV1(int[] stones) {
+    public int maxJump(int[] stones) {
         int n = stones.length;
         int res = stones[1] - stones[0];
         for (int i = 2; i < n; i++) {
             res = Math.max(res, stones[i] - stones[i - 2]);
         }
         return res;
-    }
-
-    public int maxJump(int[] stones) {
-        int lo = 0;
-        int hi = 1000_000_000;
-        while (lo < hi) {
-            int mid = lo + (hi - lo) / 2;
-            if (feasible(stones, mid)) {
-                hi = mid;
-            } else {
-                lo = mid + 1;
-            }
-        }
-        return lo;
-    }
-
-    /**
-     * One of the optimal strategies will be to jump to every stone.
-     * Skipping just one stone in every forward jump and jumping to those skipped stones in backward jump can minimize the maximum jump.
-     * @param stones
-     * @param mid
-     * @return
-     */
-    private boolean feasible(int[] stones, int mid) {
-        //todo
-        return true;
     }
 }
