@@ -46,11 +46,6 @@ import java.util.PriorityQueue;
 public class FindMedianFromDataStream {
 
     /**
-     * Your MedianFinder object will be instantiated and called as such:
-     * MedianFinder obj = new MedianFinder();
-     * obj.addNum(num);
-     * double param_2 = obj.findMedian();
-     *
      * The invariant of the algorithm is two heaps, small and large, each represent half of the current list.
      * The length of smaller half is kept to be n / 2 at all time,
      * and the length of the larger half is either n / 2 or n / 2 + 1 depend on n's parity.
@@ -109,7 +104,7 @@ public class FindMedianFromDataStream {
      * Max-heap small has the smaller half of the numbers.
      * Min-heap large has the larger half of the numbers.
      * This gives me direct access to the one or two middle values (they're the tops of the heaps),
-     * so getting the median takes O(1) time. And adding a number takes O(log n) time.
+     * so getting the median takes O(1) time. And adding one number takes O(log n) time.
      * Supporting both min- and max-heap is more or less cumbersome, depending on the language,
      * so I simply negate the numbers in the heap in which I want the reverse of the default order.
      * To prevent this from causing a bug with -231 (which negated is itself, when using 32-bit ints),
@@ -122,22 +117,41 @@ public class FindMedianFromDataStream {
      */
     class MedianFinderV1 {
 
-        private int size = 0;
-        PriorityQueue<Integer> maxHeap = new PriorityQueue<>();
+        /**
+         * Max-heap small has the smaller half of the numbers.
+         */
+        PriorityQueue<Long> maxHeap = new PriorityQueue<>();
 
-        PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+        /**
+         * Min-heap large has the larger half of the numbers.
+         */
+        PriorityQueue<Long> minHeap = new PriorityQueue<>();
 
-        public MedianFinderV1() {
-
-        }
+        public MedianFinderV1() {}
 
         public void addNum(int num) {
-
+            minHeap.add((long)num);
+            maxHeap.add(-minHeap.poll());
+            if (minHeap.size() < maxHeap.size()) {
+                minHeap.add(-maxHeap.poll());
+            }
         }
 
         public double findMedian() {
-            return 0.0;
+            double res = 0.0;
+            if (minHeap.size() > maxHeap.size()) {
+                res = minHeap.peek();
+            } else {
+                res = (minHeap.peek() - maxHeap.peek()) / 2.0;
+            }
+            return res;
         }
     }
 
+    /**
+     * Your MedianFinder object will be instantiated and called as such:
+     * MedianFinder obj = new MedianFinder();
+     * obj.addNum(num);
+     * double param_2 = obj.findMedian();
+     */
 }
