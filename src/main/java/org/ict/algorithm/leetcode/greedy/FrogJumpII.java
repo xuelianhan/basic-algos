@@ -4,8 +4,10 @@ package org.ict.algorithm.leetcode.greedy;
  * You are given a 0-indexed integer array stones sorted in strictly increasing order representing the positions of stones in a river.
  * A frog, initially on the first stone, wants to travel to the last stone and then return to the first stone.
  * However, it can jump to any stone at most once.
- * The length of a jump is the absolute difference between the position of the stone the frog is currently on and the position of the stone to which the frog jumps.
- * More formally, if the frog is at stones[i] and is jumping to stones[j], the length of the jump is |stones[i] - stones[j]|.
+ * The length of a jump is the absolute difference between the position of the stone the frog is currently on,
+ * and the position of the stone to which the frog jumps.
+ * More formally, if the frog is at stones[i] and is jumping to stones[j],
+ * the length of the jump is |stones[i] - stones[j]|.
  * The cost of a path is the maximum length of a jump among all jumps in the path.
  * Return the minimum cost of a path for the frog.
  *
@@ -46,7 +48,8 @@ public class FrogJumpII {
      * "travel to the last stone and then return to the first stone."
      * It means there are two path from first to last stone,
      * and two path have no intersection in the middle.
-     * We can image there are two frog jump from first to the last.
+     * We can image there are two frog jump from first to the last, there paths
+     * cannot be cross(This way equals one frog jump from first to last, and back from last to first)
      *
      * Intuition 2
      * If one stone not in path-1 and path-2,
