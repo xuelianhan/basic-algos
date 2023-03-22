@@ -51,14 +51,56 @@ public class CompareStringsFrequencyOfSmallestCharacter {
 
     }
 
+    /**
+     * Understanding the following solution
+     * Time Cost 2ms
+     * @param queries
+     * @param words
+     * @return
+     */
     public int[] numSmallerByFrequencyV1(String[] queries, String[] words) {
-        //todo
-        return null;
+        /**
+         * 1 <= queries[i].length, words[i].length <= 10
+         * The freqCnt-index represents frequency, it starts with 1, ends with 10, index-0 is a dummy offset,
+         * and its value represents how many Strings in "words" array have same or more frequency.
+         */
+        int[] freqCnt = new int[11];
+        for (String word : words) {
+            int cnt = countFreq(word);
+            freqCnt[cnt]++;
+        }
+        /**
+         * words = ["a","aa","aaa","aaaa"]
+         * freqCnt = [0,1,1,1,1,0,0,0,0,0,0]
+         * freqCnt = [4,4,3,2,1,0,0,0,0,0,0]
+         * i:0, freqCnt[0]=4, there are 4 words which frequency >= 0, they are "a","aa","aaa","aaaa"
+         * i:1, freqCnt[1]=4, there are 4 words which frequency >= 1, they are "a","aa","aaa","aaaa"
+         * i:2, freqCnt[2]=3, there are 3 words which frequency >= 2, they are "aa","aaa","aaaa"
+         * i:3, freqCnt[3]=2, there are 2 words which frequency >= 3, they are "aaa","aaaa"
+         * i:4, freqCnt[4]=1, there are 1 words which frequency >= 4, they are "aaaa"
+         */
+        for (int i = 9; i >= 0; i--){
+            freqCnt[i] = freqCnt[i + 1] + freqCnt[i];
+        }
+
+        int[] res = new int[queries.length];
+        for (int i = 0; i < queries.length; i++) {
+            int cnt = countFreq(queries[i]);
+            if (cnt == freqCnt.length - 1) {
+                res[i] = 0;
+            } else {
+                res[i] = freqCnt[cnt + 1];
+            }
+        }
+        return res;
     }
 
     /**
+     * Brute-Force Solution
      * Time Complexity: O(M)+O(N)+O(M*N)
      * Space Complexity: O(M)+O(N)
+     * Time Cost 473ms
+     *
      * @param queries
      * @param words
      * @return
