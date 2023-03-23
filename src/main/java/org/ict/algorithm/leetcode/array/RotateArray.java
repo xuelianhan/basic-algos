@@ -35,6 +35,30 @@ import java.util.Arrays;
 public class RotateArray {
 
     /**
+     * Flip the entire array at first, then flip first k digits,and finally flip the remained n-k digits.
+     * 1 2 3 4 5 6 7
+     * 7 6 5 4 3 2 1
+     * 5 6 7 4 3 2 1
+     * 5 6 7 1 2 3 4
+     * @param nums
+     * @param k
+     */
+    public void rotateV3(int[] nums, int k) {
+        /**
+         * e.g.nums:[-1], k:2
+         */
+        int n = nums.length;
+        /**
+         * Very important, because k might be greater than n,
+         * the mod operation will map k into range from 0 to n-1.
+         */
+        k = k % n;
+        reverse(nums, 0, n - 1);
+        reverse(nums, 0, k - 1);
+        reverse(nums, k, n - 1);
+    }
+
+    /**
      * Flip the first n-k digits, then flip the next k digits, and finally flip the entire array.
      * e.g.
      * 1 2 3 4 5 6 7
