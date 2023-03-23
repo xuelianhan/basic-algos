@@ -1,9 +1,6 @@
 package org.ict.algorithm.leetcode.heap;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.PriorityQueue;
+import java.util.*;
 
 /**
  * The median is the middle value in an ordered integer list.
@@ -46,6 +43,109 @@ import java.util.PriorityQueue;
 public class FindMedianFromDataStream {
 
     /**
+     * Method from LiYuDong
+     * Pair-Top-Heap Solution similar with version in MedianFinderV3.
+     * To dynamically maintain the median,
+     * we can create 2 binomial heaps: a small top heap and a large top heap,
+     * assuming that the current sequence length is M.
+     * We always keep:
+     * 1. the numbers in the sequence ranked from smallest to largest from 1 to M/2 are stored in the big top heap;
+     * 2. the number of numbers in the sequence with ranking from smallest to largest is M/2 + 1 to M is stored in the small top heap;
+     *
+     * Any time there are too many elements in a heap, it is time to remove the top element of that heap and insert it into another heap.
+     * In this way, the median of the sequence is:
+     * 1. the median is the top element of either the small top heap or the big top heap if there are an odd number of numbers in total at the end;
+     * 2. If there are an even number of numbers at the end,
+     * then the median is the sum of the top elements of the small top heap and the big top heap, divided by 2
+     *
+     */
+    class MedianFinderV5 {
+        PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Comparator.reverseOrder());
+        PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+
+        private int size = 0;
+
+        /**
+         * e.g. we add 1~5 to minHeap and maxHeap:
+         * num:1, size:0, maxHeap:1, minHeap:1, maxHeap:, size:1
+         * num:2, size:1, minHeap:1,2, maxHeap:1, minHeap:2, size:2
+         * num:3, size:2, maxHeap:3,1, minHeap:2,3, maxHeap:1, size:3
+         * num:4, size:3, minHeap:2,3,4, maxHeap:2,1, minHeap:3,4, size:4
+         * num:5, size:4, maxHeap:5,2,1, minHeap:3,4,5, maxHeap:2,1, size:5
+         * 5 % 2 > 0, mean = minHeap.peek() = 3
+         *
+         * @param num
+         */
+        public void addNum(int num) {
+            if (size % 2 == 0) {
+                maxHeap.offer(num);
+                minHeap.offer(maxHeap.poll());
+            } else {
+                minHeap.offer(num);
+                maxHeap.offer(minHeap.poll());
+            }
+            size++;
+        }
+        public double findMedian() {
+            double res;
+            if (size % 2 == 0) {
+                res = (maxHeap.peek() + minHeap.peek()) / 2.0;
+            } else {
+                /**
+                 * Notice here, peeking from minHeap or maxHeap depends on details of addNum method.
+                 */
+                res = minHeap.peek();
+            }
+            return res;
+        }
+    }
+
+    /**
+     * Pair-Top-Heap Solution similar with version in MedianFinderV3.
+     */
+    class MedianFinderV4 {
+        PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Comparator.reverseOrder());
+        PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+
+        private int size = 0;
+
+        /**
+         * e.g. we add 1~5 to minHeap and maxHeap:
+         * num:1, size:0, minHeap:1, maxHeap:1, minHeap:, size:1
+         * num:2, size:1, maxHeap:2,1, minHeap:2 maxHeap:1, size:2
+         * num:3, size:2, minHeap:2,3, maxHeap:2,1, minHeap:3, size:3
+         * num:4, size:3, maxHeap:4,2,1, minHeap:3,4, maxHeap:2,1, size:4
+         * num:5, size:4, minHeap:3,4,5, maxHeap:3,2,1, minHeap:4,5, size:5
+         * 5 % 2 > 0, mean = maxHeap.peek() = 3
+         *
+         * @param num
+         */
+        public void addNum(int num) {
+            if (size % 2 == 0) {
+                minHeap.offer(num);
+                maxHeap.offer(minHeap.poll());
+            } else {
+                maxHeap.offer(num);
+                minHeap.offer(maxHeap.poll());
+            }
+            size++;
+        }
+        public double findMedian() {
+            double res;
+            if (size % 2 == 0) {
+                res = (maxHeap.peek() + minHeap.peek()) / 2.0;
+            } else {
+                /**
+                 * Notice here, peeking from minHeap or maxHeap depends on details of addNum method.
+                 */
+                res = maxHeap.peek();
+            }
+            return res;
+        }
+    }
+
+
+    /**
      * The invariant of the algorithm is two heaps, small and large, each represent half of the current list.
      * The length of smaller half is kept to be n / 2 at all time,
      * and the length of the larger half is either n / 2 or n / 2 + 1 depend on n's parity.
@@ -54,45 +154,55 @@ public class FindMedianFromDataStream {
      *
      * (1) length of (small, large) == (k, k)
      * (2) length of (small, large) == (k, k + 1)
+     *
      * After adding the number, total (n + 1) numbers, they will become:
      * (1) length of (small, large) == (k, k + 1)
      * (2) length of (small, large) == (k + 1, k + 1)
-     * Here we take the first scenario for example, we know the large will gain one more item and small will remain the same size,
-     * but we cannot just push the item into large.
-     * What we should do is we push the new number into small and pop the maximum item from small then push it into large
-     * (all the pop and push here are heappop and heappush).
-     * By doing this kind of operations for the two scenarios we can keep our invariant.
      *
-     * Therefore, to add a number, we have 3 O(log n) heap operations.
-     * Luckily the heapq provided us a function "heappushpop" which saves some time by combine two into one.
-     * The document says:
-     * Push item on the heap, then pop and return the smallest item from the heap.
-     * The combined action runs more efficiently than heappush() followed by a separate call to heappop().
-     * Altogether, the add operation is O(logN), The findMedian operation is O(1).
-     *
-     * Note that the heapq in python is a min heap,
-     * thus we need to invert the values in the smaller half to mimic a "max heap".
-     * A further observation is that the two scenarios take turns when adding numbers,
-     * thus it is possible to combine the two into one.
-     * For this please see stefan's post
      * @see <a href="https://leetcode.com/problems/find-median-from-data-stream/solutions/74062/short-simple-java-c-python-o-log-n-o-1"></a>
      * @see <a href="https://leetcode.com/problems/find-median-from-data-stream/solutions/74047/java-python-two-heap-solution-o-log-n-add-o-1-find"></a>
      * @author dietpepsi
      */
     class MedianFinderV3 {
-
-        PriorityQueue<Integer> maxHeap = new PriorityQueue<>();
-
+        PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Comparator.reverseOrder());
         PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+        /**
+         * At first, minHeap and maxHeap both have no elements, zero is even.
+         */
+        private boolean even = true;
 
-        public MedianFinderV3() {}
-
+        /**
+         * e.g. we add 1~5 to minHeap and maxHeap:
+         * num:1, even:true, minHeap:1, maxHeap:1, minHeap:, even:false
+         * num:2, even:false, maxHeap:2,1, minHeap:2, maxHeap:1, even:true
+         * num:3, even:true, minHeap:2,3, maxHeap:2,1, minHeap:3, even:false
+         * num:4, even:false, maxHeap:4,2,1, minHeap:3,4, maxHeap:2,1, even:true
+         * num:5, even:true, minHeap:3,4,5, maxHeap:3,2,1, minHeap:4,5, even:false
+         * even:false, mean = maxHeap.peek() = 3
+         *
+         * @param num
+         */
         public void addNum(int num) {
-
+            if (even) {
+                minHeap.offer(num);
+                maxHeap.offer(minHeap.poll());
+            } else {
+                maxHeap.offer(num);
+                minHeap.offer(maxHeap.poll());
+            }
+            even = !even;
         }
-
         public double findMedian() {
-            return 0.0;
+            double res;
+            if (even) {
+                res = (maxHeap.peek() + minHeap.peek()) / 2.0;
+            } else {
+                /**
+                 * Notice here, peeking from minHeap or maxHeap depends on details of addNum method.
+                 */
+                res = maxHeap.peek();
+            }
+            return res;
         }
     }
 
@@ -118,10 +228,7 @@ public class FindMedianFromDataStream {
                 return 0;
             }
         });
-
         PriorityQueue<Long> minHeap = new PriorityQueue<>();
-
-        public MedianFinderV2() {}
 
         public void addNum(int num) {
             minHeap.add((long)num);
@@ -130,7 +237,6 @@ public class FindMedianFromDataStream {
                 minHeap.add(maxHeap.poll());
             }
         }
-
         public double findMedian() {
             double res;
             if (minHeap.size() > maxHeap.size()) {
@@ -151,12 +257,8 @@ public class FindMedianFromDataStream {
      * Mean = (3 + 4) / 2.0 = 3.5
      */
     class MedianFinderV1 {
-
         PriorityQueue<Integer> maxHeap = new PriorityQueue<>((a, b) -> (b - a));
-
         PriorityQueue<Integer> minHeap = new PriorityQueue<>();
-
-        public MedianFinderV1() {}
 
         public void addNum(int num) {
             minHeap.add(num);
@@ -165,7 +267,6 @@ public class FindMedianFromDataStream {
                 minHeap.add(maxHeap.poll());
             }
         }
-
         public double findMedian() {
             double res;
             if (minHeap.size() > maxHeap.size()) {
@@ -180,8 +281,8 @@ public class FindMedianFromDataStream {
 
     /**
      * I keep two heaps (or priority queues):
-     * Max-heap small has the smaller half of the numbers.
-     * Min-heap large has the larger half of the numbers.
+     * Max-heap has the smaller half of the numbers.
+     * Min-heap has the larger half of the numbers.
      * This gives me direct access to the one or two middle values (they're the tops of the heaps),
      * so getting the median takes O(1) time. And adding one number takes O(log n) time.
      * Supporting both min- and max-heap is more or less cumbersome, depending on the language,
@@ -220,8 +321,6 @@ public class FindMedianFromDataStream {
          */
         PriorityQueue<Long> minHeap = new PriorityQueue<>();
 
-        public MedianFinder() {}
-
         public void addNum(int num) {
             minHeap.add((long)num);
             maxHeap.add(-minHeap.poll());
@@ -229,7 +328,6 @@ public class FindMedianFromDataStream {
                 minHeap.add(-maxHeap.poll());
             }
         }
-
         public double findMedian() {
             double res;
             if (minHeap.size() > maxHeap.size()) {
