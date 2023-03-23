@@ -79,16 +79,13 @@ public class FindMedianFromDataStream {
      * @see <a href="https://leetcode.com/problems/find-median-from-data-stream/solutions/74047/java-python-two-heap-solution-o-log-n-add-o-1-find"></a>
      * @author dietpepsi
      */
-    class MedianFinder {
+    class MedianFinderV3 {
 
-        private int size = 0;
         PriorityQueue<Integer> maxHeap = new PriorityQueue<>();
 
         PriorityQueue<Integer> minHeap = new PriorityQueue<>();
 
-        public MedianFinder() {
-
-        }
+        public MedianFinderV3() {}
 
         public void addNum(int num) {
 
@@ -98,6 +95,85 @@ public class FindMedianFromDataStream {
             return 0.0;
         }
     }
+
+    /**
+     * Pair-Top-Heap Standard Solution
+     * MaxHeap + MinHeap for Long type, especially using Long-version while the Integer-version may cause the overflow at (a + b) / 2.0.
+     * Assume input: 1,2,3,4,5,6
+     * MaxHeap:3,2,1
+     * MinHeap:4,5,6
+     * Mean = (3 + 4) / 2.0 = 3.5
+     */
+    class MedianFinderV2 {
+
+        PriorityQueue<Long> maxHeap = new PriorityQueue<>((a, b) -> {
+            if (a < b) {
+                return 1;
+            } else if (a > b) {
+                return -1;
+            } else {
+                return 0;
+            }
+        });
+
+        PriorityQueue<Long> minHeap = new PriorityQueue<>();
+
+        public MedianFinderV2() {}
+
+        public void addNum(int num) {
+            minHeap.add((long)num);
+            maxHeap.add(minHeap.poll());
+            if (minHeap.size() < maxHeap.size()) {
+                minHeap.add(maxHeap.poll());
+            }
+        }
+
+        public double findMedian() {
+            double res;
+            if (minHeap.size() > maxHeap.size()) {
+                res = minHeap.peek();
+            } else {
+                res = (minHeap.peek() + maxHeap.peek()) / 2.0;
+            }
+            return res;
+        }
+    }
+
+    /**
+     * Pair-Top-Heap Standard Solution
+     * MaxHeap + MinHeap for Integer type
+     * Assume input: 1,2,3,4,5,6
+     * MaxHeap:3,2,1
+     * MinHeap:4,5,6
+     * Mean = (3 + 4) / 2.0 = 3.5
+     */
+    class MedianFinderV1 {
+
+        PriorityQueue<Integer> maxHeap = new PriorityQueue<>((a, b) -> (b - a));
+
+        PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+
+        public MedianFinderV1() {}
+
+        public void addNum(int num) {
+            minHeap.add(num);
+            maxHeap.add(minHeap.poll());
+            if (minHeap.size() < maxHeap.size()) {
+                minHeap.add(maxHeap.poll());
+            }
+        }
+
+        public double findMedian() {
+            double res;
+            if (minHeap.size() > maxHeap.size()) {
+                res = minHeap.peek();
+            } else {
+                res = (minHeap.peek() + maxHeap.peek()) / 2.0;
+            }
+            return res;
+        }
+    }
+
 
     /**
      * I keep two heaps (or priority queues):
@@ -115,11 +191,14 @@ public class FindMedianFromDataStream {
      * @see <a href="https://leetcode.com/problems/find-median-from-data-stream/solutions/74062/short-simple-java-c-python-o-log-n-o-1"></a>
      * @author StefanPochmann
      */
-    class MedianFinderV1 {
+    class MedianFinder {
 
         /**
          * Max-heap has the smaller half of the numbers.
          * The maxHeap here is actually the min heap, but we store the opposite number in it.
+         * maxHeap:-3,-2,-1, although the top value is -3, it's the minimum, but -(-3)=3 is the maximum
+         * It use Min-Heap and Opposite number to simulate a Max-Heap.
+         *
          * e.g. we add 1~6 to minHeap and maxHeap:
          * num:1, minHeap:1, maxHeap:-1, minHeap:empty, minHeap.size < maxHeap.size, minHeap:1, maxHeap:empty
          * num:2, minHeap:1,2, maxHeap:-1, minHeap:2, minHeap.size == maxHeap.size
@@ -138,7 +217,7 @@ public class FindMedianFromDataStream {
          */
         PriorityQueue<Long> minHeap = new PriorityQueue<>();
 
-        public MedianFinderV1() {}
+        public MedianFinder() {}
 
         public void addNum(int num) {
             minHeap.add((long)num);
@@ -149,7 +228,7 @@ public class FindMedianFromDataStream {
         }
 
         public double findMedian() {
-            double res = 0.0;
+            double res;
             if (minHeap.size() > maxHeap.size()) {
                 res = minHeap.peek();
             } else {
