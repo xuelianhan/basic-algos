@@ -119,6 +119,16 @@ public class FindMedianFromDataStream {
 
         /**
          * Max-heap has the smaller half of the numbers.
+         * The maxHeap here is actually the min heap, but we store the opposite number in it.
+         * e.g. we add 1~6 to minHeap and maxHeap:
+         * num:1, minHeap:1, maxHeap:-1, minHeap:empty, minHeap.size < maxHeap.size, minHeap:1, maxHeap:empty
+         * num:2, minHeap:1,2, maxHeap:-1, minHeap:2, minHeap.size == maxHeap.size
+         * num:3, minHeap:2,3, maxHeap:-2,-1, minHeap:3, minHeap.size < maxHeap, minHeap:2,3, maxHeap:-1
+         * num:4, minHeap:2,3,4, maxHeap:-2,-1, minHeap:3,4, minHeap.size == maxHeap
+         * num:5, minHeap:3,4,5, maxHeap:-3,-2,-1, minHeap:4,5, minHeap.size < maxHeap, minHeap:3,4,5, maxHeap:-2,-1
+         * num:6, minHeap:3,4,5,6, maxHeap:-3,-2,-1, minHeap:4,5,6, minHeap == maxHeap
+         * mean = (minHeap.peek() - maxHeap.peek) / 2.0
+         * mean = (4 - (-3)) / 2.0 = 7 / 2.0 = 3.5
          */
         PriorityQueue<Long> maxHeap = new PriorityQueue<>();
 
