@@ -1,5 +1,7 @@
 package org.ict.algorithm.leetcode.array;
 
+import java.util.Arrays;
+
 /**
  * Given an integer array nums, rotate the array to the right by k steps, where k is non-negative.
  *
@@ -32,11 +34,67 @@ package org.ict.algorithm.leetcode.array;
  */
 public class RotateArray {
 
-    public void rotateV1(int[] nums, int k) {
-
+    /**
+     * Flip the first n-k digits, then flip the next k digits, and finally flip the entire array.
+     * e.g.
+     * 1 2 3 4 5 6 7
+     * 4 3 2 1 5 6 7
+     * 4 3 2 1 7 6 5
+     * 5 6 7 1 2 3 4
+     * @see <a href="https://leetcode.com/problems/rotate-array/solutions/54250/easy-to-read-java-solution"></a>
+     * @author danny6514
+     * @param nums
+     * @param k
+     */
+    public void rotateV2(int[] nums, int k) {
+        /**
+         * e.g.nums:[-1], k:2
+         */
+        int n = nums.length;
+        /**
+         * Very important, because k might be greater than n.
+         */
+        k = k % n;
+        reverse(nums, 0, n - k - 1);
+        reverse(nums, n - k, n);
+        reverse(nums, 0, n);
     }
-    public void rotate(int[] nums, int k) {
 
+    private void reverse(int[] nums, int start, int end) {
+        while (start < end) {
+            int temp = nums[start];
+            nums[start] = nums[end];
+            nums[end] = temp;
+            start++;
+            end--;
+        }
+    }
+
+    public void rotateV1(int[] nums, int k) {
+        int n = nums.length;
+        int[] copy = new int[n];
+        copy = Arrays.copyOf(nums, n);
+        for (int i = 0; i < n; i++) {
+            int to = (i + k) % n;
+            nums[to] = copy[i];
+        }
+    }
+
+    /**
+     * Move the i-th element to the index of (i + k) % n.
+     * @param nums
+     * @param k
+     */
+    public void rotate(int[] nums, int k) {
+        int n = nums.length;
+        int[] copy = new int[n];
+        for (int i = 0; i < n; i++) {
+            int to = (i + k) % n;
+            copy[to] = nums[i];
+        }
+        for (int i = 0; i < n; i++) {
+            nums[i] = copy[i];
+        }
     }
 
 }
