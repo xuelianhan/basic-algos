@@ -22,7 +22,7 @@ import org.ict.algorithm.util.RandomGenUtil;
  * ---------------
  * 
  * 
- * @author hanxuelian001
+ * @author sniper
  *
  */
 public class PriorityQueueTest {
@@ -47,13 +47,7 @@ public class PriorityQueueTest {
 		
 		// Creates a PriorityQueue with the specified initial capacity that orders its elements according to their descend ordering.
 		// queue is a max-heap with least k elements in it.
-		PriorityQueue<Integer> queue = new PriorityQueue<>(k, new Comparator<Integer>() {
-			@Override
-			public int compare(Integer o1, Integer o2) {
-				return o2 - o1;
-			}
-			
-		});
+		PriorityQueue<Integer> queue = new PriorityQueue<>(k, (o1, o2) -> o2 - o1);
 		for (int v : list ) {
 			queue.offer(v);
 			if (queue.size() > k) {
@@ -82,13 +76,7 @@ public class PriorityQueueTest {
 		
 		// Creates a PriorityQueue with the specified initial capacity that orders its elements according to their natural ordering.
 		// queue is a min-heap with largest k elements in it.
-		PriorityQueue<Integer> queue = new PriorityQueue<>(k, new Comparator<Integer>() {
-			@Override
-			public int compare(Integer o1, Integer o2) {
-				return o1 - o2;
-			}
-			
-		});
+		PriorityQueue<Integer> queue = new PriorityQueue<>(k, Comparator.comparingInt(o -> o));
 		for (int v : list ) {
 			queue.offer(v);
 			if (queue.size() > k) {

@@ -118,12 +118,13 @@ public class FindMedianFromDataStream {
     class MedianFinderV1 {
 
         /**
-         * Max-heap small has the smaller half of the numbers.
+         * Max-heap has the smaller half of the numbers.
          */
         PriorityQueue<Long> maxHeap = new PriorityQueue<>();
 
         /**
-         * Min-heap large has the larger half of the numbers.
+         * It's default min-heap in Java(the top is the minimum)
+         * Min-heap has the larger half of the numbers.
          */
         PriorityQueue<Long> minHeap = new PriorityQueue<>();
 
