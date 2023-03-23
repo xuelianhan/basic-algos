@@ -33,6 +33,30 @@ public class PriorityQueueTest {
 		testQueueWithDefaultComparator();
 		
 	}
+	public static void testQueueWithDescendComparatorV2(int k) {
+		List<Integer> list = new ArrayList<>();
+		for (int i = 1; i < 11; i++) {
+			int randomNum = RandomGenUtil.getRandomNumberInRangeV4(1, 11);
+			list.add(randomNum);
+		}
+		System.out.println("list:" + list);
+
+		// Creates a PriorityQueue with the specified initial capacity that orders its elements according to their descend ordering.
+		// queue is a max-heap with least k elements in it.
+		PriorityQueue<Integer> maxHeap = new PriorityQueue<>(k, Comparator.reverseOrder());
+		for (int v : list ) {
+			maxHeap.offer(v);
+			if (maxHeap.size() > k) {
+				maxHeap.poll();
+			}
+			System.out.println("queue:" + maxHeap);
+		}
+
+		while (!maxHeap.isEmpty()) {
+			int head = maxHeap.poll();
+			System.out.println("head:" + head);
+		}
+	}
 	
 	/*
 	 * The queue will remain the least k elements in it
@@ -47,17 +71,17 @@ public class PriorityQueueTest {
 		
 		// Creates a PriorityQueue with the specified initial capacity that orders its elements according to their descend ordering.
 		// queue is a max-heap with least k elements in it.
-		PriorityQueue<Integer> queue = new PriorityQueue<>(k, (o1, o2) -> o2 - o1);
+		PriorityQueue<Integer> maxHeap = new PriorityQueue<>(k, (o1, o2) -> o2 - o1);
 		for (int v : list ) {
-			queue.offer(v);
-			if (queue.size() > k) {
-				queue.poll();
+			maxHeap.offer(v);
+			if (maxHeap.size() > k) {
+				maxHeap.poll();
 			}
-			System.out.println("queue:" + queue);
+			System.out.println("queue:" + maxHeap);
 		}
 		
-		while (!queue.isEmpty()) {
-			int head = queue.poll();
+		while (!maxHeap.isEmpty()) {
+			int head = maxHeap.poll();
 			System.out.println("head:" + head);
 		}
 	}
@@ -76,17 +100,17 @@ public class PriorityQueueTest {
 		
 		// Creates a PriorityQueue with the specified initial capacity that orders its elements according to their natural ordering.
 		// queue is a min-heap with largest k elements in it.
-		PriorityQueue<Integer> queue = new PriorityQueue<>(k, Comparator.comparingInt(o -> o));
+		PriorityQueue<Integer> minHeap = new PriorityQueue<>(k, Comparator.naturalOrder());
 		for (int v : list ) {
-			queue.offer(v);
-			if (queue.size() > k) {
-				queue.poll();
+			minHeap.offer(v);
+			if (minHeap.size() > k) {
+				minHeap.poll();
 			}
-			System.out.println("queue:" + queue);
+			System.out.println("queue:" + minHeap);
 		}
 		
-		while (!queue.isEmpty()) {
-			int head = queue.poll();
+		while (!minHeap.isEmpty()) {
+			int head = minHeap.poll();
 			System.out.println("head:" + head);
 		}
 	}
@@ -104,14 +128,14 @@ public class PriorityQueueTest {
 		System.out.println("list:" + list);
 		
 		// Creates a PriorityQueue with the specified initial capacity that orders its elements according to their natural ordering.
-		PriorityQueue<Integer> queue = new PriorityQueue<>(1);
+		PriorityQueue<Integer> minHeap = new PriorityQueue<>(1);
 		for (int v : list ) {
-			queue.offer(v);
-			System.out.println("queue:" + queue);
+			minHeap.offer(v);
+			System.out.println("queue:" + minHeap);
 		}
 		
-		while (!queue.isEmpty()) {
-			int head = queue.poll();
+		while (!minHeap.isEmpty()) {
+			int head = minHeap.poll();
 			System.out.println("head:" + head);
 		}
 	}

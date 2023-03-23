@@ -105,7 +105,10 @@ public class FindMedianFromDataStream {
      * Mean = (3 + 4) / 2.0 = 3.5
      */
     class MedianFinderV2 {
-
+        /**
+         * The following code equals:
+         * PriorityQueue<Long> maxHeap = new PriorityQueue<>(Comparator.reverseOrder());
+         */
         PriorityQueue<Long> maxHeap = new PriorityQueue<>((a, b) -> {
             if (a < b) {
                 return 1;
