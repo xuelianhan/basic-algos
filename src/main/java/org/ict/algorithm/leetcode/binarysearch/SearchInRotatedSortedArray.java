@@ -33,11 +33,75 @@ package org.ict.algorithm.leetcode.binarysearch;
  */
 public class SearchInRotatedSortedArray {
 
-    public int searchV1(int[] nums, int target) {
+    public int searchV4(int[] nums, int target) {
         int res = 0;
         return res;
     }
 
+    public int searchV3(int[] nums, int target) {
+        int res = 0;
+        return res;
+    }
+
+    public int searchV2(int[] nums, int target) {
+        int lo = 0;
+        int hi = nums.length - 1;
+        while (lo <= hi) {
+            int mid = lo + (hi - lo) / 2;
+            if (nums[mid] == target) {
+                return mid;
+            }
+            if (nums[mid] < nums[hi]) {
+                /**
+                 * e.g. nums:[5,6,1,2,3,4], target:3, mid:2
+                 */
+                if (nums[mid] < target && nums[hi] >= target) {
+                    lo = mid + 1;
+                } else {
+                    hi = mid - 1;
+                }
+            } else {
+                if (nums[lo] <= target && nums[mid] > target) {
+                    hi = mid - 1;
+                } else {
+                    lo = mid + 1;
+                }
+            }
+        }
+        return -1;
+    }
+
+    public int searchV1(int[] nums, int target) {
+        if (nums == null || nums.length == 0) {
+            return -1;
+        }
+        int n = nums.length;
+        if (n == 1) {
+            return (nums[0] == target ? 0 : -1);
+        }
+        if (nums[0] < nums[n - 1]) {
+            return binarySearch(nums, target, 0, n - 1);
+        }
+        int pivot = findPivot(nums);
+        if (pivot == -1) {
+            return -1;
+        }
+        if (nums[pivot] == target) {
+            return pivot;
+        }
+        if (target >= nums[0]) {
+            return binarySearch(nums, target, 0, pivot - 1);
+        } else {
+            return binarySearch(nums, target, pivot + 1, n - 1);
+        }
+    }
+
+    /**
+     * @author
+     * @param nums
+     * @param target
+     * @return
+     */
     public int search(int[] nums, int target) {
         if (nums == null || nums.length == 0) {
             return -1;
