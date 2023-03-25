@@ -33,6 +33,26 @@ package org.ict.algorithm.leetcode.binarysearch;
  */
 public class SearchInRotatedSortedArray {
 
+    /**
+     * @see <a href="https://leetcode.com/problems/search-in-rotated-sorted-array/solutions/14425/concise-o-log-n-binary-search-solution"></a>
+     * @author 1337beef
+     * @param nums
+     * @param target
+     * @return
+     */
+    public int searchV5(int[] nums, int target) {
+        int res = 0;
+        //todo
+        return res;
+    }
+
+    /**
+     * @see <a href="https://leetcode.com/problems/search-in-rotated-sorted-array/solutions/14435/clever-idea-making-it-simple"></a>
+     * @author StefanPochmann
+     * @param nums
+     * @param target
+     * @return
+     */
     public int searchV4(int[] nums, int target) {
         int res = 0;
         //todo
@@ -45,6 +65,13 @@ public class SearchInRotatedSortedArray {
         return res;
     }
 
+    /**
+     * If the middle number is smaller than the rightmost number, the right half is ordered,
+     * and if the middle number is larger than the rightmost number, the left half is ordered
+     * @param nums
+     * @param target
+     * @return
+     */
     public int searchV2(int[] nums, int target) {
         int lo = 0;
         int hi = nums.length - 1;
@@ -88,6 +115,8 @@ public class SearchInRotatedSortedArray {
             return (nums[0] == target ? 0 : -1);
         }
         /**
+         *
+         * If array has been sorted, do a normal binary search
          * e.g. nums:[1,3], target:3
          */
         if (nums[0] < nums[n - 1]) {
