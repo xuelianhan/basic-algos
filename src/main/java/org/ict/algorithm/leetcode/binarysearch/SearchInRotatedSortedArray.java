@@ -63,6 +63,9 @@ public class SearchInRotatedSortedArray {
                     hi = mid - 1;
                 }
             } else {
+                /**
+                 * e.g. nums:[4,5,6,1,2,3], target:3, mid:2
+                 */
                 if (nums[lo] <= target && nums[mid] > target) {
                     hi = mid - 1;
                 } else {
