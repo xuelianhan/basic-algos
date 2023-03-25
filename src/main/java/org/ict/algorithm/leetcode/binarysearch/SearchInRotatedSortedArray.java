@@ -76,9 +76,15 @@ public class SearchInRotatedSortedArray {
             return -1;
         }
         int n = nums.length;
+        /**
+         * e.g. nums:[1], target:1
+         */
         if (n == 1) {
             return (nums[0] == target ? 0 : -1);
         }
+        /**
+         * e.g. nums:[1,3], target:3
+         */
         if (nums[0] < nums[n - 1]) {
             return binarySearch(nums, target, 0, n - 1);
         }
