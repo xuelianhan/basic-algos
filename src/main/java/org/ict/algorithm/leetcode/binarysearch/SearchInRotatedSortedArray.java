@@ -59,14 +59,50 @@ public class SearchInRotatedSortedArray {
         return res;
     }
 
+    /**
+     * Compare nums[mid] with the left-most element in the array.
+     * Similar with searchV2
+     * @param nums
+     * @param target
+     * @return
+     */
     public int searchV3(int[] nums, int target) {
-        int res = 0;
-        //todo
-        return res;
+        int lo = 0;
+        int hi = nums.length - 1;
+        while (lo <= hi) {
+            int mid = lo + (hi - lo) / 2;
+            if (nums[mid] == target) {
+                return mid;
+            }
+            if (nums[mid] < nums[lo]) {
+                /**
+                 * We can assure that range [mid, hi] is ascending.
+                 * so we compare target with nums[mid] and nums[hi] at first.
+                 * e.g. nums:[5,6,1,2,3,4], mid:2, nums[2]:1, target:3
+                 */
+                if (nums[mid] < target && target <= nums[hi]) {
+                    lo = mid + 1;
+                } else {
+                    hi = mid - 1;
+                }
+            } else {
+                /**
+                 * We can assure that range [lo, mid,] is ascending.
+                 * so we compare target with nums[lo] and nums[mid] at first.
+                 * e.g. nums:[4,5,6,1,2,3], mid:2, nums[2]:6, target:5
+                 */
+                if (nums[lo] <= target && target < nums[mid]) {
+                    hi = mid - 1;
+                } else {
+                    lo = mid + 1;
+                }
+            }
+        }
+        return -1;
     }
 
     /**
-     * If the middle number is smaller than the rightmost number, the right half of mid is ordered,
+     * Compare nums[mid] with the right-most element in the array.
      *
      * @param nums
      * @param target
@@ -82,20 +118,26 @@ public class SearchInRotatedSortedArray {
             }
             if (nums[mid] < nums[hi]) {
                 /**
-                 * If the middle number is smaller than the rightmost number, the right half of mid is ordered
-                 * e.g. nums:[5,6,1,2,3,4], target:3, mid:2
+                 * If the middle number is smaller than the rightmost number, the right half from mid is ordered,
+                 * so we compare target with nums[mid] and nums[hi].
+                 * e.g. nums:[5,6,1,2,3,4], mid:2, nums[2]:1, target:3, nums[mid] < target and nums[hi] >= target
+                 * e.g. nums:[5,6,1,2,3,4], mid:2, nums[2]:1, target:6, nums[hi] < target
+                 * e.g. nums:[6,1,2,3,4,5], mid:2, nums[2]:2, target:1, nums[mid] > target
                  */
-                if (nums[mid] < target && nums[hi] >= target) {
+                if (nums[mid] < target && target <= nums[hi]) {
                     lo = mid + 1;
                 } else {
                     hi = mid - 1;
                 }
             } else {
                 /**
-                 * If the middle number is larger than the rightmost number, the left half of mid is ordered
-                 * e.g. nums:[4,5,6,1,2,3], target:3, mid:2
+                 * If the middle number is larger than the rightmost number, the left half to mid is ordered,
+                 * so we compare target with nums[lo] and nums[mid]
+                 * e.g. nums:[4,5,6,1,2,3], mid:2, nums[2]:6, target:5, nums[lo] < target and nums[mid] > target
+                 * e.g. nums:[4,5,6,1,2,3], mid:2, nums[2]:6, target:3, nums[lo] > target
+                 * e.g. nums:[3,4,5,6,1,2], mid:2, nums[2]:5, target:6, nums[mid] < target
                  */
-                if (nums[lo] <= target && nums[mid] > target) {
+                if (nums[lo] <= target && target < nums[mid]) {
                     hi = mid - 1;
                 } else {
                     lo = mid + 1;
