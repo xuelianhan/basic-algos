@@ -66,8 +66,8 @@ public class SearchInRotatedSortedArray {
     }
 
     /**
-     * If the middle number is smaller than the rightmost number, the right half is ordered,
-     * and if the middle number is larger than the rightmost number, the left half is ordered
+     * If the middle number is smaller than the rightmost number, the right half of mid is ordered,
+     *
      * @param nums
      * @param target
      * @return
@@ -82,6 +82,7 @@ public class SearchInRotatedSortedArray {
             }
             if (nums[mid] < nums[hi]) {
                 /**
+                 * If the middle number is smaller than the rightmost number, the right half of mid is ordered
                  * e.g. nums:[5,6,1,2,3,4], target:3, mid:2
                  */
                 if (nums[mid] < target && nums[hi] >= target) {
@@ -91,6 +92,7 @@ public class SearchInRotatedSortedArray {
                 }
             } else {
                 /**
+                 * If the middle number is larger than the rightmost number, the left half of mid is ordered
                  * e.g. nums:[4,5,6,1,2,3], target:3, mid:2
                  */
                 if (nums[lo] <= target && nums[mid] > target) {
