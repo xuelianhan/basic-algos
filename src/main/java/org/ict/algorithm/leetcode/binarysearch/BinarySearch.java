@@ -34,6 +34,7 @@ package org.ict.algorithm.leetcode.binarysearch;
  * binary search
  * @see <a href="https://leetcode.com/discuss/general-discussion/786126/Python-Powerful-Ultimate-Binary-Search-Template.-Solved-many-problems"></a>
  * @see <a href="https://leetcode.com/explore/learn/card/binary-search/125/template-i/938/"></a>
+ * @see <a href="https://leetcode.com/problems/binary-search/solutions/423162/binary-search-101"></a>
  *
  * There are two steps for finding problem whether it is binary search or not:
  * step -> 1 ask for maximum and minimum(answer lies in a range)
@@ -117,6 +118,9 @@ public class BinarySearch {
      *     = low / 2 + (high + 1) / 2
      *     = (low + high + 1) / 2
      *
+     * e.g. nums:[1,2], x=1
+     * lo:0, hi:1, mid:1, nums[1]:2,
+     *
      * @param nums
      * @param x
      * @return
@@ -125,16 +129,17 @@ public class BinarySearch {
         if (nums == null || nums.length == 0) {
             return -1;
         }
-        int low = 0, high = nums.length - 1;
-        while (low < high) {
-            int mid = low + (high - low + 1) / 2;
+        int lo = 0, hi = nums.length - 1;
+        while (lo < hi) {
+            // upper mid,  we use target x as upper bound, so write as nums[mid] <= x
+            int mid = lo + (hi - lo + 1) / 2;
             if (nums[mid] <= x) {
-                low = mid;
+                lo = mid;
             } else {
-                high = mid - 1;
+                hi = mid - 1;
             }
         }
-        return nums[low] == x ? low : -1;
+        return nums[lo] == x ? lo : -1;
     }
 
 
@@ -142,6 +147,12 @@ public class BinarySearch {
      * Find the minimum number that satisfy with >= x(x or successor of x)
      * mid = (l + r)>>1, mid doesn't get value of r, it means mid round down.
      * mid = (l + r + 1)>>1, mid doesn't get value of l, it means mid round up.
+     *
+     * e.g. nums:[1,2], x=1
+     * lo:0, hi:1, mid:0, nums[0]:1, nums[mid] == 1, hi=mid=0
+     * lo:0, hi:0, while-loop-end
+     * nums[lo]=nums[0]=1, return lo:0
+     *
      * @param nums
      * @param x
      * @return
@@ -150,16 +161,17 @@ public class BinarySearch {
         if (nums == null || nums.length == 0) {
             return -1;
         }
-        int low = 0, high = nums.length - 1;
-        while (low < high) {
-            int mid = low + (high - low) / 2;
+        int lo = 0, hi = nums.length - 1;
+        while (lo < hi) {
+            // lower mid, we use target x as lower bound, so write as nums[mid] >= x
+            int mid = lo + (hi - lo) / 2;
             if (nums[mid] >= x) {
-                high = mid;
+                hi = mid;
             } else {
-                low = mid + 1;
+                lo = mid + 1;
             }
         }
-        return nums[low] == x ? low : -1;
+        return nums[lo] == x ? lo : -1;
     }
 
 
@@ -175,19 +187,19 @@ public class BinarySearch {
         if (nums == null || nums.length == 0) {
             return -1;
         }
-        int low = 0, high = nums.length - 1;
-        while (low <= high) {
+        int lo = 0, hi = nums.length - 1;
+        while (lo <= hi) {
             //  Prevent (left + right) overflow
-            int mid = low + (high - low) / 2;
+            int mid = lo + (hi - lo) / 2;
             if (nums[mid] < x) {
-                low = mid + 1;
+                lo = mid + 1;
             } else if(nums[mid] > x) {
-                high = mid - 1;
+                hi = mid - 1;
             } else {
                 return mid;
             }
         }
-        // End Condition: high > low
+        // End Condition: low > high
         return -1;
     }
 
@@ -202,19 +214,19 @@ public class BinarySearch {
         if (nums == null || nums.length == 0) {
             return -1;
         }
-        int low = 0, high = nums.length - 1;
-        while (low <= high) {
+        int lo = 0, hi = nums.length - 1;
+        while (lo <= hi) {
             //  Prevent (left + right) overflow
-            int mid = low + (high - low) / 2;
+            int mid = lo + (hi - lo) / 2;
             if (nums[mid] == x) {
                 return mid;
             } else if (nums[mid] < x) {
-                low = mid + 1;
+                lo = mid + 1;
             } else {
-                high = mid - 1;
+                hi = mid - 1;
             }
         }
-        // End Condition: high > low
+        // End Condition: lo > hi
         return -1;
     }
 
@@ -222,23 +234,23 @@ public class BinarySearch {
         if (nums == null || nums.length == 0) {
             return -1;
         }
-        int low = 0, high = nums.length - 1;
-        while (low + 1 < high) {
-            int mid = low + (high - low) / 2;
+        int lo = 0, hi = nums.length - 1;
+        while (lo + 1 < hi) {
+            int mid = lo + (hi - lo) / 2;
             if (nums[mid] == x) {
                 return mid;
             } else if (nums[mid] < x) {
-                low = mid;
+                lo = mid;
             } else {
-                high = mid;
+                hi = mid;
             }
         }
 
-        if (nums[low] == x) {
-            return low;
+        if (nums[lo] == x) {
+            return lo;
         }
-        if (nums[high] == x) {
-            return high;
+        if (nums[hi] == x) {
+            return hi;
         }
         return -1;
     }
@@ -248,6 +260,7 @@ public class BinarySearch {
      * e.g.nums:[1,2,3], x = 3
      * lo:0, hi:3, mid:1, nums[1]:2, 2 < 3, lo=mid+1=2
      * lo:2, hi:3, mid:2, nums[2]:3, 3==3, return 2
+     *
      * @param nums
      * @param x
      * @return
