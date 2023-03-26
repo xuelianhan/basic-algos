@@ -119,7 +119,9 @@ public class BinarySearch {
      *     = (low + high + 1) / 2
      *
      * e.g. nums:[1,2], x=1
-     * lo:0, hi:1, mid:1, nums[1]:2,
+     * lo:0, hi:1, mid:1, nums[1]:2, 2 > 1, hi=mid-1=1-1=0
+     * lo:0, hi:0, while-loop-end
+     * nums[lo]=nums[0]=1, return lo:0
      *
      * @param nums
      * @param x
@@ -131,7 +133,10 @@ public class BinarySearch {
         }
         int lo = 0, hi = nums.length - 1;
         while (lo < hi) {
-            // upper mid,  we use target x as upper bound, so write as nums[mid] <= x
+            /**
+             * upper mid, how to remember?
+             * We use target x as upper bound, so write as nums[mid] <= x
+             */
             int mid = lo + (hi - lo + 1) / 2;
             if (nums[mid] <= x) {
                 lo = mid;
@@ -163,12 +168,63 @@ public class BinarySearch {
         }
         int lo = 0, hi = nums.length - 1;
         while (lo < hi) {
-            // lower mid, we use target x as lower bound, so write as nums[mid] >= x
+            /**
+             * lower mid, how to remember?
+             * We use target x as lower bound, so write as nums[mid] >= x
+             */
             int mid = lo + (hi - lo) / 2;
             if (nums[mid] >= x) {
                 hi = mid;
             } else {
                 lo = mid + 1;
+            }
+        }
+        return nums[lo] == x ? lo : -1;
+    }
+
+    /**
+     * Similar with searchV6
+     * @param nums
+     * @param x
+     * @return
+     */
+    public int searchV6_1(int[] nums, int x) {
+        if (nums == null || nums.length == 0) {
+            return -1;
+        }
+        int lo = 0, hi = nums.length - 1;
+        while (lo < hi) {
+            /**
+             * upper mid.
+             */
+            int mid = lo + (hi - lo + 1) / 2;
+            if (nums[mid] > x) {
+                hi = mid - 1;
+            } else {
+                lo = mid;
+            }
+        }
+        return nums[lo] == x ? lo : -1;
+    }
+
+    /**
+     * Similar with searchV5
+     * @param nums
+     * @param x
+     * @return
+     */
+    public int searchV5_1(int[] nums, int x) {
+        if (nums == null || nums.length == 0) {
+            return -1;
+        }
+        int lo = 0, hi = nums.length - 1;
+        while (lo < hi) {
+            // lower mid
+            int mid = lo + (hi - lo) / 2;
+            if (nums[mid] < x) {
+                lo = mid + 1;
+            } else {
+                hi = mid;
             }
         }
         return nums[lo] == x ? lo : -1;
