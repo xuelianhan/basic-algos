@@ -22,9 +22,8 @@ package org.ict.algorithm.leetcode.binarysearch;
  *
  *
  * Constraints:
- *
  * 1 <= nums.length <= 10^4
- * -104 < nums[i], target < 10^4
+ * -10^4 < nums[i], target < 10^4
  * All the integers in nums are unique.
  * nums is sorted in ascending order.
  *
@@ -245,24 +244,34 @@ public class BinarySearch {
     }
 
 
+    /**
+     * e.g.nums:[1,2,3], x = 3
+     * lo:0, hi:3, mid:1, nums[1]:2, 2 < 3, lo=mid+1=2
+     * lo:2, hi:3, mid:2, nums[2]:3, 3==3, return 2
+     * @param nums
+     * @param x
+     * @return
+     */
     public int searchV1(int[] nums, int x) {
         if (nums == null || nums.length == 0) {
             return -1;
         }
-        int low = 0, high = nums.length;
-        while (low < high) {
-            int mid = low + (high - low) / 2;
+        int lo = 0, hi = nums.length;
+        while (lo < hi) {
+            int mid = lo + (hi - lo) / 2;
             if (nums[mid] == x) {
                 return mid;
             } else if (nums[mid] < x) {
-                low = mid + 1;
+                lo = mid + 1;
             } else {
-                high = mid;
+                hi = mid;
             }
         }
-        // End Condition: high == low
-        if (low != nums.length && nums[low] == x) {
-            return low;
+        /**
+         * End Condition: high == low
+         */
+        if (lo != nums.length && nums[lo] == x) {
+            return lo;
         }
         return -1;
     }
