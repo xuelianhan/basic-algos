@@ -134,7 +134,7 @@ public class BinarySearch {
         int lo = 0, hi = nums.length - 1;
         while (lo < hi) {
             /**
-             * upper mid, how to remember?
+             * upper mid, how to remember? hi must be mid-1.
              * We use target x as upper bound, so write as nums[mid] <= x
              */
             int mid = lo + (hi - lo + 1) / 2;
@@ -169,7 +169,7 @@ public class BinarySearch {
         int lo = 0, hi = nums.length - 1;
         while (lo < hi) {
             /**
-             * lower mid, how to remember?
+             * lower mid, how to remember? lo must be mid+1
              * We use target x as lower bound, so write as nums[mid] >= x
              */
             int mid = lo + (hi - lo) / 2;
@@ -234,7 +234,7 @@ public class BinarySearch {
     /**
      * Think about edge cases:
      * when 'left' and 'right' are close enough and search space become small(like size 3,2,1)
-     *
+     * e.g. nums=[1,2], x:2
      * @param nums
      * @param x
      * @return

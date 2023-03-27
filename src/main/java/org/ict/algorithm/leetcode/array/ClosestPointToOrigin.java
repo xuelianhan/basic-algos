@@ -26,7 +26,9 @@ import java.util.PriorityQueue;
  * @see <a href="https://leetcode.com/discuss/interview-question/124642/k-closest-points-to-a-starting-point-in-cartesian-plane"></a>
  * @see <a href="http://www.zrzahid.com/k-closest-points/"></a>
  *
+ * LC973, Medium
  * This problem is one kind of amz oa
+ * @see org.ict.algorithm.leetcode.heap.KClosestPointsToOrigin
  */
 public class ClosestPointToOrigin {
 	
@@ -143,7 +145,7 @@ public class ClosestPointToOrigin {
 			if (d1 == d2) {
 				return 0;
 			}
-			return (d1 < d2? 1 : -1);
+			return (d1 < d2 ? 1 : -1);
 		});
 		
 		for (int i = 0; i < points.size(); i++) {

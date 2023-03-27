@@ -40,18 +40,67 @@ public class SearchInRotatedSortedArray {
      * @param target
      * @return
      */
+    public int searchV8(int[] nums, int target) {
+        int res = 0;
+        //todo
+        return res;
+    }
+
     public int searchV7(int[] nums, int target) {
         int res = 0;
         //todo
         return res;
     }
 
+    /**
+     * e.g. nums:[4,5,6,7,0,1,2], target:0
+     * e.g. nums:[1], target:1
+     * @param nums
+     * @param target
+     * @return
+     */
     public int searchV6(int[] nums, int target) {
-        int res = 0;
-        //todo
-        return res;
+        int lo = 0;
+        int hi = nums.length - 1;
+        while (lo < hi) {
+            int mid = lo + (hi - lo) / 2;
+            int split;
+
+            if ((nums[mid] < nums[0]) == (target < nums[0])) {
+                /**
+                 * The Above line is checking if the target and current number is on the same side.
+                 * If they are, we can assign num the actual number in the array.
+                 */
+                split = nums[mid];
+            } else {
+                /**
+                 * This line is saying: Oh since the two numbers are on the different side,
+                 * let's move the pointers to make them on the same side.
+                 */
+                split = (target < nums[0] ? Integer.MIN_VALUE : Integer.MAX_VALUE);
+            }
+            if (split < target) {
+                lo = mid + 1;
+            } else if (split > target) {
+                hi = mid;
+            } else {
+                return mid;
+            }
+        }
+        /**
+         * Check nums[lo] with target.
+         */
+        return (nums[lo] == target ? lo : -1);
     }
 
+    /**
+     * Similar with searchV4, and this version is easier to understand.
+     * e.g. nums:[4,5,6,7,0,1,2], target:0
+     * e.g. nums:[1], target:1
+     * @param nums
+     * @param target
+     * @return
+     */
     public int searchV5(int[] nums, int target) {
         int lo = 0;
         int hi = nums.length - 1;
@@ -88,6 +137,14 @@ public class SearchInRotatedSortedArray {
      * If nums[mid] and target are "on the same side" of nums[0],
      * we just take nums[mid].
      * Otherwise, we use -infinity or +infinity as needed.
+     *
+     * e.g. nums:[4,5,6,7,0,1,2], target:0
+     * lo:0, hi:7, mid:3, nums[3]:7, split:MIN, split < target, lo=mid+1=4
+     * lo:4, hi:7, mid:5, nums[5]:1, split:1, split > target, hi=mid=5
+     * lo:4, hi:5, mid:4, nums[4]:0, split:0, return mid:4
+     *
+     * e.g. nums:[1], target:1
+     *
      * @see <a href="https://leetcode.com/problems/search-in-rotated-sorted-array/solutions/14435/clever-idea-making-it-simple"></a>
      * @author StefanPochmann
      * @param nums
@@ -99,15 +156,15 @@ public class SearchInRotatedSortedArray {
         int hi = nums.length;
         while (lo < hi) {
             int mid = lo + (hi - lo) / 2;
-            int num;
+            int split;
             if ((nums[mid] < nums[0]) == (target < nums[0])) {
-                num = nums[mid];
+                split = nums[mid];
             } else {
-                num = (target < nums[0] ? Integer.MIN_VALUE : Integer.MAX_VALUE);
+                split = (target < nums[0] ? Integer.MIN_VALUE : Integer.MAX_VALUE);
             }
-            if (num < target) {
+            if (split < target) {
                 lo = mid + 1;
-            } else if (num > target) {
+            } else if (split > target) {
                 hi = mid;
             } else {
                 return mid;
