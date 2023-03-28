@@ -40,16 +40,126 @@ public class SearchInRotatedSortedArray {
      * @param target
      * @return
      */
-    public int searchV8(int[] nums, int target) {
+    public int searchV10(int[] nums, int target) {
         int res = 0;
         //todo
         return res;
     }
 
+
+    /**
+     * e.g. nums:[1,3], target:1
+     * lo:0, hi:1, mid:0, hi=mid=0
+     * @param nums
+     * @param target
+     * @return
+     */
+    public int searchV9(int[] nums, int target) {
+        int lo = 0;
+        int hi = nums.length - 1;
+        while (lo < hi) {
+            int mid = lo + (hi - lo) / 2;
+            if ((nums[mid] < nums[0]) == (target < nums[0])) {
+                /**
+                 * nums[mid] and target are on the same side.
+                 */
+                if (nums[mid] < target) {
+                    lo = mid + 1;
+                } else {
+                    hi = mid;
+                }
+            } else if (target < nums[0]) {
+                /**
+                 * target on the right side
+                 */
+                lo = mid + 1;
+            } else {
+                /**
+                 * target on the left side
+                 */
+                hi = mid;
+            }
+        }
+        return nums[lo] == target ? lo : -1;
+    }
+
+    /**
+     * Similar with searchV7
+     * @param nums
+     * @param target
+     * @return
+     */
+    public int searchV8(int[] nums, int target) {
+        int lo = 0;
+        int n = nums.length;
+        int hi = nums.length - 1;
+        while (lo < hi) {
+            int mid = lo + (hi - lo) / 2;
+            if ((nums[mid] <= nums[n - 1]) == (target <= nums[n - 1])) {
+                /**
+                 * nums[mid] and target are on the same side.
+                 */
+                if (nums[mid] < target) {
+                    lo = mid + 1;
+                } else {
+                    hi = mid;
+                }
+            } else if (target > nums[n - 1]) {
+                /**
+                 * target on the left side
+                 */
+                hi = mid;
+            } else {
+                /**
+                 * target on the right side
+                 */
+                lo = mid + 1;
+            }
+        }
+        return nums[lo] == target ? lo : -1;
+    }
+
+
+    /**
+     * e.g. nums:[4,5,6,7,0,1,2], target:0
+     * e.g. nums:[1], target:1
+     * e.g. nums:[1,3], target:1
+     * e.g. nums:[1,3], target:3
+     * e.g. nums[1,3,5], target:5
+     * e.g. nums:[1,3], target:2
+     * e.g. nums:[3,1], target:1
+     * @param nums
+     * @param target
+     * @return
+     */
     public int searchV7(int[] nums, int target) {
-        int res = 0;
-        //todo
-        return res;
+        int lo = 0;
+        int n = nums.length;
+        int hi = nums.length - 1;
+        while (lo < hi) {
+            int mid = lo + (hi - lo) / 2;
+            if ((nums[mid] - nums[n - 1]) * (target - nums[n - 1]) > 0) {
+                /**
+                 * nums[mid] and target are on the same side.
+                 */
+                if (nums[mid] < target) {
+                    lo = mid + 1;
+                } else {
+                    hi = mid;
+                }
+            } else if (target > nums[n - 1]) {
+                /**
+                 * target on the left side
+                 */
+                hi = mid;
+            } else {
+                /**
+                 * target on the right side
+                 */
+                lo = mid + 1;
+            }
+        }
+        return nums[lo] == target ? lo : -1;
     }
 
     /**
@@ -96,6 +206,8 @@ public class SearchInRotatedSortedArray {
     /**
      * Similar with searchV4, and this version is easier to understand.
      * e.g. nums:[4,5,6,7,0,1,2], target:0
+     * lo:0, hi:
+     *
      * e.g. nums:[1], target:1
      * @param nums
      * @param target

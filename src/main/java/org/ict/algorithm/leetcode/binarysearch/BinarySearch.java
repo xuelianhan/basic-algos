@@ -134,8 +134,9 @@ public class BinarySearch {
         int lo = 0, hi = nums.length - 1;
         while (lo < hi) {
             /**
-             * upper mid, how to remember? hi must be mid-1.
-             * We use target x as upper bound, so write as nums[mid] <= x
+             * upper mid, how to remember?
+             * When choose upper mid, hi must be mid-1.
+             * We use upper mid as upper bound, so write as nums[mid] > x, accordingly with hi=mid-1
              */
             int mid = lo + (hi - lo + 1) / 2;
             if (nums[mid] <= x) {
@@ -169,8 +170,9 @@ public class BinarySearch {
         int lo = 0, hi = nums.length - 1;
         while (lo < hi) {
             /**
-             * lower mid, how to remember? lo must be mid+1
-             * We use target x as lower bound, so write as nums[mid] >= x
+             * lower mid, how to remember?
+             * When choose lower mid, lo must be mid+1.
+             * We use lower mid as lower bound, so write as nums[mid] < x, accordingly with lo = mid + 1
              */
             int mid = lo + (hi - lo) / 2;
             if (nums[mid] >= x) {
