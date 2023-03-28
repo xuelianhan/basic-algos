@@ -35,16 +35,19 @@ public class PowXN {
 
     public double myPowV3(double x, int n) {
         double res = 0;
+        //todo
         return res;
     }
 
     public double myPowV2(double x, int n) {
         double res = 0;
+        //todo
         return res;
     }
 
     public double myPowV1(double x, int n) {
         double res = 0;
+        //todo
         return res;
     }
 
