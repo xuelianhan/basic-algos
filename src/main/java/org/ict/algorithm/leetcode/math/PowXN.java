@@ -50,32 +50,38 @@ public class PowXN {
 
 
     /**
+     * Understanding the following solution
      * If the exponent n is negative, we need to change it to positive exponent −n and make the base to 1/x,
      * then apply Binary Exponentiation.
      * @see <a href="https://leetcode.com/problems/powx-n/solutions/19544/5-different-choices-when-talk-with-interviewers"></a>
+     * e.g. x:2.0, n:-2147483648, if you use int, it may overflow while change n to -n
+     *
      * @param x
      * @param n
      * @return
      */
     public double myPow(double x, int n) {
-        long N = n;
-        if (N < 0) {
-            N = -N;
+        if (n == 0) {
+            return 1;
+        }
+        /**
+         * To prevent m = -m overflow, we use long type m to replace the int type n.
+         */
+        long m = n;
+        if (m < 0) {
+            m = -m;
             x = 1 / x;
         }
         /**
          * Binary Exponentiation
          */
         double res = 1;
-        if (N == 0) {
-            return 1;
-        }
-        while (N > 0) {
-            if ((N & 1) > 0) {
+        while (m > 0) {
+            if ((m & 1) > 0) {
                 res *= x;
             }
             x *= x;
-            N >>= 1;
+            m >>= 1;
         }
         return res;
     }
