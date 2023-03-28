@@ -80,6 +80,11 @@ public class PowXN {
          */
         double res = 1;
         while (m > 0) {
+            /**
+             * e.g. m = 7 = Binary(111)
+             * m & 1 = 7 & 1 = B(111) & B(001) = B(001) = 1
+             * It means get the lowest bit of m's binary form.
+             */
             if ((m & 1) > 0) {
                 res *= x;
             }
