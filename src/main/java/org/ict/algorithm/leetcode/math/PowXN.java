@@ -33,21 +33,31 @@ package org.ict.algorithm.leetcode.math;
  */
 public class PowXN {
 
-    public double myPowV3(double x, int n) {
-        double res = 0;
-        //todo
-        return res;
-    }
-
-    public double myPowV2(double x, int n) {
-        double res = 0;
-        //todo
-        return res;
-    }
-
+    /**
+     * Time Complexity logN, based on 2.
+     * @param x
+     * @param n
+     * @return
+     */
     public double myPowV1(double x, int n) {
-        double res = 0;
-        //todo
+        if (n == 0) {
+            return 1;
+        }
+        long m = n;
+        if (m < 0) {
+            m = -m;
+            x = 1 / x;
+        }
+        /**
+         * Binary Exponentiation
+         */
+        double res = 1;
+        for (; m > 0; m >>= 1) {
+            if ((m & 1) > 0) {
+                res *= x;
+            }
+            x *= x;
+        }
         return res;
     }
 
@@ -84,6 +94,8 @@ public class PowXN {
              * e.g. m = 7 = Binary(111)
              * m & 1 = 7 & 1 = B(111) & B(001) = B(001) = 1
              * It means get the lowest bit of m's binary form.
+             * m >> 1 can discard the lowest bit.
+             * If we combine m & 1 and m >> 1, we can traverse all the binary digits of m.
              */
             if ((m & 1) > 0) {
                 res *= x;
