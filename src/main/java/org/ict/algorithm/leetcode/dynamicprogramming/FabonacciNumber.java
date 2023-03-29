@@ -10,9 +10,9 @@ package org.ict.algorithm.leetcode.dynamicprogramming;
  * with seed values
  * F0 = 0 and F1 = 1.
  * @see <a href="https://www.geeksforgeeks.org/program-for-nth-fibonacci-number/"></a>
- * LC509
+ * LC509, Easy
  */
-public class Fabonacci {
+public class FabonacciNumber {
 	
 	public static void main(String[] args) {
 		

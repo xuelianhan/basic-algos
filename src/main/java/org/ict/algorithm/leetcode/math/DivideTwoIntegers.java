@@ -209,7 +209,7 @@ public class DivideTwoIntegers {
          * Utilize overflow the third time.
          * a - b >= 0, other than a >= b.
          * e.g. -2^31 - 1 overflow to 2^31 - 1, which is greater than zero, so it can go into the while-loop.
-         * If being wrote as a >= b, -2^31 >= 1 is false, it never go into the while-loop.
+         * If being wrote as a >= b, -2^31 >= 1 is false, it never goes into the while-loop.
          *
          */
         while (a - b >= 0) {

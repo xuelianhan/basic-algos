@@ -27,7 +27,7 @@ package org.ict.algorithm.leetcode.dynamicprogramming;
  *
  * @author sniper
  * @date 2022/8/18
- * LC70
+ * LC70, Easy
  */
 public class ClimbingStairs {
 

@@ -37,8 +37,9 @@ import java.util.Map;
  * 1 <= m, n <= 100
  * @author sniper
  * @date 25 Nov, 2022
- * LC62
- * This problem is similar with ClimbingStairs(LC70)
+ * LC62, Medium
+ * This problem is similar with ClimbingStairs (LC70)
+ *
  */
 public class UniquePaths {
 
