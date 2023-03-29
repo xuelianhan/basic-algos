@@ -39,7 +39,6 @@ package org.ict.algorithm.leetcode.dynamicprogramming;
  *
  *
  * Constraints:
- *
  * 1 <= s.length <= 100
  * s contains only digits and may contain leading zero(s).
  * @author sniper
@@ -118,6 +117,9 @@ public class DecodeWays {
      * @return
      */
     public int numDecodings(String s) {
+        /**
+         * 1 <= s.length <= 100, so the following check is not necessary.
+         */
         if (s == null || s.length() == 0) {
             return 0;
         }
