@@ -53,7 +53,7 @@ public class KeysAndRooms {
      */
     public boolean canVisitAllRoomsV1(List<List<Integer>> rooms) {
         Set<Integer> visited = new HashSet<>();
-        Deque<Integer> queue = new ArrayDeque<>();
+        ArrayDeque<Integer> queue = new ArrayDeque<>();
         queue.add(0);
         visited.add(0);
         while (!queue.isEmpty()) {

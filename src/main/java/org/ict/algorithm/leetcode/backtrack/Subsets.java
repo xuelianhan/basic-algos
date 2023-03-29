@@ -125,16 +125,13 @@ public class Subsets {
          * Make a deep copy of track, don't add the track directly
          */
         result.add(new ArrayList<>(track));
-        //System.out.println("result:" + result);
         for (int i = k; i < nums.length; i++) {
             track.add(nums[i]);
-            //System.out.println("after track add, k:" + k + ", i:" + i + ", track:" + track);
             /**
              * Notice here, pass i + 1 into k, not k+1
              */
             backtrack(nums, track, result, i + 1);
             track.removeLast();
-            //System.out.println("after track del, k:" + k + ", i:" + i + ", track:" + track);
         }
     }
 }

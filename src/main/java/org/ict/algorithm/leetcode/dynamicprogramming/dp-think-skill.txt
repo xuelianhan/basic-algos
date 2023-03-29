@@ -1,0 +1,4 @@
+1.First think about recursion and find duplicate calculations.
+2.By memorization and other methods to get rid of repeated calculations.
+3.Finally, see if you can do away with recursion by using the order of computation and "swipe the table" to compute directly in order,
+it's best to get it done or not.

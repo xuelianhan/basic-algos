@@ -35,6 +35,7 @@ public class PowXN {
 
     /**
      * Time Complexity logN, based on 2.
+     * Understanding the following solution.
      * @param x
      * @param n
      * @return
