@@ -45,8 +45,16 @@ package org.ict.algorithm.leetcode.dynamicprogramming;
  * @author sniper
  * @date 29 Mar, 2023
  * LC91, Medium
+ * Cisco, Lyft
  */
 public class DecodeWays {
+
+    public static void main(String[] args) {
+        String s = "11106";
+        DecodeWays instance = new DecodeWays();
+        int res = instance.numDecodings(s);
+        System.out.println(res);
+    }
 
     public int numDecodingsV5(String s) {
         int res = 0;
@@ -85,12 +93,49 @@ public class DecodeWays {
     }
 
 
+    /**
+     * Understanding the following solution.
+     *
+     * dp[i] means the way to decode a string of size-i.
+     * I used a dp array of size n + 1 to save sub-problem solutions.
+     * dp[0] means an empty string will have one way to decode,
+     * dp[1] means the way to decode a string of size 1.
+     * I then check one digit and two digit combination and save the results along the way.
+     * In the end, dp[n] will be the end result.
+     * @author yfcheng
+     * @see <a href="https://leetcode.com/problems/decode-ways/solutions/30358/java-clean-dp-solution-with-explanation"></a>
+     *
+     * e.g. s:"11106"
+     * dp[0]:1, dp[1]:1
+     *
+     * i:2, first:1, second:11, first in [1,9], dp[2]=0+dp[1]=1, second in [10,26], dp[2]=1+dp[0]=2, it means "1,1", "11".
+     * i:3, first:1, second:11, first in [1,9], dp[3]=0+dp[2]=2, second in [10,26], dp[3]=2+dp[1]=3, it means "1,1,1", "11,1", "1,11".
+     * i:4, first:0, second:10, first not in [1,9], second in [10,26], dp[4]=0+dp[2]=2, it means "11,10", "1,1,10".
+     *
+     * @param s
+     * @return
+     */
     public int numDecodings(String s) {
+        if (s == null || s.length() == 0) {
+            return 0;
+        }
         if (s.startsWith("0")) {
             return 0;
         }
-        int res = 0;
-        //todo
-        return res;
+        int n = s.length();
+        int[] dp = new int[n + 1];
+        dp[0] = 1;
+        dp[1] = s.charAt(0) == '0' ? 0 : 1;
+        for (int i = 2; i <= n; i++) {
+            int first =  Integer.valueOf(s.substring(i - 1, i));
+            int second = Integer.valueOf(s.substring(i - 2, i));
+            if (first >= 1 && first <= 9) {
+                dp[i] += dp[i - 1];
+            }
+            if (second >=10 && second <= 26) {
+                dp[i] += dp[i - 2];
+            }
+        }
+        return dp[n];
     }
 }
