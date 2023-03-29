@@ -96,7 +96,7 @@ public class DecodeWays {
     /**
      * Understanding the following solution.
      *
-     * dp[i] means the way to decode a string of size-i.
+     * dp[i] means the way to decode a string of the first-i characters with size-i
      * I used a dp array of size n + 1 to save sub-problem solutions.
      * dp[0] means an empty string will have one way to decode,
      * dp[1] means the way to decode a string of size 1.
@@ -108,9 +108,11 @@ public class DecodeWays {
      * e.g. s:"11106"
      * dp[0]:1, dp[1]:1
      *
-     * i:2, first:1, second:11, first in [1,9], dp[2]=0+dp[1]=1, second in [10,26], dp[2]=1+dp[0]=2, it means "1,1", "11".
-     * i:3, first:1, second:11, first in [1,9], dp[3]=0+dp[2]=2, second in [10,26], dp[3]=2+dp[1]=3, it means "1,1,1", "11,1", "1,11".
-     * i:4, first:0, second:10, first not in [1,9], second in [10,26], dp[4]=0+dp[2]=2, it means "11,10", "1,1,10".
+     * i:2, substring:"11",   first:1, second:11, first in [1,9], dp[2]=0+dp[1]=1, second in [10,26], dp[2]=1+dp[0]=2, it means "1,1", "11".
+     * i:3, substring:"111",  first:1, second:11, first in [1,9], dp[3]=0+dp[2]=2, second in [10,26], dp[3]=2+dp[1]=3, it means "1,1,1", "11,1", "1,11".
+     * i:4, substring:"1110", first:0, second:10, first not in [1,9], second in [10,26], dp[4]=0+dp[2]=2, it means "11,10", "1,1,10".
+     * i:5, substring:"11106",first:6, second:06, first in [1,9], second not in [10,26], dp[5]=0+dp[4]=2, it means "11,10,6", "1,1,10,6"
+     * for-loop-end, return dp[5]:2
      *
      * @param s
      * @return
