@@ -105,7 +105,8 @@ public class StringToInteger {
      * e.g. s = "+1", expected 1
      * e.g. s = "+-12", expected 0
      * e.g. s = "00000-42a1234", expected 0
-     * e.g. s = "   +0 123", expected 123
+     * e.g. s = "   +0 123", expected 0
+     *
      * @param s
      * @return
      */
@@ -120,15 +121,15 @@ public class StringToInteger {
         boolean metNegative = false;
         StringBuilder res = new StringBuilder();
         for (char c : s.toCharArray()) {
-            if (' ' == c) {
-                continue;
-            }
             if (c >= '0' && c <= '9') {
                 res.append(c);
                 metNumBefore = true;
             } else {
                 if (metNumBefore) {
                     break;
+                }
+                if (' ' == c) {
+                    continue;
                 }
                 if ('-' == c) {
                     sign = -1;
