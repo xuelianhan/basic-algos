@@ -48,13 +48,14 @@ public class NextPermutation {
         int[] nums = {1, 2, 7, 4, 3, 1};
         System.out.println(Arrays.toString(nums));
         NextPermutation instance = new NextPermutation();
-        instance.nextPermutation(nums);
+        instance.nextPermutationV1(nums);
         System.out.println(Arrays.toString(nums));
     }
 
 
     /**
      * e.g. nums = [1, 2, 7, 4, 3, 1], next permutation:[1, 3, 1, 2, 4, 7]
+     *
      *
      * 1.Find the largest index k such that nums[k] < nums[k + 1].
      *   If no such index exists, just reverse nums and done.
@@ -67,7 +68,7 @@ public class NextPermutation {
      * @see <a href="https://leetcode.com/problems/next-permutation/solutions/13867/c-from-wikipedia"></a>
      * @param nums
      */
-    public void nextPermutation(int[] nums) {
+    public void nextPermutationV1(int[] nums) {
         int n = nums.length;
         int k = 0;
         int l = 0;
@@ -99,5 +100,9 @@ public class NextPermutation {
         while (begin < end) {
             swap(nums, begin++, end--);
         }
+    }
+
+    public void nextPermutation(int[] nums) {
+        
     }
 }
