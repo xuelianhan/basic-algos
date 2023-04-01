@@ -80,20 +80,47 @@ package org.ict.algorithm.leetcode.string;
 public class StringToInteger {
 
     public static void main(String[] args) {
-        String s = "+1 34";
+        String s = " ++1";
         StringToInteger instance = new StringToInteger();
-        int res = instance.myAtoi(s);
+        int res = instance.wrong(s);
         System.out.println(res);
-    }
-
-    public int myAtoiV2(String s) {
-        int res = 0;
-        return res;
     }
 
     public int myAtoiV1(String s) {
         int res = 0;
         return res;
+    }
+
+    public int myAtoi(String s) {
+        if (s == null || s.length() == 0) {
+            return 0;
+        }
+        int sign = 1;
+        int res = 0;
+        int i = 0;
+        while (i < s.length() && s.charAt(i) == ' ') {
+            i++;
+        }
+        if (i == s.length()) {
+            return 0;
+        }
+        if (s.charAt(i) == '+' || s.charAt(i) == '-') {
+            sign = s.charAt(i) == '+' ? 1 : -1;
+            i++;
+        }
+
+        while (i < s.length()) {
+            int digit = s.charAt(i) - '0';
+            if (digit < 0 || digit > 9) {
+                break;
+            }
+            if ((Integer.MAX_VALUE / 10 < res) || (Integer.MAX_VALUE / 10 == res && Integer.MAX_VALUE % 10 < digit)) {
+                return sign == 1 ? Integer.MAX_VALUE : Integer.MIN_VALUE;
+            }
+            res = 10 * res + digit;
+            i++;
+        }
+        return sign * res;
     }
 
     /**
@@ -106,11 +133,14 @@ public class StringToInteger {
      * e.g. s = "+-12", expected 0
      * e.g. s = "00000-42a1234", expected 0
      * e.g. s = "   +0 123", expected 0
-     *
+     * e.g. s = "20000000000000000000", expected 2147483647
+     * e.g. s = "2147483646", expected 2147483646
+     * e.g. s = "  +  413", expected 0
+     * e.g. s = " ++1", expected 0
      * @param s
      * @return
      */
-    public int myAtoi(String s) {
+    public int wrong(String s) {
         if (s == null || s.length() == 0) {
             return 0;
         }
@@ -119,17 +149,25 @@ public class StringToInteger {
         boolean metCharBefore = false;
         boolean metPositive = false;
         boolean metNegative = false;
-        StringBuilder res = new StringBuilder();
+        int res = 0;
         for (char c : s.toCharArray()) {
             if (c >= '0' && c <= '9') {
-                res.append(c);
+                int digit = c - '0';
+                if ((Integer.MAX_VALUE / 10 < res) || (Integer.MAX_VALUE / 10 == res && Integer.MAX_VALUE % 10 < digit)) {
+                    return sign == 1 ? Integer.MAX_VALUE : Integer.MIN_VALUE;
+                }
+                res = 10 * res + digit;
                 metNumBefore = true;
             } else {
                 if (metNumBefore) {
                     break;
                 }
                 if (' ' == c) {
-                    continue;
+                    if (metPositive || metNegative) {
+                        break;
+                    } else {
+                        continue;
+                    }
                 }
                 if ('-' == c) {
                     sign = -1;
@@ -147,19 +185,9 @@ public class StringToInteger {
         if (metCharBefore) {
             return 0;
         }
-        if (res.length() == 0) {
-            return 0;
-        }
         if (metNegative && metPositive) {
             return 0;
         }
-        long num = sign * Long.parseLong(res.toString());
-        if (num < Integer.MIN_VALUE) {
-            return Integer.MIN_VALUE;
-        }
-        if (num > Integer.MAX_VALUE) {
-            return Integer.MAX_VALUE;
-        }
-        return (int)num;
+        return sign * res;
     }
 }
