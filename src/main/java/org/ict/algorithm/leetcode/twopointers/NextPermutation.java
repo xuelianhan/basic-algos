@@ -55,8 +55,13 @@ public class NextPermutation {
 
     /**
      * e.g. nums = [1, 2, 7, 4, 3, 1], next permutation:[1, 3, 1, 2, 4, 7]
+     * nums:[1, 2, 7, 4, 3, 1]
+     * k stopped at element 2 of index 1, because 2 < 7
+     * l stopped at element 3 of index 4, because 3 > 2
+     * swap 2 and 3, nums:[1, 3, 7, 4, 2, 1]
+     * reverse [7, 4, 2, 1], nums:[1, 3, 1, 2, 4, 7]
      *
-     *
+     * ===========================================================
      * 1.Find the largest index k such that nums[k] < nums[k + 1].
      *   If no such index exists, just reverse nums and done.
      * 2.Find the largest index l > k such that nums[k] < nums[l].
@@ -72,14 +77,17 @@ public class NextPermutation {
         int n = nums.length;
         int k = 0;
         int l = 0;
+        /**
+         * Scan array from high to low, find the first k that satisfy nums[k] < nums[k + 1]
+         */
         for (k = n - 2; k >= 0; k--){
             if (nums[k] < nums[k + 1]) {
                 break;
             }
         }
-        if (k < 0) {
+        if (k < 0) {//reverse the whole array.
             reverse(nums, 0, n - 1);
-        } else {
+        } else { // scan array from high to k+1, find the first l that satisfy nums[l] > nums[k]
             for (l = n - 1; l > k; l--) {
                 if (nums[l] > nums[k]) {
                     break;
@@ -103,6 +111,6 @@ public class NextPermutation {
     }
 
     public void nextPermutation(int[] nums) {
-        
+
     }
 }
