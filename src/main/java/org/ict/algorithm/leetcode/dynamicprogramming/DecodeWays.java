@@ -136,6 +136,7 @@ public class DecodeWays {
     /**
      * Recursion Solution
      * Time Complexity O(2^N)
+     * e.g. s = "111111111111111111111111111111111111111111111", Time Limit Exceeded.
      *
      * A char may be decoded alone or by pairing with the next char.
      * @author Shuming leetcode-id:yu6
@@ -151,6 +152,14 @@ public class DecodeWays {
         return numDecoding(0, s);
     }
 
+    /**
+     * e.g. s = "11106"
+     * (0, s)--> res=(1, s)
+     *
+     * @param p
+     * @param s
+     * @return
+     */
     private int numDecoding(int p, String s) {
         int n = s.length();
         if (p == n) {
