@@ -155,7 +155,15 @@ public class DecodeWays {
     /**
      * e.g. s = "11106"
      * (0, s)--> res=(1, s)
+     *              -->res=(2, s)
+     *                    -->res=(3, s), return 0
+     *                          -->res=(4, s)
+     *                                -->res(5, s), return 1
      *
+     *
+     *
+     * @author Rahul Mishra
+     * @see <a href="https://leetcode.com/problems/decode-ways/solutions/2645299/java-easy-to-understand-detailed-solution-recursion-memoization"></a>
      * @param p
      * @param s
      * @return
@@ -168,8 +176,14 @@ public class DecodeWays {
         if (s.charAt(p) == '0') {
             return 0;
         }
+        /**
+         * Choose one more digit after p
+         */
         int res = numDecoding(p + 1, s);
         if (p < (n - 1) && (s.charAt(p) == '1' || s.charAt(p) == '2' && s.charAt(p + 1) < '7')) {
+            /**
+             * Choose two more digit after p
+             */
             res += numDecoding(p + 2, s);
         }
         return res;
