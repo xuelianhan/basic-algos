@@ -54,6 +54,8 @@ public class NextPermutation {
 
 
     /**
+     * Understanding the following solution
+     *
      * e.g. nums = [1, 2, 7, 4, 3, 1], next permutation:[1, 3, 1, 2, 4, 7]
      * nums:[1, 2, 7, 4, 3, 1]
      * k stopped at element 2 of index 1, because 2 < 7
@@ -111,6 +113,23 @@ public class NextPermutation {
     }
 
     public void nextPermutation(int[] nums) {
-
+        if (nums == null || nums.length <= 1) {
+            return;
+        }
+        int n = nums.length;
+        int k = n - 2;
+        int l = n - 1;
+        while (k >= 0 && nums[k] >= nums[k + 1]) {
+            k--;
+        }
+        if (k >= 0) {
+            while (l > k && nums[l] <= nums[k]) {
+                l--;
+            }
+            swap(nums, k, l);
+            reverse(nums, k + 1, n - 1);
+        } else {
+            reverse(nums, k + 1, n - 1);
+        }
     }
 }

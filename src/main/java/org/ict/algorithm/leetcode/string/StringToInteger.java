@@ -91,6 +91,11 @@ public class StringToInteger {
         return res;
     }
 
+    /**
+     * Understanding the following solution
+     * @param s
+     * @return
+     */
     public int myAtoi(String s) {
         if (s == null || s.length() == 0) {
             return 0;
