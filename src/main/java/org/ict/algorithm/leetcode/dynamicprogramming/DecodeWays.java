@@ -61,7 +61,7 @@ public class DecodeWays {
      * @param s
      * @return
      */
-    public int numDecodingV6(String s) {
+    public int numDecodingV8(String s) {
         int dp1 = 1;
         int dp2 = 0;
         int n = s.length();
@@ -75,6 +75,47 @@ public class DecodeWays {
         }
         return dp1;
     }
+
+    public int numDecodingV7(String s) {
+        if (s == null || s.length() == 0) {
+            return 0;
+        }
+        if (s.startsWith("0")) {
+            return 0;
+        }
+        int n = s.length();
+        int[] dp = new int[n + 1];
+        dp[0] = 1;
+        for (int i = 1; i <= n; i++) {
+            if (s.charAt(i - 1) != '0') {
+                dp[i] += dp[i - 1];
+            }
+            if (i > 1 && (s.charAt(i - 2) == '1' || s.charAt(i - 2) == '2' && s.charAt(i - 1) < '7')) {
+                dp[i] += dp[i - 2];
+            }
+        }
+        return dp[n];
+    }
+
+    public int numDecodingV6(String s) {
+        if (s == null || s.length() == 0) {
+            return 0;
+        }
+        if (s.startsWith("0")) {
+            return 0;
+        }
+        int n = s.length();
+        int[] dp = new int[n + 1];
+        dp[0] = 1;
+        for (int i = 1; i <= n; i++) {
+            dp[i] = (s.charAt(i - 1) == '0' ? 0 : dp[i - 1]);
+            if (i > 1 && (s.charAt(i - 2) == '1' || s.charAt(i - 2) == '2' && s.charAt(i - 1) < '7')) {
+                dp[i] += dp[i - 2];
+            }
+        }
+        return dp[n];
+    }
+
 
     /**
      * Understanding the following solution.

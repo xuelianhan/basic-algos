@@ -1,6 +1,5 @@
 package org.ict.algorithm.leetcode.array;
 
-import java.util.Arrays;
 
 /**
  * You are given two integer arrays nums1 and nums2, sorted in non-decreasing order,
@@ -40,18 +39,17 @@ import java.util.Arrays;
  *
  *
  * Constraints:
- *
  * nums1.length == m + n
  * nums2.length == n
  * 0 <= m, n <= 200
  * 1 <= m + n <= 200
- * -109 <= nums1[i], nums2[j] <= 109
+ * -10^9 <= nums1[i], nums2[j] <= 10^9
  *
  *
  * Follow up: Can you come up with an algorithm that runs in O(m + n) time?
  * @author sniper
  * @date 2022/8/17
- * LC88
+ * LC88, Easy
  */
 public class MergeSortedArray {
 
