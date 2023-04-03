@@ -165,6 +165,17 @@ public class DecodeWays {
      *  1-1-10-6
      *  11-10-6
      *
+     *  e.g. s = "226"
+     *                  226
+     *                2/  \22
+     *               26    6
+     *             2/ \26
+     *             6   ""
+     *  There are three effective paths in total:
+     *  2-2-6
+     *  2-26
+     *  22-6
+     *
      * @author Shuming leetcode-id:yu6
      * @see <a href="https://leetcode.com/problems/decode-ways/solutions/30451/evolve-from-recursion-to-dp"></a>
      * @see <a href="https://leetcode.com/problems/decode-ways/solutions/608268/python-thinking-process-diagram-dp-dfs"></a>
@@ -176,13 +187,15 @@ public class DecodeWays {
         int n = s.length();
         /**
          * Condition (p == n) must be placed before (s.charAt(p) == '0') to prevent index of bound error.
+         * Why p == n, we need to return 1? not return 0?
+         * p == n means this path has come to the end, end means this path can be counted as one valid choice.
          */
         if (p == n) {
             return 1;
         }
         if (s.charAt(p) == '0') {
             /**
-             * Cut off subtrees start with "0"
+             * Cut off subtrees start with "0", because this path is invalid, so return 0 directly.
              */
             return 0;
         }
@@ -192,7 +205,7 @@ public class DecodeWays {
         int res = numDecoding(p + 1, s);
         if (p < (n - 1) && (s.charAt(p) == '1' || s.charAt(p) == '2' && s.charAt(p + 1) < '7')) {
             /**
-             * Choose two more digit after p
+             * Choose two more digits after p
              */
             res += numDecoding(p + 2, s);
         }
