@@ -121,6 +121,7 @@ public class DecodeWays {
     /**
      * Memoization Solution
      * A char may be decoded alone or by pairing with the next char.
+     * Time Cost 0ms
      *
      * @author Shuming leetcode-id:yu6
      * @see <a href="https://leetcode.com/problems/decode-ways/solutions/30451/evolve-from-recursion-to-dp"></a>
@@ -128,15 +129,37 @@ public class DecodeWays {
      * @return
      */
     public int numDecodingV1(String s) {
-        int res = 0;
-        //todo
+        if (s == null || s.length() == 0) {
+            return 0;
+        }
+        Integer[] memo = new Integer[s.length()];
+        return numDecoding(0, s, memo);
+    }
+
+    private int numDecoding(int p, String s, Integer[] memo) {
+        int n = s.length();
+        if (p == n) {
+            return 1;
+        }
+        if (s.charAt(p) == '0') {
+            return 0;
+        }
+        if (memo[p] != null) {
+            return memo[p];
+        }
+        int res = numDecoding(p + 1, s, memo);
+        if ((p < (n - 1)) && (s.charAt(p) == '1' || s.charAt(p) == '2' && s.charAt(p + 1) < '7')) {
+            res += numDecoding(p + 2, s, memo);
+        }
+        memo[p] = res;
         return res;
     }
 
     /**
-     * Recursion Solution
+     * Recursion Solution without memo
      * Time Complexity O(2^N)
-     * e.g. s = "111111111111111111111111111111111111111111111", Time Limit Exceeded.
+     * e.g. s = "111111111111111111111111111111111111111111111",
+     * Time Limit Exceeded.
      *
      * A char may be decoded alone or by pairing with the next char.
      * @author Shuming leetcode-id:yu6
@@ -204,7 +227,8 @@ public class DecodeWays {
          */
         int res = numDecoding(p + 1, s);
         /**
-         * Choose two more digits after p, the first digit can only be 1 or 2, because "26" is the legal maximum
+         * Choose two more digits after p.
+         * The first digit can only be 1 or 2, because "26" is the legal maximum
          * If you choose first digit to ones greater than 2, such as 3, 4, 5..., then they must be greater than 26.
          * If first digit has chosen 2, then the second digit cannot be greater than 6, that's the reason of condition
          * s.charAt(p) == '2' && s.charAt(p + 1) < '7')
