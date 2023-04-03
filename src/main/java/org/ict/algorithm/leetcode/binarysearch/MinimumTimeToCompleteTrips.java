@@ -45,6 +45,28 @@ public class MinimumTimeToCompleteTrips {
 
 
     public long minimumTime(int[] time, int totalTrips) {
-        return 0;
+        long lo = 1L;
+        /**
+         * 1 <= time[i], totalTrips <= 10^7, then the hi may be 10^14
+         */
+        long hi = (long)1e14;
+        while (lo < hi) {
+            long mid = lo + (hi - lo) / 2;
+            if (feasible(time, mid) >= totalTrips) {
+                hi = mid;
+            } else {
+                lo = mid + 1;
+            }
+        }
+        return lo;
     }
+
+    private long feasible(int[] time, long givenTime) {
+        long totalTrips = 0;
+        for (int t : time) {
+            totalTrips += givenTime / t;
+        }
+        return totalTrips;
+    }
+
 }
