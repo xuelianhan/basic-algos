@@ -55,7 +55,7 @@ public class DecodeWays {
      * @param s
      * @return
      */
-    public int numDecodingV5(String s) {
+    public int numDecodingV6(String s) {
         int dp1 = 1;
         int dp2 = 0;
         int n = s.length();
@@ -95,7 +95,7 @@ public class DecodeWays {
      * @param s
      * @return
      */
-    public int numDecodingV4(String s) {
+    public int numDecodingV5(String s) {
         /**
          * 1 <= s.length <= 100, so the following check is not necessary.
          */
@@ -120,6 +120,31 @@ public class DecodeWays {
             }
         }
         return dp[n];
+    }
+
+    /**
+     * Bottom-up Dynamic programming Solution
+     * Time Complexity O(N)
+     * Space Complexity O(N)
+     * @param s
+     * @return
+     */
+    public int numDecodingsV4(String s) {
+        if (s == null || s.length() == 0) {
+            return 0;
+        }
+        int n = s.length();
+        int[] dp = new int[n + 1];
+        dp[n] = 1;
+        for (int i = n - 1; i >= 0; i--) {
+            if (s.charAt(i) != '0') {
+                dp[i] = dp[i + 1];
+            }
+            if ((i < (n - 1)) && (s.charAt(i) == '1' || s.charAt(i) == '2' && s.charAt(i + 1) < '7')) {
+                dp[i] += dp[i + 2];
+            }
+        }
+        return dp[0];
     }
 
 
@@ -189,6 +214,11 @@ public class DecodeWays {
         if (s == null || s.length() == 0) {
             return 0;
         }
+        /**
+         * If you use int[] memo here, you need to initialize memo with -1:
+         * Arrays.fill(memo, -1);
+         * And then change (memo[p] != null) to (memo[p] != -1)
+         */
         Integer[] memo = new Integer[s.length()];
         return numDecoding(0, s, memo);
     }
