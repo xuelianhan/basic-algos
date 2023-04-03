@@ -47,6 +47,29 @@ public class DecodeWays {
         int res = instance.numDecoding(s);
         System.out.println(res);
     }
+    
+
+    /**
+     * Dynamic programming Solution with Constant Space
+     * Time Complexity O(N)
+     * Space Complexity O(1)
+     * @param s
+     * @return
+     */
+    public int numDecodingV5(String s) {
+        int dp1 = 1;
+        int dp2 = 0;
+        int n = s.length();
+        for (int i = n - 1; i >= 0; i--) {
+            int dp = (s.charAt(i) == '0' ? 0 : dp1);
+            if (i < (n - 1) && (s.charAt(i) == '1' || s.charAt(i) == '2' && s.charAt(i + 1) < '7')) {
+                dp += dp2;
+            }
+            dp2 = dp1;
+            dp1 = dp;
+        }
+        return dp1;
+    }
 
     /**
      * Understanding the following solution.
@@ -72,7 +95,7 @@ public class DecodeWays {
      * @param s
      * @return
      */
-    public int numDecodingV5(String s) {
+    public int numDecodingV4(String s) {
         /**
          * 1 <= s.length <= 100, so the following check is not necessary.
          */
@@ -100,12 +123,6 @@ public class DecodeWays {
     }
 
 
-    public int numDecodingV4(String s) {
-        int res = 0;
-        //todo
-        return res;
-    }
-
     /**
      * Dynamic programming Solution
      * Time Complexity O(N)
@@ -114,10 +131,12 @@ public class DecodeWays {
      * @return
      */
     public int numDecodingV3(String s) {
+        if (s == null || s.length() == 0) {
+            return 0;
+        }
         int n = s.length();
         int[] dp = new int[n + 1];
         dp[n] = 1;
-
         for (int i = n - 1; i >= 0; i--) {
             if (s.charAt(i) != '0') {
                 dp[i] = dp[i + 1];
@@ -137,6 +156,9 @@ public class DecodeWays {
      * @return
      */
     public int numDecodingV2(String s) {
+        if (s == null || s.length() == 0) {
+            return 0;
+        }
         int n = s.length();
         int[] dp = new int[n + 1];
         dp[n] = 1;
