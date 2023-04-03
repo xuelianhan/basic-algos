@@ -52,6 +52,12 @@ public class DecodeWays {
      * Dynamic programming Solution with Constant Space
      * Time Complexity O(N)
      * Space Complexity O(1)
+     *
+     * Since our dp only need to keep up to 3 following states:
+     * 1.Current state, let name dp corresponding to dp[i];
+     * 2.Last state, let name dp1 corresponding to dp[i+1];
+     * 3.Last twice state, let name dp2 corresponding to dp[i+2];
+     *
      * @param s
      * @return
      */
