@@ -47,7 +47,6 @@ public class DecodeWays {
         int res = instance.numDecoding(s);
         System.out.println(res);
     }
-    
 
     /**
      * Dynamic programming Solution with Constant Space
@@ -74,6 +73,7 @@ public class DecodeWays {
     /**
      * Understanding the following solution.
      *
+     * Top-Down Dynamic programming solution
      * dp[i] means the way to decode a string of the first-i characters with size-i
      * I used a dp array of size n + 1 to save sub-problem solutions.
      * dp[0] means an empty string will have one way to decode,
@@ -124,7 +124,7 @@ public class DecodeWays {
 
 
     /**
-     * Dynamic programming Solution
+     * Bottom-up Dynamic programming Solution
      * Time Complexity O(N)
      * Space Complexity O(N)
      * @param s
@@ -149,7 +149,7 @@ public class DecodeWays {
     }
 
     /**
-     * Dynamic programming Solution
+     * Bottom-up Dynamic programming Solution
      * Time Complexity O(N)
      * Space Complexity O(N)
      * @param s
