@@ -58,7 +58,7 @@ public class SuccessfulPairsOfSpellsAndPotions {
     public int[] successfulPairsV3(int[] spells, int[] potions, long success) {
         return null;
     }
-    
+
     public int[] successfulPairsV2(int[] spells, int[] potions, long success) {
         return null;
     }

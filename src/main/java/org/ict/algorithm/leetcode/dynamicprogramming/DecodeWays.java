@@ -154,26 +154,36 @@ public class DecodeWays {
 
     /**
      * e.g. s = "11106"
-     * (0, s)--> res=(1, s)
-     *              -->res=(2, s)
-     *                    -->res=(3, s), return 0
-     *                          -->res=(4, s)
-     *                                -->res(5, s), return 1
+     *                    11106
+     *                    1/ \11
+     *                  1106  106
+     *                 1/       \10
+     *                106        6
+     *             10/
+     *             6
+     *  There are two effective paths in total:
+     *  1-1-10-6
+     *  11-10-6
      *
-     *
-     *
-     * @author Rahul Mishra
-     * @see <a href="https://leetcode.com/problems/decode-ways/solutions/2645299/java-easy-to-understand-detailed-solution-recursion-memoization"></a>
+     * @author Shuming leetcode-id:yu6
+     * @see <a href="https://leetcode.com/problems/decode-ways/solutions/30451/evolve-from-recursion-to-dp"></a>
+     * @see <a href="https://leetcode.com/problems/decode-ways/solutions/608268/python-thinking-process-diagram-dp-dfs"></a>
      * @param p
      * @param s
      * @return
      */
     private int numDecoding(int p, String s) {
         int n = s.length();
+        /**
+         * Condition (p == n) must be placed before (s.charAt(p) == '0') to prevent index of bound error.
+         */
         if (p == n) {
             return 1;
         }
         if (s.charAt(p) == '0') {
+            /**
+             * Cut off subtrees start with "0"
+             */
             return 0;
         }
         /**
