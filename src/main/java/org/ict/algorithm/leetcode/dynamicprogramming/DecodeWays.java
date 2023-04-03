@@ -203,10 +203,13 @@ public class DecodeWays {
          * Choose one more digit after p
          */
         int res = numDecoding(p + 1, s);
+        /**
+         * Choose two more digits after p, the first digit can only be 1 or 2, because "26" is the legal maximum
+         * If you choose first digit to ones greater than 2, such as 3, 4, 5..., then they must be greater than 26.
+         * If first digit has chosen 2, then the second digit cannot be greater than 6, that's the reason of condition
+         * s.charAt(p) == '2' && s.charAt(p + 1) < '7')
+         */
         if (p < (n - 1) && (s.charAt(p) == '1' || s.charAt(p) == '2' && s.charAt(p + 1) < '7')) {
-            /**
-             * Choose two more digits after p
-             */
             res += numDecoding(p + 2, s);
         }
         return res;
