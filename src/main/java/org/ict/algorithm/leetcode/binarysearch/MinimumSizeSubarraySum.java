@@ -80,6 +80,31 @@ public class MinimumSizeSubarraySum {
      *
      * Two-pointers solution
      * Time Complexity O(N)
+     *
+     * e.g. target = 7, nums = [2,3,1,2,4,3]
+     * l:0, r:0, sum:2, l == r, but sum < 7, r++:r:1
+     * l:0, r:1, sum:5, l < r, but sum < 7, r++:r:2
+     * l:0, r:2, sum:6, l < r, but sum < 7, r++:r:3
+     * l:0, r:3, sum:8, l < r and sum > 7
+     *    res=min(max, r-l+1)=min(max, 3-0+1)=4
+     *    sum=sum-nums[0]=8-2=6, l++:l:1
+     *    l:1, r:3, l < r but sum < 7, inner-while-loop-ended
+     *    r:4
+     * l:1, r:4, sum=6+4=10, l < r and sum > 7
+     *    res=min(4, r-l+1)=min(4, 4)=4
+     *    sum=sum-nums[1]=10-3=7, l++:l:2
+     *    l < r and sum == 7
+     *    res=min(4,4-2+1)=3
+     *    sum=sum-nums[2]=7-1=6, l++:l:3
+     *    l < r but sum < 7, inner-while-loop-ended
+     *    r:5
+     * l:3, r:5, sum=6+nums[5]=6+3=9, l < r and sum > 7
+     *    res=min(3, 5-3+1)=3
+     *    sum=sum-nums[3]=6-2=4, l++:l:4
+     *    l < r but sum < 7, inner-while-loop-ended
+     *    r:6
+     * l:4, r:6, for-loop-ended, return res:3
+     *
      * @param target
      * @param nums
      * @return
