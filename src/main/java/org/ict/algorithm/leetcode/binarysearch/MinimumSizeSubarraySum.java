@@ -27,6 +27,7 @@ package org.ict.algorithm.leetcode.binarysearch;
  * @author sniper
  * @date 04 Apr, 2023
  * LC209, Medium
+ * @see org.ict.algorithm.leetcode.slidewindow.ShortestSubarrayWithSumAtLeastK
  */
 public class MinimumSizeSubarraySum {
 

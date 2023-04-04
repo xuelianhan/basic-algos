@@ -27,6 +27,7 @@ package org.ict.algorithm.leetcode.slidewindow;
  * @author sniper
  * @date 04 Apr, 2023
  * LC209, Medium
+ * @see ShortestSubarrayWithSumAtLeastK
  */
 public class MinimumSizeSubarraySum {
     
@@ -212,6 +213,11 @@ public class MinimumSizeSubarraySum {
             }
         }
         return res == Integer.MAX_VALUE ? 0 : res;
+    }
+
+    public int minSubArrayLenV02(int target, int[] nums) {
+        //todo
+        return 0;
     }
 
     public int minSubArrayLenV01(int target, int[] nums) {

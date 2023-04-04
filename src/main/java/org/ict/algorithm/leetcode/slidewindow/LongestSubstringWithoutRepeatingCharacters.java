@@ -31,7 +31,7 @@ import java.util.*;
  * s consists of English letters, digits, symbols and spaces.
  * @author sniper
  * @date 22 Oct, 2022
- * LC3
+ * LC3, Medium
  */
 public class LongestSubstringWithoutRepeatingCharacters {
 
