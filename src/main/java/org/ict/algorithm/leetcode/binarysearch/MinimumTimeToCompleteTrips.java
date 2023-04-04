@@ -43,6 +43,33 @@ package org.ict.algorithm.leetcode.binarysearch;
  */
 public class MinimumTimeToCompleteTrips {
 
+    public long minimumTimeV1(int[] time, int totalTrips) {
+        /**
+         * Define lo and hi accurately.
+         */
+        long lo = getMin(time);
+        long hi = lo * totalTrips;
+        while (lo < hi) {
+            long mid = lo + (hi - lo) / 2;
+            if (feasible(time, mid) >= totalTrips) {
+                hi = mid;
+            } else {
+                lo = mid + 1;
+            }
+        }
+        return lo;
+    }
+
+    private int getMin(int[] time) {
+        int min = Integer.MAX_VALUE;
+        for (int t : time) {
+            if (t < min) {
+                min = t;
+            }
+        }
+        return min;
+    }
+
 
     public long minimumTime(int[] time, int totalTrips) {
         long lo = 1L;

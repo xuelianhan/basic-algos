@@ -33,7 +33,7 @@ import java.util.Arrays;
  * @author sniper
  * @date 08 Mar, 2023
  * LC875, Medium
- * TikTok
+ * Google, TikTok
  */
 public class KokoEatingBananas {
 
