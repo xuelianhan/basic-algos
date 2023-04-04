@@ -78,7 +78,7 @@ public class MinimumSizeSubarraySum {
     /**
      * Return the minimal length of a sub-array whose sum is greater than or equal to target.
      *
-     * Two-pointers solution
+     * Slide Window Two-pointers solution
      * Time Complexity O(N)
      *
      * e.g. target = 7, nums = [2,3,1,2,4,3]
@@ -111,8 +111,7 @@ public class MinimumSizeSubarraySum {
      */
     public int minSubArrayLen(int target, int[] nums) {
         int res = Integer.MAX_VALUE;
-        int sum = 0;
-        for (int l = 0, r = 0; r < nums.length; r++) {
+        for (int l = 0, r = 0, sum = 0; r < nums.length; r++) {
             sum += nums[r];
             while (l <= r && sum >= target) {
                 res = Math.min(res, r - l + 1);
