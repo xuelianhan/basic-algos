@@ -216,6 +216,7 @@ public class MinimumSizeSubarraySum {
 
     /**
      * Binary Search Solution
+     * T(k) = T(k/2) + O(N) (using k to make it more clear), making the complexity O(NlogN)
      * Time Complexity O(NlogN)
      * e.g. target=15, nums: [1,2,3,4,5]
      * @param target
@@ -224,6 +225,7 @@ public class MinimumSizeSubarraySum {
      */
     public int minSubArrayLen(int target, int[] nums) {
         /**
+         * mid is the window size.
          * Notice here hi is (nums.length + 1),
          * and feasible is true, hi = mid, res = mid,
          * return res finally.
@@ -243,11 +245,19 @@ public class MinimumSizeSubarraySum {
         return res;
     }
 
-    private boolean feasible(int target, int[] nums, int mid) {
+
+    /**
+     * Maintain a fixed window.
+     * @param target
+     * @param nums
+     * @param window the size of the window
+     * @return
+     */
+    private boolean feasible(int target, int[] nums, int window) {
         int sum = 0;
         for (int i = 0; i < nums.length; i++) {
-            if (i >= mid) {
-                sum -= nums[i - mid];
+            if (i >= window) {
+                sum -= nums[i - window];
             }
             sum += nums[i];
             if (sum >= target) {

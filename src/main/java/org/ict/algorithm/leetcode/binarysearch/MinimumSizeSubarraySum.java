@@ -216,6 +216,7 @@ public class MinimumSizeSubarraySum {
 
     /**
      * Binary Search Solution
+     * T(k) = T(k/2) + O(N) (using k to make it more clear), making the complexity O(NlogN)
      * Time Complexity O(NlogN)
      * @param target
      * @param nums
@@ -246,7 +247,7 @@ public class MinimumSizeSubarraySum {
      * Maintain a fixed window.
      * @param target
      * @param nums
-     * @param window
+     * @param window the size of the window
      * @return
      */
     private boolean feasible(int target, int[] nums, int window) {
