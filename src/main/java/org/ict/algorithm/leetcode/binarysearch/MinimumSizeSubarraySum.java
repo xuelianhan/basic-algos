@@ -214,6 +214,20 @@ public class MinimumSizeSubarraySum {
         return res == Integer.MAX_VALUE ? 0 : res;
     }
 
+    public int minSubArrayLenV01(int target, int[] nums) {
+        int lo = 1;
+        int hi = nums.length + 1;
+        while (lo < hi) {
+            int mid = lo + (hi - lo) / 2;
+            if (feasible(target, nums, mid)) {
+                hi = mid;
+            } else {
+                lo = mid + 1;
+            }
+        }
+        return hi == (nums.length + 1) ? 0 : hi;
+    }
+
     public int minSubArrayLenV0(int target, int[] nums) {
         int lo = 1;
         int hi = nums.length;
