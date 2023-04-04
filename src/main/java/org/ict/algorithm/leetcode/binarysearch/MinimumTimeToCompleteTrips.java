@@ -62,6 +62,14 @@ public class MinimumTimeToCompleteTrips {
         return lo;
     }
 
+    /**
+     * Check the givenTime whether cover the time item or not.
+     * e.g. givenTime = 3, time = [1,2,3]
+     * 3/1=3, 3/2=1, 3/3=1, so the total trips are 3 + 1 + 1 = 5
+     * @param time
+     * @param givenTime
+     * @return
+     */
     private long feasible(int[] time, long givenTime) {
         long totalTrips = 0;
         for (int t : time) {
