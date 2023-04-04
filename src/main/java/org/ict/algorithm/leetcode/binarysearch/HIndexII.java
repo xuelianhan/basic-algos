@@ -30,7 +30,7 @@ package org.ict.algorithm.leetcode.binarysearch;
  * Constraints:
  *
  * n == citations.length
- * 1 <= n <= 105
+ * 1 <= n <= 10^5
  * 0 <= citations[i] <= 1000
  * citations is sorted in ascending order.
  * @author sniper
