@@ -62,17 +62,22 @@ public class NumberOfGoodPaths {
 
     public int numberOfGoodPathsV2(int[] vals, int[][] edges) {
         int res = 0;
+        //todo
         return res;
     }
 
     public int numberOfGoodPathsV1(int[] vals, int[][] edges) {
         int res = 0;
+        //todo
         return res;
     }
 
     /**
      * Union-Find Solution
      * Time Cost 129ms
+     * todo
+     * Analysis here
+     * todo
      * @param vals
      * @param edges
      * @return
