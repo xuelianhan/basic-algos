@@ -48,6 +48,7 @@ public class MinimumTimeToCompleteTrips {
         long lo = 1L;
         /**
          * 1 <= time[i], totalTrips <= 10^7, then the hi may be 10^14
+         * because mid is (lo + hi) / 2, so the hi is 10^7 * 10^7 = 10^14
          */
         long hi = (long)1e14;
         while (lo < hi) {
