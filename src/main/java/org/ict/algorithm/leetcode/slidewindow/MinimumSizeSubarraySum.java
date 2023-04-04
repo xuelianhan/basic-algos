@@ -214,6 +214,20 @@ public class MinimumSizeSubarraySum {
         return res == Integer.MAX_VALUE ? 0 : res;
     }
 
+    public int minSubArrayLenV0(int target, int[] nums) {
+        int lo = 1;
+        int hi = nums.length;
+        while (lo < hi) {
+            int mid = lo + (hi - lo) / 2;
+            if (feasible(target, nums, mid)) {
+                hi = mid;
+            } else {
+                lo = mid + 1;
+            }
+        }
+        return feasible(target, nums, hi) ? hi : 0;
+    }
+
     /**
      * Binary Search Solution
      * T(k) = T(k/2) + O(N) (using k to make it more clear), making the complexity O(NlogN)
