@@ -71,6 +71,13 @@ public class MinimumTimeToCompleteTrips {
     }
 
 
+    /**
+     * @author chandanagrawal23
+     * @see <a href="https://leetcode.com/problems/minimum-time-to-complete-trips/solutions/1802416/c-answer-on-binary-search-list-of-related-problems"></a>
+     * @param time
+     * @param totalTrips
+     * @return
+     */
     public long minimumTime(int[] time, int totalTrips) {
         long lo = 1L;
         /**

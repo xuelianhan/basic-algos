@@ -36,6 +36,21 @@ package org.ict.algorithm.leetcode.binarysearch;
  */
 public class MinimumSizeSubarraySum {
 
+    public int minSubArrayLenV3(int target, int[] nums) {
+        int lo = 1;
+        int hi = nums.length;
+        while (lo < hi) {
+
+        }
+        return lo;
+    }
+
+
+    public int minSubArrayLenV2(int target, int[] nums) {
+        return 0;
+    }
+
+
     public int minSubArrayLenV1(int target, int[] nums) {
         return 0;
     }
