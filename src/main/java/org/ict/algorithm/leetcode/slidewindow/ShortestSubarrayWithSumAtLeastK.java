@@ -2,7 +2,6 @@ package org.ict.algorithm.leetcode.slidewindow;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
-import java.util.LinkedList;
 
 /**
  * Given an integer array nums and an integer k,

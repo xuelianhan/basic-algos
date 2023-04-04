@@ -82,34 +82,12 @@ public class OptimalPartitionOfString {
     }
 
     /**
-     * @author Larry
-     * @param s
-     * @return
-     */
-    public int partitionStringV1(String s) {
-        int n = s.length();
-        int[] dp = new int[n + 1];
-        Arrays.fill(dp, Integer.MAX_VALUE);
-        dp[0] = 0;
-        Set<Character> set = new HashSet<>();
-        for (int i = 0; i < n; i++) {
-            int j = i;
-            while (j >= 0 && !set.contains(s.charAt(j))) {
-                dp[i + 1] = Math.min(dp[i + 1], dp[j] + 1);
-                set.add(s.charAt(j));
-                j -= 1;
-            }
-            set.clear();
-        }
-        return dp[n];
-    }
-
-    /**
+     * Greedy Solution:
      * Extend string as long as possible if there is no duplicate characters.
      * @param s
      * @return
      */
-    public int partitionString(String s) {
+    public int partitionStringV1(String s) {
         int n = s.length();
         Set<Character> set = new HashSet<>();
         /**
@@ -127,4 +105,29 @@ public class OptimalPartitionOfString {
         }
         return res;
     }
+
+    /**
+     * @author Larry
+     * @param s
+     * @return
+     */
+    public int partitionString(String s) {
+        int n = s.length();
+        int[] dp = new int[n + 1];
+        Arrays.fill(dp, Integer.MAX_VALUE);
+        dp[0] = 0;
+        Set<Character> set = new HashSet<>();
+        for (int i = 0; i < n; i++) {
+            int j = i;
+            while (j >= 0 && !set.contains(s.charAt(j))) {
+                dp[i + 1] = Math.min(dp[i + 1], dp[j] + 1);
+                set.add(s.charAt(j));
+                j -= 1;
+            }
+            set.clear();
+        }
+        return dp[n];
+    }
+
+
 }
