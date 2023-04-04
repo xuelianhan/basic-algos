@@ -1,4 +1,4 @@
-package org.ict.algorithm.leetcode.binarysearch;
+package org.ict.algorithm.leetcode.slidewindow;
 
 /**
  * Given an array of positive integers nums and a positive integer target,
@@ -29,7 +29,7 @@ package org.ict.algorithm.leetcode.binarysearch;
  * LC209, Medium
  */
 public class MinimumSizeSubarraySum {
-
+    
 
     /**
      * Slide Window Two-pointers solution
@@ -217,11 +217,15 @@ public class MinimumSizeSubarraySum {
     /**
      * Binary Search Solution
      * Time Complexity O(NlogN)
+     * e.g. target=15, nums: [1,2,3,4,5]
      * @param target
      * @param nums
      * @return
      */
     public int minSubArrayLen(int target, int[] nums) {
+        /**
+         * Notice here hi is (nums.length + 1) and feasible is true, hi = mid, res = mid
+         */
         int lo = 1;
         int hi = nums.length + 1;
         int res = 0;
