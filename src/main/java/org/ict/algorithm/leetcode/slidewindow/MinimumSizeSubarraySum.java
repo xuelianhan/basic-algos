@@ -224,7 +224,9 @@ public class MinimumSizeSubarraySum {
      */
     public int minSubArrayLen(int target, int[] nums) {
         /**
-         * Notice here hi is (nums.length + 1) and feasible is true, hi = mid, res = mid
+         * Notice here hi is (nums.length + 1),
+         * and feasible is true, hi = mid, res = mid,
+         * return res finally.
          */
         int lo = 1;
         int hi = nums.length + 1;
@@ -247,7 +249,7 @@ public class MinimumSizeSubarraySum {
             if (i >= mid) {
                 sum -= nums[i - mid];
             }
-            sum  += nums[i];
+            sum += nums[i];
             if (sum >= target) {
                 return true;
             }

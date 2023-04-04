@@ -222,6 +222,11 @@ public class MinimumSizeSubarraySum {
      * @return
      */
     public int minSubArrayLen(int target, int[] nums) {
+        /**
+         * Notice here hi is (nums.length + 1),
+         * and feasible is true, hi = mid, res = mid,
+         * return res finally.
+         */
         int lo = 1;
         int hi = nums.length + 1;
         int res = 0;
@@ -237,13 +242,20 @@ public class MinimumSizeSubarraySum {
         return res;
     }
 
-    private boolean feasible(int target, int[] nums, int mid) {
+    /**
+     * Maintain a fixed window.
+     * @param target
+     * @param nums
+     * @param window
+     * @return
+     */
+    private boolean feasible(int target, int[] nums, int window) {
         int sum = 0;
         for (int i = 0; i < nums.length; i++) {
-            if (i >= mid) {
-                sum -= nums[i - mid];
+            if (i >= window) {
+                sum -= nums[i - window];
             }
-            sum  += nums[i];
+            sum += nums[i];
             if (sum >= target) {
                 return true;
             }
