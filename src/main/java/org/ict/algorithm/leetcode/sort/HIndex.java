@@ -40,7 +40,7 @@ public class HIndex {
     public static void main(String[] args) {
         int[] citations = {0, 0};
         HIndex instance = new HIndex();
-        int res = instance.hIndex(citations);
+        int res = instance.hIndexV2(citations);
         System.out.println(res);
     }
 
