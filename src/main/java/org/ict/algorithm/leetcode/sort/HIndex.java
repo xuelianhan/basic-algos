@@ -34,11 +34,12 @@ import java.util.Arrays;
  * @author sniper
  * @date 04 Apr, 2023
  * LC274, Medium
+ * @see org.ict.algorithm.leetcode.binarysearch.HIndexII
  */
 public class HIndex {
 
     public static void main(String[] args) {
-        int[] citations = {0, 0};
+        int[] citations = {0, 0, 0};
         HIndex instance = new HIndex();
         int res = instance.hIndexV2(citations);
         System.out.println(res);
@@ -48,6 +49,11 @@ public class HIndex {
         Arrays.sort(citations);
         int n = citations.length;
         for (int i = 0; i < citations.length; i++) {
+            /**
+             * Assume citation is the top level.
+             * if citations cannot reach the top level, downgrade it until citation item can reach this level
+             * return the level.
+             */
             if (n > citations[i]) {
                 n--;
             } else {

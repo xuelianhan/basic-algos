@@ -107,6 +107,9 @@ public class OptimalPartitionOfString {
     }
 
     /**
+     * todo
+     * Analysis here
+     * todo
      * @author Larry
      * @param s
      * @return
