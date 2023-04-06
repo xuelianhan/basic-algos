@@ -102,9 +102,12 @@ public class MinimizeMaximumOfArray {
          */
         int lo = 0;
         int hi = (int)1e9;
+        /**
+         * Alternative:  int hi = Arrays.stream(nums).max().getAsInt();
+         */
         while (lo < hi) {
             int mid = lo + (hi - lo) / 2;
-            if (feasibleV1(nums, mid)) {
+            if (feasibleV2(nums, mid)) {
                 hi = mid;
             } else {
                 lo = mid + 1;
@@ -160,7 +163,7 @@ public class MinimizeMaximumOfArray {
 
         while (lo <= hi) {
             int mid = lo + (hi - lo) / 2;
-            if (feasibleV1(nums, mid)) {
+            if (feasibleV2(nums, mid)) {
                 hi = mid - 1;
                 res = mid;
             } else {
@@ -182,7 +185,7 @@ public class MinimizeMaximumOfArray {
      * @param avg
      * @return
      */
-    private boolean feasibleV1(int[] nums, int avg) {
+    private boolean feasibleV2(int[] nums, int avg) {
         long extra = 0;
         for (int num : nums) {
             if (num > avg) {
@@ -230,8 +233,49 @@ public class MinimizeMaximumOfArray {
         return lo;
     }
 
+
+
     /**
-     * This method feasible is less efficient than method feasibleV1, because it needs to
+     * Improved version of feasible
+     *
+     * @param nums
+     * @param avg
+     * @return
+     */
+    private boolean feasibleV1(int[] nums, int avg) {
+        if (nums[0] > avg) {
+            return false;
+        }
+        long prev = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            long diff = avg - prev;
+            prev = nums[i] - diff;
+            if (prev > avg) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Improved version of feasible
+     * @param nums
+     * @param avg
+     * @return
+     */
+    private boolean feasibleV0(int[] nums, int avg) {
+        long sum = 0;
+        for (int i = 0; i < nums.length; i++) {
+            sum += nums[i];
+            if (sum > avg * (i + 1)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * This method feasible is less efficient than method feasibleV2, because it needs to
      * iterate all the elements in the array, it doesn't fail rapidly.
      * e.g. nums = [10,1]
      * Assume that the hi is initialized to the maximum of the nums array at first.
