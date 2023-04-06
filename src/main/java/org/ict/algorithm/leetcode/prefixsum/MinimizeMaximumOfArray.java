@@ -38,7 +38,7 @@ public class MinimizeMaximumOfArray {
     public static void main(String[] args) {
         int[] nums = {3,7,1,6};
         MinimizeMaximumOfArray instance = new MinimizeMaximumOfArray();
-        int res = instance.minimizeArrayValue(nums);
+        int res = instance.minimizeArrayValueV1(nums);
         System.out.println(res);
     }
 
@@ -129,6 +129,22 @@ public class MinimizeMaximumOfArray {
      *
      * Time Complexity: O(NlogM), where M = max(nums) <= 1e9
      * Time Cost 16ms
+     *
+     * Assume that the hi is initialized to the maximum of the nums array at first.
+     * e.g. [3,7,1,6], maximum = 7
+     * lo:0, hi:7, mid = 3, max=mid=3
+     *   3 == 3, extra=0+3-3=0
+     *   7 > 3, diff=7-3=4, extra:0, diff > extra, return false, lo=mid+1:4
+     * lo:4, hi:7, mid = 5, max=mid=5
+     *   3 < 5, extra=0+5-3=2
+     *   7 > 5, diff=7-5=2, extra:2, diff==extra, extra=2-diff=0
+     *   1 < 5, extra=0+5-1=4
+     *   6 > 5, diff=6-5=1, extra:4, diff < extra, extra=4-1=3, return true, hi=mid-1=5-1=4, res=mid=5
+     * lo:4, hi:4, mid = 4, max=mid=4
+     *   3 < 4, extra=0+4-3=1
+     *   7 > 4, diff=7-4=3, extra:1, diff > extra, return false, lo=mid+1=4+1=5
+     * lo:5, hi:4, while-loop-ended, return res:5
+     *
      * @author x21svge
      * @see <a href="https://leetcode.com/problems/minimize-maximum-of-array/solutions/2706375/binary-search-with-explanation"></a>
      * @param nums
@@ -141,6 +157,7 @@ public class MinimizeMaximumOfArray {
 
         while (lo <= hi) {
             int mid = lo + (hi - lo) / 2;
+            System.out.println("lo:" + lo + ", hi:" + hi + ", mid:" + mid);
             if (feasibleV1(nums, mid)) {
                 hi = mid - 1;
                 res = mid;
