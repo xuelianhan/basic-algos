@@ -332,6 +332,9 @@ public class MinimizeMaximumOfArray {
          * Notice here we cannot access from index-0 such as:
          * for (int i = 0; i < nums.length; i++)
          * Why?
+         * Choose an integer i such that 1 <= i < n and nums[i] > 0.
+         * Decrease nums[i] by 1.
+         * Increase nums[i - 1] by 1.
          * e.g. nums = [3,7,1,6]
          * e.g. nums = [10,1]
          */
