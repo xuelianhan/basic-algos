@@ -87,7 +87,7 @@ public class MinimizeMaximumOfArray {
      * @param nums
      * @return
      */
-    public int minimizeArrayValueV2(int[] nums) {
+    public int minimizeArrayValueV3(int[] nums) {
         long sum = 0, res = 0;
         for (int i = 0; i < nums.length; i++) {
             sum += nums[i];
@@ -95,6 +95,21 @@ public class MinimizeMaximumOfArray {
         }
         return (int)res;
     }
+
+    public int minimizeArrayValueV2(int[] nums) {
+        int lo = 0;
+        int hi = (int)1e9;
+        while (lo < hi) {
+            int mid = lo + (hi - lo) / 2;
+            if (feasibleV1(nums, mid)) {
+                hi = mid;
+            } else {
+                lo = mid + 1;
+            }
+        }
+        return lo;
+    }
+
 
     /**
      * Let say, we are making all values of array <= max.
@@ -112,7 +127,7 @@ public class MinimizeMaximumOfArray {
      * So if value to remove is greater than ex, then also it is not possible.
      * Otherwise, extra -= diff
      *
-     * Time Complexity : O(NlogM)
+     * Time Complexity: O(NlogM), where M = max(nums) <= 1e9
      * Time Cost 16ms
      * @author x21svge
      * @see <a href="https://leetcode.com/problems/minimize-maximum-of-array/solutions/2706375/binary-search-with-explanation"></a>
@@ -171,17 +186,17 @@ public class MinimizeMaximumOfArray {
      * @return
      */
     public int minimizeArrayValue(int[] nums) {
-        long lo = 0;
-        long hi = 1000_000_000;
+        int lo = 0;
+        int hi = 1000_000_000;
         while (lo < hi) {
-            long mid = lo + (hi - lo) / 2L;
+            int mid = lo + (hi - lo) / 2;
             if (feasible(nums, mid)) {
                 hi = mid;
             } else {
                 lo = mid + 1;
             }
         }
-        return (int)lo;
+        return lo;
     }
 
     private boolean feasible(int[] nums, long target) {
