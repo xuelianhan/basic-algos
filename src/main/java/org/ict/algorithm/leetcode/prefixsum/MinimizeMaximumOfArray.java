@@ -132,15 +132,15 @@ public class MinimizeMaximumOfArray {
      *
      * Assume that the hi is initialized to the maximum of the nums array at first.
      * e.g. [3,7,1,6], maximum = 7
-     * lo:0, hi:7, mid = 3, max=mid=3
+     * lo:0, hi:7, mid = 3, avg=mid=3
      *   3 == 3, extra=0+3-3=0
      *   7 > 3, diff=7-3=4, extra:0, diff > extra, return false, lo=mid+1:4
-     * lo:4, hi:7, mid = 5, max=mid=5
+     * lo:4, hi:7, mid = 5, avg=mid=5
      *   3 < 5, extra=0+5-3=2
      *   7 > 5, diff=7-5=2, extra:2, diff==extra, extra=2-diff=0
      *   1 < 5, extra=0+5-1=4
      *   6 > 5, diff=6-5=1, extra:4, diff < extra, extra=4-1=3, return true, hi=mid-1=5-1=4, res=mid=5
-     * lo:4, hi:4, mid = 4, max=mid=4
+     * lo:4, hi:4, mid = 4, avg=mid=4
      *   3 < 4, extra=0+4-3=1
      *   7 > 4, diff=7-4=3, extra:1, diff > extra, return false, lo=mid+1=4+1=5
      * lo:5, hi:4, while-loop-ended, return res:5
@@ -167,17 +167,17 @@ public class MinimizeMaximumOfArray {
         return res;
     }
 
-    private boolean feasibleV1(int[] nums, int max) {
+    private boolean feasibleV1(int[] nums, int avg) {
         long extra = 0;
         for (int num : nums) {
-            if (num > max) {
-                long diff = num - max;
+            if (num > avg) {
+                long diff = num - avg;
                 if (diff > extra) {
                     return false;
                 }
                 extra -= diff;
             } else {
-                extra += max - num;
+                extra += avg - num;
             }
         }
         return true;
