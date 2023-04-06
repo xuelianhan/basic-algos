@@ -327,6 +327,12 @@ public class MinimizeMaximumOfArray {
      */
     private boolean feasible(int[] nums, long avg) {
         long carry = 0;
+        /**
+         * In this method implementation,
+         * Notice here we cannot access from index-0 such as:
+         * for (int i = 0; i < nums.length; i++)
+         * Why?
+         */
         for (int i = nums.length - 1; i >= 0; i--) {
             long x = nums[i];
             x += carry;
