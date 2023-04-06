@@ -38,7 +38,8 @@ import java.util.Arrays;
 public class MinimizeMaximumOfArray {
 
     public static void main(String[] args) {
-        int[] nums = {3,7,1,6};
+        //int[] nums = {3,7,1,6};
+        int[] nums = {10, 1};
         MinimizeMaximumOfArray instance = new MinimizeMaximumOfArray();
         int res = instance.minimizeArrayValue(nums);
         System.out.println(res);
@@ -332,8 +333,12 @@ public class MinimizeMaximumOfArray {
          * Notice here we cannot access from index-0 such as:
          * for (int i = 0; i < nums.length; i++)
          * Why?
+         * e.g. nums = [3,7,1,6]
+         * e.g. nums = [10,1]
+         * 
          */
-        for (int i = nums.length - 1; i >= 0; i--) {
+        //for (int i = nums.length - 1; i >= 0; i--) {
+        for (int i = 0; i < nums.length; i++) {
             long x = nums[i];
             x += carry;
             carry = 0;
