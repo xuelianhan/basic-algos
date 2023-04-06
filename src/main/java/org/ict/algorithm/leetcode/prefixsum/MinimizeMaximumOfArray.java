@@ -157,7 +157,6 @@ public class MinimizeMaximumOfArray {
 
         while (lo <= hi) {
             int mid = lo + (hi - lo) / 2;
-            System.out.println("lo:" + lo + ", hi:" + hi + ", mid:" + mid);
             if (feasibleV1(nums, mid)) {
                 hi = mid - 1;
                 res = mid;
