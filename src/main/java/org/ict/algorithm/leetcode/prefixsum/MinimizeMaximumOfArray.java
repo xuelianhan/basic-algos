@@ -38,7 +38,7 @@ public class MinimizeMaximumOfArray {
     public static void main(String[] args) {
         int[] nums = {3,7,1,6};
         MinimizeMaximumOfArray instance = new MinimizeMaximumOfArray();
-        int res = instance.minimizeArrayValueV1(nums);
+        int res = instance.minimizeArrayValue(nums);
         System.out.println(res);
     }
 
@@ -230,14 +230,37 @@ public class MinimizeMaximumOfArray {
         return lo;
     }
 
-    private boolean feasible(int[] nums, long target) {
+    /**
+     * This method feasible is less efficient than method feasibleV1, because it needs to
+     * iterate all the elements in the array, it doesn't fail rapidly.
+     * e.g. nums = [10,1]
+     * Assume that the hi is initialized to the maximum of the nums array at first.
+     * lo:0, hi:10, mid:5, avg=mid=5
+     *   nums[1]:1, x:1, x=x+carry=1+0=1, carry:0, x < avg
+     *   nums[0]:10, x:10, x=x+carry=10+0=10, carry:0, x > avg, carry=x-avg=10-5=5
+     *   carry:5, carry != 0, return false, lo=mid+1=6
+     * lo:6, hi:10, mid=8, avg=mid=8
+     *   nums[1]:1, x:1, x=x+carry=1+0=1, carry:0, x < avg
+     *   nums[0]:10, x:10, x=x+carry=10+0=10, carry:0, x > avg, carry=x-avg=10-8=2
+     *   carry:2, carry != 0, return false, lo=mid+1=9
+     * lo:9, hi:10, mid=9, avg=mid=9
+     *    nums[1]:1, x:1, x=x+carry=1+0=1, carry:0, x < avg
+     *    nums[0]:10, x:10, x=x+carry=10+0=10, carry:0, x > avg, carry=x-avg=10-9=1
+     *    carry:1, carry != 0, return false, lo=mid+1=10
+     * lo:10, hi:10, while-loop-ended, return lo:10
+     *
+     * @param nums
+     * @param avg
+     * @return
+     */
+    private boolean feasible(int[] nums, long avg) {
         long carry = 0;
         for (int i = nums.length - 1; i >= 0; i--) {
             long x = nums[i];
             x += carry;
             carry = 0;
-            if (x >= target) {
-                carry = x - target;
+            if (x >= avg) {
+                carry = x - avg;
             }
         }
         return carry == 0;
