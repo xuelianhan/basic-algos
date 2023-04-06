@@ -1,5 +1,7 @@
 package org.ict.algorithm.leetcode.prefixsum;
 
+import java.util.Arrays;
+
 /**
  * You are given a 0-indexed array nums comprising n non-negative integers.
  * In one operation, you must:
@@ -201,6 +203,63 @@ public class MinimizeMaximumOfArray {
         return true;
     }
 
+
+    /**
+     * Improved version of feasible
+     *
+     * @param nums
+     * @param avg
+     * @return
+     */
+    private boolean feasibleV1(int[] nums, int avg) {
+        if (nums[0] > avg) {
+            return false;
+        }
+        long prev = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            long diff = avg - prev;
+            prev = nums[i] - diff;
+            if (prev > avg) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public int minimizeArrayValueV0(int[] nums) {
+        int lo = 0;
+        /**
+         * Alternative: int hi = 1000_000_000;
+         */
+        int hi = Arrays.stream(nums).max().getAsInt();
+        while (lo < hi) {
+            int mid = lo + (hi - lo) / 2;
+            if (feasible(nums, mid)) {
+                hi = mid;
+            } else {
+                lo = mid + 1;
+            }
+        }
+        return lo;
+    }
+
+    /**
+     * Improved version of feasible
+     * @param nums
+     * @param avg
+     * @return
+     */
+    private boolean feasibleV0(int[] nums, int avg) {
+        long sum = 0;
+        for (int i = 0; i < nums.length; i++) {
+            sum += nums[i];
+            if (sum > avg * (i + 1)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     /**
      * Binary Search Solution
      * Time Cost 25ms
@@ -233,46 +292,6 @@ public class MinimizeMaximumOfArray {
         return lo;
     }
 
-
-
-    /**
-     * Improved version of feasible
-     *
-     * @param nums
-     * @param avg
-     * @return
-     */
-    private boolean feasibleV1(int[] nums, int avg) {
-        if (nums[0] > avg) {
-            return false;
-        }
-        long prev = nums[0];
-        for (int i = 1; i < nums.length; i++) {
-            long diff = avg - prev;
-            prev = nums[i] - diff;
-            if (prev > avg) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    /**
-     * Improved version of feasible
-     * @param nums
-     * @param avg
-     * @return
-     */
-    private boolean feasibleV0(int[] nums, int avg) {
-        long sum = 0;
-        for (int i = 0; i < nums.length; i++) {
-            sum += nums[i];
-            if (sum > avg * (i + 1)) {
-                return false;
-            }
-        }
-        return true;
-    }
 
     /**
      * This method feasible is less efficient than method feasibleV2, because it needs to
