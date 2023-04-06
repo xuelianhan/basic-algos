@@ -97,6 +97,9 @@ public class MinimizeMaximumOfArray {
     }
 
     public int minimizeArrayValueV2(int[] nums) {
+        /**
+         * 0 <= nums[i] <= 10^9
+         */
         int lo = 0;
         int hi = (int)1e9;
         while (lo < hi) {
@@ -167,6 +170,18 @@ public class MinimizeMaximumOfArray {
         return res;
     }
 
+    /**
+     * If avg is greater than nums[i], this means it can contribute some parts of it(avg - nums[i]) to extra for later consumption.
+     * If avg is equal to nums[i], this means it can neither contribute to extra nor to weaken extra.
+     * If avg is less than nums[i], this means it cannot cover the num[i], and need extra to provide some help to
+     * make up the difference(num - avg). Moreover, if extra cannot over the difference, it means this avg is not feasible.
+     * So return false immediately.
+     * While all the elements has been accessed, no false returned at any middle process, it means this avg is feasible.
+     *
+     * @param nums
+     * @param avg
+     * @return
+     */
     private boolean feasibleV1(int[] nums, int avg) {
         long extra = 0;
         for (int num : nums) {
