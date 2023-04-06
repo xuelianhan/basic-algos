@@ -335,10 +335,9 @@ public class MinimizeMaximumOfArray {
          * Why?
          * e.g. nums = [3,7,1,6]
          * e.g. nums = [10,1]
-         * 
+         *
          */
-        //for (int i = nums.length - 1; i >= 0; i--) {
-        for (int i = 0; i < nums.length; i++) {
+        for (int i = nums.length - 1; i >= 0; i--) {
             long x = nums[i];
             x += carry;
             carry = 0;

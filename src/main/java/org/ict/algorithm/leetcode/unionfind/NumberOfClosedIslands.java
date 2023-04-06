@@ -57,7 +57,59 @@ public class NumberOfClosedIslands {
         return 0;
     }
 
+    /**
+     * Time Cost 1ms
+     * @param grid
+     * @return
+     */
     public int closedIsland(int[][] grid) {
-        return 0;
+        int res = 0;
+        int m = grid.length;
+        int n = grid[0].length;
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                /**
+                 * 0 is land, so 0 is not island totally.
+                 * 1 is water
+                 * So we only need to check whether a land is island or not, we don't need to check a grid of water.
+                 */
+                if (grid[i][j] == 0) {
+                    res += dfs(grid, i, j);
+                }
+            }
+        }
+        return res;
+    }
+
+    /**
+     * Check grid[i][j] is island or not
+     * return 0 if it's not island, otherwise 1 if it's island.
+     * @param grid
+     * @param i
+     * @param j
+     * @return 0 if it's not island, 1 if it's island
+     */
+    private int dfs(int[][] grid, int i, int j) {
+        int m = grid.length;
+        int n = grid[0].length;
+        if ( i < 0 || i >=m || j < 0 || j >= n) {
+            return 0;
+        }
+        /**
+         * while grid[i][j] greater than 1,
+         * this grid[i][j] may be water, or may have been visited(marked as 2 below).
+         */
+        if (grid[i][j] > 0) {
+            return 1;
+        }
+        /**
+         * Mark grid[i][j] has been visited, using 2.
+         */
+        grid[i][j] = 2;
+        /**
+         * Multiply operation here can be replaced with bit | or &.
+         */
+        return dfs(grid, i + 1, j) * dfs(grid, i - 1, j) * dfs(grid, i, j + 1) * dfs(grid, i, j - 1);
     }
 }
