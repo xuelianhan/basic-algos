@@ -45,6 +45,7 @@ public class MinimizeMaximumOfArray {
     }
 
     /**
+     * Understanding the following Solution
      * The best we can do is to reduce nums[i] to the average of array nums[0, i].
      * Time Cost 9ms
      *
@@ -98,6 +99,11 @@ public class MinimizeMaximumOfArray {
         return (int)res;
     }
 
+    /**
+     * Understanding the following Solution
+     * @param nums
+     * @return
+     */
     public int minimizeArrayValueV2(int[] nums) {
         /**
          * 0 <= nums[i] <= 10^9
@@ -176,6 +182,7 @@ public class MinimizeMaximumOfArray {
     }
 
     /**
+     * Time Cost 16ms
      * If avg is greater than nums[i], this means it can contribute some parts of it(avg - nums[i]) to extra for later consumption.
      * If avg is equal to nums[i], this means it can neither contribute to extra nor to weaken extra.
      * If avg is less than nums[i], this means it cannot cover the num[i], and need extra to provide some help to
@@ -206,7 +213,7 @@ public class MinimizeMaximumOfArray {
 
     /**
      * Improved version of feasible
-     *
+     * Time Cost 13ms
      * @param nums
      * @param avg
      * @return
@@ -245,6 +252,7 @@ public class MinimizeMaximumOfArray {
 
     /**
      * Improved version of feasible
+     * Time Cost 19ms
      * @param nums
      * @param avg
      * @return
@@ -294,6 +302,7 @@ public class MinimizeMaximumOfArray {
 
 
     /**
+     * Time Cost 25ms
      * This method feasible is less efficient than method feasibleV2, because it needs to
      * iterate all the elements in the array, it doesn't fail rapidly.
      * e.g. nums = [10,1]
