@@ -253,6 +253,12 @@ public class MinimizeMaximumOfArray {
 
     /**
      * Improved version of feasible
+     * This method indicates the principle of this problem is average.
+     * e.g. average = (a1 + a2 + a3 +...+ aN) / N
+     * Our mission to the check the difference of the input avg and the real average.
+     * If the predicted avg is not enough to cover the sum, it means this avg is lower than the real average
+     * Otherwise return true if the predicted avg is enough to over the sum.
+     *
      * Time Cost 19ms
      * @param nums
      * @param avg
@@ -262,7 +268,10 @@ public class MinimizeMaximumOfArray {
         long sum = 0;
         for (int i = 0; i < nums.length; i++) {
             sum += nums[i];
-            if (sum > avg * (i + 1)) {
+            /**
+             * Use long to prevent overflow
+             */
+            if (sum > (long)avg * (i + 1)) {
                 return false;
             }
         }
@@ -330,7 +339,7 @@ public class MinimizeMaximumOfArray {
         /**
          * In this method implementation,
          * Notice here we cannot access from index-0 such as:
-         * for (int i = 0; i < nums.length; i++)
+         * for (int i = 0; i < nums.length; i++) {
          * Why?
          * Choose an integer i such that 1 <= i < n and nums[i] > 0.
          * Decrease nums[i] by 1.
@@ -338,15 +347,17 @@ public class MinimizeMaximumOfArray {
          * e.g. nums = [3,7,1,6]
          * e.g. nums = [10,1]
          */
-        long carry = 0;
+        long prevCarry = 0;
         for (int i = nums.length - 1; i >= 0; i--) {
             long x = nums[i];
-            x += carry;
-            carry = 0;
+            x += prevCarry;//add prevCarry to current value
+            prevCarry = 0;//reset prevCarry to zero for next iteration
             if (x >= avg) {
-                carry = x - avg;
+                //if average cannot cover the sum of current value and prevCarry,
+                //so prevCarry has remained difference to use for next iteration
+                prevCarry = x - avg;
             }
         }
-        return carry == 0;
+        return prevCarry == 0;
     }
 }
