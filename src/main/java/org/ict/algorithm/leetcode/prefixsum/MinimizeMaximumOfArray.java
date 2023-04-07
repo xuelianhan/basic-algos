@@ -91,13 +91,34 @@ public class MinimizeMaximumOfArray {
      * @param nums
      * @return
      */
-    public int minimizeArrayValueV3(int[] nums) {
+    public int minimizeArrayValueV4(int[] nums) {
         long sum = 0, res = 0;
         for (int i = 0; i < nums.length; i++) {
             sum += nums[i];
             res = Math.max(res, ((sum + i) / (i + 1)));
         }
         return (int)res;
+    }
+
+    /**
+     * Understanding the following Solution
+     * Time Cost 12ms
+     *
+     * @param nums
+     * @return
+     */
+    public int minimizeArrayValueV3(int[] nums) {
+        int lo = 0;
+        int hi = Arrays.stream(nums).max().getAsInt();
+        while (lo < hi) {
+            int mid = lo + (hi - lo) / 2;
+            if (feasibleV1(nums, mid)) {
+                hi = mid;
+            } else {
+                lo = mid + 1;
+            }
+        }
+        return lo;
     }
 
     /**
@@ -218,10 +239,9 @@ public class MinimizeMaximumOfArray {
         return true;
     }
 
-
     /**
      * Improved version of feasible
-     * Time Cost 13ms
+     * Time Cost 12ms
      * Please look at the following conditions clearly:
      * 1.Choose an integer i such that 1 <= i < n and nums[i] > 0.
      * 2.Decrease nums[i] by 1.
@@ -253,6 +273,7 @@ public class MinimizeMaximumOfArray {
         }
         return true;
     }
+
 
     public int minimizeArrayValueV0(int[] nums) {
         int lo = 0;
