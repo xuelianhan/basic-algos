@@ -102,6 +102,13 @@ public class MinimizeMaximumOfArray {
 
     /**
      * Understanding the following Solution
+     * ^
+     * |                        |
+     * |                        |<----mid1
+     * |                |       |<----mid2
+     * |         |      |       |<----mid3
+     * |   |     |      |       |
+     * ----------------------------------->
      * @param nums
      * @return
      */
@@ -340,7 +347,7 @@ public class MinimizeMaximumOfArray {
          * In this method implementation,
          * Notice here we cannot access from index-0 such as:
          * for (int i = 0; i < nums.length; i++) {
-         * Why?
+         * Why? See feasibleV1
          * Choose an integer i such that 1 <= i < n and nums[i] > 0.
          * Decrease nums[i] by 1.
          * Increase nums[i - 1] by 1.
