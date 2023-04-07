@@ -1,7 +1,7 @@
 package org.ict.algorithm.leetcode.breadthfirstsearch;
 
 /**
- * Given an m x n 2D binary grid grid which represents a map of '1's (land) and '0's (water),
+ * Given an m x n 2D binary grid which represents a map of '1's (land) and '0's (water),
  * return the number of islands.
  *
  * An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically.
@@ -35,7 +35,10 @@ package org.ict.algorithm.leetcode.breadthfirstsearch;
  * n == grid[i].length
  * 1 <= m, n <= 300
  * grid[i][j] is '0' or '1'.
- * LC200
+ * LC200, Medium
+ * Similar Question
+ * @see org.ict.algorithm.leetcode.unionfind.NumberOfEnclaves
+ * @see org.ict.algorithm.leetcode.unionfind.NumberOfClosedIslands
  */
 public class NumberOfIslands {
 	
@@ -92,7 +95,10 @@ public class NumberOfIslands {
 					if (grid[i][j] != CONNECT_SYMBOL) {
 						continue;
 					}
-					int id = i * n + j;// skills here: change 2D-position to 1D-number.
+					/**
+					 * skills here: change 2D-position to 1D-number.
+					 */
+					int id = i * n + j;
 					parent[id] = id;
 					count++;
 				}
@@ -101,7 +107,10 @@ public class NumberOfIslands {
 		
 		public int find(int p) {
 			while(p != parent[p]) {
-				parent[p] = parent[parent[p]];// path compression by halving
+				/**
+				 *  path compression by halving
+				 */
+				parent[p] = parent[parent[p]];
 				p = parent[p];
 			}
 			return p;
@@ -113,7 +122,9 @@ public class NumberOfIslands {
 			if (rootP == rootQ) {
 				return;
 			}
-			// direct connect p's root to q's root, not consideration weight of each node.
+			/**
+			 * direct connect p's root to q's root, not consideration weight of each node.
+			 */
 			parent[rootP] = rootQ;
 			count--;
 		}

@@ -42,7 +42,7 @@ import java.util.*;
  * All the values of rooms[i] are unique.
  * @author sniper
  * @date 21 Dec, 2022
- * LC841
+ * LC841, Medium
  */
 public class KeysAndRooms {
 
