@@ -222,19 +222,32 @@ public class MinimizeMaximumOfArray {
     /**
      * Improved version of feasible
      * Time Cost 13ms
+     * Please look at the following conditions clearly:
+     * 1.Choose an integer i such that 1 <= i < n and nums[i] > 0.
+     * 2.Decrease nums[i] by 1.
+     * 3.Increase nums[i - 1] by 1.
+     * e.g. nums = [10,1]
+     *
      * @param nums
      * @param avg
      * @return
      */
     private boolean feasibleV1(int[] nums, int avg) {
+        /**
+         * If avg cannot cover the first element, it cannot cover the whole array surely,
+         * because the array may have more than one element.
+         */
         if (nums[0] > avg) {
             return false;
         }
         long prev = nums[0];
         for (int i = 1; i < nums.length; i++) {
-            long diff = avg - prev;
-            prev = nums[i] - diff;
+            prev += nums[i] - avg;
             if (prev > avg) {
+                /**
+                 * average cannot cover prev,
+                 * so we need to return false to increase the predicted average.
+                 */
                 return false;
             }
         }
