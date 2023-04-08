@@ -42,7 +42,7 @@ import java.util.HashMap;
  * Follow-up: Can you come up with an algorithm that is less than O(n^2) time complexity?
  *
  * @author sniper
- * LC1
+ * LC1, Easy
  */
 public class TwoSum {
 

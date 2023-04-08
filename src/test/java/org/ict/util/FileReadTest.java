@@ -6,9 +6,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.stream.Stream;
 
 /**
@@ -22,6 +22,9 @@ public class FileReadTest {
         instance.testReadByBuf();
     }
 
+    /**
+     * @see <a href="https://stackoverflow.com/questions/109383/sort-a-mapkey-value-by-values"></a>
+     */
     public void testReadByBuf() {
         try {
             File f = new File("/Users/randyhubbard/Desktop/leetcode.txt");
@@ -39,14 +42,15 @@ public class FileReadTest {
                     continue;
                 }
                 if (freqNameArr.length == 2) {
-                    System.out.println(freqNameArr[0] + ", " + freqNameArr[1]);
+                    //System.out.println(freqNameArr[0] + ", " + freqNameArr[1]);
                     String key = freqNameArr[1].trim();
                     map.put(key, map.getOrDefault(key, 0) + Integer.valueOf(freqNameArr[0]));
                 }
             }
-            map.forEach((k, v) -> {
-                System.out.println(k +", " + v);
-            });
+            Stream<Map.Entry<String, Integer>> sorted =
+                    map.entrySet().stream()
+                            .sorted(Collections.reverseOrder(Map.Entry.comparingByValue()));
+            sorted.forEach(System.out::println);
         } catch (IOException e) {
             e.printStackTrace();
         }

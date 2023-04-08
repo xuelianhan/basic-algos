@@ -145,6 +145,10 @@ public class NumberOfEnclaves {
     public int numEnclaves(int[][] grid) {
         int m = grid.length;
         int n = grid[0].length;
+        /**
+         * union-find use m*n as array access index,
+         * so it needs to plus one more space.
+         */
         int[] parent = new int[m * n + 1];
         for (int i = 0; i < m * n + 1; i++) {
             parent[i] = i;

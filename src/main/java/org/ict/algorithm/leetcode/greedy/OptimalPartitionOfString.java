@@ -39,24 +39,6 @@ import java.util.Set;
  */
 public class OptimalPartitionOfString {
 
-    public int partitionStringV8(String s) {
-        Set<Character> set = new HashSet<>();
-
-        return 0;
-    }
-
-    public int partitionStringV7(String s) {
-        Set<Character> set = new HashSet<>();
-
-        return 0;
-    }
-
-    public int partitionStringV6(String s) {
-        Set<Character> set = new HashSet<>();
-
-        return 0;
-    }
-
     public int partitionStringV5(String s) {
         Set<Character> set = new HashSet<>();
 
