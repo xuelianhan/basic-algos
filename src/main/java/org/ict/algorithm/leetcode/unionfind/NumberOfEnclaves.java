@@ -42,7 +42,7 @@ public class NumberOfEnclaves {
      * @param grid
      * @return
      */
-    public int numEnclavesV4(int[][] grid) {
+    public int numEnclavesV5(int[][] grid) {
         int m = grid.length;
         int n = grid[0].length;
         int res = 0;
@@ -79,13 +79,79 @@ public class NumberOfEnclaves {
         return res;
     }
 
+    public int numEnclavesV4(int[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length;
+        int res = 0;
+        int[][] direction = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (i * j == 0 || i == m - 1 || j == n - 1) {
+                    dfsV1(grid, direction, i, j);
+                }
+            }
+        }
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 1) {
+                    res++;
+                }
+            }
+        }
+        return res;
+    }
+
+    private void dfsV1(int[][] grid, int[][] direction, int x, int y) {
+        int m = grid.length;
+        int n = grid[0].length;
+        if (x < 0 || x >= m || y < 0 || y >= n || grid[x][y] != 1) {
+            return;
+        }
+        grid[x][y] = 0;
+        for (int[] d : direction) {
+            dfsV1(grid, direction, x + d[0], y + d[1]);
+        }
+    }
+
     /**
      * Depth-First-Search Solution
      * @param grid
      * @return
      */
     public int numEnclavesV3(int[][] grid) {
-        return 0;
+        int m = grid.length;
+        int n = grid[0].length;
+        int res = 0;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (i * j == 0 || i == m - 1 || j == n - 1) {
+                    dfs(grid, i, j);
+                }
+            }
+        }
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 1) {
+                    res++;
+                }
+            }
+        }
+        return res;
+    }
+
+    private void dfs(int[][] grid, int x, int y) {
+        int m = grid.length;
+        int n = grid[0].length;
+        if (x < 0 || x >= m || y < 0 || y >= n || grid[x][y] != 1) {
+            return;
+        }
+        grid[x][y] = 0;
+        dfs(grid, x + 1, y);
+        dfs(grid, x - 1, y);
+        dfs(grid, x, y + 1);
+        dfs(grid, x, y - 1);
     }
 
     public int numEnclavesV2(int[][] grid) {
@@ -114,10 +180,10 @@ public class NumberOfEnclaves {
             }
         }
         int res = 0;
-        int reachableLoc = uf.find(m * n);
+        int reachableIndex = uf.find(m * n);
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                if (grid[i][j] == 1 && uf.find(i * n + j) != reachableLoc) {
+                if (grid[i][j] == 1 && uf.find(i * n + j) != reachableIndex) {
                     res++;
                 }
             }
