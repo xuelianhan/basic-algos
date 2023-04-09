@@ -1,7 +1,8 @@
 package org.ict.algorithm.leetcode.unionfind;
 
 
-import java.util.Arrays;
+import java.util.ArrayDeque;
+import java.util.Queue;
 
 /**
  * You are given an m x n binary matrix grid, where 0 represents a sea cell and 1 represents a land cell.
@@ -35,19 +36,56 @@ public class NumberOfEnclaves {
         System.out.println(res);
     }
 
-
-    private static final int[][] direction = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
-
+    /**
+     * Breadth-First-Search Solution
+     * Time Cost 12ms
+     * @param grid
+     * @return
+     */
     public int numEnclavesV3(int[][] grid) {
-        return 0;
+        int m = grid.length;
+        int n = grid[0].length;
+        int res = 0;
+        int[][] direction = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+        Queue<int[]> queue = new ArrayDeque<>();
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                res += grid[i][j];
+                if (i * j == 0 || i == m - 1 || j == n - 1) {
+                    queue.offer(new int[] {i, j});
+                }
+            }
+        }
+        while (!queue.isEmpty()) {
+            int[] cell = queue.poll();
+            int x = cell[0];
+            int y = cell[1];
+            if (x < 0 || x >= m || y < 0 || y >= n || grid[x][y] != 1) {
+                continue;
+            }
+            grid[x][y] = 0;
+            res--;
+            for (int[] d : direction) {
+                queue.offer(new int[] {x + d[0], y + d[1]});
+            }
+        }
+        return res;
     }
 
+    /**
+     * Depth-First-Search Solution
+     * @param grid
+     * @return
+     */
     public int numEnclavesV2(int[][] grid) {
         return 0;
     }
 
+
+
     /**
      * Union-Find Solution
+     * Time Cost 26ms
      *
      * In this problem, we don't need to count the connected component, what we need is how many cells in the component.
      * We can use a formula to flatten the two-dimensions array into one-dimension array in the union-find class:
@@ -66,6 +104,7 @@ public class NumberOfEnclaves {
     public int numEnclavesV1(int[][] grid) {
         int m = grid.length;
         int n = grid[0].length;
+        int[][] direction = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
         UnionFind uf = new UnionFind(grid);
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
@@ -87,7 +126,6 @@ public class NumberOfEnclaves {
                 }
             }
         }
-        //System.out.println(Arrays.toString(uf.parent));
         int res = 0;
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
@@ -143,6 +181,7 @@ public class NumberOfEnclaves {
     }
 
     /**
+     * Union-Find Solution
      * [0, 1, 2, 3, 16, 5, 10, 7, 8, 10, 10, 11, 12, 13, 14, 15, 16]
      * Union-Find Solution
      * Time Cost 18ms
