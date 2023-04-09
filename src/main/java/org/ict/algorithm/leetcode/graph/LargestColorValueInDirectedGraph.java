@@ -61,6 +61,9 @@ public class LargestColorValueInDirectedGraph {
      * Breadth-First-Search Solution
      * Time Cost 77ms
      * e.g. colors = "abaca", edges = [[0,1],[0,2],[2,3],[3,4]]
+     * todo
+     * Analysis here
+     * todo
      * @param colors
      * @param edges
      * @return
@@ -88,6 +91,10 @@ public class LargestColorValueInDirectedGraph {
 
         int processedCnt = 0;
         int res = 0;
+        /**
+         * freq[cur][c]:
+         * Max freq of color c after visiting node cur.
+         */
         int[][] freq = new int[n][26];
         while (!queue.isEmpty()) {
             int cur = queue.poll();
