@@ -42,7 +42,7 @@ public class NumberOfEnclaves {
      * @param grid
      * @return
      */
-    public int numEnclavesV3(int[][] grid) {
+    public int numEnclavesV4(int[][] grid) {
         int m = grid.length;
         int n = grid[0].length;
         int res = 0;
@@ -51,11 +51,18 @@ public class NumberOfEnclaves {
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
                 res += grid[i][j];
+                /**
+                 * Put boundary (i, j) into the queue.
+                 */
                 if (i * j == 0 || i == m - 1 || j == n - 1) {
                     queue.offer(new int[] {i, j});
                 }
             }
         }
+        /**
+         * Start from the land of boundary(cell value 1 represents land).
+         * Change grid[x][y] from 1 to 0, and decrease the total count of 1 variable res.
+         */
         while (!queue.isEmpty()) {
             int[] cell = queue.poll();
             int x = cell[0];
@@ -77,10 +84,46 @@ public class NumberOfEnclaves {
      * @param grid
      * @return
      */
-    public int numEnclavesV2(int[][] grid) {
+    public int numEnclavesV3(int[][] grid) {
         return 0;
     }
 
+    public int numEnclavesV2(int[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length;
+        int[][] direction = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+        UnionFind uf = new UnionFind(grid);
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] != 1) {
+                    continue;
+                }
+                if (i == 0 || j == 0 || i == m - 1 || j == n - 1) {
+                    uf.union(i * n + j, m * n);
+                } else {
+                    for (int[] d : direction) {
+                        int x = i + d[0];
+                        int y = j + d[1];
+                        if (grid[x][y] == 1) {
+                            int p = i * n + j;
+                            int q = x * n + y;
+                            uf.union(p, q);
+                        }
+                    }
+                }
+            }
+        }
+        int res = 0;
+        int reachableLoc = uf.find(m * n);
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 1 && uf.find(i * n + j) != reachableLoc) {
+                    res++;
+                }
+            }
+        }
+        return res;
+    }
 
 
     /**
