@@ -1,5 +1,6 @@
 package org.ict.algorithm.leetcode.unionfind;
 
+
 import java.util.Arrays;
 
 /**
@@ -30,7 +31,7 @@ public class NumberOfEnclaves {
     public static void main(String[] args) {
         int[][] grid = {{0,0,0,0},{1,0,1,0},{0,1,1,0},{0,0,0,0}};
         NumberOfEnclaves instance = new NumberOfEnclaves();
-        int res = instance.numEnclaves(grid);
+        int res = instance.numEnclavesV1(grid);
         System.out.println(res);
     }
 
@@ -47,66 +48,72 @@ public class NumberOfEnclaves {
 
     /**
      * Union-Find Solution
+     *
+     * In this problem, we don't need to count the connected component, what we need is how many cells in the component.
+     * We can use a formula to flatten the two-dimensions array into one-dimension array in the union-find class:
+     * index = i * n + j
+     * We don't care these cells with value not equals 1(because 0 is sea, 1 is land, we can walk on land while we can't walk directly on sea)
+     * We need to return isolate cells with 1, this cells cannot reach the boundary.
+     * This means the cells with 1 on the boundary and connected cells with these cell-1 on boundary need to be marked alone(At here we marked them as m * n).
+     * The normal cells with 1, we mark them to x*n + y.
+     * At last, we count the cells with 1, and it's parent array value not equals to m * n, that's the result we need.
+     * m * n may be used as index of array, so the parent array in UnionFind class
+     * need m * n + 1 spaces to prevent index of bound.
+     * [0, 1, 2, 3, 16, 5, 10, 7, 8, 10, 10, 11, 12, 13, 14, 15, 16]
      * @param grid
      * @return
      */
     public int numEnclavesV1(int[][] grid) {
         int m = grid.length;
         int n = grid[0].length;
-        UnionFind uf = new UnionFind(grid, 1);
+        UnionFind uf = new UnionFind(grid);
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
                 if (grid[i][j] != 1) {
                     continue;
                 }
-                for (int[] d : direction) {
-                    int x = i + d[0];
-                    int y = j + d[1];
-                    if (!inRegion(x, y, grid)) {
-                        continue;
-                    }
-                    if (grid[x][y] == 1) {
-                        int p = i * n + j;
-                        int q = x * n + y;
-                        uf.union(p, q);
+                if (i == 0 || j == 0 || i == m - 1 || j == n - 1) {
+                    uf.union(i * n + j, m * n);
+                } else {
+                    for (int[] d : direction) {
+                        int x = i + d[0];
+                        int y = j + d[1];
+                        if (grid[x][y] == 1) {
+                            int p = i * n + j;
+                            int q = x * n + y;
+                            uf.union(p, q);
+                        }
                     }
                 }
             }
         }
-        System.out.println(Arrays.toString(uf.parent));
-        return 0;
+        //System.out.println(Arrays.toString(uf.parent));
+        int res = 0;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 1 && uf.find(i * n + j) != uf.find(m * n)) {
+                    res++;
+                }
+            }
+        }
+        return res;
     }
 
-    private boolean inRegion(int x, int y, int[][] grid) {
-        if (x >=0 && x < grid.length && y >=0 && y < grid[0].length) {
-            return true;
-        }
-        return false;
-    }
 
     class UnionFind {
         int[] parent;
-        int count;
+        int count;//no used in this problem
 
-        public UnionFind(int[][] grid, int connectSymbol) {
+        public UnionFind(int[][] grid) {
             int m = grid.length;
             int n = grid[0].length;
-            parent = new int[m * n];
+            /**
+             * Set as m * n + 1 to prevent index out of bound.
+             */
+            parent = new int[m * n + 1];
             for (int i = 0; i < parent.length; i++) {
                 parent[i] = i;
-            }
-            for (int i = 0; i < m; i++) {
-                for (int j = 0; j < n; j++) {
-                    if (grid[i][j] != connectSymbol) {
-                        continue;
-                    }
-                    /**
-                     * skills here: change 2D-position to 1D-number.
-                     * int id = i * n + j;
-                     * parent[id] = id;
-                     * count++;
-                     */
-                }
+                count++;
             }
         }
 
@@ -158,6 +165,12 @@ public class NumberOfEnclaves {
                 if (grid[i][j] != 1) {
                     continue;
                 }
+                /**
+                 * skills here: change 2D-position to 1D-number.
+                 * int id = i * n + j;
+                 * 0  1  2  3
+                 * 4  5  6  7
+                 */
                 if (i == 0 || j == 0 || i == m - 1 || j == n - 1) {
                     union(parent, i * n + j, m * n);
                 } else {
@@ -176,7 +189,6 @@ public class NumberOfEnclaves {
                 }
             }
         }
-        //System.out.println(Arrays.toString(parent));
         int count = 0;
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
