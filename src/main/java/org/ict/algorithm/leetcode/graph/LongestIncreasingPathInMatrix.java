@@ -80,7 +80,7 @@ public class LongestIncreasingPathInMatrix {
         }
         int m = matrix.length;
         int n = matrix[0].length;
-        int[][] indegree = new int[m][n];
+        int[][] inDegree = new int[m][n];
         int[][] dirs = {{-1, 0}, {0, 1}, {0, -1}, {1, 0}};
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
@@ -92,7 +92,7 @@ public class LongestIncreasingPathInMatrix {
                             /**
                              * Node(i, j) ---> Node(x, y)
                              */
-                            indegree[x][y] += 1;
+                            inDegree[x][y] += 1;
                         }
                     }
                 }
@@ -104,7 +104,7 @@ public class LongestIncreasingPathInMatrix {
         Deque<int[]> queue = new ArrayDeque<>();
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                if (indegree[i][j] == 0) {
+                if (inDegree[i][j] == 0) {
                     int[] node = {i, j};
                     queue.offer(node);
                 }
@@ -127,8 +127,8 @@ public class LongestIncreasingPathInMatrix {
                          * Node(x, y) ---> Node(nx, ny)
                          */
                         if (matrix[nx][ny] > matrix[x][y]) {
-                            indegree[nx][ny] -= 1;
-                            if (indegree[nx][ny] == 0) {
+                            inDegree[nx][ny] -= 1;
+                            if (inDegree[nx][ny] == 0) {
                                 queue.offer(new int[]{nx, ny});
                             }
                         }
