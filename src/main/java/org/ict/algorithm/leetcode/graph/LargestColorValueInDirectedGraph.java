@@ -45,6 +45,12 @@ public class LargestColorValueInDirectedGraph {
     }
 
 
+    /**
+     * Topological Sort Solution.
+     * @param colors
+     * @param edges
+     * @return
+     */
     public int largestPathValue(String colors, int[][] edges) {
         return 0;
     }
