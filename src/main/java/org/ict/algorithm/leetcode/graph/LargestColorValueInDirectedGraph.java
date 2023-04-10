@@ -1,9 +1,7 @@
 package org.ict.algorithm.leetcode.graph;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Queue;
+
+import java.util.*;
 
 /**
  * There is a directed graph of n colored nodes and m edges.
@@ -41,6 +39,13 @@ import java.util.Queue;
  */
 public class LargestColorValueInDirectedGraph {
 
+    public static void main(String[] args) {
+        String colors = "abaca";
+        int[][] edges = {{0,1},{0,2},{2,3},{3,4}};
+        LargestColorValueInDirectedGraph instance = new LargestColorValueInDirectedGraph();
+        instance.largestPathValue(colors, edges);
+    }
+
     /**
      * Post-order DFS + Memoization Solution
      * @param colors
@@ -48,12 +53,13 @@ public class LargestColorValueInDirectedGraph {
      * @return
      */
     public int largestPathValueV2(String colors, int[][] edges) {
+        //todo
         return 0;
     }
 
 
     public int largestPathValueV1(String colors, int[][] edges) {
-
+        //todo
         return 0;
     }
 
@@ -64,7 +70,6 @@ public class LargestColorValueInDirectedGraph {
      * Space complexity: O(n*26)
      *
      * Time Cost 77ms
-     * e.g. colors = "abaca", edges = [[0,1],[0,2],[2,3],[3,4]]
      * Topological Sort:
      * 1.Put all the vertices with 0 in-degree into a queue.
      * 2.Get a vertex cur from queue, and decrement the in-degree of all its neighbors.
@@ -73,6 +78,23 @@ public class LargestColorValueInDirectedGraph {
      * 5.If the number of visited vertices equals the total number of vertices, it's DAG;
      * otherwise, there must be a circle in the graph.
      *
+     * e.g. colors = "abaca", edges = [[0,1],[0,2],[2,3],[3,4]]
+     * Topological-Order-Sequence: 0-->1-->2-->3-->4
+     *                             a-->b-->a-->c-->a
+     * Longest Path: 0-->2-->3-->4
+     *               a-->a-->c-->a
+     * Notice here, we need to count the character frequency of the path, not the frequency of topological-order sequence.
+     * freq[cur][c]: Max freq of color c after visiting node cur.
+     * After having visited node-4, the freq array likes the following:
+     * freq:[[1,0,0,0...], <-- path:0(sub-colors:"a"), max:1
+     *       [1,1,0,0...], <-- path:0,1(sub-colors:"ab"), max:1
+     *       [2,0,0,0...], <-- path:0,2(sub-colors:"aa"), max:2
+     *       [2,0,1,0...], <-- path:0,2,3(sub-colors:"aac"), max:2
+     *       [3,0,1,0...]] <-- path:0,2,3,4(sub-colors:"aaca"), max:3
+     *
+     *
+     * @author votrubac
+     * @see <a href="https://leetcode.com/problems/largest-color-value-in-a-directed-graph/solutions/1200575/topological-sort-vs-dfs-vs-dijkstra"></a>
      * @param colors
      * @param edges
      * @return
@@ -107,6 +129,7 @@ public class LargestColorValueInDirectedGraph {
         int processedCnt = 0;
         int res = 0;
         /**
+         * Notice here, we need to count the character frequency of the path, not the frequency of topological-order sequence.
          * freq[cur][c]:
          * Max freq of color c after visiting node cur.
          */
@@ -123,6 +146,7 @@ public class LargestColorValueInDirectedGraph {
                     queue.offer(x);
                 }
             }
+
         }
         return processedCnt == n ? res : -1;
     }

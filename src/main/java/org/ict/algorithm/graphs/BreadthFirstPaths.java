@@ -45,7 +45,7 @@ import org.ict.algorithm.util.StdOut;
  * The constructor takes time proportional to <em>V</em> + <em>E</em>,
  * where <em>V</em> is the number of vertices and <em>E</em> is the number os edges.
  * Each call to {@link #distTo(int)} and {@link #hasPathTo(int)} takes constant time;
- * each call to {@link $pathTo(int)} takes time proportional to the length of the 
+ * each call to {@link #pathTo(int)} takes time proportional to the length of the
  * path.
  * It uses extra space (not including the graph) proportional to <em>V</em>.
  * <p>

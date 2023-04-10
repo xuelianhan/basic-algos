@@ -27,7 +27,7 @@ public class TopologicalSort {
     /**
      * Kahn Algorithm
      *
-     * It requires additional space for storing the indegrees of the nodes.
+     * It requires additional space for storing the in-degrees of the nodes.
      * Put all the vertices with 0 in-degree in to a queue q.
      * Get a vertex u at a time from q, and decrement the in-degree of all its neighbors.
      * If a neighbor has 0 in-degree, add it to q.
