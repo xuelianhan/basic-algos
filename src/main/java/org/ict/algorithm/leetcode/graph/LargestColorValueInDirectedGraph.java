@@ -60,6 +60,8 @@ public class LargestColorValueInDirectedGraph {
 
     /**
      * Breadth-First-Search Solution(Kahn Algorithm)
+     * Time complexity: O(n)
+     * Space complexity: O(n*26)
      *
      * Time Cost 77ms
      * e.g. colors = "abaca", edges = [[0,1],[0,2],[2,3],[3,4]]
