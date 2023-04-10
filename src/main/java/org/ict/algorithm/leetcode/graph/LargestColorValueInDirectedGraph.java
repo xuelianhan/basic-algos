@@ -53,17 +53,24 @@ public class LargestColorValueInDirectedGraph {
 
 
     public int largestPathValueV1(String colors, int[][] edges) {
+
         return 0;
     }
 
 
     /**
-     * Breadth-First-Search Solution
+     * Breadth-First-Search Solution(Kahn Algorithm)
+     *
      * Time Cost 77ms
      * e.g. colors = "abaca", edges = [[0,1],[0,2],[2,3],[3,4]]
-     * todo
-     * Analysis here
-     * todo
+     * Topological Sort:
+     * 1.Put all the vertices with 0 in-degree into a queue.
+     * 2.Get a vertex cur from queue, and decrement the in-degree of all its neighbors.
+     * 3.If a neighbor has 0 in-degree, add it into the queue.
+     * 4.Keep repeating until queue is exhausted.
+     * 5.If the number of visited vertices equals the total number of vertices, it's DAG;
+     * otherwise, there must be a circle in the graph.
+     *
      * @param colors
      * @param edges
      * @return
@@ -74,8 +81,8 @@ public class LargestColorValueInDirectedGraph {
         for (int i = 0; i < n; i++) {
             graph[i] = new ArrayList<>();
         }
+
         int[] inDegree = new int[n];
-        Queue<Integer> queue = new ArrayDeque<>();
         for (int[] edge : edges) {
             int u = edge[0];
             int v = edge[1];
@@ -83,6 +90,7 @@ public class LargestColorValueInDirectedGraph {
             inDegree[v]++;
         }
 
+        Queue<Integer> queue = new ArrayDeque<>();
         for (int i = 0; i < n; i++) {
             if (inDegree[i] == 0) {
                 queue.offer(i);
