@@ -42,7 +42,7 @@ import java.util.Queue;
 public class LargestColorValueInDirectedGraph {
 
     /**
-     * Topological Sort Solution.
+     * Post-order DFS + Memoization Solution
      * @param colors
      * @param edges
      * @return
@@ -81,7 +81,9 @@ public class LargestColorValueInDirectedGraph {
         for (int i = 0; i < n; i++) {
             graph[i] = new ArrayList<>();
         }
-
+        /**
+         * edge: u-->v
+         */
         int[] inDegree = new int[n];
         for (int[] edge : edges) {
             int u = edge[0];
@@ -89,7 +91,10 @@ public class LargestColorValueInDirectedGraph {
             graph[u].add(v);
             inDegree[v]++;
         }
-
+        /**
+         * Identify all nodes with no incoming edges and add these nodes to queue.
+         * Because topological-order start from these nodes without incoming edges.
+         */
         Queue<Integer> queue = new ArrayDeque<>();
         for (int i = 0; i < n; i++) {
             if (inDegree[i] == 0) {
