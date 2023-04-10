@@ -26,6 +26,14 @@ public class TopologicalSort {
 
     /**
      * Kahn Algorithm
+     *
+     * It requires additional space for storing the indegrees of the nodes.
+     * Put all the vertices with 0 in-degree in to a queue q.
+     * Get a vertex u at a time from q, and decrement the in-degree of all its neighbors.
+     * If a neighbor has 0 in-degree, add it to q.
+     * Keep repeating until we exhaust q.
+     * If the number of visited vertices equals the total number of vertices, it's a DAG;
+     * otherwise, there must be a circle in the graph.
      * @param n
      * @param edges
      */
@@ -93,6 +101,7 @@ public class TopologicalSort {
      * 1: has been visited in a previous DFS session and this vertex is not in a circle.
      * It's a post-order DFS -- the node is pushed into the answer after all its subsequent nodes are visited.
      * Don't forget to reverse the ans before returning.
+     * @see <a href="https://liuzhenglaichn.gitbook.io/algorithm/graph/topological-sort"></a>
      * @return
      */
     public int[] sortByReversePostOrderOfDFS(int n, int[][] edges) {
