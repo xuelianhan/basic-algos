@@ -124,6 +124,9 @@ public class TopologicalSort {
         Arrays.fill(states, un_visited);
         Deque<Integer> postorder = new ArrayDeque<>();
         for (int i = 0; i < n; i++) {
+            /**
+             * If node-i is in visiting, it means there exist a cycle.
+             */
             if (!dfs(graph, i, states, postorder)) {
                 return new int[0];
             }
