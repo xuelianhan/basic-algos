@@ -122,7 +122,19 @@ public class BinaryTreeVerticalOrderTraversal {
      *      / \
      *     /   \
      *    15    7
-     *
+     * queue:[(0, Node-3)], dict:{}
+     * poll cur: (0, Node-3), dict not contains 0, dict:{{0, [3]}}, queue:[]
+     * offer cur.Node.left:Node-9, queue:[(-1, Node-9)]
+     * offer cur.Node.right:Node-20, queue:[(-1, Node-9), (1, Node-20)]
+     * poll cur:(-1, Node-9), queue:[(1, Node-20)], dict not contains -1, dict:{{-1, [9]}, {0, [3]}}
+     * Node-9.left is null, Node-9.right is null, queue:[(1, Node-20)]
+     * poll cur:(1, Node-20), queue:[], dict not contains 1, dict:{{-1, [9]}, {0, [3]}, {1, [20]}}
+     * offer cur.Node.left:Node-15, queue:[(0, Node-15)]
+     * offer cur.Node.right:Node-7, queue:[(0, Node-15), (2, Node-7)]
+     * poll cur:(0, Node-15),  queue:[(2, Node-7)], dict contains 0, dict:{{-1, [9]}, {0, [3, 15]}, {1, [20]}}
+     * Node-15.left is null, Node-15.right is null, queue:[(2, Node-7)]
+     * poll cur:(2, Node-7), queue:[], dict not contains 2, dict:{{-1, [9]}, {0, [3, 15]}, {1, [20]}, {2, [7]}}
+     * dict.values:[9],[3, 15], [20], [7]
      *
      * @see <a href="https://grandyang.com/leetcode/314/"></a>
      * @param root
