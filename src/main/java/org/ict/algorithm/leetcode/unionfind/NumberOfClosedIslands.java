@@ -43,10 +43,12 @@ public class NumberOfClosedIslands {
 
 
     public int closedIslandV2(int[][] grid) {
+        //todo
         return 0;
     }
 
     public int closedIslandV1(int[][] grid) {
+        //todo
         return 0;
     }
 

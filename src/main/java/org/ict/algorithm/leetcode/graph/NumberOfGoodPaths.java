@@ -85,15 +85,15 @@ public class NumberOfGoodPaths {
         List<Integer>[] graph = new List[n];
         Map<Integer, List<Integer>> valToNodes = new TreeMap<>();
 
-        for (int i = 0; i < n; ++i)
+        for (int i = 0; i < n; ++i) {
             graph[i] = new ArrayList<>();
+        }
         for (int[] edge : edges) {
             final int u = edge[0];
             final int v = edge[1];
             if (vals[v] <= vals[u]) {
                 graph[u].add(v);
             }
-
             if (vals[u] <= vals[v]) {
                 graph[v].add(u);
             }
@@ -106,17 +106,20 @@ public class NumberOfGoodPaths {
 
         for (Map.Entry<Integer, List<Integer>> entry : valToNodes.entrySet()) {
             List<Integer> nodes = entry.getValue();
-            for (final int u : nodes)
-                for (final int v : graph[u])
+            for (final int u : nodes) {
+                for (final int v : graph[u]) {
                     uf.unionByRank(u, v);
+                }
+            }
             Map<Integer, Integer> rootCount = new HashMap<>();
-            for (final int u : nodes)
+            for (final int u : nodes) {
                 rootCount.merge(uf.find(u), 1, Integer::sum);
+            }
             // For each group, C(count, 2) := count * (count - 1) / 2
-            for (final int count : rootCount.values())
+            for (final int count : rootCount.values()) {
                 ans += count * (count - 1) / 2;
+            }
         }
-
         return ans;
     }
 
@@ -125,8 +128,9 @@ public class NumberOfGoodPaths {
         public UnionFind(int n) {
             id = new int[n];
             rank = new int[n];
-            for (int i = 0; i < n; ++i)
+            for (int i = 0; i < n; ++i) {
                 id[i] = i;
+            }
         }
 
         public void unionByRank(int u, int v) {
@@ -145,7 +149,10 @@ public class NumberOfGoodPaths {
         }
 
         public int find(int u) {
-            return id[u] == u ? u : (id[u] = find(id[u]));
+            if (id[u] == u) {
+                return u;
+            }
+            return (id[u] = find(id[u]));
         }
 
         private int[] id;
