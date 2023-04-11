@@ -79,6 +79,7 @@ public class MinimumRemoveMakeValidParentheses {
                 if (left == right) {
                     /**
                      * It means current ch '(' is illegal, because left-bracket counts have matched out.
+                     * We need to skip it.
                      */
                     continue;
                 }
@@ -88,6 +89,7 @@ public class MinimumRemoveMakeValidParentheses {
                 if (left == 0) {
                     /**
                      * It means current ch ')' is illegal, because there is no left-bracket to match with it.
+                     * We need to skip it.
                      */
                     continue;
                 }
