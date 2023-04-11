@@ -130,11 +130,11 @@ public class BinaryTreeVerticalOrderTraversal {
         if (root == null) {
             return res;
         }
-        TreeMap<Integer, List<Integer>> dict = new TreeMap<>();
 
+        TreeMap<Integer, List<Integer>> dict = new TreeMap<>();
         Queue<Pair> queue = new LinkedList<>();
         queue.offer(new Pair(0, root));
-
+        
         while (!queue.isEmpty()) {
             Pair cur = queue.poll();
             if (!dict.containsKey(cur.getSeq())) {
