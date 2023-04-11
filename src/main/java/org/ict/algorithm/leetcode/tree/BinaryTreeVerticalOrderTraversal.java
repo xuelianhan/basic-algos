@@ -111,6 +111,9 @@ public class BinaryTreeVerticalOrderTraversal {
     }
 
     /**
+     * Understanding the following solution
+     * Level-Order-Traversal(Queue+TreeMap)
+     *
      * e.g. root = [3,9,20,null,null,15,7], expected:[[9], [3,15], [20], [7]]
      *    3
      *   / \
@@ -134,7 +137,7 @@ public class BinaryTreeVerticalOrderTraversal {
         TreeMap<Integer, List<Integer>> dict = new TreeMap<>();
         Queue<Pair> queue = new LinkedList<>();
         queue.offer(new Pair(0, root));
-        
+
         while (!queue.isEmpty()) {
             Pair cur = queue.poll();
             if (!dict.containsKey(cur.getSeq())) {
