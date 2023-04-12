@@ -1,6 +1,6 @@
 package org.ict.algorithm.leetcode.tree;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * Given the root of a binary tree, calculate the vertical order traversal of the binary tree.
@@ -53,14 +53,173 @@ import java.util.List;
  * @author sniper
  * @date 11 Apr, 2023
  * LC987, Hard
- * @see BinaryTreeVerticalOrderTraversal
+ * Very similar with {@link BinaryTreeVerticalOrderTraversal} but there is a little different:
+ * In the same location and should be ordered by their values.
  */
 public class VerticalOrderTraversalOfBinaryTree {
 
-    public List<List<Integer>> verticalTraversal(TreeNode root) {
+    /**
+     * Understanding the following solution.
+     * @param root
+     * @return
+     */
+    public List<List<Integer>> verticalTraversalV1(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<>();
         if (root == null) {
-            //todo
+            return res;
         }
-        return null;
+
+        TreeMap<Integer, List<Tuple>> dict = new TreeMap<>();
+        Queue<Tuple> queue = new LinkedList<>();
+        queue.offer(new Tuple(0, 0, root));
+
+        while (!queue.isEmpty()) {
+            Tuple cur = queue.poll();
+            if (!dict.containsKey(cur.getSeqColumn())) {
+                dict.put(cur.getSeqColumn(), new ArrayList<>());
+            }
+            /**
+             * Group tuples by seqColumn firstly.
+             */
+            dict.get(cur.getSeqColumn()).add(cur);
+            if (cur.getNode().left != null) {
+                Tuple p = new Tuple(cur.getSeqColumn() - 1, cur.getSeqRow() + 1, cur.getNode().left);
+                queue.offer(p);
+            }
+            if (cur.getNode().right != null) {
+                Tuple p = new Tuple(cur.getSeqColumn() + 1, cur.getSeqRow() + 1, cur.getNode().right);
+                queue.offer(p);
+            }
+        }
+        for (Map.Entry<Integer, List<Tuple>> entry : dict.entrySet()) {
+            List<Tuple> valList = entry.getValue();
+            /**
+             * Sort tuple-list by seqRow firstly, if seqRow equals, then sort tuple-list by node-val.
+             */
+            Collections.sort(valList, (o1, o2) -> {
+                if (o1.getSeqRow() < o2.getSeqRow()) {
+                    return -1;
+                } else if (o1.getSeqRow() > o2.getSeqRow()) {
+                    return 1;
+                } else {
+                    int v1 = o1.getNode().val;
+                    int v2 = o2.getNode().val;
+                    if (v1 < v2) {
+                        return -1;
+                    } else if (v1 > v2) {
+                        return 1;
+                    } else {
+                        return 0;
+                    }
+                }
+            });
+            List<Integer> list = new ArrayList<>();
+            for (Tuple tuple : valList) {
+                list.add(tuple.node.val);
+            }
+            res.add(list);
+        }
+        return res;
+    }
+
+    /**
+     * e.g root = [3,1,4,0,2,2], expected [[0],[1],[3,2,2],[4]]
+     *                 3(0,0)
+     *               /        \
+     *          1(1,-1)        4(1, 1)
+     *        /      |         /
+     *     0(2,-2)  2(2, 0)   2(2, 0)
+     * There may be multiple nodes in the same row and same column.
+     * In such a case, sort these nodes by their values.
+     *
+     *
+     * @see <a href="https://www.topcoder.com/thrive/articles/vertical-order-traversal-of-a-binary-tree"></a>
+     * @param root
+     * @return
+     */
+    public List<List<Integer>> verticalTraversal(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<>();
+        if (root == null) {
+            return res;
+        }
+
+        TreeMap<Integer, List<Tuple>> dict = new TreeMap<>();
+        Queue<Tuple> queue = new LinkedList<>();
+        queue.offer(new Tuple(0, 0, root));
+
+        while (!queue.isEmpty()) {
+            Tuple cur = queue.poll();
+            if (!dict.containsKey(cur.getSeqColumn())) {
+                dict.put(cur.getSeqColumn(), new ArrayList<>());
+            }
+            /**
+             * Group tuples by seqColumn firstly.
+             */
+            dict.get(cur.getSeqColumn()).add(cur);
+            if (cur.getNode().left != null) {
+                Tuple p = new Tuple(cur.getSeqColumn() - 1, cur.getSeqRow() + 1, cur.getNode().left);
+                queue.offer(p);
+            }
+            if (cur.getNode().right != null) {
+                Tuple p = new Tuple(cur.getSeqColumn() + 1, cur.getSeqRow() + 1, cur.getNode().right);
+                queue.offer(p);
+            }
+        }
+        for (Map.Entry<Integer, List<Tuple>> entry : dict.entrySet()) {
+            List<Tuple> valList = entry.getValue();
+            Collections.sort(valList, new Comparator<Tuple>() {
+                @Override
+                public int compare(Tuple o1, Tuple o2) {
+                    if (o1.getSeqRow() < o2.getSeqRow()) {
+                        return -1;
+                    } else if (o1.getSeqRow() > o2.getSeqRow()) {
+                        return 1;
+                    } else {
+                        int v1 = o1.getNode().val;
+                        int v2 = o2.getNode().val;
+                        if (v1 < v2) {
+                            return -1;
+                        } else if (v1 > v2) {
+                            return 1;
+                        } else {
+                            return 0;
+                        }
+                    }
+                }
+            });
+            List<Integer> list = new ArrayList<>();
+            for (Tuple tuple : valList) {
+                list.add(tuple.node.val);
+            }
+            res.add(list);
+        }
+        return res;
+    }
+
+    static class Tuple {
+        private int seqColumn;
+
+        private int seqRow;
+
+        private TreeNode node;
+
+        public Tuple() {}
+
+        public Tuple(int seqColumn, int seqRow, TreeNode node) {
+            this.seqColumn = seqColumn;
+            this.seqRow = seqRow;
+            this.node = node;
+        }
+
+        public int getSeqColumn() {
+            return seqColumn;
+        }
+
+        public int getSeqRow() {
+            return seqRow;
+        }
+        public TreeNode getNode() {
+            return node;
+        }
     }
 }

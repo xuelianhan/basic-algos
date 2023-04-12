@@ -84,30 +84,51 @@ public class BinaryTreeVerticalOrderTraversal {
         r1.right = rr1;
         root.left = l1;
         root.right = r1;
-        List<List<Integer>>  res = instance.verticalOrder(root);
+        List<List<Integer>>  res = instance.verticalOrderV1(root);
         System.out.println(res);
     }
 
 
     /**
+     * Level-Order-Traversal(TreeMap + Queue)
+     * @see <a href="https://tenderleo.gitbooks.io/leetcode-solutions-/content/GoogleMedium/314.html"></a>
      * @see <a href="https://walkccc.me/LeetCode/problems/0314/"></a>
      * @param root
      * @return
      */
-    public List<List<Integer>> verticalOrderV2(TreeNode root) {
-        //todo
-        return null;
-    }
-
-    /**
-     *
-     * @see <a href="https://tenderleo.gitbooks.io/leetcode-solutions-/content/GoogleMedium/314.html"></a>
-     * @param root
-     * @return
-     */
     public List<List<Integer>> verticalOrderV1(TreeNode root) {
-        //todo
-        return null;
+        List<List<Integer>> res = new ArrayList<>();
+        if (root == null) {
+            return res;
+        }
+        Map<Integer, List<Integer>> dict = new TreeMap<>();
+        Queue<TreeNode> nodeQueue = new LinkedList<>();
+        Queue<Integer> seqQueue = new LinkedList<>();
+        nodeQueue.offer(root);
+        seqQueue.offer(0);
+
+        while (!nodeQueue.isEmpty()) {
+            /**
+             * The seq and the TreeNode-cur make a pair.
+             */
+            TreeNode cur = nodeQueue.poll();
+            int seq = seqQueue.poll();
+            if (!dict.containsKey(seq)) {
+                dict.put(seq, new ArrayList<>());
+            }
+            dict.get(seq).add(cur.val);
+
+            if (cur.left != null) {
+                nodeQueue.offer(cur.left);
+                seqQueue.offer(seq - 1);
+            }
+            if (cur.right != null) {
+                nodeQueue.offer(cur.right);
+                seqQueue.offer(seq + 1);
+            }
+        }
+        res.addAll(dict.values());
+        return res;
     }
 
     /**
