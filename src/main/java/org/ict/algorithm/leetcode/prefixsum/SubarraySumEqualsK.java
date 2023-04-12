@@ -65,6 +65,12 @@ public class SubarraySumEqualsK {
         int sum = 0;
         int res = 0;
         Map<Integer, Integer> prefixSum = new HashMap<>();
+        /**
+         * Assume that prefix sum equals k at index-i, the range from index-0 to this index-i is an answer.
+         * So while sum == k, the sum-k is 0, the value should be 1.
+         * e.g. nums = [1, 2, 3], k = 3
+         * while 1 + 2 = 3, so range from index-0 to index-i should be an answer.
+         */
         prefixSum.put(0, 1);
         for (int i = 0; i < nums.length; i++) {
             sum += nums[i];
