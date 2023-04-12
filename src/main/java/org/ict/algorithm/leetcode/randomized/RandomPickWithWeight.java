@@ -54,7 +54,7 @@ import java.util.Random;
  * pickIndex will be called at most 10^4 times.
  * @author sniper
  * @date 12 Apr, 2023
- * LC528, Medium
+ * LC528, Medium, frequency=182.
  */
 public class RandomPickWithWeight {
 
@@ -63,6 +63,10 @@ public class RandomPickWithWeight {
     private Random random = new Random();
 
 
+    /**
+     * Initialize the prefix-sum array.
+     * @param w
+     */
     public RandomPickWithWeight(int[] w) {
         int n = w.length;
         prefixSum = new int[n];
