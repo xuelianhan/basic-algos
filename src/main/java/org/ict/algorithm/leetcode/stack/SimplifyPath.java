@@ -47,7 +47,7 @@ import java.util.*;
  * LC71, Medium, frequency=112
  */
 public class SimplifyPath {
-    
+
     public static void main(String[] args) {
         String path = "/home//foo/";
         SimplifyPath instance = new SimplifyPath();
