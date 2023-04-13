@@ -36,4 +36,8 @@ package org.ict.algorithm.leetcode.tree;
  * LC
  */
 public class LowestCommonAncestorOfBTII {
+
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        return null;
+    }
 }
