@@ -42,9 +42,30 @@ package org.ict.algorithm.leetcode.tree;
  */
 public class LowestCommonAncestorOfBT {
 
+    public static void main(String[] args) {
+        TreeNode root = new TreeNode(3);
+        TreeNode p = new TreeNode(5);
+        TreeNode q = new TreeNode(4);
+        root.left = p;
+        root.right = new TreeNode(1);
+        TreeNode pr1 = new TreeNode(2);
+        TreeNode pr1r1 = new TreeNode(4);
+        pr1.right = pr1r1;
+        p.right = pr1;
+        LowestCommonAncestorOfBT instance = new LowestCommonAncestorOfBT();
+        TreeNode res = instance.lowestCommonAncestor(root, p, q);
+        System.out.println(res);
+    }
+
+
     /**
      * Time Complexity O(N)
      * Space Complexity O(H), H is the height of the binary tree.
+     * e.g. root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 1
+     * Because p and q will exist in the tree, so if we find p and q at the same, then the root is the LCA,
+     * If we find p first, so the parent of p is the LCA.
+     * If we find q first, so the parent of q is the LCA.
+     *
      * @param root
      * @param p
      * @param q

@@ -35,17 +35,53 @@ package org.ict.algorithm.leetcode.tree;
 public class LowestCommonAncestorOfBST {
 
     /**
+     * def lowestCommonAncestor(self, root, p, q):
+     *     while (root.val - p.val) * (root.val - q.val) > 0:
+     *         root = (root.left, root.right)[p.val > root.val]
+     *     return root
+     *
+     *
      * @see <p>StefanPochmann's solution</p>
      * @param root
      * @param p
      * @param q
      * @return
      */
-    public TreeNode lowestCommonAncestorV3(TreeNode root, TreeNode p, TreeNode q) {
+    public TreeNode lowestCommonAncestorV4(TreeNode root, TreeNode p, TreeNode q) {
         while ((root.val - p.val) * (root.val - q.val) > 0) {
             root = (root.val < p.val ? root.left : root.right);
         }
         return root;
+    }
+
+    /**
+     * def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+     *         while root:
+     *             minV = min(p.val, q.val)
+     *             maxV = max(p.val, q.val)
+     *             if minV > root.val:
+     *                 root = root.right
+     *             elif maxV < root.val:
+     *                 root = root.left
+     *             else:
+     *                 return root
+     *         return None
+     * @param root
+     * @param p
+     * @param q
+     * @return
+     */
+    public TreeNode lowestCommonAncestorV3(TreeNode root, TreeNode p, TreeNode q) {
+        while (root != null) {
+            if (p.val > root.val && q.val > root.val) {
+                root = root.right;
+            } else if (p.val < root.val && q.val < root.val) {
+                root = root.left;
+            } else {
+                return root;
+            }
+        }
+        return null;
     }
 
     /**
@@ -114,6 +150,18 @@ public class LowestCommonAncestorOfBST {
         }
     }
 
+    /**
+     * def lowestCommonAncestor(self, root, p, q):
+     *     if p.val < root.val > q.val:
+     *         return self.lowestCommonAncestor(root.left, p, q)
+     *     if p.val > root.val < q.val:
+     *         return self.lowestCommonAncestor(root.right, p, q)
+     *     return root
+     * @param root
+     * @param p
+     * @param q
+     * @return
+     */
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         if (root == null) {
             return null;

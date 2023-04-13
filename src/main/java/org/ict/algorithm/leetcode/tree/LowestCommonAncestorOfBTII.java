@@ -31,12 +31,20 @@ package org.ict.algorithm.leetcode.tree;
  * -10^9 <= Node.val <= 10^9
  * All Node.val are unique.
  * p != q
+ *
  * @author sniper
  * @date 12 Apr, 2023
- * LC
+ * LC1644
  */
 public class LowestCommonAncestorOfBTII {
 
+    /**
+     * Notice that p and q will not always exist in the tree.
+     * @param root
+     * @param p
+     * @param q
+     * @return
+     */
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         return null;
     }
