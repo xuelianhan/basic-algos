@@ -1,4 +1,3 @@
-528.Random Pick with Weight=182
 1650.Lowest Common Ancestor of a Binary Tree III=160
 339.Nested List Weight Sum=134
 1570.Dot Product of Two Sparse Vectors=121

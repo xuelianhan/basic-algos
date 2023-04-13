@@ -37,7 +37,8 @@ package org.ict.algorithm.leetcode.tree;
  * p and q will exist in the tree.
  * @author sniper
  * @date 23 Nov, 2022
- * LC236
+ * LC236, Medium, frequency=186
+ * This problem is the follow-up of {@link LowestCommonAncestorOfBST}
  */
 public class LowestCommonAncestorOfBT {
 
