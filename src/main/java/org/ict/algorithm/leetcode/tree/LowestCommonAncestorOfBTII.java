@@ -2,8 +2,8 @@ package org.ict.algorithm.leetcode.tree;
 
 /**
  * Description
- * Given the root of a binary tree, return the lowest common ancestor (LCA) of two given nodes,
- * p and q. If either node p or q does not exist in the tree, return null.
+ * Given the root of a binary tree, return the lowest common ancestor (LCA) of two given nodes, p and q.
+ * If either node p or q does not exist in the tree, return null.
  * All values of the nodes in the tree are unique.
  * According to the definition of LCA on Wikipedia:
  * “The lowest common ancestor of two nodes p and q in a binary tree T is the lowest node
@@ -32,22 +32,32 @@ package org.ict.algorithm.leetcode.tree;
  * All Node.val are unique.
  * p != q
  *
+ * Follow up: Can you find the LCA traversing the tree, without checking nodes existence?
+ *
  * @author sniper
  * @date 12 Apr, 2023
  * LC1644, Medium
- * Similar with {@link LowestCommonAncestorOfBT} but a little different.
+ * Similar with {@link LowestCommonAncestorOfBT} but a little different point:
+ * p and q will not always exist in the tree.
+ *
  */
 public class LowestCommonAncestorOfBTII {
 
+    public static void main(String[] args) {
+        LowestCommonAncestorOfBTII instance = new LowestCommonAncestorOfBTII();
+
+    }
+
     /**
      * Notice that p and q will not always exist in the tree.
-     *
+     * @see <a href="https://leetcode.ca/2020-05-31-1644-Lowest-Common-Ancestor-of-a-Binary-Tree-II/"></a>
      * @param root
      * @param p
      * @param q
      * @return
      */
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+
         //todo
         return null;
     }

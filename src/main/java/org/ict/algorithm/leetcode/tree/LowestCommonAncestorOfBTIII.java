@@ -40,7 +40,9 @@ import java.util.Set;
  *
  * @author sniper
  * @date 12 Apr, 2023
- * LC1650, Medium
+ * LC1650, Medium, frequency=160
+ * Similar with {@link LowestCommonAncestorOfBT} but a little different on the definition of Node.
+ *
  */
 public class LowestCommonAncestorOfBTIII {
 
@@ -59,8 +61,24 @@ public class LowestCommonAncestorOfBTIII {
     }
 
     /**
+     * This method is a bit tricky, and most people won’t be able to come up with it in a short amount of time.
+     * The idea is as follows:
+     * we will use 2 pointers (pointerA, pointerB) that go from nodeA and nodeB upwards respectively.
+     * Assume nodeA locates at a shallower level than nodeB,
+     * i.e. depth(nodeA) < depth(nodeB), pointerA will reach the top quicker than pointerB.
+     * Suppose the difference in depth between nodeA and nodeB is diff, by the time pointerA reaches the top,
+     * pointerB will be diff levels behind.
+     * Now if pointerA resets its path and continues upwards from nodeB instead of nodeA,
+     * it will need diff steps to reach the level of nodeA,
+     * by which time pointerB has already caught up and will be at the same level of pointerA
+     * (pointerB restarts from nodeA after reaching the top).
+     * Now the only thing to do is to compare pointerA and pointerB on the way up.
+     * If pointerA and pointerB points to the same node, we’ve found the lowest common ancestor.
+     *
      * Time Complexity O(N)
      * Space Complexity O(1)
+     *
+     * @see <a href="https://iamageek.medium.com/leetcode-1650-lowest-common-ancestor-of-a-binary-tree-iii-6d008b93376c"></a>
      * @param p
      * @param q
      * @return
@@ -76,8 +94,18 @@ public class LowestCommonAncestorOfBTIII {
     }
 
     /**
-     * Time Complexity O(N)
-     * Space Complexity O(1)
+     * One way to solve this problem is to traverse from one of the nodes all the way up to the top,
+     * and save all the ancestors in a hash map.
+     * Afterwards, we will go from the other node to the top of the tree,
+     * and return the node if it’s already in the hash map.
+     * If so, we have found the lowest common ancestor.
+     * Since we will go from nodeA to the root once and also from nodeB upwards once,
+     * the time complexity is O(N), N being the number of nodes in the tree.
+     * This is because the tree can be skewed if we’re out of luck.
+     * And as we need to store the list of ancestors,
+     * the space complexity is also O(N).
+     *
+     * @see <a href="https://iamageek.medium.com/leetcode-1650-lowest-common-ancestor-of-a-binary-tree-iii-6d008b93376c"></a>
      * @param p
      * @param q
      * @return
@@ -103,9 +131,8 @@ public class LowestCommonAncestorOfBTIII {
         public Node right;
         public Node parent;
 
-        public Node() {
+        public Node() {}
 
-        }
         public Node(int val) {
             this.val = val;
         }

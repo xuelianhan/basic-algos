@@ -94,7 +94,7 @@ public class MinimumGeneticMutation {
             /**
              * Iterate from the tail due to the queue size varies.
              * Another alternative option is to store the size of queue:
-             * e.g
+             * e.g.
              * int size = queue.size();
              * for (int i = 0; i < size; i++)
              * do-level-order-traversal-here;
@@ -104,7 +104,6 @@ public class MinimumGeneticMutation {
                 if (cur.equals(end)) {
                     return level;
                 }
-
                 /**
                  * Replace each character with 'A', 'C', 'G', 'T', generate string with 8-characters,
                  * If the generated string has not been visited, and within the range of bank,
