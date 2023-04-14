@@ -39,6 +39,15 @@ import java.util.Stack;
 public class ValidateStackSequences {
 
     /**
+     * We can seem pushed sequence as wood plank, and popped sequence as disk saw.
+     * we need to process the wood with disk saw.
+     *                    --------
+     * -------------    /          \
+     *                 /            \
+     * ----------------\            /
+     *                  \          /
+     *                   ----------
+     *
      * 1.Push each item into the stack;
      * 2.Greedily pop the item from the stack if top item is same as popped element,
      * and increment the pointer of popped.
@@ -51,6 +60,11 @@ public class ValidateStackSequences {
         int n = pushed.length;
         Stack<Integer> stack = new Stack<>();
         for (int i = 0, j = 0; i < n; i++) {
+            /**
+             * Stack is the machine plane , while-loop is the disk saw on the machine plane
+             * Now we put wood plank on the machine plane, and push it forward little by little, cut off a part
+             * while the little-part is same as the sawtooth.
+             */
             stack.push(pushed[i]);
             while (!stack.isEmpty() && stack.peek() == popped[j]) {
                 stack.pop();

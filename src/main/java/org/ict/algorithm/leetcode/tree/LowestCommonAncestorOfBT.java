@@ -1,5 +1,7 @@
 package org.ict.algorithm.leetcode.tree;
 
+import java.util.*;
+
 /**
  * Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.
  *
@@ -30,8 +32,8 @@ package org.ict.algorithm.leetcode.tree;
  *
  * Constraints:
  *
- * The number of nodes in the tree is in the range [2, 105].
- * -109 <= Node.val <= 109
+ * The number of nodes in the tree is in the range [2, 10^5].
+ * -10^9 <= Node.val <= 10^9
  * All Node.val are unique.
  * p != q
  * p and q will exist in the tree.
@@ -61,10 +63,19 @@ public class LowestCommonAncestorOfBT {
     /**
      * Time Complexity O(N)
      * Space Complexity O(H), H is the height of the binary tree.
+     *
      * e.g. root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 1
      * Because p and q will exist in the tree, so if we find p and q at the same, then the root is the LCA,
      * If we find p first, so the parent of p is the LCA.
      * If we find q first, so the parent of q is the LCA.
+     * We can seem there are two boxs before us, our target is to find dish-p and dish q in the two boxs
+     * from the top-down view.
+     *
+     * def lowestCommonAncestor(self, root, p, q):
+     *     if root in (None, p, q): return root
+     *     left, right = (self.lowestCommonAncestor(kid, p, q)
+     *                    for kid in (root.left, root.right))
+     *     return root if left and right else left or right
      *
      * @param root
      * @param p
@@ -81,5 +92,97 @@ public class LowestCommonAncestorOfBT {
             return root;
         }
         return (left == null ? right : left);
+    }
+
+    /**
+     * Iterative-Solution with Queue(BFS)
+     * Note:
+     * All Node.val are unique.
+     * p != q
+     * p and q will exist in the tree.
+     * @param root
+     * @param p
+     * @param q
+     * @return
+     */
+    public TreeNode lowestCommonAncestorV1(TreeNode root, TreeNode p, TreeNode q) {
+        Map<TreeNode, TreeNode> parent = new HashMap<>();
+        Queue<TreeNode> queue = new LinkedList<>();
+        parent.put(root, null);
+        queue.offer(root);
+
+        while (!parent.containsKey(p) || !parent.containsKey(q)) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode cur = queue.poll();
+
+                if (cur.left != null) {
+                    parent.put(cur.left, cur);
+                    queue.offer(cur.left);
+                }
+
+                if (cur.right != null) {
+                    parent.put(cur.right, cur);
+                    queue.offer(cur.right);
+                }
+            }
+        }
+
+        Set<TreeNode> ancestors = new HashSet<>();
+        while (p != null) {
+            ancestors.add(p);
+            p = parent.get(p);
+        }
+
+        while (!ancestors.contains(q)) {
+            q = parent.get(q);
+        }
+        return q;
+    }
+
+
+    /**
+     * Iterative-Solution with Stack(DFS)
+     * Note:
+     * All Node.val are unique.
+     * p != q
+     * p and q will exist in the tree.
+     *
+     * @param root
+     * @param p
+     * @param q
+     * @return
+     * @author dietpepsi
+     * @see <a href="https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/solutions/65236/java-python-iterative-solution"></a>
+     */
+    public TreeNode lowestCommonAncestorV0(TreeNode root, TreeNode p, TreeNode q) {
+        Map<TreeNode, TreeNode> parent = new HashMap<>();
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        parent.put(root, null);
+        stack.push(root);
+
+        while (!parent.containsKey(p) || !parent.containsKey(q)) {
+            TreeNode node = stack.pop();
+            if (node.left != null) {
+                parent.put(node.left, node);
+                stack.push(node.left);
+            }
+
+            if (node.right != null) {
+                parent.put(node.right, node);
+                stack.push(node.right);
+            }
+        }
+
+        Set<TreeNode> ancestors = new HashSet<>();
+        while (p != null) {
+            ancestors.add(p);
+            p = parent.get(p);
+        }
+
+        while (!ancestors.contains(q)) {
+            q = parent.get(q);
+        }
+        return q;
     }
 }

@@ -18,12 +18,12 @@ package org.ict.algorithm.leetcode.tree;
  * Example 2:
  * Input: root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 4
  * Output: 5
- * Explanation: The LCA of nodes 5 and 4 is 5. A node can be a descendant of itself according to the definition of LCA.
+ * Explanation: The LCA of nodes 5 and 4 is 5.
+ * A node can be a descendant of itself according to the definition of LCA.
  *
  * Example 3:
  * Input: root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 10
  * Output: null
- *
  * Explanation: Node 10 does not exist in the tree, so return null.
  *
  * Constraints:
@@ -34,18 +34,21 @@ package org.ict.algorithm.leetcode.tree;
  *
  * @author sniper
  * @date 12 Apr, 2023
- * LC1644
+ * LC1644, Medium
+ * Similar with {@link LowestCommonAncestorOfBT} but a little different.
  */
 public class LowestCommonAncestorOfBTII {
 
     /**
      * Notice that p and q will not always exist in the tree.
+     *
      * @param root
      * @param p
      * @param q
      * @return
      */
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        //todo
         return null;
     }
 }
