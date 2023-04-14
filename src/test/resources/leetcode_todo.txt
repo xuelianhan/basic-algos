@@ -1,5 +1,4 @@
 339.Nested List Weight Sum=134
-1570.Dot Product of Two Sparse Vectors=121
 408.Valid Word Abbreviation=114
 253.Meeting Rooms II=106
 921.Minimum Add to Make Parentheses Valid=100
