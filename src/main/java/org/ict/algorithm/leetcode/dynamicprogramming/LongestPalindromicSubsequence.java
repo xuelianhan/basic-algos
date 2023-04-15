@@ -1,5 +1,7 @@
 package org.ict.algorithm.leetcode.dynamicprogramming;
 
+import java.util.Arrays;
+
 /**
  * Given a string s, find the longest palindromic subsequence's length in s.
  * A subsequence is a sequence that can be derived from another sequence
@@ -37,7 +39,23 @@ public class LongestPalindromicSubsequence {
 
     public int longestPalindromeSubseqV1(String s) {
         int res = 0;
-        //todo
+        int n = s.length();
+        int[] dp = new int[n];
+        Arrays.fill(dp, 1);
+        for (int i = n - 1; i >= 0; i--) {
+            int len = 0;
+            for (int j = i + 1; j < n; j++) {
+                int t = dp[j];
+                if (s.charAt(i) == s.charAt(j)) {
+                    dp[j] = len + 2;
+                }
+                len = Math.max(len, t);
+            }
+        }
+
+        for (int x : dp) {
+            res = Math.max(res, x);
+        }
         return res;
     }
 
@@ -53,6 +71,14 @@ public class LongestPalindromicSubsequence {
      * 1.If s[i] == s[j], then dp[i][j] = dp[i + 1][j - 1] + 2;
      * 2.If s[i] != s[j], then dp[i][j] = max(dp[i + 1][j], dp[i][j - 1]);
      *
+     * e.g. s = "bbbab"
+     *   i
+     * j 0 1 2 3 4
+     * 0 1
+     * 1   1
+     * 2     1
+     * 3       1
+     * 4       1 1
      * @param s
      * @return
      */
