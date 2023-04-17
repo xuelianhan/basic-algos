@@ -111,11 +111,9 @@ public class MaximumValueOfKCoinsFromPiles {
                 for (int j = 0; j < prefix.length; j++) {
                     if (i >= j) {
                         dp[i] = Math.max(dp[i], dp[i - j] + prefix[j]);
-                        System.out.println("i:" + i + ", j:" + j + ", dp[" + i + "]:" + dp[i]);
                     }
                 }
             }
-            System.out.println("dp:" + Arrays.toString(dp));
         }
         /**
          * return the k-th element of dp.
@@ -145,9 +143,11 @@ public class MaximumValueOfKCoinsFromPiles {
                 for (int j = 0; j < prefix.length; j++) {
                     if (i >= j) {
                         dp[i] = Math.max(dp[i], dp[i - j] + prefix[j]);
+                        //System.out.println("i:" + i + ", j:" + j + ", dp[" + i + "]:" + dp[i]);
                     }
                 }
             }
+            //System.out.println("dp:" + Arrays.toString(dp));
         }
         System.out.println("dp:" + Arrays.toString(dp));
         return dp[k];
