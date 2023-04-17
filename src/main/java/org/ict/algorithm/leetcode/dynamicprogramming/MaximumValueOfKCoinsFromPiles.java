@@ -71,23 +71,39 @@ public class MaximumValueOfKCoinsFromPiles {
              * for (int i = 1; i < m + 1; i++) {
              *     prefix[i] = prefix[i - 1] + pile.get(i - 1);
              * }
+             * Recommend i starts from 0, otherwise you need to be careful to deal with
+             * the boundary.
              */
             int[] prefix = new int[m + 1];
-            for (int i = 0; i < m; ++i) {
+            for (int i = 0; i < m; i++) {
                 prefix[i + 1] = prefix[i] + p.get(i);
             }
             prefixSum.add(prefix);
         }
-        /*
-        prefixSum.forEach(item -> {
-            System.out.println(Arrays.toString(item));
-        });*/
         /**
          * e.g. k = 2, piles.length==2, p1, p2
          * 1. choose one from p1, choose one from p2;
          * 2. choose two from p1;
          * 3. choose two from p2;
          * So the possibility times is (k + 1)
+         * e.g. piles = [[1,100,3],[7,8,9]], k = 2
+         * prefixSum:[[0, 1, 101, 104], [0, 7, 15, 24]]
+         * prefix:[0, 1, 101, 104]
+         * i:2, j:0, i >= j, dp[2]=max(dp[2], dp[2] + prefix[0])=max(0, 0 + 0)=0
+         * i:2, j:1, i >= j, dp[2]=max(dp[2], dp[1] + prefix[1])=max(0, 0 + 1)=1
+         * i:2, j:2, i >= j, dp[2]=max(dp[2], dp[0] + prefix[2])=max(1, 0 + 101)=101
+         * i:1, j:0, i >= j, dp[1]=max(dp[1], dp[1] + prefix[0])=max(0, 0 + 0)=0
+         * i:1, j:1, i >= j, dp[1]=max(dp[1], dp[0] + prefix[1])=max(0, 0 + 1)=1
+         * i:0, j:0, i >= j, dp[0]=max(dp[0], dp[0] + prefix[0])=max(0, 0 + 0)=0
+         * dp = [0, 1, 101]
+         * prefix:[0, 7, 15, 24]
+         * i:2, j:0, i >= j, dp[2]=max(dp[2], dp[2] + prefix[0])=max(101, 101 + 0)=101
+         * i:2, j:1, i >= j, dp[2]=max(dp[2], dp[1] + prefix[1])=max(101, 1 + 7)=101
+         * i:2, j:2, i >= j, dp[2]=max(dp[2], dp[0] + prefix[2])=max(101, 0 + 15)=101
+         * i:1, j:0, i >= j, dp[1]=max(dp[1], dp[1] + prefix[0])=max(1, 1 + 0)=1
+         * i:1, j:1, i >= j, dp[1]=max(dp[1], dp[0] + prefix[1])=max(1, 0 + 7)=7
+         * i:0, j:0, i >= j, dp[0]=max(dp[0], dp[0] + prefix[0])=max(0, 0 + 0)=0
+         * dp:[0, 7, 101]
          */
         int[] dp = new int[k + 1];
         for (int[] prefix : prefixSum) {
@@ -95,9 +111,11 @@ public class MaximumValueOfKCoinsFromPiles {
                 for (int j = 0; j < prefix.length; j++) {
                     if (i >= j) {
                         dp[i] = Math.max(dp[i], dp[i - j] + prefix[j]);
+                        System.out.println("i:" + i + ", j:" + j + ", dp[" + i + "]:" + dp[i]);
                     }
                 }
             }
+            System.out.println("dp:" + Arrays.toString(dp));
         }
         /**
          * return the k-th element of dp.
