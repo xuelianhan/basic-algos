@@ -38,6 +38,7 @@ import java.util.List;
  * @author sniper
  * @date 16 Apr, 2023
  * LC2218, Hard
+ * Apple Interview Question
  */
 public class MaximumValueOfKCoinsFromPiles {
 
@@ -59,6 +60,58 @@ public class MaximumValueOfKCoinsFromPiles {
         instance.maxValueOfCoins(piles, k);
     }
 
+    /**
+     * Time Cost 233ms
+     * @author lee215
+     * @see <a href="https://leetcode.com/problems/maximum-value-of-k-coins-from-piles/solutions/1887010/java-c-python-top-down-dp-solution"></a>
+     * @param piles
+     * @param k
+     * @return
+     */
+    public int maxValueOfCoinsV1(List<List<Integer>> piles, int k) {
+        /**
+         * memo[i][k] = max value of picking k coins from piles[i]
+         */
+        Integer[][] memo = new Integer[piles.size()][k + 1];
+        return helper(piles, memo, k, 0);
+    }
+
+    private int helper(List<List<Integer>> piles, Integer[][] memo, int k,  int i) {
+        if (i == piles.size() || k == 0) {
+            return 0;
+        }
+        if (memo[i][k] != null) {
+            return memo[i][k];
+        }
+        int res = helper(piles, memo, k, i + 1);
+        int sum = 0;
+        /**
+         * Try to pick 1, 2, ..., k coins from current pile
+         */
+        for (int j = 0; j < Math.min(piles.get(i).size(), k); j++) {
+            sum += piles.get(i).get(j);
+            res = Math.max(res, sum + helper(piles, memo,k - j - 1,i + 1));
+        }
+        memo[i][k] = res;
+        return res;
+    }
+
+    /**
+     * Time Cost 54ms in Java
+     * Time Cost 5806ms in Python
+     *  def maxValueOfCoins(self, piles: List[List[int]], k: int) -> int:
+     *         prefix_sum = [list(accumulate(p, initial=0)) for p in piles]
+     *         dp = [0] * (k + 1)
+     *         for prefix in prefix_sum:
+     *             for i in range(k, -1, -1):
+     *                 for j, v in enumerate(prefix):
+     *                     if i >= j:
+     *                         dp[i] = max(dp[i], dp[i - j] + v)
+     *         return dp[-1]
+     * @param piles
+     * @param k
+     * @return
+     */
     public int maxValueOfCoins(List<List<Integer>> piles, int k) {
         List<int[]> prefixSum = new ArrayList<>();
         for (List<Integer> p : piles) {
@@ -120,6 +173,7 @@ public class MaximumValueOfKCoinsFromPiles {
          */
         return dp[k];
     }
+
 
     public int wrong(List<List<Integer>> piles, int k) {
         List<int[]> prefixSum = new ArrayList<>();
