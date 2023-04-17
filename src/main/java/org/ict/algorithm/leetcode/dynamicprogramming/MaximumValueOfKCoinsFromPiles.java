@@ -1,6 +1,7 @@
 package org.ict.algorithm.leetcode.dynamicprogramming;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -40,16 +41,54 @@ import java.util.List;
  */
 public class MaximumValueOfKCoinsFromPiles {
 
+    public static void main(String[] args) {
+        List<Integer> list1 = new ArrayList<>();
+        list1.addAll(Arrays.asList(1,100,3));
+        List<Integer> list2 = new ArrayList<>();
+        list2.addAll(Arrays.asList(7,8,9));
+        List<List<Integer>> piles = new ArrayList<>();
+        piles.add(list1);
+        piles.add(list2);
+        piles.forEach(item -> {
+            System.out.println("input:" + item);
+        });
+        int k = 2;
+        MaximumValueOfKCoinsFromPiles instance = new MaximumValueOfKCoinsFromPiles();
+        //instance.wrong(piles, k);
+        System.out.println("=============");
+        instance.maxValueOfCoins(piles, k);
+    }
+
     public int maxValueOfCoins(List<List<Integer>> piles, int k) {
         List<int[]> prefixSum = new ArrayList<>();
         for (List<Integer> p : piles) {
             int m = p.size();
+            /**
+             * A little trick here, length of prefix set to
+             * m + 1 instead of m.
+             * prefix[0] is zero, prefix[1] is the first element of pile.
+             * Or write as following:
+             * for (int i = 1; i < m + 1; i++) {
+             *     prefix[i] = prefix[i - 1] + pile.get(i - 1);
+             * }
+             */
             int[] prefix = new int[m + 1];
             for (int i = 0; i < m; ++i) {
                 prefix[i + 1] = prefix[i] + p.get(i);
             }
             prefixSum.add(prefix);
         }
+        /*
+        prefixSum.forEach(item -> {
+            System.out.println(Arrays.toString(item));
+        });*/
+        /**
+         * e.g. k = 2, piles.length==2, p1, p2
+         * 1. choose one from p1, choose one from p2;
+         * 2. choose two from p1;
+         * 3. choose two from p2;
+         * So the possibility times is (k + 1)
+         */
         int[] dp = new int[k + 1];
         for (int[] prefix : prefixSum) {
             for (int i = k; i >= 0; i--) {
@@ -60,6 +99,9 @@ public class MaximumValueOfKCoinsFromPiles {
                 }
             }
         }
+        /**
+         * return the k-th element of dp.
+         */
         return dp[k];
     }
 
@@ -67,16 +109,21 @@ public class MaximumValueOfKCoinsFromPiles {
         List<int[]> prefixSum = new ArrayList<>();
         for (List<Integer> pile : piles) {
             int m = pile.size();
+            // prefix length should be m+1
             int[] prefix = new int[m];
             prefix[0] = pile.get(0);
+            // i upper limit should be m + 1
             for (int i = 1; i < m; i++) {
-                prefix[i] = prefix[i - 1] + pile.get(i);
+                prefix[i] = prefix[i - 1] + pile.get(i - 1);
             }
             prefixSum.add(prefix);
         }
-        int[] dp = new int[k];
+        prefixSum.forEach(item -> {
+            System.out.println(Arrays.toString(item));
+        });
+        int[] dp = new int[k + 1];
         for (int[] prefix : prefixSum) {
-            for (int i = k - 1; i >= 0; i--) {
+            for (int i = k; i >= 0; i--) {
                 for (int j = 0; j < prefix.length; j++) {
                     if (i >= j) {
                         dp[i] = Math.max(dp[i], dp[i - j] + prefix[j]);
@@ -84,6 +131,7 @@ public class MaximumValueOfKCoinsFromPiles {
                 }
             }
         }
-        return dp[k - 1];
+        System.out.println("dp:" + Arrays.toString(dp));
+        return dp[k];
     }
 }
