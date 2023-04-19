@@ -30,10 +30,36 @@ import java.util.Arrays;
  */
 public class LongestPalindromicSubsequence {
 
+    /**
+     * Understanding the following solution
+     * Time Cost 42ms
+     * @author tankztc
+     * @see <a href="https://leetcode.com/problems/longest-palindromic-subsequence/solutions/99101/straight-forward-java-dp-solution"></a>
+     * @param s
+     * @return
+     */
     public int longestPalindromeSubseqV2(String s) {
-        int res = 0;
-        //todo
-        return res;
+        int n = s.length();
+        Integer[][] memo = new Integer[n][n];
+        return helper(s, memo, 0, n - 1);
+    }
+
+    private int helper(String s, Integer[][] memo, int i, int j) {
+        if (memo[i][j] != null) {
+            return memo[i][j];
+        }
+        if (i > j) {
+            return 0;
+        }
+        if (i == j) {
+            return 1;
+        }
+        if (s.charAt(i) == s.charAt(j)) {
+            memo[i][j] = helper(s, memo, i + 1, j - 1) + 2;
+        } else {
+            memo[i][j] = Math.max(helper(s, memo, i + 1, j), helper(s, memo, i, j - 1));
+        }
+        return memo[i][j];
     }
 
 
@@ -60,6 +86,8 @@ public class LongestPalindromicSubsequence {
     }
 
     /**
+     * Understanding the following solution
+     *
      * Time Cost 55ms.
      * Create a two-dimensional DP array,
      * where dp[i][j] denotes the longest palindromic subsequence of the string in the interval [i,j].
@@ -70,7 +98,38 @@ public class LongestPalindromicSubsequence {
      * then the recursive formula is as follows
      * 1.If s[i] == s[j], then dp[i][j] = dp[i + 1][j - 1] + 2;
      * 2.If s[i] != s[j], then dp[i][j] = max(dp[i + 1][j], dp[i][j - 1]);
-     *
+     * @see <a href="https://stackoverflow.com/questions/13157961/2d-array-of-zeros"></a>
+     * -------------------------------------------------------------
+     * def longestPalindromeSubseq(self, s: str) -> int:
+     *         if not s: return 0
+     *         n = len(s)
+     *         dp = [[0] * n for _ in range(n)]
+     *         for i in range(n - 1, -1, -1):
+     *             dp[i][i] = 1
+     *             for j in range(i + 1, n):
+     *                 if s[i] == s[j]:
+     *                     dp[i][j] = dp[i + 1][j - 1] + 2
+     *                 else:
+     *                     dp[i][j] = max(dp[i + 1][j], dp[i][j - 1])
+     *         return dp[0][n - 1]
+     * ---------------------------------------------------------------
+     * def longestPalindromeSubseq(s: String): Int = {
+     *         if (s.isEmpty) return 0
+     *         val n = s.length
+     *         val dp = Array.ofDim[Int](n, n)
+     *         for (i <- n - 1 to 0 by -1) {
+     *             dp(i)(i) = 1
+     *             for (j <- i + 1 until n) {
+     *                 if (s(i) == s(j)) {
+     *                     dp(i)(j) = dp(i + 1)(j - 1) + 2
+     *                 } else {
+     *                     dp(i)(j) = math.max(dp(i + 1)(j), dp(i)(j - 1))
+     *                 }
+     *             }
+     *         }
+     *         dp(0)(n - 1)
+     *     }
+     * ----------------------------------------------------------------
      * e.g. s = "bbbab"
      *   i
      * j 0 1 2 3 4

@@ -57,6 +57,8 @@ public class MaximumValueOfKCoinsFromPiles {
     }
 
     /**
+     * Understanding the following solution.
+     *
      * Time Cost 233ms in Java
      * @author lee215
      * @see <a href="https://leetcode.com/problems/maximum-value-of-k-coins-from-piles/solutions/1887010/java-c-python-top-down-dp-solution"></a>
