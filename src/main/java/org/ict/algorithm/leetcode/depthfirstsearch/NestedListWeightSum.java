@@ -45,6 +45,25 @@ import java.util.Queue;
  */
 public class NestedListWeightSum {
 
+    public int depthSumV2(List<NestedInteger> nestedList) {
+        /**
+         * At here, res can be replaced with a global variable.
+         */
+        int[] res = new int[1];
+        dfsV2(nestedList, 1, res);
+        return res[0];
+    }
+
+    private void dfsV2(List<NestedInteger> nestedList, int depth, int[] res) {
+        for (NestedInteger item : nestedList) {
+            if (item.isInteger()) {
+                res[0] += item.getInteger() * depth;
+            } else {
+                dfsV2(item.getList(), depth + 1, res);
+            }
+        }
+    }
+
     /**
      * Understanding the following solution
      *
