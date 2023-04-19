@@ -77,18 +77,18 @@ public class MaximumValueOfKCoinsFromPiles {
      * lru_cache() is one such function in functools module,
      * which helps in reducing the execution time of the function by using memoization technique
      * if maxsize is set to None, the LRU feature will be disabled and the cache can grow without any limitations
-     *   def maxValueOfCoins(self, A, K):
+     *   def maxValueOfCoins(self, piles: List[List[int]], k: int) -> int:
+     *   
+     *        @functools.lru_cache(None)
+     *           def dp(i, k):
+     *               if k == 0 or i == len(piles): return 0
+     *               res, cur = dp(i + 1, k), 0
+     *               for j in range(min(len(piles[i]), k)):
+     *                   cur += piles[i][j]
+     *                   res = max(res, cur + dp(i+1, k-j-1))
+     *               return res
      *
-     *         @functools.lru_cache(None)
-     *         def dp(i, k):
-     *             if k == 0 or i == len(A): return 0
-     *             res, cur = dp(i + 1, k), 0
-     *             for j in range(min(len(A[i]), k)):
-     *                 cur += A[i][j]
-     *                 res = max(res, cur + dp(i+1, k-j-1))
-     *             return res
-     *
-     *         return dp(0, K)
+     *           return dp(0, k)
      * --------------------------------------------------------
      * @see <a href="https://stackoverflow.com/questions/20353210/what-is-the-purpose-of-stdfunction-and-how-to-use-it"></a>
      * function<int(int, int)> takes two int arguments and returns int,
