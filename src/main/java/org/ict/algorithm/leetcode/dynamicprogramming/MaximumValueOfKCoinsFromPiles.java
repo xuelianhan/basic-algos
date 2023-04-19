@@ -78,7 +78,7 @@ public class MaximumValueOfKCoinsFromPiles {
      * which helps in reducing the execution time of the function by using memoization technique
      * if maxsize is set to None, the LRU feature will be disabled and the cache can grow without any limitations
      *   def maxValueOfCoins(self, piles: List[List[int]], k: int) -> int:
-     *   
+     *
      *        @functools.lru_cache(None)
      *           def dp(i, k):
      *               if k == 0 or i == len(piles): return 0
@@ -173,12 +173,17 @@ public class MaximumValueOfKCoinsFromPiles {
             return memo[i][k];
         }
         /**
-         * Pick 0 coins from current pile
+         * For each pile, there are two options:
+         * 1.choose nothing from current pile;
+         * 2.choose from current pile and the rest in the next pile;
+         * The following codes pick 0 coins from current pile-i,
+         * because it moves to the next round pile-(i+1) directly.
          */
         int res = helper(piles, memo, k, i + 1);
         int sum = 0;
         /**
-         * Try to pick 1, 2, ..., min(len(pile[i]), k) coins from current pile
+         * Try to pick 1, 2, ..., min(len(pile[i]), k) coins from current pile-i
+         * Moving to next pile-(i+1) with accumulated coin value in current pile-i
          */
         for (int j = 0; j < Math.min(piles.get(i).size(), k); j++) {
             sum += piles.get(i).get(j);
