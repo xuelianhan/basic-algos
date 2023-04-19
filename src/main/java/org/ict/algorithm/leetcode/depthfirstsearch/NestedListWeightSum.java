@@ -48,7 +48,10 @@ public class NestedListWeightSum {
     /**
      * Understanding the following solution
      *
-     * Depth-First-Search
+     * Depth-First-Search Solution
+     *
+     * e.g. nestedList = [1,[4,[6]]]
+     *
      * @param nestedList
      * @return
      */
@@ -62,7 +65,7 @@ public class NestedListWeightSum {
             if (item.isInteger()) {
                 sum += item.getInteger() * depth;
             } else {
-                sum += dfs(nestedList, depth + 1);
+                sum += dfs(item.getList(), depth + 1);
             }
         }
         return sum;
@@ -70,7 +73,7 @@ public class NestedListWeightSum {
 
     /**
      * Understanding the following solution
-     * 
+     *
      * Breadth-First-Search
      *
      * @param nestedList
