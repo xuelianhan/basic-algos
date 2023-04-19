@@ -1,6 +1,8 @@
 package org.ict.algorithm.leetcode.depthfirstsearch;
 
+import java.util.ArrayDeque;
 import java.util.List;
+import java.util.Queue;
 
 /**
  * Description
@@ -43,12 +45,59 @@ import java.util.List;
  */
 public class NestedListWeightSum {
 
+    /**
+     * Understanding the following solution
+     *
+     * Depth-First-Search
+     * @param nestedList
+     * @return
+     */
     public int depthSumV1(List<NestedInteger> nestedList) {
-        return 0;
+        return dfs(nestedList, 1);
     }
 
+    private int dfs(List<NestedInteger> nestedList, int depth) {
+        int sum = 0;
+        for (NestedInteger item : nestedList) {
+            if (item.isInteger()) {
+                sum += item.getInteger() * depth;
+            } else {
+                sum += dfs(nestedList, depth + 1);
+            }
+        }
+        return sum;
+    }
+
+    /**
+     * Understanding the following solution
+     * 
+     * Breadth-First-Search
+     *
+     * @param nestedList
+     * @return
+     */
     public int depthSum(List<NestedInteger> nestedList) {
-        return 0;
+        int res = 0;
+        int depth = 0;
+        Queue<NestedInteger> queue = new ArrayDeque<>();
+        for (NestedInteger item : nestedList) {
+            queue.offer(item);
+        }
+
+        while (!queue.isEmpty()) {
+            depth++;
+            for (int size = queue.size(); size > 0; size--) {
+                NestedInteger cur = queue.poll();
+                if (cur.isInteger()) {
+                    res += cur.getInteger() * depth;
+                } else {
+                    for (NestedInteger item : cur.getList()) {
+                        queue.offer(item);
+                    }
+                }
+            }
+        }
+        return res;
     }
 
     /**
