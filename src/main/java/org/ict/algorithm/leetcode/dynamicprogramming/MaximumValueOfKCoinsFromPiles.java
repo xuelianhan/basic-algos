@@ -5,36 +5,32 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * There are n piles of coins on a table. Each pile consists of a positive number of coins of assorted denominations.
+ * There are n piles of coins on a table.
+ * Each pile consists of a positive number of coins of assorted denominations.
  * In one move, you can choose any coin on top of any pile, remove it, and add it to your wallet.
  * Given a list piles, where piles[i] is a list of integers denoting the composition of the ith pile from top to bottom,
  * and a positive integer k,
  * return the maximum total value of coins you can have in your wallet if you choose exactly k coins optimally.
  *
- *
- *
  * Example 1:
- *
- *
  * Input: piles = [[1,100,3],[7,8,9]], k = 2
  * Output: 101
  * Explanation:
  * The above diagram shows the different ways we can choose k coins.
  * The maximum total we can obtain is 101.
- * Example 2:
  *
+ * Example 2:
  * Input: piles = [[100],[100],[100],[100],[100],[100],[1,1,1,1,1,1,700]], k = 7
  * Output: 706
  * Explanation:
  * The maximum total can be obtained if we choose all coins from the last pile.
  *
- *
  * Constraints:
- *
  * n == piles.length
  * 1 <= n <= 1000
  * 1 <= piles[i][j] <= 10^5
  * 1 <= k <= sum(piles[i].length) <= 2000
+ *
  * @author sniper
  * @date 16 Apr, 2023
  * LC2218, Hard
@@ -61,16 +57,80 @@ public class MaximumValueOfKCoinsFromPiles {
     }
 
     /**
-     * Time Cost 233ms
+     * Time Cost 233ms in Java
      * @author lee215
      * @see <a href="https://leetcode.com/problems/maximum-value-of-k-coins-from-piles/solutions/1887010/java-c-python-top-down-dp-solution"></a>
+     * Intuition
+     * Top down dynamic programming.
+     * Also noticed that some people already get accepted, a dp program.
+     *
+     *
+     * Explanation
+     * dp[i,k] means picking k elements from pile[i] to pile[n-1].
+     * We can pick 0,1,2,3... elements from the current pile[i] one by one.
+     * It asks for the maximum total value of coins we can have,
+     * so we need to return max of all the options.
+     *
+     * Complexity
+     * Time O(nm)
+     * Space O(nk)
+     * where m = sum(piles[i].length) <= 2000
+     * lru_cache() is one such function in functools module,
+     * which helps in reducing the execution time of the function by using memoization technique
+     * if maxsize is set to None, the LRU feature will be disabled and the cache can grow without any limitations
+     *   def maxValueOfCoins(self, A, K):
+     *
+     *         @functools.lru_cache(None)
+     *         def dp(i, k):
+     *             if k == 0 or i == len(A): return 0
+     *             res, cur = dp(i + 1, k), 0
+     *             for j in range(min(len(A[i]), k)):
+     *                 cur += A[i][j]
+     *                 res = max(res, cur + dp(i+1, k-j-1))
+     *             return res
+     *
+     *         return dp(0, K)
+     * -------------------------------------------------------------
+     * Let use dp with states dp(n, k),
+     * where it is (current index of pile, number of elements we still need to take).
+     * Then on each state we can try to take 0, ..., min(k, len(piles[m])) elements from pile m.
+     * Also,
+     * if n == N, that is we reached the last pile and k == 0, we are happy, return 0.
+     * If k > 0, it means that we reached the last pile and did not take k elements, we are not happy, return -inf.
+     *
+     * Complexity
+     * Imagine, that piles have x1, ..., xn elements in them.
+     * Then for state (1, k) we have x1 possible transactions,
+     * for state (2, k) we have x2 possible transactions and so on.
+     * In total we have x1 + ... + xn transactions for every value of k.
+     * So, in total we have time complexity O(M * K),
+     * where M = x1 + ... + xn. Space is O(n * K).
+     * python version provided by DBabichev:
+     * @see <a href="https://leetcode.com/problems/maximum-value-of-k-coins-from-piles/solutions/1886905/python-dp-solution-complexity-updated-explained"></a>
+     * class Solution:
+     *     def maxValueOfCoins(self, piles, K):
+     *         N = len(piles)
+     *         @lru_cache(None)
+     *         def dp(n, k):
+     *             if n == N:
+     *                 if k == 0: return 0
+     *                 if k > 0: return -float("inf")
+     *             ans = dp(n + 1, k)
+     *             sm = 0
+     *             for i in range(min(k, len(piles[n]))):
+     *                 sm += piles[n][i]
+     *                 ans = max(ans, dp(n + 1, k - i - 1) + sm)
+     *             return ans
+     *
+     *         return dp(0, K)
+     *  -------------------------------------------------------------
      * @param piles
      * @param k
      * @return
      */
     public int maxValueOfCoinsV1(List<List<Integer>> piles, int k) {
         /**
-         * memo[i][k] = max value of picking k coins from piles[i]
+         * memo[i][k] = maximum value of picking k coins from piles[i]
          */
         Integer[][] memo = new Integer[piles.size()][k + 1];
         return helper(piles, memo, k, 0);
@@ -86,7 +146,7 @@ public class MaximumValueOfKCoinsFromPiles {
         int res = helper(piles, memo, k, i + 1);
         int sum = 0;
         /**
-         * Try to pick 1, 2, ..., k coins from current pile
+         * Try to pick 1, 2, ..., min(len(pile[i]), k) coins from current pile
          */
         for (int j = 0; j < Math.min(piles.get(i).size(), k); j++) {
             sum += piles.get(i).get(j);
@@ -118,8 +178,10 @@ public class MaximumValueOfKCoinsFromPiles {
             int m = p.size();
             /**
              * A little trick here, length of prefix set to
-             * m + 1 instead of m.
-             * prefix[0] is zero, prefix[1] is the first element of pile.
+             * m + 1 instead of m. The prefix[0] has its usage, please see the below dp-while-loop.
+             * prefix[0] is zero,
+             * prefix[1] is the first element of pile.
+             * prefix[2] is the sum of first element and second element.
              * Or write as following:
              * for (int i = 1; i < m + 1; i++) {
              *     prefix[i] = prefix[i - 1] + pile.get(i - 1);
@@ -162,6 +224,10 @@ public class MaximumValueOfKCoinsFromPiles {
         for (int[] prefix : prefixSum) {
             for (int i = k; i >= 0; i--) {
                 for (int j = 0; j < prefix.length; j++) {
+                    /**
+                     * Each time choose number of j prefix sum, so the available remain is i-j.
+                     * j start from zero because dp[i] may have value already.
+                     */
                     if (i >= j) {
                         dp[i] = Math.max(dp[i], dp[i - j] + prefix[j]);
                     }
