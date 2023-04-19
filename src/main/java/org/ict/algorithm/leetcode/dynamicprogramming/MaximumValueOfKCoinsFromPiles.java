@@ -64,7 +64,6 @@ public class MaximumValueOfKCoinsFromPiles {
      * Top down dynamic programming.
      * Also noticed that some people already get accepted, a dp program.
      *
-     *
      * Explanation
      * dp[i,k] means picking k elements from pile[i] to pile[n-1].
      * We can pick 0,1,2,3... elements from the current pile[i] one by one.
@@ -112,6 +111,8 @@ public class MaximumValueOfKCoinsFromPiles {
      *         return dp(0, K);
      *     }
      * -------------------------------------------------------------
+     * @author DBabichev
+     * @see <a href="https://leetcode.com/problems/maximum-value-of-k-coins-from-piles/solutions/1886905/python-dp-solution-complexity-updated-explained"></a>
      * Let use dp with states dp(n, k),
      * where it is (current index of pile, number of elements we still need to take).
      * Then on each state we can try to take 0, ..., min(k, len(piles[m])) elements from pile m.
@@ -127,7 +128,6 @@ public class MaximumValueOfKCoinsFromPiles {
      * So, in total we have time complexity O(M * K),
      * where M = x1 + ... + xn. Space is O(n * K).
      * python version provided by DBabichev:
-     * @see <a href="https://leetcode.com/problems/maximum-value-of-k-coins-from-piles/solutions/1886905/python-dp-solution-complexity-updated-explained"></a>
      * -------------------------------------------------------------
      * class Solution:
      *     def maxValueOfCoins(self, piles, K):
@@ -153,15 +153,22 @@ public class MaximumValueOfKCoinsFromPiles {
     public int maxValueOfCoinsV1(List<List<Integer>> piles, int k) {
         /**
          * memo[i][k] = maximum value of picking k coins from piles[i]
+         * Integer[piles.size()][k + 1] is OK too.
          */
-        Integer[][] memo = new Integer[piles.size()][k + 1];
+        Integer[][] memo = new Integer[piles.size() + 1][k + 1];
         return helper(piles, memo, k, 0);
     }
 
     private int helper(List<List<Integer>> piles, Integer[][] memo, int k,  int i) {
+        /**
+         * Reach the end, return 0
+         */
         if (i == piles.size() || k == 0) {
             return 0;
         }
+        /**
+         * Being calculated previously, return immediately
+         */
         if (memo[i][k] != null) {
             return memo[i][k];
         }
@@ -252,6 +259,7 @@ public class MaximumValueOfKCoinsFromPiles {
             for (int i = k; i >= 0; i--) {
                 for (int j = 0; j < prefix.length; j++) {
                     /**
+                     * prefix[j] means picking up number of j elements from current piles
                      * Each time choose number of j prefix sum, so the available remain is i-j.
                      * j start from zero because dp[i] may have value already.
                      */
