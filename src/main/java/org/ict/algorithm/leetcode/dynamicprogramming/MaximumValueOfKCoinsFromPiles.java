@@ -92,6 +92,9 @@ public class MaximumValueOfKCoinsFromPiles {
      *         return dp(0, K)
      * --------------------------------------------------------
      * @see <a href="https://stackoverflow.com/questions/20353210/what-is-the-purpose-of-stdfunction-and-how-to-use-it"></a>
+     * function<int(int, int)> takes two int arguments and returns int,
+     * [&](int i, int k) satisfy format: [ capture_list ]( argument_list ) -> return_type { code }
+     * --------------------------------------------------------
      * int maxValueOfCoins(vector<vector<int>>& A, int K) {
      *         int n = A.size();
      *         vector<vector<int>> memo(n + 1, vector<int>(K + 1, 0));
@@ -125,6 +128,7 @@ public class MaximumValueOfKCoinsFromPiles {
      * where M = x1 + ... + xn. Space is O(n * K).
      * python version provided by DBabichev:
      * @see <a href="https://leetcode.com/problems/maximum-value-of-k-coins-from-piles/solutions/1886905/python-dp-solution-complexity-updated-explained"></a>
+     * -------------------------------------------------------------
      * class Solution:
      *     def maxValueOfCoins(self, piles, K):
      *         N = len(piles)
@@ -180,7 +184,9 @@ public class MaximumValueOfKCoinsFromPiles {
     /**
      * Time Cost 54ms in Java
      * Time Cost 5806ms in Python
-     *  def maxValueOfCoins(self, piles: List[List[int]], k: int) -> int:
+     * Using the list() constructor to make a List:
+     * -----------------------------------------------------------------
+     * def maxValueOfCoins(self, piles: List[List[int]], k: int) -> int:
      *         prefix_sum = [list(accumulate(p, initial=0)) for p in piles]
      *         dp = [0] * (k + 1)
      *         for prefix in prefix_sum:
