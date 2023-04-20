@@ -42,5 +42,61 @@ package org.ict.algorithm.leetcode.twopointers;
  */
 public class ValidWordAbbreviation {
 
+    /**
+     * Understanding the following solution
+     * @param word
+     * @param abbr
+     * @return
+     */
+    public boolean validWordAbbreviationV1(String word, String abbr) {
+        int m = word.length();
+        int n = abbr.length();
+        int i = 0;
+        int j = 0;
+        while (i < m && j < n) {
+            if (word.charAt(i) == abbr.charAt(j)) {
+                i++;
+                j++;
+                continue;
+            }
+            if (abbr.charAt(j) <= '0' || abbr.charAt(j) > '9') {
+                return false;
+            }
+            int num = 0;
+            while (j < n && Character.isDigit(abbr.charAt(j))) {
+                num = num * 10 + abbr.charAt(j) - '0';
+                j++;
+            }
+            i += num;
+        }
+        return i == m && j == n;
+    }
 
+    public boolean validWordAbbreviation(String word, String abbr) {
+        int m = word.length();
+        int n = abbr.length();
+        int i = 0;
+        int j = 0;
+        while (i < m) {
+            if (j == n) {
+                return false;
+            }
+            if (word.charAt(i) == abbr.charAt(j)) {
+                i++;
+                j++;
+                continue;
+            }
+            int k = j;
+            while (k < n && Character.isDigit(abbr.charAt(k))) {
+                k++;
+            }
+            String t = abbr.substring(j, k);
+            if (j == k || t.charAt(0) == '0' || Integer.parseInt(t) == 0) {
+                return false;
+            }
+            i += Integer.parseInt(t);
+            j = k;
+        }
+        return i == m && j == n;
+    }
 }
