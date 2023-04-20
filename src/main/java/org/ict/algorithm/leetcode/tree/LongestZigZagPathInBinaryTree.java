@@ -81,7 +81,19 @@ public class LongestZigZagPathInBinaryTree {
      *             dfs(7, res, 0, 4) --> res = max(3, max(0, 4)) = 4
      *          dfs(6, res, 0, 1) --> res = max(4, max(0, 1)) = 4
      *    dfs(3, res, 0, 1) --> res = max(4, max(0, 1)) = 4
+     * -------------------------------------------------------------
+     * def longestZigZag(self, root: Optional[TreeNode]) -> int:
+     *         def dfs(root, l, r):
+     *             if root is None:
+     *                 return
+     *             nonlocal res
+     *             res = max(res, l, r)
+     *             dfs(root.left, r + 1, 0)
+     *             dfs(root.right, 0, l + 1)
      *
+     *         res = 0
+     *         dfs(root, 0, 0)
+     *         return res
      * @param root
      * @return
      */
