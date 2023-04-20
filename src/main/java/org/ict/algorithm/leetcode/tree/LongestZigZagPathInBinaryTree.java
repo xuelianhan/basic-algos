@@ -38,6 +38,13 @@ import java.util.Deque;
 public class LongestZigZagPathInBinaryTree {
 
     public static void main(String[] args) {
+        TreeNode root = generateTestDataOne();
+        LongestZigZagPathInBinaryTree instance = new LongestZigZagPathInBinaryTree();
+        int res = instance.longestZigZagV1(root);
+        System.out.println(res);
+    }
+
+    public static TreeNode generateTestDataOne() {
         TreeNode root = new TreeNode(1);
         TreeNode node2 = new TreeNode(2);
         TreeNode node3 = new TreeNode(3);
@@ -51,32 +58,11 @@ public class LongestZigZagPathInBinaryTree {
         node4.left = node5;
         node4.right = node6;
         node5.right = node7;
-
-        LongestZigZagPathInBinaryTree instance = new LongestZigZagPathInBinaryTree();
-        instance.longestZigZag(root);
-    }
-
-    public int longestZigZagV3(TreeNode root) {
-        return 0;
-    }
-
-    public int longestZigZagV2(TreeNode root) {
-        return 0;
-    }
-
-    public int longestZigZagV1(TreeNode root) {
-        if (root == null) {
-            return 0;
-        }
-        Deque<ZigZag> queue = new ArrayDeque<>();
-        return 0;
-    }
-
-    class ZigZag {
-
+        return root;
     }
 
     /**
+     * Understanding the following solution
      *                     1
      *                   /   \
      *                  2     3
@@ -99,7 +85,7 @@ public class LongestZigZagPathInBinaryTree {
      * @param root
      * @return
      */
-    public int longestZigZag(TreeNode root) {
+    public int longestZigZagV1(TreeNode root) {
         int[] res = new int[1];
         dfs(root, res, 0, 0);
         return res[0];
@@ -124,5 +110,68 @@ public class LongestZigZagPathInBinaryTree {
         //System.out.println("dfs(" + root.val + ", " + res[0] + ", " + l + ", " + r + ")");
         dfs(root.left, res, r + 1, 0);
         dfs(root.right, res, 0, l + 1);
+    }
+
+
+    /**
+     * Understanding the following solution
+     * @param root
+     * @return
+     */
+    public int longestZigZag(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        int res = 0;
+        Deque<ZigZag> queue = new ArrayDeque<>();
+        if (root.left != null) {
+            queue.offer(new ZigZag(root.left, "l", 1));
+        }
+        if (root.right != null) {
+            queue.offer(new ZigZag(root.right, "r", 1));
+        }
+        while (!queue.isEmpty()) {
+            ZigZag cur = queue.poll();
+            res = Math.max(res, cur.zigZagSize);
+            if (cur.node.left != null) {
+                if ("l".equals(cur.from)) {
+                    /**
+                     * Consecutive left-left, reset zigZagSize to 1
+                     */
+                    queue.offer(new ZigZag(cur.node.left, "l", 1));
+                }
+                if ("r".equals(cur.from)) {
+                    queue.offer(new ZigZag(cur.node.left, "l",  cur.zigZagSize + 1));
+                }
+            }
+            if (cur.node.right != null) {
+                if ("l".equals(cur.from)) {
+                    queue.offer(new ZigZag(cur.node.right, "r",  cur.zigZagSize + 1));
+                }
+                if ("r".equals(cur.from)) {
+                    /**
+                     * Consecutive right-right, reset zigZagSize to 1
+                     */
+                    queue.offer(new ZigZag(cur.node.right, "r", 1));
+                }
+            }
+        }
+        return res;
+    }
+
+    static class ZigZag {
+        TreeNode node;
+
+        String from;
+
+        int zigZagSize;
+
+        public ZigZag(TreeNode node, String from, int zigZagSize) {
+            this.node = node;
+            this.from = from;
+            this.zigZagSize = zigZagSize;
+        }
+
+
     }
 }
