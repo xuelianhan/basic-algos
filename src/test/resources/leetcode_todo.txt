@@ -1,4 +1,3 @@
-339.Nested List Weight Sum=134
 408.Valid Word Abbreviation=114
 253.Meeting Rooms II=106
 921.Minimum Add to Make Parentheses Valid=100
