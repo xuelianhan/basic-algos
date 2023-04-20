@@ -106,6 +106,10 @@ public class LongestZigZagPathInBinaryTree {
     }
 
     /**
+     * If we move left, it means the zigzag path increment by 1 based on the previous right result, this is(r + 1).
+     * If we move right, it means the zigzag path increment by 1 based on the previous left result, this is (l + 1).
+     * Move left, we need to pass previous right result plus one to left, and reset the right length r to zero.
+     * Move right, we need to pass previous left result plus one to right, and reset the left length l to zero.
      *
      * @param root
      * @param res
@@ -117,7 +121,7 @@ public class LongestZigZagPathInBinaryTree {
             return;
         }
         res[0] = Math.max(res[0], Math.max(l, r));
-        System.out.println("dfs(" + root.val + ", " + res[0] + ", " + l + ", " + r + ")");
+        //System.out.println("dfs(" + root.val + ", " + res[0] + ", " + l + ", " + r + ")");
         dfs(root.left, res, r + 1, 0);
         dfs(root.right, res, 0, l + 1);
     }
