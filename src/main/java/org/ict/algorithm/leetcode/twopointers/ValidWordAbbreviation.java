@@ -42,6 +42,42 @@ package org.ict.algorithm.leetcode.twopointers;
  */
 public class ValidWordAbbreviation {
 
+    public boolean validWordAbbreviationV3(String word, String abbr) {
+        int m = word.length();
+        int n = abbr.length();
+        int i = 0;
+        int j = 0;
+        //todo
+        return false;
+    }
+
+    public boolean validWordAbbreviationV2(String word, String abbr) {
+        int m = word.length();
+        int n = abbr.length();
+        int i = 0;
+        int j = 0;
+        while (i < m && j < n) {
+            if (abbr.charAt(j) >= '0' && abbr.charAt(j) <= '9') {
+                if (abbr.charAt(j) == '0') {
+                    return false;
+                }
+                int num = 0;
+                while (j < n && abbr.charAt(j) >= '0' && abbr.charAt(j) <= '9') {
+                    num = 10 * num + abbr.charAt(j) - '0';
+                    j++;
+                }
+                i += num;
+            } else {
+                if (word.charAt(i) != abbr.charAt(j)) {
+                    return false;
+                }
+                i++;
+                j++;
+            }
+        }
+        return i == m && j == n;
+    }
+
     /**
      * Understanding the following solution
      * @param word
@@ -59,6 +95,9 @@ public class ValidWordAbbreviation {
                 j++;
                 continue;
             }
+            /**
+             * e.g. word="substitution", abbr="s010n"
+             */
             if (abbr.charAt(j) <= '0' || abbr.charAt(j) > '9') {
                 return false;
             }
