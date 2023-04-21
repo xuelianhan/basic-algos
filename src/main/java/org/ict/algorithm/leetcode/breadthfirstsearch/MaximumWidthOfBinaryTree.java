@@ -61,7 +61,7 @@ public class MaximumWidthOfBinaryTree {
      * size:2, left:2, right:2, cur:(2, 3), right:3, queue:(5, 4), res = max(0, 2) = 2
      * size:1, left:1, right:1, cur:(5, 1), right:1, queue: null, res = max(2, 1) = 2
      * return res:2
-     * 
+     *
      * @param root
      * @return
      */
