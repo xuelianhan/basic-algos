@@ -45,10 +45,24 @@ public class ValidWordAbbreviation {
     public boolean validWordAbbreviationV3(String word, String abbr) {
         int m = word.length();
         int n = abbr.length();
-        int i = 0;
-        int j = 0;
-        //todo
-        return false;
+        int p = 0;
+        int cnt = 0;
+        for (int j = 0; j < n; j++) {
+            if (abbr.charAt(j) >= '0' && abbr.charAt(j) <= '9') {
+                if (cnt == 0 && abbr.charAt(j) == '0') {
+                    return false;
+                }
+                cnt = cnt * 10 + abbr.charAt(j) - '0';
+            } else {
+                p += cnt;
+                if (p >= m || word.charAt(p) != abbr.charAt(j)) {
+                    return false;
+                }
+                p++;
+                cnt = 0;
+            }
+        }
+        return p + cnt == m;
     }
 
     public boolean validWordAbbreviationV2(String word, String abbr) {
