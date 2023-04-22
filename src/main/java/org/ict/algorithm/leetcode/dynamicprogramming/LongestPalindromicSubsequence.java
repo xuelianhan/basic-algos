@@ -27,6 +27,7 @@ import java.util.Arrays;
  * @author sniper
  * @date 14 Apr, 2023
  * LC516, Medium
+ * The follow-up question is {@link MinimumInsertionStepsMakeStringPalindrome}
  */
 public class LongestPalindromicSubsequence {
 
