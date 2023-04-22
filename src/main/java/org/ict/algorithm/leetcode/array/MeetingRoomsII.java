@@ -1,5 +1,6 @@
 package org.ict.algorithm.leetcode.array;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -29,7 +30,7 @@ public class MeetingRoomsII {
     public static void main(String[] args) {
         int[][] intervals = {{0,30},{5,10},{15,20}};
         MeetingRoomsII instance = new MeetingRoomsII();
-        int res = instance.minMeetingRooms(intervals);
+        int res = instance.minMeetingRoomsV1(intervals);
         System.out.println(res);
     }
     public int minMeetingRoomsV3(int[][] intervals) {
@@ -37,20 +38,85 @@ public class MeetingRoomsII {
         return 0;
     }
 
+    /**
+     * e.g.intervals = [[0,30],[5,10],[15,20]]
+     *
+     * @param intervals
+     * @return
+     */
     public int minMeetingRoomsV2(int[][] intervals) {
-        //todo
-        return 0;
+        int n = 1_000_010;
+        int[] delta = new int[n];
+        for (int[] a : intervals) {
+            delta[a[0]]++;
+            delta[a[1]]--;
+        }
+
+        int res = delta[0];
+        for (int i = 1; i < n; i++) {
+            delta[i] += delta[i - 1];
+            res = Math.max(res, delta[i]);
+        }
+        return res;
     }
 
 
+    /**
+     * e.g.intervals = [[0,30],[5,10],[15,20]]
+     * starts:0, 5, 15
+     * ends:10, 20, 30
+     * i:0, j:0, starts[0] < ends[0], res:1, i++
+     * i:1, j:0, starts[1] < ends[0], res:2, i++
+     * i:2, j:0, starts[2] > ends[0], j++, i++
+     * i:3, j:1, for-loop-ended
+     * return res:2
+     *
+     * @param intervals
+     * @return
+     */
     public int minMeetingRoomsV1(int[][] intervals) {
-        //todo
-        return 0;
+        int n = intervals.length;
+        int[] starts = new int[n];
+        int[] ends = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            starts[i] = intervals[i][0];
+            ends[i] = intervals[i][1];
+        }
+        Arrays.sort(starts);
+        Arrays.sort(ends);
+
+        int res = 0;
+        for (int i = 0, j = 0; i < n; i++) {
+            if (starts[i] < ends[j]) {
+                res++;
+            } else {
+                j++;
+            }
+        }
+        return res;
     }
 
     /**
+     * Understanding the following solution
+     * The whole process likes lock and unlock, the most consecutive lock numbers is the answer.
+     *
      * Those with time conflicts will need to be arranged in a separate meeting room,
      * while those without time conflicts can share the meeting room.
+     * Iterate through the time interval,
+     * for the start time, the mapping value increases by 1,
+     * for the end time, the mapping value decreases by 1,
+     * then define the result variable res,
+     * and the number of rooms, iterate through the TreeMap,
+     * time from small to large,
+     * the number of rooms each time plus the mapping value,
+     * and then update the result res, encounter the start time,
+     * the mapping is positive, the number of rooms will increase,
+     * if a time is the end time of a meeting,
+     * but also the start time of another meeting,
+     * the mapping value first subtracted and then added is still 0,
+     * and do not need to allocate a new room,
+     * and the mapping value of the end time is a negative number will not increase the number of rooms
      * e.g.intervals = [[0,30],[5,10],[15,20]]
      * TreeMap:
      * 0, 1
