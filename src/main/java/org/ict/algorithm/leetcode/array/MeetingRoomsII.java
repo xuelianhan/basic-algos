@@ -28,7 +28,7 @@ public class MeetingRoomsII {
     public static void main(String[] args) {
         int[][] intervals = {{0,30},{5,10},{15,20}};
         MeetingRoomsII instance = new MeetingRoomsII();
-        int res = instance.minMeetingRoomsV1(intervals);
+        int res = instance.minMeetingRoomsV3(intervals);
         System.out.println(res);
     }
 
@@ -55,7 +55,37 @@ public class MeetingRoomsII {
      * iterate [15,20], minHeap is not empty, peek:10, peek < 15, poll 10 from minHeap, minHeap:30, push 20 into minHeap, minHeap:20, 30
      * minHeap:20, 30
      * return minHeap.size()=2
-     * 
+     * --------------------------------------
+     * class Solution:
+     *   def minMeetingRoomsV3(self, intervals: List[List[int]]) -> int:
+     *     minHeap = []  # Store end times of each room.
+     *
+     *     for start, end in sorted(intervals):
+     *       # No overlap, we can reuse the same room.
+     *       if minHeap and start >= minHeap[0]:
+     *         heapq.heappop(minHeap)
+     *       heapq.heappush(minHeap, end)
+     *
+     *     return len(minHeap)
+     * --------------------------------------
+     * class Solution {
+     *  public:
+     *   int minMeetingRoomsV3(vector<vector<int>>& intervals) {
+     *     sort(begin(intervals), end(intervals));
+     *
+     *     // Store end times of each room.
+     *     priority_queue<int, vector<int>, greater<>> minHeap;
+     *
+     *     for (const vector<int>& interval : intervals) {
+     *       // No overlap, we can reuse the same room.
+     *       if (!minHeap.empty() && interval[0] >= minHeap.top())
+     *         minHeap.pop();
+     *       minHeap.push(interval[1]);
+     *     }
+     *
+     *     return minHeap.size();
+     *   }
+     * };
      * @param intervals
      * @return
      */
@@ -73,6 +103,10 @@ public class MeetingRoomsII {
          */
         PriorityQueue<Integer> minHeap = new PriorityQueue<>();
         for (int[] interval : intervals) {
+            /**
+             * if peek of end-time less than or equals to start-time of current interval,
+             * so it's no need to allocate a new meeting room, and kick it out of the minHeap.
+             */
             if (!minHeap.isEmpty() && minHeap.peek() <= interval[0]) {
                 minHeap.poll();
             }
@@ -117,6 +151,22 @@ public class MeetingRoomsII {
      * res:2, rooms:2, res = max(res, rooms) = 2
      * res:2, rooms:1, res = max(res, rooms) = 2
      * res:2, rooms:0, res = max(res, rooms) = 2
+     * -------------------------------------------
+     * class Solution {
+     * public:
+     *     int minMeetingRoomsV2(vector<vector<int>>& intervals) {
+     *         map<int, int> m;
+     *         for (auto a : intervals) {
+     *             ++m[a[0]];
+     *             --m[a[1]];
+     *         }
+     *         int rooms = 0, res = 0;
+     *         for (auto it : m) {
+     *             res = max(res, rooms += it.second);
+     *         }
+     *         return res;
+     *     }
+     * };
      * @param intervals
      * @return
      */
@@ -153,6 +203,30 @@ public class MeetingRoomsII {
      * i:15,prefixSum[15]=1+1=2, res=max(2, 2)=2
      * i:20,prefixSum[20]=2-1=1, res=max(2, 1)=2
      * i:30,prefixSum[30]=1-1=0, res=max(2, 0)=2
+     * --------------------------------------------
+     * class Solution:
+     *     def minMeetingRooms(self, intervals: List[List[int]]) -> int:
+     *         prefixSum = [0] * 1000010
+     *         for start, end in intervals:
+     *             prefixSum[start] += 1
+     *             prefixSum[end] -= 1
+     *         return max(accumulate(prefixSum))
+     * --------------------------------------------
+     * class Solution {
+     * public:
+     *     int minMeetingRooms(vector<vector<int>>& intervals) {
+     *         int n = 1000010;
+     *         vector<int> prefixSum(n);
+     *         for (auto e : intervals) {
+     *             ++prefixSum[e[0]];
+     *             --prefixSum[e[1]];
+     *         }
+     *         for (int i = 0; i < n - 1; ++i) {
+     *             prefixSum[i + 1] += prefixSum[i];
+     *         }
+     *         return *max_element(prefixSum.begin(), prefixSum.end());
+     *     }
+     * };
      * @param intervals
      * @return
      */
