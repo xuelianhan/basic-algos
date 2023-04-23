@@ -82,7 +82,14 @@ public class FindLeavesOfBinaryTree {
     }
 
     /**
-     * Depth-First-Search Solution
+     * Depth-First-Search Post-Order-Traversal Solution
+     *
+     * Utilize the depth to put the node at depth index of array.
+     * Each node from the left child node and the right child node separate walk can get two depths,
+     * because the condition of becoming a leaf node is the left and right child nodes are empty,
+     * so we take the greater value of the left and right child nodes plus 1 for the current node depth value,
+     * know the depth value can be added to the node value to the correct location in the result.
+     *
      * Time Complexity O(N)
      * Space Complexity O(h), h is the height of the binary tree
      * ------------------------------------------------------
