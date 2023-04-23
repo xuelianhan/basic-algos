@@ -141,6 +141,9 @@ public class FindLeavesOfBinaryTree {
         }
         int l = helper(root.left, res);
         int r = helper(root.right, res);
+        /**
+         * The depth of current node is 1 plus the maximum depth of left child and right child.
+         */
         int depth = 1 + Math.max(l, r);
         if (res.size() == depth) {
             /**
