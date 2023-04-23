@@ -1,9 +1,6 @@
 package org.ict.algorithm.leetcode.breadthfirstsearch;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * Given a binary tree, imagine yourself standing on the right side of it,
@@ -17,7 +14,8 @@ import java.util.Queue;
  *  \     \
  *   5     4       <---
  * 
- * 
+ *
+ * LC199, Medium
  */
 public class BinaryTreeRightSideView {
 	
@@ -26,7 +24,7 @@ public class BinaryTreeRightSideView {
 	 * @param root
 	 * @return
 	 */
-	public List<Integer> rightSideViewV2(TreeNode root) {
+	public List<Integer> rightSideViewV3(TreeNode root) {
 		List<Integer> result = new ArrayList<>();
 		if (root == null) {
 			return result;
@@ -37,6 +35,10 @@ public class BinaryTreeRightSideView {
 			int size = queue.size();
 			for (int i = 0; i < size; i++) {
 				TreeNode node = queue.poll();
+				/**
+				 * If we put right firstly, put left secondly,
+				 * then the first element is the target seeing from right-view.
+				 */
 				if (i == 0) {
 					result.add(node.val);
 				}
@@ -49,6 +51,35 @@ public class BinaryTreeRightSideView {
 			}
 		}
 		return result;
+	}
+
+	public List<Integer> rightSideViewV2(TreeNode root) {
+		List<Integer> res = new ArrayList<>();
+		if (root == null) {
+			return res;
+		}
+		Queue<TreeNode> queue = new ArrayDeque<>();
+		queue.offer(root);
+		while (!queue.isEmpty()) {
+			int size = queue.size();
+			for (int i = 0; i < size; i++) {
+				TreeNode cur = queue.poll();
+				/**
+				 * If we put left firstly, put right secondly,
+				 * then the last element is the target seeing from right-view.
+				 */
+				if (i == size - 1) {
+					res.add(cur.val);
+				}
+				if (cur.left != null) {
+					queue.offer(cur.left);
+				}
+				if (cur.right != null) {
+					queue.offer(cur.right);
+				}
+			}
+		}
+		return res;
 	}
 
 	/**
