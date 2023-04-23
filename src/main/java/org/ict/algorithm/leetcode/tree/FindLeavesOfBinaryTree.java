@@ -147,7 +147,8 @@ public class FindLeavesOfBinaryTree {
         int depth = 1 + Math.max(l, r);
         if (res.size() == depth) {
             /**
-             * Meet the leaf node
+             * Utilize the depth to put the node at depth index of array.
+             * So when depth equals res.size(), we need to add new empty list.
              */
             res.add(new ArrayList<>());
         }
