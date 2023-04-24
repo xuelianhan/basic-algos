@@ -52,20 +52,136 @@ public class FindLeavesOfBinaryTree {
         node2.right = node5;
 
         FindLeavesOfBinaryTree instance = new FindLeavesOfBinaryTree();
-        List<List<Integer>> res = instance.findLeaves(root);
+        List<List<Integer>> res = instance.findLeavesV1(root);
         System.out.println(res);
     }
 
+    /**
+     * Similar with findLeavesV1
+     * --------------------------
+     * # Definition for a binary tree node.
+     * class TreeNode:
+     *     def __init__(self, val=0, left=None, right=None):
+     *         self.val = val
+     *         self.left = left
+     *         self.right = right
+     * class Solution:
+     *     def findLeaves(self, root: TreeNode) -> List[List[int]]:
+     *         def dfs(root, prev, t):
+     *             if root is None:
+     *                 return
+     *             if root.left is None and root.right is None:
+     *                 t.append(root.val)
+     *                 if prev.left == root:
+     *                     prev.left = None
+     *                 else:
+     *                     prev.right = None
+     *             dfs(root.left, root, t)
+     *             dfs(root.right, root, t)
+     *
+     *         res = []
+     *         prev = TreeNode(left=root)
+     *         while prev.left:
+     *             t = []
+     *             dfs(prev.left, prev, t)
+     *             res.append(t)
+     *         return res
+     * @param root
+     * @return
+     */
     public List<List<Integer>> findLeavesV2(TreeNode root) {
-        //todo
-        return null;
+        List<List<Integer>> res = new ArrayList<>();
+        TreeNode prev = new TreeNode(0, root, null);
+        while (prev.left != null) {
+            List<Integer> leaves = new ArrayList<>();
+            removeV2(prev.left, prev, leaves);
+            res.add(leaves);
+        }
+        return res;
     }
 
+    private void removeV2(TreeNode root, TreeNode prev, List<Integer> leaves) {
+        if (root == null) {
+            return;
+        }
+        if (root.left == null && root.right == null) {
+            leaves.add(root.val);
+            if (prev.left == root) {
+                prev.left = null;
+            } else {
+                prev.right = null;
+            }
+        }
+        removeV2(root.left, root, leaves);
+        removeV2(root.right, root, leaves);
+    }
+
+    /**
+     * Iterate through the binary tree,
+     * find the leaf node, assign it to null,
+     * and then add it to the leaves array
+     * Example 1:
+     *             1
+     *            / \
+     *           2   3
+     *          / \
+     *         4   5
+     * root != null
+     * remove(1, leaves)
+     *       remove(2, leaves)
+     *             remove(4, leaves), leaves:[4]
+     *             node-2.left=null
+     *             remove(5, leaves), leaves:[4, 5]
+     *             node-2.right=null
+     *             return node-2
+     *       node-1.left=node-2
+     *       remove(3, leaves), leaves:[4, 5, 3]
+     *       node-1.right=null
+     *       return node-1
+     * root = node-1
+     * res.add(leaves),res:[[4, 5, 3]]
+     *
+     * root != null, leaves = new list[]
+     * remove(1, leaves)
+     *     remove(2, leaves)
+     *           leaves.add(2), return null
+     *     node-1.left=null
+     *     remove(null, leaves), return null
+     *     node-1.right=null
+     *     return node-1
+     * root = node-1
+     * res.add(leaves), res:[[4, 5, 3], [2]]
+     *
+     * root != null, leaves = new list[]
+     * remove(1, leaves)
+     *       node-1.left == null and node-1.right == null
+     *       leaves.add(1), return null
+     * roo == null, res.add(leaves), res:[[4, 5, 3], [2], [1]]
+     * return res
+     * @param root
+     * @return
+     */
     public List<List<Integer>> findLeavesV1(TreeNode root) {
-        List<List<Integer>> ans = new ArrayList<>();
+        List<List<Integer>> res = new ArrayList<>();
+        while (root != null) {
+            List<Integer> leaves = new ArrayList<>();
+            root = remove(root, leaves);
+            res.add(leaves);
+        }
+        return res;
+    }
 
-
-        return ans;
+    private TreeNode remove(TreeNode node, List<Integer> leaves) {
+        if (node == null) {
+            return null;
+        }
+        if (node.left == null && node.right == null) {
+            leaves.add(node.val);
+            return null;
+        }
+        node.left = remove(node.left, leaves);
+        node.right = remove(node.right, leaves);
+        return node;
     }
 
 
