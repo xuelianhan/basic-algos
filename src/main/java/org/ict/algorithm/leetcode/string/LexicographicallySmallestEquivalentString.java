@@ -1,4 +1,4 @@
-package org.ict.algorithm.leetcode.string.medium;
+package org.ict.algorithm.leetcode.string;
 
 /**
  * You are given two strings of the same length s1 and s2 and a string baseStr.

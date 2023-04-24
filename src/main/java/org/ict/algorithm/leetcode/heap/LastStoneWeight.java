@@ -40,15 +40,18 @@ import java.util.PriorityQueue;
  * 1 <= stones[i] <= 1000
  * @author sniper
  * @date 25 Apr, 2023
- * LC1046, Easy,
+ * LC1046, Easy
  */
 public class LastStoneWeight {
 
     /**
      * Understanding the following solution
-     * 
+     *
      * Don't care the middle process of the array,
      * focus on the final result that we need.
+     *
+     * e.g. stones = [2,7,4,1,8,1]
+     *
      * @param stones
      * @return
      */
