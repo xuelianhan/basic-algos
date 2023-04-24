@@ -52,11 +52,12 @@ public class FindLeavesOfBinaryTree {
         node2.right = node5;
 
         FindLeavesOfBinaryTree instance = new FindLeavesOfBinaryTree();
-        List<List<Integer>> res = instance.findLeavesV1(root);
+        List<List<Integer>> res = instance.findLeavesV2(root);
         System.out.println(res);
     }
 
     /**
+     * Understanding the following solution
      * Similar with findLeavesV1, but no need to return node in dfs
      * --------------------------
      * # Definition for a binary tree node.
@@ -118,7 +119,8 @@ public class FindLeavesOfBinaryTree {
             leaves.add(root.val);
             if (prev.left == root) {
                 prev.left = null;
-            } else {
+            } else if (prev.right == root){
+                //this else-if can be replaced with single else clause
                 prev.right = null;
             }
         }
