@@ -100,7 +100,7 @@ public class FindLeavesOfBinaryTree {
     public List<List<Integer>> findLeavesV2(TreeNode root) {
         List<List<Integer>> res = new ArrayList<>();
         /**
-         * Node-prev is a dummy node.
+         * Node-prev is a parent node pointing at the node waiting to delete.
          */
         TreeNode prev = new TreeNode(0, root, null);
         while (prev.left != null) {
@@ -111,21 +111,27 @@ public class FindLeavesOfBinaryTree {
         return res;
     }
 
-    private void removeV2(TreeNode root, TreeNode prev, List<Integer> leaves) {
-        if (root == null) {
+    /**
+     * @param node the node to be recycled.
+     * @param prev the parent node of recycled node.
+     * @param leaves
+     */
+    private void removeV2(TreeNode node, TreeNode prev, List<Integer> leaves) {
+        if (node == null) {
             return;
         }
-        if (root.left == null && root.right == null) {
-            leaves.add(root.val);
-            if (prev.left == root) {
+        if (node.left == null && node.right == null) {
+            leaves.add(node.val);
+            //Once node has been recycled, its parent's left or right points at null
+            if (prev.left == node) {
                 prev.left = null;
-            } else if (prev.right == root){
+            } else if (prev.right == node){
                 //this else-if can be replaced with single else clause
                 prev.right = null;
             }
         }
-        removeV2(root.left, root, leaves);
-        removeV2(root.right, root, leaves);
+        removeV2(node.left, node, leaves);
+        removeV2(node.right, node, leaves);
     }
 
     /**
