@@ -44,7 +44,7 @@ import java.util.PriorityQueue;
  * 1 <= k <= 10^5
  * @author sniper
  * @date 28 Dec, 2022
- * LC1962
+ * LC1962, Medium
  */
 public class RemoveStonesToMinimizeTheTotal {
 
