@@ -43,7 +43,25 @@ public class DecodeString {
     /**
      * Understanding the following solution
      * Double-Stack Method
+     * class Solution:
+     *     def decodeString(self, s: str) -> str:
+     *         stack1, stack2 = [], []
+     *         num, res = 0, ''
+     *         for c in s:
+     *             if c.isdigit():
+     *                 num = num * 10 + int(c)
+     *             elif c == '[':
+     *                 stack1.append(num)
+     *                 stack2.append(res)
+     *                 num, res = 0, ''
+     *             elif c == ']':
+     *                 res = stack2.pop() + res * stack1.pop()
+     *             else:
+     *                 res += c
+     *         return res
+     * -------------------------------------------
      * e.g. s = "3[a2[c]]"
+     *
      * @param s
      * @return
      */
