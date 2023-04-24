@@ -1,4 +1,3 @@
-811.Subdomain Visit Count=76
 244.Shortest Word Distance II=71
 423.Reconstruct Original Digits from English=69
 1268.Search Suggestions System=68

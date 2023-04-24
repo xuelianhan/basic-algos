@@ -53,6 +53,11 @@ public class SubdomainVisitCount {
         res.forEach(System.out::println);
     }
 
+    public List<String> subdomainVisitsV1(String[] cpdomains) {
+        //todo
+        return null;
+    }
+
     /**
      * Keep using map.put(key, map.getOrDefault(key, 0) + cnt);
      * @param cpdomains
