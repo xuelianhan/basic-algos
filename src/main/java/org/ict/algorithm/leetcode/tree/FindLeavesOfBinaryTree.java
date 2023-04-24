@@ -57,7 +57,7 @@ public class FindLeavesOfBinaryTree {
     }
 
     /**
-     * Similar with findLeavesV1
+     * Similar with findLeavesV1, but no need to return node in dfs
      * --------------------------
      * # Definition for a binary tree node.
      * class TreeNode:
@@ -86,11 +86,21 @@ public class FindLeavesOfBinaryTree {
      *             dfs(prev.left, prev, t)
      *             res.append(t)
      *         return res
+     * ------------------------
+     * Example 1:
+     *             1
+     *            / \
+     *           2   3
+     *          / \
+     *         4   5
      * @param root
      * @return
      */
     public List<List<Integer>> findLeavesV2(TreeNode root) {
         List<List<Integer>> res = new ArrayList<>();
+        /**
+         * Node-prev is a dummy node.
+         */
         TreeNode prev = new TreeNode(0, root, null);
         while (prev.left != null) {
             List<Integer> leaves = new ArrayList<>();
@@ -117,6 +127,8 @@ public class FindLeavesOfBinaryTree {
     }
 
     /**
+     * Understanding the following solution
+     *
      * Iterate through the binary tree,
      * find the leaf node, assign it to null,
      * and then add it to the leaves array
@@ -156,7 +168,7 @@ public class FindLeavesOfBinaryTree {
      * remove(1, leaves)
      *       node-1.left == null and node-1.right == null
      *       leaves.add(1), return null
-     * roo == null, res.add(leaves), res:[[4, 5, 3], [2], [1]]
+     * root == null, res.add(leaves), res:[[4, 5, 3], [2], [1]]
      * return res
      * @param root
      * @return
