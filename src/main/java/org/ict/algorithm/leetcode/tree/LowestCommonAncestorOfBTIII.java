@@ -14,7 +14,8 @@ import java.util.Set;
  * }
  *
  * According to the definition of LCA on Wikipedia:
- * "The lowest common ancestor of two nodes p and q in a tree T is the lowest node that has both p and q as descendants
+ * "The lowest common ancestor of two nodes p and q in a tree T
+ * is the lowest node that has both p and q as descendants
  * (where we allow a node to be a descendant of itself)."
  *                             3
  *                          /     \
@@ -67,13 +68,14 @@ public class LowestCommonAncestorOfBTIII {
     }
 
     /**
-     * This method is a bit tricky, and most people won’t be able to come up with it in a short amount of time.
+     * This method is a bit tricky,
+     * and most people won’t be able to come up with it in a short amount of time.
      * The idea is as follows:
      * we will use 2 pointers (pointerA, pointerB) that go from nodeA and nodeB upwards respectively.
      * Assume nodeA locates at a shallower level than nodeB,
      * i.e. depth(nodeA) < depth(nodeB), pointerA will reach the top quicker than pointerB.
-     * Suppose the difference in depth between nodeA and nodeB is diff, by the time pointerA reaches the top,
-     * pointerB will be diff levels behind.
+     * Suppose the difference in depth between nodeA and nodeB is diff,
+     * by the time pointerA reaches the top, pointerB will be diff levels behind.
      * Now if pointerA resets its path and continues upwards from nodeB instead of nodeA,
      * it will need diff steps to reach the level of nodeA,
      * by which time pointerB has already caught up and will be at the same level of pointerA
@@ -83,6 +85,28 @@ public class LowestCommonAncestorOfBTIII {
      *
      * Time Complexity O(N)
      * Space Complexity O(1)
+     *
+     * e.g.root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 4
+     *                             3
+     *                          /     \
+     *                        5         1
+     *                      /   \      /  \
+     *                     6     2    0    8
+     *                          /  \
+     *                         7    4
+     * p:5, q:4
+     * a:p, b:q,
+     * a != b, a = a.parent, a:3, b = b.parent, b:2
+     * a != b, a = a.parent, a:null, b = b.parent, b:5
+     * a != b, a == null, a = q, a:4, b = b.parent, b:3
+     * a != b, a = a.parent, a:2, b = b.parent, b:null
+     * a != b, a = a.parent, a:5, b == null, b = p, b:5
+     * a == b, a:5, b:5
+     * return a:5
+     *
+     * a: 5-->3-->null-->4-->2   -->5
+     * b: 4-->2--> 5  -->3-->null-->5
+     *
      *
      * @see <a href="https://iamageek.medium.com/leetcode-1650-lowest-common-ancestor-of-a-binary-tree-iii-6d008b93376c"></a>
      * @param p
@@ -101,9 +125,9 @@ public class LowestCommonAncestorOfBTIII {
 
     /**
      * One way to solve this problem is to traverse from one of the nodes all the way up to the top,
-     * and save all the ancestors in a hash map.
+     * and save all the ancestors in a hash set.
      * Afterwards, we will go from the other node to the top of the tree,
-     * and return the node if it’s already in the hash map.
+     * and return the node if it’s already in the hash set.
      * If so, we have found the lowest common ancestor.
      * Since we will go from nodeA to the root once and also from nodeB upwards once,
      * the time complexity is O(N), N being the number of nodes in the tree.
