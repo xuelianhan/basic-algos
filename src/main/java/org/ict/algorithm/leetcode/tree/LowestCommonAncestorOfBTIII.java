@@ -16,7 +16,13 @@ import java.util.Set;
  * According to the definition of LCA on Wikipedia:
  * "The lowest common ancestor of two nodes p and q in a tree T is the lowest node that has both p and q as descendants
  * (where we allow a node to be a descendant of itself)."
- *
+ *                             3
+ *                          /     \
+ *                        5         1
+ *                      /   \      /  \
+ *                     6     2    0    8
+ *                          /  \
+ *                         7    4
  * Example 1:
  * Input: root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 1
  * Output: 3
