@@ -73,21 +73,21 @@ import java.util.Map;
  * Follow up: Could you write a solution that runs in O(m + n) time and use only O(1) memory?
  * @author sniper
  * @date 2022/8/23
- * LC160
+ * LC160, Easy
  */
 public class IntersectionOfTwoLinkedLists {
 
     /**
      * Solution provided by MyFavCat
      *
-     * I found most solutions here preprocess linkedlists to get the difference in len.
+     * I found most solutions here preprocess linked lists to get the difference in len.
      * Actually we don't care about the "value" of difference,
      * we just want to make sure two pointers reach the intersection node at the same time.
      *
      * We can use two iterations to do that.
      * In the first iteration, we will reset the pointer of one linkedlist to the head
      * of another linkedlist after it reaches the tail node.
-     * In the second iteration, we will move two pointers until they points to the same node.
+     * In the second iteration, we will move two pointers until they point to the same node.
      * Our operations in first iteration will help us counteract the difference.
      * So if two linkedlist intersects,
      * the meeting point in second iteration must be the intersection point.
@@ -117,6 +117,8 @@ public class IntersectionOfTwoLinkedLists {
      * I believe to visualize it can resolve most of the doubts posted previously.
      *
      * Below is my commented Java code:
+     *
+     * @see org.ict.algorithm.leetcode.tree.LowestCommonAncestorOfBTIII
      * @param headA
      * @param headB
      * @return

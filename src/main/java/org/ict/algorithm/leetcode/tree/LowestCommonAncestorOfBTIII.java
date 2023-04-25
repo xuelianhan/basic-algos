@@ -53,6 +53,27 @@ import java.util.Set;
  */
 public class LowestCommonAncestorOfBTIII {
 
+    /**
+     * """
+     * # Definition for a Node.
+     * class Node:
+     *     def __init__(self, val):
+     *         self.val = val
+     *         self.left = None
+     *         self.right = None
+     *         self.parent = None
+     * """
+     *
+     * class Solution:
+     *     def lowestCommonAncestor(self, p: 'Node', q: 'Node') -> 'Node':
+     *         a, b = p, q
+     *         while a != b:
+     *             a = a.parent if a.parent else q
+     *             b = b.parent if b.parent else p
+     *         return a
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         Node root = new Node(3);
         Node p = new Node(5);
@@ -70,6 +91,7 @@ public class LowestCommonAncestorOfBTIII {
     /**
      * This method is a bit tricky,
      * and most people won’t be able to come up with it in a short amount of time.
+     *
      * The idea is as follows:
      * we will use 2 pointers (pointerA, pointerB) that go from nodeA and nodeB upwards respectively.
      * Assume nodeA locates at a shallower level than nodeB,
@@ -106,8 +128,10 @@ public class LowestCommonAncestorOfBTIII {
      *
      * a: 5-->3-->null-->4-->2   -->5
      * b: 4-->2--> 5  -->3-->null-->5
+     * You can imagine this as a cycle.
      *
-     *
+     * This solution is same as LC160
+     * @see org.ict.algorithm.leetcode.linkedlist.IntersectionOfTwoLinkedLists
      * @see <a href="https://iamageek.medium.com/leetcode-1650-lowest-common-ancestor-of-a-binary-tree-iii-6d008b93376c"></a>
      * @param p
      * @param q

@@ -46,7 +46,15 @@ public class LinkedListCycleII {
      * Assume the distance from head to the start of the loop is x1
      * the distance from the start of the loop to the point where fast and slow meet is x2
      * the distance from the point where fast and slow meet to the start of the loop is x3
-     * What is the distance fast moved? What is the distance slow moved? And their relationship?
+     * What is the distance fast moved?
+     * What is the distance slow moved? And their relationship?
+     *        x1                  x2                    x3
+     * head----->loop-start>----------->meet-point----------------->
+     *           ^                                                 |
+     *           |                                                 |
+     *           |                                                 V
+     *           <-----------------<---------------<----------------
+     *
      *
      * x1 + x2 + x3 + x2
      * x1 + x2
