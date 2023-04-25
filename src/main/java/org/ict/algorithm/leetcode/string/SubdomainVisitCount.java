@@ -53,9 +53,131 @@ public class SubdomainVisitCount {
         res.forEach(System.out::println);
     }
 
+    /**
+     * Understanding the following solution
+     * # In Python both %s and %d are placeholders for a string and a number respectively.
+     * # %s will return the string and %d will return number, the values are passed using % operator.
+     * # This % operator formatting is used in C language also.
+     * e.g.
+     * # name = 'Robey’
+     * # number = 454
+     * # print '%s %d' % (name, number)
+     *
+     * def subdomainVisits(self, cpdomains):
+     *        count = collections.Counter()
+     *         for cd in cpdomains:
+     *             n, s = cd.split()
+     *             count[s] += int(n)
+     *             for i in range(len(s)):
+     *                 if s[i] == '.':
+     *                     count[s[i + 1:]] += int(n)
+     *         return ["%d %s" % (count[k], k) for k in count]
+     * --------------------------------------------------------
+     * # print('.'.join(domains[i:])) likes the following:
+     * # com
+     * # leetcode.com
+     * # discuss.leetcode.com
+     *
+     * def subdomainVisits(self, cpdomains: List[str]) -> List[str]:
+     *     count = collections.Counter()
+     *
+     *     for cpdomain in cpdomains:
+     *       num, domains = cpdomain.split()
+     *       num, domains = int(num), domains.split('.')
+     *       for i in reversed(range(len(domains))):
+     *         #print('.'.join(domains[i:]))
+     *         count['.'.join(domains[i:])] += num
+     *
+     *     return [str(freq) + ' ' + domain for domain, freq in count.items()]
+     * ---------------------------------------------------------
+     * def subdomainVisits(self, cpdomains: List[str]) -> List[str]:
+     *         count = collections.Counter()
+     *         for cpdomain in cpdomains:
+     *             num, domain = cpdomain.split()
+     *             count[domain] += int(num)
+     *             for i in range(len(domain)):
+     *                 if domain[i] == '.':
+     *                     count[domain[i + 1:]] += int(num)
+     *
+     *         return [str(freq) + ' ' + domain for domain, freq in count.items()]
+     * @param cpdomains
+     * @return
+     */
+    public List<String> subdomainVisitsV3(String[] cpdomains) {
+        Map<String, Integer> freq = new HashMap<>();
+        for (String cpDomain : cpdomains) {
+            int space = cpDomain.indexOf(" ");
+            int num = Integer.valueOf(cpDomain.substring(0, space));
+            String domain = cpDomain.substring(space + 1);
+
+            for (int i = 0; i < domain.length(); i++) {
+                if (domain.charAt(i) == '.') {
+                    String subDomain = domain.substring(i + 1);
+                    freq.put(subDomain, freq.getOrDefault(subDomain, 0) + num);
+                }
+            }
+            freq.put(domain, freq.getOrDefault(domain, 0) + num);
+        }
+
+        List<String> res = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : freq.entrySet()) {
+            res.add(entry.getValue() + " " + entry.getKey());
+        }
+        return res;
+    }
+
+    /**
+     * Understanding the following solution
+     * @param cpdomains
+     * @return
+     */
+    public List<String> subdomainVisitsV2(String[] cpdomains) {
+        Map<String, Integer> freq = new HashMap<>();
+        for (String cpDomain : cpdomains) {
+            int space = cpDomain.indexOf(" ");
+            int num = Integer.valueOf(cpDomain.substring(0, space));
+            String domain = cpDomain.substring(space + 1);
+
+            for (int i = 0; i < domain.length(); i++) {
+                if (domain.charAt(i) == '.') {
+                    String subDomain = domain.substring(i + 1);
+                    freq.put(subDomain, freq.getOrDefault(subDomain, 0) + num);
+                }
+            }
+            freq.put(domain, freq.getOrDefault(domain, 0) + num);
+        }
+        return freq.entrySet().stream()
+                .map(entry -> entry.getValue() + " " + entry.getKey())
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Understanding the following solution
+     *
+     * Time Cost 16ms
+     *
+     * @param cpdomains
+     * @return
+     */
     public List<String> subdomainVisitsV1(String[] cpdomains) {
-        //todo
-        return null;
+        Map<String, Integer> freq = new HashMap<>();
+        for (String cpDomain : cpdomains) {
+            int space = cpDomain.indexOf(" ");
+            int num = Integer.valueOf(cpDomain.substring(0, space));
+            String domain = cpDomain.substring(space + 1);
+
+            freq.merge(domain, num, Integer::sum);
+
+            for (int i = 0; i < domain.length(); i++) {
+                if (domain.charAt(i) == '.') {
+                    String subDomain = domain.substring(i + 1);
+                    freq.merge(subDomain, num, Integer::sum);
+                }
+            }
+        }
+        return freq.entrySet().stream()
+                .map(entry -> entry.getValue() + " " + entry.getKey())
+                .collect(Collectors.toList());
     }
 
     /**
@@ -65,8 +187,8 @@ public class SubdomainVisitCount {
      */
     public List<String> subdomainVisits(String[] cpdomains) {
         Map<String, Integer> freq = new HashMap<>();
-        for (String domain : cpdomains) {
-            String[] arr = domain.split("\\s+");
+        for (String cpDomain : cpdomains) {
+            String[] arr = cpDomain.split("\\s+");
             Integer cnt = Integer.parseInt(arr[0]);
             freq.put(arr[1], freq.getOrDefault(arr[1], 0) + cnt);
             /**
