@@ -90,6 +90,8 @@ public class SubdomainVisitCount {
      *
      *     return [str(freq) + ' ' + domain for domain, freq in count.items()]
      * ---------------------------------------------------------
+     * # The following return statement is OK too:
+     * # return ["%d %s" % (count[k], k) for k in count]
      * def subdomainVisits(self, cpdomains: List[str]) -> List[str]:
      *         count = collections.Counter()
      *         for cpdomain in cpdomains:
@@ -100,6 +102,7 @@ public class SubdomainVisitCount {
      *                     count[domain[i + 1:]] += int(num)
      *
      *         return [str(freq) + ' ' + domain for domain, freq in count.items()]
+     *
      * @param cpdomains
      * @return
      */
