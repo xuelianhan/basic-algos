@@ -60,6 +60,8 @@ public class ShortestWordDistanceII {
         private Map<String, List<Integer>> map = new HashMap<>();
 
         /**
+         * Understanding the following solution
+         *
          * Similar with WordDistanceV3, only a little different at
          * the constructor using Map.computeIfAbsent.
          * @param wordsDict
