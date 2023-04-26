@@ -134,6 +134,25 @@ public class ShortestWordDistanceII {
 
     }
 
+    /**
+     * class WordDistance:
+     *     def __init__(self, wordsDict: List[str]):
+     *         self.d = defaultdict(list)
+     *         for i, w in enumerate(wordsDict):
+     *             self.d[w].append(i)
+     *
+     *     def shortest(self, word1: str, word2: str) -> int:
+     *         a, b = self.d[word1], self.d[word2]
+     *         ans = inf
+     *         i = j = 0
+     *         while i < len(a) and j < len(b):
+     *             ans = min(ans, abs(a[i] - b[j]))
+     *             if a[i] <= b[j]:
+     *                 i += 1
+     *             else:
+     *                 j += 1
+     *         return ans
+     */
     static class WordDistanceV1 {
 
         private Map<String, List<Integer>> map = new HashMap<>();
@@ -191,6 +210,18 @@ public class ShortestWordDistanceII {
 
         /**
          * Time Complexity O(M*N)
+         *
+         * The following code can be optimized so that the complexity of the query is changed from O(MN) to O(M+N),
+         * where M and N are the lengths of two words,
+         * and two pointers i and j are needed to point to a position in the position array,
+         * both initialized to 0 at the beginning,
+         * then compare the numbers in the position array,
+         * and move the pointer of the smaller one backward by one
+         * until the traversal of one of the arrays is completed
+         * @see  WordDistanceV1 shortest-method
+         * @see  WordDistanceV2 shortest-method
+         * @see  WordDistanceV3 shortest-method
+         *
          * @param word1
          * @param word2
          * @return
