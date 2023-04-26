@@ -38,6 +38,13 @@ public class ShortestWordDistanceIII {
         System.out.println(res);
     }
 
+    /**
+     * Not easy to understand, Recommend shortestWordDistance instead of this one.
+     * @param wordsDict
+     * @param word1
+     * @param word2
+     * @return
+     */
     public int shortestWordDistanceV1(String[] wordsDict, String word1, String word2) {
         int i = -1;
         int res = wordsDict.length;
@@ -54,6 +61,27 @@ public class ShortestWordDistanceIII {
 
     /**
      * Understanding the following solution
+     * ----------------------------------------
+     * class Solution:
+     *     def shortestWordDistance(self, wordsDict: List[str], word1: str, word2: str) -> int:
+     *         ans = len(wordsDict)
+     *         if word1 == word2:
+     *             j = -1
+     *             for i, w in enumerate(wordsDict):
+     *                 if w == word1:
+     *                     if j != -1:
+     *                         ans = min(ans, i - j)
+     *                     j = i
+     *         else:
+     *             i = j = -1
+     *             for k, w in enumerate(wordsDict):
+     *                 if w == word1:
+     *                     i = k
+     *                 if w == word2:
+     *                     j = k
+     *                 if i != -1 and j != -1:
+     *                     ans = min(ans, abs(i - j))
+     *         return ans
      * @param wordsDict
      * @param word1
      * @param word2
