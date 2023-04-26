@@ -47,13 +47,68 @@ import java.util.Map;
 public class ShortestWordDistanceII {
 
     public static void main(String[] args) {
-        String[] wordsDict = {"practice", "makes", "perfect", "coding", "makes"};
-        ShortestWordDistanceII.WordDistanceV3 wd = new ShortestWordDistanceII.WordDistanceV3(wordsDict);
+        String[] wordsDict = {"practice", "practice", "makes", "perfect", "coding", "makes"};
+        ShortestWordDistanceII.WordDistanceV4 wd = new ShortestWordDistanceII.WordDistanceV4(wordsDict);
         String word1 = "coding";
         String word2 = "practice";
         int res = wd.shortest(word1, word2);
         System.out.println(res);
     }
+
+    static class WordDistanceV4 {
+
+        private Map<String, List<Integer>> map = new HashMap<>();
+
+        /**
+         * Similar with WordDistanceV3, only a little different at
+         * the constructor using Map.computeIfAbsent.
+         * @param wordsDict
+         */
+        public WordDistanceV4(String[] wordsDict) {
+            for (int i = 0; i < wordsDict.length; i++) {
+                map.computeIfAbsent(wordsDict[i], k -> new ArrayList<>()).add(i);
+            }
+        }
+
+        /**
+         * Time Complexity O(M + N)
+         *
+         * e.g.
+         * wordsDict = ["practice", "practice", "makes", "perfect", "coding", "makes"]
+         * word1 = "coding"
+         * word2 = "practice"
+         *
+         * list1:[4], list2:[0, 1]
+         * i:0, j:0, res = min(MAX, abs(list1[0] - list2[0])) = min(MAX, abs(4 - 0)) = 4
+         *           a:4, b:0, a > b, j++, j:1
+         *
+         * @param word1
+         * @param word2
+         * @return
+         */
+        public int shortest(String word1, String word2) {
+            int res = Integer.MAX_VALUE;
+            List<Integer> list1 = map.get(word1);
+            List<Integer> list2 = map.get(word2);
+
+            for (int i = 0, j = 0; i < list1.size() && j < list2.size();) {
+                int a = list1.get(i);
+                int b = list2.get(j);
+                res = Math.min(res, Math.abs(a - b));
+                /**
+                 * At here, both <= and < is OK
+                 */
+                if (a < b) {
+                    i++;
+                } else {
+                    j++;
+                }
+            }
+            return res;
+        }
+
+    }
+
 
     static class WordDistanceV3 {
 
@@ -68,6 +123,20 @@ public class ShortestWordDistanceII {
 
         /**
          * Time Complexity O(M + N)
+         *
+         * e.g.
+         * wordsDict = ["practice", "practice", "makes", "perfect", "coding", "makes"]
+         * word1 = "coding"
+         * word2 = "practice"
+         *
+         * list1:[4], list2:[0, 1]
+         * i:0, j:0, res = min(MAX, abs(list1[0] - list2[0])) = min(MAX, abs(4 - 0)) = 4
+         *           a:4, b:0, a > b, j++, j:1
+         * i:0, j:1, res = min(4, abs(list1[0] - list2[1])) = min(4, abs(4 - 1)) =  3
+         *           a:4, b:1, a > b, j++, j:2
+         * j == 2 == list2.size(), for-loop-ended
+         * return res:3
+         *
          * @param word1
          * @param word2
          * @return
@@ -78,11 +147,13 @@ public class ShortestWordDistanceII {
             List<Integer> list2 = map.get(word2);
 
             for (int i = 0, j = 0; i < list1.size() && j < list2.size();) {
-                res = Math.min(res, Math.abs(list1.get(i) - list2.get(j)));
+                int a = list1.get(i);
+                int b = list2.get(j);
+                res = Math.min(res, Math.abs(a - b));
                 /**
                  * At here, both <= and < is OK
                  */
-                if (list1.get(i) < list2.get(j)) {
+                if (a < b) {
                     i++;
                 } else {
                     j++;
@@ -216,8 +287,18 @@ public class ShortestWordDistanceII {
          * and two pointers i and j are needed to point to a position in the position array,
          * both initialized to 0 at the beginning,
          * then compare the numbers in the position array,
-         * and move the pointer of the smaller one backward by one
-         * until the traversal of one of the smaller array is completed
+         * and move the pointer of the smaller one backward by one until the traversal of one of the array is completed.
+         *
+         * Why we can only move the smaller pointer, other than iterate both of the two arrays?
+         * Because our target is to get the minimum difference, and the index array of list1, list2 are ascending order
+         * for example, suppose that list1 = [1, 2, 3], list2 = [4, 5]
+         * because all the items in list1 less than 4 in list2,
+         * Once we complete traverse list1, there is no need to compare list1 with 5 in list2.
+         * res = min(res, abs(1 - 4)) = 3
+         * res = min(3, abs(2 - 4)) = 2
+         * res = min(2, abs(3 - 4)) = 1
+         *
+         *
          * @see  WordDistanceV1 shortest-method
          * @see  WordDistanceV2 shortest-method
          * @see  WordDistanceV3 shortest-method
