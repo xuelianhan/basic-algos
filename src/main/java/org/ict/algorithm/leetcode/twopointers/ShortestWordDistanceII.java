@@ -217,7 +217,7 @@ public class ShortestWordDistanceII {
          * both initialized to 0 at the beginning,
          * then compare the numbers in the position array,
          * and move the pointer of the smaller one backward by one
-         * until the traversal of one of the arrays is completed
+         * until the traversal of one of the smaller array is completed
          * @see  WordDistanceV1 shortest-method
          * @see  WordDistanceV2 shortest-method
          * @see  WordDistanceV3 shortest-method
