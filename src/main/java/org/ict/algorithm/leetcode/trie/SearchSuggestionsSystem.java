@@ -53,19 +53,15 @@ public class SearchSuggestionsSystem {
         String searchWord = "tatiana";
 
         SearchSuggestionsSystem instance = new SearchSuggestionsSystem();
-        List<List<String>> res = instance.suggestedProductsV1(products, searchWord);
+        List<List<String>> res = instance.suggestedProducts(products, searchWord);
         System.out.println(res);
         //res.forEach(System.out::println);
     }
 
-    public List<List<String>> suggestedProductsV1(String[] products, String searchWord) {
-        //todo
-        return null;
-    }
-
-
 
     /**
+     * Understanding the following solution
+     * 
      * Time Cost 18ms
      * Design a system that suggests at most three product names from products
      * after each character of searchWord is typed
