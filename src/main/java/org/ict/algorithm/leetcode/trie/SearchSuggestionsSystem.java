@@ -61,7 +61,7 @@ public class SearchSuggestionsSystem {
 
     /**
      * Understanding the following solution
-     * 
+     *
      * Time Cost 18ms
      * Design a system that suggests at most three product names from products
      * after each character of searchWord is typed
