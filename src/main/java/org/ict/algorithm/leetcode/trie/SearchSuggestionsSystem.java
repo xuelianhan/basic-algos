@@ -2,6 +2,7 @@ package org.ict.algorithm.leetcode.trie;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -44,13 +45,17 @@ import java.util.List;
  */
 public class SearchSuggestionsSystem {
 
+
     public static void main(String[] args) {
-        String[] products = {"mobile","mouse","moneypot","monitor","mousepad"};
-        String searchWord = "mouse";
+        //String[] products = {"mobile","mouse","moneypot","monitor","mousepad"};
+        //String searchWord = "mouse";
+        String[] products = {"havana"};
+        String searchWord = "tatiana";
 
         SearchSuggestionsSystem instance = new SearchSuggestionsSystem();
-        List<List<String>> res = instance.suggestedProducts(products, searchWord);
-        res.forEach(System.out::println);
+        List<List<String>> res = instance.suggestedProductsV1(products, searchWord);
+        System.out.println(res);
+        //res.forEach(System.out::println);
     }
 
     public List<List<String>> suggestedProductsV1(String[] products, String searchWord) {
@@ -58,8 +63,13 @@ public class SearchSuggestionsSystem {
         return null;
     }
 
+
+
     /**
      * Time Cost 18ms
+     * Design a system that suggests at most three product names from products
+     * after each character of searchWord is typed
+     *
      * @param products
      * @param searchWord
      * @return
@@ -94,11 +104,12 @@ public class SearchSuggestionsSystem {
 
 
     static class TrieNode {
+        TrieNode[] children = new TrieNode[26];
+
         /**
          * The index of sorted products.
          */
         List<Integer> idxList = new ArrayList<>();
-        TrieNode[] children = new TrieNode[26];
 
         /**
          * Store word and its index-i into the Trie-Tree
@@ -135,6 +146,9 @@ public class SearchSuggestionsSystem {
                     break;
                 }
                 node = node.children[idx];
+                /**
+                 * Collect the words-index with same character.
+                 */
                 res[i] = node.idxList;
             }
             return res;
