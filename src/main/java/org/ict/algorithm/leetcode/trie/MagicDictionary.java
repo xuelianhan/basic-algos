@@ -46,7 +46,7 @@ import java.util.Set;
  * At most 100 calls will be made to search.
  * @author sniper
  * @date 13 Nov, 2022
- * LC676
+ * LC676, Medium
  */
 public class MagicDictionary {
 

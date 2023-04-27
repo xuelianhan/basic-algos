@@ -34,7 +34,7 @@ import java.util.*;
  * words[i] consists of only lowercase letters.
  * @author sniper
  * @date 14 Nov, 2022
- * LC820
+ * LC820, Medium
  */
 public class ShortEncodingOfWords {
 

@@ -1,5 +1,7 @@
 package org.ict.algorithm.leetcode.trie;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -11,7 +13,12 @@ import java.util.List;
  *
  * Example 1:
  * Input: products = ["mobile","mouse","moneypot","monitor","mousepad"], searchWord = "mouse"
- * Output: [["mobile","moneypot","monitor"],["mobile","moneypot","monitor"],["mouse","mousepad"],["mouse","mousepad"],["mouse","mousepad"]]
+ * Output: [
+ * ["mobile","moneypot","monitor"],
+ * ["mobile","moneypot","monitor"],
+ * ["mouse","mousepad"],
+ * ["mouse","mousepad"],
+ * ["mouse","mousepad"]]
  * Explanation: products sorted lexicographically = ["mobile","moneypot","monitor","mouse","mousepad"].
  * After typing m and mo all products match and we show user ["mobile","moneypot","monitor"].
  * After typing mou, mous and mouse the system suggests ["mouse","mousepad"].
@@ -19,7 +26,7 @@ import java.util.List;
  * Example 2:
  * Input: products = ["havana"], searchWord = "havana"
  * Output: [["havana"],["havana"],["havana"],["havana"],["havana"],["havana"]]
- * Explanation: The only word "havana" will be always suggested while typing the search word.
+ * Explanation: The only word "havana" will always be suggested while typing the search word.
  *
  *
  * Constraints:
@@ -37,14 +44,104 @@ import java.util.List;
  */
 public class SearchSuggestionsSystem {
 
+    public static void main(String[] args) {
+        String[] products = {"mobile","mouse","moneypot","monitor","mousepad"};
+        String searchWord = "mouse";
+
+        SearchSuggestionsSystem instance = new SearchSuggestionsSystem();
+        List<List<String>> res = instance.suggestedProducts(products, searchWord);
+        res.forEach(System.out::println);
+    }
+
     public List<List<String>> suggestedProductsV1(String[] products, String searchWord) {
         //todo
         return null;
     }
 
+    /**
+     * Time Cost 18ms
+     * @param products
+     * @param searchWord
+     * @return
+     */
     public List<List<String>> suggestedProducts(String[] products, String searchWord) {
-        //todo
-        return null;
+        /**
+         * This sorting assure the lexicographical order.
+         */
+        Arrays.sort(products);
+
+        /**
+         * Build Trie-Tree
+         */
+        TrieNode root = new TrieNode();
+        for (int i = 0; i < products.length; i++) {
+            root.insert(products[i], i);
+        }
+
+        /**
+         * To search and collect result.
+         */
+        List<List<String>> res = new ArrayList<>();
+        for (List<Integer> list : root.search(searchWord)) {
+            List<String> temp = new ArrayList<>();
+            for (int i : list) {
+                temp.add(products[i]);
+            }
+            res.add(temp);
+        }
+        return res;
     }
+
+
+    static class TrieNode {
+        /**
+         * The index of sorted products.
+         */
+        List<Integer> idxList = new ArrayList<>();
+        TrieNode[] children = new TrieNode[26];
+
+        /**
+         * Store word and its index-i into the Trie-Tree
+         * @param word
+         * @param i
+         */
+        public void insert(String word, int i) {
+            TrieNode node = this;
+            for (char ch : word.toCharArray()) {
+                int idx = ch - 'a';
+                if (node.children[idx] == null) {
+                    node.children[idx] = new TrieNode();
+                }
+                node = node.children[idx];
+                /**
+                 * If there are more than three products with a common prefix,
+                 * return the three lexicographically minimums products.
+                 */
+                if (node.idxList.size() < 3) {
+                    node.idxList.add(i);
+                }
+            }
+        }
+
+        public List<Integer>[] search(String word) {
+            int n = word.length();
+            List<Integer>[] res = new List[n];
+            Arrays.setAll(res, k -> new ArrayList<>());
+
+            TrieNode node = this;
+            for (int i = 0; i < n; i++) {
+                int idx = word.charAt(i) - 'a';
+                if (node.children[idx] == null) {
+                    break;
+                }
+                node = node.children[idx];
+                res[i] = node.idxList;
+            }
+            return res;
+        }
+
+    }
+
+
 
 }

@@ -34,6 +34,11 @@ public class AddDigits {
     /**
      * Congruence formula
      * @see <a href="https://en.wikipedia.org/wiki/Digital_root"></a>
+     * ---------------------------------------------------------------
+     * class Solution:
+     *     def addDigits(self, num: int) -> int:
+     *          return 0 if num == 0 else 1 + (num - 1) % 9;
+     *
      * @param num
      * @return
      */
