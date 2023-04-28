@@ -1,9 +1,6 @@
 package org.ict.algorithm.leetcode.trie;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * You are given an array of strings products and a string searchWord.
@@ -58,7 +55,6 @@ public class SearchSuggestionsSystem {
         //res.forEach(System.out::println);
     }
 
-
     /**
      * Understanding the following solution
      *
@@ -86,6 +82,8 @@ public class SearchSuggestionsSystem {
 
         /**
          * To search and collect result.
+         * Suggests at most three product names from products after each character of searchWord is typed,
+         * so the search result is a list with size at most three, it's implemented by insert operation above.
          */
         List<List<String>> res = new ArrayList<>();
         for (List<Integer> list : root.search(searchWord)) {
@@ -105,6 +103,8 @@ public class SearchSuggestionsSystem {
         /**
          * The index of sorted products.
          * Store the index instead of string itself, can save a lot of memory.
+         * e.g. words in products array and search-word may be both very large,
+         * so store word is not
          */
         List<Integer> idxList = new ArrayList<>();
 

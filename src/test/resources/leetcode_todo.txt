@@ -1,5 +1,4 @@
 68.Text Justification=64
-1396.Design Underground System=64
 1152.Analyze User Website Visit Pattern=56
 364.Nested List Weight Sum II=48
 1822.Sign of the Product of an Array=45
