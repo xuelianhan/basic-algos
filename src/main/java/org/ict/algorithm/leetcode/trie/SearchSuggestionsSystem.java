@@ -104,6 +104,7 @@ public class SearchSuggestionsSystem {
 
         /**
          * The index of sorted products.
+         * Store the index instead of string itself, can save a lot of memory.
          */
         List<Integer> idxList = new ArrayList<>();
 
