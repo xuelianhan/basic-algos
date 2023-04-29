@@ -9,9 +9,7 @@ import org.ict.algorithm.util.StdOut;
  * $ javac org/ict/algorithm/fundamentals/Queue.java 
  * $ java org/ict/algorithm/fundamentals/Queue < ../resources/tobe.txt 
  * to be or not to be (2 left in queue)
- *
- *
- * @see http://algs4.cs.princeton.edu/13stacks/Queue.java.html
+ * @see <a href="http://algs4.cs.princeton.edu/13stacks/Queue.java.html"></a>
  */
 public class Queue<Item> implements Iterable<Item> {
     

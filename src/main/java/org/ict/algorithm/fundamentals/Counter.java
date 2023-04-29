@@ -2,6 +2,7 @@ package org.ict.algorithm.fundamentals;
 import org.ict.algorithm.util.StdOut;
 import org.ict.algorithm.util.StdRandom;
 
+
 /***********************************************************
  * Compilation: javac org/ict/algorithm/util/Counter.java
  * Execution: java org/ict/algorithm/util/Counter  6 600000

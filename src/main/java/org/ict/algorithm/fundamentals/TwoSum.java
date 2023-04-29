@@ -1,5 +1,6 @@
 package org.ict.algorithm.fundamentals;
 
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,6 +16,9 @@ import org.ict.algorithm.util.StdOut;
  * 
  * Compilation:javac org/ict/algorithm/fundamentals/TwoSum.java
  * Execution: java org/ict/algorithm/fundamentals/TwoSum  ../resources/1Kints.txt
+=======
+/**
+>>>>>>> 6c9635f8... change package location
  * Reads n integers and counts the number of pairs that sum to zero.
  * Running time: n^2
  *
