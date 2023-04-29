@@ -14,9 +14,9 @@ public class Autoboxing {
     }
 
     public static void main(String[] args) {
-        cmp(new Integer(42), 42);
-        cmp(new Integer(42), 43);
-        cmp(new Integer(42), new Integer(42));
+        cmp(Integer.valueOf(42), 42);
+        cmp(Integer.valueOf(42), 43);
+        cmp(Integer.valueOf(42), Integer.valueOf(42));
         cmp(43, 43);
         cmp(143,143);
 
