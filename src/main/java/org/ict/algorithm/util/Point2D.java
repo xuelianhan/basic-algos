@@ -9,15 +9,16 @@ import java.util.Comparator;
  */
 public final class Point2D implements Comparable<Point2D> {
    
-    public static final Comparator<Point2D> X_ORDER = new XOrder();
-    
+	public static final Comparator<Point2D> X_ORDER = new XOrder();
+	    
     public static final Comparator<Point2D> Y_ORDER = new YOrder();
     
-    public static final Comparator<Point2D> R_ORDER = new ROrder();_
+    public static final Comparator<Point2D> R_ORDER = new ROrder();
 
     private final double x;
 
     private final double y;
+    
 
     public Point2D(double x, double y) {
         if (Double.isInfinite(x) || Double.isInfinite(y)) {
@@ -50,6 +51,8 @@ public final class Point2D implements Comparable<Point2D> {
         return Math.sqrt(x*x + y*y);
     }
     
+    
+    
     /**
      * https://en.wikipedia.org/wiki/Inverse_trigonometric_functionse
      * http://mathworld.wolfram.com/InverseTangent.html
@@ -58,10 +61,53 @@ public final class Point2D implements Comparable<Point2D> {
     public double theta() {
     	return Math.atan2(y, x);
     }
+    
+    private double angleTo(Point2D that) {
+    	double dx = that.x - this.x;
+    	double dy = that.y - this.y;
+    	return Math.atan2(dy, dx);
+    }
 
 	public int compareTo(Point2D o) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+    private static class XOrder implements Comparator<Point2D> {
+      public int compare(Point2D p, Point2D q) {
+          if (p.x < q.x){
+            return -1;
+          } else if (p.x > q.x) {
+            return 1;
+          } else {
+            return 0;
+          }
+      }
+    }
+
+    private static class YOrder implements Comparator<Point2D> {
+      public int compare(Point2D p, Point2D q) {
+          if (p.y < q.y){
+            return -1;
+          } else if (p.y > q.y) {
+            return 1;
+          } else {
+            return 0;
+          }
+      }
+    }
+
+    private static class ROrder implements Comparator<Point2D> {
+      public int compare(Point2D p, Point2D q) {
+          int delta = (p.x*p.x + p.y*p.y) - (q.x*q.x + q.y*q.y);
+          if (delta < 0){
+            return -1;
+          } else if (delta > 0) {
+            return 1;
+          } else {
+            return 0;
+          }
+      }
+    }
 
 }
