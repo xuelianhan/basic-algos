@@ -65,6 +65,7 @@ public final class In {
     private static final Pattern EVERYTHING_PATTERN = Pattern.compile("\\A");
 
     //// end: section (1 of 2) of code duplicated from In to StdIn.
+
     private Scanner scanner;
 
     /**
@@ -77,6 +78,7 @@ public final class In {
 
     /**
      * Initializes an input stream from a socket.
+     *
      * @param  socket the socket
      * @throws IllegalArgumentException if cannot open {@code socket}
      * @throws IllegalArgumentException if {@code socket} is {@code null}
@@ -95,6 +97,7 @@ public final class In {
 
     /**
      * Initializes an input stream from a URL.
+     *
      * @param  url the URL
      * @throws IllegalArgumentException if cannot open {@code url}
      * @throws IllegalArgumentException if {@code url} is {@code null}
@@ -178,6 +181,7 @@ public final class In {
 
             InputStream is     = site.getInputStream();
             scanner            = new Scanner(new BufferedInputStream(is), CHARSET_NAME);
+            scanner.useLocale(LOCALE);
         }
         catch (IOException ioe) {
             throw new IllegalArgumentException("Could not open " + name, ioe);
@@ -776,91 +780,7 @@ public final class In {
             System.out.println(e);
         }
         System.out.println();
-    }
-    
-    /**
-     * Reads all remaining tokens from this input stream and returns them as
-     * an array of strings.
-     *
-     * @return all remaining tokens in this input stream, as an array of strings.
-     */
-    public String[] readAllStrings() {
-        String[] tokens = WHITESPACE_PATTERN.split(readAll());
-        if (tokens.length == 0 || tokens[0].length() > 0) {
-            return tokens;
-        }
-        String[] decapitokens = new String[tokens.length - 1];
-        for (int i = 0; i < tokens.length - 1; i++) {
-            decapitokens[i] = tokens[i+1];
-        }
-        return decapitokens;
-    }
 
-    /**
-     * Reads all remaining lines from this input stream and returns them as
-     * an array of strings.
-     *
-     * @return all remaining lines in this input stream, as an array of strings
-     */
-    public String[] readAllLines() {
-        ArrayList<String> lines = new ArrayList<String>();
-        while (hasNextLine()) {
-            lines.add(readLine());
-        }
-        return lines.toArray(new String[lines.size()]);
-    }
-
-    /**
-     * Reads all remaining tokens from this input stream, parses them as integers,
-     * and returns them as an array of integers.
-     *
-     * @return all remaining lines in this input stream, as an array of integers
-     */
-    public int[] readAllInts() {
-        String[] fields = readAllStrings();
-        int[] vals = new int[fields.length];
-        for (int i = 0; i < fields.length; i++) {
-            vals[i] = Integer.parseInt(fields[i]);
-        }
-        return vals;
-    }
-
-    /**
-     * Reads all remaining tokens from this input stream, parses them as longs,
-     * and returns them as an array of longs.
-     *
-     * @return all remaining lines in this input stream, as an array of longs
-     */
-    public long[] readAllLongs() {
-        String[] fields = readAllStrings();
-        long[] vals = new long[fields.length];
-        for (int i = 0; i < fields.length; i++) {
-            vals[i] = Long.parseLong(fields[i]);
-        }
-        return vals;
-    }
-
-    /**
-     * Reads all remaining tokens from this input stream, parses them as doubles,
-     * and returns them as an array of doubles.
-     *
-     * @return all remaining lines in this input stream, as an array of doubles
-     */
-    public double[] readAllDoubles() {
-        String[] fields = readAllStrings();
-        double[] vals = new double[fields.length];
-        for (int i = 0; i < fields.length; i++) {
-            vals[i] = Double.parseDouble(fields[i]);
-        }
-        return vals;
-    }
-
-
-    /**
-     * Closes this input stream.
-     */
-    public void close() {
-        scanner.close();
     }
 
 }
