@@ -51,7 +51,7 @@ public final class Point2D implements Comparable<Point2D> {
     }
     
     /**
-     * https://en.wikipedia.org/wiki/Inverse_trigonometric_functions
+     * https://en.wikipedia.org/wiki/Inverse_trigonometric_functionse
      * http://mathworld.wolfram.com/InverseTangent.html
      * @return
      */
