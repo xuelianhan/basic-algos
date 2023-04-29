@@ -8,8 +8,8 @@ import java.util.concurrent.ThreadLocalRandom;
  * In particular, there is no need to reinvent the random integer generation wheel 
  * when there is a straightforward API within the standard library to accomplish the task.
  * 
- * @see http://www.mkyong.com/java/java-generate-random-integers-in-a-range/
- * @see https://stackoverflow.com/questions/363681/how-do-i-generate-random-integers-within-a-specific-range-in-java
+ * @see <a href="http://www.mkyong.com/java/java-generate-random-integers-in-a-range/"></a>
+ * @see <a href="https://stackoverflow.com/questions/363681/how-do-i-generate-random-integers-within-a-specific-range-in-java"></a>
  */
 public class RandomGenUtil {
     /**
@@ -58,6 +58,7 @@ public class RandomGenUtil {
         return r.nextInt((max - min) + 1) + min;
     }
 
+
     /**
      * This will generates a random integer between min (inclusive) and max (inclusive).
      * @param min
@@ -70,6 +71,6 @@ public class RandomGenUtil {
         }
         return (int)(Math.random() * ((max - min) + 1)) + min; 
     }
-    
-    
+
+
 }

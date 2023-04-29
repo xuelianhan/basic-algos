@@ -37,7 +37,7 @@ public class AnnieTestThree {
       }
       BigInteger sum = BigInteger.ZERO;
       for (int i : A) {
-        BigInteger b =  BigInteger.valueOf(new Double(Math.pow(2, i)).intValue());
+        BigInteger b =  BigInteger.valueOf(Double.valueOf(Math.pow(2, i)).intValue());
         sum = sum.add(b);
       }
       BigInteger three = new BigInteger("3");

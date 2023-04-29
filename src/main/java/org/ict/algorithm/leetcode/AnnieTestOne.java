@@ -45,7 +45,7 @@ public class AnnieTestOne {
     }
 
     public static void main(String[] args) {
-        int[] A = genRandomTestArray(1000000, 0, 5000000);
+        int[] A = genRandomTestArray(1000000, 0, 5_000_000);
         int diff = solutionA(A);
         System.out.println(diff);
     }
