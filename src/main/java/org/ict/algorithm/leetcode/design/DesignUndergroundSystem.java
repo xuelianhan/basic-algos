@@ -6,8 +6,8 @@ import java.util.Map;
 /**
  * An underground railway system is keeping track of customer travel times between different stations.
  * They are using this data to calculate the average time it takes to travel from one station to another.
- * Implement the UndergroundSystem class:
  *
+ * Implement the UndergroundSystem class:
  * void checkIn(int id, string stationName, int t)
  * A customer with a card ID equal to id, checks in at the station stationName at time t.
  * A customer can only be checked into one place at a time.
@@ -15,6 +15,7 @@ import java.util.Map;
  * A customer with a card ID equal to id, checks out from the station stationName at time t.
  * double getAverageTime(string startStation, string endStation)
  * Returns the average time it takes to travel from startStation to endStation.
+ *
  * The average time is computed from all the previous traveling times from startStation to endStation that happened directly,
  * meaning a check in at startStation followed by a check-out from endStation.
  * The time it takes to travel from startStation to endStation may be different from the time it takes to travel from endStation to startStation.
@@ -103,6 +104,26 @@ public class DesignUndergroundSystem {
 
     /**
      * Two HashMap
+     *
+     * class UndergroundSystem:
+     *   def __init__(self):
+     *     # {id: (stationName, time)}
+     *     self.checkIns = {}
+     *     # {route: (numTrips, totalTime)}
+     *     self.checkOuts = collections.defaultdict(lambda: [0, 0])
+     *
+     *   def checkIn(self, id: int, stationName: str, t: int) -> None:
+     *     self.checkIns[id] = (stationName, t)
+     *
+     *   def checkOut(self, id: int, stationName: str, t: int) -> None:
+     *     startStation, startTime = self.checkIns.pop(id)
+     *     route = (startStation, stationName)
+     *     self.checkOuts[route][0] += 1
+     *     self.checkOuts[route][1] += t - startTime
+     *
+     *   def getAverageTime(self, startStation: str, endStation: str) -> float:
+     *     numTrips, totalTime = self.checkOuts[(startStation, endStation)]
+     *     return totalTime / numTrips
      */
     class UndergroundSystemV1 {
 
@@ -137,6 +158,62 @@ public class DesignUndergroundSystem {
      * Three HashMap
      * Time Complexity O(1)
      * Space Complexity O(2*Persons + station^2)
+     *
+     * class UndergroundSystem:
+     *
+     *     def __init__(self):
+     *         self.ts = {}
+     *         self.d = {}
+     *
+     *     def checkIn(self, id: int, stationName: str, t: int) -> None:
+     *         self.ts[id] = (t, stationName)
+     *
+     *     def checkOut(self, id: int, stationName: str, t: int) -> None:
+     *         t0, station = self.ts[id]
+     *         x = self.d.get((station, stationName), (0, 0))
+     *         self.d[(station, stationName)] = (x[0] + t - t0, x[1] + 1)
+     *
+     *     def getAverageTime(self, startStation: str, endStation: str) -> float:
+     *         x = self.d[(startStation, endStation)]
+     *         return x[0] / x[1]
+     * ----------------------------------
+     * struct CheckIn {
+     *     string stationName;
+     *     int time;
+     * };
+     *
+     * struct CheckOut {
+     *     int numTrips;
+     *     int totalTime;
+     * };
+     *
+     * class UndergroundSystem {
+     * public:
+     *     UndergroundSystem() {
+     *
+     *     }
+     *
+     *     void checkIn(int id, string stationName, int t) {
+     *         checkIns[id] = {stationName, t};
+     *     }
+     *
+     *     void checkOut(int id, string stationName, int t) {
+     *         const auto [startStation, startTime] = checkIns[id];
+     *         checkIns.erase(id);
+     *         const string& route = startStation + "->" + stationName;
+     *         ++checkOuts[route].numTrips;
+     *         checkOuts[route].totalTime += t - startTime;
+     *     }
+     *
+     *     double getAverageTime(string startStation, string endStation) {
+     *         const auto& [numTrips, totalTime] = checkOuts[startStation + "->" + endStation];
+     *         return totalTime / (double)numTrips;
+     *     }
+     *
+     * private:
+     *     unordered_map<int, CheckIn> checkIns;
+     *     unordered_map<string, CheckOut> checkOuts;
+     * };
      */
     class UndergroundSystem {
 
@@ -156,7 +233,9 @@ public class DesignUndergroundSystem {
         public void checkOut(int id, String stationName, int t) {
             String trip = checkInIdName.get(id) + "->" + stationName;
             int[] costAndTimes = fromTo.getOrDefault(trip, new int[2]);
+            // total cost time
             costAndTimes[0] += (t - checkInIdTime.get(id));
+            // number of trips
             costAndTimes[1]++;
             fromTo.put(trip, costAndTimes);
         }
