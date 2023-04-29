@@ -73,7 +73,7 @@ public class LinkedBag<Item> implements Iterable<Item> {
     }
 
 
-    public static void main() {
+    public static void main(String[] args) {
         LinkedBag<String> bag = new LinkedBag<String>();
         while (!StdIn.isEmpty()) {
             String item = StdIn.readString();
