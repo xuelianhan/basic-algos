@@ -2,11 +2,8 @@ package org.ict.algorithm.util;
 
 import java.util.Locale;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.Socket;
@@ -22,69 +19,68 @@ import java.net.Socket;
  * by Robert Sedgewick and Kevin Wayne.
  *
  */
-public final class Out {
-    //force Unicode UTF-8 encoding; otherwise it's system dependent
+public class Out {
+
+    // force Unicode UTF-8 encoding; otherwise it's system dependent
     private static final String CHARSET_NAME = "UTF-8";
-    //assume language = English, country = US for consistency with In
+
+    // assume language = English, country = US for consistency with In
     private static final Locale LOCALE = Locale.US;
-   
+
     private PrintWriter out;
-    
+
     /**
-     * Initializes an output stream from a {@link OutputStream}
-     * @param os the {@code OutputStream}
+     * Initializes an output stream from a {@link OutputStream}.
+     *
+     * @param  os the {@code OutputStream}
      */
     public Out(OutputStream os) {
         try {
             OutputStreamWriter osw = new OutputStreamWriter(os, CHARSET_NAME);
             out = new PrintWriter(osw, true);
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             e.printStackTrace();
         }
     }
-    
+
     /**
-     * Innitializes an output stream from standard output.
+     * Initializes an output stream from standard output.
      */
     public Out() {
         this(System.out);
     }
 
     /**
-     *
      * Initializes an output stream from a socket.
-     * @param socket the socket
+     *
+     * @param  socket the socket
      */
     public Out(Socket socket) {
         try {
             OutputStream os = socket.getOutputStream();
             OutputStreamWriter osw = new OutputStreamWriter(os, CHARSET_NAME);
             out = new PrintWriter(osw, true);
-        } catch (IOException e) {
-            e.printStackTrace(); 
+        }
+        catch (IOException e) {
+            e.printStackTrace();
         }
     }
-    
+
     /**
      * Initializes an output stream from a file.
-     * 
-     * @param filename the name of the file
+     *
+     * @param  filename the name of the file
      */
     public Out(String filename) {
         try {
-            File f = new File(filename);
-            if (!f.exists()) {
-                f.createNewFile();
-            }
             OutputStream os = new FileOutputStream(filename);
             OutputStreamWriter osw = new OutputStreamWriter(os, CHARSET_NAME);
             out = new PrintWriter(osw, true);
-        } catch (FileNotFoundException | UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             e.printStackTrace();
         }
-        
     }
 
     /**
@@ -103,6 +99,7 @@ public final class Out {
 
     /**
      * Prints an object to this output stream and then terminates the line.
+     *
      * @param x the object to print
      */
     public void println(Object x) {
@@ -111,6 +108,7 @@ public final class Out {
 
     /**
      * Prints a boolean to this output stream and then terminates the line.
+     *
      * @param x the boolean to print
      */
     public void println(boolean x) {
@@ -119,6 +117,7 @@ public final class Out {
 
     /**
      * Prints a character to this output stream and then terminates the line.
+     *
      * @param x the character to print
      */
     public void println(char x) {
@@ -127,6 +126,7 @@ public final class Out {
 
     /**
      * Prints a double to this output stream and then terminates the line.
+     *
      * @param x the double to print
      */
     public void println(double x) {
@@ -135,6 +135,7 @@ public final class Out {
 
     /**
      * Prints a float to this output stream and then terminates the line.
+     *
      * @param x the float to print
      */
     public void println(float x) {
@@ -143,6 +144,7 @@ public final class Out {
 
     /**
      * Prints an integer to this output stream and then terminates the line.
+     *
      * @param x the integer to print
      */
     public void println(int x) {
@@ -151,6 +153,7 @@ public final class Out {
 
     /**
      * Prints a long to this output stream and then terminates the line.
+     *
      * @param x the long to print
      */
     public void println(long x) {
@@ -160,22 +163,26 @@ public final class Out {
     /**
      * Prints a byte to this output stream and then terminates the line.
      * <p>
-     * To write binary data, see {@link BinaryOut}
+     * To write binary data, see {@link BinaryOut}.
+     *
      * @param x the byte to print
      */
     public void println(byte x) {
         out.println(x);
     }
 
+
+
     /**
      * Flushes this output stream.
      */
-    public void flush() {
+    public void print() {
         out.flush();
     }
 
     /**
      * Prints an object to this output stream and flushes this output stream.
+     *
      * @param x the object to print
      */
     public void print(Object x) {
@@ -184,7 +191,18 @@ public final class Out {
     }
 
     /**
+     * Prints a boolean to this output stream and flushes this output stream.
+     *
+     * @param x the boolean to print
+     */
+    public void print(boolean x) {
+        out.print(x);
+        out.flush();
+    }
+
+    /**
      * Prints a character to this output stream and flushes this output stream.
+     *
      * @param x the character to print
      */
     public void print(char x) {
@@ -194,6 +212,7 @@ public final class Out {
 
     /**
      * Prints a double to this output stream and flushes this output stream.
+     *
      * @param x the double to print
      */
     public void print(double x) {
@@ -203,6 +222,7 @@ public final class Out {
 
     /**
      * Prints a float to this output stream and flushes this output stream.
+     *
      * @param x the float to print
      */
     public void print(float x) {
@@ -212,6 +232,7 @@ public final class Out {
 
     /**
      * Prints an integer to this output stream and flushes this output stream.
+     *
      * @param x the integer to print
      */
     public void print(int x) {
@@ -220,8 +241,9 @@ public final class Out {
     }
 
     /**
-     * Prints a long to this output stream and flushes this output stream.
-     * @param x the long to print
+     * Prints a long integer to this output stream and flushes this output stream.
+     *
+     * @param x the long integer to print
      */
     public void print(long x) {
         out.print(x);
@@ -230,6 +252,7 @@ public final class Out {
 
     /**
      * Prints a byte to this output stream and flushes this output stream.
+     *
      * @param x the byte to print
      */
     public void print(byte x) {
@@ -250,8 +273,8 @@ public final class Out {
     }
 
     /**
-     * Prints a formatted string to this output stream, using the specified format
-     * string and arguments, and then flushes this output stream.
+     * Prints a formatted string to this output stream, using the specified
+     * locale, format string, and arguments, and then flushes this output stream.
      *
      * @param locale the locale
      * @param format the format string
@@ -262,17 +285,24 @@ public final class Out {
         out.flush();
     }
 
+
     /**
      * A test client.
+     *
      * @param args the command-line arguments
      */
     public static void main(String[] args) {
-        Out out = new Out();
+        Out out;
+
+        // write to stdout
+        out = new Out();
         out.println("Test 1");
         out.close();
 
-        out = new Out("/home/hanxuelian/Public/basic-algos/src/main/resources/out-test.log");
+        // write to a file
+        out = new Out("test.txt");
         out.println("Test 2");
         out.close();
     }
+
 }

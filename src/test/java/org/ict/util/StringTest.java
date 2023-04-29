@@ -2,7 +2,6 @@ package org.ict.util;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.commons.lang3.StringUtils;
 import org.ict.algorithm.util.StdOut;
 
@@ -127,8 +126,9 @@ public class StringTest {
 
 	public void testSorted() {
 		String[] a = new String[]{"ab", "bc", "ca"};
-		StdOut.print(isSorted(a));
+		System.out.println(isSorted(a));
 	}
+
 
     public boolean isPalindrome(String s) {
         int N = s.length();
@@ -137,7 +137,7 @@ public class StringTest {
                 return false;
             }
         }
-        return true; 
+        return true;
     }
 
     public boolean isSorted(String[] a) {
@@ -152,7 +152,7 @@ public class StringTest {
 	public void testStrMutate() {
 		String s1 = "hello";
 		String s2 = s1;
-		
+
 		s1 = "world";
 		System.out.println(s1);
 		System.out.println(s2);
@@ -163,7 +163,7 @@ public class StringTest {
 		String t = "CDDABAB";
 		System.out.println(circularRotate(s, t));
 	}
-	
+
 	public boolean circularRotate(String s, String t) {
 		boolean flag = false;
 		if (s.length() == t.length()) {
@@ -174,8 +174,8 @@ public class StringTest {
 		}
 		return flag;
 	}
-	
-	public static String reverseStr(final String s) {
+
+	public String reverseStr(final String s) {
 		if (s == null) {
 			return null;
 		}
