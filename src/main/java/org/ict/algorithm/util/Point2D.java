@@ -54,7 +54,7 @@ public final class Point2D implements Comparable<Point2D> {
     
     
     /**
-     * https://en.wikipedia.org/wiki/Inverse_trigonometric_functionse
+     * https://en.wikipedia.org/wiki/Inverse_trigonometric_functions
      * http://mathworld.wolfram.com/InverseTangent.html
      * @return
      */
@@ -67,47 +67,76 @@ public final class Point2D implements Comparable<Point2D> {
     	double dy = that.y - this.y;
     	return Math.atan2(dy, dx);
     }
+    
+    /**
+     * Shoelace formula
+     * Return twice the signed area of the triangle a-b-c
+     * the area size is Math.abs(a.x * b.y + b.x * c.y + c.x * a.y - b.x * a.y - c.x * b.y - a.x * c.y)
+     */
+    public static double area2(Point2D a, Point2D b, Point2D c) {
+      return a.x * b.y + b.x * c.y + c.x * a.y - b.x * a.y - c.x * b.y - a.x * c.y;
+    }
 
 	public int compareTo(Point2D o) {
-		// TODO Auto-generated method stub
-		return 0;
+        if (this.y < o.y) return -1;
+        if (this.y > o.y) return 1;
+        if (this.x < o.x) return -1;
+        if (this.x > o.x) return 1;
+	    return 0;
 	}
 
     private static class XOrder implements Comparator<Point2D> {
-      public int compare(Point2D p, Point2D q) {
-          if (p.x < q.x){
-            return -1;
-          } else if (p.x > q.x) {
-            return 1;
-          } else {
-            return 0;
-          }
-      }
+        public int compare(Point2D p, Point2D q) {
+            if (p.x < q.x){
+                return -1;
+            } else if (p.x > q.x) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
     }
 
     private static class YOrder implements Comparator<Point2D> {
-      public int compare(Point2D p, Point2D q) {
-          if (p.y < q.y){
-            return -1;
-          } else if (p.y > q.y) {
-            return 1;
-          } else {
-            return 0;
-          }
-      }
+        public int compare(Point2D p, Point2D q) {
+            if (p.y < q.y){
+                return -1;
+            } else if (p.y > q.y) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
     }
 
     private static class ROrder implements Comparator<Point2D> {
-      public int compare(Point2D p, Point2D q) {
-          int delta = (p.x*p.x + p.y*p.y) - (q.x*q.x + q.y*q.y);
-          if (delta < 0){
-            return -1;
-          } else if (delta > 0) {
-            return 1;
-          } else {
-            return 0;
-          }
-      }
+        public int compare(Point2D p, Point2D q) {
+            int delta = (p.x*p.x + p.y*p.y) - (q.x*q.x + q.y*q.y);
+            if (delta < 0){
+                return -1;
+            } else if (delta > 0) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
     }
+
+    private static class Atan2Order implements Comparator<Point2D> {
+        public int compare(Point2D q1, Point2D q2) {
+            double angle1 = angleTo(q1);
+            double angle2 = angleTo(q2);
+            if (angle1 < angle2) {
+                return -1;
+            } else if (angle1 > angle2) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
+    }
+
+
+
 
 }
