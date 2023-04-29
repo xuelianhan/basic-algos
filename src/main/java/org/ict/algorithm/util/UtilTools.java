@@ -1,10 +1,12 @@
 package org.ict.algorithm.util;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class UtilTools {
-	
+
 	public static void showArrayData(Comparable[] a) {
 		for (int i = 0; i < a.length; i++) {
 			if (i == (a.length - 1))
@@ -14,6 +16,7 @@ public class UtilTools {
 		}
 	}
 	
+
 	public static void testListAddNull() {
 	    List<String> list = new ArrayList<String>();
 	    list.add(null);
@@ -23,5 +26,6 @@ public class UtilTools {
 	public static void main(String[] args) {
 	    testListAddNull();
 	}
+
 
 }	
