@@ -2,6 +2,8 @@ package org.ict.algorithm.list;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import org.ict.algorithm.util.StdOut;
+
 public class DelDuplicatedNodes {
 
     public static void delDupNodes(SingleLinkedList list) {
@@ -10,7 +12,7 @@ public class DelDuplicatedNodes {
        while (iter.hasNext()) {
             String s = iter.next();
             if (set.contains(s)) {
-                list.remove(s):
+                list.remove(s);
             } else {
                 set.add(s);
             }

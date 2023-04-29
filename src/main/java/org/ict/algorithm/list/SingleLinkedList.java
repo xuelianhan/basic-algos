@@ -103,7 +103,7 @@ public class SingleLinkedList<Item> implements Iterable<Item> {
         }
 
         public void remove() {
-            throw new UnsupportedOperationException();
+           throw new UnsupportedOperationException(); 
         }
 
     }
