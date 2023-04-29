@@ -3,7 +3,7 @@ package org.ict.algorithm.util;
 import java.util.Comparator;
 
 /**
- *
+ * http://algs4.cs.princeton.edu/12oop/Point2D.java.html
  * @author Robert Sedgewick
  * @author Kevin Wayne
  */
