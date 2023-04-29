@@ -1,6 +1,7 @@
 #maven compile directory
 target/*
 classes/*
+src/test/*/*.class
 
 
 #Use wildcards as well
