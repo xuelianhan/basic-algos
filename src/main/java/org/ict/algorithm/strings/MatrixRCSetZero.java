@@ -3,7 +3,7 @@ package org.ict.algorithm.strings;
 import java.util.Arrays;
 /**
  * Tue Jul  5 11:28:58 CST 2016
- * Write an algorithm such that if an element in an MxN matrix is 0,its entire row an column are set to 0.
+ * Write an algorithm such that if an element in an MxN matrix is 0,its entire row a column are set to 0.
  */
 public class MatrixRCSetZero {
 
@@ -101,6 +101,7 @@ public class MatrixRCSetZero {
            matrix[i][0] = 0;
          }
        }
+
     }
     
     public static void main(String[] args) {
@@ -113,9 +114,7 @@ public class MatrixRCSetZero {
         //obj.setZeroOne(matrix);
         obj.setZeroTwo(matrix);
         System.out.println("After being set to zero matrix:");
-        for (int[] row : matrix) {
-          System.out.println(Arrays.toString(row));
-        }
+
     }
 
 
