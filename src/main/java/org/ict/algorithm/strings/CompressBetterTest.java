@@ -100,6 +100,7 @@ public class CompressBetterTest {
         //System.out.println(countCompression(str));
         System.out.println(compressBetter(str));
         System.out.println(compressBetterAnother(str));
+
     }
 
 }
