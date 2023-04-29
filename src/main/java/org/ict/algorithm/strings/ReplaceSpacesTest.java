@@ -1,6 +1,5 @@
 package org.ict.algorithm.strings;
 
-
 /**
  *
  * 1.4.Write a method to replace all spaces in a stirng with '%20'.You may assume that the
