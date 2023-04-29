@@ -40,4 +40,3 @@ do
   echo "Finished processing file:"$aclog
 done
 echo "Final results have been written into directory "$MID_RS_LOG_DIR
-      
