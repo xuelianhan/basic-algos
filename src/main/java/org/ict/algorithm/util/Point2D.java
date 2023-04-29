@@ -1,5 +1,7 @@
 package org.ict.algorithm.util;
 
+import java.util.Comparator;
+
 /**
  *
  * @author Robert Sedgewick
@@ -46,6 +48,15 @@ public final class Point2D implements Comparable<Point2D> {
 
     public double r() {
         return Math.sqrt(x*x + y*y);
+    }
+    
+    /**
+     * https://en.wikipedia.org/wiki/Inverse_trigonometric_functions
+     * http://mathworld.wolfram.com/InverseTangent.html
+     * @return
+     */
+    public double theta() {
+    	return Math.atan2(y, x);
     }
 
 	public int compareTo(Point2D o) {
