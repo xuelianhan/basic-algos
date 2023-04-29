@@ -1,11 +1,11 @@
 package org.ict.algorithm.list;
 
 import java.util.Iterator;
-
+import org.ict.algorithm.util.StdOut;
 /**
  *
  *
- *
+ * Tue Aug  2 10:19:08 CST 2016
  */
 public class SingleLinkedList<Item> implements Iterable<Item> {
 
@@ -18,7 +18,7 @@ public class SingleLinkedList<Item> implements Iterable<Item> {
         N = 0;
     }
 
-    private class Node<Item> {
+    private class Node {
         private Item item; 
         private Node next;
     }
@@ -39,9 +39,17 @@ public class SingleLinkedList<Item> implements Iterable<Item> {
         N++;
     }
 
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (Item item : this) {
+            sb.append(" " + item);
+        }
+        return sb.toString();
+    }
+
     public void remove(Item data) {
+        Node prior = null;
         if (data == null) {
-           Node prior = null;
            for (Node n = first; n != null;) {
                if (n.item == null) {
                    prior.next = n.next; 
@@ -71,21 +79,39 @@ public class SingleLinkedList<Item> implements Iterable<Item> {
         private Node cur = first; 
         
         public boolean hasNext() {
-            return cur == null;
+            return cur != null;
         }
 
         public Item next() {
             if (!hasNext()) {
                 throw new IllegalArgumentException();
             }
-            return  
+            Item item = cur.item;
+            cur = cur.next;
+            return item; 
+        }
+
+        public void remove() {
+            throw new UnsupportedOperationException();
         }
 
     }
 
     public static void main(String[] args) {
-
-
+        SingleLinkedList<String> sl = new SingleLinkedList<String>();
+        sl.add("A");
+        sl.add("B");
+        sl.add("C");
+        sl.add("D");
+        
+        StdOut.println("Input:" + sl + "\nOutput:");
+        Iterator<String> iter = sl.iterator();
+        while (iter.hasNext()) {
+            String s = iter.next();
+            StdOut.print(s + ",");
+        }
+        sl.remove("A");
+        StdOut.println("\nAfter A has been removed, Output:" + sl + "\n");
     }
 
 }
