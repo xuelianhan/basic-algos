@@ -68,6 +68,19 @@ public class SingleLinkedList<Item> implements Iterable<Item> {
 
     private class ListIterator implements Iterator<Item> {
 
+        private Node cur = first; 
+        
+        public boolean hasNext() {
+            return cur == null;
+        }
+
+        public Item next() {
+            if (!hasNext()) {
+                throw new IllegalArgumentException();
+            }
+            return  
+        }
+
     }
 
     public static void main(String[] args) {

@@ -1,6 +1,7 @@
 package org.ict.algorithm.util;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class LinkedQueue<Item> implements Iterable<Item> {
     
@@ -14,6 +15,7 @@ public class LinkedQueue<Item> implements Iterable<Item> {
         this.first = null;
         this.last = null;
         N = 0;
+        check();
     }
 
     public int size() {
@@ -42,43 +44,95 @@ public class LinkedQueue<Item> implements Iterable<Item> {
           oldlast.next = last;
         }
         N++;
+        check();
     }
 
     public Item peek() {
-        return null;
+        if (isEmpty()) {
+            throw new NoSuchElementException("Queue underflow");
+        }
+        return first.item;
     }
 
     public Item dequeue() {
-
+        if (isEmpty()) {
+            throw new NoSuchElementException("Queue underflow");
+        }
+        Item item = first.item;
+        first = first.next;
+        N--;
+        if (isEmpty()) {
+            last = null;//to avoid loitering
+        }
+        check();
+        return item;
     }
 
     public String toString() {
-        return null;
+        StringBuilder sb = new StringBuilder();
+        for (Item item : this) {
+            sb.append(item + " ");
+        }
+        return sb.toString();
     }
 
     public Iterator<Item> iterator(){
-        return null;
+        return new ListIterator();
     }
 
     private class ListIterator implements Iterator<Item> {
         private Node current = first;
 
-        boolean hasNext() {
-
+        public boolean hasNext() {
+            return current != null;    
         }
 
-        Item next() {
-
+        public Item next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            Item item = current.item;
+            current = current.next;
+            return item;
         }
 
-        void remove() {
-
+        public void remove() {
+            throw new UnsupportedOperationException();
         }
 
     }
 
-    private boolean check() {
-        return true;
+    private void check() {
+        if (N < 0) {
+            throw new IllegalStateException("N cannot be negative number! ");
+        } else if (N == 0) {
+            if (first != null || last != null) {
+                throw new IllegalStateException("Head Tail pointer are not equal to null when N is zero");
+            }
+        } else if (N == 1) {
+            if (first == null || last == null || first != last || first.next != null) {
+                throw new IllegalStateException("Head Tail pointer are not illegal when N is one");
+            }
+        } else {
+            if (first == null || last == null || first == last || first.next == null || last.next != null) {
+                throw new IllegalStateException("Head Tail pointer are not illegal when N is more than one");
+            }
+            //check internal consistency of instance variable N
+            int numberOfNodes = 0;
+            for (Node x = first; (x != null) && (numberOfNodes <= N); x = x.next) {
+                numberOfNodes++;
+            }
+            if (numberOfNodes != N) {
+                throw new IllegalStateException("Number of Nodes is not equals to N");
+            }
+            Node lastNode = first;
+            while (lastNode.next != null) {
+                lastNode = lastNode.next;
+            }
+            if (lastNode != last) {
+                throw new IllegalStateException("Last Node is not equals to last pointer");
+            }
+        }
     }
 
     public static void main(String[] args) {
