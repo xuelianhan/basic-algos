@@ -55,9 +55,7 @@ public class StaticSETofInts {
 
     public static void main(String[] args) {
         int[] keys = {1,5,2,9,3,8,4};
-
         StaticSETofInts ssoi = new StaticSETofInts(keys);
-
         System.out.println(ssoi.contains(3));
     }
 
