@@ -31,6 +31,9 @@ public class RotateImageTest {
                 matrix[j][first] = matrix[last][j]; 
                 //right to bottom
                 matrix[last][j] = matrix[i][last];
+                //top to right
+                matrix[i][last] = top;
+
             }
         }
     }
