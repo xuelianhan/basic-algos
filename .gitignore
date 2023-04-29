@@ -12,3 +12,6 @@ src/test/*/*.class
 *.un~
 *.idea/*
 *.settings/*
+
+*.classpath
+*.project
