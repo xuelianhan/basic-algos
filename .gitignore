@@ -1,5 +1,6 @@
 #maven compile directory
-/target/*
+target/*
+classes/*
 
 
 #Use wildcards as well
