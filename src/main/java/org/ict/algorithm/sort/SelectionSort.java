@@ -48,8 +48,9 @@ public class SelectionSort {
 			}
 			if (i != min)
 				exchange(a,min,i);
-			assert isSorted(a,c,0,N);
+			assert isSorted(a,c,0,i);
 		}
+		assert isSorted(a, c);
 
 	}
 

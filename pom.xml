@@ -177,7 +177,6 @@
 							<manifest>
 								<addClasspath>true</addClasspath>
 								<classpathPrefix>lib/</classpathPrefix>
-								<!--<mainClass>org.ict.algorithm.sort.SelectionSort</mainClass> -->
 							</manifest>
 						</archive>
 					</configuration>
