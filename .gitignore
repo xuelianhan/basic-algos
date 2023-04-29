@@ -11,3 +11,4 @@ src/test/*/*.class
 *.class
 *.un~
 *.idea/*
+*.settings/*
