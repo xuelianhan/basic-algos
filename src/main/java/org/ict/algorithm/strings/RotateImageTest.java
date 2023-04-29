@@ -1,14 +1,15 @@
 package org.ict.algorithm.strings;
 
 import java.util.Arrays;
+
 /**
  *
  * Given an image represented by an NxN matrix, where each pixel in the image is 4 bytes,
  * write a method to rotate the image by 90 degrees.Can you do this in place?
- * @see http://stackoverflow.com/questions/25882480/rotating-a-nxn-matrix-in-java
- * @see http://stackoverflow.com/questions/2799755/rotate-array-clockwise
- * @see http://www.programcreek.com/2013/01/leetcode-rotate-image-java/
- * @see http://www.geeksforgeeks.org/rotate-matrix-elements/
+ * @see <a href="http://stackoverflow.com/questions/25882480/rotating-a-nxn-matrix-in-java"></a>
+ * @see <a href="http://stackoverflow.com/questions/2799755/rotate-array-clockwise"></a>
+ * @see <a href="http://www.programcreek.com/2013/01/leetcode-rotate-image-java/"></a>
+ * @see <a href="http://www.geeksforgeeks.org/rotate-matrix-elements/"></a>
  *
  */
 public class RotateImageTest {
