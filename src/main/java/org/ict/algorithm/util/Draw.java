@@ -7,9 +7,9 @@
  *  allows you to create drawings consisting of points, lines, and curves
  *  in a window on your computer and to save the drawings to a file.
  *  This is the object-oriented version of standard draw; it supports
- *  multiple indepedent drawing windows.
+ *  multiple independent drawing windows.
  *
- *  Todo
+ *
  *  ----
  *    -  Add support for gradient fill, etc.
  *
@@ -62,6 +62,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
+
+
 /**
  *  <i>Draw</i>. This class provides a basic capability for
  *  creating drawings with your programs. It uses a simple graphics model that
@@ -76,6 +78,7 @@ import javax.swing.KeyStroke;
  *  @author Robert Sedgewick
  *  @author Kevin Wayne
  */
+
 
 public final class Draw implements ActionListener, MouseListener, MouseMotionListener, KeyListener {
 
