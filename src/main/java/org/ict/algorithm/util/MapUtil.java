@@ -5,10 +5,9 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+
 /***
- * 
- * @see http://stackoverflow.com/questions/109383/sort-a-mapkey-value-by-values-java
- *
+ * @see <a href="http://stackoverflow.com/questions/109383/sort-a-mapkey-value-by-values-java"></a>
  */
 public class MapUtil {
 
@@ -56,6 +55,7 @@ public class MapUtil {
 		}
 		return result;
 	}
+
 
 	/**
 	 * @see <a href="https://stackoverflow.com/questions/40772997/how-to-convert-listv-into-mapk-listv-with-java-8-streams-and-custom-list"></a>

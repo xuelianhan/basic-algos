@@ -12,14 +12,18 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+
 import org.ict.algorithm.util.MapUtil;
 
 /**
+<<<<<<< HEAD
  * Amazon written test
  *
  */
 
 /**
+=======
+>>>>>>> 30ad7c61... add code
  * U1,/
  * U1,subscribers
  * U2,/
@@ -29,6 +33,7 @@ import org.ict.algorithm.util.MapUtil;
  * U2,filter
  * U2,export
  * U3,/
+<<<<<<< HEAD
  * u3,subscribers 
  * U3,filter
  * U3,export
@@ -39,6 +44,13 @@ import org.ict.algorithm.util.MapUtil;
  * U5,subscribers 
  * U5,filter
  * The most frequent 3 page sequence:
+=======
+ * The most frequent 3 page sequence:
+ * U1:/-->subscribers-->filter-->export
+ * U2:/-->subscribers-->filter-->export
+ * U3:/
+ * 
+>>>>>>> 30ad7c61... add code
  * results:
  * /-->subscribers-->filter
  * subscribers-->filter-->export
@@ -58,7 +70,7 @@ public class ThreeMaxPagesPath {
 				fw = new FileWriter(f);
 				bw = new BufferedWriter(fw);
 				
-				for (int i = 0; i < 100000; i++) {
+				for (int i = 0; i < 100_000; i++) {
 					
 				}
 			} catch (IOException e) {
@@ -78,7 +90,7 @@ public class ThreeMaxPagesPath {
 		}
 		return f;
 	}
-	
+
 	public static Map<String, Integer> findThreeMaxPagesPathV1(String file, String separator, int depth) {
 		Map<String, Integer> pageVisitCounts = new HashMap<String, Integer>();
 		if (file == null || "".equals(file)) {
@@ -103,6 +115,7 @@ public class ThreeMaxPagesPath {
 					urlLinkedList = new LinkedList<String>();
 				} else {
 					urlLinkedList = userUrls.get(user);
+
 					String pages = "";
 					if (urlLinkedList.size() == (depth - 1)) {
 						pages = urlLinkedList.get(0).trim() + separator + urlLinkedList.get(1).trim() + separator + page;
@@ -133,6 +146,7 @@ public class ThreeMaxPagesPath {
 		String file = "/home/hanxuelian/Desktop/test-access.log";
 		String separator = ",";
 		Map<String, Integer> pageVisitCounts = findThreeMaxPagesPathV1(file, separator, 3);
+
 		System.out.println(pageVisitCounts.size());
 		Map<String, Integer>  result = MapUtil.sortByValueDescendOrder(pageVisitCounts);
 		System.out.println(result);
