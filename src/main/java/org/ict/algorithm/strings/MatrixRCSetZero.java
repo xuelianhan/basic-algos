@@ -6,8 +6,6 @@ import java.util.Arrays;
  * Write an algorithm such that if an element in an MxN matrix is 0,its entire row a column are set to 0.
  */
 public class MatrixRCSetZero {
-
-
     /**
      * The following code takes O(N) space by using an boolean array to indicate the row and collumn
      * whether has zero or not.
@@ -101,21 +99,18 @@ public class MatrixRCSetZero {
            matrix[i][0] = 0;
          }
        }
-
     }
     
     public static void main(String[] args) {
-        int[][] matrix = {{0, 1, 1, 1},{2, 0, 3, 9},{1, 1, 1, 4}, {8, 6, 3, 5}};
+        int[][] matrix = {{0, 1, 1, 1}, {2, 0, 3, 9}, {1, 1, 1, 4}, {8, 6, 3, 5}};
         System.out.println("Raw input matrix:");
         for (int[] row : matrix) {
-          System.out.println(Arrays.toString(row));
+            System.out.println(Arrays.toString(row));
         }
         MatrixRCSetZero obj = new MatrixRCSetZero();
         //obj.setZeroOne(matrix);
         obj.setZeroTwo(matrix);
         System.out.println("After being set to zero matrix:");
-
     }
-
 
 }
