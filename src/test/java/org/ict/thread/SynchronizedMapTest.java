@@ -7,8 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *
- * @see http://stackoverflow.com/questions/567068/java-synchronized-block-vs-collections-synchronizedmap
+ * @see <a href="http://stackoverflow.com/questions/567068/java-synchronized-block-vs-collections-synchronizedmap"></a>
  */
 public class SynchronizedMapTest {
 
@@ -51,6 +50,7 @@ public class SynchronizedMapTest {
 			
 			t.start();
 			r.start();
+
 		}
 	}
 }
