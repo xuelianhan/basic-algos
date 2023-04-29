@@ -4,14 +4,13 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * http://chriswu.me/blog/a-lru-cache-in-10-lines-of-java/
- * http://stackoverflow.com/questions/23772102/lru-cache-in-java-with-generics-and-o1-operations
- * http://www.programcreek.com/2013/03/leetcode-lru-cache-java/
+ * @see <a href=http://chriswu.me/blog/a-lru-cache-in-10-lines-of-java/"></a>
+ * @see <a href=http://stackoverflow.com/questions/23772102/lru-cache-in-java-with-generics-and-o1-operations"></a>
+ * @see <a href=http://www.programcreek.com/2013/03/leetcode-lru-cache-java/"></a>
+ * @see <a href="http://www.source-code.biz/snippets/java/6.htm"></a>
+ * @see org.ict.algorithm.util.LRUCacheWithMap
  * @param <K>
  * @param <V>
- * @see org.ict.rpc.common.utils.LRUCache for another thread-safe implementation version
- * @see org.ict.algorithm.util.LRUCacheWithMap
- * @see http://www.source-code.biz/snippets/java/6.htm
  */
 public class LRUCache<K, V> extends LinkedHashMap<K,V> {
 
@@ -19,8 +18,8 @@ public class LRUCache<K, V> extends LinkedHashMap<K,V> {
 	
 	private int cacheSize;
 	
-	
-    public LRUCache(int cacheSize) {
+
+	public LRUCache(int cacheSize) {
 		super(16, 0.75f, true);
 		this.cacheSize = cacheSize;
 	}
@@ -29,7 +28,7 @@ public class LRUCache<K, V> extends LinkedHashMap<K,V> {
 	protected boolean removeEldestEntry(Map.Entry<K, V> eldest) {
 		return size() >= cacheSize;
 	}
-	
+
 	@Override
 	public synchronized V get(Object key) {
 	    return super.get(key);
@@ -57,6 +56,7 @@ public class LRUCache<K, V> extends LinkedHashMap<K,V> {
 		LRUCache<String, String> cache = new LRUCache<String, String>(5);
 		for (int i = 0; i < 6; i++) {
 			cache.put((i + 1) + "", "A" + (i + 1));
+
 		}
 		System.out.println(cache);
 	}
