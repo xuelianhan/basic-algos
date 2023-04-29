@@ -50,7 +50,6 @@ public class SynchronizedMapTest {
 			
 			t.start();
 			r.start();
-
 		}
 	}
 }
