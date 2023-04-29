@@ -23,6 +23,7 @@ public class FlexibleThreeStack {
    public static int numberOfElements() {
         return stacks[0].size + stacks[1].size + stacks[2].size;
    }
+   
 
    public static void push(int stackNum, int number) {
 	   //todo
