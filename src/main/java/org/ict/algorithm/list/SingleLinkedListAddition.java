@@ -15,6 +15,9 @@ public class SingleLinkedListAddition {
 		if (l1 != null && l2 != null) {
 			Iterator<Integer> iter1 = l1.iterator();
 			Iterator<Integer> iter2 = l2.iterator();
+			while (iter1.hasNext() && iter2.hasNext()) {
+				r.carry = (iter1.next() + iter2.next()) > 10 ? 1 :0;
+			}
 		}
 		return r;
 	}
