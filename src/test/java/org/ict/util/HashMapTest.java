@@ -13,58 +13,58 @@ import com.google.common.collect.Lists;
 
 
 public class HashMapTest {
-	
-	public static void main(String[] args) {
+
+    public static void main(String[] args) {
         //testNullValue();
         testCollectorToMap();
-	}
+    }
 
     /**
      * https://www.onlinetutorialspoint.com/java8/resolve-nullpointerexception-in-collectors-tomap.html
+     *
      * @see <a href="https://stackoverflow.com/questions/24630963/java-8-nullpointerexception-in-collectors-tomap"></a>
      */
-	public static void testCollectorToMap() {
+    public static void testCollectorToMap() {
         List<String> list = Lists.newArrayList();
         // null value will throws NullPointerException
         list.stream().collect(Collectors.toMap(item -> item, null));
     }
 
 
-
-	public static void testNullValue() {
+    public static void testNullValue() {
         Map<String, String> map = new HashMap<>();
         map.put("1", null);
     }
 
     public static void testThreadSave() {
         Map<Long, BigDecimal> map = new HashMap<>();
-        for (int i = 0 ; i < 10; i++) {
-            new SaveString("Thread-"+(i+1), map).start();
+        for (int i = 0; i < 10; i++) {
+            new SaveString("Thread-" + (i + 1), map).start();
         }
     }
 
-	public void testShiftLeft() {
-		System.out.println(1<<30);
-	}
+    public void testShiftLeft() {
+        System.out.println(1 << 30);
+    }
 
     public void testGroupBy() {
         List<User> users = Lists.newArrayList();
-        for(int i = 0; i < 5; i++) {
+        for (int i = 0; i < 5; i++) {
             User user = new User();
             if (i % 2 == 0) {
                 user.setType("Even");
-                user.setName("user"+ i);
-                user.setMoney(new BigDecimal(20+i));
+                user.setName("user" + i);
+                user.setMoney(new BigDecimal(20 + i));
             } else {
                 user.setType("Odd");
-                user.setName("user"+ i);
-                user.setMoney(new BigDecimal(30+i));
+                user.setName("user" + i);
+                user.setMoney(new BigDecimal(30 + i));
             }
             users.add(user);
         }
 
         Map<String, List<User>> g = users.stream().collect(Collectors.groupingBy(User::getType));
-        g.forEach((k,v)->{
+        g.forEach((k, v) -> {
             System.out.println("type: " + k + "User size : " + v.size());
             BigDecimal sum = v
                     .stream()
@@ -120,18 +120,14 @@ public class HashMapTest {
         names.put("Fred", "Flintstone");
         names.put("Jane", "Doe");
         names.entrySet().stream()
-        .filter(e -> e.getValue().equals("Donkey"))
-        .map(Map.Entry::getKey)
-        .findFirst()
-        .orElse(null);
+                .filter(e -> e.getValue().equals("Donkey"))
+                .map(Map.Entry::getKey)
+                .findFirst()
+                .orElse(null);
     }
 
     public void testGetNull() {
         Map<Long, Long> map = new LinkedHashMap<Long, Long>();
         map.get(null);
     }
-
-	
 }
-
-
