@@ -15,6 +15,7 @@ import java.util.regex.Pattern;
 import java.util.NoSuchElementException;
 import java.util.InputMismatchException;
 
+
 /**
  * <i>Input</i>. This class provides methods for reading strings
  * and numbers from standard input, file input, URLs, and sockets.
@@ -88,7 +89,6 @@ public final class In {
     private static final Pattern EVERYTHING_PATTERN = Pattern.compile("\\A");
 
     //// end: section (1 of 2) of code duplicated from In to StdIn.
-
     private Scanner scanner;
 
     /**
@@ -101,7 +101,6 @@ public final class In {
 
     /**
      * Initializes an input stream from a socket.
-     *
      * @param  socket the socket
      * @throws IllegalArgumentException if cannot open {@code socket}
      * @throws IllegalArgumentException if {@code socket} is {@code null}
@@ -120,7 +119,6 @@ public final class In {
 
     /**
      * Initializes an input stream from a URL.
-     *
      * @param  url the URL
      * @throws IllegalArgumentException if cannot open {@code url}
      * @throws IllegalArgumentException if {@code url} is {@code null}
@@ -204,7 +202,6 @@ public final class In {
 
             InputStream is     = site.getInputStream();
             scanner            = new Scanner(new BufferedInputStream(is), CHARSET_NAME);
-            scanner.useLocale(LOCALE);
         }
         catch (IOException ioe) {
             throw new IllegalArgumentException("Could not open " + name, ioe);
@@ -803,7 +800,6 @@ public final class In {
             System.out.println(e);
         }
         System.out.println();
-
     }
 
 }
