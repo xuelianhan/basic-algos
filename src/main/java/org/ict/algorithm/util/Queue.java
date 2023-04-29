@@ -78,7 +78,7 @@ public class Queue<Item> implements Iterable<Item> {
     }
 
     public Iterator<Item> iterator() {
-        return new ListIterator<Item>();
+        return new ListIterator();
     }
    
     private class ListIterator implements Iterator<Item> {
@@ -117,7 +117,7 @@ public class Queue<Item> implements Iterable<Item> {
                 String item = q.dequeue();
                 StdOut.print(item + " ");
             } else {
-                StdOut.println("Nothing to do.")
+                StdOut.println("Nothing to do.");
             }
         }
         StdOut.println("(" + q.size() + " left in queue)");
