@@ -1,13 +1,12 @@
 package org.ict.algorithm.strings;
 
 import java.util.Arrays;
-
-
 /**
  * Tue Jul  5 11:28:58 CST 2016
  * Write an algorithm such that if an element in an MxN matrix is 0,its entire row an column are set to 0.
  */
 public class MatrixRCSetZero {
+
 
     /**
      * The following code takes O(N) space by using an boolean array to indicate the row and collumn
@@ -118,5 +117,6 @@ public class MatrixRCSetZero {
           System.out.println(Arrays.toString(row));
         }
     }
+
 
 }
