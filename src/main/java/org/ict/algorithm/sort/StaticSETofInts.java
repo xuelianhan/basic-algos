@@ -3,9 +3,9 @@ package org.ict.algorithm.sort;
 import java.util.Arrays;
 
 /**
- * @see http://algs4.cs.princeton.edu/12oop/StaticSETofInts.java.html
- *  javac org/ict/algorithm/sort/StaticSETofInts.java 
- *  java org/ict/algorithm/sort/StaticSETofInts
+ * @see <a href="http://algs4.cs.princeton.edu/12oop/StaticSETofInts.java.html"></a>
+ * javac org/ict/algorithm/sort/StaticSETofInts.java
+ * java org/ict/algorithm/sort/StaticSETofInts
  *
  */
 
@@ -60,4 +60,5 @@ public class StaticSETofInts {
 
         System.out.println(ssoi.contains(3));
     }
+
 }
