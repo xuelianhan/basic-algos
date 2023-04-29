@@ -72,9 +72,27 @@ public final class Point2D implements Comparable<Point2D> {
      * Shoelace formula
      * Return twice the signed area of the triangle a-b-c
      * the area size is Math.abs(a.x * b.y + b.x * c.y + c.x * a.y - b.x * a.y - c.x * b.y - a.x * c.y)
+     * http://math.stackexchange.com/questions/516219/finding-out-the-area-of-a-triangle-if-the-coordinates-of-the-three-vertices-are
      */
     public static double area2(Point2D a, Point2D b, Point2D c) {
-      return a.x * b.y + b.x * c.y + c.x * a.y - b.x * a.y - c.x * b.y - a.x * c.y;
+        return a.x * b.y + b.x * c.y + c.x * a.y - b.x * a.y - c.x * b.y - a.x * c.y;
+        //equals to Vector.ab and Vector.ac 's cross-product
+        //Vab = (b.x - a.x, b.y - a.y),Vac = (c.x - a.x, c.y - a.y)
+        //Vab, Vac cross-product is Vab cross-multi Vac:
+        //(b.x - a.x)*(c.y - a.y) - (b.y - a.y)*(c.x - a.x)
+        //so the above formula can write as this:
+        //return (b.x - a.x)*(c.y - a.y) - (b.y - a.y)*(c.x - a.x);
+    }
+
+    public static int ccw(Point2D a, Point2D b, Point2D c) {
+        double area2 = area2(a, b, c);
+        if (area2 < 0)  { 
+            return -1;
+        } else if (area2 > 0) { 
+            return 1;
+        } else {
+            return 0;
+        }
     }
 
 	public int compareTo(Point2D o) {
