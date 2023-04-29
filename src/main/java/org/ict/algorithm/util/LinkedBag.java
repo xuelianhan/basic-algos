@@ -74,10 +74,12 @@ public class LinkedBag<Item> implements Iterable<Item> {
 
 
     public static void main(String[] args) {
+        StdOut.println("LinkedBag test start.");
         LinkedBag<String> bag = new LinkedBag<String>();
         while (!StdIn.isEmpty()) {
             String item = StdIn.readString();
             bag.add(item);
+            StdOut.println("LinkedBag test add: " + item);
         }
         StdOut.println("size of bag = " + bag.size());
         for (String s : bag) {
