@@ -3,7 +3,6 @@ package org.ict.util;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
-import org.ict.algorithm.util.StdOut;
 
 public class StringTest {
 	private static final String PHONE_REGEX = "(\\d{3})\\d{4}(\\d{4})";
@@ -33,8 +32,8 @@ public class StringTest {
 	
 	
 	/**
-	 * @see https://stackoverflow.com/questions/12925988/how-to-generate-strings-that-share-the-same-hashcode-in-java
-	 * @see https://stackoverflow.com/questions/30163368/two-string-instances-seems-same-but-their-hashcode-are-different
+	 * @see <a href="https://stackoverflow.com/questions/12925988/how-to-generate-strings-that-share-the-same-hashcode-in-java"></a>
+	 * @see <a href="https://stackoverflow.com/questions/30163368/two-string-instances-seems-same-but-their-hashcode-are-different"></a>
 	 * 
 	 */
 	public void testHashCode() {
@@ -116,18 +115,6 @@ public class StringTest {
     public void testShift() {
         System.out.println(8>>1);
     }
-
-	public void testPalindrome() {
-		String s1 = "ABA";
-		String s2 = "ABC"; 
-		StdOut.println(isPalindrome(s1));
-		StdOut.println(isPalindrome(s2));
-	}
-
-	public void testSorted() {
-		String[] a = new String[]{"ab", "bc", "ca"};
-		System.out.println(isSorted(a));
-	}
 
 
     public boolean isPalindrome(String s) {
