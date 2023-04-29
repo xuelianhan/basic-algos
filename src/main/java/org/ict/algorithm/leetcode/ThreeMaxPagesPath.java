@@ -53,9 +53,8 @@ public class ThreeMaxPagesPath {
 				f.createNewFile();
 				fw = new FileWriter(f);
 				bw = new BufferedWriter(fw);
-				
 				for (int i = 0; i < 100_000; i++) {
-					
+					//todo
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -74,7 +73,6 @@ public class ThreeMaxPagesPath {
 		}
 		return f;
 	}
-
 
 	public static Map<String, Integer> findThreeMaxPagesPathV1(String file, String separator, int depth) {
 		Map<String, Integer> pageVisitCounts = new HashMap<String, Integer>();
@@ -130,9 +128,5 @@ public class ThreeMaxPagesPath {
 		String file = "/home/hanxuelian/Desktop/test-access.log";
 		String separator = ",";
 		Map<String, Integer> pageVisitCounts = findThreeMaxPagesPathV1(file, separator, 3);
-
-		System.out.println(pageVisitCounts.size());
-		Map<String, Integer>  result = MapUtil.sortByValueDescendOrder(pageVisitCounts);
-		System.out.println(result);
 	}
 }

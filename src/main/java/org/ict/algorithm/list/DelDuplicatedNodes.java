@@ -6,7 +6,7 @@ import org.ict.algorithm.util.StdOut;
 
 public class DelDuplicatedNodes {
 
-    public static void delDupNodes(SingleLinkedList list) {
+    public static void delDupNodes(SingleLinkedList<String> list) {
        HashSet<String> set = new HashSet<String>(); 
        Iterator<String> iter = list.iterator();
        while (iter.hasNext()) {
