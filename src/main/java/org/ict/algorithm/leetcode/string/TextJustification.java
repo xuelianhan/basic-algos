@@ -87,18 +87,40 @@ public class TextJustification {
                 j++;
             }
             StringBuilder out = new StringBuilder();
+            /**
+             * spaces is the total number of spaces for current line.
+             * We need to allocate these spaces to match the rule
+             */
             int spaces = maxWidth - len;
             for (int k = i; k < j; k++) {
                 out.append(words[k]);
                 if (spaces > 0) {
+                    int allocatedSpaces = 0;
                     if (j == words.length) {
                         /**
                          * Now we at the last line.
                          */
+                        if (j - k == 1) {
+                            allocatedSpaces = spaces;
+                        } else {
+                            allocatedSpaces = 1;
+                        }
 
                     } else {
-
+                        if (j - k - 1 > 0) {
+                            if (spaces % (j - k - 1) == 0) {
+                                allocatedSpaces = spaces / (j - k - 1);
+                            } else {
+                                allocatedSpaces = spaces / (j - k - 1) + 1;
+                            }
+                        } else {
+                            allocatedSpaces = spaces;
+                        }
                     }
+                    for (int m = 0; m < allocatedSpaces; m++) {
+                        out.append(" ");
+                    }
+                    spaces -= allocatedSpaces;
                 }
             }
             res.add(out.toString());
