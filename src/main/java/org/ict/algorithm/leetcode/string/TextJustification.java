@@ -65,6 +65,111 @@ import java.util.List;
  */
 public class TextJustification {
 
+    /**
+     * Understanding the following solution
+     * @param words
+     * @param maxWidth
+     * @return
+     */
+    public List<String> fullJustifyV2(String[] words, int maxWidth) {
+        List<String> res = new ArrayList<>();
+        int i = 0;
+        StringBuilder out = new StringBuilder();
+        while (i < words.length) {
+            int j = i;
+            int len = 0;
+            while (j < words.length && (len + words[j].length() + j - i) <= maxWidth) {
+                len += words[j].length();
+                j++;
+            }
+            /**
+             * Calculate the number of spaces needed for each line.
+             */
+            int spaces = maxWidth - len;
+
+            for (int k = i; k < j; k++) {
+                out.append(words[k]);
+                if (spaces > 0) {
+                    int allocatedSpaces = calculateHowAllocate(words.length, j, k, spaces);
+                    appendSpaces(out, allocatedSpaces);
+                    spaces -= allocatedSpaces;
+                }
+            }
+            res.add(out.toString());
+            /**
+             * Clear the StringBuilder for next line iteration.
+             */
+            out.setLength(0);
+            i = j;
+        }
+        return res;
+    }
+
+    /**
+     * Understanding the following solution
+     * @param words
+     * @param maxWidth
+     * @return
+     */
+    public List<String> fullJustifyV1(String[] words, int maxWidth) {
+        List<String> res = new ArrayList<>();
+        int i = 0;
+        while (i < words.length) {
+            int j = i;
+            int len = 0;
+            while (j < words.length && (len + words[j].length() + j - i) <= maxWidth) {
+                len += words[j].length();
+                j++;
+            }
+            int spaces = maxWidth - len;
+
+            StringBuilder out = new StringBuilder();
+            for (int k = i; k < j; k++) {
+                out.append(words[k]);
+                if (spaces > 0) {
+                    int allocatedSpaces = calculateHowAllocate(words.length, j, k, spaces);
+                    appendSpaces(out, allocatedSpaces);
+                    spaces -= allocatedSpaces;
+                }
+            }
+            res.add(out.toString());
+            i = j;
+        }
+        return res;
+    }
+
+    private int calculateHowAllocate(int lengthOfWords, int j, int k, int spaces) {
+        int allocatedSpaces = 0;
+        if (j == lengthOfWords) {
+            if (j == k + 1) {
+                allocatedSpaces = spaces;
+            } else {
+                allocatedSpaces = 1;
+            }
+        } else {
+            if (j - 1 - k > 0) {
+                allocatedSpaces = assignEvenlyOrLeft(spaces, j - 1 - k);
+            } else {
+                allocatedSpaces = spaces;
+            }
+        }
+        return allocatedSpaces;
+    }
+
+    private int assignEvenlyOrLeft(int spaces, int slots) {
+        if (spaces % slots == 0) {
+            return spaces / slots;
+        } else {
+            return spaces / slots + 1;
+        }
+    }
+
+    private void appendSpaces(StringBuilder out, int allocatedSpaces) {
+        for (int m = 0; m < allocatedSpaces; m++) {
+            out.append(" ");
+        }
+    }
+
 
     /**
      * Understanding the following solution
@@ -86,6 +191,7 @@ public class TextJustification {
              * but the value:
              * (len + words[j].length() + j - i) = 2 + 1 + 2 - 0 = 5, it exceeds the maxWidth.
              * j - i = 2 - 0 = 2, but in fact, there are only 1 spaces matches the above condition.
+             * Notice here using <= maxWidth, not < maxWidth
              */
             int len = 0;
             while (j < words.length && len + words[j].length() + j - i <= maxWidth) {
@@ -110,8 +216,10 @@ public class TextJustification {
                     if (j == words.length) {
                         /**
                          * Now we at the last line if j steps at the length of words.
+                         * Because we have calculated the spaces needed for each line before,
+                         * so the j must have been at length of words while processing the last line.
                          */
-                        if (j - k == 1) {
+                        if (j == k + 1) {
                             /**
                              * If k is the last word, we allocate all the remained spaces after current word.
                              */
@@ -124,6 +232,11 @@ public class TextJustification {
                         }
 
                     } else {
+                        /**
+                         * On the lines before the last line, words from k to j - 1,
+                         * number of slots = j - 1 - k
+                         * e.g. k:1, j:4, There are three words, it has two slots, like this 1_2_3.
+                         */
                         if (j - k - 1 > 0) {
                             if (spaces % (j - k - 1) == 0) {
                                 allocatedSpaces = spaces / (j - k - 1);
@@ -131,6 +244,10 @@ public class TextJustification {
                                 allocatedSpaces = spaces / (j - k - 1) + 1;
                             }
                         } else {
+                            /**
+                             * j == k + 1,
+                             * Allocating the remained spaces to the last slot of current line.
+                             */
                             allocatedSpaces = spaces;
                         }
                     }
