@@ -66,6 +66,12 @@ import java.util.List;
 public class TextJustification {
 
 
+    /**
+     * Understanding the following solution
+     * @param words
+     * @param maxWidth
+     * @return
+     */
     public List<String> fullJustify(String[] words, int maxWidth) {
         List<String> res = new ArrayList<>();
         int i = 0;
@@ -89,7 +95,12 @@ public class TextJustification {
             StringBuilder out = new StringBuilder();
             /**
              * spaces is the total number of spaces for current line.
-             * We need to allocate these spaces to match the rule
+             * We need to allocate these spaces between the words from i to j-1 that match the rule
+             * 1.Extra spaces between words should be distributed as evenly as possible;
+             * 2.If the number of spaces on a line does not divide evenly between words,
+             * the empty slots on the left will be assigned more spaces than the slots on the right;
+             * 3.For the last line of text, it should be left-justified,
+             * and no extra space is inserted between words.
              */
             int spaces = maxWidth - len;
             for (int k = i; k < j; k++) {
@@ -98,11 +109,17 @@ public class TextJustification {
                     int allocatedSpaces = 0;
                     if (j == words.length) {
                         /**
-                         * Now we at the last line.
+                         * Now we at the last line if j steps at the length of words.
                          */
                         if (j - k == 1) {
+                            /**
+                             * If k is the last word, we allocate all the remained spaces after current word.
+                             */
                             allocatedSpaces = spaces;
                         } else {
+                            /**
+                             * Otherwise we allocate only one space after current word
+                             */
                             allocatedSpaces = 1;
                         }
 
@@ -117,6 +134,7 @@ public class TextJustification {
                             allocatedSpaces = spaces;
                         }
                     }
+
                     for (int m = 0; m < allocatedSpaces; m++) {
                         out.append(" ");
                     }
