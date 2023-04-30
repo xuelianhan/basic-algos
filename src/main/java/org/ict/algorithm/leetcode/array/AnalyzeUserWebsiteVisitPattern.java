@@ -26,10 +26,17 @@ import java.util.List;
  * If there is more than one pattern with the same largest score, return the lexicographically smallest such pattern.
  *
  * Example 1:
- * Input: username = ["joe","joe","joe","james","james","james","james","mary","mary","mary"], timestamp = [1,2,3,4,5,6,7,8,9,10], website = ["home","about","career","home","cart","maps","home","home","about","career"]
+ * Input:
+ * username = ["joe","joe","joe","james","james","james","james","mary","mary","mary"],
+ * timestamp = [1,2,3,4,5,6,7,8,9,10],
+ * website = ["home","about","career","home","cart","maps","home","home","about","career"]
+ *
  * Output: ["home","about","career"]
+ *
  * Explanation: The tuples in this example are:
- * ["joe","home",1],["joe","about",2],["joe","career",3],["james","home",4],["james","cart",5],["james","maps",6],["james","home",7],["mary","home",8],["mary","about",9], and ["mary","career",10].
+ * ["joe","home",1],["joe","about",2],["joe","career",3],["james","home",4],
+ * ["james","cart",5],["james","maps",6],["james","home",7],["mary","home",8],
+ * ["mary","about",9], and ["mary","career",10].
  * The pattern ("home", "about", "career") has score 2 (joe and mary).
  * The pattern ("home", "cart", "maps") has score 1 (james).
  * The pattern ("home", "cart", "home") has score 1 (james).
@@ -38,7 +45,8 @@ import java.util.List;
  * The pattern ("home", "home", "home") has score 0 (no user visited home 3 times).
  *
  * Example 2:
- * Input: username = ["ua","ua","ua","ub","ub","ub"], timestamp = [1,2,3,4,5,6], website = ["a","b","a","a","b","c"]
+ * Input: username = ["ua","ua","ua","ub","ub","ub"],
+ * timestamp = [1,2,3,4,5,6], website = ["a","b","a","a","b","c"]
  * Output: ["a","b","a"]
  *
  * Constraints:
