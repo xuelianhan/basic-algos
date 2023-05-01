@@ -32,6 +32,7 @@ public class AverageSalaryExcludingMinAndMax {
 
     /**
      * Because  1000 <= salary[i] <= 10^6
+     * -----------------------------------------------------
      * class Solution:
      *     def average(self, salary: List[int]) -> float:
      *         n = len(salary)
@@ -45,6 +46,14 @@ public class AverageSalaryExcludingMinAndMax {
      *             if s < min:
      *                 min = s
      *         return (sum - max - min) / (n - 2)
+     * -----------------------------------------------------
+     * class Solution:
+     *     def average(self, salary: List[int]) -> float:
+     *         s, m, M = 0, float('inf'), float('-inf')
+     *         for num in salary:
+     *             s += num
+     *             m, M = min(m, num), max(M, num)
+     *         return (s - m - M) / (len(salary) - 2)
      * @param salary
      * @return
      */
