@@ -1,7 +1,6 @@
 package org.ict.algorithm.leetcode.array;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Description
@@ -67,10 +66,117 @@ import java.util.List;
  */
 public class AnalyzeUserWebsiteVisitPattern {
 
-    public
-    List<String> mostVisitedPattern(String[] username, int[] timestamp, String[] website) {
-        List<String> res = new ArrayList<>();
+    public static void main(String[] args) {
+        String[] username = {"joe","joe","joe","james","james","james","james","mary","mary","mary"};
+        int[] timestamp = {1,2,3,4,5,6,7,8,9,10};
+        String[] website = {"home","about","career","home","cart","maps","home","home","about","career"};
 
-        return res;
+        AnalyzeUserWebsiteVisitPattern instance = new AnalyzeUserWebsiteVisitPattern();
+        List<String> res = instance.mostVisitedPattern(username, timestamp, website);
+        System.out.println(res);
+    }
+
+    /**
+     * e.g.
+     * path: a-->b-->c, the number of users access this path is 100
+     * path: b-->c-->d, the number of users access this path is 99
+     * path: a-->c-->d, the number of users access this path is
+     *
+     * 1.Group by username using HashMap.
+     * 2.Iterate paths for each username, and count the path.
+     * 3.Sorting and return.
+     * -----------------------
+     * class Solution:
+     *     def mostVisitedPattern(self, username: List[str], timestamp: List[int], website: List[str]) -> List[str]:
+     *         d = defaultdict(list)
+     *         for user, _, site in sorted(zip(username, timestamp, website), key=lambda x: x[1]):
+     *             d[user].append(site)
+     *
+     *         cnt = Counter()
+     *         for sites in d.values():
+     *             m = len(sites)
+     *             s = set()
+     *             if m > 2:
+     *                 for i in range(m - 2):
+     *                     for j in range(i + 1, m - 1):
+     *                         for k in range(j + 1, m):
+     *                             s.add((sites[i], sites[j], sites[k]))
+     *             for t in s:
+     *                 cnt[t] += 1
+     *         return sorted(cnt.items(), key=lambda x: (-x[1], x[0]))[0][0]
+     *
+     * @param username
+     * @param timestamp
+     * @param website
+     * @return
+     */
+    public List<String> mostVisitedPattern(String[] username, int[] timestamp, String[] website) {
+        int n = username.length;
+        Map<String, List<Node>> userNodes = new HashMap<>();
+        for (int i = 0; i < n; i++) {
+            String user = username[i];
+            int ts = timestamp[i];
+            String site = website[i];
+            userNodes.computeIfAbsent(user, a -> new ArrayList<>()).add(new Node(user, ts, site));
+        }
+
+        Map<String, Integer> counter = new HashMap<>();
+        for (List<Node> nodeList : userNodes.values()) {
+            int m = nodeList.size();
+            Set<String> pathSet = new HashSet<>();
+            if (m > 2) {
+                Collections.sort(nodeList, (a, b) -> a.ts - b.ts);
+                for (int i = 0; i < m - 2; i++) {
+                    for (int j = i + 1; j < m - 1; j++) {
+                        for (int k = j + 1; k < m; k++) {
+                            String path = nodeList.get(i).website + "," + nodeList.get(j).website + "," + nodeList.get(k).website;
+                            pathSet.add(path);
+                        }
+                    }
+                }
+            }
+
+            for (String path : pathSet) {
+                counter.put(path, counter.getOrDefault(path, 0) + 1);
+            }
+        }
+
+        /**
+         * Return the pattern with the largest score.
+         * If there is more than one pattern with the same largest score,
+         * return the lexicographically smallest such pattern.
+         */
+        int max = 0;
+        String path = "";
+        for (Map.Entry<String, Integer> entry : counter.entrySet()) {
+            if (max < entry.getValue() || (max == entry.getValue() && entry.getKey().compareTo(path) < 0)) {
+                max = entry.getValue();
+                path = entry.getKey();
+            }
+        }
+        return Arrays.asList(path.split(","));
+    }
+
+    static class Node {
+        String user;
+
+        int ts;
+
+        String website;
+
+        public Node(String user, int ts, String website) {
+            this.user = user;
+            this.ts= ts;
+            this.website = website;
+        }
+
+        @Override
+        public String toString() {
+            return "Node{" +
+                    "user='" + user + '\'' +
+                    ", ts=" + ts +
+                    ", website='" + website + '\'' +
+                    '}';
+        }
     }
 }
