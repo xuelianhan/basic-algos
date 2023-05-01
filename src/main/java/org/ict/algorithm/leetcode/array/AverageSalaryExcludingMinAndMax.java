@@ -30,6 +30,24 @@ import java.util.Arrays;
  */
 public class AverageSalaryExcludingMinAndMax {
 
+    /**
+     * Because  1000 <= salary[i] <= 10^6
+     * class Solution:
+     *     def average(self, salary: List[int]) -> float:
+     *         n = len(salary)
+     *         min = 1000001
+     *         max = 0
+     *         sum = 0
+     *         for s in salary:
+     *             sum += s
+     *             if s > max:
+     *                 max = s
+     *             if s < min:
+     *                 min = s
+     *         return (sum - max - min) / (n - 2)
+     * @param salary
+     * @return
+     */
     public double averageV1(int[] salary) {
         int n = salary.length;
         long sum = 0;
@@ -47,6 +65,18 @@ public class AverageSalaryExcludingMinAndMax {
         return (double)(sum - min - max) / (n - 2);
     }
 
+    /**
+     * class Solution:
+     *     def average(self, salary: List[int]) -> float:
+     *         salary.sort()
+     *         n = len(salary)
+     *         sum = 0
+     *         for s in salary[1:-1]:
+     *             sum += s
+     *         return sum / (n - 2)
+     * @param salary
+     * @return
+     */
     public double average(int[] salary) {
         Arrays.sort(salary);
         int n = salary.length;
