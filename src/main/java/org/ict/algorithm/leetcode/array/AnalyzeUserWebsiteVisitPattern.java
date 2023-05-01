@@ -86,6 +86,16 @@ public class AnalyzeUserWebsiteVisitPattern {
      * 2.Iterate paths for each username, and count the path.
      * 3.Sorting and return.
      * -----------------------
+     * Python’s zip() function is defined as zip(*iterables).
+     * The function takes in iterables as arguments and returns an iterator.
+     *
+     * lambda x:(x[0],-x[1])
+     * this generates tuples of (the first element, negative of the second element)
+     * When you sort 2-tuples, they are sorted based on
+     * The first element
+     * If the first elements are equal, then the second element
+     * @see <a href="https://stackoverflow.com/questions/62208185/what-does-arr-sortkey-lambda-x-x0-x1-mean"></a>
+     * -----------------------
      * class Solution:
      *     def mostVisitedPattern(self, username: List[str], timestamp: List[int], website: List[str]) -> List[str]:
      *         d = defaultdict(list)
