@@ -35,7 +35,7 @@ package org.ict.algorithm.leetcode.array;
  * -100 <= nums[i] <= 100
  * @author sniper
  * @date 03 May 2023
- * LC1822, Easy, frequency=1822
+ * LC1822, Easy, frequency=45
  */
 public class SignOfTheProductOfAnArray {
     public int arraySign(int[] nums) {
