@@ -34,7 +34,7 @@ package org.ict.algorithm.leetcode.stack;
  * Amazon, Meta, AirBnb
  * @author sniper
  * @date 11 Dec, 2022
- * LC385
+ * LC385, Medium
  */
 public class MiniParser {
 

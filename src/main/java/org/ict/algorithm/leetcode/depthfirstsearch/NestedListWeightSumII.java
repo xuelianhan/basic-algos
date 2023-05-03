@@ -1,9 +1,6 @@
 package org.ict.algorithm.leetcode.depthfirstsearch;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * Description
@@ -38,10 +35,18 @@ import java.util.Queue;
  */
 public class NestedListWeightSumII {
 
+    public static void main(String[] args) {
+        List<NestedInteger> nestedList = new ArrayList<>();
+
+        NestedListWeightSumII instance = new NestedListWeightSumII();
+        int res = instance.depthSumInverseV2(nestedList);
+        System.out.println(res);
+    }
+
     public int depthSumInverseV2(List<NestedInteger> nestedList) {
         int unweighted = 0;
         int weighted = 0;
-        Queue<List<NestedInteger>> queue = new LinkedList<>();
+        Queue<List<NestedInteger>> queue = new ArrayDeque<>();
         queue.offer(nestedList);
         while (!queue.isEmpty()) {
             int size = queue.size();

@@ -44,7 +44,7 @@ import java.util.Deque;
  * At most 3 * 10^4 calls will be made to push, pop, top, and getMin.
  * @author sniper
  * @date 08 Jan, 2023
- * LC155, Medium
+ * LC155, Medium, frequency=3
  */
 public class MinStackDesign {
 
