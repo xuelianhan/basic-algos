@@ -1,6 +1,9 @@
 package org.ict.algorithm.leetcode.depthfirstsearch;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 /**
  * Description
@@ -34,7 +37,48 @@ import java.util.List;
  * LC364, Medium, frequency=48
  */
 public class NestedListWeightSumII {
-    
+
+    public int depthSumInverseV2(List<NestedInteger> nestedList) {
+        int unweighted = 0;
+        int weighted = 0;
+        Queue<List<NestedInteger>> queue = new LinkedList<>();
+        queue.offer(nestedList);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                List<NestedInteger> cur = queue.poll();
+                for (NestedInteger item : cur) {
+                    if (item.isInteger()) {
+                        unweighted += item.getInteger();
+                    } else if (!item.getList().isEmpty()){
+                        queue.offer(item.getList());
+                    }
+                }
+            }
+            weighted += unweighted;
+        }
+
+        return weighted;
+    }
+
+    public int depthSumInverseV1(List<NestedInteger> nestedList) {
+        int unweighted = 0;
+        int weighted = 0;
+        while (!nestedList.isEmpty()) {
+            List<NestedInteger> nextLevel = new ArrayList<>();
+            for (NestedInteger item : nestedList) {
+                if (item.isInteger()) {
+                    unweighted += item.getInteger();
+                } else {
+                    nextLevel.addAll(item.getList());
+                }
+            }
+            weighted += unweighted;
+            nestedList = nextLevel;
+        }
+        return weighted;
+    }
+
 
     /**
      * -----------------------------------------------------------------------
