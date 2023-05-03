@@ -34,6 +34,7 @@ import java.util.List;
  * LC364, Medium, frequency=48
  */
 public class NestedListWeightSumII {
+    
 
     /**
      * -----------------------------------------------------------------------
@@ -66,8 +67,15 @@ public class NestedListWeightSumII {
         return dfs(nestedList, maxDepth);
     }
 
-    private int dfs(List<NestedInteger> nestedList, int maxDepth) {
+    private int dfs(List<NestedInteger> nestedList, int depth) {
         int depthSum = 0;
+        for (NestedInteger item : nestedList) {
+            if (item.isInteger()) {
+                depthSum += item.getInteger() * depth;
+            } else {
+                depthSum += dfs(item.getList(), depth - 1);
+            }
+        }
         return depthSum;
     }
 
