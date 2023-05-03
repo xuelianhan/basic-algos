@@ -8,7 +8,7 @@ import java.util.Queue;
  * Description
  * You are given a nested list of integers nestedList.
  * Each element is either an integer or a list whose elements may also be integers or other lists.
- * The depth of an integer is the number of lists that it is inside of.
+ * The depth of an integer is the number of lists that it is inside of it.
  * For example, the nested list [1,[2,2],[[3],2],1] has each integer's value set to its depth.
  * Return the sum of each integer in nestedList multiplied by its depth.
  *
@@ -99,13 +99,13 @@ public class NestedListWeightSum {
      * @return
      */
     public int depthSum(List<NestedInteger> nestedList) {
-        int res = 0;
-        int depth = 0;
         Queue<NestedInteger> queue = new ArrayDeque<>();
         for (NestedInteger item : nestedList) {
             queue.offer(item);
         }
 
+        int res = 0;
+        int depth = 0;
         while (!queue.isEmpty()) {
             depth++;
             for (int size = queue.size(); size > 0; size--) {
@@ -150,26 +150,4 @@ public class NestedListWeightSum {
      *     public List<NestedInteger> getList();
      * }
      */
-     class NestedInteger {
-
-         public NestedInteger(){}
-         public NestedInteger(int value){
-             //todo
-         }
-         public boolean isInteger() {
-             return false;
-         }
-         public Integer getInteger() {
-             return 0;
-         }
-         public void setInteger(int value) {
-             //todo
-         }
-         public void add(NestedInteger ni) {
-             //todo
-         }
-         public List<NestedInteger> getList() {
-             return null;
-         }
-    }
 }

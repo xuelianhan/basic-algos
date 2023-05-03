@@ -1,4 +1,3 @@
-364.Nested List Weight Sum II=48
 1822.Sign of the Product of an Array=45
 716.Max Stack=41
 1146.Snapshot Array=41
