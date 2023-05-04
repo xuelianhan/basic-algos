@@ -46,7 +46,7 @@ import java.util.Deque;
  * @date 08 Jan, 2023
  * LC155, Medium, frequency=3
  */
-public class MinStackDesign {
+public class DesignMinStack {
 
     /**
      * Time Cost 4ms

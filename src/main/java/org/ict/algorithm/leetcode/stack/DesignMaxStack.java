@@ -1,4 +1,4 @@
-package org.ict.algorithm.leetcode.design;
+package org.ict.algorithm.leetcode.stack;
 
 /**
  * Description
