@@ -77,6 +77,10 @@ public class DesignMaxStack {
 
         public MaxStackV2() {}
 
+        /**
+         * Time Complexity: O(logN), TreeMap is implemented by Red-Black-Tree.
+         * @param x
+         */
         public void push(int x) {
             Node node = stack.add(x);
             /**
@@ -88,6 +92,10 @@ public class DesignMaxStack {
             map.computeIfAbsent(x, k -> new ArrayList<>()).add(node);
         }
 
+        /**
+         * Time Complexity: O(logN), TreeMap is implemented by Red-Black-Tree.
+         * @return
+         */
         public int pop() {
             Node node = stack.pop();
             List<Node> nodeList = map.get(node.val);
@@ -98,14 +106,26 @@ public class DesignMaxStack {
             return x;
         }
 
+        /**
+         * Time Complexity: O(1)
+         * @return
+         */
         public int top() {
             return stack.peek();
         }
 
+        /**
+         * Time Complexity: O(logN), TreeMap is implemented by Red-Black-Tree.
+         * @return
+         */
         public int peekMax() {
             return map.lastKey();
         }
 
+        /**
+         * Time Complexity: O(logN), TreeMap is implemented by Red-Black-Tree.
+         * @return
+         */
         public int popMax() {
             int x = peekMax();
             List<Node> nodeList = map.get(x);
@@ -116,7 +136,6 @@ public class DesignMaxStack {
             stack.remove(node);
             return x;
         }
-
     }
 
     class DoubleLinkedList {
@@ -195,9 +214,12 @@ public class DesignMaxStack {
 
         /**
          * A little different with method push of MaxStack
+         * Time Complexity: O(1)
+         *
          * e.g. push [2, 1, 5, 3, 9] into stack one by one.
          * stack1: [2, 1, 5, 3, 9]
          * stack2: [2, 2, 5, 5, 9]
+         *
          * @param x
          */
         public void push(int x) {
@@ -208,16 +230,25 @@ public class DesignMaxStack {
 
         /**
          * A little different with method pop of MaxStack
+         * Time Complexity: O(1)
          */
         public int pop() {
             stack2.pop();
             return stack1.pop();
         }
 
+        /**
+         * Time Complexity: O(1)
+         * @return
+         */
         public int top() {
             return stack1.peek();
         }
 
+        /**
+         * Time Complexity: O(1)
+         * @return
+         */
         public int peekMax() {
             return stack2.peek();
         }
@@ -264,6 +295,8 @@ public class DesignMaxStack {
         public MaxStack() {}
 
         /**
+         * Time Complexity: O(1)
+         *
          * e.g. push [2, 1, 5, 3, 9] into stack one by one.
          * stack1: [2, 1, 5, 3, 9]
          * stack2: [2, 5, 9]
@@ -276,6 +309,10 @@ public class DesignMaxStack {
             }
         }
 
+        /**
+         * Time Complexity: O(1)
+         * @return
+         */
         public int pop() {
             if (!stack2.isEmpty() && stack2.peek() == stack1.peek()) {
                 stack2.pop();
@@ -284,10 +321,18 @@ public class DesignMaxStack {
             return t;
         }
 
+        /**
+         * Time Complexity: O(1)
+         * @return
+         */
         public int top() {
             return stack1.peek();
         }
 
+        /**
+         * Time Complexity: O(1)
+         * @return
+         */
         public int peekMax() {
             return stack2.peek();
         }
