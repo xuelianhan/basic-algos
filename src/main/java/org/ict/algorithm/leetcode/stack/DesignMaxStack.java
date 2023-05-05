@@ -59,12 +59,12 @@ public class DesignMaxStack {
      * TreeMap can find the largest value, insert values, and delete values, all in O(logN) time.
      *
      * Algorithm
-     * Let's store the stack as a double linked list dll, and store a map from value to a List of Node.
-     * When weMaxStack.push(x), we add a node to our dll, and add or update our entry map.get(x).add(node).
-     * When weMaxStack.pop(), we find the value val = dll.pop(), and remove the node from our map, deleting the entry if it was the last one.
+     * Let's store the stack as a double linked list stack, and store a map from value to a List of Node.
+     * When weMaxStack.push(x), we add a node to our stack, and add or update our entry map.get(x).add(node).
+     * When weMaxStack.pop(), we find the value val = stack.pop(), and remove the node from our map, deleting the entry if it was the last one.
      * When weMaxStack.popMax(), we use the map to find the relevant node to unlink, and return its value.
      * The above operations are more clear given that we have a working DoubleLinkedList class.
-     * The implementation provided uses head and tail_sentinels_to simplify the relevant Double LinkedList operations.
+     * The implementation provided uses head and tail sentinels to simplify the relevant Double Linked List operations.
      */
     class MaxStackV2 {
         private DoubleLinkedList stack = new DoubleLinkedList();
