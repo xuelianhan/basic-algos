@@ -47,6 +47,8 @@ import java.util.*;
 public class DesignMaxStack {
 
     /**
+     * Understanding the following solution
+     * 
      * LeetCode Official - Approach #2: Double Linked List + TreeMap
      *
      * Intuition
@@ -191,6 +193,8 @@ public class DesignMaxStack {
     }
 
     /**
+     * Understanding the following solution
+     *
      * LeetCode Official - Approach #1: Two Stacks
      *
      * For peekMax, we remember the largest value we've seen on the side.
@@ -273,6 +277,8 @@ public class DesignMaxStack {
     }
 
     /**
+     * Understanding the following solution
+     *
      * Two stacks are used to simulate this.
      * stack1 is a normal stack to hold all numbers,
      * while stack2 is a maximum stack to hold the largest number that appears.

@@ -69,6 +69,15 @@ public class DesignMinStack {
          */
         public MinStackV1() {}
 
+        /**
+         * e.g. push [2, 1, 5, 3, 9] into stack one by one.
+         * push 2, 2 < MIN_VAL, stack:MAX, MIN_VAL:2, stack:MAX, 2
+         * push 1, 1 < MIN_VAL, stack:MAX, 2, 2, MIN_VAL:1, stack:MAX, 2, 2, 1
+         * push 5, 5 > MIN_VAL, MIN_VAL:1, stack:MAX, 2, 2, 1, 5
+         * push 3, 3 > MIN_VAL, MIN_VAL:1, stack:MAX, 2, 2, 1, 5, 3
+         * push 9, 9 > MIN_VAL, MIN_VAL:1, stack:MAX, 2, 2, 1, 5, 3, 9
+         * @param val
+         */
         public void push(int val) {
             if (val <= MIN_VAL) {
                 stack.push(MIN_VAL);
@@ -94,6 +103,7 @@ public class DesignMinStack {
 
     /**
      * Time Cost 5ms
+     * Understanding the following solution
      */
     class MinStack {
 
