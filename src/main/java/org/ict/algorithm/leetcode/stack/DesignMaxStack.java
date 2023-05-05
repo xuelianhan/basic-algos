@@ -96,15 +96,37 @@ public class DesignMaxStack {
             return stack2.peek();
         }
 
+        /**
+         * In the popMax() function, we save the top element of stack2 into a variable max at first,
+         * and then we want to remove this element in stack1,
+         * because the stack can't locate the element directly.
+         * So we use a temporary stack temp, to save the outgoing element of stack1 into this temporary stack temp.
+         * We exit the while-loop while the top element of stack1 and stack2 are the same.
+         * At this time, we find stack2's top element in stack1, top elements in stack1 and stack2 are removed respectively.
+         * After that, we can add the elements in the temporary stack temp back into stack1.
+         * Note that at this time, it is easy to make a mistake that stack2 is not updated at the same time,
+         * so we can directly call the push () function.
+         * @return
+         */
         public int popMax() {
             int max = stack2.peek();
+            /**
+             * Store the elements not equals max temporarily into a temp stack.
+             */
             Stack<Integer> temp = new Stack<>();
             while (stack1.peek() != stack2.peek()) {
                 temp.push(stack1.peek());
                 stack1.pop();
             }
+            /**
+             * pop max from stack1 and stack2
+             */
             stack1.pop();
             stack2.pop();
+
+            /**
+             * push elements of temp back into the stack1 and stack2
+             */
             while (!temp.empty()) {
                 push(temp.peek());
                 temp.pop();
