@@ -56,15 +56,14 @@ public class Dota2Senate {
      *
      * We can use two queues, pushing the position of the respective camp into a different queue inside,
      * and then for the cycle.
-     * Each time from the two queues each take a position out to see the size of the relationship,
-     * the small one indicates that in the front,
-     * we can put the back of that Ban off,
-     * so we have to add the small one back into the queue,
-     * but can not directly add the original position,
+     * Each time from the two queues, we take a position out to see the size of the relationship,
+     * the small one in the front indicates that it can ban off the following one.
+     * So we have to add the smaller one back into the queue,
+     * but can not directly add at the original position,
      * because the next round before his turn to Ban,
-     * so we have to add an n, and then into the queue.
-     * This way when a queue is empty, the loop is launched,
-     * and we return to the camp that is not empty.
+     * so we have to add an n, and then push into the queue.
+     * The loop exit while one of the queue is empty,
+     * and we return to the camp that its queue is not empty.
      *
      * e.g. senate = "RD"
      * q1:0, q2:1
