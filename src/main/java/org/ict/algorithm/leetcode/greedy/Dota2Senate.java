@@ -54,8 +54,7 @@ public class Dota2Senate {
     /**
      * Understanding the following solution
      *
-     * We can use two queues, pushing the position of the respective camp into a different queue inside,
-     * and then for the cycle.
+     * We can use two queues, pushing the position of the respective camp into different queues.
      * Each time from the two queues, we take a position out to see the size of the relationship,
      * the small one in the front indicates that it can ban off the following one.
      * So we have to add the smaller one back into the queue,

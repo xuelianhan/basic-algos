@@ -1,5 +1,9 @@
 package org.ict.algorithm.leetcode.stack;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.Stack;
+
 /**
  * Description
  * Design a max stack data structure that supports the stack operations and supports finding the stack's maximum element.
@@ -48,5 +52,65 @@ package org.ict.algorithm.leetcode.stack;
  */
 public class DesignMaxStack {
 
+    class MaxStack1 {
+
+    }
+
+    class MaxStack {
+        private Deque<Integer> stack1 = new ArrayDeque<>();
+
+        private Deque<Integer> stack2 = new ArrayDeque<>();
+
+        /**
+         * Your MaxStack object will be instantiated and called as such:
+         * MaxStack obj = new MaxStack();
+         * obj.push(x);
+         * int param_2 = obj.pop();
+         * int param_3 = obj.top();
+         * int param_4 = obj.peekMax();
+         * int param_5 = obj.popMax();
+         */
+        public MaxStack() {}
+
+        public void push(int x) {
+            stack1.push(x);
+            if (stack2.isEmpty() || stack2.peek() <= x) {
+                stack2.push(x);
+            }
+        }
+
+        public int pop() {
+            if (!stack2.isEmpty() && stack2.peek() == stack1.peek()) {
+                stack2.pop();
+            }
+            int t = stack1.pop();
+            return t;
+        }
+
+        public int top() {
+            return stack1.peek();
+        }
+
+        public int peekMax() {
+            return stack2.peek();
+        }
+
+        public int popMax() {
+            int mx = stack2.peek();
+            Stack<Integer> temp = new Stack<>();
+            while (stack1.peek() != stack2.peek()) {
+                temp.push(stack1.peek());
+                stack1.pop();
+            }
+            stack1.pop();
+            stack2.pop();
+            while (!temp.empty()) {
+                push(temp.peek());
+                temp.pop();
+            }
+            return mx;
+        }
+
+    }
 
 }
