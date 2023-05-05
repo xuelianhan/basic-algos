@@ -48,7 +48,7 @@ public class DesignMaxStack {
 
     /**
      * Understanding the following solution
-     * 
+     *
      * LeetCode Official - Approach #2: Double Linked List + TreeMap
      *
      * Intuition

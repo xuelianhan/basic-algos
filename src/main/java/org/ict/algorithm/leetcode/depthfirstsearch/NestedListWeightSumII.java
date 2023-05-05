@@ -43,6 +43,11 @@ public class NestedListWeightSumII {
         System.out.println(res);
     }
 
+    /**
+     * todo
+     * @param nestedList
+     * @return
+     */
     public int depthSumInverseV2(List<NestedInteger> nestedList) {
         int unweighted = 0;
         int weighted = 0;
@@ -66,6 +71,11 @@ public class NestedListWeightSumII {
         return weighted;
     }
 
+    /**
+     * todo
+     * @param nestedList
+     * @return
+     */
     public int depthSumInverseV1(List<NestedInteger> nestedList) {
         int unweighted = 0;
         int weighted = 0;

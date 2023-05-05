@@ -1,4 +1,3 @@
-1146.Snapshot Array=41
 359.Logger Rate Limiter=35
 1604.Alert Using Same Key-Card Three or More Times in a One Hour Period=33
 718.Maximum Length of Repeated Subarray=31
