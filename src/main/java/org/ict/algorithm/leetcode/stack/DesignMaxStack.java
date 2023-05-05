@@ -65,6 +65,11 @@ public class DesignMaxStack {
      * When weMaxStack.popMax(), we use the map to find the relevant node to remove, and return its value.
      * The above operations are more clear given that we have a working DoubleLinkedList class.
      * The implementation provided uses head and tail sentinels to simplify the relevant Double Linked List operations.
+     *
+     * Time Complexity: O(logN) for all operations except peek which is O(1), where N is the number of operations performed.
+     * Most operations involving TreeMap are O(logN).
+     *
+     * Space Complexity: O(N), the size of the data structures used.
      */
     class MaxStackV2 {
         private DoubleLinkedList stack = new DoubleLinkedList();
