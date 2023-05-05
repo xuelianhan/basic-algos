@@ -50,6 +50,8 @@ public class DesignMinStack {
 
     /**
      * Time Cost 4ms
+     * -----------------
+     *
      */
     class MinStackV1 {
 
@@ -116,6 +118,9 @@ public class DesignMinStack {
         }
 
         public void pop() {
+            /**
+             * Auto de-boxing here
+             */
             int top = stack1.pop();
             if (!stack2.isEmpty() && stack2.peek() == top) {
                 stack2.pop();

@@ -28,9 +28,8 @@ import org.ict.algorithm.util.StdOut;
  * <em>put</em>, <em>get</em>, <em>contains</em>, <em>delete</em>  
  * <em>size</em>, and <em>is-empty</em> methods
  * It also provides ordered methods for finding the <em>minimum</em>,
- * <em>maxmium</em>, <em>floor</em>, and <em>ceiling</em>
- * It also provides a <em>keys</em> method for iterating over all of
- * the keys
+ * <em>maximum</em>, <em>floor</em>, and <em>ceiling</em>
+ * It also provides a <em>keys</em> method for iterating over all the keys.
  * A symbol table implements the <em>associative array</em> abstraction:
  * when associating a value with  a key tha t is already in the symbol table,
  * the convention is to replace the old value with the new value
@@ -48,7 +47,7 @@ import org.ict.algorithm.util.StdOut;
  * The <em>size</em>, and <em>is-empty</em> operations take constant time.
  * Construction takes constant time.
  *
- * Fro other implementations of the same API, see {@link ST}, {@link BinarySearchST},
+ * For other implementations of the same API, see {@link ST}, {@link BinarySearchST},
  * {@link SequentialSearchST}, {@link BST}, {@link SeparateChainingHashST},
  * {@linke LinearProbingHashST}, and {@link AVLTreeST} see Page 452.
  *
