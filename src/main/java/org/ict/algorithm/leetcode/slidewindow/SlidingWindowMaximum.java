@@ -196,7 +196,7 @@ public class SlidingWindowMaximum {
         for (int i = 0; i < n; i++) {
             /**
              * Remove index out of range k from the head of the queue.
-             * Kick off the left index out of range, and it no longer participate the subsequent comparision.
+             * Kick off the left index out of range, and it no longer participate the subsequent comparison.
              */
             if (!queue.isEmpty() && queue.peek() < i - k + 1) {
                 // default pull the head element of the queue, equals the operation of queue.pollFirst()

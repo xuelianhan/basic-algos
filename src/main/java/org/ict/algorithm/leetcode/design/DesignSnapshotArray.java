@@ -124,6 +124,11 @@ public class DesignSnapshotArray {
             Arrays.setAll(arr, k -> new ArrayList<>());
         }
 
+        /**
+         * Only record snapshot version
+         * @param index
+         * @param val
+         */
         public void set(int index, int val) {
             arr[index].add(new int[]{snapId, val});
         }
