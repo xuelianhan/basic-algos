@@ -62,7 +62,7 @@ public class DesignMaxStack {
      * Let's store the stack as a double linked list stack, and store a map from value to a List of Node.
      * When weMaxStack.push(x), we add a node to our stack, and add or update our entry map.get(x).add(node).
      * When weMaxStack.pop(), we find the value val = stack.pop(), and remove the node from our map, deleting the entry if it was the last one.
-     * When weMaxStack.popMax(), we use the map to find the relevant node to unlink, and return its value.
+     * When weMaxStack.popMax(), we use the map to find the relevant node to remove, and return its value.
      * The above operations are more clear given that we have a working DoubleLinkedList class.
      * The implementation provided uses head and tail sentinels to simplify the relevant Double Linked List operations.
      */
@@ -115,6 +115,9 @@ public class DesignMaxStack {
     }
 
     class DoubleLinkedList {
+        /**
+         * Two sentinel nodes: head and tail
+         */
         private Node head = new Node();
         private Node tail = new Node();
 
@@ -123,6 +126,11 @@ public class DesignMaxStack {
             tail.prev = head;
         }
 
+        /**
+         * Add a node with val before tail-node
+         * @param val
+         * @return
+         */
         public Node add(int val) {
             Node node = new Node(val);
             node.next = tail;
