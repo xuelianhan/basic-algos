@@ -75,7 +75,7 @@ public class DesignMaxStack {
         public void push(int x) {
             Node node = stack.add(x);
             /**
-             * if (map.containsKey(x)) {
+             * if (!map.containsKey(x)) {
              *     map.put(x, new ArrayList<>());
              * }
              * map.get(x).add(node);
@@ -219,6 +219,7 @@ public class DesignMaxStack {
 
         /**
          * A little different with method popMax of MaxStack
+         * Time Complexity: O(N)
          */
         public int popMax() {
             int max = peekMax();
@@ -296,6 +297,9 @@ public class DesignMaxStack {
          * After that, we can add the elements in the temporary stack temp back into stack1.
          * Note that at this time, it is easy to make a mistake that stack2 is not updated at the same time,
          * so we can directly call the push () function.
+         *
+         * Time Complexity: O(N)
+         *
          * @return
          */
         public int popMax() {
