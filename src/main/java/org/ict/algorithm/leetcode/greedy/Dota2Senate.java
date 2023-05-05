@@ -50,6 +50,31 @@ import java.util.Queue;
  * LC649, Medium
  */
 public class Dota2Senate {
+
+    /**
+     * Understanding the following solution
+     *
+     * We can use two queues, pushing the position of the respective camp into a different queue inside,
+     * and then for the cycle.
+     * Each time from the two queues each take a position out to see the size of the relationship,
+     * the small one indicates that in the front,
+     * we can put the back of that Ban off,
+     * so we have to add the small one back into the queue,
+     * but can not directly add the original position,
+     * because the next round before his turn to Ban,
+     * so we have to add an n, and then into the queue.
+     * This way when a queue is empty, the loop is launched,
+     * and we return to the camp that is not empty.
+     *
+     * e.g. senate = "RD"
+     * q1:0, q2:1
+     * 0 < 1, q1:2
+     * q1.size():1, q2.size():0
+     * return "Radiant"
+     *
+     * @param senate
+     * @return
+     */
     public String predictPartyVictory(String senate) {
         int n = senate.length();
         Queue<Integer> q1 = new ArrayDeque<>();
