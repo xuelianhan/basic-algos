@@ -51,7 +51,13 @@ public class DesignMaxStack {
 
     }
 
+    /**
+     * Two stacks are used to simulate this.
+     * stack1 is a normal stack to hold all numbers,
+     * while stack2 is a maximum stack to hold the largest number that appears.
+     */
     class MaxStack {
+
         private Deque<Integer> stack1 = new ArrayDeque<>();
 
         private Deque<Integer> stack2 = new ArrayDeque<>();
@@ -91,7 +97,7 @@ public class DesignMaxStack {
         }
 
         public int popMax() {
-            int mx = stack2.peek();
+            int max = stack2.peek();
             Stack<Integer> temp = new Stack<>();
             while (stack1.peek() != stack2.peek()) {
                 temp.push(stack1.peek());
@@ -103,7 +109,7 @@ public class DesignMaxStack {
                 push(temp.peek());
                 temp.pop();
             }
-            return mx;
+            return max;
         }
 
     }
