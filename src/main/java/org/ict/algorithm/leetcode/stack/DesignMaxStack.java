@@ -43,11 +43,68 @@ import java.util.Stack;
  * There will be at least one element in the stack when pop, top, peekMax, or popMax is called.
  * @author sniper
  * @date 03 May 2023
- * LC716, Medium, frequency=41
+ * LC716, Hard, frequency=41
  */
 public class DesignMaxStack {
 
-    class MaxStack1 {
+    class MaxStackV2 {
+
+        public MaxStackV2() {}
+
+    }
+
+    /**
+     * LeetCode Official - Approach #1: Two Stacks
+     * For peekMax, we remember the largest value we've seen on the side.
+     * For example if we add [2, 1, 5, 3, 9] in stack , we'll store [2, 2, 5, 5, 9] in maxStack.
+     * This works seamlessly with pop operations, and also it's easy to compute:
+     * it's just the maximum of the element we are adding and the previous maximum.
+     * For popMax, we know what the current maximum (peekMax) is.
+     * We can pop until we find that maximum, then push the popped elements back on the stack.
+     *
+     * Time Complexity: O(N) for the popMax operation, and O(1) for the other operations,
+     * where N is the number of operations performed.
+     * Space Complexity: O(N), the maximum size of the stack.
+     * @see <a href="https://aaronice.gitbook.io/lintcode/stack/max-stack"></a>
+     */
+    class MaxStackV1 {
+        private Deque<Integer> stack1 = new ArrayDeque<>();
+
+        private Deque<Integer> stack2 = new ArrayDeque<>();
+
+        public MaxStackV1() {}
+
+        public void push(int x) {
+            int max = stack2.isEmpty() ? x : stack2.peek();
+            stack2.push(max > x ? max : x);
+            stack1.push(x);
+        }
+
+        public int pop() {
+            stack2.pop();
+            return stack1.pop();
+        }
+
+        public int top() {
+            return stack1.peek();
+        }
+
+        public int peekMax() {
+            return stack2.peek();
+        }
+
+        public int popMax() {
+            int max = peekMax();
+            Stack<Integer> aux = new Stack<>();
+            while (top() != max) {
+                aux.push(pop());
+            }
+            pop();
+            while (!aux.isEmpty()) {
+                push(aux.pop());
+            }
+            return max;
+        }
 
     }
 
@@ -101,7 +158,7 @@ public class DesignMaxStack {
          * and then we want to remove this element in stack1,
          * because the stack can't locate the element directly.
          * So we use a temporary stack temp, to save the outgoing element of stack1 into this temporary stack temp.
-         * We exit the while-loop while the top element of stack1 and stack2 are the same.
+         * We exit the while-loop until the top element of stack1 and stack2 are the same.
          * At this time, we find stack2's top element in stack1, top elements in stack1 and stack2 are removed respectively.
          * After that, we can add the elements in the temporary stack temp back into stack1.
          * Note that at this time, it is easy to make a mistake that stack2 is not updated at the same time,
