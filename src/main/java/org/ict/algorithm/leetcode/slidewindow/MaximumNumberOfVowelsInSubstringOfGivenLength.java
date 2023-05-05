@@ -38,6 +38,13 @@ import java.util.Set;
  */
 public class MaximumNumberOfVowelsInSubstringOfGivenLength {
 
+    public static void main(String[] args) {
+        String s = "leetcode";
+        int k = 3;
+        MaximumNumberOfVowelsInSubstringOfGivenLength instance = new MaximumNumberOfVowelsInSubstringOfGivenLength();
+        instance.maxVowelsV1(s, k);
+    }
+
     /**
      * class Solution:
      *   def maxVowels(self, s: str, k: int) -> int:
@@ -53,6 +60,16 @@ public class MaximumNumberOfVowelsInSubstringOfGivenLength {
      *       ans = max(ans, maxi)
      *
      *     return ans
+     * -------------------------------------
+     * e.g. s = "leetcode", k = 3
+     * i:0, c:'l', max:0, max:0, res:0
+     * i:1, c:'e', max:1, max:1, res:1
+     * i:2, c:'e', max:2, max:2, res:2
+     * i:3, c:'t', max:2, max:2, res:2
+     * i:4, c:'c', max:2, max:1, res:2
+     * i:5, c:'o', max:2, max:1, res:2
+     * i:6, c:'d', max:1, max:1, res:2
+     * i:7, c:'e', max:2, max:2, res:2
      * @param s
      * @param k
      * @return
@@ -65,6 +82,7 @@ public class MaximumNumberOfVowelsInSubstringOfGivenLength {
         for (int i = 0; i < s.length(); i++) {
             if (vowels.contains(s.charAt(i))) {
                 max++;
+
             }
             if (i >= k && vowels.contains(s.charAt(i - k))) {
                 max--;
