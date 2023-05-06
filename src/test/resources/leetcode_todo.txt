@@ -1,4 +1,3 @@
-1604.Alert Using Same Key-Card Three or More Times in a One Hour Period=33
 718.Maximum Length of Repeated Subarray=31
 539.Minimum Time Difference=30
 2034.Stock Price Fluctuation=30

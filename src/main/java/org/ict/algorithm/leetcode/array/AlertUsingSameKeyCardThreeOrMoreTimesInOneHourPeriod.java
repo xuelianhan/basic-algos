@@ -42,8 +42,85 @@ import java.util.*;
  */
 public class AlertUsingSameKeyCardThreeOrMoreTimesInOneHourPeriod {
 
+    public static void main(String[] args) {
+        String[] keyName = {"john","john","john"};
+        String[] keyTime = {"23:58","23:59","00:01"};
+        AlertUsingSameKeyCardThreeOrMoreTimesInOneHourPeriod instance = new AlertUsingSameKeyCardThreeOrMoreTimesInOneHourPeriod();
+        List<String> res = instance.alertNamesV2(keyName, keyTime);
+        System.out.println(res);
+    }
+
+    public List<String> alertNamesV3(String[] keyName, String[] keyTime) {
+        TreeMap<String, TreeSet<Integer>> map = new TreeMap<>();
+        int n = keyName.length;
+        for (int i = 0; i < n; i++) {
+            String name = keyName[i];
+            String time = keyTime[i];
+            int t = Integer.parseInt(time.substring(0, 2)) * 60 + Integer.parseInt(time.substring(3));
+            map.computeIfAbsent(name, k -> new TreeSet<>()).add(t);
+        }
+
+        List<String> res = new ArrayList<>();
+        for (Map.Entry<String, TreeSet<Integer>> entry : map.entrySet()) {
+            /**
+             * TreeSet sort time automatically
+             */
+            Deque<Integer> queue = new ArrayDeque<>();
+            for (int t : entry.getValue()) {
+                queue.offer(t);
+                if (queue.peekLast() - queue.peek() > 60) {
+                    queue.poll();
+                }
+                if (queue.size() >= 3) {
+                    res.add(entry.getKey());
+                    break;
+                }
+            }
+        }
+        return res;
+    }
+
+    /**
+     * TreeMap + Deque
+     * @param keyName
+     * @param keyTime
+     * @return
+     */
+    public List<String> alertNamesV2(String[] keyName, String[] keyTime) {
+        TreeMap<String, List<Integer>> map = new TreeMap<>();
+        int n = keyName.length;
+        for (int i = 0; i < n; i++) {
+            String name = keyName[i];
+            String time = keyTime[i];
+            int t = Integer.parseInt(time.substring(0, 2)) * 60 + Integer.parseInt(time.substring(3));
+            map.computeIfAbsent(name, k -> new ArrayList<>()).add(t);
+        }
+
+        List<String> res = new ArrayList<>();
+        for (Map.Entry<String, List<Integer>> entry : map.entrySet()) {
+            List<Integer> list = entry.getValue();
+            /**
+             * Sorting here is very important, because we need subtract later
+             */
+            Collections.sort(list);
+            Deque<Integer> queue = new ArrayDeque<>();
+            for (int t : list) {
+                queue.offer(t);
+                if (queue.peekLast() - queue.peek() > 60) {
+                    queue.poll();
+                }
+                if (queue.size() >= 3) {
+                    res.add(entry.getKey());
+                    break;
+                }
+            }
+        }
+        return res;
+    }
+
     /**
      * Time Cost 113ms
+     * TreeMap
      * -----------------------------------------------------
      * class Solution:
      *     def alertNames(self, keyName: List[str], keyTime: List[str]) -> List[str]:
@@ -62,6 +139,20 @@ public class AlertUsingSameKeyCardThreeOrMoreTimesInOneHourPeriod {
      *         ans.sort()
      *         return ans
      * -----------------------------------------------------
+     * def alertNames(self, keyName: List[str], keyTime: List[str]) -> List[str]:
+     *         name_to_time = collections.defaultdict(list)
+     *         for name, hour_minute in zip(keyName, keyTime):
+     *             hour, minute = map(int, hour_minute.split(':'))
+     *             time = hour * 60 + minute
+     *             name_to_time[name].append(time)
+     *         names = []
+     *         for name, time_list in name_to_time.items():
+     *             time_list.sort()
+     *             for i, time in enumerate(time_list):
+     *                 if i >= 2 and time - time_list[i - 2] <= 60:
+     *                     names.append(name)
+     *                     break
+     *         return sorted(names)
      * @param keyName
      * @param keyTime
      * @return
@@ -103,6 +194,7 @@ public class AlertUsingSameKeyCardThreeOrMoreTimesInOneHourPeriod {
 
     /**
      * Time Cost 62ms
+     * HashMap + Sort
      * @param keyName
      * @param keyTime
      * @return
