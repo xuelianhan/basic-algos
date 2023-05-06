@@ -42,7 +42,7 @@ public class MaximumLengthOfRepeatedSubarray {
     }
 
     /**
-     *
+     * One-Dimension DP
      * @param nums1
      * @param nums2
      * @return
@@ -52,7 +52,7 @@ public class MaximumLengthOfRepeatedSubarray {
     }
 
     /**
-     *
+     * One-Dimension DP
      * @param nums1
      * @param nums2
      * @return
@@ -62,7 +62,7 @@ public class MaximumLengthOfRepeatedSubarray {
     }
 
     /**
-     *
+     * Two-Dimension DP
      * @param nums1
      * @param nums2
      * @return
@@ -72,34 +72,44 @@ public class MaximumLengthOfRepeatedSubarray {
     }
 
     /**
-     *
+     * Two-Dimension DP
+     * dp[i][j] denotes the length of the longest subarray of the first i numbers of array A and the first j numbers of array B.
+     * If dp[i][j] is not 0, then the i-th array in A and the j-th number in B must be equal.
+     * e.g. nums1 = [1,2,2], nums2 = [3,1,2]
+     *   3 1 2
+     * 1 0 1 0
+     * 2 0 0 2
+     * 2 0 0 1
      * @param nums1
      * @param nums2
      * @return
      */
     public int findLengthV2(int[] nums1, int[] nums2) {
-        return 0;
-    }
-
-    /**
-     *
-     * @param nums1
-     * @param nums2
-     * @return
-     */
-    public int findLengthV1(int[] nums1, int[] nums2) {
-        return 0;
+        int m = nums1.length;
+        int n = nums2.length;
+        int[][] dp = new int[m + 1][n + 1];
+        int res = 0;
+        for (int i = 1; i <= m; i++) {
+            for (int j = 1; j <= n; j++) {
+                if (nums1[i - 1] == nums2[j - 1]) {
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+                    res = Math.max(res, dp[i][j]);
+                }
+            }
+        }
+        return res;
     }
 
     /**
      * Brute-Force Solution
      * Time Cost 49ms
      * e.g. nums1 = [0,0,0,0,1], nums2 = [1,0,0,0,0]
+     * e.g. nums1 = [0,1,1,1,1], nums2 = [1,0,1,0,1]
      * @param nums1
      * @param nums2
      * @return
      */
-    public int findLength(int[] nums1, int[] nums2) {
+    public int findLengthV1(int[] nums1, int[] nums2) {
         int res = 0;
         int m = nums1.length;
         int n = nums2.length;
@@ -131,5 +141,31 @@ public class MaximumLengthOfRepeatedSubarray {
 
         return res;
     }
+
+    /**
+     * Brute-Force Solution
+     * Time Cost 2771ms
+     * Time Complexity : O(M * N * min(M,N))
+     * @param nums1
+     * @param nums2
+     * @return
+     */
+    public int findLength(int[] nums1, int[] nums2) {
+        int res = 0;
+        int m = nums1.length;
+        int n = nums2.length;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                int len = 0;
+                while (i + len < m && j + len < n && nums1[i + len] == nums2[j + len]) {
+                    len++;
+                }
+                res = Math.max(res, len);
+            }
+        }
+        return res;
+    }
+
+
 
 }
