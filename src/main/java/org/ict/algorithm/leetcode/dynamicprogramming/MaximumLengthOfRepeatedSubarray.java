@@ -29,7 +29,7 @@ public class MaximumLengthOfRepeatedSubarray {
         int[] nums1 = {1,2,2};
         int[] nums2 = {3,1,2};
         MaximumLengthOfRepeatedSubarray instance = new MaximumLengthOfRepeatedSubarray();
-        int res = instance.findLengthV2(nums1, nums2);
+        int res = instance.findLengthV4(nums1, nums2);
         System.out.println(res);
     }
 
@@ -56,6 +56,26 @@ public class MaximumLengthOfRepeatedSubarray {
     /**
      * Two-Dimension DP
      * Time Cost 27ms
+     * ----------------
+     * dp[i][j] := max length of nums1[i:] and nums2[j:]
+     * e.g. nums1 = [1,2,2], nums2 = [3,1,2]
+     * dp[4][4]
+     *     3 1 2
+     * ------------
+     *   0 2 0 0
+     * 1 0 0 1 0
+     * 2 0 0 1 0
+     * 2 0 0 0 0
+     * ----------
+     * dp[2][2]=1,
+     * it means the largest common prefix of nums1[2:]=[2] and nums2[2:]=[2] is [2], which has length of 1.
+     *
+     * dp[1][2]=1,
+     * it means the largest common prefix of nums1[1:]=[2, 2] and nums2[2:]=[2] is [2], which has length of 1.
+     *
+     * dp[0][1]=2,
+     * it means the largest common prefix of nums1[0:]=[1, 2, 2] and nums2[1:]=[1, 2] is [1, 2], which has length of 2.
+     *
      * @param nums1
      * @param nums2
      * @return
@@ -76,12 +96,40 @@ public class MaximumLengthOfRepeatedSubarray {
                 }
             }
         }
+        System.out.println(Arrays.deepToString(dp));
         return res;
     }
 
     /**
      * Two-Dimension DP
      * Time Cost 33ms
+     *
+     * It's the classic Longest Common Substring problem, can be used by using Dynamic Programming.
+     * Let dp[i][j] is the longest common suffix between nums1[0..i-1] and nums2[0..j-1].
+     *
+     * dp[i][j] := max length of (A[0:i], B[0:j])
+     * dp[i][j] = dp[i – 1][j – 1] + 1 if A[i-1] == B[j-1] else 0
+     * Time complexity: O(m*n)
+     * Space complexity: O(m*n) -> O(n)
+     * --------------------------------------------------
+     * e.g. nums1 = [1,2,2], nums2 = [3,1,2]
+     * dp[4][4]
+     *     3 1 2
+     * ------------
+     *   0 0 0 0
+     * 1 0 0 1 0
+     * 2 0 0 0 2
+     * 2 0 0 0 1
+     * ----------
+     * dp[1][2]=1,
+     * it means first-1 numbers of nums1:[1], and the first-2 numbers of nums2:[3,1], have the longest common suffix [1] with length of 1
+     *
+     * dp[2][3]=2,
+     * it means first-2 numbers of nums1:[1,2], and the first-3 numbers of nums2:[3,1,2], have the longest common suffix [1,2] with length of 2
+     *
+     * dp[3][3]=1,
+     * it means first-3 numbers of nums1:[1,2,2], and the first-3 numbers of nums2:[3,1,2] have the longest common suffix [2] with length of 1
+     *
      * @param nums1
      * @param nums2
      * @return
@@ -99,13 +147,15 @@ public class MaximumLengthOfRepeatedSubarray {
                 }
             }
         }
+        //System.out.println(Arrays.deepToString(dp));
         return res;
     }
 
     /**
      * Two-Dimension DP
      * Time Cost 31ms
-     * dp[i][j] denotes the length of the longest subarray of the first i numbers of array A and the first j numbers of array B.
+     * ----------------------------------
+     * dp[i][j] denotes the length of the longest suffix of the first i numbers of array A and the first j numbers of array B.
      * If dp[i][j] is not 0, then the i-th array in A and the j-th number in B must be equal.
      * e.g. nums1 = [1,2,2], nums2 = [3,1,2]
      * dp[4][4]
@@ -117,13 +167,13 @@ public class MaximumLengthOfRepeatedSubarray {
      * 2 0 0 0 1
      * ----------
      * dp[1][2]=1,
-     * it means first-1 numbers of nums1:[1], and the first-2 numbers of nums2:[3,1], have the longest subarray [1] with length of 1
+     * it means first-1 numbers of nums1:[1], and the first-2 numbers of nums2:[3,1], have the longest common suffix [1] with length of 1
      *
      * dp[2][3]=2,
-     * it means first-2 numbers of nums1:[1,2], and the first-3 numbers of nums2:[3,1,2], have the longest subarray [1,2] with length of 2
+     * it means first-2 numbers of nums1:[1,2], and the first-3 numbers of nums2:[3,1,2], have the longest common suffix [1,2] with length of 2
      *
      * dp[3][3]=1,
-     * it means first-3 numbers of nums1:[1,2,2], and the first-3 numbers of nums2:[3,1,2] have the longest subarray [2] with length of 1
+     * it means first-3 numbers of nums1:[1,2,2], and the first-3 numbers of nums2:[3,1,2] have the longest common suffix [2] with length of 1
      *
      * @param nums1
      * @param nums2
@@ -145,7 +195,7 @@ public class MaximumLengthOfRepeatedSubarray {
                 }
             }
         }
-        System.out.println(Arrays.deepToString(dp));
+        //System.out.println(Arrays.deepToString(dp));
         return res;
     }
 
