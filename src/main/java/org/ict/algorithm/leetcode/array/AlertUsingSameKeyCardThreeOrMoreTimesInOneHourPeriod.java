@@ -21,8 +21,8 @@ import java.util.*;
  * keyTime = ["10:00","10:40","11:00","09:00","11:00","13:00","15:00"]
  * Output: ["daniel"]
  * Explanation: "daniel" used the key-card 3 times in a one-hour period ("10:00","10:40", "11:00").
- * Example 2:
  *
+ * Example 2:
  * Input:
  * keyName = ["alice","alice","alice","bob","bob","bob","bob"],
  * keyTime = ["12:01","12:00","18:00","21:00","21:20","21:30","23:00"]
@@ -36,6 +36,7 @@ import java.util.*;
  * [keyName[i], keyTime[i]] is unique.
  * 1 <= keyName[i].length <= 10
  * keyName[i] contains only lowercase English letters.
+ * 
  * @author sniper
  * @date 06 May 2023
  * LC1604, Medium, frequency=33
