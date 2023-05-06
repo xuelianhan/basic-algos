@@ -1,5 +1,7 @@
 package org.ict.algorithm.leetcode.dynamicprogramming;
 
+import java.util.Arrays;
+
 /**
  * Given two integer arrays nums1 and nums2, return the maximum length of a subarray that appears in both arrays.
  *
@@ -24,10 +26,10 @@ package org.ict.algorithm.leetcode.dynamicprogramming;
 public class MaximumLengthOfRepeatedSubarray {
 
     public static void main(String[] args) {
-        int[] nums1 = {1,2,3,2,1};
-        int[] nums2 = {3,2,1,4,7};
+        int[] nums1 = {1,2,2};
+        int[] nums2 = {3,1,2};
         MaximumLengthOfRepeatedSubarray instance = new MaximumLengthOfRepeatedSubarray();
-        int res = instance.findLength(nums1, nums2);
+        int res = instance.findLengthV2(nums1, nums2);
         System.out.println(res);
     }
 
@@ -106,10 +108,23 @@ public class MaximumLengthOfRepeatedSubarray {
      * dp[i][j] denotes the length of the longest subarray of the first i numbers of array A and the first j numbers of array B.
      * If dp[i][j] is not 0, then the i-th array in A and the j-th number in B must be equal.
      * e.g. nums1 = [1,2,2], nums2 = [3,1,2]
-     *   3 1 2
-     * 1 0 1 0
-     * 2 0 0 2
-     * 2 0 0 1
+     * dp[4][4]
+     *     3 1 2
+     * ------------
+     *   0 0 0 0
+     * 1 0 0 1 0
+     * 2 0 0 0 2
+     * 2 0 0 0 1
+     * ----------
+     * dp[1][2]=1,
+     * it means first-1 numbers of nums1:[1], and the first-2 numbers of nums2:[3,1], have the longest subarray [1] with length of 1
+     *
+     * dp[2][3]=2,
+     * it means first-2 numbers of nums1:[1,2], and the first-3 numbers of nums2:[3,1,2], have the longest subarray [1,2] with length of 2
+     *
+     * dp[3][3]=1,
+     * it means first-3 numbers of nums1:[1,2,2], and the first-3 numbers of nums2:[3,1,2] have the longest subarray [2] with length of 1
+     *
      * @param nums1
      * @param nums2
      * @return
@@ -130,6 +145,7 @@ public class MaximumLengthOfRepeatedSubarray {
                 }
             }
         }
+        System.out.println(Arrays.deepToString(dp));
         return res;
     }
 
