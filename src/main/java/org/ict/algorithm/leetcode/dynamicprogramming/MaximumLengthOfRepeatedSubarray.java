@@ -107,8 +107,8 @@ public class MaximumLengthOfRepeatedSubarray {
      * It's the classic Longest Common Substring problem, can be used by using Dynamic Programming.
      * Let dp[i][j] is the longest common suffix between nums1[0..i-1] and nums2[0..j-1].
      *
-     * dp[i][j] := max length of (A[0:i], B[0:j])
-     * dp[i][j] = dp[i – 1][j – 1] + 1 if A[i-1] == B[j-1] else 0
+     * dp[i][j] := the longest common suffix between nums1[0..i-1] and nums2[0..j-1]
+     * dp[i][j] = dp[i – 1][j – 1] + 1 if nums1[i - 1] == nums2[j - 1] else 0
      * Time complexity: O(m*n)
      * Space complexity: O(m*n) -> O(n)
      * --------------------------------------------------
