@@ -23,38 +23,113 @@ package org.ict.algorithm.leetcode.dynamicprogramming;
  */
 public class MaximumLengthOfRepeatedSubarray {
 
+    public static void main(String[] args) {
+        int[] nums1 = {1,2,3,2,1};
+        int[] nums2 = {3,2,1,4,7};
+        MaximumLengthOfRepeatedSubarray instance = new MaximumLengthOfRepeatedSubarray();
+        int res = instance.findLength(nums1, nums2);
+        System.out.println(res);
+    }
+
+    /**
+     *
+     * @param nums1
+     * @param nums2
+     * @return
+     */
     public int findLengthV6(int[] nums1, int[] nums2) {
         return 0;
     }
 
+    /**
+     *
+     * @param nums1
+     * @param nums2
+     * @return
+     */
     public int findLengthV5(int[] nums1, int[] nums2) {
         return 0;
     }
 
+    /**
+     *
+     * @param nums1
+     * @param nums2
+     * @return
+     */
     public int findLengthV4(int[] nums1, int[] nums2) {
         return 0;
     }
 
+    /**
+     *
+     * @param nums1
+     * @param nums2
+     * @return
+     */
     public int findLengthV3(int[] nums1, int[] nums2) {
         return 0;
     }
 
+    /**
+     *
+     * @param nums1
+     * @param nums2
+     * @return
+     */
     public int findLengthV2(int[] nums1, int[] nums2) {
         return 0;
     }
 
+    /**
+     *
+     * @param nums1
+     * @param nums2
+     * @return
+     */
     public int findLengthV1(int[] nums1, int[] nums2) {
         return 0;
     }
 
     /**
      * Brute-Force Solution
+     * Time Cost 49ms
+     * e.g. nums1 = [0,0,0,0,1], nums2 = [1,0,0,0,0]
      * @param nums1
      * @param nums2
      * @return
      */
     public int findLength(int[] nums1, int[] nums2) {
-        return 0;
+        int res = 0;
+        int m = nums1.length;
+        int n = nums2.length;
+        /**
+         * Fixed the start point in nums1, compare it one by one with elements in nums2
+         */
+        for (int k = 0; k < m; k++) {
+            for (int i = k, j = 0; i < m && j < n;) {
+                int cnt = 0;
+                while (i < m && j < n && nums1[i++] == nums2[j++]) {
+                    cnt++;
+                }
+                res = Math.max(res, cnt);
+            }
+        }
+
+        /**
+         * Fixed the start point in nums2, compare it one by one with elements in nums1
+         */
+        for (int k = 0; k < n; k++) {
+            for (int i = 0, j = k; i < m && j < n;) {
+                int cnt = 0;
+                while (i < m && j < n && nums1[i++] == nums2[j++]) {
+                    cnt++;
+                }
+                res = Math.max(res, cnt);
+            }
+        }
+
+        return res;
     }
 
 }
