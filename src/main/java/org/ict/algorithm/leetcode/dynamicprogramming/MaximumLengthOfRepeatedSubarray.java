@@ -32,7 +32,7 @@ public class MaximumLengthOfRepeatedSubarray {
     }
 
     /**
-     *
+     * One-Dimension DP
      * @param nums1
      * @param nums2
      * @return
@@ -52,27 +52,57 @@ public class MaximumLengthOfRepeatedSubarray {
     }
 
     /**
-     * One-Dimension DP
+     * Two-Dimension DP
+     * Time Cost 27ms
      * @param nums1
      * @param nums2
      * @return
      */
     public int findLengthV4(int[] nums1, int[] nums2) {
-        return 0;
+        int m = nums1.length;
+        int n = nums2.length;
+        /**
+         * dp[i][j] := max length of nums1[i:] and nums2[j:]
+         */
+        int[][] dp = new int[m + 1][n + 1];
+        int res = 0;
+        for (int i = m - 1; i >= 0; i--) {
+            for (int j = n - 1; j >= 0; j--) {
+                if (nums1[i] == nums2[j]) {
+                    dp[i][j] = dp[i + 1][j + 1] + 1;
+                    res = Math.max(res, dp[i][j]);
+                }
+            }
+        }
+        return res;
     }
 
     /**
      * Two-Dimension DP
+     * Time Cost 33ms
      * @param nums1
      * @param nums2
      * @return
      */
     public int findLengthV3(int[] nums1, int[] nums2) {
-        return 0;
+        int m = nums1.length;
+        int n = nums2.length;
+        int[][] dp = new int[m + 1][n + 1];
+        int res = 0;
+        for (int i = 1; i <= m; i++) {
+            for (int j = 1; j <= n; j++) {
+                if (nums1[i - 1] == nums2[j - 1]) {
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+                    res = Math.max(res, dp[i][j]);
+                }
+            }
+        }
+        return res;
     }
 
     /**
      * Two-Dimension DP
+     * Time Cost 31ms
      * dp[i][j] denotes the length of the longest subarray of the first i numbers of array A and the first j numbers of array B.
      * If dp[i][j] is not 0, then the i-th array in A and the j-th number in B must be equal.
      * e.g. nums1 = [1,2,2], nums2 = [3,1,2]
@@ -94,6 +124,9 @@ public class MaximumLengthOfRepeatedSubarray {
                 if (nums1[i - 1] == nums2[j - 1]) {
                     dp[i][j] = dp[i - 1][j - 1] + 1;
                     res = Math.max(res, dp[i][j]);
+                } else {
+                    // dp is int array, default is zero, so this branch can be ignored.
+                    dp[i][j] = 0;
                 }
             }
         }
@@ -115,6 +148,7 @@ public class MaximumLengthOfRepeatedSubarray {
         int n = nums2.length;
         /**
          * Fixed the start point in nums1, compare it one by one with elements in nums2
+         * Don't separate i++ and j++ out from condition nums1[i++] == nums2[j++]
          */
         for (int k = 0; k < m; k++) {
             for (int i = k, j = 0; i < m && j < n;) {
@@ -128,6 +162,7 @@ public class MaximumLengthOfRepeatedSubarray {
 
         /**
          * Fixed the start point in nums2, compare it one by one with elements in nums1
+         * Don't separate i++ and j++ out from condition nums1[i++] == nums2[j++]
          */
         for (int k = 0; k < n; k++) {
             for (int i = 0, j = k; i < m && j < n;) {
