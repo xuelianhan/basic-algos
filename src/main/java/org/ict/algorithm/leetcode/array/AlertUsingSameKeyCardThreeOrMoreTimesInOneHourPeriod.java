@@ -12,6 +12,7 @@ import java.util.*;
  * Access times are given in the 24-hour time format "HH:MM", such as "23:51" and "09:49".
  * Return a list of unique worker names who received an alert for frequent key card use.
  * Sort the names in ascending order alphabetically.
+ *
  * Notice that "10:00" - "11:00" is considered to be within a one-hour period,
  * while "22:51" - "23:52" is not considered to be within a one-hour period.
  *
@@ -36,7 +37,7 @@ import java.util.*;
  * [keyName[i], keyTime[i]] is unique.
  * 1 <= keyName[i].length <= 10
  * keyName[i] contains only lowercase English letters.
- * 
+ *
  * @author sniper
  * @date 06 May 2023
  * LC1604, Medium, frequency=33
@@ -51,6 +52,15 @@ public class AlertUsingSameKeyCardThreeOrMoreTimesInOneHourPeriod {
         System.out.println(res);
     }
 
+    /**
+     * The system emits an alert if any worker uses the key-card three or more times in a one-hour period.
+     * Return a list of unique worker names who received an alert for frequent key card use.
+     * Sort the names in ascending order alphabetically.
+     *
+     * @param keyName
+     * @param keyTime
+     * @return
+     */
     public List<String> alertNamesV3(String[] keyName, String[] keyTime) {
         TreeMap<String, TreeSet<Integer>> map = new TreeMap<>();
         int n = keyName.length;
@@ -72,6 +82,12 @@ public class AlertUsingSameKeyCardThreeOrMoreTimesInOneHourPeriod {
                 if (queue.peekLast() - queue.peek() > 60) {
                     queue.poll();
                 }
+                /**
+                 * Because we are asked to find the one who press the key at least 3 times in 60 minutes.
+                 * Starting from i = 2 to make sure the size of the list is at least 3;
+                 * If the list size is less than 3, then the corresponding employee will be ignored by the code,
+                 * because he/she is definitely NOT among the ones we are looking for.
+                 */
                 if (queue.size() >= 3) {
                     res.add(entry.getKey());
                     break;
@@ -110,6 +126,12 @@ public class AlertUsingSameKeyCardThreeOrMoreTimesInOneHourPeriod {
                 if (queue.peekLast() - queue.peek() > 60) {
                     queue.poll();
                 }
+                /**
+                 * Because we are asked to find the one who press the key at least 3 times in 60 minutes.
+                 * Starting from i = 2 to make sure the size of the list is at least 3;
+                 * If the list size is less than 3, then the corresponding employee will be ignored by the code,
+                 * because he/she is definitely NOT among the ones we are looking for.
+                 */
                 if (queue.size() >= 3) {
                     res.add(entry.getKey());
                     break;
@@ -180,6 +202,12 @@ public class AlertUsingSameKeyCardThreeOrMoreTimesInOneHourPeriod {
         for (Map.Entry<String, List<Integer>> entry : map.entrySet()) {
             List<Integer> list = entry.getValue();
             int m = list.size();
+            /**
+             * Because we are asked to find the one who press the key at least 3 times in 60 minutes.
+             * Starting from i = 2 to make sure the size of the list is at least 3;
+             * If the list size is less than 3, then the corresponding employee will be ignored by the code,
+             * because he/she is definitely NOT among the ones we are looking for.
+             */
             if (m > 2) {
                 Collections.sort(list);
                 for (int i = 0; i < m - 2; i++) {
@@ -222,6 +250,12 @@ public class AlertUsingSameKeyCardThreeOrMoreTimesInOneHourPeriod {
         for (Map.Entry<String, List<Integer>> entry : map.entrySet()) {
             List<Integer> list = entry.getValue();
             int m = list.size();
+            /**
+             * Because we are asked to find the one who press the key at least 3 times in 60 minutes.
+             * Starting from i = 2 to make sure the size of the list is at least 3;
+             * If the list size is less than 3, then the corresponding employee will be ignored by the code,
+             * because he/she is definitely NOT among the ones we are looking for.
+             */
             if (m > 2) {
                 Collections.sort(list);
                 for (int i = 0; i < m - 2; i++) {
