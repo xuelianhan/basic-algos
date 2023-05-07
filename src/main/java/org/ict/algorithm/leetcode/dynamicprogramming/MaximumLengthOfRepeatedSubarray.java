@@ -351,6 +351,20 @@ public class MaximumLengthOfRepeatedSubarray {
      * Understanding the following solution
      * Brute-Force Solution
      * Time Cost 34ms
+     * -------------------
+     * maxLen[i][j] --> the max length of common subarray ending at A[i] and B[j]
+     * => 0 , if A[i] != A[j]
+     * => maxLen[i-1][j-1] + 1, if A[i] = B[j]
+     * So maxLen[i][j] only depends on maxLen[i-1][j-1],
+     * what you only need is to keep maxLen[i-1][j-1] which is one element.
+     * At the following codes,  we use maxLenEnding to keep maxLen[i-1][j-1],
+     * and traverse the matrix diagonally
+     * ------------------------------------
+     * e.g. nums1 = [1,2,2], nums2 = [3,1,2]
+     *
+     *
+     * @see <a href="https://leetcode.com/problems/maximum-length-of-repeated-subarray/solutions/109040/java-o-mn-time-o-1-space"></a>
+     * @author seanzhou1023
      * @param nums1
      * @param nums2
      * @return
@@ -387,6 +401,51 @@ public class MaximumLengthOfRepeatedSubarray {
     }
 
     /**
+     * Understanding the following solution
+     * Brute-Force Solution
+     * Time Cost 34ms
+     * @param nums1
+     * @param nums2
+     * @return
+     */
+    public int findLengthV1(int[] nums1, int[] nums2) {
+        int res = 0;
+        int m = nums1.length;
+        int n = nums2.length;
+        /**
+         * Fixed the start point in nums1, compare it one by one with elements in nums2
+         */
+        for (int k = 0; k < m; k++) {
+            int cnt = 0;
+            for (int i = k, j = 0; i < m && j < n; i++, j++) {
+                if (nums1[i] == nums2[j]) {
+                    cnt++;
+                } else {
+                    cnt = 0;
+                }
+                res = Math.max(res, cnt);
+            }
+        }
+
+        /**
+         * Fixed the start point in nums2, compare it one by one with elements in nums1
+         */
+        for (int k = 0; k < n; k++) {
+            int cnt = 0;
+            for (int i = 0, j = k; i < m && j < n; i++, j++) {
+                if (nums1[i] == nums2[j]) {
+                    cnt++;
+                } else {
+                    cnt = 0;
+                }
+                res = Math.max(res, cnt);
+            }
+        }
+
+        return res;
+    }
+
+    /**
      * Brute-Force Solution
      * Time Cost 49ms
      * e.g. nums1 = [0,0,0,0,1], nums2 = [1,0,0,0,0]
@@ -395,7 +454,7 @@ public class MaximumLengthOfRepeatedSubarray {
      * @param nums2
      * @return
      */
-    public int findLengthV1(int[] nums1, int[] nums2) {
+    public int findLengthV0(int[] nums1, int[] nums2) {
         int res = 0;
         int m = nums1.length;
         int n = nums2.length;
