@@ -70,7 +70,31 @@ package org.ict.algorithm.leetcode.depthfirstsearch;
  */
 public class FlattenMultilevelDoublyLinkedList {
 
+    /**
+     *
+     * @param head
+     * @return
+     */
+    public Node flattenV4(Node head) {
 
+        return null;
+    }
+
+    /**
+     *
+     * @param head
+     * @return
+     */
+    public Node flattenV3(Node head) {
+
+        return null;
+    }
+
+    /**
+     *
+     * @param head
+     * @return
+     */
     public Node flattenV2(Node head) {
 
         return null;
@@ -87,39 +111,40 @@ public class FlattenMultilevelDoublyLinkedList {
     }
 
     /**
-     * Depth-First-Search Recursive Solution
+     * Recursive Solution
+     * Time Cost 2ms
      * e.g.
      * 1---2---3---4---5---6--NULL
      *         |
      *         7---8---9---10--NULL
      *             |
      *            11--12--NULL
-     * expected:
-     * [1,2,3,4,5,6,null,null,null,7,8,9,10,null,null,11,12]
+     * expected: [1,2,3,7,8,11,12,9,10,4,5,6]
+     * 
      * @param head
      * @return
      */
     public Node flatten(Node head) {
-        Node cur = head;
-        while (cur != null) {
-            if (cur.child != null) {
-                Node next = cur.next;
-                cur.child = flatten(cur.child);
-                Node tail = cur.child;
+        Node p = head;
+        while (p != null) {
+            if (p.child != null) {
+                Node next = p.next;
+                p.child = flatten(p.child);
+                Node tail = p.child;
                 while (tail.next != null) {
                     tail = tail.next;
                 }
 
-                cur.next = cur.child;
-                cur.next.prev = cur;
+                p.next = p.child;
+                p.next.prev = p;
 
-                cur.child = null;
+                p.child = null;
                 tail.next = next;
                 if (next != null) {
                     next.prev = tail;
                 }
             }
-            cur = cur.next;
+            p = p.next;
         }
         return head;
     }
