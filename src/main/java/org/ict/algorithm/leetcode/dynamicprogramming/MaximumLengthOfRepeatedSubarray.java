@@ -53,7 +53,7 @@ public class MaximumLengthOfRepeatedSubarray {
      * @param nums2
      * @return
      */
-    public int findLengthV7(int[] nums1, int[] nums2) {
+    public int findLengthV8(int[] nums1, int[] nums2) {
         int m = nums1.length;
         int n = nums2.length;
         /**
@@ -99,7 +99,7 @@ public class MaximumLengthOfRepeatedSubarray {
      * @param nums2
      * @return
      */
-    public int findLengthV6(int[] nums1, int[] nums2) {
+    public int findLengthV7(int[] nums1, int[] nums2) {
         int m = nums1.length;
         int n = nums2.length;
         /**
@@ -130,10 +130,10 @@ public class MaximumLengthOfRepeatedSubarray {
      * ------------------------
      * e.g. nums1 = [1,2,2], nums2 = [3,1,2]
      * dp:
-     * [0, 0, 0, 0]
-     * [0, 0, 0, 0]
-     * [0, 0, 1, 0]
-     * [0, 0, 1, 0]
+     * [0, 0, 0, 0], subarray1:[2], subarray2:[3]
+     * [0, 0, 0, 0], subarray1:[2], subarray2:[3, 1]
+     * [0, 0, 1, 0], subarray1:[2], subarray2:[3, 1, 2]
+     * [0, 0, 1, 0], subarray1:[2],
      * [0, 0, 1, 0]
      * [0, 0, 1, 0]
      * [0, 0, 1, 0]
@@ -143,7 +143,7 @@ public class MaximumLengthOfRepeatedSubarray {
      * @param nums2
      * @return
      */
-    public int findLengthV5(int[] nums1, int[] nums2) {
+    public int findLengthV6(int[] nums1, int[] nums2) {
         int m = nums1.length;
         int n = nums2.length;
         int[] dp = new int[n + 1];
@@ -166,6 +166,7 @@ public class MaximumLengthOfRepeatedSubarray {
     }
 
     /**
+     * Understanding the following solution
      * Two-Dimension DP
      * Time Cost 27ms
      * Time complexity: O(m*n)
@@ -196,7 +197,7 @@ public class MaximumLengthOfRepeatedSubarray {
      * @param nums2
      * @return
      */
-    public int findLengthV4(int[] nums1, int[] nums2) {
+    public int findLengthV5(int[] nums1, int[] nums2) {
         int m = nums1.length;
         int n = nums2.length;
         /**
@@ -217,6 +218,7 @@ public class MaximumLengthOfRepeatedSubarray {
     }
 
     /**
+     * Understanding the following solution
      * Two-Dimension DP
      * Time Cost 33ms
      * Time complexity: O(m*n)
@@ -264,7 +266,7 @@ public class MaximumLengthOfRepeatedSubarray {
      * @param nums2
      * @return
      */
-    public int findLengthV3(int[] nums1, int[] nums2) {
+    public int findLengthV4(int[] nums1, int[] nums2) {
         int m = nums1.length;
         int n = nums2.length;
         /**
@@ -285,6 +287,7 @@ public class MaximumLengthOfRepeatedSubarray {
     }
 
     /**
+     * Understanding the following solution
      * Two-Dimension DP
      * Time Cost 31ms
      * Time complexity: O(m*n)
@@ -314,7 +317,7 @@ public class MaximumLengthOfRepeatedSubarray {
      * @param nums2
      * @return
      */
-    public int findLengthV2(int[] nums1, int[] nums2) {
+    public int findLengthV3(int[] nums1, int[] nums2) {
         int m = nums1.length;
         int n = nums2.length;
         /**
@@ -341,6 +344,45 @@ public class MaximumLengthOfRepeatedSubarray {
             }
         }
         //System.out.println(Arrays.deepToString(dp));
+        return res;
+    }
+
+    /**
+     * Understanding the following solution
+     * Brute-Force Solution
+     * Time Cost 34ms
+     * @param nums1
+     * @param nums2
+     * @return
+     */
+    public int findLengthV2(int[] nums1, int[] nums2) {
+        int res = 0;
+        int m = nums1.length;
+        int n = nums2.length;
+        for (int k = 0; k < m; k++) {
+            int maxLenEnding = 0;
+            for (int i = k, j = 0; i < m && j < n; i++, j++) {
+                if (nums1[i] != nums2[j]) {
+                    maxLenEnding = 0;
+                } else {
+                    maxLenEnding++;
+                    res = Math.max(res, maxLenEnding);
+                }
+            }
+        }
+
+        for (int k = 0; k < n; k++) {
+            int maxLenEnding = 0;
+            for (int i = 0, j = k; i < m && j < n; i++, j++) {
+                if (nums1[i] != nums2[j]) {
+                    maxLenEnding = 0;
+                } else {
+                    maxLenEnding++;
+                    res = Math.max(res, maxLenEnding);
+                }
+            }
+        }
+
         return res;
     }
 
