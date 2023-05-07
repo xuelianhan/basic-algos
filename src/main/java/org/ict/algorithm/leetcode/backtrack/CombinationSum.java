@@ -52,6 +52,7 @@ public class CombinationSum {
         LinkedList<Integer> track = new LinkedList<>();
         /**
          * Corner case process.
+         * e.g. candidates = [2], target = 1
          */
         Arrays.sort(candidates);
         if (candidates[0] > target) {
@@ -92,6 +93,7 @@ public class CombinationSum {
         LinkedList<Integer> track = new LinkedList<>();
         /**
          * Corner case process.
+         * e.g. candidates = [2], target = 1
          */
         Arrays.sort(candidates);
         if (candidates[0] > target) {
