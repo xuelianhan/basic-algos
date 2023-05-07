@@ -29,16 +29,26 @@ public class MaximumLengthOfRepeatedSubarray {
         int[] nums1 = {1,2,2};
         int[] nums2 = {3,1,2};
         MaximumLengthOfRepeatedSubarray instance = new MaximumLengthOfRepeatedSubarray();
-        int res = instance.findLengthV4(nums1, nums2);
+        int res = instance.findLengthV7(nums1, nums2);
         System.out.println(res);
     }
 
     /**
+     * One-Dimension DP
      * Time complexity: O(m*n)
      * Space complexity: O(n)
      *
-     * e.g. nums1 = [1,2,3,2,1], nums2 = [3,2,1,4,7]
-     *
+     * e.g. nums1 = [1,2,2], nums2 = [3,1,2]
+     * dp:
+     * [0, 0, 0, 0]
+     * [0, 0, 1, 0]
+     * [0, 0, 1, 0]
+     * [0, 0, 1, 2]
+     * [0, 0, 0, 2]
+     * [0, 0, 0, 2]
+     * [0, 0, 0, 1]
+     * [0, 0, 0, 1]
+     * [0, 0, 0, 1]
      * @param nums1
      * @param nums2
      * @return
@@ -58,6 +68,7 @@ public class MaximumLengthOfRepeatedSubarray {
                 } else {
                     dp[j + 1] = 0;
                 }
+                System.out.println(Arrays.toString(dp));
                 res = Math.max(res, dp[j + 1]);
             }
         }
@@ -73,8 +84,17 @@ public class MaximumLengthOfRepeatedSubarray {
      * If at any point they are equal,
      * we increase the value of dp array at point index after adding one to previous index value in dp.
      * -----------------------------------------------
-     * e.g. nums1 = [1,2,3,2,1], nums2 = [3,2,1,4,7]
-     *
+     * e.g. nums1 = [1,2,2], nums2 = [3,1,2]
+     * dp:
+     * [0, 0, 0, 0]
+     * [0, 0, 1, 0]
+     * [0, 0, 1, 0]
+     * [0, 0, 1, 2]
+     * [0, 0, 0, 2]
+     * [0, 0, 0, 2]
+     * [0, 0, 0, 1]
+     * [0, 0, 0, 1]
+     * [0, 0, 0, 1]
      * @param nums1
      * @param nums2
      * @return
@@ -94,6 +114,7 @@ public class MaximumLengthOfRepeatedSubarray {
                 } else {
                     dp[j] = 0;
                 }
+                System.out.println(Arrays.toString(dp));
                 res = Math.max(res, dp[j]);
             }
         }
@@ -106,6 +127,18 @@ public class MaximumLengthOfRepeatedSubarray {
      *
      * Time complexity: O(m*n)
      * Space complexity: O(n)
+     * ------------------------
+     * e.g. nums1 = [1,2,2], nums2 = [3,1,2]
+     * dp:
+     * [0, 0, 0, 0]
+     * [0, 0, 0, 0]
+     * [0, 0, 1, 0]
+     * [0, 0, 1, 0]
+     * [0, 0, 1, 0]
+     * [0, 0, 1, 0]
+     * [0, 0, 1, 0]
+     * [0, 2, 1, 0]
+     * [0, 2, 0, 0]
      * @param nums1
      * @param nums2
      * @return
@@ -125,6 +158,7 @@ public class MaximumLengthOfRepeatedSubarray {
                 } else {
                     dp[j] = 0;
                 }
+                System.out.println(Arrays.toString(dp));
                 res = Math.max(res, dp[j]);
             }
         }
@@ -146,7 +180,9 @@ public class MaximumLengthOfRepeatedSubarray {
      * 1 0 0 1 0
      * 2 0 0 1 0
      * 2 0 0 0 0
-     * ----------
+     * ---------------------------
+     * dp[3][j]==dp[i][3]==0
+     * ---------------------------
      * dp[2][2]=1,
      * it means the largest common prefix of nums1[2:]=[2] and nums2[2:]=[2] is [2], which has length of 1.
      *
