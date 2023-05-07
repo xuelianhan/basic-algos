@@ -34,28 +34,108 @@ public class MaximumLengthOfRepeatedSubarray {
     }
 
     /**
+     * Time complexity: O(m*n)
+     * Space complexity: O(n)
+     *
+     * e.g. nums1 = [1,2,3,2,1], nums2 = [3,2,1,4,7]
+     *
+     * @param nums1
+     * @param nums2
+     * @return
+     */
+    public int findLengthV7(int[] nums1, int[] nums2) {
+        int m = nums1.length;
+        int n = nums2.length;
+        /**
+         * dp[j] is the length of the longest common subarray ending with nums1[i-1], nums2[j-1]
+         */
+        int[] dp = new int[n + 1];
+        int res = 0;
+        for (int i = 0; i < m; i++) {
+            for (int j = n - 1; j >= 0; j--) {
+                if (nums1[i] == nums2[j]) {
+                    dp[j + 1] = dp[j] + 1;
+                } else {
+                    dp[j + 1] = 0;
+                }
+                res = Math.max(res, dp[j + 1]);
+            }
+        }
+        return res;
+    }
+
+    /**
      * One-Dimension DP
+     * Time Cost 29ms
+     * Time complexity: O(m*n)
+     * Space complexity: O(n)
+     * We are comparing each element of vector 1 (starting from left boundary) to each element of vector 2 (starting from right boundary).
+     * If at any point they are equal,
+     * we increase the value of dp array at point index after adding one to previous index value in dp.
+     * -----------------------------------------------
+     * e.g. nums1 = [1,2,3,2,1], nums2 = [3,2,1,4,7]
+     *
      * @param nums1
      * @param nums2
      * @return
      */
     public int findLengthV6(int[] nums1, int[] nums2) {
-        return 0;
+        int m = nums1.length;
+        int n = nums2.length;
+        /**
+         * dp[j] is the length of the longest common subarray ending with nums1[i-1], nums2[j-1]
+         */
+        int[] dp = new int[n + 1];
+        int res = 0;
+        for (int i = 1; i <= m; i++) {
+            for (int j = n; j > 0; j--) {
+                if (nums1[i - 1] == nums2[j - 1]) {
+                    dp[j] = dp[j - 1] + 1;
+                } else {
+                    dp[j] = 0;
+                }
+                res = Math.max(res, dp[j]);
+            }
+        }
+        return res;
     }
 
     /**
      * One-Dimension DP
+     * Time Cost 38ms
+     *
+     * Time complexity: O(m*n)
+     * Space complexity: O(n)
      * @param nums1
      * @param nums2
      * @return
      */
     public int findLengthV5(int[] nums1, int[] nums2) {
-        return 0;
+        int m = nums1.length;
+        int n = nums2.length;
+        int[] dp = new int[n + 1];
+        int res = 0;
+        for (int i = m - 1; i >= 0; i--) {
+            /**
+             * The order is very important
+             */
+            for (int j = 0; j < n; j++) {
+                if (nums1[i] == nums2[j]) {
+                    dp[j] = dp[j + 1] + 1;
+                } else {
+                    dp[j] = 0;
+                }
+                res = Math.max(res, dp[j]);
+            }
+        }
+        return res;
     }
 
     /**
      * Two-Dimension DP
      * Time Cost 27ms
+     * Time complexity: O(m*n)
+     * Space complexity: O(m*n)
      * ----------------
      * dp[i][j] := max length of nums1[i:] and nums2[j:]
      * e.g. nums1 = [1,2,2], nums2 = [3,1,2]
@@ -103,6 +183,8 @@ public class MaximumLengthOfRepeatedSubarray {
     /**
      * Two-Dimension DP
      * Time Cost 33ms
+     * Time complexity: O(m*n)
+     * Space complexity: O(m*n)
      *
      * It's the classic Longest Common Substring problem, can be used by using Dynamic Programming.
      * Let dp[i][j] is the longest common suffix between nums1[0..i-1] and nums2[0..j-1].
@@ -137,6 +219,9 @@ public class MaximumLengthOfRepeatedSubarray {
     public int findLengthV3(int[] nums1, int[] nums2) {
         int m = nums1.length;
         int n = nums2.length;
+        /**
+         * dp[i][j] denotes the length of the longest suffix of nums1[0...i-1] and nums2[0...j-1]
+         */
         int[][] dp = new int[m + 1][n + 1];
         int res = 0;
         for (int i = 1; i <= m; i++) {
@@ -154,6 +239,8 @@ public class MaximumLengthOfRepeatedSubarray {
     /**
      * Two-Dimension DP
      * Time Cost 31ms
+     * Time complexity: O(m*n)
+     * Space complexity: O(m*n)
      * ----------------------------------
      * dp[i][j] denotes the length of the longest suffix of the first i numbers of array A and the first j numbers of array B.
      * If dp[i][j] is not 0, then the i-th array in A and the j-th number in B must be equal.
@@ -182,6 +269,9 @@ public class MaximumLengthOfRepeatedSubarray {
     public int findLengthV2(int[] nums1, int[] nums2) {
         int m = nums1.length;
         int n = nums2.length;
+        /**
+         * dp[i][j] denotes the length of the longest suffix of nums1[0...i-1] and nums2[0...j-1]
+         */
         int[][] dp = new int[m + 1][n + 1];
         int res = 0;
         for (int i = 1; i <= m; i++) {
