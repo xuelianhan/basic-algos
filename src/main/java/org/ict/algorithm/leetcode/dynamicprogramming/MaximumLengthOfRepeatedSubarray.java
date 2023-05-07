@@ -137,7 +137,7 @@ public class MaximumLengthOfRepeatedSubarray {
      * Time complexity: O(m*n)
      * Space complexity: O(m*n)
      * ----------------
-     * dp[i][j] := max length of nums1[i:] and nums2[j:]
+     * dp[i][j] := max length of common prefix of nums1[i:] and nums2[j:]
      * e.g. nums1 = [1,2,2], nums2 = [3,1,2]
      * dp[4][4]
      *     3 1 2
@@ -164,7 +164,7 @@ public class MaximumLengthOfRepeatedSubarray {
         int m = nums1.length;
         int n = nums2.length;
         /**
-         * dp[i][j] := max length of nums1[i:] and nums2[j:]
+         * dp[i][j] := max length of common prefix of nums1[i:] and nums2[j:]
          */
         int[][] dp = new int[m + 1][n + 1];
         int res = 0;
