@@ -34,7 +34,7 @@ import java.util.Stack;
  * s consists of lowercase English letters.
  * @author sniper
  * @date 2022/8/9
- * LC1047
+ * LC1047, Easy
  */
 public class RemoveAllAdjacentDuplicatesInString {
 
@@ -50,7 +50,7 @@ public class RemoveAllAdjacentDuplicatesInString {
         char[] arr = s.toCharArray();
         for (int j = 0; j < n; j++) {
             arr[i] = arr[j];
-            if (i > 0 && arr[i-1] == arr[i]) {
+            if (i > 0 && arr[i - 1] == arr[i]) {
                 i -= 2;
             }
             i++;
@@ -61,8 +61,8 @@ public class RemoveAllAdjacentDuplicatesInString {
     /**
      * Two pointers solution provided by lee215
      *
-     * i refers to the index to set next character in the output string.
-     * j refers to the index of current iteration in the input string.
+     * The i refers to the index to set next character in the output string.
+     * The j refers to the index of current iteration in the input string.
      *
      * Iterate characters of S one by one while increasing j.
      *
