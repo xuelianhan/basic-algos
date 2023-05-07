@@ -211,6 +211,18 @@ public class MaximumLengthOfRepeatedSubarray {
      *
      * dp[3][3]=1,
      * it means first-3 numbers of nums1:[1,2,2], and the first-3 numbers of nums2:[3,1,2] have the longest common suffix [2] with length of 1
+     * --------------------------------
+     * class Solution:
+     *     def findLength(self, nums1: List[int], nums2: List[int]) -> int:
+     *       m, n = len(nums1), len(nums2)
+     *       dp = [[0] * (n + 1) for _ in range(0, m + 1)]
+     *       res = 0
+     *       for i in range(1, m + 1):
+     *         for j in range(1, n + 1):
+     *           if nums1[i - 1] == nums2[j - 1]:
+     *             dp[i][j] = dp[i - 1][j - 1] + 1
+     *             res = max(res, dp[i][j])
+     *       return res
      *
      * @param nums1
      * @param nums2
@@ -280,7 +292,14 @@ public class MaximumLengthOfRepeatedSubarray {
                     dp[i][j] = dp[i - 1][j - 1] + 1;
                     res = Math.max(res, dp[i][j]);
                 } else {
-                    // dp is int array, default is zero, so this branch can be ignored.
+                    /**
+                     * If you are looking for longest common sequence,
+                     * then you put dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]); at here.
+                     * However, this problem is looking for subarray,
+                     * since both character is not equal, which means we need to break it here.
+                     * hence, set dp[i][j] to 0.
+                     * dp is int array, default is zero, so this branch can be ignored.
+                     */
                     dp[i][j] = 0;
                 }
             }
