@@ -36,17 +36,29 @@ import org.ict.algorithm.util.StdOut;
  *  merge(a, aux, 0, 5, 10), a:[E, O, R, S, T, X, A, E, L, M, P]
  *  a after sort:[A, E, E, L, M, O, P, R, S, T, X]
  *
+ * $ javac org/ict/algorithm/sort/Merge.java
+ * $ more ../resources/tiny.txt 
+ * S O R T E X A M P L E
+ * $ java org/ict/algorithm/sort/Merge < ../resources/tiny.txt
+ *  A
+ *  E
+ *  E
+ *  L
+ *  M
+ *  O
+ *  P
+ *  R
+ *  S
+ *  T
+ *  X
  *
- */
-
-/**
  * Like QuickSort, Merge Sort is a Divide and Conquer algorithm. 
  * It divides input array in two halves, calls itself for the two halves and then merges the two sorted halves. 
  * The merge() function is used for merging two halves. 
  * The merge(arr, lo, mid, hi) is key process that 
  * assumes that arr[lo..mid] and arr[mid+1..hi] are sorted 
  * and merges the two sorted sub-arrays into one.
- * 
+ *
  * The {@code Merge} class provides static methods for sorting an array using mergesort.
  * <p>
  * For additional documentation, see <a href="https://algs4.cs.princeton.edu/22mergesort">Section 2.2</a>
@@ -63,8 +75,8 @@ public class Merge extends AbstractSortHelper {
     //stably merge a[lo .. mid] with a[mid+1 .. hi] using aux[lo .. hi]
     private static void merge(Comparable[] a, Comparable[] aux, int lo, int mid, int hi) {
         //precondition: a[lo .. mid] and a[mid+1 .. hi] are sorted subarrays 
-        assert AbstractSortHelper.isSorted(a, lo, mid); 
-        assert AbstractSortHelper.isSorted(a, mid+1, hi); 
+        assert isSorted(a, lo, mid);
+        assert isSorted(a, mid+1, hi);
 
         //copy to aux[]
         for (int k = lo; k <= hi; k++) {
@@ -78,14 +90,14 @@ public class Merge extends AbstractSortHelper {
                 a[k] = aux[j++];
             } else if (j > hi) {
                 a[k] = aux[i++];
-            } else if (AbstractSortHelper.less(aux[j], aux[i])) {
+            } else if (less(aux[j], aux[i])) {
                 a[k] = aux[j++];
             } else {
                 a[k] = aux[i++];
             }
         }
         //postcondition: a[lo .. hi] is sorted
-        assert AbstractSortHelper.isSorted(a, lo, hi);
+        assert isSorted(a, lo, hi);
     }
 
     //mergesort a[lo .. hi] using auxiliary array aux[lo .. hi]
@@ -97,7 +109,7 @@ public class Merge extends AbstractSortHelper {
         int mid = lo + (hi - lo) / 2;
         sort(a, aux, lo, mid);
         sort(a, aux, mid + 1, hi);
-        StdOut.println("merge(a, aux, " + lo + ", " + mid +", "+ hi + "), a:" + Arrays.toString(a)); 
+        StdOut.println("merge(a, aux, " + lo + ", " + mid +", "+ hi + "), a:" + Arrays.toString(a));
         merge(a, aux, lo, mid, hi);
     }
 
@@ -109,8 +121,8 @@ public class Merge extends AbstractSortHelper {
         Comparable[] aux = new Comparable[a.length];
         StdOut.println("a before sort:" + Arrays.toString(a)); 
         sort(a, aux, 0, a.length - 1);
-        StdOut.println("a after sort:" + Arrays.toString(a)); 
-        assert AbstractSortHelper.isSorted(a);
+        StdOut.println("a after sort:" + Arrays.toString(a));
+        assert isSorted(a);
     }
 
 
@@ -131,7 +143,7 @@ public class Merge extends AbstractSortHelper {
                 index[k] = aux[j++];
             } else if (j > hi) {
                 index[k] = aux[i++];
-            } else if (AbstractSortHelper.less(a[aux[j]], a[aux[i]])) {
+            } else if (less(a[aux[j]], a[aux[i]])) {
                 index[k] = aux[j++];
             } else {
                 index[k] = aux[i++];
@@ -154,7 +166,7 @@ public class Merge extends AbstractSortHelper {
         StdOut.println("index before sort:" + Arrays.toString(index)); 
         int[] aux = new int[n];
         sort(a, index, aux, 0, n-1);
-        StdOut.println("index after sort:" + Arrays.toString(index)); 
+        StdOut.println("index after sort:" + Arrays.toString(index));
         return index;
     }
 
@@ -166,7 +178,7 @@ public class Merge extends AbstractSortHelper {
         int mid = lo + (hi - lo) / 2;
         sort(a, index, aux, lo , mid);
         sort(a, index, aux, mid+1 , hi);
-        StdOut.println("merge(a, index, aux, " + lo + ", " + mid +", "+ hi + "), index:" + Arrays.toString(index)); 
+        StdOut.println("merge(a, index, aux, " + lo + ", " + mid +", "+ hi + "), index:" + Arrays.toString(index));
         merge(a, index, aux, lo, mid, hi);
     }
 
