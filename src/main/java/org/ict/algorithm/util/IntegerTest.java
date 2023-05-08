@@ -1,6 +1,5 @@
 package org.ict.algorithm.util;
 
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
