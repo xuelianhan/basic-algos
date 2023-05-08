@@ -46,6 +46,7 @@ import org.ict.algorithm.util.StdOut;
  *  @author Kevin Wayne
  */
 public class Insertion extends AbstractSortHelper {
+
     
     //This class should not be instantiated.
     private Insertion(){}
