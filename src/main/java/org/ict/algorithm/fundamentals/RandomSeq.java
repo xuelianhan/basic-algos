@@ -8,7 +8,6 @@ import org.ict.algorithm.util.StdRandom;
  * sequence of real numbers in a given range.
  * For additional documentation, see <a href="http://algs4.cs.princeton.edu/11model/">Section 1.1</a> of
  * <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
- *
  * compilation:
  * $ javac org/ict/algorithm/fundamentals/RandomSeq.java 
  *
