@@ -36,22 +36,6 @@ import org.ict.algorithm.util.StdOut;
  *  merge(a, aux, 0, 5, 10), a:[E, O, R, S, T, X, A, E, L, M, P]
  *  a after sort:[A, E, E, L, M, O, P, R, S, T, X]
  *
- * $ javac org/ict/algorithm/sort/Merge.java
- * $ more ../resources/tiny.txt 
- * S O R T E X A M P L E
- * $ java org/ict/algorithm/sort/Merge < ../resources/tiny.txt
- *  A
- *  E
- *  E
- *  L
- *  M
- *  O
- *  P
- *  R
- *  S
- *  T
- *  X
- *
  * Like QuickSort, Merge Sort is a Divide and Conquer algorithm. 
  * It divides input array in two halves, calls itself for the two halves and then merges the two sorted halves. 
  * The merge() function is used for merging two halves. 
