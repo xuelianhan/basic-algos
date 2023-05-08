@@ -23,7 +23,6 @@ import org.ict.algorithm.util.Out;
  *   3
  *   4
  *   5
- * 
  *
  * Reads in text files specified as the first command-line
  * arguments, concatenates them, and writes the result to 
