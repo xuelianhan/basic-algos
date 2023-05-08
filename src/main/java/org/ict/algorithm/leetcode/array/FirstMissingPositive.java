@@ -111,12 +111,11 @@ public class FirstMissingPositive {
 				return i + 1;
 			}
 		}
-
 		return len + 1;
 	}
 
 
-	public static void swap(int[] A, int i, int j){
+	public void swap(int[] A, int i, int j){
 		if (i != j) {
 			A[i] ^= A[j];
 			A[j] ^= A[i];
