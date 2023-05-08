@@ -1,5 +1,7 @@
 package org.ict.algorithm.leetcode.depthfirstsearch;
 
+import java.util.Stack;
+
 /**
  * You are given a doubly linked list, which contains nodes that have a next pointer, a previous pointer,
  * and an additional child pointer.
@@ -71,21 +73,97 @@ package org.ict.algorithm.leetcode.depthfirstsearch;
 public class FlattenMultilevelDoublyLinkedList {
 
     /**
-     *
+     * Understanding the following solution
+     * Stack Solution
      * ------------------------------------------------
-     * e.g.
+     * e.g.expected: [1,2,3,7,8,11,12,9,10,4,5,6]
      * 1---2---3---4---5---6--NULL
      *         |
      *         7---8---9---10--NULL
      *             |
      *            11--12--NULL
-     * expected: [1,2,3,7,8,11,12,9,10,4,5,6]
+     * ------------------------------------------------
+     * push 4 into the stack, stack:4
+     * 1---2---3   4---5---6--NULL
+     *         |
+     *         7---8---9---10--NULL
+     *             |
+     *            11--12--NULL
+     * ------------------------------------------------
+     * push 9 into the stack, stack:4, 9
+     * 1---2---3   4---5---6--NULL
+     *         |
+     *         7---8   9---10--NULL
+     *             |
+     *            11--12--NULL
+     * ------------------------------------------------
+     * pop 9 from the stack, stack:4
+     * 1---2---3   4---5---6--NULL
+     *         |
+     *         7---8   9---10--NULL
+     *             |   |
+     *            11--12
+     * ------------------------------------------------
+     * pop 4 from the stack, stack:
+     * 1---2---3            4---5---6--NULL
+     *         |            |
+     *         7---8   9---10
+     *             |   |
+     *            11--12
+     * ------------------------------------------------
+     * """
+     * # Definition for a Node.
+     * class Node:
+     *     def __init__(self, val, prev, next, child):
+     *         self.val = val
+     *         self.prev = prev
+     *         self.next = next
+     *         self.child = child
+     * """
+     *
+     * class Solution:
+     *     def flatten(self, head: 'Optional[Node]') -> 'Optional[Node]':
+     *         p = head
+     *         stack = []
+     *         while p:
+     *             if p.child:
+     *                 if p.next:
+     *                     stack.append(p.next)
+     *                 child = p.child
+     *                 p.next = child
+     *                 child.prev = p
+     *                 p.child = None
+     *             elif p.next == None and stack:
+     *                 p.next = stack.pop()
+     *                 p.next.prev = p
+     *             p = p.next
+     *         return head
      * @param head
      * @return
      */
     public Node flattenV4(Node head) {
+        Node p = head;
+        /**
+         * Deque<Node> stack = new ArrayDeque<>(); is OK.
+         */
+        Stack<Node> stack = new Stack<>();
+        while (p != null) {
+            if (p.child != null) {
+                if (p.next != null) {
+                    stack.push(p.next);
+                }
 
-        return null;
+                Node child = p.child;
+                p.next = child;
+                child.prev = p;
+                p.child = null;
+            } else if (p.next == null && !stack.isEmpty()) {
+                p.next = stack.pop();
+                p.next.prev = p;
+            }
+            p = p.next;
+        }
+        return head;
     }
 
     /**
@@ -130,6 +208,38 @@ public class FlattenMultilevelDoublyLinkedList {
      *         return head;
      *     }
      * };
+     * ------------------------------------------------
+     * """
+     * # Definition for a Node.
+     * class Node:
+     *     def __init__(self, val, prev, next, child):
+     *         self.val = val
+     *         self.prev = prev
+     *         self.next = next
+     *         self.child = child
+     * """
+     *
+     * class Solution:
+     *     def flatten(self, head: 'Optional[Node]') -> 'Optional[Node]':
+     *         p = head
+     *         while p:
+     *             if p.child:
+     *                 child = p.child
+     *                 tail = child
+     *                 while tail.next:
+     *                     tail = tail.next
+     *
+     *                 next = p.next
+     *                 p.next = child
+     *                 child.prev = p
+     *                 p.child = None
+     *
+     *                 tail.next = next
+     *                 if next:
+     *                     next.prev = tail
+     *
+     *             p = p.next
+     *         return head
      * @param head
      * @return
      */
