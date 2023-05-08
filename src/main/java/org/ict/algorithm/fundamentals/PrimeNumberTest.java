@@ -10,8 +10,6 @@ package org.ict.algorithm.fundamentals;
  * see <a href="https://github.com/kevin-wayne/algs4">algs</a>
  * see <a href="https://en.wikipedia.org/wiki/Harmonic_number">harmonic_number</a>
  * see <a href="http://algs4.cs.princeton.edu/home/"></a>
- * 
- *
  */
 public class PrimeNumberTest {
 
