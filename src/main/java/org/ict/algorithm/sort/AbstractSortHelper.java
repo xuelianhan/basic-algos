@@ -25,7 +25,7 @@ public abstract class AbstractSortHelper {
         a[i] = a[j];
         a[j] = swap;
     }
-    
+
     // exchange a[i] and a[j] (for indirect sort)
     public static void exch(int[] a, int i, int j) {
         int swap = a[i];
