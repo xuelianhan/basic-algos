@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 /**
  * Weighted quick-union by height
- * Develop a implementation WeightedQuickUnionByHeightUF.java that uses the same basic strategy as 
+ * Develop an implementation WeightedQuickUnionByHeightUF.java that uses the same basic strategy as
  * weighted quick-union but keeps track of tree height and always links the shorter tree to the taller one 
  * Prove a logarithmic upper bound on the height of the trees for N sites with your algorithm
  * 
@@ -147,7 +147,6 @@ public class WeightedQuickUnionByHeightUF {
             int p = StdIn.readInt();
             int q = StdIn.readInt();
             StdOut.println(p + " " + q);
-
             if (uf.connected(p, q)) {
                 continue;
             }
