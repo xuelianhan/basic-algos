@@ -1,13 +1,11 @@
 package org.ict.algorithm.fundamentals;
+
 import java.util.Arrays;
 import java.util.Map;
 import java.util.HashMap;
 import org.ict.algorithm.util.In;
 import org.ict.algorithm.util.StdOut;
 import org.ict.algorithm.search.BinarySearch;
-
-
-
 /**
  * Compilation: javac org/ict/algorithm/fundamentals/TwoSumFast.java
  * Execution: java org/ict/algorithm/fundamentals/TwoSumFast  ../resources/1Kints.txt
