@@ -7,6 +7,7 @@ import org.ict.algorithm.util.In;
 import org.ict.algorithm.util.StdOut;
 
 /**
+<<<<<<< HEAD
  * Given an array of integers, return indices of the two numbers such that they
  * add up to a specific target.
  * You may assume that each input would have exactly on solution, and you may
@@ -14,9 +15,6 @@ import org.ict.algorithm.util.StdOut;
  * 
  * Compilation:javac org/ict/algorithm/fundamentals/TwoSum.java
  * Execution: java org/ict/algorithm/fundamentals/TwoSum  ../resources/1Kints.txt
-=======
-/**
->>>>>>> 6c9635f8... change package location
  * Reads n integers and counts the number of pairs that sum to zero.
  * Running time: n^2
  *
@@ -117,11 +115,14 @@ public class TwoSum {
 		int[] a = in.readAllInts();
         int count = countAndOutput(a);
         StdOut.println(count);
+<<<<<<< HEAD
         int[] pair = twoSumPair(a, 0);
         StdOut.println(Arrays.toString(pair));
         int[] pair2 = twoSumPair2(a, 0);
         StdOut.println(Arrays.toString(pair2));
         int[] pair3 = twoSumPair3(a, 0);
         StdOut.println(Arrays.toString(pair3));
+=======
+>>>>>>> bd6c4d6e... add TwoSum.java
 	}
 }
