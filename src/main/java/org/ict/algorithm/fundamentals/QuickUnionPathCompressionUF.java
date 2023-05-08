@@ -3,9 +3,7 @@ import java.util.Arrays;
 import org.ict.algorithm.util.StdIn;
 import org.ict.algorithm.util.StdOut;
 
-
 /**
- *
  *  Quick-union with path compression 
  *  Modify QuickUnionUF.java to include path compression, 
  *  by adding a loop to find() that links every site on the path from p to the root
@@ -56,6 +54,12 @@ public class QuickUnionPathCompressionUF {
     //number of components
     private int count;
 
+    /**
+     *
+     *
+     *
+     *
+     */
     public QuickUnionPathCompressionUF (int n) {
         this.count = n;
         id = new int[n];
@@ -127,6 +131,7 @@ public class QuickUnionPathCompressionUF {
                 continue;
             }
             uf.union(p, q);
+
         }
         StdOut.println(uf.count()+ " components");
     }
