@@ -31,21 +31,22 @@ import org.ict.algorithm.util.StdIn;
  *  the minimum element (considering ascending order) from the unsorted subarray is picked and moved to the sorted subarray. 
  *
  */
-public class Selection {
+public class Selection extends  AbstractSortHelper {
 	
 	public static void sort(Comparable[] a) {
 		int N = a.length;
 		for (int i = 0; i < N; i++) {
 		    int min = i;
 		    for (int j = i+1; j < N; j++) {
-			    if (AbstractSortHelper.less(a[j],a[min])) 
+			    if (less(a[j],a[min]))
 		        	min = j;		  
 		    }
-		    if (i != min)
-		        AbstractSortHelper.exch(a, min, i);
-		    assert AbstractSortHelper.isSorted(a,0,i);
+		    if (i != min) {
+				exch(a, min, i);
+			}
+		    assert isSorted(a,0,i);
 		}	
-		assert AbstractSortHelper.isSorted(a);
+		assert isSorted(a);
 	}
 
 	public static void sort(Object[] a, Comparator comparator) {
@@ -53,14 +54,16 @@ public class Selection {
 		for (int i = 0; i < N; i++) {
 			int min = i;
 			for (int j = i+1; j < N; j++) {
-				if (AbstractSortHelper.less(a[j],a[min], comparator))
+				if (less(a[j],a[min], comparator)) {
 					min = j;
+				}
 			}
-			if (i != min)
-			    AbstractSortHelper.exch(a,min,i);
-			assert AbstractSortHelper.isSorted(a, 0, i, comparator);
+			if (i != min) {
+				exch(a,min,i);
+			}
+			assert isSorted(a, 0, i, comparator);
 		}
-		assert AbstractSortHelper.isSorted(a, comparator);
+		assert isSorted(a, comparator);
 	}
 
 	
