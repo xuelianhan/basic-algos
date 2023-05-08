@@ -1,20 +1,27 @@
 package org.ict.algorithm.leetcode.array;
 
 /**
- * Given an unsorted integer array, find the smallest missing positive integer.
+ * Given an unsorted integer array nums, return the smallest missing positive integer.
+ * You must implement an algorithm that runs in O(n) time and uses constant extra space.
+ *
  * Example 1:
- * Input: [1,2,0]
+ * Input: nums = [1,2,0]
  * Output: 3
- * 
+ * Explanation: The numbers in the range [1,2] are all in the array.
+ *
  * Example 2:
- * Input: [3,4,-1,1]
+ * Input: nums = [3,4,-1,1]
  * Output: 2
- * 
+ * Explanation: 1 is in the array but 2 is missing.
+ *
  * Example 3:
- * Input: [7,8,9,11,12]
+ * Input: nums = [7,8,9,11,12]
  * Output: 1
- * 
- * Note: should run in O(n) time and uses constant extra space.
+ * Explanation: The smallest positive integer 1 is missing.
+ *
+ * Constraints:
+ * 1 <= nums.length <= 10^5
+ * -2^31 <= nums[i] <= 2^31 - 1
  *
  * LC41, Hard, frequency=28
  */
@@ -30,7 +37,7 @@ public class FirstMissingPositive {
 	
 	/**
 	 * The basic idea is to traversal and try to move the current value to position whose index is exactly the value (swap them). 
-	 * Then travelsal again to find the first unusal value, which can not be corresponding to its index
+	 * Then traversal again to find the first unusual value, which can not be corresponding to its index
 	 * @param nums
 	 * @return
 	 */
@@ -74,8 +81,9 @@ public class FirstMissingPositive {
 	 */
 	public int firstMissingPositiveV1(int[] nums) {
 		int i = 0;
-		while (i < nums.length) {
-			if (nums[i] == i+1 || nums[i] <= 0 || nums[i] > nums.length) {
+		int n = nums.length;
+		while (i < n) {
+			if (nums[i] == i+1 || nums[i] <= 0 || nums[i] > n) {
 				i++;
 			} else if (nums[nums[i]-1] != nums[i]) {
 				swap(nums, i, nums[i]-1);
@@ -84,10 +92,10 @@ public class FirstMissingPositive {
 			}
 		}
 		i = 0;
-		while(i < nums.length && nums[i] == i+1) {
+		while(i < n && nums[i] == i+1) {
 			i++;
 		}
-		return i+1;
+		return i + 1;
     }
 
 	/**
@@ -99,19 +107,19 @@ public class FirstMissingPositive {
 	 * @return
 	 */
 	public int firstMissingPositive(int[] nums) {
-		int len = nums.length;
-		for (int i = 0; i < len; ++i) {
+		int n = nums.length;
+		for (int i = 0; i < n; ++i) {
 			// why use while in here? not if statement?
-			while (nums[i] > 0 && nums[i] <= len && nums[nums[i] - 1] != nums[i]) {
+			while (nums[i] > 0 && nums[i] <= n && nums[nums[i] - 1] != nums[i]) {
 				swap(nums, nums[i], nums[nums[i] - 1]);
 			}
 		}
-		for (int i = 0; i < len; ++ i) {
+		for (int i = 0; i < n; ++ i) {
 			if (nums[i] != i + 1) {
 				return i + 1;
 			}
 		}
-		return len + 1;
+		return n + 1;
 	}
 
 
