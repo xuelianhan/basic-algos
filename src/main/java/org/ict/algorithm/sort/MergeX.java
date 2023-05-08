@@ -43,7 +43,7 @@ public class MergeX extends AbstractSortHelper {
     private MergeX() {}
     private static <T> void merge(Comparable<T>[] src, Comparable<T>[] dst, int lo, int mid, int hi) {
         //no copy to auxiliary array compared with merge in Merge.java
-        StdOut.println("before merge(src, dst, " + lo  + "," + mid + "," + hi+"), src:" +Arrays.toString(src)+ ", dst:" + Arrays.toString(dst));    
+        StdOut.println("before merge(src, dst, " + lo  + "," + mid + "," + hi+"), src:" +Arrays.toString(src)+ ", dst:" + Arrays.toString(dst));
 
         //precondition: src[lo .. mid] and src[mid+1 .. hi] are sorted subarrays
         assert isSorted(src, lo, mid);
@@ -76,6 +76,7 @@ public class MergeX extends AbstractSortHelper {
         }
     }
 
+
     /**
      *  Improvements. We can cut the running time of mergesort sustantially with some carefully considered 
      *  modifications to the implementation.
@@ -104,7 +105,7 @@ public class MergeX extends AbstractSortHelper {
         StdOut.println("sort(src, dst, " + lo  + "," + hi+"), src:" +Arrays.toString(src)+ ", dst:" + Arrays.toString(dst));    
         
         if (hi <= (lo + CUTOFF)) {
-            StdOut.println("invoke Insertion Sort before:<" + lo + ", " + hi + "> " + ", dst: " + Arrays.toString(dst));    
+            StdOut.println("invoke Insertion Sort before:<" + lo + ", " + hi + "> " + ", dst: " + Arrays.toString(dst));
             //Don't use Insertion sort method, because the upper bound is not included due out of array size
             //Insertion.sort(dst, lo, hi);
             insertionSort(dst, lo, hi);
@@ -126,6 +127,7 @@ public class MergeX extends AbstractSortHelper {
             return;
         }
         merge(src, dst, lo, mid, hi);
+        StdOut.println("merge(src, dst, " + lo  + "," + mid + "," + hi+"), src:" +Arrays.toString(src)+ ", dst:" + Arrays.toString(dst));    
     }
 
     /**
@@ -151,7 +153,7 @@ public class MergeX extends AbstractSortHelper {
         sort(aux, a, 0, a.length-1, comparator);
         assert isSorted(a, comparator);
     }
-    
+
     private static <T> void merge(Object[] src, Object[] dst, int lo, int mid, int hi, Comparator<T> comparator) {
         //no copy to auxiliary array compared with merge in Merge.java
         //precondition: src[lo .. mid] and src[mid+1 .. hi] are sorted subarrays

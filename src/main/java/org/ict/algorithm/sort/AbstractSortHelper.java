@@ -13,6 +13,7 @@ public abstract class AbstractSortHelper {
     public static boolean less(Comparable v, Comparable w) {
         return v.compareTo(w) < 0;
     }
+
     //is v < w ?
     public static boolean less(Object v, Object w, Comparator comparator) {
         int res = comparator.compare(v, w);
