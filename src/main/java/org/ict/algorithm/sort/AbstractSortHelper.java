@@ -7,15 +7,14 @@ import java.util.Comparator;
  * Only member methods (non-static) can be inherited by sub classes having appropriate access modifiers.
  * @see https://stackoverflow.com/questions/16079745/java-generic-static-methods
  */
-public class AbstractSortHelper {
-    
+public abstract class AbstractSortHelper {
+
     //is v < w ? 
     public static boolean less(Comparable v, Comparable w) {
         return v.compareTo(w) < 0;
     }
-    //is v < w ? 
+    //is v < w ?
     public static boolean less(Object v, Object w, Comparator comparator) {
-        return comparator.compare(v, w) < 0;
     }
     // exchange a[i] and a[j]
     public static void exch(Object[] a, int i, int j) {
@@ -24,12 +23,14 @@ public class AbstractSortHelper {
         a[j] = swap;
     }
 
+
     // exchange a[i] and a[j] (for indirect sort)
     public static void exch(int[] a, int i, int j) {
         int swap = a[i];
         a[i] = a[j];
         a[j] = swap;
     }
+
     //is the array a[] sorted?
     public static boolean isSorted(Comparable[] a) {
         return isSorted(a, 0, a.length - 1);
@@ -55,7 +56,7 @@ public class AbstractSortHelper {
 
     //is the array a[] sorted?
     public static boolean isSorted(Object[] a, Comparator comparator) {
-        return isSorted(a, 0, a.length - 1, comparator); 
+        return isSorted(a, 0, a.length - 1, comparator);
     }
     //is the array h-sorted? 
     public static boolean isHsorted(Comparable[] a, int h) {
@@ -72,6 +73,7 @@ public class AbstractSortHelper {
             StdOut.println(a[i]);
         }
     }
+
     
     //reverse array
     public static void reverse(int[] a) {

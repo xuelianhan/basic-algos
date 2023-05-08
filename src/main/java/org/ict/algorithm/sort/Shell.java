@@ -10,7 +10,8 @@ package org.ict.algorithm.sort;
  * @author Robert Sedgewick
  * @author Kevin Wayne
  */
-public class Shell {
+public class Shell extends AbstractSortHelper {
+
     
     //This class should not be instantiated.
     private Shell(){}
