@@ -20,7 +20,7 @@ public class TestkafkaConsumer extends Thread {
     
     public TestkafkaConsumer(String brokers, String groupId, String topic) {
         Properties prop = createConsumerConfig(brokers, groupId);
-        this.consumer = new KafkaConsumer<>(prop);
+        this.consumer = new KafkaConsumer<String, String>(prop);
         this.topic = topic;
         this.consumer.subscribe(Arrays.asList(this.topic));
     }

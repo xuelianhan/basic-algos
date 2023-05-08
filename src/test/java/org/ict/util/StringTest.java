@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 
 public class StringTest {
+<<<<<<< HEAD
 	private static final String PHONE_REGEX = "(\\d{3})\\d{4}(\\d{4})";
 	private static final String PHONE_FORMAT = "$1****$2";
 	private String formatPhone(String phone) {
@@ -27,6 +28,35 @@ public class StringTest {
 			System.out.println(i % (len));
 			System.out.println(i & (len - 1));// (i & (len - 1)) equal with (i % (len))
 		}
+=======
+    
+    @Test
+    public void testModulus() {
+        int t = 2001;
+        for (int i = 0; i < t % 2000; i++) {
+            System.out.println(i);
+        }
+    }
+    
+    @Test
+    public void testNullCompare() {
+        Integer delayMinutes = null; 
+        delayMinutes = (delayMinutes == null || delayMinutes < 1) ? 1 : delayMinutes;
+        System.out.println(delayMinutes);
+    }
+    
+    @Test
+    public void testShift() {
+        System.out.println(8>>1);
+    }
+	
+	@Test
+	public void testPalindrome() {
+		String s1 = "ABA";
+		String s2 = "ABC"; 
+		StdOut.println(isPalindrome(s1));
+		StdOut.println(isPalindrome(s2));
+>>>>>>> 4300cf31... add visitor pattern
 	}
 	
 	
