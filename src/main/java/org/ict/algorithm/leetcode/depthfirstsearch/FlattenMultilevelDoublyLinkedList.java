@@ -72,6 +72,14 @@ public class FlattenMultilevelDoublyLinkedList {
 
     /**
      *
+     * ------------------------------------------------
+     * e.g.
+     * 1---2---3---4---5---6--NULL
+     *         |
+     *         7---8---9---10--NULL
+     *             |
+     *            11--12--NULL
+     * expected: [1,2,3,7,8,11,12,9,10,4,5,6]
      * @param head
      * @return
      */
@@ -81,7 +89,21 @@ public class FlattenMultilevelDoublyLinkedList {
     }
 
     /**
+     * Understanding the following solution
+     * Iterative Solution
+     * ------------------------------------------------
+     * e.g. expected: [1,2,3,7,8,11,12,9,10,4,5,6]
+     * 1---2---3---4---5---6--NULL
+     *         |
+     *         7---8---9---10--NULL
+     *             |
+     *            11--12--NULL
      *
+     * 1---2---3---7---8---9---10---4---5---6--NULL
+     *                 |
+     *                11--12--NULL
+     *
+     * 1---2---3---7---8---11---12---10---4---5---6--NULL
      * @param head
      * @return
      */
@@ -91,36 +113,142 @@ public class FlattenMultilevelDoublyLinkedList {
     }
 
     /**
-     *
-     * @param head
-     * @return
-     */
-    public Node flattenV2(Node head) {
-
-        return null;
-    }
-
-    /**
+     * Understanding the following solution
      * Iterative Solution
-     * @param head
-     * @return
-     */
-    public Node flattenV1(Node head) {
-
-        return null;
-    }
-
-    /**
-     * Recursive Solution
-     * Time Cost 2ms
-     * e.g.
+     *
+     * The iterative writing method is the other way around.
+     * The second layer is added to the first layer,
+     * at this time there may be many layers under the second layer.
+     * We ignore them temporarily,
+     * then layer by layer to join the first layer while traversing them.
+     * No matter which method, the list can be flattened finally.
+     * You can imagine that the whole process likes
+     * first layer absorbs the second layer, then the second layer absorbs the third layer, etc.
+     * from top to bottom layer by layer.
+     *
+     * ------------------------------------------------
+     * e.g. expected: [1,2,3,7,8,11,12,9,10,4,5,6]
      * 1---2---3---4---5---6--NULL
      *         |
      *         7---8---9---10--NULL
      *             |
      *            11--12--NULL
-     * expected: [1,2,3,7,8,11,12,9,10,4,5,6]
-     * 
+     *
+     * 1---2---3---7---8---9---10---4---5---6--NULL
+     *                 |
+     *                11--12--NULL
+     *
+     * 1---2---3---7---8---11---12---10---4---5---6--NULL
+     *
+     * @param head
+     * @return
+     */
+    public Node flattenV2(Node head) {
+        Node p = head;
+        while (p != null) {
+            if (p.child != null) {
+                /**
+                 * In recursive solution the following line is like this:
+                 * Node child = flattenV1(p.child);
+                 */
+                Node child = p.child;
+                Node tail = child;
+                while (tail.next != null) {
+                    tail = tail.next;
+                }
+
+                Node next = p.next;
+                p.next = child;
+                child.prev = p;
+                p.child = null;
+
+                tail.next = next;
+                if (next != null) {
+                    next.prev = tail;
+                }
+            }
+            p = p.next;
+        }
+        return head;
+    }
+
+    /**
+     * Understanding the following solution
+     * Recursive solution same as flatten
+     *
+     * The recursive method of writing is to start from the bottom of the operation,
+     * first the bottom layer into the penultimate layer,
+     * and then the mixed layer into the penultimate layer, and so on,
+     * until they are integrated into the first layer.
+     *
+     * You can imagine that the whole process likes the bottom layer is merged into
+     * the 2nd-layer from the bottom, then the 2nd-layer is merged into 3rd-layer from the bottom.etc.
+     * from bottom to top layer by layer.
+     * ------------------------------------------------
+     * e.g. expected: [1,2,3,7,8,11,12,9,10,4,5,6]
+     * 1---2---3---4---5---6--NULL
+     *         |
+     *         7---8---9---10--NULL
+     *             |
+     *            11--12--NULL
+     *
+     * At first, the bottom-layer 11--12 is merged into 7--8 layer.
+     * Then, the 7--8 layer is merged into the top layer 1--2.
+     * 1---2---3---4---5---6--NULL
+     *         |
+     *         7---8---11---12---9---10--NULL
+     *
+     * 1---2---3---7---8---11---12---10---4---5---6--NULL
+     *
+     * @param head
+     * @return
+     */
+    public Node flattenV1(Node head) {
+        Node p = head;
+        while (p != null) {
+            if (p.child == null) {
+                p = p.next;
+                continue;
+            }
+
+            Node child = flattenV1(p.child);
+            Node tail = child;
+            while (tail.next != null) {
+                tail = tail.next;
+            }
+
+            Node next = p.next;
+            p.next = child;
+            child.prev = p;
+            p.child = null;
+
+            tail.next = next;
+            if (next != null) {
+                next.prev = tail;
+            }
+
+        }
+        return head;
+    }
+
+    /**
+     * Understanding the following solution
+     * Recursive Solution
+     * Time Cost 2ms
+     * ---------------------------------------
+     * e.g.expected: [1,2,3,7,8,11,12,9,10,4,5,6]
+     * 1---2---3---4---5---6--NULL
+     *         |
+     *         7---8---9---10--NULL
+     *             |
+     *            11--12--NULL
+     *            
+     * 1---2---3---4---5---6--NULL
+     *         |
+     *         7---8---11---12---9---10--NULL
+     *
+     * 1---2---3---7---8---11---12---10---4---5---6--NULL
+     *
      * @param head
      * @return
      */
@@ -128,17 +256,17 @@ public class FlattenMultilevelDoublyLinkedList {
         Node p = head;
         while (p != null) {
             if (p.child != null) {
-                Node next = p.next;
                 p.child = flatten(p.child);
                 Node tail = p.child;
                 while (tail.next != null) {
                     tail = tail.next;
                 }
 
+                Node next = p.next;
                 p.next = p.child;
-                p.next.prev = p;
-
+                p.next.prev = p;//Or using p.child.prev = p; is OK.
                 p.child = null;
+
                 tail.next = next;
                 if (next != null) {
                     next.prev = tail;
