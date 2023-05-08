@@ -41,6 +41,7 @@ public class MergeX extends AbstractSortHelper {
 
     //This class should not be instantiated
     private MergeX() {}
+    
     private static <T> void merge(Comparable<T>[] src, Comparable<T>[] dst, int lo, int mid, int hi) {
         //no copy to auxiliary array compared with merge in Merge.java
         StdOut.println("before merge(src, dst, " + lo  + "," + mid + "," + hi+"), src:" +Arrays.toString(src)+ ", dst:" + Arrays.toString(dst));
@@ -75,7 +76,6 @@ public class MergeX extends AbstractSortHelper {
             }
         }
     }
-
 
     /**
      *  Improvements. We can cut the running time of mergesort sustantially with some carefully considered 
