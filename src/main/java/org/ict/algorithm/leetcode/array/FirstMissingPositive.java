@@ -83,26 +83,30 @@ public class FirstMissingPositive {
 		int i = 0;
 		int n = nums.length;
 		while (i < n) {
-			if (nums[i] == i+1 || nums[i] <= 0 || nums[i] > n) {
+			if (nums[i] == i + 1 || nums[i] <= 0 || nums[i] > n) {
 				i++;
-			} else if (nums[nums[i]-1] != nums[i]) {
-				swap(nums, i, nums[i]-1);
+			} else if (nums[nums[i] - 1] != nums[i]) {
+				swap(nums, i, nums[i] - 1);
 			} else {
 				i++;
 			}
 		}
 		i = 0;
-		while(i < n && nums[i] == i+1) {
+		while(i < n && nums[i] == i + 1) {
 			i++;
 		}
 		return i + 1;
     }
 
 	/**
+	 * Understanding the following solution
+	 *
 	 * Put each number in its right place.
 	 * For example:
 	 * When we find 5, then swap it with A[4].
 	 * At last, the first place where its number is not right, return the place + 1.
+	 * @author makuiyu
+	 * @see <a href="https://leetcode.com/problems/first-missing-positive/solutions/17071/my-short-c-solution-o-1-space-and-o-n-time"></a>
 	 * @param nums
 	 * @return
 	 */
