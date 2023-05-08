@@ -131,7 +131,6 @@ public class QuickUnionPathCompressionUF {
                 continue;
             }
             uf.union(p, q);
-
         }
         StdOut.println(uf.count()+ " components");
     }
