@@ -3,6 +3,7 @@ import java.util.Arrays;
 import org.ict.algorithm.util.StdIn;
 import org.ict.algorithm.util.StdOut;
 
+
 /**
  *
  *  Quick-union with path compression 
@@ -55,12 +56,6 @@ public class QuickUnionPathCompressionUF {
     //number of components
     private int count;
 
-    /**
-     *
-     *
-     *
-     *
-     */
     public QuickUnionPathCompressionUF (int n) {
         this.count = n;
         id = new int[n];
