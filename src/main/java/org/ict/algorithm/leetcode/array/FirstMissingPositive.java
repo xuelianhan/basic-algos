@@ -1,5 +1,9 @@
 package org.ict.algorithm.leetcode.array;
 
+import java.util.Arrays;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 /**
  * Given an unsorted integer array nums, return the smallest missing positive integer.
  * You must implement an algorithm that runs in O(n) time and uses constant extra space.
@@ -133,5 +137,26 @@ public class FirstMissingPositive {
 			A[j] ^= A[i];
 			A[i] ^= A[j];
 		}
+	}
+
+	/**
+	 * Brute-Force Solution
+	 * Time Cost 24ms
+	 * Time Complexity O(N)
+	 * Space Complexity O(N)
+	 * @param nums
+	 * @return
+	 */
+	public int firstMissingPositiveBruteForce(int[] nums) {
+		Set<Integer> set = Arrays.stream(nums).boxed().collect(Collectors.toSet());
+		int res = 1;
+		int n = nums.length;
+		while (res <= n) {
+			if (!set.contains(res)) {
+				return res;
+			}
+			res++;
+		}
+		return res;
 	}
 }
