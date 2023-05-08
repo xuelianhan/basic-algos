@@ -14,7 +14,7 @@ import org.ict.algorithm.util.StdOut;
  *
  * @author Robert Sedgewick
  * @author Kevin Wayne
- * $ javac org/ict/algorithm/fundamentals/WeightedQuickUnionPathCompressionUF.java 
+ * $ javac org/ict/algorithm/fundamentals/WeightedQuickUnionPathCompressionUF.java
  * $ more ../resources/tinyUF.txt 
  * 10
  * 4 3
@@ -88,7 +88,6 @@ public class WeightedQuickUnionPathCompressionUF {
             parent[i] = i;
             //be careful here!
             size[i] = 1;
-            //be careful here!
         }
     }
 
