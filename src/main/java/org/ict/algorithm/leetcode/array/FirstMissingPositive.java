@@ -16,7 +16,7 @@ package org.ict.algorithm.leetcode.array;
  * 
  * Note: should run in O(n) time and uses constant extra space.
  *
- * LC41, Hard
+ * LC41, Hard, frequency=28
  */
 public class FirstMissingPositive {
 	
