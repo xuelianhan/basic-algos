@@ -65,6 +65,7 @@ public class LengthOfLongestSubString {
         int n = s.length();
         int result = 0;
         //try to extend the range [i, j]
+        //draw a graph to show the process will be helpful to understand this method
         for (int j = 0, i = 0; j < n; j++) {
             char c = s.charAt(j);
             if (charMap.containsKey(c)) {
@@ -101,9 +102,10 @@ public class LengthOfLongestSubString {
         int n = s.length();
         int[] index = new int[128];
         int result = 0;
+        //try to extend range [i, j]
         for (int j = 0, i = 0; j < n; j++) {
             char c = s.charAt(j);
-            i = Math.max(index[c], j - i + 1);
+            i = Math.max(index[c], i);
             result = Math.max(result, j - i + 1);
             index[c] = j + 1;
         }
