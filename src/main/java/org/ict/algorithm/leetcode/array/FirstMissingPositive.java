@@ -1,7 +1,6 @@
 package org.ict.algorithm.leetcode.array;
 
 /**
- * 
  * Given an unsorted integer array, find the smallest missing positive integer.
  * Example 1:
  * Input: [1,2,0]
@@ -17,7 +16,7 @@ package org.ict.algorithm.leetcode.array;
  * 
  * Note: should run in O(n) time and uses constant extra space.
  *
- * LC41
+ * LC41, Hard
  */
 public class FirstMissingPositive {
 	
@@ -94,7 +93,6 @@ public class FirstMissingPositive {
 	 * When we find 5, then swap it with A[4].
 	 * At last, the first place where its number is not right, return the place + 1.
 	 * @param A
-	 * @param n
 	 * @return
 	 */
 	public static int firstMissingPositiveV1(int A[]) {
