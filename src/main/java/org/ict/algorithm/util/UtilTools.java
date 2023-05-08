@@ -1,9 +1,7 @@
 package org.ict.algorithm.util;
 
-
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class UtilTools {
 
@@ -15,7 +13,6 @@ public class UtilTools {
 				System.out.print(a[i]+ ",");
 		}
 	}
-	
 
 	public static void testListAddNull() {
 	    List<String> list = new ArrayList<String>();
@@ -26,6 +23,5 @@ public class UtilTools {
 	public static void main(String[] args) {
 	    testListAddNull();
 	}
-
 
 }	

@@ -1,7 +1,6 @@
 package org.ict.algorithm.fundamentals;
 
 import org.ict.algorithm.util.StdIn;
-import org.ict.algorithm.util.StdOut;
 /**
  *
  * @author Robert Sedgewick
@@ -121,10 +120,6 @@ public class UF {
             if (uf.connected(p, q)) {
                 continue;
             }
-
-            uf.union(p, q);
-            StdOut.println(p + " " + q);
         }
-        StdOut.println(uf.count() + " components");
     }
 }
