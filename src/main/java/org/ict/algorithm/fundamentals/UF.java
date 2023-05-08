@@ -2,7 +2,6 @@ package org.ict.algorithm.fundamentals;
 
 import org.ict.algorithm.util.StdIn;
 import org.ict.algorithm.util.StdOut;
-
 /**
  *
  * @author Robert Sedgewick
