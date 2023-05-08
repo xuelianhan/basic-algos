@@ -15,7 +15,10 @@ public abstract class AbstractSortHelper {
     }
     //is v < w ?
     public static boolean less(Object v, Object w, Comparator comparator) {
+        int res = comparator.compare(v, w);
+        return res < 0 ? true : false;
     }
+
     // exchange a[i] and a[j]
     public static void exch(Object[] a, int i, int j) {
         Object swap = a[i];
