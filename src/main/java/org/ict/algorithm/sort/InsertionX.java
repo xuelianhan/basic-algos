@@ -14,7 +14,7 @@ import org.ict.algorithm.util.StdOut;
  * @author Kevin Wayne
  */
 public class InsertionX extends AbstractSortHelper {
-
+    
     //This class should not be instantiated.
     private InsertionX(){}
     
@@ -40,7 +40,6 @@ public class InsertionX extends AbstractSortHelper {
             //wrong code
             //while (AbstractSortHelper.less(a[j], a[j-1])) {
             //wrong code
-            
             while (less(v, a[j-1])) {
                 a[j] = a[j-1];
                 j--;
