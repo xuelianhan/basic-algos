@@ -107,7 +107,7 @@ public class TwoSum {
         }
         throw new IllegalArgumentException("No two sum pair solution");
     }
-    
+
 	
 	public static void main(String[] args) {
 		In in = new In(args[0]);
