@@ -32,18 +32,30 @@ public class TwoNumbersAdd {
         int carry = 0;
         int mod = 0;
         while (p != null || q != null) {
+            //1.get data
             int x = (p != null) ? p.data : 0;
             int y = (q != null) ? q.data : 0;
+            
+            //2.calculate carry and mod
             int sum = x + y + carry;
             carry = sum / 10;
             mod = sum % 10;
+            
+            //3.create new Node and move pointer to next
             current.next = new ListNode(mod);
+            current = current.next;
+            
+            //4.move pointer forward
             if (p != null) p = p.next;
             if (q != null) q = q.next;
         }
+        
+        //attention here!!!
         if (carry > 0) {
             current.next = new ListNode(carry);
         }
+        //attention here!!!
+       
         return dummyHead.next;
     }
     
@@ -119,23 +131,41 @@ public class TwoNumbersAdd {
     }
     
     public static void main(String[] args) {
-        
+        System.out.println("=========test0=========");
         ListNode l1 = createAtBeginning(new int[] {0, 1});
         ListNode l2 = createAtBeginning(new int[] {0, 1, 2});
         print(l1);
         print(l2);
         
+        System.out.println("=========test1=========");
         //10 + 210 = 220
-        ListNode l3 = createAtEnd(new int[] {0, 1});
-        ListNode l4 = createAtEnd(new int[] {0, 1, 2});
+        l1 = createAtEnd(new int[] {0, 1});
+        l2 = createAtEnd(new int[] {0, 1, 2});
        
-        ListNode result1 = addTwoNumbers(l3, l4);
-        print(l3);
-        print(l4);
+        ListNode result1 = addTwoNumbers(l1, l2);
+        print(l1);
+        print(l2);
         print(result1);
-        //null + 10 = 10
         
+        System.out.println("=========test2=========");
+        //null + 10 = 10
+        l1 = createAtEnd(null);
+        l2 = createAtEnd(new int[] {0, 1});
+       
+        result1 = addTwoNumbers(l1, l2);
+        print(l1);
+        print(l2);
+        print(result1);
+        
+        System.out.println("=========test3=========");
         //99 + 1 = 100
+        l1 = createAtEnd(new int[] {9, 9});
+        l2 = createAtEnd(new int[] {1});
+       
+        result1 = addTwoNumbers(l1, l2);
+        print(l1);
+        print(l2);
+        print(result1);
     }
     
 }
