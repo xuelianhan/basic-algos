@@ -104,12 +104,56 @@ public class FlattenMultilevelDoublyLinkedList {
      *                11--12--NULL
      *
      * 1---2---3---7---8---11---12---10---4---5---6--NULL
+     * -----------------------------------------------
+     * class Solution {
+     * public:
+     *     Node* flatten(Node* head) {
+     *         for (Node* p = head; p; p = p->next) {
+     *             if (p->child) {
+     *                 Node* child = p->child;
+     *                 Node* tail = child;
+     *                 while (tail->next) {
+     *                     tail = tail->next;
+     *                 }
+     *
+     *                 Node* next = p->next;
+     *                 p->next = child;
+     *                 child->prev = p;
+     *                 p->child = nullptr;
+     *
+     *                 tail->next = next;
+     *                 if (next) {
+     *                     next->prev = tail;
+     *                 }
+     *             }
+     *         }
+     *         return head;
+     *     }
+     * };
      * @param head
      * @return
      */
     public Node flattenV3(Node head) {
+        for (Node p = head; p != null; p = p.next) {
+            if (p.child != null) {
+                Node child = p.child;
+                Node tail = child;
+                while (tail.next != null) {
+                    tail = tail.next;
+                }
 
-        return null;
+                Node next = p.next;
+                p.next = child;
+                child.prev = p;
+                p.child = null;
+
+                tail.next = next;
+                if (next != null) {
+                    next.prev = tail;
+                }
+            }
+        }
+        return head;
     }
 
     /**
@@ -242,7 +286,7 @@ public class FlattenMultilevelDoublyLinkedList {
      *         7---8---9---10--NULL
      *             |
      *            11--12--NULL
-     *            
+     *
      * 1---2---3---4---5---6--NULL
      *         |
      *         7---8---11---12---9---10--NULL
