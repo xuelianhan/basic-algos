@@ -29,6 +29,7 @@ package org.ict.algorithm.leetcode.matrix;
 public class TransposeMatrix {
 
     /**
+     * ---------------------------------------------------------------
      * class Solution {
      * public:
      *     vector<vector<int>> transpose(vector<vector<int>>& matrix) {
@@ -50,8 +51,25 @@ public class TransposeMatrix {
      *             for j in range(len(matrix[0])):
      *                 res[j][i] = matrix[i][j]
      *         return res
-     * -------------------------
-     *
+     * --------------------------
+     * >>> a = [[1,2,3],[4,5,6],[7,8,9]]
+     * >>> print(a)
+     * [[1, 2, 3],
+     *  [4, 5, 6],
+     *  [7, 8, 9]]
+     * >>> b = zip(*a)
+     * >>> print(b)
+     * <zip object at 0x10958d340>
+     * >>> print(list(b))
+     * [(1, 4, 7),
+     *  (2, 5, 8),
+     *  (3, 6, 9)]
+     * >>> exit()
+     * --------------
+     * class Solution:
+     *    def transpose(self, matrix: List[List[int]]) -> List[List[int]]:
+     *          return list(zip(*matrix))
+     * --------------------------
      * @param matrix
      * @return
      */
