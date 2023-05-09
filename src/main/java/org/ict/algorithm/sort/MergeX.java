@@ -44,12 +44,7 @@ public class MergeX extends AbstractSortHelper {
     
     private static <T> void merge(Comparable<T>[] src, Comparable<T>[] dst, int lo, int mid, int hi) {
         //no copy to auxiliary array compared with merge in Merge.java
-<<<<<<< HEAD
         StdOut.println("before merge(src, dst, " + lo  + "," + mid + "," + hi+"), src:" +Arrays.toString(src)+ ", dst:" + Arrays.toString(dst));
-=======
-        StdOut.println("before merge(src, dst, " + lo  + "," + mid + "," + hi+"), src:" +Arrays.toString(src)+ ", dst:" + Arrays.toString(dst));    
->>>>>>> 710ddd9f... add codes
-
         //precondition: src[lo .. mid] and src[mid+1 .. hi] are sorted subarrays
         assert isSorted(src, lo, mid);
         assert isSorted(src, mid+1, hi);

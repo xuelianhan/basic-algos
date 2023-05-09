@@ -169,7 +169,6 @@
 646.Maximum Length of Pair Chain=2
 1710.Maximum Units on a Truck=2
 1110.Delete Nodes And Return Forest=2
-6.ZigZag Conversion=2
 999.Available Captures for Rook=2
 333.Largest BST Subtree=2
 977.Squares of a Sorted Array=2
