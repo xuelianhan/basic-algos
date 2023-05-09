@@ -60,7 +60,6 @@
 1347.Minimum Number of Steps to Make Two Strings Anagram=7
 1481.Least Number of Unique Integers after K Removals=7
 1700.Number of Students Unable to Eat Lunch=7
-311.Sparse Matrix Multiplication=7
 588.Design In-Memory File System=7
 1775.Equal Sum Arrays With Minimum Number of Operations=7
 1257.Smallest Common Region=7
@@ -196,7 +195,6 @@
 642.Design Search Autocomplete System=2
 44.Wildcard Matching=2
 885.Spiral Matrix III=2
-867.Transpose Matrix=2
 402.Remove K Digits=2
 1804.Implement Trie II (Prefix Tree)=2
 1352.Product of the Last K Numbers=2

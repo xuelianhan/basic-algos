@@ -1,4 +1,4 @@
-package org.ict.algorithm.leetcode.array;
+package org.ict.algorithm.leetcode.matrix;
 
 import java.util.Arrays;
 
@@ -25,7 +25,7 @@ import java.util.Arrays;
  * 1 <= n <= 20
  * @author sniper
  * @date 24 Dec, 2022
- * LC59
+ * LC59, Medium, frequency=6
  */
 public class SpiralMatrixII {
 
