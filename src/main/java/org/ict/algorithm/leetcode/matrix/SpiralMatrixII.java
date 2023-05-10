@@ -60,7 +60,7 @@ public class SpiralMatrixII {
      * @param n
      * @return
      */
-    public int[][] generateMatrixV4(int n) {
+    public int[][] generateMatrixV5(int n) {
         int[][] res = new int[n][n];
         int[][] dir = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
         int d = 0;
@@ -89,10 +89,8 @@ public class SpiralMatrixII {
      * @param n
      * @return
      */
-    public int[][] generateMatrixV3(int n) {
+    public int[][] generateMatrixV4(int n) {
         int[][] res = new int[n][n];
-        //int[][] dir = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
-        //int d = 0;
         int x = 0;
         int y = 0;
         /**
@@ -140,7 +138,7 @@ public class SpiralMatrixII {
      * @param n
      * @return
      */
-    public int[][] generateMatrixV2(int n) {
+    public int[][] generateMatrixV3(int n) {
         int[][] res = new int[n][n];
         int x = 0;
         int y = 0;
@@ -167,6 +165,34 @@ public class SpiralMatrixII {
         return res;
     }
 
+    public int[][] generateMatrixV2(int n) {
+        int[][] res = new int[n][n];
+        /**
+         * Notice the sequence of the direction.
+         * right-->down-->left-->up
+         * the first one can swap with the last one, because
+         * we check the bound later, once it's out of bound
+         * we move direction to the next element.
+         */
+        int[][] dir = {{0, 1}, {1, 0}, {0, -1}, {-1, 0} };
+        int d = 0;
+        int x = 0;
+        int y = 0;
+        for (int i = 0; i < n * n; i++) {
+            res[x][y] = i + 1;
+            int nx = (x + dir[d][0]);
+            int ny = (y + dir[d][1]);
+            if (nx < 0 || nx >= n || ny < 0 || ny >= n || res[nx][ny] != 0) {
+                d = (d + 1) % 4;
+                nx = (x + dir[d][0]);
+                ny = (y + dir[d][1]);
+            }
+            x = nx;
+            y = ny;
+        }
+        return res;
+    }
+
     /**
      * Understanding the following Solution.
      * @param n
@@ -175,10 +201,6 @@ public class SpiralMatrixII {
     public int[][] generateMatrixV1(int n) {
         int[][] res = new int[n][n];
         /**
-         * (0,1) means move down (x, y + 1)
-         * (1,0) means move left (x + 1, y)
-         * (0,-1) means move up (x, y - 1)
-         * (-1,0) means move right (x - 1, y)
          * the sequence of dir will affect the final result.
          * e.g. you cannot arrange (0, 1) first, then put {-1, 0} afterward.
          * this may incur overflow at res[x][y].
@@ -221,6 +243,8 @@ public class SpiralMatrixII {
         return res;
     }
 
+
+
     /**
      * Understanding the following Solution.
      * Time Cost 0ms
@@ -232,15 +256,19 @@ public class SpiralMatrixII {
     public int[][] generateMatrix(int n) {
         int[][] res = new int[n][n];
         /**
-         * (0,1) means move down (x, y + 1)
-         * (1,0) means move left (x + 1, y)
-         * (0,-1) means move up (x, y - 1)
-         * (-1,0) means move right (x - 1, y)
+         * {-1, 0}, move up
+         * {0, 1}, move right
+         * {1, 0}, move down
+         * {0, -1}, move left
+         *
          * the sequence of dir will affect the final result.
          * e.g. you cannot arrange (0, 1) first, then put {-1, 0} afterward.
          * this may incur overflow at res[x][y].
          * Why? the transfer must rotate 90 degrees.
          * (0, 1) --> (-1, 0) is not a clockwise 90 degrees rotate.
+         *
+         * The following sequence can be replaced with:
+         * {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
          */
         int[][] dir = {{-1, 0} ,{0, 1}, {1, 0}, {0, -1}};
         /**
