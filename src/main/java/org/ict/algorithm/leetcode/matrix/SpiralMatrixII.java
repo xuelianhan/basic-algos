@@ -195,6 +195,29 @@ public class SpiralMatrixII {
      *                 x, y = i + dirs[k][0], j + dirs[k][1]
      *             i, j = x, y
      *         return res
+     * -----------------------------------------------------
+     * class Solution {
+     * public:
+     *     const int dir[4][2] = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+     *
+     *     vector<vector<int>> generateMatrix(int n) {
+     *         vector<vector<int>> res(n, vector<int>(n));
+     *         int i = 0, j = 0, d = 0;
+     *         for (int v = 1; v <= n * n; v++) {
+     *             res[i][j] = v;
+     *             int x = i + dir[d][0];
+     *             int y = j + dir[d][1];
+     *             if (x < 0 || x >= n || y < 0 || y>= n || res[x][y]) {
+     *                 d = (d + 1) % 4;
+     *                 x = i + dir[d][0];
+     *                 y = j + dir[d][1];
+     *             }
+     *             i = x;
+     *             j = y;
+     *         }
+     *         return res;
+     *     }
+     * };
      * @param n
      * @return
      */
