@@ -43,6 +43,34 @@ public class SpiralMatrixIII {
     /**
      * Understanding the following solution
      * Time Cost 4ms
+     * @param rows
+     * @param cols
+     * @param rStart
+     * @param cStart
+     * @return
+     */
+    public int[][] spiralMatrixIIIV6(int rows, int cols, int rStart, int cStart) {
+        int rowCnt = rows * cols;
+        int[][] res = new int[rowCnt][2];
+        int x = 0, y = 1, temp = 0, cnt = 0;
+        for (int i = 0; cnt < rowCnt; i++) {
+            for (int k = 0; k < i / 2 + 1; k++) {
+                if (rStart >= 0 && rStart < rows && cStart >= 0 && cStart < cols) {
+                    res[cnt++] = new int[]{rStart, cStart};
+                }
+                rStart += x;
+                cStart += y;
+            }
+            temp = x;
+            x = y;
+            y = -temp;
+        }
+        return res;
+    }
+
+    /**
+     * Understanding the following solution
+     * Time Cost 4ms
      * -------------------
      * class Solution:
      *     def spiralMatrixIII(self, rows: int, cols: int, rStart: int, cStart: int) -> List[List[int]]:
@@ -83,8 +111,7 @@ public class SpiralMatrixIII {
         int[][] res = new int[rowCnt][2];
         //int[][] dir = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
         res[0] = new int[]{rStart, cStart};
-        int x = 0, y = 1, temp = 0;
-        int cnt = 1;
+        int x = 0, y = 1, temp = 0, cnt = 1;
         for (int i = 0; cnt < rowCnt; i++) {
             for (int k = 0; k < i / 2 + 1; k++) {
                 rStart += x;
