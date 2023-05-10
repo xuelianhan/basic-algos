@@ -59,7 +59,19 @@ public class SpiralMatrixIII {
      *             x, y = y, -x
      *             i += 1
      *         return res
-     *
+     * ---------------------------------------------
+     * class Solution:
+     *     def spiralMatrixIII(self, rows: int, cols: int, x: int, y: int) -> List[List[int]]:
+     *         res = []
+     *         dx, dy, n = 0, 1, 0
+     *         while len(res) < rows * cols:
+     *             for i in range(n // 2 + 1):
+     *                 if 0 <= x < rows and 0 <= y < cols:
+     *                     res.append([x, y])
+     *                 x, y = x + dx, y + dy
+     *             dx, dy, n = dy, -dx, n + 1
+     *         return res
+     * ----------------------------------------------
      * @param rows
      * @param cols
      * @param rStart
