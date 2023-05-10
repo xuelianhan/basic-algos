@@ -165,16 +165,50 @@ public class SpiralMatrixII {
         return res;
     }
 
+    /**
+     * Understanding the following Solution.
+     * ------------------------------------------------------
+     * class Solution:
+     *     def generateMatrix(self, n: int) -> List[List[int]]:
+     *         dir = [[0, 1], [1, 0], [0, -1], [-1, 0]]
+     *         res = [[0] * n for _ in range(0, n)]
+     *         x = y = d= 0
+     *         for i in range(1, n * n + 1):
+     *             res[x][y] = i
+     *             nx, ny = x + dir[d][0], y + dir[d][1]
+     *             if nx < 0 or nx >= n or ny < 0 or ny >= n or res[nx][ny] != 0:
+     *                 d = (d + 1) % 4
+     *                 nx, ny = x + dir[d][0], y + dir[d][1]
+     *             x, y = nx, ny
+     *         return res
+     * -----------------------------------------------------
+     * class Solution:
+     *     def generateMatrix(self, n: int) -> List[List[int]]:
+     *         res = [[0] * n for _ in range(n)]
+     *         dirs = ((0, 1), (1, 0), (0, -1), (-1, 0))
+     *         i = j = k = 0
+     *         for v in range(1, n * n + 1):
+     *             res[i][j] = v
+     *             x, y = i + dirs[k][0], j + dirs[k][1]
+     *             if x < 0 or y < 0 or x >= n or y >= n or res[x][y]:
+     *                 k = (k + 1) % 4
+     *                 x, y = i + dirs[k][0], j + dirs[k][1]
+     *             i, j = x, y
+     *         return res
+     * @param n
+     * @return
+     */
     public int[][] generateMatrixV2(int n) {
         int[][] res = new int[n][n];
         /**
          * Notice the sequence of the direction.
-         * right-->down-->left-->up
+         * right -->down --> left --> up
+         * {{0, 1}, {1, 0}, {0, -1}, {-1, 0}}
          * the first one can swap with the last one, because
          * we check the bound later, once it's out of bound
          * we move direction to the next element.
          */
-        int[][] dir = {{0, 1}, {1, 0}, {0, -1}, {-1, 0} };
+        int[][] dir = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
         int d = 0;
         int x = 0;
         int y = 0;
