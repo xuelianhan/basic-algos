@@ -1,4 +1,4 @@
-package org.ict.algorithm.leetcode.breadthfirstsearch;
+package org.ict.algorithm.leetcode.unionfind;
 
 /**
  * Given an m x n 2D binary grid which represents a map of '1's (land) and '0's (water),
@@ -32,8 +32,8 @@ package org.ict.algorithm.leetcode.breadthfirstsearch;
  * grid[i][j] is '0' or '1'.
  * LC200, Medium, frequency=306, High Frequency Interview Problem
  * Similar Question
- * @see org.ict.algorithm.leetcode.unionfind.NumberOfEnclaves
- * @see org.ict.algorithm.leetcode.unionfind.NumberOfClosedIslands
+ * @see NumberOfEnclaves
+ * @see NumberOfClosedIslands
  *
  */
 public class NumberOfIslands {

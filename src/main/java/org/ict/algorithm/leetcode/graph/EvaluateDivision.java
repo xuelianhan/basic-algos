@@ -47,6 +47,8 @@ import java.util.*;
 public class EvaluateDivision {
 
     /**
+     * Understanding the following solution
+     * Time Cost 1ms
      * @author lee215
      * @author Falldawn
      * @param equations
@@ -55,7 +57,23 @@ public class EvaluateDivision {
      * @return
      */
     public double[] calcEquationV3(List<List<String>> equations, double[] values, List<List<String>> queries) {
-        return null;
+        UF uf = new UF();
+        for (int i = 0; i < values.length; i++) {
+            uf.union(equations.get(i).get(0), equations.get(i).get(1), values[i]);
+        }
+
+        int n = queries.size();
+        double[] res = new double[n];
+        for (int i = 0; i < n; i++) {
+            String x = queries.get(i).get(0);
+            String y = queries.get(i).get(1);
+            if (uf.parents.containsKey(x) && uf.parents.containsKey(y) && Objects.equals(uf.find(x), uf.find(y))) {
+                res[i] = uf.vals.get(x) / uf.vals.get(y);
+            } else {
+                res[i] = -1.0;
+            }
+        }
+        return res;
     }
 
     class UF {
