@@ -45,7 +45,7 @@ import java.util.*;
  *
  * This problem is same as MinimumGeneticMutation of LC433
  *
- * LC127
+ * LC127, Hard, frequency=55
  *
  */
 public class WordLadder {

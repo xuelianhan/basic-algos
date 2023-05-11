@@ -28,7 +28,7 @@ package org.ict.algorithm.leetcode.dynamicprogramming;
  * The product of any prefix or suffix of nums is guaranteed to fit in a 32-bit integer.
  * @author sniper
  * @date 28 Mar, 2023
- * LC152, Medium
+ * LC152, Medium, frequency=32
  */
 public class MaximumProductSubarray {
 

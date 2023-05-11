@@ -1,4 +1,4 @@
-package org.ict.algorithm.leetcode.twopointers;
+package org.ict.algorithm.leetcode.math;
 
 import java.util.HashMap;
 import java.util.Map;

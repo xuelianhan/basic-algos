@@ -29,7 +29,7 @@ package org.ict.algorithm.leetcode.binarysearch;
  * -10^4 <= target <= 10^4
  * @author sniper
  * @date 23 Mar, 2023
- * LC33, Medium
+ * LC33, Medium, frequency=85
  */
 public class SearchInRotatedSortedArray {
 

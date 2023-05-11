@@ -41,7 +41,7 @@ import java.util.*;
  * There will be at least one element in the data structure when getRandom is called.
  * @author sniper
  * @date 04 Jan, 2023
- * LC380
+ * LC380, Medium, frequency=60
  */
 public class InsertDeleteGetRandomO1 {
 

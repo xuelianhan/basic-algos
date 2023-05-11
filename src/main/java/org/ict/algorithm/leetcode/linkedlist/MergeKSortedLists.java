@@ -43,7 +43,7 @@ import java.util.*;
  *
  * @author sniper
  * @date 20 Sep, 2022
- * LC23
+ * LC23, Hard, frequency=98
  */
 public class MergeKSortedLists {
 

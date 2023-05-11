@@ -35,7 +35,7 @@ import java.util.Queue;
  * -1000 <= Node.val <= 1000
  * @author sniper
  * @date 04 Jan, 2023
- * LC297
+ * LC297, Hard, frequency=49
  */
 public class SerializeAndDeserializeBinaryTree {
 

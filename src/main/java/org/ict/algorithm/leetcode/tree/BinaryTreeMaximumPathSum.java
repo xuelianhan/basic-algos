@@ -30,7 +30,7 @@ package org.ict.algorithm.leetcode.tree;
  *
  * The number of nodes in the tree is in the range [1, 3 * 10^4].
  * -1000 <= Node.val <= 1000
- * LC124
+ * LC124, Hard, frequency=39
  */
 public class BinaryTreeMaximumPathSum {
 

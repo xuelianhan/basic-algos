@@ -34,7 +34,7 @@ import java.util.Arrays;
  *
  * @author sniper
  * @date 30 Oct, 2022
- * LC238
+ * LC238, Medium, frequency=42
  */
 public class ProductOfArrayExceptSelf {
 

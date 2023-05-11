@@ -23,26 +23,24 @@ import java.util.*;
  *
  *
  * Example 1:
- *
  * Input: digits = "23"
  * Output: ["ad","ae","af","bd","be","bf","cd","ce","cf"]
- * Example 2:
  *
+ * Example 2:
  * Input: digits = ""
  * Output: []
- * Example 3:
  *
+ * Example 3:
  * Input: digits = "2"
  * Output: ["a","b","c"]
  *
- *
  * Constraints:
- *
  * 0 <= digits.length <= 4
  * digits[i] is a digit in the range ['2', '9'].
+ *
  * @author sniper
  * @date 01 Nov, 2022
- * LC17
+ * LC17, Medium, frequency=35
  */
 public class LetterCombinationsOfPhoneNumber {
 
