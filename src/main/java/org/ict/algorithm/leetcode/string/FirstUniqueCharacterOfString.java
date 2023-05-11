@@ -1,6 +1,5 @@
 package org.ict.algorithm.leetcode.string;
 
-import java.util.*;
 
 /**
  * Given a string s,
@@ -29,7 +28,7 @@ import java.util.*;
  * s consists of only lowercase English letters.
  * @author sniper
  * @date 2022/2/9
- * LC387
+ * LC387, Easy, frequency=28
  */
 public class FirstUniqueCharacterOfString {
     
@@ -38,7 +37,38 @@ public class FirstUniqueCharacterOfString {
         int result = firstUniqueChar(s);
         System.out.println(result);
     }
-    
+
+    /**
+     * Understanding the following solution
+     * Time Cost 8ms
+     * -------------------------------------
+     * class Solution:
+     *     def firstUniqChar(self, s: str) -> int:
+     *         count = collections.Counter(s)
+     *         for i, c in enumerate(s):
+     *             if count[c] == 1:
+     *                 return i
+     *         return -1
+     * ----------------------------------------
+     * class Solution {
+     * public:
+     *     int firstUniqChar(string s) {
+     *         vector<int>  count(128);
+     *         for (const char c : s) {
+     *             count[c]++;
+     *         }
+     *
+     *         for (int i = 0; i < s.length(); i++) {
+     *             if (count[s[i]] == 1) {
+     *                 return i;
+     *             }
+     *         }
+     *         return -1;
+     *     }
+     * };
+     * @param s
+     * @return
+     */
     public static int firstUniqueChar(String s) {
         /**
          * record the frequency of each character of s

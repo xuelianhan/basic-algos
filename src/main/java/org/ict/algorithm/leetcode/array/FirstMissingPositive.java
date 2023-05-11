@@ -32,13 +32,13 @@ import java.util.stream.Collectors;
 public class FirstMissingPositive {
 
     public static void main(String[] args) {
-        int[] nums = {7, 8, 9, 11, 12};
+        int[] nums = {3,4,-1,1};
 
         FirstMissingPositive instance = new FirstMissingPositive();
-        int res = instance.firstMissingPositive(nums);
+        int res = instance.firstMissingPositiveV3(nums);
         System.out.println(res);
     }
-    
+
     /**
      * Understanding the following solution
 	 * Time Cost 1ms
@@ -64,7 +64,30 @@ public class FirstMissingPositive {
 	 *     }
 	 * };
 	 * ---------------------------------------
-	 *
+	 * class Solution:
+     *     def firstMissingPositive(self, nums: List[int]) -> int:
+     *         def swap(i, j):
+     *             nums[i], nums[j] = nums[j], nums[i]
+     *
+     *         n = len(nums)
+     *         for i in range(n):
+     *             while 1 <= nums[i] <= n and nums[nums[i] - 1] != nums[i]:
+     *                 swap(i, nums[i] - 1)
+     *         for i in range(n):
+     *             if i + 1 != nums[i]:
+     *                 return i + 1
+     *         return n + 1
+     * ---------------------------------------
+     * e.g. nums = [3,4,-1,1]
+     * i:0, nums: [-1,4,3,1], nums[0]:-1, exit-while-loop, i++->i:1
+     * i:1, nums: [-1,1,3,4], nums[1]:1, nums[nums[1]-1]:-1, -1 != 1
+     *      nums: [1,-1,3,4], nums[1]:-1, exit-while-loop, i++->i:2
+     * i:2, nums: [1,-1,3,4], nums[2]:3, nums[3-1] == nums[2], exit-while-loop, i++->i:3
+     * i:3, nums: [1,-1,3,4], nums[3]:4, nums[4-1] == nums[3], exit-while-loop, i++->i:4
+     * i:4, exit-first-for-loop
+     * i:0, nums[0] == 1, 1 == i + 1, i++->i:1
+     * i:1, nums[1] == -1, -1 != i + 1, return i + 1 = 1 + 1 = 2
+     *
      * @param nums
      * @return
      */
@@ -174,6 +197,7 @@ public class FirstMissingPositive {
         int n = nums.length;
         for (int i = 0; i < n; ++i) {
             // why use while in here? not if statement?
+            // Please see example in firstMissingPositiveV3 above, there is an explanation.
             while (nums[i] > 0 && nums[i] <= n && nums[nums[i] - 1] != nums[i]) {
                 swap(nums, i, nums[i] - 1);
             }
