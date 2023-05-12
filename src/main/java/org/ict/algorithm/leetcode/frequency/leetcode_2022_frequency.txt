@@ -73,7 +73,7 @@
 41.First Missing Positive=28, Array, Hash Table
 1507.Reformat Date=26
 202.Happy Number=26
-272.Closest Binary Search Tree Value II=26
+272.Closest Binary Search Tree Value II=26, Binary Search Tree, DFS, Stack, Heap
 48.Rotate Image=26
 399.Evaluate Division=25, Union Find, DFS, BFS
 415.Add Strings=24
