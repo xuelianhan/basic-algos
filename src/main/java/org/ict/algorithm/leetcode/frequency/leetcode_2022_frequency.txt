@@ -78,7 +78,7 @@
 399.Evaluate Division=25, Union Find, DFS, BFS
 415.Add Strings=24
 443.String Compression=24
-692.Top K Frequent Words=23
+692.Top K Frequent Words=23, Heap
 239.Sliding Window Maximum=23
 283.Move Zeroes=22
 1304.Find N Unique Integers Sum up to Zero=22

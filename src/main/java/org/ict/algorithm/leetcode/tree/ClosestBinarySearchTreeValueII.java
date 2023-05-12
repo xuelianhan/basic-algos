@@ -49,13 +49,45 @@ public class ClosestBinarySearchTreeValueII {
         double target = 3.714286;
         int k = 2;
         ClosestBinarySearchTreeValueII instance = new ClosestBinarySearchTreeValueII();
-        List<Integer> res = instance.closestKValuesV0(root, target, k);
+        List<Integer> res = instance.closestKValuesV4(root, target, k);
         res.forEach(i -> System.out.println(i));
     }
 
     /**
      * Understanding the following solution
-     * Iterative Solution with Stack
+     * Iterative In-Order Traversal Solution with Stack
+     * @param root
+     * @param target
+     * @param k
+     * @return
+     */
+    public List<Integer> closestKValuesV4(TreeNode root, double target, int k) {
+        List<Integer> res = new ArrayList<>();
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode p = root;
+        while (p != null || !stack.isEmpty()) {
+            if (p != null) {
+                stack.push(p);
+                p = p.left;
+            } else {
+                p = stack.pop();
+                if (res.size() < k) {
+                    res.add(p.val);
+                } else if (Math.abs(p.val- target) < Math.abs(res.get(0) - target)){
+                    res.remove(0);
+                    res.add(p.val);
+                } else {
+                    break;
+                }
+                p = p.right;
+            }
+        }
+        return res;
+    }
+
+    /**
+     * Understanding the following solution
+     * Iterative In-Order Traversal Solution with Stack
      * @param root
      * @param target
      * @param k
