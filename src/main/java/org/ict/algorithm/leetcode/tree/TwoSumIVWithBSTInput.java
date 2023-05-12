@@ -34,7 +34,7 @@ import java.util.Map;
  * @author sniper
  * @date 2021/12/1
  *
- * @LC653
+ * @LC653, Easy
  */
 public class TwoSumIVWithBSTInput {
 
