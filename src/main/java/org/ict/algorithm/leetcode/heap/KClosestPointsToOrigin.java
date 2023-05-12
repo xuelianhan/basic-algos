@@ -29,7 +29,7 @@ import java.util.PriorityQueue;
  * -10^4 < xi, yi < 10^4
  * @author sniper
  * @date 27 Mar, 2023
- * LC973, Medium
+ * LC973, Medium, frequency=183
  * Amazon OA
  */
 public class KClosestPointsToOrigin {

@@ -15,9 +15,6 @@ import java.util.*;
  *       2     5
  *     /  \
  *    1   3
- *
- *
- *
  * Input: root = [4,2,5,1,3], target = 3.714286, k = 2
  * Output: [4,3]
  *
@@ -52,32 +49,19 @@ public class ClosestBinarySearchTreeValueII {
         double target = 3.714286;
         int k = 2;
         ClosestBinarySearchTreeValueII instance = new ClosestBinarySearchTreeValueII();
-        List<Integer> res = instance.closestKValuesV2(root, target, k);
+        List<Integer> res = instance.closestKValuesV0(root, target, k);
         res.forEach(i -> System.out.println(i));
     }
 
-
     /**
-     * Max-Heap Solution
-     * @param root
-     * @param target
-     * @param k
-     * @return
-     */
-    public List<Integer> closestKValuesV3(TreeNode root, double target, int k) {
-        List<Integer> res = new ArrayList<>();
-
-        return res;
-    }
-
-    /**
+     * Understanding the following solution
      * Iterative Solution with Stack
      * @param root
      * @param target
      * @param k
      * @return
      */
-    public List<Integer> closestKValuesV2(TreeNode root, double target, int k) {
+    public List<Integer> closestKValuesV3(TreeNode root, double target, int k) {
         List<Integer> res = new ArrayList<>();
         Stack<TreeNode> stack = new Stack<>();
         TreeNode p = root;
@@ -100,19 +84,61 @@ public class ClosestBinarySearchTreeValueII {
         return res;
     }
 
-
-
     /**
+     * Understanding the following solution
      * Depth-First-Search(In-Order Traversal and collect result while traversing)
      * @param root
      * @param target
      * @param k
      * @return
      */
-    public List<Integer> closestKValuesV1(TreeNode root, double target, int k) {
+    public List<Integer> closestKValuesV2(TreeNode root, double target, int k) {
         List<Integer> res = new ArrayList<>();
-        inOrderV1(root, target, k, res);
+        /**
+         * inOrderV22(root, target, k, res); is OK too.
+         */
+        inOrderV21(root, target, k, res);
         return res;
+    }
+
+    /**
+     * class Solution {
+     * public:
+     *     vector<int> closestKValues(TreeNode* root, double target, int k) {
+     *         vector<int> res;
+     *         inorder(root, target, k, res);
+     *         return res;
+     *     }
+     *     void inorder(TreeNode *root, double target, int k, vector<int> &res) {
+     *         if (!root) return;
+     *         inorder(root->left, target, k, res);
+     *         if (res.size() < k) res.push_back(root->val);
+     *         else if (abs(root->val - target) < abs(res[0] - target)) {
+     *             res.erase(res.begin());
+     *             res.push_back(root->val);
+     *         } else return;
+     *         inorder(root->right, target, k, res);
+     *     }
+     * };
+     * @param root
+     * @param target
+     * @param k
+     * @param res
+     */
+    private void inOrderV21(TreeNode root, double target, int k, List<Integer> res) {
+        if (root == null) {
+            return;
+        }
+        inOrderV21(root.left, target, k, res);
+        if (res.size() < k) {
+            res.add(root.val);
+        } else if (Math.abs(root.val - target) < Math.abs(res.get(0) - target)) {
+            res.remove(0);
+            res.add(root.val);
+        } else {
+            return;
+        }
+        inOrderV21(root.right, target, k, res);
     }
 
     /**
@@ -145,11 +171,11 @@ public class ClosestBinarySearchTreeValueII {
      * @param k
      * @param res
      */
-    private void inOrderV2(TreeNode root, double target, int k, List<Integer> res) {
+    private void inOrderV22(TreeNode root, double target, int k, List<Integer> res) {
         if (root == null) {
             return;
         }
-        inOrderV2(root.left, target, k, res);
+        inOrderV22(root.left, target, k, res);
         if (res.size() < k) {
             res.add(root.val);
         } else {
@@ -159,49 +185,161 @@ public class ClosestBinarySearchTreeValueII {
             res.remove(0);
             res.add(root.val);
         }
-        inOrderV2(root.right, target, k, res);
+        inOrderV22(root.right, target, k, res);
     }
 
     /**
-     * class Solution {
-     * public:
-     *     vector<int> closestKValues(TreeNode* root, double target, int k) {
-     *         vector<int> res;
-     *         inorder(root, target, k, res);
-     *         return res;
-     *     }
-     *     void inorder(TreeNode *root, double target, int k, vector<int> &res) {
-     *         if (!root) return;
-     *         inorder(root->left, target, k, res);
-     *         if (res.size() < k) res.push_back(root->val);
-     *         else if (abs(root->val - target) < abs(res[0] - target)) {
-     *             res.erase(res.begin());
-     *             res.push_back(root->val);
-     *         } else return;
-     *         inorder(root->right, target, k, res);
-     *     }
-     * };
+     * Understanding the following solution
+     * Max-Heap Solution
      * @param root
      * @param target
      * @param k
-     * @param res
+     * @return
      */
-    private void inOrderV1(TreeNode root, double target, int k, List<Integer> res) {
+    public List<Integer> closestKValuesV1(TreeNode root, double target, int k) {
+        List<Integer> res = new ArrayList<>();
+        PriorityQueue<Pair> maxHeap = new PriorityQueue<>((a, b) -> {
+            if (a.diff < b.diff) {
+                return 1;
+            } else if (a.diff > b.diff) {
+                return -1;
+            } else {
+                return 0;
+            }
+        });
+        inOrderV1(root, target, k, maxHeap);
+        while (!maxHeap.isEmpty()) {
+            res.add(maxHeap.poll().val);
+        }
+        return res;
+    }
+
+    private void inOrderV1(TreeNode root, double target, int k, PriorityQueue<Pair> queue) {
         if (root == null) {
             return;
         }
-        inOrderV1(root.left, target, k, res);
-        if (res.size() < k) {
-            res.add(root.val);
-        } else if (Math.abs(root.val - target) < Math.abs(res.get(0) - target)) {
-            res.remove(0);
-            res.add(root.val);
-        } else {
-            return;
+        inOrderV1(root.left, target, k, queue);
+        queue.offer(new Pair(Math.abs(root.val - target), root.val));
+        if (queue.size() > k) {
+            queue.poll();
         }
-        inOrderV1(root.right, target, k, res);
+        inOrderV1(root.right, target, k, queue);
     }
 
+    class Pair {
+        private double diff;
+
+        private int val;
+
+        public Pair(double diff, int val) {
+            this.diff = diff;
+            this.val = val;
+        }
+    }
+
+    /**
+     * Understanding the following solution
+     * Deque solution
+     * Input: root = [4,2,5,1,3], target = 3.714286, k = 2
+     *          4
+     *        /   \
+     *       2     5
+     *     /  \
+     *    1   3
+     * queue:[1,2,3,4,5]
+     * --------------------
+     * class Solution:
+     *   def closestKValues(self, root: Optional[TreeNode], target: float, k: int) -> List[int]:
+     *     q = collections.deque()
+     *
+     *     def inorder(root: Optional[TreeNode]) -> None:
+     *       if not root:
+     *         return
+     *
+     *       inorder(root.left)
+     *       q.append(root.val)
+     *       inorder(root.right)
+     *
+     *     inorder(root)
+     *
+     *     while len(q) > k:
+     *       if abs(q[0] - target) > abs(q[-1] - target):
+     *         q.popleft()
+     *       else:
+     *         q.pop()
+     *
+     *     return list(q)
+     * -----------------------
+     * class Solution {
+     *  public:
+     *   vector<int> closestKValues(TreeNode* root, double target, int k) {
+     *     deque<int> q;
+     *
+     *     inorder(root, q);
+     *
+     *     while (q.size() > k)
+     *       if (abs(q.front() - target) > abs(q.back() - target))
+     *         q.pop_front();
+     *       else
+     *         q.pop_back();
+     *
+     *     return {begin(q), end(q)};
+     *   }
+     *
+     *  private:
+     *   void inorder(TreeNode* root, deque<int>& q) {
+     *     if (root == nullptr)
+     *       return;
+     *
+     *     inorder(root->left, q);
+     *     q.push_back(root->val);
+     *     inorder(root->right, q);
+     *   }
+     * };
+     *
+     * @param root
+     * @param target
+     * @param k
+     * @return
+     */
+    public List<Integer> closestKValuesV0(TreeNode root, double target, int k) {
+        Deque<Integer> queue = new ArrayDeque<>();
+        /**
+         * Add all values into queue by In-Order-Sequence.
+         */
+        inOrder(root, queue);
+
+        /**
+         * Always check the minimum and maximum of the queue, with the target.
+         * Discard the bigger one of the absolute difference.
+         */
+        while (queue.size() > k) {
+            if (Math.abs(queue.peekFirst() - target) > Math.abs(queue.peekLast() - target)) {
+                queue.pollFirst();
+            } else {
+                queue.pollLast();
+            }
+        }
+        return new ArrayList<>(queue);
+    }
+
+    private void inOrder(TreeNode root, Deque<Integer> q) {
+        if (root == null) {
+            return;
+        }
+        inOrder(root.left, q);
+        q.offerLast(root.val);
+        inOrder(root.right, q);
+    }
+
+    /**
+     * Understanding the following solution
+     * Linked List Queue solution
+     * @param root
+     * @param target
+     * @param k
+     * @return
+     */
     public List<Integer> closestKValues(TreeNode root, double target, int k) {
         List<Integer> res = new ArrayList<>();
         Queue<Integer> queue = new LinkedList<>();

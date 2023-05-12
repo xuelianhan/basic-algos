@@ -29,7 +29,7 @@ import java.util.*;
  * Follow up: Your algorithm's time complexity must be better than O(n log n), where n is the array's size.
  * @author sniper
  * @date 21 Sep, 2022
- * LC347
+ * LC347, Medium, frequency=107
  */
 public class TopKFrequentElements {
 
@@ -59,7 +59,7 @@ public class TopKFrequentElements {
          * create a MinPQ here.
          */
         Queue<Integer> minHeap = new PriorityQueue<>(Comparator.comparingInt(freq::get));
-        //Queue<Integer> minHeap = new PriorityQueue<>((n1, n2) -> count.get(n1) - count.get(n2));
+        //Queue<Integer> minHeap = new PriorityQueue<>((n1, n2) -> freq.get(n1) - freq.get(n2));
 
         /**
          * 2. keep k top frequent elements in the minHeap.
