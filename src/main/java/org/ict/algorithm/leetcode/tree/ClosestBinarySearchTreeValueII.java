@@ -216,16 +216,16 @@ public class ClosestBinarySearchTreeValueII {
         return res;
     }
 
-    private void inOrderV1(TreeNode root, double target, int k, PriorityQueue<Pair> queue) {
+    private void inOrderV1(TreeNode root, double target, int k, PriorityQueue<Pair> maxHeap) {
         if (root == null) {
             return;
         }
-        inOrderV1(root.left, target, k, queue);
-        queue.offer(new Pair(Math.abs(root.val - target), root.val));
-        if (queue.size() > k) {
-            queue.poll();
+        inOrderV1(root.left, target, k, maxHeap);
+        maxHeap.offer(new Pair(Math.abs(root.val - target), root.val));
+        if (maxHeap.size() > k) {
+            maxHeap.poll();
         }
-        inOrderV1(root.right, target, k, queue);
+        inOrderV1(root.right, target, k, maxHeap);
     }
 
     class Pair {
