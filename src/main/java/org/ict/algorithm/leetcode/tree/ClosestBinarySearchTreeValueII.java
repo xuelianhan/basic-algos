@@ -207,7 +207,9 @@ public class ClosestBinarySearchTreeValueII {
                 return 0;
             }
         });
+
         inOrderV1(root, target, k, maxHeap);
+
         while (!maxHeap.isEmpty()) {
             res.add(maxHeap.poll().val);
         }
@@ -306,6 +308,7 @@ public class ClosestBinarySearchTreeValueII {
         Deque<Integer> queue = new ArrayDeque<>();
         /**
          * Add all values into queue by In-Order-Sequence.
+         * It likes sorting in natural order.
          */
         inOrder(root, queue);
 
@@ -347,9 +350,9 @@ public class ClosestBinarySearchTreeValueII {
          * In-Order-Traversal at first and store the results into a queue.
          */
         inOrder(root, target,k, queue);
-
         /**
          * Iterate values from the queue and store them into a list.
+         * Or using new ArrayList<>(queue);
          */
         while (!queue.isEmpty()) {
             res.add(queue.poll());
