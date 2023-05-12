@@ -88,12 +88,12 @@ public class LongestCommonSubsequence {
         int m = text1.length();
         int n = text2.length();
 
-        int[][] dp = new int[m+1][n+1];
+        int[][] dp = new int[m + 1][n + 1];
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
                 char c1 = text1.charAt(i);
                 char c2 = text2.charAt(j);
-                dp[i+1][j+1] = (c1 == c2 ? dp[i][j] + 1 : Math.max(dp[i+1][j], dp[i][j+1]));
+                dp[i + 1][j + 1] = (c1 == c2 ? dp[i][j] + 1 : Math.max(dp[i + 1][j], dp[i][j + 1]));
             }
         }
 
@@ -126,7 +126,7 @@ public class LongestCommonSubsequence {
         int m = text1.length();
         int n = text2.length();
 
-        int[][] dp = new int[m+1][n+1];
+        int[][] dp = new int[m + 1][n + 1];
 
         /**
          * Due to i=0 or j=0, both dp[i][0] and dp[0][j] are zero
