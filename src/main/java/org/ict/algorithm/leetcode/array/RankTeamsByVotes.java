@@ -1,5 +1,10 @@
 package org.ict.algorithm.leetcode.array;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+
 /**
  * In a special ranking system,
  * each voter gives a rank from highest to lowest to all teams participating in the competition.
@@ -44,8 +49,78 @@ package org.ict.algorithm.leetcode.array;
  * LC1366, Medium, frequency=22
  */
 public class RankTeamsByVotes {
-    public String rankTeams(String[] votes) {
-        //todo
+
+    public String rankTeamsV1(String[] votes) {
+        int teamSize = votes[0].length();
+        List<Pair> list = new ArrayList<>();
         return null;
+    }
+
+    static class Pair {
+        private char name;
+        private int totalVotes;
+
+        public Pair(char name, int totalVotes) {
+            this.name = name;
+            this.totalVotes = totalVotes;
+        }
+    }
+
+    /**
+     * Understanding the following solution
+     * Time Cost 4ms
+     * e.g. votes = ["ABC","ACB","ABC","ACB","ACB"]
+     *
+     * @param votes
+     * @return
+     */
+    public String rankTeams(String[] votes) {
+        Team[] teams = new Team[26];
+        int teamSize = votes[0].length();
+        for (int i = 0; i < 26; i++) {
+            teams[i] = new Team((char)('A' + i), teamSize);
+        }
+
+        for (String s : votes) {
+            for (int i = 0; i < teamSize; i++) {
+                teams[s.charAt(i) - 'A'].rank[i]++;
+            }
+        }
+        Arrays.sort(teams, new Comparator<Team>() {
+            @Override
+            public int compare(Team o1, Team o2) {
+                for (int i = 0; i < o1.rank.length; i++) {
+                    if (o1.rank[i] > o2.rank[i]) {
+                        return -1;
+                    } else if (o1.rank[i] < o2.rank[i]) {
+                        return 1;
+                    }
+                }
+                return o1.name - o2.name;
+            }
+        });
+
+        StringBuilder res = new StringBuilder();
+        /**
+         * Notice, there are only teamSize teams, not 26 teams
+         * So the following codes using teamSize instead of teams.length.
+         * e.g. votes = ["ABC","ACB","ABC","ACB","ACB"]
+         * There are only 3 teams: A, B, C
+         */
+        for (int i = 0; i < teamSize; i++) {
+            res.append(teams[i].name);
+        }
+        return res.toString();
+    }
+
+    static class Team {
+        private char name;
+
+        private int[] rank;
+
+        public Team(char name, int size) {
+            this.name = name;
+            this.rank =new int[size];
+        }
     }
 }

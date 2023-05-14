@@ -1,5 +1,4 @@
-1366.Rank Teams by Votes=22
-1656.Design an Ordered Stream=20
+1656.Design an Ordered Stream=20, Design
 1051.Height Checker=20
 697.Degree of an Array=20
 1046.Last Stone Weight=19

@@ -83,7 +83,7 @@
 283.Move Zeroes=22, Array, Two Pointers
 1304.Find N Unique Integers Sum up to Zero=22, Array, Math
 362.Design Hit Counter=22, Design
-1366.Rank Teams by Votes=22
+1366.Rank Teams by Votes=22, Array, Sorting, Hash Table , Counting
 278.First Bad Version=21
 605.Can Place Flowers=21
 21.Merge Two Sorted Lists=20
