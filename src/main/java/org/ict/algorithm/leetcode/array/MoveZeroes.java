@@ -29,7 +29,7 @@ import java.util.Arrays;
  * Follow up: Could you minimize the total number of operations done?
  * @author sniper
  * @date 26 Sep, 2022
- * LC283
+ * LC283, Easy, frequency=22
  */
 public class MoveZeroes {
 

@@ -1,4 +1,4 @@
-package org.ict.algorithm.leetcode.array;
+package org.ict.algorithm.leetcode.matrix;
 
 import java.util.Arrays;
 
