@@ -91,6 +91,9 @@ public class SolvingQuestionsWithBrainpower {
      *     }
      * }
      * -----------------------------------------------
+     * In recursive solution, we iterate from index-0 to index-(n-1),
+     * while in dynamic solution, we do the reverse order,
+     * from n-1 to 0
      * e.g. questions = [[3,2],[4,3],[4,4],[2,5]]
      * i:3, p:2, b:5, j=i+b+1=9, dp[3]=max(dp[4], p+0)=max(0, 3)=3
      *
@@ -104,6 +107,11 @@ public class SolvingQuestionsWithBrainpower {
             int p = questions[i][0];
             int b = questions[i][1];
             int j = i + b + 1;
+            /**
+             * Skip i-th question, you go to the (i+1)-th question.
+             * Or you take the i-th question, go the i + question[i][1] + 1 question if
+             * it's in bound of question.
+             */
             dp[i] = Math.max(dp[i + 1], p + (j > n ? 0 : dp[j]));
         }
         return dp[0];
