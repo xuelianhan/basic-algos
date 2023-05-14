@@ -14,10 +14,7 @@ package org.ict.algorithm.leetcode.dynamicprogramming;
  * but you will be unable to solve questions 2 and 3.
  * Return the maximum points you can earn for the exam.
  *
- *
- *
  * Example 1:
- *
  * Input: questions = [[3,2],[4,3],[4,4],[2,5]]
  * Output: 5
  * Explanation: The maximum points can be earned by solving questions 0 and 3.
@@ -25,8 +22,8 @@ package org.ict.algorithm.leetcode.dynamicprogramming;
  * - Unable to solve questions 1 and 2
  * - Solve question 3: Earn 2 points
  * Total points earned: 3 + 2 = 5. There is no other way to earn 5 or more points.
- * Example 2:
  *
+ * Example 2:
  * Input: questions = [[1,1],[2,2],[3,3],[4,4],[5,5]]
  * Output: 7
  * Explanation: The maximum points can be earned by solving questions 1 and 4.
@@ -36,9 +33,7 @@ package org.ict.algorithm.leetcode.dynamicprogramming;
  * - Solve question 4: Earn 5 points
  * Total points earned: 2 + 5 = 7. There is no other way to earn 7 or more points.
  *
- *
  * Constraints:
- *
  * 1 <= questions.length <= 10^5
  * questions[i].length == 2
  * 1 <= points-i, brainpower-i <= 10^5
@@ -49,6 +44,7 @@ package org.ict.algorithm.leetcode.dynamicprogramming;
 public class SolvingQuestionsWithBrainpower {
 
     /**
+     * Understanding the following solution.
      * Time Cost 5ms
      * Time complexity O(n),
      * Space complexity O(n)
@@ -95,11 +91,13 @@ public class SolvingQuestionsWithBrainpower {
      *     }
      * }
      * -----------------------------------------------
+     * e.g. questions = [[3,2],[4,3],[4,4],[2,5]]
+     * i:3, p:2, b:5, j=i+b+1=9, dp[3]=max(dp[4], p+0)=max(0, 3)=3
      *
      * @param questions
      * @return
      */
-    public long mostPoints(int[][] questions) {
+    public long mostPointsV1(int[][] questions) {
         int n = questions.length;
         long[] dp = new long[n + 1];
         for (int i = n - 1; i >= 0; i--) {
@@ -109,6 +107,46 @@ public class SolvingQuestionsWithBrainpower {
             dp[i] = Math.max(dp[i + 1], p + (j > n ? 0 : dp[j]));
         }
         return dp[0];
+    }
+
+    /**
+     * Understanding the following solution
+     * Recursive + Memorization Solution
+     * Time Cost 20ms
+     * -----------------------------
+     * class Solution:
+     *     def mostPoints(self, questions: List[List[int]]) -> int:
+     *         @cache
+     *         def dfs(i: int) -> int:
+     *             if i >= len(questions):
+     *                 return 0
+     *             p, b = questions[i]
+     *             return max(p + dfs(i + b + 1), dfs(i + 1))
+     *
+     *         return dfs(0)
+     * @param questions
+     * @return
+     */
+    public long mostPoints(int[][] questions) {
+        Long[] memo = new Long[questions.length];
+        return helper(0, questions, memo);
+    }
+
+    private long helper(int idx, int[][] questions, Long[] memo) {
+        if (idx >= questions.length) {
+            return 0;
+        }
+        if (memo[idx] != null) {
+            return memo[idx];
+        }
+        /**
+         * Only two choices, take current-idx question and solve it,
+         * or leave current-dx question and go to the next.
+         */
+        long take = questions[idx][0] + helper(idx + questions[idx][1] + 1, questions, memo);
+        long leave = helper(idx + 1, questions, memo);
+        memo[idx] = Math.max(take, leave);
+        return memo[idx];
     }
 
 }
