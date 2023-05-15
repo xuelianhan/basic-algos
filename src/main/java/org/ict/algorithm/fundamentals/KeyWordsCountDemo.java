@@ -38,7 +38,7 @@ public class KeyWordsCountDemo {
     private static String replaceBackRegex = "\\d{4}-\\d{2}-\\d{2}\\d{2}:\\d{2}:\\d{2}";
 
     public static void main(String[] args) {
-        String input =  "/home/hanxuelian/Desktop/keyword.log";
+        String input =  "/home/xxx/Desktop/keyword.log";
         String keyWord = "keyword";
         int count = countKeyWord(input, keyWord);
         System.out.println(count);
