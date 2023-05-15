@@ -30,7 +30,7 @@ import org.ict.algorithm.util.StdOut;
  *  @author Kevin Wayne
  */
 public class Inversions {
-
+    
     // do not instantiate
     private Inversions() { }
 
@@ -85,8 +85,15 @@ public class Inversions {
         return inversions;
     }
 
-
-
+    /**
+     *  merge and count(Comparable version)
+     *  @see https://stackoverflow.com/questions/21544716/implementing-comparable-with-a-generic-class
+     *  @see https://docs.oracle.com/javase/tutorial/java/generics/boundedTypeParams.html
+     *  @see https://docs.oracle.com/javase/tutorial/java/generics/inheritance.html
+     *  @see https://docs.oracle.com/javase/tutorial/java/generics/subtyping.html
+     *  @see https://docs.oracle.com/javase/tutorial/java/generics/upperBounded.html
+     *  @see 
+     */
     // merge and count (Comparable version)
     private static <Key extends Comparable<Key>> long merge(Key[] a, Key[] aux, int lo, int mid, int hi) {
         long inversions = 0;
