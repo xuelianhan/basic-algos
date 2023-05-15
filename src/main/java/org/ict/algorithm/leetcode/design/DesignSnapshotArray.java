@@ -187,6 +187,28 @@ public class DesignSnapshotArray {
      * because in the case of you modifying a same index several times, such as set(0, 15), set(0,4), set(0,7), snap(), set(0,9)
      * you want to retrieve the last value with the snap_id
      * so you go to snap_id+1, and then -1 to get the last value
+     * ------------------------------------------------------------
+     * Important Bisection Functions
+     * 1. bisect(list, num, beg, end):
+     * This function returns the position in the sorted list,
+     * where the number passed in argument can be placed to maintain the resultant list in sorted order.
+     * If the element is already present in the list,
+     * the rightmost position where element has to be inserted is returned.
+     * This function takes 4 arguments,
+     * list which has to be worked with, a number to insert,
+     * starting position in list to consider, ending position which has to be considered.
+     *
+     * 2. bisect_left(list, num, beg, end):
+     * This function returns the position in the sorted list,
+     * where the number passed in argument can be placed to maintain the resultant list in sorted order.
+     * If the element is already present in the list, the leftmost position where element has to be inserted is returned.
+     *
+     * This function takes 4 arguments,
+     * list which has to be worked with, number to insert,
+     * starting position in list to consider, ending position which has to be considered.
+     *
+     * 3. bisect_right(list, num, beg, end):
+     * This function works similar to the “bisect()” and mentioned above.
      */
     class SnapshotArray {
         private List<int[]>[] arr;
