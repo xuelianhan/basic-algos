@@ -115,6 +115,12 @@ public class DesignSnapshotArray {
          * Gets the entry corresponding to the specified key; if no such entry
          * exists, returns the entry for the greatest key less than the specified
          * key; if no such entry exists, returns {@code null}.
+         * ----------------------------------------------------
+         * For those who are trying to understand why floorEntry() method is used in the get method.
+         * There is a possibility that snap() call is made multiple times consecutively,
+         * in that case we are not updating the snap_id with any value in the TreeMap but just incrementing the snap_id.
+         * So if a get call is made with some input snap_id,
+         * we need to find the greatest snap_id lower than input snap_id for which an entry was added to the TreeMap.
          */
         public int get(int index, int snap_id) {
             return arr[index].floorEntry(snap_id).getValue();
