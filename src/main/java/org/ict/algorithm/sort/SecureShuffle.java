@@ -39,7 +39,6 @@ import org.ict.algorithm.util.StdOut;
  *  KH
  *
  ******************************************************************************/
-
 public class SecureShuffle {
     
     public static void main(String[] args) {

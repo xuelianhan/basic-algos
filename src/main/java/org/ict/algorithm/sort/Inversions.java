@@ -30,7 +30,7 @@ import org.ict.algorithm.util.StdOut;
  *  @author Kevin Wayne
  */
 public class Inversions {
-    
+
     // do not instantiate
     private Inversions() { }
 
