@@ -2,7 +2,6 @@ package org.ict.algorithm.sort;
 
 import org.ict.algorithm.util.StdIn;
 import org.ict.algorithm.util.StdOut;
-
 /**
  *  The {@code Inversions} class provides static methods to count the
  *  number of <em>inversions</em> in either an array of integers or 
