@@ -11,9 +11,7 @@ import java.util.*;
  * int snap() takes a snapshot of the array and returns the snap_id: the total number of times we called snap() minus 1.
  * int get(index, snap_id) returns the value at the given index, at the time we took the snapshot with the given snap_id
  *
- *
  * Example 1:
- *
  * Input: ["SnapshotArray","set","snap","set","get"]
  * [[3],[0,5],[],[0,6],[0,0]]
  * Output: [null,null,0,null,5]
@@ -24,9 +22,7 @@ import java.util.*;
  * snapshotArr.set(0,6);
  * snapshotArr.get(0,0);  // Get the value of array[0] with snap_id = 0, return 5
  *
- *
  * Constraints:
- *
  * 1 <= length <= 5 * 10^4
  * 0 <= index < length
  * 0 <= val <= 10^9
@@ -121,6 +117,9 @@ public class DesignSnapshotArray {
          * in that case we are not updating the snap_id with any value in the TreeMap but just incrementing the snap_id.
          * So if a get call is made with some input snap_id,
          * we need to find the greatest snap_id lower than input snap_id for which an entry was added to the TreeMap.
+         * ----------------------------------------------------
+         * e.g.set(0, 15), set(0,4), set(0,7), snap(), snap(), set(0,9)
+         *
          */
         public int get(int index, int snap_id) {
             return arr[index].floorEntry(snap_id).getValue();
@@ -184,7 +183,8 @@ public class DesignSnapshotArray {
      *-------------------------------------------
      * For those of you wondering why it's
      * i = bisect.bisect(self.A[index], [snap_id + 1]) - 1
-     * because in the case of you modifying a same index several times, such as set(0, 15), set(0,4), set(0,7), snap(), set(0,9)
+     * because in the case of you modifying a same index several times,
+     * such as set(0, 15), set(0,4), set(0,7), snap(), set(0,9)
      * you want to retrieve the last value with the snap_id
      * so you go to snap_id+1, and then -1 to get the last value
      * ------------------------------------------------------------
@@ -247,6 +247,12 @@ public class DesignSnapshotArray {
          * Time Complexity O(logSnapTimes)
          * e.g.["SnapshotArray","set","snap","set","get"], [[3],[0,5],[],[0,6],[0,0]]
          * [ [[0, 5], [1, 6]], [], [] ]
+         * get(0, 0)
+         * snap_id:0, arr[0] = [[0, 5], [1, 6]]
+         * lo:0, hi:2, mid:1, 1 > snap_id, hi:1
+         * lo:0, hi:1, mid:0, 0 == snap_id, lo = mid + 1 = 1
+         * lo:1, hi:1, while-loop-ended
+         * lo:1, list.get(lo-1)=[0,5], return 5
          *
          * @param index
          * @param snap_id
@@ -265,6 +271,8 @@ public class DesignSnapshotArray {
                  * Notice here we use > snap_id instead of >= snap_id
                  * Why?
                  * The given snap_id may not exist in the inner list,
+                 * for example, we call snap() multiple times consecutively, the snapId is increasing,
+                 * but the snapId in the inner array doesn't change,
                  * and we need to find the first mapping array value that is not greater than the given snap_id,
                  * so we find the first location that is greater than the snap_id,
                  * and then back off by one is the target.
