@@ -51,19 +51,7 @@ import java.util.List;
 public class RankTeamsByVotes {
 
     public String rankTeamsV1(String[] votes) {
-        int teamSize = votes[0].length();
-        List<Pair> list = new ArrayList<>();
         return null;
-    }
-
-    static class Pair {
-        private char name;
-        private int totalVotes;
-
-        public Pair(char name, int totalVotes) {
-            this.name = name;
-            this.totalVotes = totalVotes;
-        }
     }
 
     /**
