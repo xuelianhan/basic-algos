@@ -5,7 +5,6 @@ import org.ict.algorithm.util.StdIn;
 import org.ict.algorithm.util.StdOut;
 import org.ict.algorithm.util.StdRandom;
 
-
 /**
  *  quicksort
  *
