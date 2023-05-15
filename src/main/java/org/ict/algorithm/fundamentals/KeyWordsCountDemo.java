@@ -2,16 +2,18 @@ package org.ict.algorithm.fundamentals;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-
-import java.io.*;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 /**
  * file input content:
  * 
@@ -34,7 +36,7 @@ public class KeyWordsCountDemo {
     private static Pattern time_pattern = Pattern.compile("\\d{4}-\\d{2}-\\d{2}\\s+\\d{2}:\\d{2}:\\d{2}");
 
     private static String replaceBackRegex = "\\d{4}-\\d{2}-\\d{2}\\d{2}:\\d{2}:\\d{2}";
-    
+
     public static void main(String[] args) {
         String input =  "/home/hanxuelian/Desktop/keyword.log";
         String keyWord = "keyword";
@@ -109,7 +111,6 @@ public class KeyWordsCountDemo {
      * @see https://stackoverflow.com/questions/9046820/fastest-way-to-incrementally-read-a-large-file
      * @see https://howtodoinjava.com/java-7/nio/3-ways-to-read-files-using-java-nio/
      * @see https://howtodoinjava.com/core-java/io/how-java-io-works-internally-at-lower-level/
-     * 
      * @param path
      * @param keyWord
      * @return
@@ -167,7 +168,7 @@ public class KeyWordsCountDemo {
         
         return count;
     }
-    
+
     public static String testReplaceBack(String content) {
         List<String> replaceList = matchRegex(content, time_pattern);
         String result = replaceBack(content, replaceBackRegex, replaceList);
