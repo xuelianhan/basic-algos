@@ -143,7 +143,6 @@ public class KeyWordsCountDemo {
             }
             
             String text = new String(data);
-           
             Pattern p = Pattern.compile(keyWord);
             //remove all whitespace(including line breaks) equivalent to [\t\n\r\f].
             Matcher m = p.matcher(text.replaceAll("\\s+", ""));
