@@ -273,7 +273,7 @@ public class DesignSnapshotArray {
                  * The given snap_id may not exist in the inner list,
                  * for example, we call snap() multiple times consecutively, the snapId is increasing,
                  * but the snapId in the inner array doesn't change,
-                 * and we need to find the first mapping array value that is not greater than the given snap_id,
+                 * and we need to find the greatest mapping array value that is not greater than the given snap_id,
                  * so we find the first location that is greater than the snap_id,
                  * and then back off by one is the target.
                  */
@@ -285,7 +285,6 @@ public class DesignSnapshotArray {
             }
             return lo == 0 ? 0 : list.get(lo - 1)[1];
         }
-
     }
 
     /**
