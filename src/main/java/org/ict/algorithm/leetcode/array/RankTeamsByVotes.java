@@ -1,9 +1,7 @@
 package org.ict.algorithm.leetcode.array;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.List;
 
 /**
  * In a special ranking system,
@@ -51,6 +49,7 @@ import java.util.List;
 public class RankTeamsByVotes {
 
     public String rankTeamsV1(String[] votes) {
+
         return null;
     }
 

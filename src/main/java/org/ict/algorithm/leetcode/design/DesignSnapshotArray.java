@@ -35,9 +35,14 @@ import java.util.*;
 public class DesignSnapshotArray {
 
     public static void main(String[] args) {
-        List<Integer> list = new ArrayList<>(2);
-        System.out.println(list.size());
-        list.set(1, 5);
+        DesignSnapshotArray.SnapshotArrayV1 ss = new DesignSnapshotArray.SnapshotArrayV1(4);
+        //[[4],[],[],[3,1],[2,4],[],[1,4]]
+        int snapId1 = ss.snap();
+        int snapId2 = ss.snap();
+        int res1 = ss.get(3, 1);
+        ss.set(2, 4);
+        int snapId3 = ss.snap();
+        ss.set(1, 4);
     }
 
     /**
@@ -72,7 +77,7 @@ public class DesignSnapshotArray {
      *
      * @author lee215
      */
-    class SnapshotArrayV1 {
+    static class SnapshotArrayV1 {
 
         private TreeMap<Integer, Integer>[] arr;
 
@@ -86,7 +91,7 @@ public class DesignSnapshotArray {
             arr = new TreeMap[length];
             for (int i = 0; i < length; i++) {
                 arr[i] = new TreeMap<>();
-                arr[i].put(0, 0);
+                arr[i].put(0, 0);//Don't forget this initialization.
             }
         }
 
@@ -108,6 +113,8 @@ public class DesignSnapshotArray {
 
         /**
          * Time Complexity O(logSnapTimes)
+         * ---------------
+         * floorEntry(snap_id):
          * Gets the entry corresponding to the specified key; if no such entry
          * exists, returns the entry for the greatest key less than the specified
          * key; if no such entry exists, returns {@code null}.
@@ -118,10 +125,21 @@ public class DesignSnapshotArray {
          * So if a get call is made with some input snap_id,
          * we need to find the greatest snap_id lower than input snap_id for which an entry was added to the TreeMap.
          * ----------------------------------------------------
-         * e.g.set(0, 15), set(0,4), set(0,7), snap(), snap(), set(0,9)
+         ** e.g. ["SnapshotArray","snap","snap","get","set","snap","set"],
+         * [[4],[],[],[3,1],[2,4],[],[1,4]]
+         * If you use arr[index].get(snap_id).intValue(); you will get NPE while get(snap_id) return null.
+         * 1.new SnapshotArray(4): [{0, 0}, {0, 0}, {0, 0}, {0, 0}]
+         * 2.snap(), snapId:1, arr:[{0, 0}, {0, 0}, {0, 0}, {0, 0}]
+         * 3.snap(), snapId:2, arr:[{0, 0}, {0, 0}, {0, 0}, {0, 0}]
+         * 4.get(3, 1), return 0
+         * 5.set(2, 4), arr:[{0, 0}, {0, 0}, {2, 4}, {0, 0}]
+         * 6.snap(), snapId:3
+         * 7.set(1, 4), arr:[{0, 0}, {1, 4}, {0, 0}, {0, 0}]
          *
          */
         public int get(int index, int snap_id) {
+            //Map.Entry<Integer, Integer> entry = arr[index].floorEntry(snap_id);
+            //Integer p = arr[index].get(snap_id);//wrong
             return arr[index].floorEntry(snap_id).getValue();
         }
     }
@@ -210,7 +228,7 @@ public class DesignSnapshotArray {
      * 3. bisect_right(list, num, beg, end):
      * This function works similar to the “bisect()” and mentioned above.
      */
-    class SnapshotArray {
+    static class SnapshotArray {
         private List<int[]>[] arr;
 
         private int snapId;
