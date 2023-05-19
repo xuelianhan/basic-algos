@@ -47,6 +47,60 @@ import java.util.List;
  */
 public class DesignAnOrderedStream {
 
+    /**
+     * Rules for Global and Local variables in Python
+     * To avoid UnboundLocalError you should also know the general guidelines of local and global variables in Python.
+     * 1.In Python, variables that are only referenced inside a function are implicitly global.
+     * 2.If the value is assigned to a variable inside a function,
+     * then the scope changes to local unless it's explicitly declared as global.
+     * ----------------------------------------------------
+     * Conclusion
+     * In Python, UnboundLocalError: local variable referenced before assignment occurs
+     * when you reference a local variable before assigning any value to it inside a function.
+     * To solve the error, you need to make it a global variable inside a function or pass the
+     * global variable as a function argument to the method.
+     * -----------------------------------------------------
+     * class OrderedStream:
+     *
+     *     def __init__(self, n: int):
+     *         self.arr = [None] * n
+     *         self.idx = 0
+     *
+     *
+     *     def insert(self, idKey: int, value: str) -> List[str]:
+     *         res = []
+     *         self.arr[idKey - 1] = value
+     *         while self.idx < len(self.arr) and self.arr[self.idx]:
+     *             res.append(self.arr[self.idx])
+     *             self.idx += 1
+     *         return res
+     * ------------------------------------------------------------
+     * class OrderedStream {
+     * public:
+     *     vector<string> arr;
+     *     int idx = 0;
+     *
+     *     OrderedStream(int n) {
+     *         arr.resize(n, "");
+     *     }
+     *
+     *     vector<string> insert(int idKey, string value) {
+     *         arr[idKey - 1] = value;
+     *         vector<string> res;
+     *         while (idx < arr.size() && arr[idx] != "") {
+     *             res.push_back(arr[idx]);
+     *             idx++;
+     *         }
+     *         return res;
+     *     }
+     * };
+     *
+     *
+     * Your OrderedStream object will be instantiated and called as such:
+     * OrderedStream* obj = new OrderedStream(n);
+     * vector<string> param_1 = obj->insert(idKey,value);
+     *
+     */
     static class OrderedStream {
         private String[] arr;
         private int idx;
