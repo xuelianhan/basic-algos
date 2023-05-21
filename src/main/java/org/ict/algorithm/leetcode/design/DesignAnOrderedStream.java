@@ -99,7 +99,69 @@ public class DesignAnOrderedStream {
      * Your OrderedStream object will be instantiated and called as such:
      * OrderedStream* obj = new OrderedStream(n);
      * vector<string> param_1 = obj->insert(idKey,value);
+     * --------------------------------
      *
+     * class OrderedStream(_n: Int) {
+     *
+     *     private var arr: Array[String] = new Array[String](_n)
+     *     private var idx: Int = 0
+     *
+     *     def insert(idKey: Int, value: String): List[String] = {
+     *         val res = scala.collection.mutable.ListBuffer[String]()
+     *         arr(idKey - 1) = value
+     *         while (idx < arr.length && arr(idx) != null) {
+     *             res += arr(idx)
+     *             idx += 1
+     *         }
+     *         res.toList
+     *     }
+     * }
+     * var obj = new OrderedStream(n)
+     * var param_1 = obj.insert(idKey,value)
+     * ----------------------------
+     * use std::convert::TryInto;
+     *
+     * struct OrderedStream {
+     *     arr: Vec<String>,
+     *     idx: usize,
+     * }
+     *
+     * impl OrderedStream {
+     *     fn new(n: i32) -> Self {
+     *         OrderedStream {
+     *             arr: vec![String::new(); n.try_into().unwrap()],
+     *             idx: 0,
+     *         }
+     *     }
+     *
+     *     fn insert(&mut self, id_key: i32, value: String) -> Vec<String> {
+     *         let mut res = Vec::new();
+     *         self.arr[id_key as usize - 1] = value;
+     *         while self.idx < self.arr.len() && !self.arr[self.idx].is_empty() {
+     *             res.push(self.arr[self.idx].clone());
+     *             self.idx += 1;
+     *         }
+     *         res
+     *     }
+     * }
+     *
+     * #[test]
+     * fn test_ordered_stream() {
+     *     let mut stream = OrderedStream::new(3);
+     *     stream.insert(1, "a");
+     *     stream.insert(2, "b");
+     *     stream.insert(3, "c");
+     *     assert_eq!(stream.insert(1, "d"), vec!["a", "b", "c", "d"]);
+     * }
+     * #
+     * The arr field is a Vec<String>, and the String type does not implement the Copy trait.
+     * This means that when you try to index the arr field, the value at the index will be moved into the res vector.
+     * However, the String type is a heap-allocated type,
+     * and moving it will invalidate the reference in the arr field.
+     * To fix this, you can clone the value at the index before pushing it into the res vector.
+     * This will create a new,
+     * independent copy of the value, which can be safely pushed into the res vector
+     * without invalidating the reference in the arr field
      */
     static class OrderedStream {
         private String[] arr;
