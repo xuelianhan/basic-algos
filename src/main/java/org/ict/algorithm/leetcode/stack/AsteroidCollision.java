@@ -1,7 +1,6 @@
 package org.ict.algorithm.leetcode.stack;
 
 import java.util.ArrayDeque;
-import java.util.Collections;
 import java.util.Deque;
 
 /**
@@ -40,11 +39,38 @@ import java.util.Deque;
  */
 public class AsteroidCollision {
 
+
+    /**
+     * Understanding the following solution
+     * FIFO-Queue solution
+     * @param asteroids
+     * @return
+     */
     public int[] asteroidCollisionV1(int[] asteroids) {
-        //todo
-        return null;
+        Deque<Integer> queue = new ArrayDeque<>();
+        for (int a : asteroids) {
+            if (a > 0) {
+                queue.offerLast(a);
+            } else {
+                while (!queue.isEmpty() && queue.peekLast() > 0 && queue.peekLast() < -a) {
+                    queue.pollLast();
+                }
+                if (!queue.isEmpty() && queue.peekLast() == -a) {
+                    queue.pollLast();
+                } else if (queue.isEmpty() || queue.peekLast() < -a) {
+                    queue.offerLast(a);
+                }
+            }
+        }
+        return queue.stream().mapToInt(Integer::intValue).toArray();
     }
 
+    /**
+     * Understanding the following solution
+     * FILO-Stack solution
+     * @param asteroids
+     * @return
+     */
     public int[] asteroidCollision(int[] asteroids) {
         Deque<Integer> stack = new ArrayDeque<>();
         for (int a : asteroids) {
@@ -59,6 +85,9 @@ public class AsteroidCollision {
                 } else if (stack.peek() == -a) {
                     // Both explode
                     stack.pop();
+                } else {
+                    // stack.peek() > -a
+                    // Destroy current element-a, so do nothing.
                 }
             }
         }
