@@ -1,7 +1,5 @@
 package org.ict.algorithm.leetcode.heap;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.PriorityQueue;
 
 /**
@@ -40,9 +38,71 @@ import java.util.PriorityQueue;
  * 1 <= stones[i] <= 1000
  * @author sniper
  * @date 25 Apr, 2023
- * LC1046, Easy
+ * LC1046, Easy, frequency=19
  */
 public class LastStoneWeight {
+
+    /**
+     * class Solution {
+     * public:
+     *     int lastStoneWeight(vector<int>& stones) {
+     *         priority_queue<int> maxHeap(begin(stones), end(stones));
+     *         while (maxHeap.size() > 1) {
+     *             int first = maxHeap.top(); maxHeap.pop();
+     *             int second = maxHeap.top(); maxHeap.pop();
+     *             if (first > second) {
+     *                 maxHeap.push(first - second);
+     *             }
+     *         }
+     *
+     *         return maxHeap.empty() ? 0 : maxHeap.top();
+     *     }
+     * };
+     * --------------------------------------------
+     * class Solution:
+     *     def lastStoneWeight(self, stones: List[int]) -> int:
+     *         minHeap = [-x for x in stones]
+     *         heapq.heapify(minHeap)
+     *         while len(minHeap) > 1 and minHeap[0] != 0:
+     *             heapq.heappush(minHeap, heapq.heappop(minHeap) - heapq.heappop(minHeap))
+     *         return -minHeap[0]
+     * -----------------------------------------------
+     * import scala.collection.mutable.PriorityQueue;
+     *
+     * object Solution {
+     *     def lastStoneWeight(stones: Array[Int]): Int = {
+     *         var maxHeap = new PriorityQueue[Int]()
+     *         for (stone <- stones) {
+     *             maxHeap.addOne(stone)
+     *         }
+     *
+     *         while (maxHeap.size > 1) {
+     *             var x = maxHeap.dequeue
+     *             var y = maxHeap.dequeue
+     *             if (x > y) {
+     *                 maxHeap.enqueue(x - y)
+     *             }
+     *         }
+     *         return if (maxHeap.isEmpty) 0 else maxHeap.dequeue
+     *     }
+     * }
+     * -----------------------------------------------
+     * Time O(NlogN)
+     * Space O(N)
+     * @author lee215
+     * @param stones
+     * @return
+     */
+    public int lastStoneWeightV1(int[] stones) {
+        PriorityQueue<Integer> maxHeap = new PriorityQueue<>((a, b) -> b - a);
+        for (int s : stones) {
+            maxHeap.offer(s);
+        }
+        while (maxHeap.size() > 1) {
+            maxHeap.offer(maxHeap.poll() - maxHeap.poll());
+        }
+        return maxHeap.poll();
+    }
 
     /**
      * Understanding the following solution
@@ -51,7 +111,50 @@ public class LastStoneWeight {
      * focus on the final result that we need.
      *
      * e.g. stones = [2,7,4,1,8,1]
+     * -----------------------------------
+     * class Solution {
+     * public:
+     *     int lastStoneWeight(vector<int>& stones) {
+     *         priority_queue<int> maxHeap;
+     *         for (int stone : stones) {
+     *             maxHeap.push(stone);
+     *         }
      *
+     *         while (maxHeap.size() > 1) {
+     *             int first = maxHeap.top();
+     *             maxHeap.pop();
+     *             int second = maxHeap.top();
+     *             maxHeap.pop();
+     *             if (first > second) {
+     *                 maxHeap.push(first - second);
+     *             }
+     *         }
+     *
+     *         return maxHeap.empty() ? 0 : maxHeap.top();
+     *     }
+     * };
+     * -----------------------------------
+     * from heapq import heappop, heappush, heapify
+     * class Solution:
+     *     def lastStoneWeight(self, stones: List[int]) -> int:
+     *         minHeap = []
+     *         heapify(minHeap)
+     *         for stone in stones:
+     *             heappush(minHeap, -1 * stone)
+     *
+     *         while len(minHeap) > 1:
+     *             first = heappop(minHeap)
+     *             second = heappop(minHeap)
+     *             if first < second:
+     *                 heappush(minHeap, first - second)
+     *
+     *         if len(minHeap) == 0:
+     *             return 0
+     *         else:
+     *             return -1 * minHeap.pop()
+     * -------------------------------------
+     * Time O(NlogN)
+     * Space O(N)
      * @param stones
      * @return
      */

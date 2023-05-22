@@ -1,5 +1,3 @@
-1046.Last Stone Weight=19
-735.Asteroid Collision=19
 1423.Maximum Points You Can Obtain from Cards=17
 792.Number of Matching Subsequences=17
 1386.Cinema Seat Allocation=17
