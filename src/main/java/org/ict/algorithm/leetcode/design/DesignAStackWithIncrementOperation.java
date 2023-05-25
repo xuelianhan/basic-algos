@@ -71,6 +71,35 @@ public class DesignAStackWithIncrementOperation {
      *     def increment(self, k: int, val: int) -> None:
      *         for i in range(min(k, self.pos)):
      *             self.arr[i] += val
+     * ---------------------------------------------
+     * class CustomStack {
+     * public:
+     *     vector<int> arr;
+     *     int pos;
+     *
+     *     CustomStack(int maxSize) {
+     *         arr.resize(maxSize);
+     *         pos = 0;
+     *     }
+     *
+     *     void push(int x) {
+     *         if (pos < arr.size()) {
+     *             arr[pos++] = x;
+     *         }
+     *     }
+     *
+     *     int pop() {
+     *         return pos == 0 ? -1 : arr[--pos];
+     *     }
+     *
+     *     void increment(int k, int val) {
+     *         for (int i = 0; i < min(k, pos); i++) {
+     *             arr[i] += val;
+     *         }
+     *     }
+     * };
+     * ------------------------------------------------
+     *
      */
     static class CustomStackV1 {
         private int[] arr;

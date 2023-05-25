@@ -1,4 +1,4 @@
-package org.ict.algorithm.leetcode;
+package org.ict.algorithm.leetcode.string;
 
 
 import java.util.Arrays;
@@ -33,18 +33,19 @@ import java.util.Arrays;
  * s will be a valid string such that mapping is always possible.
  * @author sniper
  * @date 2022/8/10
- * LC1309
+ * LC1309, Easy
  */
 public class DecryptStringFromAlphabetToIntegerMapping {
 
     public static void main(String[] args) {
         String s = "10#11#12";
         //String s = "1326#";
-        String result = freqAlphabets(s);
+        DecryptStringFromAlphabetToIntegerMapping instance = new DecryptStringFromAlphabetToIntegerMapping();
+        String result = instance.freqAlphabets(s);
         System.out.println(result);
     }
 
-    public static String freqAlphabets(String s) {
+    public String freqAlphabets(String s) {
         char[] chars = new char[26];
         for(int i = 0; i < 26; i++) {
             chars[i] = (char)(97 + i);

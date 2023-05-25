@@ -14,7 +14,6 @@
 221.Maximal Square=14
 724.Find Pivot Index=13
 453.Minimum Moves to Equal Array Elements=13
-1381.Design a Stack With Increment Operation=13
 1086.High Five=12
 174.Dungeon Game=12
 273.Integer to English Words=12
@@ -37,7 +36,6 @@
 353.Design Snake Game=8
 849.Maximize Distance to Closest Person=8
 228.Summary Ranges=8
-670.Maximum Swap=8
 468.Validate IP Address=8
 1861.Rotating the Box=8
 158.Read N Characters Given Read4 II - Call multiple times=8

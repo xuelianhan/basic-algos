@@ -33,7 +33,8 @@ package org.ict.algorithm.leetcode.twopointers;
  * 0 <= height[i] <= 10^4
  * @author sniper
  * @date 04 Jan, 2023
- * LC11
+ * LC11, Medium, frequency=13
+ * Tag: ByteDance
  */
 public class ContainerWithMostWater {
 
