@@ -54,6 +54,13 @@ public class DesignLRUCache {
 
     /**
      * Understanding the following solution
+     * (k1, node1)
+     *        |
+     *        V
+     * (k2, node2)
+     *        |
+     *        V
+     * (k3, node3)
      * --------------------------------------
      * class Node:
      *     def __init__(self, key = 0, val = 0):
