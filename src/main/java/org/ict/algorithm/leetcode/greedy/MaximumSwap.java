@@ -36,9 +36,23 @@ public class MaximumSwap {
 
 
     /**
-     * todo
+     * Understanding the following solution
      *
      * Two Pointers Solution
+     * ------------------------------------
+     * def maximumSwap(self, num: int) -> int:
+     *         arr = list(str(num))
+     *         n = len(arr)
+     *         p1, p2, max = -1, -1, n - 1
+     *         for i in range(n - 2, -1, -1):
+     *             if arr[i] > arr[max]:
+     *                 max = i
+     *             elif arr[i] < arr[max]:
+     *                 p1 = i
+     *                 p2 = max
+     *         if p1 != -1:
+     *             arr[p1], arr[p2] = arr[p2], arr[p1]
+     *         return int(''.join(arr))
      * ------------------------------------
      * e.g. num = 1993, expected 9913
      * arr: ['1', '9', '9', '3']
