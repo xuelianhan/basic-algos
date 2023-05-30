@@ -124,6 +124,96 @@ public class DesignLRUCache {
      *     def move_to_head(self, node):
      *         self.remove_node(node)
      *         self.add_to_head(node)
+     * --------------------------------------------------
+     * struct Node {
+     *     // This struct represents a node in the doubly linked list.
+     *     // It has three fields: key, value, and pointers to the previous and next nodes.
+     *     int k;
+     *     int v;
+     *     Node* prev;
+     *     Node* next;
+     *
+     *     Node() : k(0), v(0), prev(nullptr), next(nullptr) { }
+     *     Node(int key, int val) : k(key), v(val), prev(nullptr), next(nullptr) { }
+     * };
+     *
+     * class LRUCache {
+     * public:
+     *     // This class represents an LRU cache.
+     *     // It has four public methods: `LRUCache`, `get`, and `put`.
+     *     LRUCache(int capacity) : cap(capacity), size(0) {
+     *         // Initialize the head and tail nodes of the doubly linked list.
+     *         head = new Node();
+     *         tail = new Node();
+     *         head->next = tail;
+     *         tail->prev = head;
+     *     }
+     *
+     *     int get(int key) {
+     *         // Get the value associated with the given key.
+     *         // If the key is not in the cache, return -1.
+     *         if (!cache.count(key)) return -1;
+     *         Node* node = cache[key];
+     *         moveToHead(node);
+     *         return node->v;
+     *     }
+     *
+     *     void put(int key, int value) {
+     *         // Add the given key-value pair to the cache.
+     *         // If the key already exists, update the value.
+     *         // If the cache is full, remove the least recently used key-value pair.
+     *         if (cache.count(key)) {
+     *             Node* node = cache[key];
+     *             node->v = value;
+     *             moveToHead(node);
+     *         } else {
+     *             Node* node = new Node(key, value);
+     *             cache[key] = node;
+     *             addToHead(node);
+     *             ++size;
+     *             if (size > cap) {
+     *                 node = removeTail();
+     *                 cache.erase(node->k);
+     *                 --size;
+     *             }
+     *         }
+     *     }
+     *
+     * private:
+     *     // These are the private members of the LRUCache class.
+     *     unordered_map<int, Node*> cache;
+     *     Node* head;
+     *     Node* tail;
+     *     int cap;
+     *     int size;
+     *
+     *     void moveToHead(Node* node) {
+     *         // Move the given node to the head of the doubly linked list.
+     *         removeNode(node);
+     *         addToHead(node);
+     *     }
+     *
+     *     void removeNode(Node* node) {
+     *         // Remove the given node from the doubly linked list.
+     *         node->prev->next = node->next;
+     *         node->next->prev = node->prev;
+     *     }
+     *
+     *     void addToHead(Node* node) {
+     *         // Add the given node to the head of the doubly linked list.
+     *         node->next = head->next;
+     *         node->prev = head;
+     *         head->next = node;
+     *         node->next->prev = node;
+     *     }
+     *
+     *     Node* removeTail() {
+     *         // Remove the tail node from the doubly linked list.
+     *         Node* node = tail->prev;
+     *         removeNode(node);
+     *         return node;
+     *     }
+     * };
      */
     static class LRUCacheV1 {
         private Map<Integer, Node> cache = new HashMap<>();
