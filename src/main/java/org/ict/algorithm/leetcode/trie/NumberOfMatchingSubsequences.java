@@ -30,7 +30,15 @@ package org.ict.algorithm.leetcode.trie;
  */
 public class NumberOfMatchingSubsequences {
 
+    public static void main(String[] args) {
+        String s = "abcde";
+        String[] words = {"a","bb","acd","ace"};
+        NumberOfMatchingSubsequences instance = new NumberOfMatchingSubsequences();
+        instance.numMatchingSubseq(s, words);
+    }
+
     public int numMatchingSubseqV1(String s, String[] words) {
+        //todo
         return 0;
     }
 
@@ -81,6 +89,9 @@ public class NumberOfMatchingSubsequences {
         }
         for (int j = 0; j < 26; j++) {
             if (node.children[j] != null) {
+                /**
+                 * Notice the indexOf method and the i-index.
+                 */
                 int idx = s.indexOf('a' + j, i);
                 if (idx != -1) {
                     res += dfs(s, idx + 1, node.children[j]);
