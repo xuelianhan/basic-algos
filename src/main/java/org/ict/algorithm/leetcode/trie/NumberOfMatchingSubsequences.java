@@ -55,11 +55,11 @@ public class NumberOfMatchingSubsequences {
 
     /**
      * e.g. s = "abcde", words = ["a","bb","acd","ace"]
-     *                 root
-     *                  |
-     *              a(count:1)-b
-     *                     \    \
-     *                      c  b(count:1)
+     *                       root
+     *                        |
+     *                       a(count:1)---b
+     *                       /             \
+     *                      c              b(count:1)
      *                     / \
      *                   /    \
      *                 /       \
