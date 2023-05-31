@@ -39,6 +39,68 @@ public class MaximumPointsYouCanObtainFromCards {
 
     /**
      * Understanding the following solution
+     * Combine maxScoreV1 and maxScoreV4.
+     * --------------------------------------------------------------
+     * impl Solution {
+     *     pub fn max_score(card_points: Vec<i32>, k: i32) -> i32 {
+     *         let (k, n) = (k as usize, card_points.len());
+     *         let mut sum = card_points.iter().take(n - k).sum::<i32>();
+     *         let mut min = sum;
+     *         for i in 0..k {
+     *             sum += card_points[n - k + i] - card_points[i];
+     *             min = min.min(sum);
+     *         }
+     *         card_points.iter().sum::<i32>() - min
+     *     }
+     * }
+     * --------------------------------------------------------------
+     * class Solution:
+     *     def maxScore(self, cardPoints: List[int], k: int) -> int:
+     *         n = len(cardPoints)
+     *         arrSum = sum(cardPoints)
+     *         windowSum = sum(cardPoints[: n - k])
+     *         t = windowSum
+     *         for i in range(0, k):
+     *             windowSum += cardPoints[n - k + i] - cardPoints[i]
+     *             t = min(t, windowSum)
+     *         return arrSum - t
+     *---------------------------------------------------------------
+     * class Solution {
+     * public:
+     *     int maxScore(vector<int>& cardPoints, int k) {
+     *         const int n = cardPoints.size();
+     *         const int sum = accumulate(begin(cardPoints), end(cardPoints), 0);
+     *         int windowSum = accumulate(begin(cardPoints), begin(cardPoints) + n - k, 0);
+     *         int t = windowSum;
+     *         for (int i = 0; i < k; i++) {
+     *             windowSum += cardPoints[n - k + i] - cardPoints[i];
+     *             t = min(t, windowSum);
+     *         }
+     *         return sum - t;
+     *     }
+     * };
+     *
+     * @param cardPoints
+     * @param k
+     * @return
+     */
+    public int maxScoreV5(int[] cardPoints, int k) {
+        int n = cardPoints.length;
+        int sum = Arrays.stream(cardPoints).sum();
+        int windowSum = 0;
+        for (int i = 0; i < n - k; i++) {
+            windowSum += cardPoints[i];
+        }
+        int min = windowSum;
+        for (int i = 0; i < k; i++) {
+            windowSum += cardPoints[n - k + i] - cardPoints[i];
+            min = Math.min(min, windowSum);
+        }
+        return sum - min;
+    }
+
+    /**
+     * Understanding the following solution
      * Similar with maxScoreV3
      * Time Cost 2ms
      *       car
@@ -51,7 +113,36 @@ public class MaximumPointsYouCanObtainFromCards {
      * length of 1_2 is n-k
      * (n - k + i - 1 < n) means the car's index can only go from 2 to 3
      * (prefix[n - k + i] - prefix[i]) means the sum of car body
-     *
+     * ---------------------------------------------------------
+     * class Solution:
+     *     def maxScore(self, cardPoints: List[int], k: int) -> int:
+     *         n = len(cardPoints)
+     *         prefix = [0] * (n + 1)
+     *         for i in range(0, n):
+     *             prefix[i + 1] = prefix[i] + cardPoints[i]
+     *         t = inf
+     *         for i in range(0, n):
+     *             if (n - k + i - 1 < n):
+     *                 t = min(t, prefix[n - k + i] - prefix[i])
+     *         return prefix[n] - t
+     * ------------------------------------------------------------
+     * class Solution {
+     * public:
+     *     int maxScore(vector<int>& cardPoints, int k) {
+     *         const int n = cardPoints.size();
+     *         vector<int> prefix(n + 1);
+     *         for (int i = 0; i < n; i++) {
+     *             prefix[i + 1] = prefix[i] + cardPoints[i];
+     *         }
+     *         int t = INT_MAX;
+     *         for (int i = 0; i < n; i++) {
+     *             if (n - k + i - 1 < n) {
+     *                 t = min(t, prefix[n - k + i] - prefix[i]);
+     *             }
+     *         }
+     *         return prefix[n] - t;
+     *     }
+     * };
      * @param cardPoints
      * @param k
      * @return
