@@ -50,8 +50,8 @@ public class MaximumPointsYouCanObtainFromCards {
      * length of 2_3 is k
      * length of 1_2 is n-k
      * (n - k + i - 1 < n) means the car's index can only go from 2 to 3
-     * (prefix[n - k + i] - prefix[i]) means the sum of car
-     * 
+     * (prefix[n - k + i] - prefix[i]) means the sum of car body
+     *
      * @param cardPoints
      * @param k
      * @return
