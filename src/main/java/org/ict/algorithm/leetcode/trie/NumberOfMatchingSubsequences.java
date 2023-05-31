@@ -30,10 +30,14 @@ package org.ict.algorithm.leetcode.trie;
  */
 public class NumberOfMatchingSubsequences {
 
+    public int numMatchingSubseqV1(String s, String[] words) {
+        return 0;
+    }
+
     /**
      * Trie + Depth-First-Search
      * Time Cost 123ms
-     * 
+     *
      * Time Complexity O(len(s) + sum(len(words[i])))
      * Space Complexity O(sum(len(words[i])))
      * @param s
@@ -49,7 +53,28 @@ public class NumberOfMatchingSubsequences {
 
     private TrieNode root = new TrieNode();
 
+    /**
+     * e.g. s = "abcde", words = ["a","bb","acd","ace"]
+     *                 root
+     *                  |
+     *              a(count:1)-b
+     *                     \    \
+     *                      c  b(count:1)
+     *                     / \
+     *                   /    \
+     *                 /       \
+     *               /          \
+     *             d(count:1)   e(count:1)
+     *
+     * @param s
+     * @param i
+     * @param node
+     * @return
+     */
     private int dfs(String s, int i, TrieNode node) {
+        /**
+         * Notice here res is initialized to node.count, not zero.
+         */
         int res = node.count;
         if (i >= s.length()) {
             return res;
