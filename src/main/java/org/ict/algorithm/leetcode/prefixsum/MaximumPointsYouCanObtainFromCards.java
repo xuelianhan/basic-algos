@@ -41,6 +41,17 @@ public class MaximumPointsYouCanObtainFromCards {
      * Understanding the following solution
      * Similar with maxScoreV3
      * Time Cost 2ms
+     *       car
+     * [______________]
+     * ------------------------
+     * ^              ^       ^
+     * 1              2       3
+     *
+     * length of 2_3 is k
+     * length of 1_2 is n-k
+     * (n - k + i - 1 < n) means the car's index can only go from 2 to 3
+     * (prefix[n - k + i] - prefix[i]) means the sum of car
+     * 
      * @param cardPoints
      * @param k
      * @return
@@ -76,6 +87,15 @@ public class MaximumPointsYouCanObtainFromCards {
      * i:0, j = 5 - 2 - 1 + 0 = 2, t = min(t, prefix[3] - prefix[0]) = min(t, A[0] + A[1] + A[2])
      * i:1, j = 5 - 2 - 1 + 1 = 3, t = min(t, prefix[4] - prefix[1]) = min(t, A[1] + A[2] + A[3])
      * i:2, j = 5 - 2 - 1 + 2 = 4, t = min(t, prefix[5] - prefix[2]) = min(t, A[2] + A[3] + A[4])
+     * [_____________]
+     * -------------------------------
+     *
+     *            [_____________]
+     * -------------------------------
+     *  [_____________] is prefix[j + 1] - prefix[i] ,
+     *  we need to find the maximum of the rest part
+     *  (The remaining part of the long dashed line after removing the closed interval)
+     *
      *
      * @param cardPoints
      * @param k
