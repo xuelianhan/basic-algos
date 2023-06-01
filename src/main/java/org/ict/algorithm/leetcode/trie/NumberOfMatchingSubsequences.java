@@ -43,6 +43,7 @@ public class NumberOfMatchingSubsequences {
     }
 
     /**
+     * Understanding the following solution
      * Trie + Depth-First-Search
      * Time Cost 123ms
      *
@@ -73,6 +74,11 @@ public class NumberOfMatchingSubsequences {
      *                 /       \
      *               /          \
      *             d(count:1)   e(count:1)
+     * ------------------------------------------------
+     * dfs(s, 0, root), res:0, i:0, j:0, idx:0
+     *    dfs(s, 1, root[a]), res:1, i:1, j:2, idx:2
+     *       dfs(s, 2, root[c]), res:0, i:2, j:3, idx:3
+     *       dfs(s, 2, root[c]), res:0, i:2, j:4, idx:4
      *
      * @param s
      * @param i

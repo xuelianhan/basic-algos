@@ -35,7 +35,7 @@ import java.util.HashMap;
  * Follow-up: Can you come up with an algorithm that is less than O(n^2) time complexity?
  *
  * @author sniper
- * LC1, Easy, High Frequency
+ * LC1, Easy, frequency=396
  */
 public class TwoSum {
 
