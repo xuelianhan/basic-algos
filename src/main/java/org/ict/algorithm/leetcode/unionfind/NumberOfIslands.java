@@ -240,7 +240,7 @@ public class NumberOfIslands {
 						continue;
 					}
 					/**
-					 * skills here: change 2D-position to 1D-number.
+					 * skills here: convert 2D-position to 1D-number.
 					 */
 					int id = i * n + j;
 					parent[id] = id;

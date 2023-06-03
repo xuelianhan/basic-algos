@@ -39,6 +39,8 @@ import java.util.Set;
  */
 public class MinimumRemoveMakeValidParentheses {
 
+
+
     /**
      * Understanding the following solution
      * Two-Pointers Solution
@@ -61,10 +63,33 @@ public class MinimumRemoveMakeValidParentheses {
      * i:0, ch:a, res:a
      * i:1, ch:), right:2->1, left:0, skip this ch:), res:a
      * i:2, ch:b,
+     * ------------------------
+     * class Solution:
+     *     def minRemoveToMakeValid(self, s: str) -> str:
+     *         if len(s) == 0:
+     *             return ''
+     *         res = []
+     *         left, right = 0, 0
+     *         s_list = list(s)
+     *         for c in s_list:
+     *             if c == ')':
+     *                 right+=1
+     *         for c in s_list:
+     *             if c == '(':
+     *                 if left == right:
+     *                     continue
+     *                 left+=1
+     *             elif c == ')':
+     *                 right-=1
+     *                 if left == 0:
+     *                     continue
+     *                 left-=1
+     *             res.append(c)
+     *         return ''.join(res)
      * @param s
      * @return
      */
-    public String minRemoveToMakeValidV2(String s) {
+    public String minRemoveToMakeValidV4(String s) {
         int left = 0;
         int right = 0;
         for (char ch : s.toCharArray()) {
@@ -100,9 +125,109 @@ public class MinimumRemoveMakeValidParentheses {
         return res.toString();
     }
 
+    public String minRemoveToMakeValidV3(String s) {
+        Deque<Character> stack = new ArrayDeque<>();
+        char[] arr = s.toCharArray();
+        int cnt = 0;
+        for (int i = 0; i < arr.length; i++) {
+            /**
+             * Skip extra ')' in first loop
+             */
+            if (arr[i] == ')' && cnt == 0) {
+                continue;
+            }
+            if (arr[i] == '(') {
+                cnt++;
+            } else if (arr[i] == ')') {
+                cnt--;
+            }
+            stack.push(arr[i]);
+        }
+        cnt = 0;
+        StringBuilder res = new StringBuilder();
+        while (!stack.isEmpty()) {
+            /**
+             * Skip extra '(' in second loop
+             */
+            char ch = stack.pop();
+            if (ch == '(' && cnt == 0) {
+                continue;
+            }
+            if (ch == '(') {
+                cnt--;
+            } else if (ch == ')') {
+                cnt++;
+            }
+            res.insert(0, ch);
+        }
+        return res.toString();
+    }
+
+    public String minRemoveToMakeValidV2(String s) {
+        if (s == null || s.length() == 0) {
+            return "";
+        }
+        Deque<Character> stack = new ArrayDeque<>();
+        char[] arr = s.toCharArray();
+        int cnt = 0;
+        for (int i = 0; i < arr.length; i++) {
+            /**
+             * Skip extra ')' in first loop
+             */
+            if (arr[i] == ')' && cnt == 0) {
+                continue;
+            }
+            if (arr[i] == '(') {
+                cnt++;
+            } else if (arr[i] == ')') {
+                cnt--;
+            }
+            stack.push(arr[i]);
+        }
+        cnt = 0;
+        StringBuilder res = new StringBuilder();
+        while (!stack.isEmpty()) {
+            /**
+             * Skip extra '(' in second loop
+             */
+            char ch = stack.pop();
+            if (ch == '(' && cnt == 0) {
+                continue;
+            }
+            if (ch == '(') {
+                cnt--;
+            } else if (ch == ')') {
+                cnt++;
+            }
+            res.append(ch);
+        }
+        /**
+         * Don't forget to reverse the result.
+         */
+        return res.reverse().toString();
+    }
+
     /**
      * Understanding the following solution
      * Time Cost 13ms
+     * --------------------
+     * class Solution:
+     *     def minRemoveToMakeValid(self, s: str) -> str:
+     *         if len(s) == 0:
+     *             return ''
+     *         stack = []
+     *         s_list = list(s)
+     *         for i in range(len(s_list)):
+     *             if s_list[i] == '(':
+     *                 stack.append(i)
+     *             elif s_list[i] == ')':
+     *                 if len(stack) == 0:
+     *                     s_list[i] = ''
+     *                 else:
+     *                     stack.pop()
+     *         for i in stack:
+     *             s_list[i] = ''
+     *         return ''.join(s_list)
      * @param s
      * @return
      */
@@ -151,6 +276,7 @@ public class MinimumRemoveMakeValidParentheses {
     }
 
     /**
+     * Understanding the following solution.
      * Time Cost 27ms
      * @param s
      * @return
