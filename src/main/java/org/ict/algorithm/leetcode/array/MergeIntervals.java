@@ -47,14 +47,14 @@ public class MergeIntervals {
         for (int[] interval : intervals) {
             if (newInterval[1] < interval[0]) {
                 /**
-                 * The last interval in list has no intersection with the current interval.
+                 * The last interval in the list has no intersection with the current interval.
                  * Add the current interval to the list.
                  */
                 newInterval = interval;
                 list.add(newInterval);
             } else {
                 /**
-                 * Merge last interval in list with the current interval.
+                 * Merge the last interval in the list with the current interval.
                  */
                 newInterval[1] = Math.max(newInterval[1], interval[1]);
             }
