@@ -8,7 +8,7 @@ import java.util.*;
  * (ie, from top to bottom, column by column).
  * If two nodes are in the same row and column,
  * the order should be from left to right.
- * 
+ *
  * Examples 1:
  * Input: [3,9,20,null,null,15,7]
  *    3
@@ -86,8 +86,37 @@ public class BinaryTreeVerticalOrderTraversal {
         r1.right = rr1;
         root.left = l1;
         root.right = r1;
-        List<List<Integer>>  res = instance.verticalOrderV1(root);
+        List<List<Integer>>  res = instance.verticalOrderV2(root);
         System.out.println(res);
+    }
+
+    /**
+     * Level-Order traversal with TreeMap
+     * Understanding the following solution
+     * @param root
+     * @return
+     */
+    public List<List<Integer>> verticalOrderV2(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<>();
+        if (root == null) {
+            return res;
+        }
+        Deque<Pair> queue = new ArrayDeque<>();
+        queue.offer(new Pair(0, root));
+        TreeMap<Integer, List<Integer>> treeMap = new TreeMap<>();
+        while (!queue.isEmpty()) {
+            for (int size = queue.size(); size > 0; size--) {
+                Pair cur = queue.poll();
+                treeMap.computeIfAbsent(cur.seq, a -> new ArrayList<>()).add(cur.node.val);
+                if (cur.node.left != null) {
+                    queue.offer(new Pair(cur.seq - 1, cur.node.left));
+                }
+                if (cur.node.right != null) {
+                    queue.offer(new Pair(cur.seq + 1, cur.node.right));
+                }
+            }
+        }
+        return new ArrayList<>(treeMap.values());
     }
 
 
@@ -138,13 +167,13 @@ public class BinaryTreeVerticalOrderTraversal {
      * Level-Order-Traversal(Queue+TreeMap)
      *
      * e.g. root = [3,9,20,null,null,15,7], expected:[[9], [3,15], [20], [7]]
-     *    3
-     *   / \
-     *  /   \
-     * 9     20
-     *      / \
-     *     /   \
-     *    15    7
+     *    3(0)
+     *   /   \
+     *  /     \
+     * 9(-1)  20(1)
+     *       /  \
+     *     /     \
+     *   15(0)   7(2)
      * queue:[(0, Node-3)], dict:{}
      * poll cur: (0, Node-3), dict not contains 0, dict:{{0, [3]}}, queue:[]
      * offer cur.Node.left:Node-9, queue:[(-1, Node-9)]
