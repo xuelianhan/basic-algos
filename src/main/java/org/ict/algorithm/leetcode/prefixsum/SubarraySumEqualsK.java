@@ -28,6 +28,14 @@ import java.util.Map;
  */
 public class SubarraySumEqualsK {
 
+    public static void main(String[] args) {
+        int[] nums = {1, 1, 1};
+        int k = 2;
+        SubarraySumEqualsK instance = new SubarraySumEqualsK();
+        int res = instance.subarraySumV1(nums, k);
+        System.out.println(res);
+    }
+
 
     /**
      * Understanding the following solution.
@@ -38,11 +46,12 @@ public class SubarraySumEqualsK {
      * in the hash map and add the occurrences if it is found to the answer.
      *
      * e.g. nums = [1,2,3], k = 3, expected 2
+     * map:{(0, 1)}
      * i:0, sum:1, res:0, map:{(1, 1)},
      * i:1, sum:3, res:1, map:{(1, 1),(3, 1)}, it means sum of range:[0, i] is k
      * i:2, sum:6, res:2, map:{(1, 1),(3, 2)}
      *
-     * e.g. nums = [1], k = 0, expected 0
+     * e.g. nums = [1], k = 0, expected 0, if you use res + 1 instead of putting (0, 1), you will get the wrong answer 1.
      *
      * def subarraySum(self, nums: List[int], k: int) -> int:
      *         sum = 0
@@ -57,6 +66,16 @@ public class SubarraySumEqualsK {
      *             else:
      *                 dict[sum] += 1
      *         return res
+     * ---------------------------------------------
+     * e.g. nums = [1,1,1], k = 2, expected 2
+     * map:{(0, 1)}
+     * i:0, sum:1, sum-k=-1, map not contains -1, map:{(0, 1), (1, 1)}
+     * i:1, sum:2, sum-k= 0, map contains 0, res = res + 1 = 1, map:{(0, 1), (1, 1), (2, 1)}
+     * i:2, sum:3, sum-k= 1, map contains 1, res = res + 1 = 2, map:{(0, 1), (1, 1), (2, 1), (3, 1)}
+     * ----------|-----|
+     *           ^     ^
+     *           k    sum
+     *
      * @param nums
      * @param k
      * @return
@@ -69,7 +88,7 @@ public class SubarraySumEqualsK {
          * Assume that prefix sum equals k at index-i, the range from index-0 to this index-i is an answer.
          * So while sum == k, the sum-k is 0, the value should be 1.
          * e.g. nums = [1, 2, 3], k = 3
-         * while 1 + 2 = 3, so range from index-0 to index-i should be an answer.
+         * while 1 + 2 = 3, i:1, so range from index-0 to index-1 should be an answer.
          */
         prefixSum.put(0, 1);
         for (int i = 0; i < nums.length; i++) {
