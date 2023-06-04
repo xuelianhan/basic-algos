@@ -39,6 +39,8 @@ public class SubarraySumEqualsK {
 
     /**
      * Understanding the following solution.
+     * We can get intuition from problem two sum:
+     * @see org.ict.algorithm.leetcode.array.TwoSum
      *
      * We use hash map to store the cumulative sum, sum[i] up to index-i,
      * if sum[i]−sum[j]=k, then it means the sum between indices i and j is k
@@ -48,8 +50,8 @@ public class SubarraySumEqualsK {
      * e.g. nums = [1,2,3], k = 3, expected 2
      * map:{(0, 1)}
      * i:0, sum:1, sum-k=-2, map not contains -2, res:0, map:{(1, 1)},
-     * i:1, sum:3, sum-k= 0, map contains 0, res:1, map:{(1, 1), (3, 1)}, it means sum of range:[0, i] is k
-     * i:2, sum:6, sum-k= 3, map contains 3, res:2, map:{(1, 1), (3, 1), (6, 1)}
+     * i:1, sum:3, sum-k= 0, map contains 0, res:1, map:{(1, 1), (3, 1)}, nums[0]~nums[1] is a valid sub-array.
+     * i:2, sum:6, sum-k= 3, map contains 3, res:2, map:{(1, 1), (3, 1), (6, 1)}, nums[2] is a valid sub-array.
      *
      * e.g. nums = [1], k = 0, expected 0, if you use res + 1 instead of putting (0, 1), you will get the wrong answer 1.
      *
@@ -70,8 +72,8 @@ public class SubarraySumEqualsK {
      * e.g. nums = [1,1,1], k = 2, expected 2
      * map:{(0, 1)}
      * i:0, sum:1, sum-k=-1, map not contains -1, map:{(0, 1), (1, 1)}
-     * i:1, sum:2, sum-k= 0, map contains 0, res = res + 1 = 1, map:{(0, 1), (1, 1), (2, 1)}
-     * i:2, sum:3, sum-k= 1, map contains 1, res = res + 1 = 2, map:{(0, 1), (1, 1), (2, 1), (3, 1)}
+     * i:1, sum:2, sum-k= 0, map contains 0, res = res + 1 = 1, map:{(0, 1), (1, 1), (2, 1)}, nums[0]~nums[1] is a valid sub-array.
+     * i:2, sum:3, sum-k= 1, map contains 1, res = res + 1 = 2, map:{(0, 1), (1, 1), (2, 1), (3, 1)}, nums[1]~nums2] is a valid sub-array.
      * ----------|-----|
      *           ^     ^
      *           k    sum
