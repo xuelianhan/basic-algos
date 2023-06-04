@@ -47,9 +47,9 @@ public class SubarraySumEqualsK {
      *
      * e.g. nums = [1,2,3], k = 3, expected 2
      * map:{(0, 1)}
-     * i:0, sum:1, res:0, map:{(1, 1)},
-     * i:1, sum:3, res:1, map:{(1, 1),(3, 1)}, it means sum of range:[0, i] is k
-     * i:2, sum:6, res:2, map:{(1, 1),(3, 2)}
+     * i:0, sum:1, sum-k=-2, map not contains -2, res:0, map:{(1, 1)},
+     * i:1, sum:3, sum-k= 0, map contains 0, res:1, map:{(1, 1), (3, 1)}, it means sum of range:[0, i] is k
+     * i:2, sum:6, sum-k= 3, map contains 3, res:2, map:{(1, 1), (3, 1), (6, 1)}
      *
      * e.g. nums = [1], k = 0, expected 0, if you use res + 1 instead of putting (0, 1), you will get the wrong answer 1.
      *
