@@ -35,26 +35,47 @@ package org.ict.algorithm.leetcode.tree;
 public class LowestCommonAncestorOfBST {
 
     /**
+     * Not recommend, because the product may occur overflow in some case.
      * def lowestCommonAncestor(self, root, p, q):
      *     while (root.val - p.val) * (root.val - q.val) > 0:
      *         root = (root.left, root.right)[p.val > root.val]
      *     return root
+     * -------------------------------
+     * [0,-1000000000,1000000000], -1000000000, 1000000000, expected 0, but output -1000000000
      *
-     *
-     * @see <p>StefanPochmann's solution</p>
+     * @author StefanPochmann
      * @param root
      * @param p
      * @param q
      * @return
      */
-    public TreeNode lowestCommonAncestorV4(TreeNode root, TreeNode p, TreeNode q) {
+    public TreeNode lowestCommonAncestorOverflow(TreeNode root, TreeNode p, TreeNode q) {
+        /**
+         * the product value of (root.val - p.val) * (root.val - q.val) maybe overflow.
+         */
         while ((root.val - p.val) * (root.val - q.val) > 0) {
             root = (p.val < root.val ? root.left : root.right);
         }
         return root;
     }
 
+    public TreeNode lowestCommonAncestorV4(TreeNode root, TreeNode p, TreeNode q) {
+        while ((root.val - p.val) * (root.val - q.val) > 0) {
+            if (root.val > p.val && root.val > q.val) {
+                root = root.left;
+            } else if (root.val < p.val && root.val < q.val) {
+                root = root.right;
+            } else {
+                return root;
+            }
+
+        }
+        return root;
+    }
+
     /**
+     * Understanding the following solution
+     *
      * def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
      *         while root:
      *             minV = min(p.val, q.val)
@@ -81,6 +102,7 @@ public class LowestCommonAncestorOfBST {
                 return root;
             }
         }
+        //return root is OK too, because root might have been assigned with null.
         return null;
     }
 

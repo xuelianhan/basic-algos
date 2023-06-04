@@ -61,8 +61,9 @@ public class LowestCommonAncestorOfBT {
      * Because p and q will exist in the tree, so if we find p and q at the same, then the root is the LCA,
      * If we find p first, so the parent of p is the LCA.
      * If we find q first, so the parent of q is the LCA.
-     * We can seem there are two boxs before us, our target is to find dish-p and dish q in the two boxs
-     * from the top-down view. At each time, we choose two of the boxs and find the dishes numbered with p or q.
+     * We can seem there are two boxs before us, our target is to find dish-p and dish-q in the two boxs
+     * from the top-down view.
+     * At each time, we choose two of the boxs and find the dishes numbered with p or q.
      *
      * def lowestCommonAncestor(self, root, p, q):
      *     if root in (None, p, q): return root
@@ -88,11 +89,43 @@ public class LowestCommonAncestorOfBT {
     }
 
     /**
+     * Not recommend.
      * Iterative-Solution with Queue(BFS)
      * Note:
      * All Node.val are unique.
      * p != q
      * p and q will exist in the tree.
+     * ---------------------------
+     * Python-Queue solution occurs Time limited Exception. Why?
+     * Bard's answer:
+     * The bug in the Python code is that it is using a breadth-first search (BFS) to
+     * find the lowest common ancestor (LCA) of two nodes in a binary tree.
+     * BFS is a good algorithm for finding the LCA of two nodes in a balanced binary tree,
+     * but it is not a good algorithm for finding the LCA of two nodes in an unbalanced binary tree.
+     * In an unbalanced binary tree, the LCA of two nodes may be far away from the root of the tree.
+     * This means that a BFS will have to visit many nodes in the tree before it finds the LCA.
+     * This can take a long time, especially for large binary trees.
+     *
+     * A better algorithm for finding the LCA of two nodes in an unbalanced binary tree is a depth-first search (DFS).
+     * DFS is a recursive algorithm that starts at the root of the tree and explores the tree in a depth-first manner.
+     * DFS will eventually reach the LCA of two nodes, regardless of whether the tree is balanced or unbalanced.
+     * The following is a Python implementation of the DFS algorithm for finding the LCA of two nodes in a binary tree:
+     * -------------------------------------------
+     * ef lowest_common_ancestor(root, p, q):
+     *     if root is None:
+     *         return None
+     *
+     *     if root == p or root == q:
+     *         return root
+     *
+     *     left_lca = lowest_common_ancestor(root.left, p, q)
+     *     right_lca = lowest_common_ancestor(root.right, p, q)
+     *
+     *     if left_lca is not None and right_lca is not None:
+     *         return root
+     *
+     *     return left_lca if left_lca is not None else right_lca
+     *
      * @param root
      * @param p
      * @param q
@@ -134,12 +167,41 @@ public class LowestCommonAncestorOfBT {
 
 
     /**
+     * Understanding the following solution
+     *
      * Iterative-Solution with Stack(DFS)
      * Note:
      * All Node.val are unique.
      * p != q
      * p and q will exist in the tree.
+     * -----------------------------------
+     * # Definition for a binary tree node.
+     * # class TreeNode:
+     * #     def __init__(self, x):
+     * #         self.val = x
+     * #         self.left = None
+     * #         self.right = None
      *
+     * class Solution:
+     *     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+     *         stack = [root]
+     *         parent = {root: None}
+     *         while p not in parent or q not in parent:
+     *             node = stack.pop()
+     *             if node.left:
+     *                 parent[node.left] = node
+     *                 stack.append(node.left)
+     *             if node.right:
+     *                 parent[node.right] = node
+     *                 stack.append(node.right)
+     *         ancestors = set()
+     *         while p:
+     *             ancestors.add(p)
+     *             p = parent[p]
+     *         while q not in ancestors:
+     *             q = parent[q]
+     *         return q
+     *--------------------------------------
      * @param root
      * @param p
      * @param q
@@ -148,8 +210,15 @@ public class LowestCommonAncestorOfBT {
      * @see <a href="https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/solutions/65236/java-python-iterative-solution"></a>
      */
     public TreeNode lowestCommonAncestorV0(TreeNode root, TreeNode p, TreeNode q) {
+        /**
+         * parent content:(child, parent)
+         */
         Map<TreeNode, TreeNode> parent = new HashMap<>();
         Deque<TreeNode> stack = new ArrayDeque<>();
+        /**
+         * Very important, root's parent is null.
+         * this will be used as terminated condition in the second while-loop.
+         */
         parent.put(root, null);
         stack.push(root);
 
@@ -168,6 +237,9 @@ public class LowestCommonAncestorOfBT {
 
         Set<TreeNode> ancestors = new HashSet<>();
         while (p != null) {
+            /**
+             * Add current p firstly, then go up to parent.
+             */
             ancestors.add(p);
             p = parent.get(p);
         }
