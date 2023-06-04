@@ -49,7 +49,7 @@ public class LowestCommonAncestorOfBST {
      */
     public TreeNode lowestCommonAncestorV4(TreeNode root, TreeNode p, TreeNode q) {
         while ((root.val - p.val) * (root.val - q.val) > 0) {
-            root = (root.val < p.val ? root.left : root.right);
+            root = (p.val < root.val ? root.left : root.right);
         }
         return root;
     }
