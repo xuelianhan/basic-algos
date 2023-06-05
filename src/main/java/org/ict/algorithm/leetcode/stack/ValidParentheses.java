@@ -22,7 +22,7 @@ import java.util.*;
  * s consists of parentheses only '()[]{}'.
  *
  * @author sniper
- * LC20, Easy
+ * LC20, Easy, frequency=177
  */
 public class ValidParentheses {
 
@@ -42,6 +42,22 @@ public class ValidParentheses {
 
     /**
      * Time Cost 1ms
+     * --------------------------
+     * class Solution:
+     *     def isValid(self, s: str) -> bool:
+     *         if not s or len(s) < 2:
+     *             return False
+     *         stack = []
+     *         for c in s:
+     *             if c == '(':
+     *                 stack.append(')')
+     *             elif c == '[':
+     *                 stack.append(']')
+     *             elif c == '{':
+     *                 stack.append('}')
+     *             elif not stack or stack.pop() != c:
+     *                 return False
+     *         return not stack
      * @see <a href="https://leetcode.com/problems/valid-parentheses/solutions/9178/short-java-solution"></a>
      * @author phoenix13steve
      * @param s
@@ -56,10 +72,16 @@ public class ValidParentheses {
                 stack.push(']');
             } else if (c == '{') {
                 stack.push('}');
+                /**
+                 * Notice using pop instead of peek
+                 */
             } else if (stack.isEmpty() || stack.pop() != c) {
                 return false;
             }
         }
+        /**
+         * Notice check stack at last.
+         */
         return stack.isEmpty();
     }
 

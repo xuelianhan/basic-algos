@@ -65,7 +65,15 @@ public class RandomPickWithWeight {
 
     /**
      * Initialize the prefix-sum array.
+     *
      * ------------------------------------------------
+     * we have the numbers 1, 5, 2 easiest solution is to construct the following array
+     * arr[] = {0,1,1,1,1,1,2,2}
+     * then generate a random number between 0 and 7 and return the arr[rnd].
+     * This is solution is really not good,
+     * though due to the space requirements it has (imagine a number being 2billion).
+     * The solution here is similar,    but instead we construct the following array (accumulated sum)
+     *
      * class Solution {
      * public:
      *     Solution(vector<int>& w) {
@@ -96,6 +104,27 @@ public class RandomPickWithWeight {
      *     vector<int> prefix_sum;
      * };
      * ---------------------------------------------
+     * class Solution:
+     *
+     *     def __init__(self, w: List[int]):
+     *         self.prefix_sum = [0] * len(w)
+     *         self.prefix_sum[0] = w[0]
+     *         for i in range(1, len(w)):
+     *             self.prefix_sum[i] = self.prefix_sum[i - 1] + w[i]
+     *
+     *     def pickIndex(self) -> int:
+     *         n = len(self.prefix_sum)
+     *         lo = 0
+     *         hi = n
+     *         # randint(start, end), A random integer in range [start, end] including the end points.
+     *         target = random.randint(0, self.prefix_sum[-1] - 1)
+     *         while lo < hi:
+     *             mid = lo + (hi - lo) // 2
+     *             if self.prefix_sum[mid] > target:
+     *                 hi = mid
+     *             else:
+     *                 lo = mid + 1
+     *         return lo
      *
      * @param w
      */
@@ -158,8 +187,11 @@ public class RandomPickWithWeight {
      */
     public int pickIndex() {
         int n = prefixSum.length;
-        int lo = 0;
+        int lo = 0;// prefixSum effective number is start from prefixSum[0], so lo is initialized as zero.
         int hi = n;
+        /**
+         * Generate a random number between 0(inclusive) to prefixSum[n - 1](exclusive)
+         */
         int target = random.nextInt(prefixSum[n - 1]);
         while (lo < hi) {
             int mid = lo + (hi - lo) / 2;

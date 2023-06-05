@@ -63,6 +63,28 @@ public class RandomPickWithWeightV1 {
 
     private Random random = new Random();
 
+    /**
+     * class Solution:
+     *
+     *     def __init__(self, w: List[int]):
+     *         self.prefix_sum = [0]
+     *         for c in w:
+     *             self.prefix_sum.append(self.prefix_sum[-1] + c)
+     *
+     *     def pickIndex(self) -> int:
+     *         n = len(self.prefix_sum)
+     *         lo, hi = 1, n - 1
+     *         target = random.randint(1, self.prefix_sum[-1])
+     *         while lo < hi:
+     *             mid = lo + (hi - lo) // 2
+     *             if self.prefix_sum[mid] >= target:
+     *                 hi = mid
+     *             else:
+     *                 lo = mid + 1
+     *         return lo - 1
+     *
+     * @param w
+     */
     public RandomPickWithWeightV1(int[] w) {
         int n = w.length;
         /**
