@@ -1,7 +1,7 @@
 package org.ict.algorithm.leetcode.math;
 
 /**
- * Implement pow(x, n), which calculates x raised to the power n (i.e., xn).
+ * Implement pow(x, n), which calculates x raised to the power n (i.e., x^n).
  *
  *
  *
@@ -25,13 +25,38 @@ package org.ict.algorithm.leetcode.math;
  * -100.0 < x < 100.0
  * -2^31 <= n <= 2^31-1
  * n is an integer.
- * -10^4 <= xn <= 10^4
+ * Either x is not zero or n > 0.
+ * -10^4 <= x^n <= 10^4
  *
  * @author sniper
  * @date 28 Mar, 2023
- * LC50, Medium
+ * LC50, Medium, frequency=165
  */
 public class PowXN {
+
+    /**
+     * Understanding the following solution.
+     * e.g. x = 2.0, n = 5
+     * i:5, i % 2 != 0, res:2.0, x = 4.0
+     * i:2, i % 2 == 0, x = 16.0
+     * i:1, i % 2 != 0, res:2.0*16.0=32.0, x=256.0
+     * i:0, i == 0, exit-for-loop
+     * n > 0, return res:32.0
+     * @param x
+     * @param n
+     * @return
+     */
+    public double myPowV2(double x, int n) {
+        double res = 1.0;
+        for (int i = n; i != 0; i /= 2) {
+            if (i % 2 != 0) {
+                res *= x;
+            }
+            x *= x;
+        }
+        return n < 0 ? 1 / res : res;
+    }
+
 
     /**
      * Time Complexity logN, based on 2.
