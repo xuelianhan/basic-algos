@@ -5,7 +5,7 @@ import java.util.PriorityQueue;
 /**
  * Given an array of points where points[i] = [xi, yi] represents a point on the X-Y plane and an integer k,
  * return the k-closest points to the origin (0, 0).
- * The distance between two points on the X-Y plane is the Euclidean distance (i.e., √(x1 - x2)2 + (y1 - y2)2).
+ * The distance between two points on the X-Y plane is the Euclidean distance (i.e., √(x1 - x2)^2 + (y1 - y2)^2).
  * You may return the answer in any order.
  * The answer is guaranteed to be unique (except for the order that it is in).
  *
@@ -36,6 +36,18 @@ public class KClosestPointsToOrigin {
 
     /**
      * Similar with kClosest but more concise.
+     *
+     * Euclidean distance's square:
+     * (x1 - x2)^2 + (y1 - y2)^2
+     * = x1^2 - 2*x1*x2 + x2^2 + y1^2 - 2*y1*y2 + y2^2
+     * = x1^2 + x2^2 + y1^2 + y2^2 - 2*x1*x2 - 2*y1*y2
+     * While (x2, y2) is (0, 0), the above statement can be simplified as following:
+     * = x1^2 + y1^2
+     * As we compare distance to original point of two points, if we want to in descendant order
+     * we do like this:
+     * (p1, p2) -> (p2[0] * p2[0] + p2[1] * p2[1] - p1[0] * p1[0] - p1[1] * p1[1])
+     *
+     * @see <a href="https://leetcode.com/problems/k-closest-points-to-origin/solutions/220235/java-three-solutions-to-this-classical-k-th-problem/"></a>
      * @param points
      * @param k
      * @return

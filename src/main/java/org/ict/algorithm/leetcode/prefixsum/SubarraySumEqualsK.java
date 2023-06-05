@@ -36,6 +36,88 @@ public class SubarraySumEqualsK {
         System.out.println(res);
     }
 
+    /**
+     * Understanding the following solution
+     * -----------------------------------
+     * class Solution:
+     *     def subarraySum(self, nums: List[int], k: int) -> int:
+     *         prefixSum, res = 0, 0
+     *         counter = Counter({0: 1})
+     *         for x in nums:
+     *             prefixSum += x
+     *             res += counter[prefixSum - k]
+     *             counter[prefixSum] += 1
+     *         return res
+     *  ------------------------------------
+     *  class Solution {
+     * public:
+     *     int subarraySum(vector<int>& nums, int k) {
+     *         int res = 0;
+     *         int sum = 0;
+     *         int n = nums.size();
+     *         unordered_map<int, int> map{{0, 1}};
+     *         for (int i = 0; i < n; i++) {
+     *             sum += nums[i];
+     *             res += map[sum - k];
+     *             map[sum] += 1;
+     *         }
+     *         return res;
+     *     }
+     * };
+     * -------------------------------------
+     * object Solution {
+     *     def subarraySum(nums: Array[Int], k: Int): Int = {
+     *         var res = 0
+     *         var prefixSum = 0
+     *         val freq = scala.collection.mutable.HashMap[Int, Int]()
+     *         freq.put(0, 1)
+     *         for (num <- nums) {
+     *             prefixSum += num
+     *             res += freq.getOrElse(prefixSum - k, 0)
+     *             freq.put(prefixSum, freq.getOrElse(prefixSum, 0) + 1)
+     *         }
+     *         res
+     *     }
+     * }
+     * ----------------------------------
+     * use std::collections::HashMap;
+     *
+     * impl Solution {
+     *     pub fn subarray_sum(nums: Vec<i32>, k: i32) -> i32 {
+     *         let mut res = 0;
+     *         let mut sum = 0;
+     *         let mut map = HashMap::new();
+     *         map.insert(0, 1);
+     *         nums.iter().for_each(|num| {
+     *             sum += num;
+     *             res += map.get(&(sum - k)).unwrap_or(&0);
+     *             map.insert(sum, map.get(&sum).unwrap_or(&0) + 1);
+     *         });
+     *         res
+     *     }
+     * }
+     * @param nums
+     * @param k
+     * @return
+     */
+    public int subarraySumV2(int[] nums, int k) {
+        int res = 0;
+        int prefixSum = 0;
+        Map<Integer, Integer> freq = new HashMap<>();
+        freq.put(0, 1);
+        for (int num : nums) {
+            prefixSum += num;
+            /**
+             * The accumulation of res should be put before updating of freq.
+             * e.g. nums = [1], k = 0, expected 0
+             * If you exchange the following two lines, you will get a wrong answer.
+             */
+            res += freq.getOrDefault(prefixSum - k, 0);
+            freq.put(prefixSum, freq.getOrDefault(prefixSum, 0) + 1);
+        }
+        return res;
+    }
+
 
     /**
      * Understanding the following solution.
@@ -83,22 +165,22 @@ public class SubarraySumEqualsK {
      * @return
      */
     public int subarraySumV1(int[] nums, int k) {
-        int sum = 0;
+        int prefixSum = 0;
         int res = 0;
-        Map<Integer, Integer> prefixSum = new HashMap<>();
+        Map<Integer, Integer> freq = new HashMap<>();
         /**
-         * Assume that prefix sum equals k at index-i, the range from index-0 to this index-i is an answer.
-         * So while sum == k, the sum-k is 0, the value should be 1.
+         * Assume that prefix prefixSum equals k at index-i, the range from index-0 to this index-i is an answer.
+         * So while prefixSum == k, the prefixSum-k is 0, the value should be 1.
          * e.g. nums = [1, 2, 3], k = 3
          * while 1 + 2 = 3, i:1, so range from index-0 to index-1 should be an answer.
          */
-        prefixSum.put(0, 1);
+        freq.put(0, 1);
         for (int i = 0; i < nums.length; i++) {
-            sum += nums[i];
-            if (prefixSum.containsKey(sum - k)) {
-                res += prefixSum.get(sum - k);
+            prefixSum += nums[i];
+            if (freq.containsKey(prefixSum - k)) {
+                res += freq.get(prefixSum - k);
             }
-            prefixSum.put(sum, prefixSum.getOrDefault(sum, 0) + 1);
+            freq.put(prefixSum, freq.getOrDefault(prefixSum, 0) + 1);
         }
         return res;
     }
