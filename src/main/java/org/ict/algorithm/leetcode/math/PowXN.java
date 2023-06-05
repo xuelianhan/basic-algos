@@ -94,6 +94,21 @@ public class PowXN {
      * then apply Binary Exponentiation.
      * @see <a href="https://leetcode.com/problems/powx-n/solutions/19544/5-different-choices-when-talk-with-interviewers"></a>
      * e.g. x:2.0, n:-2147483648, if you use int, it may overflow while change n to -n
+     * -----------------------------------------------
+     * class Solution:
+     *     def myPow(self, x: float, n: int) -> float:
+     *         m = n
+     *         if m < 0:
+     *             m = -m
+     *             x = 1 / x
+     *         res = 1.0
+     *         while m > 0:
+     *             if m & 1 > 0:
+     *                 res *= x
+     *             x *= x
+     *             m >>= 1
+     *         return res
+     * -----------------------------------------------
      *
      * @param x
      * @param n
@@ -123,11 +138,11 @@ public class PowXN {
              * m >> 1 can discard the lowest bit.
              * If we combine m & 1 and m >> 1, we can traverse all the binary digits of m.
              */
-            if ((m & 1) > 0) {
+            if ((m & 1) > 0) {// equals m % 2 != 0, m & 1 > 0 means m is an odd number
                 res *= x;
             }
             x *= x;
-            m >>= 1;
+            m >>= 1;// equals m / 2
         }
         return res;
     }
