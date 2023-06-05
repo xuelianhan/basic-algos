@@ -65,6 +65,38 @@ public class RandomPickWithWeight {
 
     /**
      * Initialize the prefix-sum array.
+     * ------------------------------------------------
+     * class Solution {
+     * public:
+     *     Solution(vector<int>& w) {
+     *         int n = w.size();
+     *         prefix_sum = w;
+     *         for (int i = 1; i < n; i++) {
+     *             prefix_sum[i] = prefix_sum[i - 1] + w[i];
+     *         }
+     *     }
+     *
+     *     int pickIndex() {
+     *         int n = prefix_sum.size();
+     *         int lo = 0;
+     *         int hi = n;
+     *         int target = rand() % prefix_sum.back();
+     *         while (lo < hi) {
+     *             int mid = lo + (hi - lo) / 2;
+     *             if (prefix_sum[mid] > target) {
+     *                 hi = mid;
+     *             } else {
+     *                 lo = mid + 1;
+     *             }
+     *         }
+     *         return lo;
+     *     }
+     *
+     * private:
+     *     vector<int> prefix_sum;
+     * };
+     * ---------------------------------------------
+     *
      * @param w
      */
     public RandomPickWithWeight(int[] w) {
@@ -131,6 +163,10 @@ public class RandomPickWithWeight {
         int target = random.nextInt(prefixSum[n - 1]);
         while (lo < hi) {
             int mid = lo + (hi - lo) / 2;
+            /**
+             * A little different with standard binary search on the location side of ==.
+             * Notice here: prefixSum[mid] > target, not prefixSum[mid] >= target
+             */
             if (prefixSum[mid] > target) {
                 hi = mid;
             } else {

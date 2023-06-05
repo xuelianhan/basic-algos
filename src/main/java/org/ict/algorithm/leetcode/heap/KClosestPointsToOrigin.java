@@ -46,6 +46,28 @@ public class KClosestPointsToOrigin {
      * As we compare distance to original point of two points, if we want to in descendant order
      * we do like this:
      * (p1, p2) -> (p2[0] * p2[0] + p2[1] * p2[1] - p1[0] * p1[0] - p1[1] * p1[1])
+     * ----------------------------------------------------------------------------
+     * class Solution {
+     * public:
+     *     vector<vector<int>> kClosest(vector<vector<int>>& points, int k) {
+     *         vector<vector<int>> res;
+     *         priority_queue<pair<int, int>> pq;
+     *         for (int i = 0; i < points.size(); ++i) {
+     *             int t = points[i][0] * points[i][0] + points[i][1] * points[i][1];
+     *             pq.push({t, i});
+     *             if (pq.size() > k) {
+     *                 pq.pop();
+     *             }
+     *         }
+     *         while (!pq.empty()) {
+     *             auto t = pq.top();
+     *             pq.pop();
+     *             res.push_back(points[t.second]);
+     *         }
+     *         return res;
+     *     }
+     * };
+     * ------------------------------------------------------------------------------
      *
      * @see <a href="https://leetcode.com/problems/k-closest-points-to-origin/solutions/220235/java-three-solutions-to-this-classical-k-th-problem/"></a>
      * @param points
@@ -74,6 +96,21 @@ public class KClosestPointsToOrigin {
      * The advantage of this solution is it can deal with real-time(online) stream data.
      * It does not have to know the size of the data previously.
      * The disadvantage of this solution is it is not the most efficient solution.
+     * --------------------------------------------------
+     * import heapq
+     *
+     * class Solution:
+     *     def kClosest(self, points: List[List[int]], k: int) -> List[List[int]]:
+     *         heap = []
+     *         for (x, y) in points:
+     *             dist = -(x*x + y*y)
+     *             if len(heap) == k:
+     *                 heapq.heappushpop(heap, (dist, x, y))
+     *             else:
+     *                 heapq.heappush(heap, (dist, x, y))
+     *         return [(x, y) for (dist, x, y) in heap]
+     * ---------------------------------------------------
+     *
      * @param points
      * @param k
      * @return

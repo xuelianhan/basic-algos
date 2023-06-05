@@ -171,7 +171,7 @@ public class BinarySearch {
         while (lo < hi) {
             /**
              * lower mid, how to remember?
-             * When choose lower mid, lo must be mid+1.
+             * When choose lower mid, lo must be mid + 1.
              * We use lower mid as lower bound, so write as nums[mid] < x, accordingly with lo = mid + 1
              */
             int mid = lo + (hi - lo) / 2;
