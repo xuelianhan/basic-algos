@@ -31,7 +31,7 @@ import java.util.*;
  * s consists of English letters, digits, symbols and spaces.
  * @author sniper
  * @date 22 Oct, 2022
- * LC3, Medium
+ * LC3, Medium, frequency=157
  */
 public class LongestSubstringWithoutRepeatingCharacters {
 
@@ -310,7 +310,7 @@ public class LongestSubstringWithoutRepeatingCharacters {
             }
             /**
              * After the map is shrink, we need to calculate the max-length of no repeated substring.
-             * As the index starts from 0 , ans will be (right pointer-left pointer + 1)
+             * As the index starts from 0 , res will be (right pointer-left pointer + 1)
              */
             res = Math.max(res, right - left + 1);
             /**
