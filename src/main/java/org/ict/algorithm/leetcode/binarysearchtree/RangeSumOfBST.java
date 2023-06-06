@@ -62,6 +62,21 @@ public class RangeSumOfBST {
      *         if root.val > high:
      *             return self.rangeSumBST(root.left, low, high)
      *         return root.val + self.rangeSumBST(root.left, low, high) + self.rangeSumBST(root.right, low, high)
+     * ---------------------------------------------------
+     * class Solution {
+     *     public int rangeSumBST(TreeNode root, int low, int high) {
+     *         if (root == null || low > high) {
+     *             return 0;
+     *         }
+     *         if (root.val >= low && root.val <= high) {
+     *             return root.val + rangeSumBST(root.left, low, high) + rangeSumBST(root.right, low, high);
+     *         } else if (root.val < low) {
+     *             return rangeSumBST(root.right, low, high);
+     *         } else {
+     *             return rangeSumBST(root.left, low, high);
+     *         }
+     *     }
+     * }
      * @param root
      * @param low
      * @param high
