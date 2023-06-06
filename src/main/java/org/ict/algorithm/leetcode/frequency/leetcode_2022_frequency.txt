@@ -21,7 +21,7 @@
 339.Nested List Weight Sum=134, DFS
 42.Trapping Rain Water=134, Two Pointers, DP, Monotonic Stack
 227.Basic Calculator II=127, Stack, Math
-15.3Sum=123, Two Pointers, Sorting
+15.3Sum=123, Two Pointers, Sorting, Array
 79.Word Search=123, Backtracking, Matrix
 1570.Dot Product of Two Sparse Vectors=121, Math, Hash Table
 2.Add Two Numbers=119, Linked List, Math, Recursion

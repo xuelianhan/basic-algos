@@ -44,10 +44,64 @@ import java.util.*;
  * 3 <= nums.length <= 3000
  * -10^5 <= nums[i] <= 10^5
  *
- * LC15
+ * LC15, Medium, frequency=123
  */
 public class ThreeSum {
 
+	/**
+	 * Understanding the following solution
+	 * Sorting + Two-Pointer
+	 * Time Cost 49ms
+	 * @param nums
+	 * @return
+	 */
+	public List<List<Integer>> threeSumV3(int[] nums) {
+		if (nums == null || nums.length < 3) {
+			return new ArrayList<>();
+		}
+		Set<List<Integer>> set = new HashSet<>();
+		Arrays.sort(nums);
+		int n = nums.length;
+		for (int i = 0; i < n - 2; i++) {
+			if (i > 0 && nums[i] == nums[i - 1]) {
+				continue;
+			}
+			int lo = i + 1;
+			int hi = n - 1;
+			while (lo < hi) {
+				int sum = nums[i] + nums[lo] + nums[hi];
+				if (sum == 0) {
+					set.add(Arrays.asList(nums[i], nums[lo], nums[hi]));
+					lo++;
+					hi--;
+					/**
+					 * A little tuning
+					 */
+					while (lo < hi && nums[lo] == nums[lo - 1]) {
+						lo++;
+					}
+					while (lo < hi && nums[hi] == nums[hi + 1]) {
+						hi--;
+					}
+				} else if (sum < 0) {
+					lo++;
+				} else if (sum > 0) {
+					hi--;
+				}
+			}
+		}
+		return new ArrayList<>(set);
+	}
+
+	/**
+	 * Understanding the following solution
+	 * Sorting + Two-Pointer
+	 * -------------------------------------------------
+	 *
+	 * Time Cost 47ms
+	 * @param nums
+	 * @return
+	 */
 	public List<List<Integer>> threeSumV2(int[] nums) {
 		if (nums == null || nums.length < 3) {
 			return null;
@@ -61,19 +115,24 @@ public class ThreeSum {
 			if (i > 0 && nums[i] == nums[i-1]) {
 				continue;
 			}
-			int low = i + 1;
-			int high = nums.length - 1;
-			while (low < high) {
-				int sum = nums[i] + nums[low] + nums[high];
+			/**
+			 * Fixed one element nums[i], and search for another two elements: nums[lo], nums[hi]
+			 */
+			int lo = i + 1;
+			int hi = nums.length - 1;
+			while (lo < hi) {
+				int sum = nums[i] + nums[lo] + nums[hi];
 				if (sum == 0) {
 					/**
 					 * short j++, k-- to one line.
 					 */
-					set.add(Arrays.asList(nums[i], nums[low++], nums[high--]));
+					set.add(Arrays.asList(nums[i], nums[lo], nums[hi]));
+					lo++;
+					hi--;
 				} else if (sum > 0) {
-					high--;
+					hi--;
 				} else if (sum < 0) {
-					low++;
+					lo++;
 				}
 			}
 		}
@@ -83,7 +142,7 @@ public class ThreeSum {
 
 
 	/**
-	 * Understand this solution.
+	 * Time Cost 683ms
 	 * @param nums
 	 * @return
 	 */
@@ -126,6 +185,7 @@ public class ThreeSum {
 
 
 	/**
+	 * Time Cost 984ms
 	 * A basic idea is to convert it to Two-Sum problem.
 	 * x + y + z = 0
 	 * x + y = -z
@@ -144,18 +204,19 @@ public class ThreeSum {
 		if (nums == null || nums.length < 3) {
 			return null;
 		}
+		int n = nums.length;
 		/**
 		 * Use Set to remove duplicated triplets.
 		 */
 		Set<List<Integer>> set = new HashSet<>();
 		Arrays.sort(nums);
-		for (int i = 0; i < nums.length-2; i++) {
+		for (int i = 0; i < n - 2; i++) {
 			/**
 			 * target = -z
 			 */
 			int target = -nums[i];
 			Map<Integer, Integer> map = new HashMap<>();
-			for (int j = i + 1; j < nums.length; j++) {
+			for (int j = i + 1; j < n; j++) {
 				/**
 				 * y = -z - x
 				 */

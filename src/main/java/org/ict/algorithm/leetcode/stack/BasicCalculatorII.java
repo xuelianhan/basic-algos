@@ -36,9 +36,10 @@ import java.util.Deque;
  * s represents a valid expression.
  * All the integers in the expression are non-negative integers in the range [0, 2^31 - 1].
  * The answer is guaranteed to fit in a 32-bit integer.
+ *
  * @author sniper
  * @date 18 Jan, 2023
- * LC227, Medium
+ * LC227, Medium, frequency=127
  */
 public class BasicCalculatorII {
 
@@ -324,6 +325,7 @@ public class BasicCalculatorII {
         return res;
     }
 
+
     /**
      * Understanding the following solution
      *
@@ -340,6 +342,51 @@ public class BasicCalculatorII {
      * operand:1
      * pop 1, res = 0 + 1 = 1
      * return res:1
+     * -----------------------------------------------
+     * class Solution {
+     * public:
+     *     int calculate(string s) {
+     *         int n = s.size();
+     *         // Notice using long here instead of int to prevent overflow
+     *         long num = 0;
+     *         char prevSign = '+';
+     *         stack<int> stack;
+     *
+     *         for (int i = 0; i < n; i++) {
+     *             char ch = s[i];
+     *             if (ch >= '0' && ch <= '9') {
+     *                 num = 10 * num + ch - '0';
+     *             }
+     *
+     *             if (i == n - 1 || ch == '+' || ch == '-' || ch == '*' || ch == '/') {
+     *                 if (prevSign == '+' ) {
+     *                     stack.push(num);
+     *                 } else if (prevSign == '-') {
+     *                     stack.push(-num);
+     *                 } else if (prevSign == '*') {
+     *                     int t = stack.top();
+     *                     stack.pop();
+     *                     stack.push(t * num);
+     *                 } else if (prevSign == '/') {
+     *                     int t = stack.top();
+     *                     stack.pop();
+     *                     stack.push(t / num);
+     *                 }
+     *
+     *                 prevSign = ch;
+     *                 num = 0;
+     *             }
+     *         }
+     *
+     *         int res = 0;
+     *         while (!stack.empty()) {
+     *             res += stack.top();
+     *             stack.pop();
+     *         }
+     *         return res;
+     *     }
+     * };
+     * ------------------------------------------------------------
      *
      * @author abner
      * @see <a href="https://leetcode.com/problems/basic-calculator-ii/solutions/63003/share-my-java-solution"></a>
@@ -373,6 +420,7 @@ public class BasicCalculatorII {
                 num = 10 * num + c - '0';
             }
             /**
+             * While current char is operator or the last element, we can calculate the result of last step.
              * e.g. s = "1-1+1"
              * e.g. s = " 3/2 "
              * e.g. s = "3+2*2"
@@ -402,3 +450,26 @@ public class BasicCalculatorII {
         return res;
     }
 }
+
+//#  class Solution:
+//#        def calculate(self, s: str) -> int:
+//#        num, n = 0, len(s)
+//#        stack = []
+//#        prevSign = '+'
+//#
+//#        for i, ch in enumerate(s):
+//#          if ch.isdigit():
+//#            num  = 10 * num + int(ch)
+//#          if i == n - 1 or ch in '+-*/':
+//#            if prevSign == '+':
+//#              stack.append(num)
+//#            elif prevSign == '-':
+//#              stack.append(-num)
+//#            elif prevSign == '*':
+//#              stack.append(stack.pop() * num)
+//#            elif prevSign == '/':
+//#              stack.append(int(stack.pop() / num))
+//#            prevSign = ch
+//#            num = 0
+//#
+//#        return sum(stack)

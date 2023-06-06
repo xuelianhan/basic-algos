@@ -27,11 +27,15 @@ package org.ict.algorithm.leetcode.twopointers;
  * 0 <= height[i] <= 105
  * @author sniper
  * @date 19 Sep, 2022
- * LC42
+ * LC42, Hard, frequency=134
  */
 public class TrappingRainWater {
 
     /**
+     * Understanding the following solution
+     *
+     * Two-Pointer Solution
+     *
      * Idea and Solution provided by mcrystal.
      *
      * Instead of calculating area by height*width, we can think it in a cumulative way.
@@ -49,12 +53,16 @@ public class TrappingRainWater {
      * -------------------------------------
      * left                             right
      *
+     * --------------------------------------
+     * Time Complexity O(N)
+     * Space Complexity O(1)
      *
+     * @see <a href="https://leetcode.com/problems/trapping-rain-water/solutions/17357/sharing-my-simple-c-code-o-n-time-o-1-space/"></a>
      * @author mcrystal
      * @param height
      * @return
      */
-    public int trap(int[] height) {
+    public int trapV5(int[] height) {
         int left = 0;
         int right = height.length - 1;
 
@@ -91,5 +99,10 @@ public class TrappingRainWater {
             }
         }
         return res;
+    }
+
+
+    public int trap(int[] height) {
+        return 0;
     }
 }
