@@ -210,9 +210,142 @@ public class LongestSubstringWithoutRepeatingCharacters {
      *
      * Two-Pointers + HashSet solution.
      * The idea is use a hashset to track the longest substring without repeating characters so far,
-     * use a fast pointer j to see if character j is in the hashset or not, if not, add it to the hashset, move j forward and update the max length,
+     * use a fast pointer j to see if character j is in the hashset or not,
+     * if not, add it to the hashset, move j forward and update the max length,
      * otherwise, delete from the head by using a slow pointer i until we can put character j to the hash set.
+     * -----------------------------------------------
+     * public int lengthOfLongestSubstring(String s) {
+     *         int res = 0;
+     *         if (s == null || s.length() == 0) {
+     *             return res;
+     *         }
+     *         int l = 0;
+     *         int r = 0;
+     *         Set<Character> set = new HashSet<>();
+     *         while (r < s.length()) {
+     *             if (!set.contains(s.charAt(r))) {
+     *                 set.add(s.charAt(r));
+     *                 res = Math.max(res, r - l + 1);
+     *                 r++;
+     *             } else {
+     *                 set.remove(s.charAt(l));
+     *                 l++;
+     *             }
+     *         }
+     *         return res;
+     * }
+     * ----------------------------------------------
+     * class Solution:
+     *     def lengthOfLongestSubstring(self, s: str) -> int:
+     *         if s is None or len(s) == 0:
+     *             return 0
+     *         l, res, n = 0, 0, len(s)
+     *         hs = set()
+     *         for r, ch in enumerate(s):
+     *             while ch in hs:
+     *                 hs.remove(s[l])
+     *                 l += 1
+     *             hs.add(ch)
+     *             res = max(res, r - l + 1)
+     *         return res
+     * ---------------------------------------------
+     * class Solution {
+     *     public int lengthOfLongestSubstring(String s) {
+     *         int res = 0;
+     *         if (s == null || s.length() == 0) {
+     *             return res;
+     *         }
+     *         int l = 0;
+     *         int r = 0;
+     *         Set<Character> set = new HashSet<>();
+     *         while (r < s.length()) {
+     *             while (set.contains(s.charAt(r))) {
+     *                 set.remove(s.charAt(l));
+     *                 l++;
+     *             }
+     *             set.add(s.charAt(r));
+     *             res = Math.max(res, set.size());
+     *             r++;
+     *         }
+     *         return res;
+     *     }
+     * }
+     * ----------------------------------------------
+     * class Solution {
+     *     public int lengthOfLongestSubstring(String s) {
+     *         int res = 0;
+     *         if (s == null || s.length() == 0) {
+     *             return res;
+     *         }
+     *         int l = 0;
+     *         Set<Character> set = new HashSet<>();
+     *         for (int r = 0; r < s.length(); r++) {
+     *             char ch = s.charAt(r);
+     *             while (set.contains(ch)) {
+     *                 set.remove(s.charAt(l));
+     *                 l++;
+     *             }
+     *             set.add(ch);
+     *             res = Math.max(res, set.size());
+     *         }
+     *         return res;
+     *     }
+     * }
+     * -------------------------------------------
+     * class Solution {
+     * public:
+     *     int lengthOfLongestSubstring(string s) {
+     *         unordered_set<char> hs;
+     *         int l = 0;
+     *         int res = 0;
+     *         for (int r = 0; r < s.size(); r++) {
+     *             while (hs.count(s[r])) {
+     *                 hs.erase(s[l++]);
+     *             }
+     *             hs.insert(s[r]);
+     *             res = max(res, r - l + 1);
+     *         }
+     *         return res;
+     *     }
+     * };
+     * --------------------------------------
+     *  class Solution {
+     * public:
+     *     int lengthOfLongestSubstring(string s) {
+     *         unordered_set<char> hs;
+     *         int l = 0;
+     *         int res = 0;
+     *         for (int r = 0; r < s.size(); r++) {
+     *             while (hs.count(s[r])) {
+     *                 hs.erase(s[l++]);
+     *             }
+     *             hs.insert(s[r]);
+     *             res = max(res, (int)hs.size());
+     *         }
+     *         return res;
+     *     }
+     * };
+     * -------------------------------------------
+     * use std::collections::HashSet;
      *
+     * impl Solution {
+     *     pub fn length_of_longest_substring(s: String) -> i32 {
+     *         let s = s.as_bytes();
+     *         let mut set = HashSet::new();
+     *         let mut i = 0;
+     *         s.iter()
+     *             .map(|c| {
+     *                 while set.contains(&c) {
+     *                     set.remove(&s[i]);
+     *                     i += 1;
+     *                 }
+     *                 set.insert(c);
+     *                 set.len()
+     *             })
+     *             .max()
+     *             .unwrap_or(0) as i32
+     *     }
+     * }
      * @param s
      * @return
      */
@@ -236,8 +369,33 @@ public class LongestSubstringWithoutRepeatingCharacters {
 
     /**
      * Slide-Window solution
-     * Please compare it with lengthOfLongestSubstring.
      *
+     * Please compare it with lengthOfLongestSubstring.
+     * The location of r++ is different, so r - l + 1 becomes r - l in the max
+     * -------------------------------------------------
+     * class Solution {
+     * public:
+     *     int lengthOfLongestSubstring(string s) {
+     *         int res = 0;
+     *         if (s.empty()) {
+     *             return 0;
+     *         }
+     *         int l = 0;
+     *         int r = 0;
+     *         int freq[128] = {0};
+     *         while (r < s.length()) {
+     *             freq[s[r]]++;
+     *             while (freq[s[r]] > 1) {
+     *                 freq[s[l]]--;
+     *                 l++;
+     *             }
+     *             r++;
+     *             res = max(res, r - l);
+     *         }
+     *
+     *         return res;
+     *     }
+     * };
      * @param s
      * @return
      */
@@ -272,8 +430,71 @@ public class LongestSubstringWithoutRepeatingCharacters {
      * left:0, right:2, map[99]=1, res=max(2, 2-0+1)=3, right:3
      * left:0, right:3, map[97]=2, map[97]--, map[97]=1, left:1, res=max(3, 3-1+1)=3, right:4
      * left:1, right:4, map[98]=2, map[98]--, map[98]=1, left:2, res=max(3, 4-2+1)=3, right:5
+     * ---------------------------------------------------------------------------------------
+     * public int lengthOfLongestSubstring(String s) {
+     *         int res = 0;
+     *         if (s == null || s.length() == 0) {
+     *             return res;
+     *         }
+     *         int l = 0;
+     *         int r = 0;
+     *         int[] freq = new int[128];
+     *         while (r < s.length()) {
+     *             char rc = s.charAt(r);
+     *             freq[rc]++;
+     *             while (freq[rc] > 1) {
+     *                 char lc = s.charAt(l);
+     *                 freq[lc]--;
+     *                 l++;
+     *             }
+     *             res = Math.max(res, r - l + 1);
+     *             r++;
+     *         }
+     *         return res;
+     * }
+     * ------------------------------------------
+     * The ord() function takes a string as input,
+     * and returns the Unicode code point of the first character in the string.
+     * class Solution:
+     *     def lengthOfLongestSubstring(self, s: str) -> int:
+     *         if s is None or len(s) == 0:
+     *             return 0
+     *         n = len(s)
+     *         l, r, res = 0, 0, 0
+     *         freq = [0] * 128
+     *         while r < n:
+     *             freq[ord(s[r])] += 1
+     *             while freq[ord(s[r])] > 1:
+     *                 freq[ord(s[l])] -= 1
+     *                 l += 1
+     *             res = max(res, r - l + 1)
+     *             r += 1
+     *         return res
+     * -------------------------------------------
+     * class Solution {
+     * public:
+     *     int lengthOfLongestSubstring(string s) {
+     *         int res = 0;
+     *         if (s.empty()) {
+     *             return 0;
+     *         }
+     *         int l = 0;
+     *         int r = 0;
+     *         int freq[128] = {0};
      *
+     *         while (r < s.length()) {
+     *             freq[s[r]]++;
+     *             while (freq[s[r]] > 1) {
+     *                 freq[s[l]]--;
+     *                 l++;
+     *             }
+     *             res = max(res, r - l + 1);
+     *             r++;
+     *         }
      *
+     *         return res;
+     *     }
+     * };
      * @param s
      * @return
      */
@@ -304,7 +525,7 @@ public class LongestSubstringWithoutRepeatingCharacters {
                 char lc = s.charAt(left);
                 map[lc]--;
                 /**
-                 * Contraction of the present map till the occurrence of the 't' char becomes 1
+                 * Contraction of the present map till the occurrence of the frequency of right char becomes 1
                  */
                 left++;
             }
