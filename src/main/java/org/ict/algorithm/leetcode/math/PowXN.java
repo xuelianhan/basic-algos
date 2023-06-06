@@ -37,11 +37,27 @@ public class PowXN {
     /**
      * Understanding the following solution.
      * e.g. x = 2.0, n = 5
+     * res:1.0
      * i:5, i % 2 != 0, res:2.0, x = 4.0
      * i:2, i % 2 == 0, x = 16.0
      * i:1, i % 2 != 0, res:2.0*16.0=32.0, x=256.0
      * i:0, i == 0, exit-for-loop
      * n > 0, return res:32.0
+     * --------------------------------
+     * class Solution {
+     * public:
+     *     double myPow(double x, int n) {
+     *         double res = 1.0;
+     *         for (int i = n; i != 0; i /= 2) {
+     *             if (i % 2 != 0) {
+     *                 res *= x;
+     *             }
+     *             x *= x;
+     *         }
+     *         return n < 0 ? 1 / res : res;
+     *     }
+     * };
+     * -----------------------------------
      * @param x
      * @param n
      * @return
@@ -61,6 +77,7 @@ public class PowXN {
     /**
      * Time Complexity logN, based on 2.
      * Understanding the following solution.
+     * ----------------------------------------
      * @param x
      * @param n
      * @return
@@ -109,7 +126,27 @@ public class PowXN {
      *             m >>= 1
      *         return res
      * -----------------------------------------------
+     * object Solution {
+     *     def myPow(x: Double, n: Int): Double = {
+     *         var m : Long = n
+     *         var y = x
+     *         if (m < 0) {
+     *             m = -m
+     *             y = 1 / y
+     *         }
      *
+     *         var res = 1.0
+     *         while (m > 0) {
+     *             if ((m & 1) > 0) {
+     *                 res *= y
+     *             }
+     *             y *= y
+     *             m >>= 1
+     *         }
+     *
+     *         res
+     *     }
+     * }
      * @param x
      * @param n
      * @return
@@ -138,11 +175,11 @@ public class PowXN {
              * m >> 1 can discard the lowest bit.
              * If we combine m & 1 and m >> 1, we can traverse all the binary digits of m.
              */
-            if ((m & 1) > 0) {// equals m % 2 != 0, m & 1 > 0 means m is an odd number
+            if ((m & 1) > 0) { // equals m % 2 != 0, (m & 1) > 0 means m is an odd number
                 res *= x;
             }
             x *= x;
-            m >>= 1;// equals m / 2
+            m >>= 1; // equals m / 2
         }
         return res;
     }
