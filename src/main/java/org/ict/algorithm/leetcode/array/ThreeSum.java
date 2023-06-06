@@ -51,6 +51,117 @@ public class ThreeSum {
 	/**
 	 * Understanding the following solution
 	 * Sorting + Two-Pointer
+	 * -----------------------------------------------
+	 * class Solution {
+	 * public:
+	 *     vector<vector<int>> threeSum(vector<int>& nums) {
+	 *         int n = nums.size();
+	 *         vector<vector<int>> res;
+	 *         sort(nums.begin(), nums.end());
+	 *
+	 *         for (int i = 0; i < n - 2; i++) {
+	 *             if (i > 0 && nums[i] == nums[i - 1]) {
+	 *                 continue;
+	 *             }
+	 *             int lo = i + 1;
+	 *             int hi = n - 1;
+	 *             while (lo < hi) {
+	 *                 int sum = nums[i] + nums[lo] + nums[hi];
+	 *                 if (sum == 0) {
+	 *                     res.push_back({nums[i], nums[lo], nums[hi]});
+	 *                     lo++;
+	 *                     hi--;
+	 *                     while (lo < hi && nums[lo] == nums[lo - 1]) {
+	 *                         lo++;
+	 *                     }
+	 *                     while (lo < hi && nums[hi] == nums[hi + 1]) {
+	 *                         hi--;
+	 *                     }
+	 *                 } else if (sum < 0) {
+	 *                     lo++;
+	 *                 } else if (sum > 0) {
+	 *                     hi--;
+	 *                 }
+	 *             }
+	 *         }
+	 *         return res;
+	 *     }
+	 * };
+	 * -------------------------------------------------------
+	 * class Solution:
+	 *     def threeSum(self, nums: List[int]) -> List[List[int]]:
+	 *         n = len(nums)
+	 *         nums.sort()
+	 *         res = []
+	 *         for i in range(n - 2):
+	 *             if i > 0 and nums[i] == nums[i - 1]:
+	 *                 continue
+	 *             lo, hi = i + 1, n - 1
+	 *             while lo < hi:
+	 *                 sum_t = nums[i] + nums[lo] + nums[hi]
+	 *                 if sum_t < 0:
+	 *                     lo += 1
+	 *                 elif sum_t > 0:
+	 *                     hi -= 1
+	 *                 else:
+	 *                     res.append([nums[i], nums[lo], nums[hi]])
+	 *                     lo, hi = lo + 1, hi - 1
+	 *                     while lo < hi and nums[lo] == nums[lo - 1]:
+	 *                         lo += 1
+	 *                     while lo < hi and nums[hi] == nums[hi + 1]:
+	 *                         hi -= 1
+	 *         return res
+	 * @param nums
+	 * @return
+	 */
+	public List<List<Integer>> threeSumV4(int[] nums) {
+		if (nums == null || nums.length < 3) {
+			return new ArrayList<>();
+		}
+		Arrays.sort(nums);
+		int n = nums.length;
+		List<List<Integer>> res = new ArrayList<>();
+
+		for (int i = 0; i < n - 2; i++) {
+			/**
+			 * Skip duplicated items
+			 */
+			if (i > 0 && nums[i] == nums[i - 1]) {
+				continue;
+			}
+			int lo = i + 1;
+			int hi = n - 1;
+			while (lo < hi) {
+				int sum = nums[i] + nums[lo] + nums[hi];
+				if (sum == 0) {
+					res.add(Arrays.asList(nums[i], nums[lo], nums[hi]));
+					lo++;
+					hi--;
+					/**
+					 * A little tuning, skip duplicated items
+					 */
+					while (lo < hi && nums[lo] == nums[lo - 1]) {
+						lo++;
+					}
+					while (lo < hi && nums[hi] == nums[hi + 1]) {
+						hi--;
+					}
+				} else if (sum < 0) {
+					lo++;
+				} else if (sum > 0) {
+					hi--;
+				}
+			}
+		}
+		return res;
+	}
+
+
+	/**
+	 * Understanding the following solution
+	 * Sorting + Two-Pointer
+	 * ---------------------------------------
+	 *
 	 * Time Cost 49ms
 	 * @param nums
 	 * @return
