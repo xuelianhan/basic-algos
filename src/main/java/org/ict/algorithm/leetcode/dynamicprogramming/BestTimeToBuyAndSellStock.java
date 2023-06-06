@@ -36,7 +36,56 @@ public class BestTimeToBuyAndSellStock {
     public static void main(String[] args) {
         int[] prices = {7,1,5,3,6,4};
         //int[] prices = {7,6,4,3,1};
-        maxProfitV2(prices);
+        BestTimeToBuyAndSellStock instance = new BestTimeToBuyAndSellStock();
+        instance.maxProfitV2(prices);
+    }
+
+    /**
+     * Understanding the following solution
+     * -------------------------------------------------
+     * class Solution {
+     * public:
+     *     int maxProfit(vector<int>& prices) {
+     *         int res = 0;
+     *         int buy = INT_MAX;
+     *         for (int i = 0; i < prices.size(); i++) {
+     *             buy = min(buy, prices[i]);
+     *             res = max(res, prices[i] - buy);
+     *         }
+     *         return res;
+     *     }
+     * };
+     * ---------------------------------------------------
+     * class Solution:
+     *     def maxProfit(self, prices: List[int]) -> int:
+     *         res, buy = 0, inf
+     *         for price in prices:
+     *             buy = min(buy, price)
+     *             res = max(res, price - buy)
+     *         return res
+     * ---------------------------------------------------
+     * impl Solution {
+     *     pub fn max_profit(prices: Vec<i32>) -> i32 {
+     *         let mut res = 0;
+     *         let mut buy = i32::MAX;
+     *         for price in prices {
+     *             buy = buy.min(price);
+     *             res = res.max(price - buy);
+     *         }
+     *         res
+     *     }
+     * }
+     * @param prices
+     * @return
+     */
+    public int maxProfitV4(int[] prices) {
+        int res = 0;
+        int buy = Integer.MAX_VALUE;
+        for (int price : prices) {
+            buy = Math.min(buy, price);
+            res = Math.max(res, price - buy);
+        }
+        return res;
     }
 
     /**
@@ -68,7 +117,7 @@ public class BestTimeToBuyAndSellStock {
      * @param prices
      * @return
      */
-    public static int maxProfitV3(int[] prices) {
+    public int maxProfitV3(int[] prices) {
         int currentMax = 0;
         int soFarFoundMax = 0;
         for (int i = 1; i < prices.length; i++) {
@@ -82,10 +131,11 @@ public class BestTimeToBuyAndSellStock {
 
     /**
      * No need if-condition, calculate minimum price and maximum profit directly.
+     *
      * @param prices
      * @return
      */
-    public static int maxProfitV2(int[] prices) {
+    public int maxProfitV2(int[] prices) {
         int maxProfit = 0;
         int minPrice = Integer.MAX_VALUE;
         for (int price : prices) {
@@ -113,7 +163,7 @@ public class BestTimeToBuyAndSellStock {
      * @param prices
      * @return
      */
-    public static int maxProfitV1(int[] prices) {
+    public int maxProfitV1(int[] prices) {
         int n = prices.length;
         int buy = prices[0], maxProfit = 0;
         for (int i = 1; i < n; i++) {
@@ -137,7 +187,7 @@ public class BestTimeToBuyAndSellStock {
      * @param prices
      * @return
      */
-    public static int maxProfitV0(int[] prices) {
+    public int maxProfitV0(int[] prices) {
         int n = prices.length;
         int minBuySoFar = prices[0], maxProfit = 0;
         for (int i = 1; i < n; i++) {
@@ -156,7 +206,7 @@ public class BestTimeToBuyAndSellStock {
      * @param prices
      * @return
      */
-    public static int maxProfit(int[] prices) {
+    public int maxProfit(int[] prices) {
         int n = prices.length;
         int minBuySoFar = prices[0], maxProfit = 0;
         for (int i = 1; i < n; i++) {
