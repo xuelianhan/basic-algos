@@ -1,19 +1,33 @@
-package org.ict.algorithm.leetcode.array;
+package org.ict.algorithm.leetcode.dynamicprogramming;
 
 /**
- * Given an integer array nums, 
- * find the contiguous sub-array (containing at least one number)
- * which has the largest sum and return its sum.
- * Example:
- * Input: [-2,1,-3,4,-1,2,1,-5,4],
+ * Given an integer array nums, find the subarray
+ * with the largest sum, and return its sum.
+ *
+ * Example 1:
+ * Input: nums = [-2,1,-3,4,-1,2,1,-5,4]
  * Output: 6
- * Explanation: [4,-1,2,1] has the largest sum = 6.
- * Follow up:
- * If you have figured out the O(n) solution, 
- * try coding another solution using the divide and conquer approach, 
+ * Explanation: The subarray [4,-1,2,1] has the largest sum 6.
+ *
+ * Example 2:
+ * Input: nums = [1]
+ * Output: 1
+ * Explanation: The subarray [1] has the largest sum 1.
+ *
+ * Example 3:
+ * Input: nums = [5,4,-1,7,8]
+ * Output: 23
+ * Explanation: The subarray [5,4,-1,7,8] has the largest sum 23.
+ *
+ * Constraints:
+ * 1 <= nums.length <= 10^5
+ * -104 <= nums[i] <= 10^4
+ *
+ * Follow up: If you have figured out the O(n) solution,
+ * try coding another solution using the divide and conquer approach,
  * which is more subtle.
  *
- * LC53
+ * LC53, Medium, frequency=152
  *
  */
 public class MaximumSubArray {
@@ -23,12 +37,29 @@ public class MaximumSubArray {
 	}
 	
 	/**
-	 * Divide and Conquer
+	 * Understanding the following solution
+	 * Dynamic Programming Solution
+	 * ---------------------------------
+	 * class Solution:
+	 *     def maxSubArray(self, nums: List[int]) -> int:
+	 *       f, res, i, n = nums[0], nums[0], 1, len(nums)
+	 *       while i < n:
+	 *         f = nums[i] + max(f , 0)
+	 *         res = max(res, f)
+	 *         i += 1
+	 *       return res
+	 * ----------------------------------
 	 * @param nums
 	 * @return
 	 */
 	public int maxSubArrayV7(int[] nums) {
-		return 0;
+		int f = nums[0];
+		int res = nums[0];
+		for (int i = 1; i < nums.length; i++) {
+			f = nums[i] + Math.max(f, 0);
+			res = Math.max(res, f);
+		}
+		return res;
 	}
 
 	public int maxSubArrayV6(int[] nums) {
@@ -58,10 +89,10 @@ public class MaximumSubArray {
 	 * 
 	 * At first, I think the sub problem should look like: 
 	 * maxSubArray(int A[], int i, int j), which means the maxSubArray for A[i: j]
-	 * In this way, our goal is to figure out what maxSubArray(A, 0, A.length - 1) is
+	 * In this way, our goal is to figure out what maxSubArray(A, 0, A.length - 1) is.
 	 * However, if we define the format of the sub problem in this way, 
 	 * it's hard to find the connection from the sub problem to the original problem(at least for me). 
-	 * In other words, I can't find a way to divided the original problem into the sub problems 
+	 * In other words, I can't find a way to divide the original problem into the sub problems
 	 * and use the solutions of the sub problems to somehow create the solution of the original one
 	 * 
 	 * So I change the format of the sub problem into something like: 
@@ -69,7 +100,7 @@ public class MaximumSubArray {
 	 * Note that now the sub problem's format is less flexible and less powerful than the previous one 
 	 * because there's a limitation that A[i] should be contained in that sequence,
 	 * and we have to keep track of each solution of the sub problem to update the global optimal value
-	 * However, now the connect between the sub problem & the original one becomes clearer:
+	 * However, now the connection between the sub problem & the original one becomes clearer:
 	 * maxSubArray(A, i) = maxSubArray(A, i - 1) > 0 ? maxSubArray(A, i - 1) : 0 + A[i]; 
 	 * 
 	 * @param nums
@@ -77,7 +108,10 @@ public class MaximumSubArray {
 	 */
 	public int maxSubArrayV5(int[] nums) {
 		int n = nums.length;
-        int[] dp = new int[n];//dp[i] means the maximum subarray ending with A[i];
+		/**
+		 * dp[i] means the maximum subarray ending with A[i];
+		 */
+        int[] dp = new int[n];
         dp[0] = nums[0];
         int max = dp[0];
         

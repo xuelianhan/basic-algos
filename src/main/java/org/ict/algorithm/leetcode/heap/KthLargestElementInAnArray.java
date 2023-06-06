@@ -28,14 +28,16 @@ import java.util.PriorityQueue;
  * -10^4 <= nums[i] <= 10^4
  * @author sniper
  * @date 21 Sep, 2022
- * LC215
+ * LC215, Medium, frequency=154
  */
 public class KthLargestElementInAnArray {
 
     public static void main(String[] args) {
         int[] nums = {3,2,1,5,6,4};
         int k = 2;
-        int result = findKthLargestV1(nums, k) ;
+
+        KthLargestElementInAnArray instance = new KthLargestElementInAnArray();
+        int result = instance.findKthLargestV1(nums, k) ;
         System.out.println(result);
     }
 
@@ -144,6 +146,8 @@ public class KthLargestElementInAnArray {
     }
 
     /**
+     * Understanding the following solution
+     *
      * Use a Min-Heap of priority queue, keep queue size to k.
      * The root of heap is the minimum of the k numbers.
      * It's also the k'th-largest element in the heap.
@@ -161,12 +165,27 @@ public class KthLargestElementInAnArray {
      * Time Complexity O(N.log(k)).
      *
      * The real running time is 152ms
+     * -----------------------------------------------
+     * class Solution {
+     * public:
+     *     int findKthLargest(vector<int>& nums, int k) {
+     *         priority_queue<int> max_heap;
+     *         for (int i = 0; i < nums.size(); i++) {
+     *             max_heap.push(-nums[i]);
+     *             if (max_heap.size() > k) {
+     *                 max_heap.pop();
+     *             }
+     *         }
+     *         return -max_heap.top();
+     *     }
+     * };
+     * -------------------------------------------
      *
      * @param nums
      * @param k
      * @return
      */
-    public static int findKthLargestV1(int[] nums, int k) {
+    public int findKthLargestV1(int[] nums, int k) {
         PriorityQueue<Integer> minHeap = new PriorityQueue<>(k);
         for (int num : nums) {
             minHeap.offer(num);
