@@ -245,16 +245,12 @@ public class BinaryTreeVerticalOrderTraversal {
 
     static class Pair {
         private Integer seq;
-
         private TreeNode node;
-
         public Pair() {}
-
         public Pair(Integer seq, TreeNode node) {
             this.seq = seq;
             this.node = node;
         }
-
         public Integer getSeq() {
             return seq;
         }

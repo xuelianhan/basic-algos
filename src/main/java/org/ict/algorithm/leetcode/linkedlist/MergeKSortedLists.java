@@ -67,7 +67,7 @@ public class MergeKSortedLists {
         });
 
         /**
-         * Add head of every list into the queue.
+         * Add the head of every list into the queue.
          * Notice we only add the head, not add all nodes into the queue.
          */
         for (ListNode head : lists) {
@@ -78,7 +78,7 @@ public class MergeKSortedLists {
         }
 
         /**
-         * When dequeue from the queue, the output is natural order.
+         * When dequeued from the queue, the output is natural order.
          */
         ListNode dummy = new ListNode(0);
         ListNode pre = dummy;

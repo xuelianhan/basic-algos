@@ -17,7 +17,7 @@
 53.Maximum Subarray=152, DP, Divide and Conquer
 938.Range Sum of BST=149, DFS, Binary Search Tree
 121.Best Time to Buy and Sell Stock=148, DP
-49.Group Anagrams=138, Hash Table, Sorting
+49.Group Anagrams=138, Hash Table, Sorting, Array
 339.Nested List Weight Sum=134, DFS
 42.Trapping Rain Water=134, Two Pointers, DP, Monotonic Stack
 227.Basic Calculator II=127, Stack, Math

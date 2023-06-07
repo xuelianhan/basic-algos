@@ -92,20 +92,20 @@ public class MeetingRoomsII {
     public int minMeetingRoomsV3(int[][] intervals) {
         /**
          * Sort by start time at first.
-         * Both of the following two sorting method are OK.
+         * Both of the following two sorting methods are OK.
          */
         //Arrays.sort(intervals, Comparator.comparingInt(a -> a[0]));
         Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
 
 
         /**
-         * The minHeap stores end-time of each room.
+         * The minHeap stores the end-time of each room.
          */
         PriorityQueue<Integer> minHeap = new PriorityQueue<>();
         for (int[] interval : intervals) {
             /**
              * if peek of end-time less than or equals to start-time of current interval,
-             * so it's no need to allocate a new meeting room, and kick it out of the minHeap.
+             * so there's no need to allocate a new meeting room, and kick it out of the minHeap.
              */
             if (!minHeap.isEmpty() && minHeap.peek() <= interval[0]) {
                 minHeap.poll();

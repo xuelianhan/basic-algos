@@ -1,6 +1,8 @@
 package org.ict.algorithm.leetcode.array;
 
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.PriorityQueue;
 
 /**
  * p4
@@ -240,16 +242,115 @@ I know that was not very easy to understand, but all the above reasoning eventua
  If you have any suggestions to make the logic and implementation even more cleaner. Please do let me know!
  *
  *
- * LC4
+ * LC4, Hard, frequency=105
  *
  */
 public class MedianSortedArrays {
+
+    public double findMedianSortedArraysV3(int[] nums1, int[] nums2) {
+        int m = nums1.length;
+        int n = nums2.length;
+        int[] aux = new int[m + n];
+        int i = 0;
+        int j = 0;
+        int k = 0;
+        for (; i < m && j < n; k++) {
+            if (nums1[i] <= nums2[j]) {
+                aux[k] = nums1[i++];
+            } else {
+                aux[k] = nums2[j++];
+            }
+        }
+
+        while (i < m) {
+            aux[k++] = nums1[i++];
+        }
+        while (j < n) {
+            aux[k++] = nums2[j++];
+        }
+
+        int lo = 0;
+        int hi = m + n - 1;
+        int mid = lo + (hi - lo) / 2;
+        double res = 0;
+        if ((m + n) % 2 == 0) {
+            res = (aux[mid] + aux[mid + 1]) / 2.0;
+        } else {
+            res = aux[mid];
+        }
+        return res;
+    }
+
+    /**
+     * Max-heap small has the smaller half of the numbers.
+     */
+    PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Comparator.reverseOrder());
+
+    /**
+     * Min-heap large has the larger half of the numbers.
+     */
+    PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+
+    private int size = 0;
+
+    public void addNum(int num) {
+        if (size % 2 == 0) {
+            minHeap.add(num);
+            maxHeap.add(minHeap.poll());
+        } else {
+            maxHeap.add(num);
+            minHeap.add(maxHeap.poll());
+        }
+        size++;
+    }
+
+    public double findMedian() {
+        double res;
+        if (size % 2 == 0) {
+            res = (minHeap.peek() + maxHeap.peek()) / 2.0;
+        } else {
+            res = maxHeap.peek();
+        }
+        return res;
+    }
+
+    /**
+     * The Easiest Solution
+     * @author xueliansniper
+     * @param nums1
+     * @param nums2
+     * @return
+     */
+    public double findMedianSortedArraysV2(int[] nums1, int[] nums2) {
+        int m = nums1.length;
+        int n = nums2.length;
+        int i = 0;
+        int j = 0;
+        for (; i < m && j < n;) {
+            if (nums1[i] <= nums2[j]) {
+                addNum(nums1[i]);
+                i++;
+            } else {
+                addNum(nums2[j]);
+                j++;
+            }
+        }
+        while (i < m) {
+            addNum(nums1[i]);
+            i++;
+        }
+        while (j < n) {
+            addNum(nums2[j]);
+            j++;
+        }
+        return findMedian();
+    }
 	
-	public static double findMedianSortedArrays2(int[] nums1, int[] nums2) {
+	public static double findMedianSortedArraysV1(int[] nums1, int[] nums2) {
 		int N1 = nums1.length;
 		int N2 = nums2.length;
 		if (N1 < N2) {
-			return findMedianSortedArrays(nums2, nums1);	// Make sure A2 is the shorter one.
+			return findMedianSortedArraysV1(nums2, nums1);	// Make sure A2 is the shorter one.
 		}
 		int lo = 0, hi = N2 * 2;
 	    while (lo <= hi) {

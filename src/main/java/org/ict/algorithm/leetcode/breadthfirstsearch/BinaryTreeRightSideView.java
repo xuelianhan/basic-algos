@@ -15,7 +15,7 @@ import java.util.*;
  *   5     4       <---
  * 
  *
- * LC199, Medium
+ * LC199, Medium, frequency=112
  */
 public class BinaryTreeRightSideView {
 	
@@ -66,7 +66,7 @@ public class BinaryTreeRightSideView {
 				TreeNode cur = queue.poll();
 				/**
 				 * If we put left firstly, put right secondly,
-				 * then the last element is the target seeing from right-view.
+				 * then the last element is the target seeing from the right-view.
 				 */
 				if (i == size - 1) {
 					res.add(cur.val);

@@ -38,7 +38,7 @@ package org.ict.algorithm.leetcode.twopointers;
  *
  * @author sniper
  * @date 19 Apr, 2023
- * LC408, Medium, frequency=114
+ * LC408, Easy, frequency=114
  */
 public class ValidWordAbbreviation {
 

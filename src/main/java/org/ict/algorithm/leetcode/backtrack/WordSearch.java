@@ -71,6 +71,93 @@ public class WordSearch {
     }
 
     /**
+     * Time Cost 280ms
+     * ---------------------------------------
+     * class Solution:
+     *     def exist(self, board: List[List[str]], word: str) -> bool:
+     *         def dfs(i, j, pos):
+     *             if i < 0 or i >= m or j < 0 or j >= n or word[pos] != board[i][j]:
+     *                 return False
+     *             if pos == len(word) - 1:
+     *                 return True
+     *             t = board[i][j]
+     *             board[i][j] = '#'
+     *             for a, b in [[0, 1], [0, -1], [-1, 0], [1, 0]]:
+     *                 x, y = i + a, j + b
+     *                 if dfs(x, y, pos + 1):
+     *                     return True
+     *             board[i][j] = t
+     *             return False
+     *
+     *         m, n = len(board), len(board[0])
+     *         return any(dfs(i, j, 0) for i in range(m) for j in range(n))
+     * --------------------------------------------------------------------------
+     * @param board
+     * @param word
+     * @param m
+     * @param n
+     * @param i
+     * @param j
+     * @param pos
+     * @return
+     */
+    public boolean backtrackV3(char[][] board, String word, int m, int n, int i, int j, int pos) {
+        if (i < 0 || i >= m || j < 0 || j >= n || board[i][j] != word.charAt(pos)) {
+            return false;
+        }
+        if (pos == word.length() - 1) {
+            return true;
+        }
+        char origin = board[i][j];
+        board[i][j] = '#';
+        int[] dirs = {-1, 0, 1, 0, -1};
+        for (int k = 0; k < 4; k++) {
+            int x = i + dirs[k];
+            int y = j + dirs[k + 1];
+            if (backtrackV3(board, word, m, n, x, y, pos + 1)) {
+                return true;
+            }
+        }
+        board[i][j] = origin;
+        return false;
+    }
+
+    /**
+     * Time cost 256ms
+     * @param board
+     * @param word
+     * @param m
+     * @param n
+     * @param i
+     * @param j
+     * @param pos
+     * @return
+     */
+    public boolean backtrackV2(char[][] board, String word, int m, int n, int i, int j, int pos) {
+        /**
+         * Notice this line has been put before boarder checking.
+         */
+        if (pos == word.length()) {
+            return true;
+        }
+        if (i < 0 || i >= m || j < 0 || j >= n || board[i][j] != word.charAt(pos)) {
+            return false;
+        }
+
+        board[i][j] += 256;
+        int[] dirs = {-1, 0, 1, 0, -1};
+        for (int k = 0; k < 4; k++) {
+            int x = i + dirs[k];
+            int y = j + dirs[k + 1];
+            if (backtrackV2(board, word, m, n, x, y, pos + 1)) {
+                return true;
+            }
+        }
+        board[i][j] -= 256;
+        return false;
+    }
+
+    /**
      * Time Cost 147ms
      * @param board
      * @param word

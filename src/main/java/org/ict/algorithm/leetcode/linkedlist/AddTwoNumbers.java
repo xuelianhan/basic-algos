@@ -1,6 +1,5 @@
 package org.ict.algorithm.leetcode.linkedlist;
 
-import java.util.Stack;
 
 /**
  * You are given two non-empty linked lists representing two non-negative integers.
@@ -26,6 +25,12 @@ import java.util.Stack;
  *
  * Input: l1 = [2,4,9], l2 = [5,6,4,9]
  * Output: [7,0,4,0,1]
+ * --------
+ *    942
+ * + 9465
+ * -------
+ *  10407
+ *
  * 942 + 9465 = 10407 --> reverse operation --> 70401
  *
  *
@@ -37,7 +42,7 @@ import java.util.Stack;
  *
  * @author sniper
  * @date 17 Aug, 2022
- * LC2
+ * LC2, Medium, frequency=119
  * TOP100
  */
 public class AddTwoNumbers {
@@ -50,8 +55,8 @@ public class AddTwoNumbers {
          * Because numbers are reverse order,
          * so we add the number one by one
          * from lower to higher digit.
-         * This is the order of iteration the list.
-         * So we don't need using stack here.
+         * This is the order of iteration of the list.
+         * So we don't need to use stack here.
          */
         while (l1 != null || l2 != null || carry != 0) {
             int sum = 0;
