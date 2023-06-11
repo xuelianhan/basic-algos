@@ -3,7 +3,8 @@ package org.ict.algorithm.leetcode.breadthfirstsearch;
 import java.util.*;
 
 /**
- * A transformation sequence from the word beginWord to word endWord using a dictionary wordList is a sequence of words beginWord -> s1 -> s2 -> ... -> sk such that:
+ * A transformation sequence from the word beginWord to word endWord using a dictionary wordList is a sequence of
+ * words beginWord -> s1 -> s2 -> ... -> sk such that:
  *
  * Every adjacent pair of words differs by a single letter.
  * Every si for 1 <= i <= k is in wordList. Note that beginWord does not need to be in wordList.
@@ -72,7 +73,7 @@ public class WordLadder {
 	 * @return
 	 */
 	public static int ladderLengthV3(String beginWord, String endWord, List<String> wordList) {
-		Set<String> words = new HashSet<String>(wordList);
+		Set<String> words = new HashSet<>(wordList);
 		if (!words.contains(endWord)) {
 			return 0;
 		}

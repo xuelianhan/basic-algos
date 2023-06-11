@@ -144,7 +144,7 @@ public class SearchSuggestionsSystem {
                 }
                 node = node.children[idx];
                 /**
-                 * Collect the words-index with same character.
+                 * Collect the words-index with the same character.
                  */
                 res[i] = node.idxList;
             }

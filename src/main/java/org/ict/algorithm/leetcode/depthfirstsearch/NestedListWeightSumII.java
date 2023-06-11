@@ -67,7 +67,6 @@ public class NestedListWeightSumII {
             }
             weighted += unweighted;
         }
-
         return weighted;
     }
 
