@@ -34,6 +34,20 @@ package org.ict.algorithm.leetcode.binarysearch;
 public class SearchInRotatedSortedArray {
 
     /**
+     * todo
+     * Comments by lavender_sz:
+     * For those who struggled to figure out why it is real_mid=(mid+rot)%n: you can think of it this way:
+     * If we want to find real_mid for array [4,5,6,7,0,1,2],
+     * you can shift the part before the rotating point to the end of the array (after 2)
+     * so that the sorted array is "recovered" from the rotating point but only longer,
+     * like this: [4, 5, 6, 7, 0, 1, 2, 4, 5, 6, 7].
+     * The real mid in this longer array is the middle point between the rotating point and the last element:
+     * (rot + (hi+rot)) / 2. (hi + rot) is the index of the last element.
+     * And of course, this result is larger than the real middle.
+     * So you just need to wrap around and get the remainder: ((rot + (hi + rot)) / 2) % n.
+     * And this expression is effectively (rot + hi/2) % n, which is (rot+mid) % n.
+     * Hope it helps!
+     * ----------------------------
      * class Solution:
      *     def search(self, nums: List[int], target: int) -> int:
      *         n = len(nums)
@@ -66,6 +80,12 @@ public class SearchInRotatedSortedArray {
         int lo = 0;
         int n = nums.length;
         int hi = n - 1;
+        /**
+         * Find the index of the smallest value using binary search.
+         * Loop will terminate since mid < hi, and lo or hi will shrink by at least 1.
+         * Proof by contradiction that mid < hi: if mid==hi, then lo==hi and loop would have been terminated.
+         * While lo==hi, lo is the index of the smallest value and also the number of places rotated.
+         */
         while (lo < hi) {
             int mid = lo + (hi - lo) / 2;
             if (nums[mid] > nums[hi]) {
@@ -94,6 +114,7 @@ public class SearchInRotatedSortedArray {
 
 
     /**
+     * understanding the following solution
      * e.g. nums:[1,3], target:1
      * lo:0, hi:1, mid:0, hi=mid=0
      * @param nums
