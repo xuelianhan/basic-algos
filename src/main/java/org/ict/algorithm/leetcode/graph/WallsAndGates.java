@@ -51,6 +51,61 @@ public class WallsAndGates {
 
     /**
      * Breadth-First-Search
+     * ----------------------
+     * class Solution:
+     *   def wallsAndGates(self, rooms: List[List[int]]) -> None:
+     *     kInf = 2**31 - 1
+     *     m = len(rooms)
+     *     n = len(rooms[0])
+     *     dirs = [0, 1, 0, -1, 0]
+     *     q = collections.deque()
+     *
+     *     for i in range(m):
+     *       for j in range(n):
+     *         if rooms[i][j] == 0:
+     *           q.append((i, j))
+     *
+     *     while q:
+     *       i, j = q.popleft()
+     *       for k in range(4):
+     *         x = i + dirs[k]
+     *         y = j + dirs[k + 1]
+     *         if x < 0 or x == m or y < 0 or y == n:
+     *           continue
+     *         if rooms[x][y] != kInf:
+     *           continue
+     *         rooms[x][y] = rooms[i][j] + 1
+     *         q.append((x, y))
+     * ----------------------------
+     * class Solution {
+     *  public:
+     *   void wallsAndGates(vector<vector<int>>& rooms) {
+     *     const int m = rooms.size();
+     *     const int n = rooms[0].size();
+     *     const vector<int> dirs{0, 1, 0, -1, 0};
+     *     queue<pair<int, int>> q;
+     *
+     *     for (int i = 0; i < m; ++i)
+     *       for (int j = 0; j < n; ++j)
+     *         if (rooms[i][j] == 0)
+     *           q.emplace(i, j);
+     *
+     *     while (!q.empty()) {
+     *       const auto [i, j] = q.front();
+     *       q.pop();
+     *       for (int k = 0; k < 4; ++k) {
+     *         const int x = i + dirs[k];
+     *         const int y = j + dirs[k + 1];
+     *         if (x < 0 || x == m || y < 0 || y == n)
+     *           continue;
+     *         if (rooms[x][y] != INT_MAX)
+     *           continue;
+     *         rooms[x][y] = rooms[i][j] + 1;
+     *         q.emplace(x, y);
+     *       }
+     *     }
+     *   }
+     * };
      * @param rooms
      */
     public void wallsAndGatesV3(int[][] rooms) {
@@ -116,6 +171,28 @@ public class WallsAndGates {
 
     /**
      * Breadth-First-Search
+     * --------------------------
+     * class Solution {
+     * public:
+     *     void wallsAndGates(vector<vector<int>>& rooms) {
+     *         queue<pair<int, int>> q;
+     *         vector<vector<int>> dirs{{0, -1}, {-1, 0}, {0, 1}, {1, 0}};
+     *         for (int i = 0; i < rooms.size(); ++i) {
+     *             for (int j = 0; j < rooms[i].size(); ++j) {
+     *                 if (rooms[i][j] == 0) q.push({i, j});
+     *             }
+     *         }
+     *         while (!q.empty()) {
+     *             int i = q.front().first, j = q.front().second; q.pop();
+     *             for (int k = 0; k < dirs.size(); ++k) {
+     *                 int x = i + dirs[k][0], y = j + dirs[k][1];
+     *                 if (x < 0 || x >= rooms.size() || y < 0 || y >= rooms[0].size() || rooms[x][y] < rooms[i][j] + 1) continue;
+     *                 rooms[x][y] = rooms[i][j] + 1;
+     *                 q.push({x, y});
+     *             }
+     *         }
+     *     }
+     * };
      * @param rooms
      */
     public void wallsAndGatesV1(int[][] rooms) {
@@ -147,6 +224,25 @@ public class WallsAndGates {
 
     /**
      * Depth-First-Search
+     * ---------------------------
+     * class Solution {
+     * public:
+     *     void wallsAndGates(vector<vector<int>>& rooms) {
+     *         for (int i = 0; i < rooms.size(); ++i) {
+     *             for (int j = 0; j < rooms[i].size(); ++j) {
+     *                 if (rooms[i][j] == 0) dfs(rooms, i, j, 0);
+     *             }
+     *         }
+     *     }
+     *     void dfs(vector<vector<int>>& rooms, int i, int j, int val) {
+     *         if (i < 0 || i >= rooms.size() || j < 0 || j >= rooms[i].size() || rooms[i][j] < val) return;
+     *         rooms[i][j] = val;
+     *         dfs(rooms, i + 1, j, val + 1);
+     *         dfs(rooms, i - 1, j, val + 1);
+     *         dfs(rooms, i, j + 1, val + 1);
+     *         dfs(rooms, i, j - 1, val + 1);
+     *     }
+     * };
      * @param rooms
      */
     public void wallsAndGates(int[][] rooms) {
