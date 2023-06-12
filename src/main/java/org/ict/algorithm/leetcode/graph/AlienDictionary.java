@@ -45,10 +45,68 @@ public class AlienDictionary {
 
     public static void main(String[] args) {
         String[] words = {"wrt","wrf","er","ett","rftt"};
-        //String[] words = {"z","x", "z"};
+        //String[] words = {"z","x"};
         AlienDictionary instance = new AlienDictionary();
-        String res = instance.alienOrderV3(words);
+        String res = instance.alienOrderV4(words);
         System.out.println(res);
+    }
+
+    public String alienOrderV4(String[] words) {
+        Map<Character, Set<Character>> graph = new HashMap<>();
+        int[] inDegrees = new int[26];
+        buildGraph(words, graph, inDegrees);
+        return topologicalOrder(graph, inDegrees);
+    }
+
+    private void buildGraph(String[] words, Map<Character, Set<Character>> graph, int[] inDegrees) {
+        for (String word : words) {
+            for (char ch : word.toCharArray()) {
+                graph.putIfAbsent(ch, new HashSet<>());
+            }
+        }
+
+        for (int i = 1; i < words.length; i++) {
+            String w1 = words[i - 1];
+            String w2 = words[i];
+
+            int min = Math.min(w1.length(), w2.length());
+            for (int j = 0; j < min; j++) {
+                char u = w1.charAt(j);
+                char v = w2.charAt(j);
+                if (u != v) {
+                    if (!graph.get(u).contains(v)) {
+                        graph.get(u).add(v);
+                        inDegrees[v - 'a']++;
+                    }
+                    // Later characters' order are meaningless
+                    break;
+                }
+                // w1 = "ab", w2 = "a" -> invalid
+                if (j == min - 1 && w1.length() > w2.length()) {
+                    graph.clear();
+                    return;
+                }
+            }
+        }
+    }
+
+    private String topologicalOrder(Map<Character, Set<Character>> graph, int[] inDegrees) {
+        StringBuilder res = new StringBuilder();
+        Queue<Character> queue = graph.keySet()
+                .stream()
+                .filter(c -> inDegrees[c - 'a'] == 0)
+                .collect(Collectors.toCollection(ArrayDeque::new));
+
+        while (!queue.isEmpty()) {
+            char u = queue.poll();
+            res.append(u);
+            for (char v : graph.get(u)) {
+                if (--inDegrees[v - 'a'] == 0) {
+                    queue.offer(v);
+                }
+            }
+        }
+        return res.length() == graph.size() ? res.toString() : "";
     }
 
     public String alienOrderV3(String[] words) {
