@@ -1,4 +1,3 @@
-432.All O`one Data Structure=17
 269.Alien Dictionary=16
 332.Reconstruct Itinerary=16
 346.Moving Average from Data Stream=16

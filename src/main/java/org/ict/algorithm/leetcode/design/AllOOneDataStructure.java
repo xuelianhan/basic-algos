@@ -81,15 +81,18 @@ public class AllOOneDataStructure {
     /**
      * Time Cost 55ms
      *  node-root, 0,keys:[]
+     *   ^
      *   |
      *   V
-     *  node-a, 1, keys:[a]
+     *  node-1, 1, keys:[a, d, f]
+     *   ^
      *   |
      *   V
-     *  node-b, 2, keys:[b]
+     *  node-2, 2, keys:[b, e]
+     *   ^
      *   |
      *   V
-     *  node-c, 3, keys:[c]
+     *  node-3, 3, keys:[c]
      *
      * @author StefanPochmann
      * @see <a href="https://leetcode.com/problems/all-oone-data-structure/solutions/91398/c-solution-with-comments/"></a>
@@ -164,6 +167,9 @@ public class AllOOneDataStructure {
         Node prev;
         Node next;
         int cnt;
+        /**
+         * Store the keys with the same cnt.
+         */
         Set<String> keys = new HashSet<>();
 
         public Node() {
