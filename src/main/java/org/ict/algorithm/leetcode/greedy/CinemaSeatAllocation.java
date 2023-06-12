@@ -98,7 +98,7 @@ public class CinemaSeatAllocation {
      * @param reservedSeats
      * @return
      */
-    public int maxNumberOfFamiliesV2(int n, int[][] reservedSeats) {
+    public int maxNumberOfFamiliesV4(int n, int[][] reservedSeats) {
         Map<Integer, Integer> graph = new HashMap<>();
         for (int[] reserved : reservedSeats) {
             int row = reserved[0];
@@ -113,23 +113,34 @@ public class CinemaSeatAllocation {
             int reserved = graph.get(row);
             int cnt = 0;
             /**
-             * Check if seats 2,3,4,5 are available
+             * Check if seats 2,3,4,5 are available(0b00000111100, from right side view)
+             * (1 << 2) | (1 << 3) | (1 << 4) | (1 << 5) = 60
              */
-            if ((reserved &  60) == 0) cnt += 1;
+            if ((reserved & 60) == 0) cnt += 1;
             /**
-             * Check if seats 6,7,8,9 are available
+             * Check if seats 6,7,8,9 are available(0b1111000000, from right side view)
+             * (1 << 6) | (1 << 7) | (1 << 8) | (1 << 9) = 960
              */
             if ((reserved & 960) == 0) cnt += 1;
             /**
-             * Check if seats 4,5,6,7 are available
+             * Check if seats 4,5,6,7 are available(0b0011110000, from right side view)
+             * (1 << 4) | (1 << 5) | (1 << 6) | (1 << 7) = 240
              */
-            if ((reserved & 240) == 0 && cnt == 0) cnt = 1;
+            if ((reserved & 240) == 0 && cnt == 0) {
+                cnt = 1;
+            }
             max += cnt;
         }
         return max + 2 * (n - graph.size());
     }
 
-    public int maxNumberOfFamiliesV1(int n, int[][] reservedSeats) {
+    /**
+     * Bit-Vector Solution
+     * @param n
+     * @param reservedSeats
+     * @return
+     */
+    public int maxNumberOfFamiliesV3(int n, int[][] reservedSeats) {
         Map<Integer, Integer> graph = new HashMap<>();
         for (int[] e : reservedSeats) {
             int i = e[0];
@@ -153,6 +164,74 @@ public class CinemaSeatAllocation {
             }
         }
         return res;
+    }
+
+    /**
+     * Understanding the following solution
+     * Bit-Vector Solution
+     * @param n
+     * @param reservedSeats
+     * @return
+     */
+    public int maxNumberOfFamiliesV2(int n, int[][] reservedSeats) {
+        Map<Integer, Integer> graph = new HashMap<>();
+        for (int[] e : reservedSeats) {
+            int i = e[0];
+            int j = e[1];
+            graph.put(i, graph.getOrDefault(i, 0) | 1 << (10 - j));
+        }
+
+        int res = 2 * (n - graph.size());
+        for (int i : graph.keySet()) {
+            int seats = graph.get(i);
+            if ((seats & 0b0111111110) == 0) {
+                res += 2;
+            } else if ((seats & 0b0111100000) == 0
+                    || (seats & 0b0001111000) == 0
+                    || (seats & 0b0000011110) == 0) {
+                res += 1;
+            }
+        }
+        return res;
+    }
+
+    /**
+     * Understanding the following solution
+     * HashSet Solution
+     * @param n
+     * @param reservedSeats
+     * @return
+     */
+    public int maxNumberOfFamiliesV1(int n, int[][] reservedSeats) {
+        Map<Integer, Set<Integer>> graph = new HashMap<>();
+        for (int[] e : reservedSeats) {
+            int i = e[0];
+            int j = e[1];
+            graph.putIfAbsent(i, new HashSet<>());
+            graph.get(i).add(j);
+        }
+
+        int res = 2 * (n - graph.size());
+        for (int i : graph.keySet()) {
+            Set<Integer> set = graph.get(i);
+            if (noneOfRange(set, 2, 9)) {
+                res += 2;
+            } else if (noneOfRange(set, 2, 5)
+                    || noneOfRange(set, 4, 7)
+                    || noneOfRange(set, 6, 9)) {
+                res += 1;
+            }
+        }
+        return res;
+    }
+
+    private boolean noneOfRange(Set<Integer> set, int start, int end) {
+        for (int i = start; i <= end; i++) {
+            if (set.contains(i)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
