@@ -232,6 +232,17 @@ public class AlienDictionary {
 
     /**
      * Depth-First-Search
+     * ------------------------
+     * To save space, it is not necessary to use a HashSet to record all occurrences of the letters as in the above solution,
+     * instead, this two-dimensional array can be used to store this information.
+     * At the same time, this two-dimensional array can also hold the information of the order pairs,
+     * as long as graph[i][j] = true, we know that the letter in position i is in front of the letter in position j.
+     * The method of finding the sequential pairs is exactly the same as the above solution,
+     * after which the DFS traversal can be performed.
+     * Since the DFS traversal needs to mark the traversal nodes, an array of visited is used.
+     * Since it is a depth-first traversal,
+     * it is not necessary to start traversing from the node with the entry degree of 0,
+     * but from any node.
      * @param words
      * @return
      */
