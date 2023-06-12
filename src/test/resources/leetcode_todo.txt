@@ -1,6 +1,3 @@
-332.Reconstruct Itinerary=16
-346.Moving Average from Data Stream=16
-286.Walls and Gates=16
 25.Reverse Nodes in k-Group=15
 552.Student Attendance Record II=14
 1487.Making File Names Unique=14

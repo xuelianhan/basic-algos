@@ -36,6 +36,7 @@ import java.util.stream.Stream;
  * words[i] consists of only lowercase English letters.
  * @author sniper
  * @date 12 Jun 2023
+ *
  * This Problem is similar with
  * {@link org.ict.algorithm.leetcode.breadthfirstsearch.CourseSchedule}
  * {@link org.ict.algorithm.leetcode.breadthfirstsearch.CourseScheduleTwo}
@@ -109,6 +110,11 @@ public class AlienDictionary {
         return res.length() == graph.size() ? res.toString() : "";
     }
 
+    /**
+     * Understanding the following solution
+     * @param words
+     * @return
+     */
     public String alienOrderV3(String[] words) {
         Map<Character, Set<Character>> graph = new HashMap<>();
         int[] inDegrees = new int[26];
@@ -168,6 +174,8 @@ public class AlienDictionary {
 
 
     /**
+     * Understanding the following solution
+     *
      * Topological-Sort
      * @param words
      * @return
@@ -203,6 +211,7 @@ public class AlienDictionary {
                         graph.get(ch1).add(ch2);
                         inDegrees.put(ch2, inDegrees.get(ch2) + 1);
                     }
+                    // Later characters' order are meaningless
                     break;
                 }
             }
