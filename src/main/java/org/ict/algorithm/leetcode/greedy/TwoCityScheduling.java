@@ -81,6 +81,21 @@ public class TwoCityScheduling {
     /**
      * Understanding the following solution
      * Time Cost 1ms
+     * -------------------
+     * First of all, suppose we let all people go to city A, then the total cost is to add up the cost of all people going to city A.
+     * But now we need to let half of them go to city B.
+     * Since the cost is different, how to calculate it?
+     * If the cost of going to city B is less than the cost of going to city A,
+     * then the difference between the two should be refunded,
+     * and if the cost of going to city A is less than the cost of going to city B,
+     * then the difference between the two should be added.
+     * So, if the cost to city B is negative, then it is refund, and if it is positive, then it is the additional cost.
+     * Of course, we want it to be negative, and the smaller, the better,
+     * so that we can refund and make the whole cost smaller.
+     * So we start by iterating through the costs array,
+     * add the cost to city A to the result res,
+     * then put the difference between the cost to city B and the cost to city A into the refund array,
+     * then sort the refund array and add the first n values to the result res.
      * @param costs
      * @return
      */
