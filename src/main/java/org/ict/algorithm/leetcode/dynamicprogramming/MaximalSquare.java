@@ -31,27 +31,69 @@ package org.ict.algorithm.leetcode.dynamicprogramming;
  */
 public class MaximalSquare {
 
-    public int maximalSquareV4(char[][] matrix) {
-        int res = 0;
-        return res;
-    }
 
-    public int maximalSquareV3(char[][] matrix) {
-        int res = 0;
-        return res;
-    }
-
+    /**
+     * 1-Dimension Dynamic Programming
+     * @param matrix
+     * @return
+     */
     public int maximalSquareV2(char[][] matrix) {
-        int res = 0;
-        return res;
+        int m = matrix.length;
+        int n = matrix[0].length;
+        int[] dp = new int[n];
+        int maxLength = 0;
+        /**
+         * dp[i - 1][j - 1]
+         */
+        int prev = 0;
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                int cache = dp[j];
+                if (i == 0 || j == 0 || matrix[i][j] == '0') {
+                    dp[j] = (matrix[i][j] == '1' ? 1 : 0);
+                } else {
+                    dp[j] = Math.min(prev, Math.min(dp[j], dp[j - 1])) + 1;
+                }
+                maxLength = Math.max(maxLength, dp[j]);
+                prev = cache;
+            }
+        }
+
+        return maxLength * maxLength;
     }
 
+    /**
+     * 2-Dimension Dynamic Programming
+     * Time Cost 7ms
+     * @param matrix
+     * @return
+     */
     public int maximalSquareV1(char[][] matrix) {
-        int res = 0;
-        return res;
+        int m = matrix.length;
+        int n = matrix[0].length;
+        int[][] dp = new int[m][n];
+        int maxLength = 0;
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (i == 0 || j == 0 || matrix[i][j] == '0') {
+                    dp[i][j] = (matrix[i][j] == '1' ? 1 : 0);
+                } else {
+                    dp[i][j] = Math.min(dp[i - 1][j - 1], Math.min(dp[i - 1][j], dp[i][j - 1])) + 1;
+                }
+                maxLength = Math.max(maxLength, dp[i][j]);
+            }
+        }
+        return maxLength * maxLength;
     }
 
 
+    /**
+     * Time Cost 3ms
+     * @param matrix
+     * @return
+     */
     public int maximalSquare(char[][] matrix) {
         /**
          * number of rows
@@ -67,20 +109,20 @@ public class MaximalSquare {
          * Copy First row to aux
          */
         for (int j = 0; j < cols; j++) {
-            //Converting char to it's int value, such as '1' to 1
+            //Converting char to int value, such as '1' to 1
             aux[0][j] = matrix[0][j] - '0';
         }
         /**
          * Copy first column to aux
          */
         for (int i = 0; i < rows; i++) {
-            //Converting char to it's int value, such as '1' to 1
+            //Converting char to int value, such as '1' to 1
             aux[i][0] = matrix[i][0]  - '0';
         }
         for (int i = 1; i < rows; i++) {
             for (int j = 1; j < cols; j++) {
                 if (matrix[i][j] == '1') {
-                    aux[i][j] = Math.min(aux[i-1][j], Math.min(aux[i][j-1], aux[i-1][j-1])) + 1;
+                    aux[i][j] = Math.min(aux[i - 1][j], Math.min(aux[i][j - 1], aux[i - 1][j - 1])) + 1;
                 } else {
                     aux[i][j] = 0;
                 }
