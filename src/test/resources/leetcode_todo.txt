@@ -1,5 +1,3 @@
-1487.Making File Names Unique=14
-1029.Two City Scheduling=14
 1438.Longest Continuous Subarray With Absolute Diff Less Than or Equal to Limit=14
 221.Maximal Square=14
 724.Find Pivot Index=13

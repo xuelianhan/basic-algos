@@ -45,6 +45,12 @@ package org.ict.algorithm.leetcode.dynamicprogramming;
 public class StudentAttendanceRecordII {
 
     /**
+     * todo
+     * Understanding the following solution
+     * ---------------------------------------
+     * P(n) is the total number of all possible attendance records ended with 'P' with length n.
+     * L(n) is the total number of all possible attendance records ended with 'L' with length n.
+     * A(n) is the total number of all possible attendance records ended with 'A' with length n.
      * @see <a href="https://leetcode.com/problems/student-attendance-record-ii/solutions/101643/share-my-o-n-c-dp-solution-with-thinking-process-and-explanation/"></a>
      * @author KJer
      * @param n
@@ -56,16 +62,16 @@ public class StudentAttendanceRecordII {
         int[] P = new int [n];
         int[] L = new int [n];
 
-        P[0] = 1;
-        L[0] = 1;
-        A[0] = 1;
+        P[0] = 1;//P
+        L[0] = 1;//L
+        A[0] = 1;//A
 
         if (n > 1) {
-            L[1] = 3;
-            A[1] = 2;
+            L[1] = 3;//AL, PL, LL
+            A[1] = 2;//LA, PA
         }
         if (n > 2) {
-            A[2] = 4;
+            A[2] = 4;//LLA, LPA, PLA, PPA
         }
         for(int i = 1; i < n; i++){
             A[i - 1] %= m;
