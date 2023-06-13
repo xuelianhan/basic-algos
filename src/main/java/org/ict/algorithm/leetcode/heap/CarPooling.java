@@ -32,7 +32,7 @@ package org.ict.algorithm.leetcode.heap;
  * 1 <= capacity <= 10^5
  * @author sniper
  * @date 06 Jan, 2023
- * LC1094
+ * LC1094, frequency=10
  */
 public class CarPooling {
 
