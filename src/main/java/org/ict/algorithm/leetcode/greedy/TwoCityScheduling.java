@@ -42,8 +42,20 @@ import java.util.Arrays;
  */
 public class TwoCityScheduling {
 
+    public static void main(String[] args) {
+        int[][] costs = {{10,20}, {30,200}, {400,50}, {30,20}};
+        TwoCityScheduling instance = new TwoCityScheduling();
+        instance.twoCitySchedCostV1(costs);
+    }
+
     /**
      * Time Cost 2ms
+     * e.g. costs = {{10,20}, {30,200}, {400,50}, {30,20}};
+     * After sorting:
+     * [[30, 200], [10, 20], [30, 20], [400, 50]]
+     * 170, 10, -10, -350
+     * res = 30 + 20 + 10 + 50 = 110
+     *
      * @param costs
      * @return
      */
@@ -59,6 +71,7 @@ public class TwoCityScheduling {
         // Sort in descending order by the money saved if we fly a person to A
         // instead of B.
         Arrays.sort(costs, (a, b) -> (b[1] - b[0]) - (a[1] - a[0]));
+        //System.out.println(Arrays.deepToString(costs));
         for (int i = 0; i < n; i++) {
             res += costs[i][0] + costs[i + n][1];
         }
@@ -66,6 +79,7 @@ public class TwoCityScheduling {
     }
 
     /**
+     * Understanding the following solution
      * Time Cost 1ms
      * @param costs
      * @return
