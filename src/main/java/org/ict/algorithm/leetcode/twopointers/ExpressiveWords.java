@@ -117,6 +117,9 @@ public class ExpressiveWords {
             while (j2 < m && w.charAt(j2) == w.charAt(j)) {
                 j2++;
             }
+            /**
+             * e.g. s = "aaa", words = ["aaaa"], so we use max(3, j2 - j) here.
+             */
             if (i2 - i != j2 - j && i2 - i < Math.max(3, j2 - j)) {
                 return false;
             }
