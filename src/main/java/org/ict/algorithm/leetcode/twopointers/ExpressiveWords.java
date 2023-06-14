@@ -119,6 +119,7 @@ public class ExpressiveWords {
             }
             /**
              * e.g. s = "aaa", words = ["aaaa"], so we use max(3, j2 - j) here.
+             * expected 0, but if you remove max, you will get 1 at last.
              */
             if (i2 - i != j2 - j && i2 - i < Math.max(3, j2 - j)) {
                 return false;
