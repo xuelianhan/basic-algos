@@ -54,19 +54,30 @@ public class DungeonGame {
         System.out.println(res);
     }
 
-    public int calculateMinimumHPV2(int[][] dungeon) {
-        int res = 0;
-        return res;
-    }
-
-
+    /**
+     * 1-Dimension DP
+     * @param dungeon
+     * @return
+     */
     public int calculateMinimumHPV1(int[][] dungeon) {
-        int res = 0;
-        return res;
+        int m = dungeon.length;
+        int n = dungeon[0].length;
+        int[] dp = new int[n + 1];
+        Arrays.fill(dp, Integer.MAX_VALUE);
+        dp[n - 1] = 1;
+
+        for (int i = m - 1; i >= 0; i--) {
+            for (int j = n - 1; j >= 0; j--) {
+                dp[j] = Math.max(1, Math.min(dp[j], dp[j + 1]) - dungeon[i][j]);
+            }
+        }
+
+        return dp[0];
     }
 
     /**
      * Understanding the following solution
+     * 2-Dimension DP
      * Time Cost 2ms
      * -----------------
      * e.g. dungeon = [[-2,-3,3],
