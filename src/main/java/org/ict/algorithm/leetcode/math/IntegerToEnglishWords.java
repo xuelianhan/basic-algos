@@ -57,7 +57,7 @@ public class IntegerToEnglishWords {
             s.append(helper(num / 100)).append(" Hundred ").append(helper(num % 100));
         else if (num < 1_000_000)
             s.append(helper(num / 1000)).append(" Thousand ").append(helper(num % 1000));
-        else if (num < 1000000000)
+        else if (num < 1_000_000_000)
             s.append(helper(num / 1_000_000)).append(" Million ").append(helper(num % 1_000_000));
         else
             s.append(helper(num / 1_000_000_000)).append(" Billion ").append(helper(num % 1_000_000_000));
