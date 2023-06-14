@@ -38,13 +38,32 @@ package org.ict.algorithm.leetcode.dynamicprogramming;
 public class DeleteAndEarn {
 
     public int deleteAndEarnV2(int[] nums) {
-        int res = 0;
-        return res;
+        int[] bucket = new int[10_001];
+        for (int num : nums) {
+            bucket[num] += num;
+        }
+
+        for (int i = 2; i < 10_001; i++) {
+            bucket[i] = Math.max(bucket[i - 1], bucket[i - 2] + bucket[i]);
+        }
+        return bucket[10_000];
     }
 
     public int deleteAndEarnV1(int[] nums) {
-        int res = 0;
-        return res;
+        int[] bucket = new int[10001];
+        for (int num : nums) {
+            bucket[num] += num;
+        }
+
+        int takePrev = 0;
+        int notTakePrev = 0;
+        for (int num : bucket) {
+            int dp = Math.max(takePrev, notTakePrev + num);
+            notTakePrev = takePrev;
+            takePrev = dp;
+        }
+
+        return takePrev;
     }
 
     /**
