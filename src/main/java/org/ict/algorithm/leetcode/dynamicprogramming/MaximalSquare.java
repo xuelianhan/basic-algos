@@ -31,13 +31,44 @@ package org.ict.algorithm.leetcode.dynamicprogramming;
  */
 public class MaximalSquare {
 
+    /**
+     * 1-Dimension Dynamic Programming
+     * @param matrix
+     * @return
+     */
+    public int maximalSquareV4(char[][] matrix) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+        int[] dp = new int[m + 1];
+        int maxLength = 0;
+        /**
+         * dp[i - 1][j - 1]
+         */
+        int prev = 0;
+        for (int j = 0; j < n; j++) {
+            /**
+             * Notice i <= m instead of i < m, e.g. matrix = [["1"]], expected 1
+             */
+            for (int i = 1; i <= m; i++) {
+                int cache = dp[i];
+                if (matrix[i - 1][j] == '1') {
+                    dp[i] = Math.min(dp[i], Math.min(dp[i - 1], prev)) + 1;
+                    maxLength = Math.max(maxLength, dp[i]);
+                } else {
+                    dp[i] = 0;
+                }
+                prev = cache;
+            }
+        }
+        return maxLength * maxLength;
+    }
 
     /**
      * 1-Dimension Dynamic Programming
      * @param matrix
      * @return
      */
-    public int maximalSquareV2(char[][] matrix) {
+    public int maximalSquareV3(char[][] matrix) {
         int m = matrix.length;
         int n = matrix[0].length;
         int[] dp = new int[n];
@@ -60,6 +91,31 @@ public class MaximalSquare {
             }
         }
 
+        return maxLength * maxLength;
+    }
+
+    /**
+     * 2-Dimension Dynamic Programming
+     * Time Cost 7ms
+     * @param matrix
+     * @return
+     */
+    public int maximalSquareV2(char[][] matrix) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+        int[][] dp = new int[m][n];
+        int maxLength = 0;
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (i == 0 || j == 0) {
+                    dp[i][j] = matrix[i][j] - '0';
+                } else if (matrix[i][j] == '1') {
+                    dp[i][j] = Math.min(dp[i - 1][j - 1], Math.min(dp[i - 1][j], dp[i][j - 1])) + 1;
+                }
+                maxLength = Math.max(maxLength, dp[i][j]);
+            }
+        }
         return maxLength * maxLength;
     }
 
