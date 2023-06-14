@@ -80,9 +80,44 @@ public class DungeonGame {
      * 2-Dimension DP
      * Time Cost 2ms
      * -----------------
+     * dp[i][j] is used to represent the starting blood volume from the current location (i, j),
+     * the first to deal with the starting life value of the room where the princess is located,
+     * and then slowly spread to the first room, and constantly get the optimal life value of each location.
+     * If we start traversing from the starting position,
+     * we do not know the initial amount of blood that should be initialized,
+     * but when we reach the princess room, we know that the amount of blood can not be less than 1.
+     * If the princess room also needs to drop blood,
+     * then after dropping blood left 1 to ensure that the starting position of the minimum amount of blood.
+     * Then the following to derive the state transfer equation,
+     * first consider what determines the amount of blood in each position,
+     * the knight will hang mainly because when going to the next room,
+     * the amount of blood dropped is greater than its own blood value,
+     * and can go to the room only the right and the lower side,
+     * so the current position of the blood is determined by the right and the lower room survivable blood,
+     * furthermore, it should be determined by the smaller survivable blood,
+     * because the smaller We need the starting blood to be as small as possible because we are pushing backwards,
+     * and the amount of blood left after the PK when the knight enters the room in the reverse direction
+     * is the starting blood before the pk when the knight enters the room in the forward direction.
+     * So use the right side of the current room
+     * and the next room in the smaller amount of blood of the knight minus the number of the current room,
+     * if it is a negative number or 0, that the current room is positive,
+     * so the knight into the current room after the value of life is 1 on the line,
+     * because there will be no blood loss.
+     * And if the difference is positive, the current room's blood may be positive or negative,
+     * but the knight's life value after entering the current room must be the difference.
+     * So our state transfer equation is dp[i][j] = max(1, min(dp[i+1][j], dp[i][j+1]) - dungeon[i][j]).
+     * In order to better deal with the boundary case,
+     * our two-dimensional dp array than the original array of the number of rows and columns are more than 1,
+     * first all initialized to integer number maximum INT_MAX, as we know that after reaching the princess room,
+     * the amount of blood after the knight firefight is at least 1,
+     * then at this time the right side of the princess room and the next room in the number we set to 1,
+     * so that the amount of survival blood to reach the princess room is 1 minus The number of the princess room compared to 1,
+     * take the larger value.
+     * -----------------------------
      * e.g. dungeon = [[-2,-3,3],
      *                [-5,-10,1],
      *                [10,30,-5]]
+     *
      * dp:
      * [
      *   [7,   5,  2, MAX],
