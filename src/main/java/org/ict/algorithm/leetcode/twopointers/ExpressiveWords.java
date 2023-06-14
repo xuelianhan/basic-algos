@@ -45,8 +45,16 @@ package org.ict.algorithm.leetcode.twopointers;
  */
 public class ExpressiveWords {
 
+    public static void main(String[] args) {
+        String s = "aaa";
+        String[] words = {"aaaa"};
+        ExpressiveWords instance = new ExpressiveWords();
+        int res = instance.expressiveWordsV2(s, words);
+        System.out.println(res);
+    }
+
     /**
-     *
+     * Understanding the following solution.
      * Time Cost 2ms
      *
      * @param s
@@ -120,6 +128,8 @@ public class ExpressiveWords {
             /**
              * e.g. s = "aaa", words = ["aaaa"], so we use max(3, j2 - j) here.
              * expected 0, but if you remove max, you will get 1 at last.
+             * i:0, j:0, i2:3, j2:4, i2 - i = 3, j2 - j = 4, i2 - i
+             * i2 - i != j2 - j and i2 - i = 3 < max(3, 4), so return false
              */
             if (i2 - i != j2 - j && i2 - i < Math.max(3, j2 - j)) {
                 return false;
