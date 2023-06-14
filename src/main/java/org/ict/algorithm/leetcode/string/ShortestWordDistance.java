@@ -48,6 +48,32 @@ public class ShortestWordDistance {
     /**
      * Understanding the following Solution
      * Two-Pointer Solution
+     * ------------------------------------
+     * class Solution:
+     *     def shortestDistance(self, wordsDict: List[str], word1: str, word2: str) -> int:
+     *         i = j = -1
+     *         res = inf
+     *         for k, w in enumerate(wordsDict):
+     *             if w == word1:
+     *                 i = k
+     *             if w == word2:
+     *                 j = k
+     *             if i != -1 and j != -1:
+     *                 res = min(res, abs(i - j))
+     *         return res
+     * --------------------------------------------
+     * class Solution {
+     * public:
+     *     int shortestDistance(vector<string>& words, string word1, string word2) {
+     *         int p1 = -1, p2 = -1, res = INT_MAX;
+     *         for (int i = 0; i < words.size(); ++i) {
+     *             if (words[i] == word1) p1 = i;
+     *             else if (words[i] == word2) p2 = i;
+     *             if (p1 != -1 && p2 != -1) res = min(res, abs(p1 - p2));
+     *         }
+     *         return res;
+     *     }
+     * };
      * @param wordsDict
      * @param word1
      * @param word2
