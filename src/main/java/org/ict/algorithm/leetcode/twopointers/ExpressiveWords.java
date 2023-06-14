@@ -46,51 +46,86 @@ package org.ict.algorithm.leetcode.twopointers;
 public class ExpressiveWords {
 
     /**
+     *
      * Time Cost 2ms
+     *
      * @param s
      * @param words
      * @return
      */
     public int expressiveWordsV2(String s, String[] words) {
         int res = 0;
-        for (String t : words) {
-            if (check(s, t)) {
+        for (String w : words) {
+            if (check(s, w)) {
                 res++;
             }
         }
         return res;
     }
 
-    private boolean check(String s, String t) {
-        int m = s.length(), n = t.length();
-        if (n > m) {
-            return false;
-        }
+    /**
+     * e.g. s = "heeellooo", w = "hello"
+     * n:9, m:5
+     * i:0, j:0, i2:0, j2:0, i < 9 and j < 5
+     *           s[0] == w[0] == 'h'
+     *           i2 < 9 and s[i2] == s[i], i2++, i2:1
+     *           j2 < 5 and w[j2] == w[j], j2++, j2:1
+     *           i2 - i = 1, j2 - j = 1,
+     *           i = i2, j = j2
+     * i:1, j:1, i2:1, j2:1, i < 9 and j < 5
+     *           s[1] == w[1] == 'e'
+     *           i2 < 9 and s[i2] == s[i], i2++, i2:2
+     *           i2 < 9 and s[i2] == s[i], i2++, i2:3
+     *           i2 < 9 and s[i2] == s[i], i2++, i2:4
+     *           j2 < 5 and w[j2] == w[j], j2++, j2:2
+     *           i2 - i = 4 - 1= 3, j2 - j = 2 - 1 = 1
+     *           i = i2, j = j2
+     * i:4, j:2, i2:4, j2:2, i < 9 and j < 5
+     *           s[4] == w[2] == 'l'
+     *           i2 < 9 and s[i2] == s[i], i2++, i2:5
+     *           i2 < 9 and s[i2] == s[i], i2++, i2:6
+     *           j2 < 5 and w[j2] == w[j], j2++, j2:3
+     *           j2 < 5 and w[j2] == w[j], j2++, j2:4
+     *           i2 - i = 6 - 4 = 2, j2 - j = 4 - 2 = 2
+     *           i = i2, j = j2
+     * i:6, j:4, i2:6, j2:4, i < 9 and j < 5
+     *           s[6] == w[4] == 'o'
+     *           i2 < 9 and s[i2] == s[i], i2++, i2:7
+     *           i2 < 9 and s[i2] == s[i], i2++, i2:8
+     *           i2 < 9 and s[i2] == s[i], i2++, i2:9
+     *           j2 < 5 and w[j2] == w[j], j2++, j2:5
+     *           i2 - i = 9 - 6 = 3, j2 - j = 5 - 4 = 1
+     *           i = i2, j = j2
+     * i:9, j:5, end-for-loop
+     * return i == 9 and j == 5
+     *
+     * @param s
+     * @param w
+     * @return
+     */
+    private boolean check(String s, String w) {
+        int n = s.length();
+        int m = w.length();
         int i = 0, j = 0;
-        while (i < m && j < n) {
-            if (s.charAt(i) != t.charAt(j)) {
+        for (int i2 = 0, j2 = 0; i < n && j < m; i = i2, j = j2) {
+            if (s.charAt(i) != w.charAt(j)) {
                 return false;
             }
-            int k = i;
-            while (k < m && s.charAt(k) == s.charAt(i)) {
-                ++k;
+            while (i2 < n && s.charAt(i2) == s.charAt(i)) {
+                i2++;
             }
-            int c1 = k - i;
-            i = k;
-            k = j;
-            while (k < n && t.charAt(k) == t.charAt(j)) {
-                ++k;
+            while (j2 < m && w.charAt(j2) == w.charAt(j)) {
+                j2++;
             }
-            int c2 = k - j;
-            j = k;
-            if (c1 < c2 || (c1 < 3 && c1 != c2)) {
+            if (i2 - i != j2 - j && i2 - i < Math.max(3, j2 - j)) {
                 return false;
             }
         }
-        return i == m && j == n;
+        return i == n && j == m;
     }
 
     /**
+     * Understanding the following solution
      * Time Cost 2ms
      * @param s
      * @param words
@@ -110,11 +145,11 @@ public class ExpressiveWords {
         final int n = s.length();
         final int m = word.length();
         int j = 0;
-        for (int i = 0; i < n; ++i) {
+        for (int i = 0; i < n; i++) {
             if (j < m && s.charAt(i) == word.charAt(j)) {
                 j++;
             } else if (i > 1 && s.charAt(i) == s.charAt(i - 1) && s.charAt(i - 1) == s.charAt(i - 2)) {
-            } else if (0 < i && i + 1 < n && s.charAt(i - 1) == s.charAt(i) && s.charAt(i) == s.charAt(i + 1)) {
+            } else if (0 < i && i < (n - 1) && s.charAt(i - 1) == s.charAt(i) && s.charAt(i) == s.charAt(i + 1)) {
             } else {
                 return false;
             }
