@@ -37,6 +37,11 @@ package org.ict.algorithm.leetcode.dynamicprogramming;
  */
 public class DeleteAndEarn {
 
+    /**
+     * Time Cost 4ms
+     * @param nums
+     * @return
+     */
     public int deleteAndEarnV2(int[] nums) {
         int[] bucket = new int[10_001];
         for (int num : nums) {
@@ -49,6 +54,11 @@ public class DeleteAndEarn {
         return bucket[10_000];
     }
 
+    /**
+     * Time Cost 4ms
+     * @param nums
+     * @return
+     */
     public int deleteAndEarnV1(int[] nums) {
         int[] bucket = new int[10001];
         for (int num : nums) {
@@ -67,6 +77,7 @@ public class DeleteAndEarn {
     }
 
     /**
+     * Understanding the following Solution
      * Time Cost 4ms
      * e.g. nums = [2,2,3,3,3,4]
      * bucket:[0, 0, 4, 9, 4,...]
