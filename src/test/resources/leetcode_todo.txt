@@ -1,4 +1,3 @@
-740.Delete and Earn=11
 1094.Car Pooling=10
 465.Optimal Account Balancing=10
 1817.Finding the Users Active Minutes=10

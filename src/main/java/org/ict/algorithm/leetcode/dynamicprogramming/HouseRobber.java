@@ -34,12 +34,13 @@ import java.util.Arrays;
  * 0 <= nums[i] <= 400
  * @author sniper
  * @date 14 Dec, 2022
- * LC198
+ * LC198, Medium, frequency=6
  */
 public class HouseRobber {
 
 
     /**
+     * Understanding the following solution
      * Dynamic Programming
      * Time Complexity O(N)
      * Space Complexity O(1)
