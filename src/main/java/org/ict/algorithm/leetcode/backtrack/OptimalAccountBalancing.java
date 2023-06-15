@@ -248,7 +248,7 @@ public class OptimalAccountBalancing {
      *                  start == n == 3, res[0] = min(Integer.MAX_VALUE, 2) = 2, return
      *             debtArr[2] = 0 - 5 = -5
      *     debtArr[1] = 5 - (-5) = 10
-     
+
      *
      * @param debtArr
      * @param start
