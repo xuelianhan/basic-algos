@@ -1,4 +1,3 @@
-1817.Finding the Users Active Minutes=10
 37.Sudoku Solver=10
 1428.Leftmost Column with at Least a One=10
 419.Battleships in a Board=9
