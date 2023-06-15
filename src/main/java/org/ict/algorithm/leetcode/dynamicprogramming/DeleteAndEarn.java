@@ -38,6 +38,7 @@ package org.ict.algorithm.leetcode.dynamicprogramming;
 public class DeleteAndEarn {
 
     /**
+     * Understanding the following Solution
      * Time Cost 4ms
      * @param nums
      * @return
