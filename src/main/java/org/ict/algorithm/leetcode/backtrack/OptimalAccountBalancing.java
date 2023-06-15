@@ -69,6 +69,35 @@ public class OptimalAccountBalancing {
     /**
      * Understanding the following Solution
      * Backtracking Solution
+     * ----------------------------
+     * class Solution:
+     *   def minTransfers(self, transactions: List[List[int]]) -> int:
+     *     balance = [0] * 21
+     *
+     *     for u, v, amount in transactions:
+     *       balance[u] -= amount
+     *       balance[v] += amount
+     *
+     *     debt = [b for b in balance if b]
+     *
+     *     def dfs(s: int) -> int:
+     *       while s < len(debt) and not debt[s]:
+     *         s += 1
+     *       if s == len(debt):
+     *         return 0
+     *
+     *       res = math.inf
+     *       for i in range(s + 1, len(debt)):
+     *         if debt[i] * debt[s] < 0:
+     *           debt[i] += debt[s]  # debt[s] is settled
+     *           res = min(res, 1 + dfs(s + 1))
+     *           debt[i] -= debt[s]  # Backtrack
+     *
+     *       return res
+     *
+     *     return dfs(0)
+     * -----------------------------------------
+     *
      * @param transactions
      * @return
      */
@@ -120,6 +149,39 @@ public class OptimalAccountBalancing {
     /**
      * Understanding the following Solution
      * Backtracking Solution
+     * ---------------------------------
+     * class Solution {
+     * public:
+     *     int minTransfers(vector<vector<int>>& transactions) {
+     *         int res = INT_MAX;
+     *         unordered_map<int, int> balance;
+     *         for (auto t : transactions) {
+     *             balance[t[0]] -= t[2];
+     *             balance[t[1]] += t[2];
+     *         }
+     *         vector<int> debt;
+     *         for (auto a : balance) {
+     *             if (a.second != 0) debt.push_back(a.second);
+     *         }
+     *         helper(debt, 0, 0, res);
+     *         return res;
+     *     }
+     *     void helper(vector<int>& debt, int start, int cnt, int& res) {
+     *         int n = debt.size();
+     *         while (start < n && debt[start] == 0) ++start;
+     *         if (start == n) {
+     *             res = min(res, cnt);
+     *             return;
+     *         }
+     *         for (int i = start + 1; i < n; ++i) {
+     *             if ((debt[i] < 0 && debt[start] > 0) || (debt[i] > 0 && debt[start] < 0)) {
+     *                 debt[i] += debt[start];
+     *                 helper(debt, start + 1, cnt + 1, res);
+     *                 debt[i] -= debt[start];
+     *             }
+     *         }
+     *     }
+     * };
      * @param transactions
      * @return
      */
