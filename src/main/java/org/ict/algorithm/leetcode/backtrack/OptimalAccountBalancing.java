@@ -15,7 +15,8 @@ import java.util.List;
  * Explanation:
  * Person #0 gave person #1 $10.
  * Person #2 gave person #0 $5.
- * Two transactions are needed. One way to settle the debt is person #1 pays person #0 and #2 $5 each.
+ * Two transactions are needed.
+ * One way to settle the debt is person #1 pays person #0 and #2 $5 each.
  *
  * Example 2:
  * Input: transactions = [[0,1,10],[1,0,1],[1,2,5],[2,0,5]]
@@ -42,7 +43,7 @@ public class OptimalAccountBalancing {
         int[][] transactions = {{0,1,10},{2,0,5}};
         //int[][] transactions = {{0,1,10}, {1,0,1}, {1,2,5}, {2,0,5}};
         OptimalAccountBalancing instance = new OptimalAccountBalancing();
-        int res = instance.minTransfersV1(transactions);
+        int res = instance.minTransfers(transactions);
         System.out.println(res);
     }
 
@@ -97,6 +98,12 @@ public class OptimalAccountBalancing {
      *
      *     return dfs(0)
      * -----------------------------------------
+     * transactions[i] = [from-i, to-i, amount-i]
+     * e.g. transactions = [[0,1,10],[2,0,5]]
+     * balance:[0,   0,  0,...]
+     * balance:[-10, 10, 0,...]
+     * balance:[-5, 10, -5,...]
+     * debtArr:[-5, 10, -5]
      *
      * @param transactions
      * @return
@@ -182,6 +189,14 @@ public class OptimalAccountBalancing {
      *         }
      *     }
      * };
+     * -------------------------------------------
+     * transactions[i] = [from-i, to-i, amount-i]
+     * e.g. transactions = [[0,1,10],[2,0,5]]
+     * balance:[0,   0,  0,...]
+     * balance:[-10, 10, 0,...]
+     * balance:[-5, 10, -5,...]
+     * debtArr:[-5, 10, -5]
+     *
      * @param transactions
      * @return
      */
@@ -216,12 +231,39 @@ public class OptimalAccountBalancing {
         return res[0];
     }
 
+    /**
+     * e.g. debtArr:[-5, 10, -5]
+     * n:3, start:0, cnt:0
+     * backtrack(debtArr, 0, 0, res)
+     *     start:0, i = start + 1 = 1
+     *     debtArr[1] * debtArr[0] < 0
+     *     debtArr[1] = 10 + (-5) = 5
+     *     backtrack(debtArr, 1, 1, res)
+     *             n:3, start:1, cnt:1, i = start + 1 = 2
+     *             debtArr:[-5, 5, -5]
+     *             debtArr[2] * debtArr[1] < 0
+     *             debtArr[2] = -5 + 5 = 0
+     *             backtrack(debtArr, 2, 2, res)
+     *                  n:3, start:2, cnt:2, debtArr[2] == 0, start++, start:3
+     *                  start == n == 3, res[0] = min(Integer.MAX_VALUE, 2) = 2, return
+     *             debtArr[2] = 0 - 5 = -5
+     *     debtArr[1] = 5 - (-5) = 10
+     
+     *
+     * @param debtArr
+     * @param start
+     * @param cnt
+     * @param res
+     */
     private void backtrack(int[] debtArr, int start, int cnt, int[] res) {
         int n = debtArr.length;
         while (start < n &&  debtArr[start] == 0) {
             start++;
         }
         if (start == n) {
+            /**
+             * Return the minimum number of transactions required to settle the debt.
+             */
             res[0] = Math.min(res[0], cnt);
             return;
         }
