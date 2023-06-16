@@ -133,7 +133,7 @@ public class AsteroidCollision {
             if (a > 0) {
                 queue.offerLast(a);
             } else {
-                // Clear all the positives that less than -a.
+                // Clear all the positives that are less than -a.
                 // One word like Chu Qing in Chinese, it means empty.
                 while (!queue.isEmpty() && queue.peekLast() > 0 && queue.peekLast() < -a) {
                     queue.pollLast();

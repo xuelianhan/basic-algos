@@ -41,7 +41,8 @@ public class MoveZeroes {
         //int[] nums = {0};
         //int[] nums = {45192,0,-659,-52359,-99225,-75991,0,-15155,27382,59818,0,-30645,-17025,81209,887,64648};
         //int[] nums = {0,0};
-        moveZeroes(nums);
+        MoveZeroes instance = new MoveZeroes();
+        instance.moveZeroes(nums);
         System.out.println(Arrays.toString(nums));
     }
 
@@ -49,7 +50,7 @@ public class MoveZeroes {
      * Shift non-zero items to left and fill the remained items with zero
      * @param nums
      */
-    public static void moveZeroesV3(int[] nums) {
+    public void moveZeroesV3(int[] nums) {
         if (nums == null || nums.length == 0 || nums.length == 1) {
             return;
         }
@@ -69,7 +70,7 @@ public class MoveZeroes {
      *
      * @param nums
      */
-    public static void moveZeroesV2(int[] nums) {
+    public void moveZeroesV2(int[] nums) {
         if (nums == null || nums.length == 0 || nums.length == 1) {
             return;
         }
@@ -91,7 +92,7 @@ public class MoveZeroes {
      *
      * @param nums
      */
-    public static void moveZeroes(int[] nums) {
+    public void moveZeroes(int[] nums) {
         if (nums == null || nums.length == 0 || nums.length == 1) {
             return;
         }

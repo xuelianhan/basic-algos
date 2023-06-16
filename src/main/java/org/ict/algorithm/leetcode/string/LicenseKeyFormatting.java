@@ -36,18 +36,29 @@ package org.ict.algorithm.leetcode.string;
  * 1 <= k <= 10^4
  * @author sniper
  * @date 14 Feb, 2022
- * LC482
+ * LC482, Easy, frequency=18
  */
 public class LicenseKeyFormatting {
 
     public static void main(String[] args) {
         String s = "r";
         int k = 1;
-        String result = licenseKeyFormatting(s, k);
+        LicenseKeyFormatting instance = new LicenseKeyFormatting();
+        String result = instance.licenseKeyFormatting(s, k);
         System.out.println(result);
     }
 
-    public static String licenseKeyFormatting(String s, int k) {
+    public String licenseKeyFormattingV1(String s, int k) {
+        StringBuilder res = new StringBuilder();
+        for (int i = s.length() - 1; i >= 0; i--) {
+            if (s.charAt(i) != '-') {
+                res.append(res.length() % (k + 1) == k ? '-' : "").append(s.charAt(i));
+            }
+        }
+        return res.reverse().toString().toUpperCase();
+    }
+
+    public String licenseKeyFormatting(String s, int k) {
         int i = s.length() - 1;
         int j = 0;
         char dash = '-';

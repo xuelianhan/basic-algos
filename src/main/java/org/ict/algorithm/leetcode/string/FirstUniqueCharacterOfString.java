@@ -34,7 +34,8 @@ public class FirstUniqueCharacterOfString {
     
     public static void main(String[] args) {
         String s = "loveleetcode";
-        int result = firstUniqueChar(s);
+        FirstUniqueCharacterOfString instance = new FirstUniqueCharacterOfString();
+        int result = instance.firstUniqueChar(s);
         System.out.println(result);
     }
 
@@ -69,7 +70,7 @@ public class FirstUniqueCharacterOfString {
      * @param s
      * @return
      */
-    public static int firstUniqueChar(String s) {
+    public int firstUniqueChar(String s) {
         /**
          * record the frequency of each character of s
          */

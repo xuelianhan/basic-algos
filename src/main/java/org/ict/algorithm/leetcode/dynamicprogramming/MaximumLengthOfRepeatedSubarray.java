@@ -333,11 +333,11 @@ public class MaximumLengthOfRepeatedSubarray {
                 } else {
                     /**
                      * If you are looking for longest common sequence,
-                     * then you put dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]); at here.
+                     * then you put dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);  here.
                      * However, this problem is looking for subarray,
-                     * since both character is not equal, which means we need to break it here.
+                     * since both character are not equal, which means we need to break it here.
                      * hence, set dp[i][j] to 0.
-                     * dp is int array, default is zero, so this branch can be ignored.
+                     * dp is an int array, default is zero, so this branch can be ignored.
                      */
                     dp[i][j] = 0;
                 }

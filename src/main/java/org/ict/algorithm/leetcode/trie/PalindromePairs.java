@@ -77,7 +77,7 @@ public class PalindromePairs {
      * where k is the length of the word of the substring.
      * But since the isPalindrome check only walks through the part (length - 1 - k),
      * the added up time would still be O(l).
-     * This is would be the reason why the current solution is much faster than the TrieTree solution with time complexity of O(nll),
+     * This would be the reason why the current solution is much faster than the TrieTree solution with time complexity of O(nll),
      * as there are unnecessary palindrome checks.
      *
      * @author sagnik_20

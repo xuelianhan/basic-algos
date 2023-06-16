@@ -29,7 +29,7 @@ import java.util.List;
  *
  * @author sniper
  * @date 2021/12/2
- * LC98
+ * LC98, Medium, frequency=18
  */
 public class ValidateBinarySearchTree {
 

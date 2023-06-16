@@ -40,14 +40,15 @@ import java.util.Deque;
  *
  * @author sniper
  * @date 30 Oct, 2022
- * LC239
+ * LC239, Hard, frequency=23
  */
 public class SlidingWindowMaximum {
 
     public static void main(String[] args) {
         int[] nums = {1,3,-1,-3,5,3,6,7};
         int k = 3;
-        maxSlidingWindow(nums, k);
+        SlidingWindowMaximum instance = new SlidingWindowMaximum();
+        instance.maxSlidingWindow(nums, k);
     }
 
     /**
@@ -58,7 +59,7 @@ public class SlidingWindowMaximum {
      * @param k
      * @return
      */
-    public static int[] maxSlidingWindowV4(int[] nums, int k) {
+    public int[] maxSlidingWindowV4(int[] nums, int k) {
         if (nums == null || k <= 0) {
             return new int[0];
         }
@@ -108,7 +109,7 @@ public class SlidingWindowMaximum {
      * @param k
      * @return
      */
-    public static int[] maxSlidingWindowV3(int[] nums, int k) {
+    public int[] maxSlidingWindowV3(int[] nums, int k) {
         if (nums == null || k <= 0) {
             return new int[0];
         }

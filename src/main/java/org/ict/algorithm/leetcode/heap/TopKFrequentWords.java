@@ -51,7 +51,8 @@ public class TopKFrequentWords {
         //String[] words = {"aaa","aa","a"};
         //int k = 3;
 
-        List<String> result = topKFrequent(words, k);
+        TopKFrequentWords instance = new TopKFrequentWords();
+        List<String> result = instance.topKFrequent(words, k);
         System.out.println(result);
     }
 
@@ -65,10 +66,10 @@ public class TopKFrequentWords {
      * @param k
      * @return
      */
-    public static List<String> topKFrequentV1(String[] words, int k) {
+    public List<String> topKFrequentV1(String[] words, int k) {
         List<String> result = new ArrayList<>();
         /**
-         * 1. we calculate the frequency for each word.
+         * 1. Se calculate the frequency for each word.
          */
         Map<String, Integer> freq = new HashMap<>();
         for (String word : words) {
@@ -104,8 +105,8 @@ public class TopKFrequentWords {
         }
 
         /**
-         * Because we use minHeap, so the root is the minimum,
-         * we should add items at the head of list because we need the reverse order.
+         * Because we use minHeap, so the root is the minimum.
+         * We should add items at the head of the list because we need the reverse order.
          */
         while (!minHeap.isEmpty()) {
             result.add(0, minHeap.poll().getKey());
@@ -120,7 +121,7 @@ public class TopKFrequentWords {
      * @param k
      * @return
      */
-    public static List<String> topKFrequent(String[] words, int k) {
+    public List<String> topKFrequent(String[] words, int k) {
         List<String> result = new ArrayList<>();
         /**
          * Notice here using hashmap may lead case failed. Why?

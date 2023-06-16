@@ -63,7 +63,8 @@ public class DesignMaxStack {
      * Algorithm
      * Let's store the stack as a double linked list stack, and store a map from value to a List of Node.
      * When weMaxStack.push(x), we add a node to our stack, and add or update our entry map.get(x).add(node).
-     * When weMaxStack.pop(), we find the value val = stack.pop(), and remove the node from our map, deleting the entry if it was the last one.
+     * When weMaxStack.pop(), we find the value val = stack.pop(),
+     * and remove the node from our map, deleting the entry if it was the last one.
      * When weMaxStack.popMax(), we use the map to find the relevant node to remove, and return its value.
      * The above operations are more clear given that we have a working DoubleLinkedList class.
      * The implementation provided uses head and tail sentinels to simplify the relevant Double Linked List operations.

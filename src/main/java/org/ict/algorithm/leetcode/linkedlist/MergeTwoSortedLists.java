@@ -30,7 +30,7 @@ package org.ict.algorithm.leetcode.linkedlist;
  * The number of nodes in both lists is in the range [0, 50].
  * -100 <= Node.val <= 100
  * Both list1 and list2 are sorted in non-decreasing order.
- * LC21
+ * LC21, Easy, frequency=20
  */
 public class MergeTwoSortedLists {
 

@@ -30,7 +30,7 @@ import java.util.Arrays;
  * 0 <= n <= flowerbed.length
  * @author sniper
  * @date 07 Jan, 2023
- * LC605, Easy
+ * LC605, Easy, frequency=21
  */
 public class CanPlaceFlowers {
 
@@ -63,7 +63,7 @@ public class CanPlaceFlowers {
         int count = 0;
         for (int i = 0; i < flowerbed.length; i++) {
             /**
-             * if current position is empty, check whether its left and right are both empty or not.
+             * if the current position is empty, check whether its left and right are both empty or not.
              */
             if (flowerbed[i] == 0) {
                 boolean emptyL = (i == 0 || flowerbed[i - 1] == 0);

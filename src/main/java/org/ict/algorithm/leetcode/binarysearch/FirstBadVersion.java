@@ -35,7 +35,7 @@ package org.ict.algorithm.leetcode.binarysearch;
  * 1 <= bad <= n <= 2^31 - 1
  * @author sniper
  * @date 29 Mar, 2023
- * LC278, Easy
+ * LC278, Easy, frequency=21
  */
 public class FirstBadVersion {
 

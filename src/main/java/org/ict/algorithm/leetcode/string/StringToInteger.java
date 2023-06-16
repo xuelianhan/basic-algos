@@ -75,7 +75,7 @@ package org.ict.algorithm.leetcode.string;
  * s consists of English letters (lower-case and upper-case), digits (0-9), ' ', '+', '-', and '.'.
  * @author sniper
  * @date 30 Mar, 2023
- * LC8, Medium
+ * LC8, Medium, frequency=19
  */
 public class StringToInteger {
 
@@ -88,6 +88,7 @@ public class StringToInteger {
 
     public int myAtoiV1(String s) {
         int res = 0;
+        //todo
         return res;
     }
 

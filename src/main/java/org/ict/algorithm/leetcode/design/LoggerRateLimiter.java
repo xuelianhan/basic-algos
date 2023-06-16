@@ -5,9 +5,10 @@ import java.util.*;
 /**
  * Description
  * Design a logger system that receives a stream of messages along with their timestamps.
- * Each unique message should only be printed at most every 10 seconds
+ * Each unique message should only be printed at almost every 10 seconds
  * (i.e. a message printed at timestamp t will prevent other identical messages from being printed until timestamp t + 10).
- * All messages will come in chronological order. Several messages may arrive at the same timestamp.
+ * All messages will come in chronological order.
+ * Several messages may arrive at the same timestamp.
  *
  * Implement the Logger class:
  *
@@ -102,9 +103,7 @@ public class LoggerRateLimiter {
         private Deque<Pair> messageQueue = new ArrayDeque<>();
         private Set<String> messageSet = new HashSet<>();
 
-        public LoggerV1() {
-
-        }
+        public LoggerV1() {}
 
         public boolean shouldPrintMessage(int timestamp, String message) {
             while (!messageQueue.isEmpty()) {

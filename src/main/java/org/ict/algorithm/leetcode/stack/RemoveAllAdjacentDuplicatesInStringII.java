@@ -87,7 +87,7 @@ public class RemoveAllAdjacentDuplicatesInStringII {
             }
         }
         /**
-         * Don't forget reverse here!
+         * Don't forget the reverse here!
          */
         return res.reverse().toString();
     }

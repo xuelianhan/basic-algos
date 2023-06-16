@@ -35,6 +35,7 @@ import java.util.Set;
  * 1 <= n <= 2^31 - 1
  * @author sniper
  * @date 24 Sep, 2022
+ * LC202, Easy, frequency=26
  */
 public class HappyNumber {
 
