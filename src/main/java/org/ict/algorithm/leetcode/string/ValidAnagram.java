@@ -28,7 +28,7 @@ import java.util.Arrays;
  * How would you adapt your solution to such a case?
  * @author sniper
  * @date 2021/12/17 12:13 AM
- * LC242
+ * LC242, Easy, frequency=11
  */
 public class ValidAnagram {
 
