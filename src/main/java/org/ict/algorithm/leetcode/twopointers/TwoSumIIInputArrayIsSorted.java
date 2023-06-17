@@ -41,11 +41,139 @@ package org.ict.algorithm.leetcode.twopointers;
  */
 public class TwoSumIIInputArrayIsSorted {
 
-    public int[] twoSumV1(int[] numbers, int target) {
+    /**
+     * Two-Pointers Solution
+     * Time Cost 1ms
+     * @param numbers
+     * @param target
+     * @return
+     */
+    public int[] twoSumV4(int[] numbers, int target) {
+        for (int l = 0, r = numbers.length - 1;;) {
+            int x = numbers[l] + numbers[r];
+            if (x == target) {
+                return new int[] {l + 1, r + 1};
+            }
+            if (x < target) {
+                l++;
+            } else {
+                r--;
+            }
+        }
+    }
+
+
+    /**
+     * Two-Pointers Solution
+     * Time Cost 1ms
+     * @param numbers
+     * @param target
+     * @return
+     */
+    public int[] twoSumV3(int[] numbers, int target) {
+        int l = 0;
+        int r = numbers.length - 1;
+        while (numbers[l] + numbers[r] != target) {
+            if (numbers[l] + numbers[r] < target) {
+                l++;
+            } else {
+                r--;
+            }
+        }
+        /**
+         * The tests are generated such that there is exactly one solution
+         */
+        return new int[] {l + 1, r + 1};
+    }
+
+    /**
+     * Two-Pointers Solution
+     * Time Cost 1ms
+     * -----------------------
+     * class Solution:
+     *     def twoSum(self, numbers: List[int], target: int) -> List[int]:
+     *         l, r = 0, len(numbers) - 1
+     *         while l < r:
+     *             x = numbers[l] + numbers[r]
+     *             if x == target:
+     *                 return [l + 1, r + 1]
+     *             elif x < target:
+     *                 l += 1
+     *             else:
+     *                 r -=1
+     *
+     * @param numbers
+     * @param target
+     * @return
+     */
+    public int[] twoSumV2(int[] numbers, int target) {
+        int l = 0;
+        int r = numbers.length - 1;
+        while (l < r) {
+            int sum = numbers[l] + numbers[r];
+            if (sum == target) {
+                return new int[]{l + 1, r + 1};
+            } else if (sum < target) {
+                l++;
+            } else {
+                r--;
+            }
+        }
         return null;
     }
 
+    /**
+     * Binary Search Solution
+     * Time Cost 6ms
+     * @param numbers
+     * @param target
+     * @return
+     */
+    public int[] twoSumV1(int[] numbers, int target) {
+        for (int i = 0, n = numbers.length;; i++) {
+            int x = target - numbers[i];
+            int l = i + 1;
+            int r = n - 1;
+            while (l < r) {
+                int mid = l + (r - l) / 2;
+                if (numbers[mid] < x) {
+                    l = mid + 1;
+                } else {
+                    r = mid;
+                }
+            }
+            if (numbers[l] == x) {
+                return new int[] {i + 1, l + 1};
+            }
+        }
+    }
+
+    /**
+     * Binary Search Solution
+     * Time Cost 6ms
+     * @param numbers
+     * @param target
+     * @return
+     */
     public int[] twoSum(int[] numbers, int target) {
+        for (int i = 0; i < numbers.length; i++) {
+            int x = target - numbers[i];
+            int l = i + 1;
+            int r = numbers.length;
+            while (l < r) {
+                int mid = l + (r - l) / 2;
+                if (numbers[mid] == x) {
+                    /**
+                     * Notice here {i + 1, mid + 1}, because index-returned start from 1.
+                     */
+                    return new int[] {i + 1, mid + 1};
+                } else if (numbers[mid] < x) {
+                    l = mid + 1;
+                } else {
+                    r = mid;
+                }
+            }
+        }
         return null;
     }
 
