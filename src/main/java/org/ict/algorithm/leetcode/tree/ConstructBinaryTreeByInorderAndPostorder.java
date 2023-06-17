@@ -37,12 +37,69 @@ public class ConstructBinaryTreeByInorderAndPostorder {
     /**
      * Understanding the following solution
      * Time Cost 2ms
-     * ----------------
+     * ------------------------------------------------
+     * @author lurklurk
      * The basic idea is to take the last element in postorder array as the root,
      * find the position of the root in the inorder array;
      * then locate the range for left subtree and right subtree and do recursion.
      * Use a HashMap to record the index of root in the inorder array.
-     * @author lurklurk
+     * -------------------------------------------------
+     * # Definition for a binary tree node.
+     * # class TreeNode:
+     * #     def __init__(self, val=0, left=None, right=None):
+     * #         self.val = val
+     * #         self.left = left
+     * #         self.right = right
+     * class Solution:
+     *     def buildTree(self, inorder: List[int], postorder: List[int]) -> Optional[TreeNode]:
+     *         map = {num: i for i, num in enumerate(inorder)}
+     *         n = len(inorder)
+     *
+     *         def build(inStart: int, inEnd: int, postStart: int, postEnd: int) -> Optional[TreeNode]:
+     *             if inStart > inEnd:
+     *                 return None
+     *             rootVal = postorder[postEnd]
+     *             rootInOrderIndex = map[rootVal]
+     *             leftSize = rootInOrderIndex - inStart
+     *
+     *             root = TreeNode(rootVal)
+     *             root.left = build(inStart, rootInOrderIndex - 1,  postStart, postStart + leftSize - 1)
+     *             root.right = build(rootInOrderIndex + 1, inEnd,  postStart + leftSize, postEnd - 1)
+     *             return root
+     *
+     *         return build(0, n - 1, 0, n - 1)
+     * --------------------------------------------------
+     * class Solution {
+     * public:
+     *     TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
+     *         unordered_map<int, int> map;
+     *         for (int i = 0; i < inorder.size(); ++i) {
+     *             map[inorder[i]] = i;
+     *         }
+     *         const int n =  inorder.size();
+     *         return build(inorder, 0, n - 1, postorder, 0, n - 1, map);
+     *     }
+     *
+     * private:
+     *   TreeNode* build(const vector<int>& inorder, int inStart, int inEnd,
+     *                   const vector<int>& postorder, int postStart, int postEnd,
+     *                   const unordered_map<int, int>& map) {
+     *
+     *         if (inStart > inEnd) {
+     *             return nullptr;
+     *         }
+     *         const int rootVal = postorder[postEnd];
+     *         const int rootInOrderIndex = map.at(rootVal);
+     *         const int leftSize = rootInOrderIndex - inStart;
+     *
+     *         TreeNode* root = new TreeNode(rootVal);
+     *         root->left = build(inorder, inStart, rootInOrderIndex - 1,
+     *             postorder, postStart, postStart + leftSize - 1, map);
+     *         root->right = build(inorder, rootInOrderIndex + 1, inEnd,
+     *             postorder, postStart + leftSize, postEnd - 1, map);
+     *         return root;
+     *   }
+     * };
      * @param inorder
      * @param postorder
      * @return
