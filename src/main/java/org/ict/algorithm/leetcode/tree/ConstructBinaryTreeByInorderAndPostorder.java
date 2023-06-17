@@ -70,7 +70,7 @@ public class ConstructBinaryTreeByInorderAndPostorder {
      *          5
      *         / \
      *   (11,4)   (13,8,9)
-     *   
+     *
      * left:
      * inStart:0, inEnd = rootInOrderIdx - 1 = 1, [11, 4] of inorder
      * postStart:0, postEnd = postStart + leftSize - 1 = 0 + 2 - 1 = 1, [11, 4] of postorder
@@ -99,8 +99,7 @@ public class ConstructBinaryTreeByInorderAndPostorder {
 
         TreeNode root = new TreeNode(rootVal);
         root.left = build(inorder, inStart, rootInOrderIdx - 1, postorder, postStart, postStart + leftSize - 1, map);
-        root.right = build(inorder, rootInOrderIdx + 1, inEnd, postorder, postStart + leftSize, postEnd
-         - 1, map);
+        root.right = build(inorder, rootInOrderIdx + 1, inEnd, postorder, postStart + leftSize, postEnd - 1, map);
         return root;
     }
 
