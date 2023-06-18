@@ -118,12 +118,22 @@ public class SnakesAndLadders {
 
     /**
      * Convert digit(starting from 1) to x-y coordinate(0-0 based)
+     * starting from the bottom left of the board (i.e. board[n - 1][0]),
+     * and alternating direction each row.
      * e.g. n = 4
      * 16 15 14 13
      * 9  10 11 12
      * 8   7  6  5
      * 1   2  3  4
      * -------------------------
+     * cur:1, x:0, y:0, x = n - 1 - x = 4 - 1 = 3, so cur:1 --> (3, 0)
+     * cur:2, x:0, y:1, x = n - 1 - x = 4 - 1 = 3, so cur:2 --> (3, 1)
+     * cur:3, x:0, y:2, x = n - 1 - x = 4 - 1 = 3, so cur:3 --> (3, 2)
+     * cur:4, x:0, y:3, x = n - 1 - x = 4 - 1 = 3, so cur:4 --> (0, 3)
+     * cur:5, x:1, y:0, x % 2==1, y=n-1-y=4-1=3, x=n-1-x=2, so cur:5 --> (2, 3)
+     * cur:6, x:1, y:1, x % 2==1, y=n-1-y=4-1-1=2, x=n-1-x=4-1-1=2, so cur:6 --> (2, 2)
+     * ......
+     * 
      * @param cur
      * @param n
      * @return
@@ -132,6 +142,9 @@ public class SnakesAndLadders {
         int x = (cur - 1) / n;
         int y = (cur - 1) % n;
         if (x % 2 == 1) {
+            /**
+             * A trick here, alternating direction each row.
+             */
             y = n - 1 - y;
         }
         x = n - 1 - x;
