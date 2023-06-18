@@ -1,8 +1,12 @@
 package org.ict.algorithm.leetcode.breadthfirstsearch;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
+
 /**
  * You are given an n x n integer matrix board where the cells labeled from 1 to n^2
- * in a Boustrophedon style starting from the bottom left of the board (i.e. board[n - 1][0]) and alternating direction each row.
+ * in a Boustrophedon style starting from the bottom left of the board (i.e. board[n - 1][0])
+ * and alternating direction each row.
  *
  * You start on square 1 of the board.
  * In each move, starting from square curr, do the following:
@@ -17,11 +21,13 @@ package org.ict.algorithm.leetcode.breadthfirstsearch;
  * The destination of that snake or ladder is board[r][c]. Squares 1 and n2 do not have a snake or ladder.
  *
  * Note that you only take a snake or ladder at most once per move.
- * If the destination to a snake or ladder is the start of another snake or ladder, you do not follow the subsequent snake or ladder.
+ * If the destination to a snake or ladder is the start of another snake or ladder,
+ * you do not follow the subsequent snake or ladder.
  *
  * For example, suppose the board is [[-1,4],[-1,3]], and on the first move, your destination square is 2.
  * You follow the ladder to square 3, but do not follow the subsequent ladder to 4.
- * Return the least number of moves required to reach the square n2. If it is not possible to reach the square, return -1.
+ * Return the least number of moves required to reach the square n2.
+ * If it is not possible to reach the square, return -1.
  *
  *
  *
@@ -44,7 +50,8 @@ package org.ict.algorithm.leetcode.breadthfirstsearch;
  * This is the lowest possible number of moves to reach the last square, so return 4.
  * Example 2:
  *
- * Input: board = [[-1,-1],[-1,3]]
+ * Input: board = [[-1,-1],
+ *                 [-1,3]]
  * Output: 1
  *
  *
@@ -72,7 +79,59 @@ public class SnakesAndLadders {
     }
 
 
+    /**
+     * Time Cost 7ms
+     * Time Complexity O(N^2)
+     * Space Complexity O(N^2)
+     * @param board
+     * @return
+     */
     public int snakesAndLadders(int[][] board) {
-        return 0;
+        int n = board.length;
+        int res = 0;
+        Deque<Integer> queue = new ArrayDeque<>();
+        queue.offer(1);
+        boolean[] visited = new boolean[n * n  + 1];
+        while (!queue.isEmpty()) {
+            for (int k = queue.size(); k > 0; k--) {
+                int cur = queue.poll();
+                if (cur == n * n) {
+                    return res;
+                }
+                for (int i = 1; i <= 6 && cur + i <= n * n; i++) {
+                    int[] pos = getPosition(cur + i, n);
+                    int next = board[pos[0]][pos[1]] == -1 ? (cur + i) : board[pos[0]][pos[1]];
+                    if (visited[next]) {
+                        continue;
+                    }
+                    visited[next] = true;
+                    queue.offer(next);
+                }
+            }
+            res++;
+        }
+        return -1;
+    }
+
+    /**
+     * Convert digit(starting from 1) to x-y coordinate(0-0 based)
+     * e.g. n = 4
+     * 16 15 14 13
+     * 9  10 11 12
+     * 8   7  6  5
+     * 1   2  3  4
+     * -------------------------
+     * @param cur
+     * @param n
+     * @return
+     */
+    private int[] getPosition(int cur, int n) {
+        int x = (cur - 1) / n;
+        int y = (cur - 1) % n;
+        if (x % 2 == 1) {
+            y = n - 1 - y;
+        }
+        x = n - 1 - x;
+        return new int[] {x, y};
     }
 }
