@@ -100,6 +100,9 @@ public class SnakesAndLadders {
                 }
                 for (int i = 1; i <= 6 && cur + i <= n * n; i++) {
                     int[] pos = getPosition(cur + i, n);
+                    /**
+                     * board[i][j] is either -1 or in the range [1, n^2].
+                     */
                     int next = board[pos[0]][pos[1]] == -1 ? (cur + i) : board[pos[0]][pos[1]];
                     if (visited[next]) {
                         continue;
