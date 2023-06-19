@@ -35,13 +35,48 @@ import java.util.List;
 public class NQueens {
 
 
+    /**
+     * todo
+     * Time Cost 1ms
+     * @param n
+     * @return
+     */
     public List<List<String>> solveNQueensV1(int n) {
-        //todo
-        return null;
+        List<List<String>> res = new ArrayList<>();
+        char[][] board = new char[n][n];
+
+        for (int i = 0; i < n; i++) {
+            Arrays.fill(board[i], '.');
+        }
+
+        boolean[] cols = new boolean[n];
+        boolean[] diagonalOne = new boolean[2 * n - 1];
+        boolean[] diagonalTwo = new boolean[2 * n - 1];
+        backtrackV1(0, cols, diagonalOne, diagonalTwo, board, res);
+
+        return res;
     }
 
+    private void backtrackV1(int curRow, boolean[] cols, boolean[] diagonalOne,  boolean[] diagonalTwo, char[][] board, List<List<String>> res) {
+        int n = board.length;
+        if (curRow == n) {
+            res.add(build(board));
+            return;
+        }
+        for (int j = 0; j < n; j++) {
+            if (cols[j] || diagonalOne[curRow + j] || diagonalTwo[j - curRow + n - 1]) {
+                continue;
+            }
+            cols[j] = diagonalOne[curRow + j] =  diagonalTwo[j - curRow + n - 1] = true;
+            board[curRow][j] = 'Q';
+            backtrackV1(curRow + 1, cols, diagonalOne,  diagonalTwo, board, res);
+            cols[j] = diagonalOne[curRow + j] =  diagonalTwo[j - curRow + n - 1] = false;
+            board[curRow][j] = '.';
+        }
+    }
 
     /**
+     * Understanding the following solution
      * Time Cost 3ms
      * @param n
      * @return
@@ -62,6 +97,7 @@ public class NQueens {
         int n = board.length;
         if (curRow == n) {
             res.add(build(board));
+            return;
         }
         for (int j = 0; j < n; j++) {
             if (isValid(board, curRow, j)) {
@@ -84,6 +120,11 @@ public class NQueens {
 
         /**
          * Check the main diagonal line
+         *  to
+         *   \
+         *    \
+         *     \
+         *      from(row - 1, col - 1)
          */
         for (int i = row - 1, j = col - 1; i >= 0 && j >= 0; i--, j--) {
             if (board[i][j] == 'Q') {
@@ -92,6 +133,11 @@ public class NQueens {
         }
         /**
          * Check another diagonal line
+         *         to
+         *        /
+         *      /
+         *    /
+         *  from(row - 1, col + 1)
          *
          */
         for (int i = row - 1, j = col + 1; i >= 0 && j < board.length; i--, j++) {
