@@ -31,10 +31,7 @@ import java.util.*;
  * If it is not possible to reach the square, return -1.
  *
  *
- *
  * Example 1:
- *
- *
  * Input: board = [[-1,-1,-1,-1,-1,-1],
  *                 [-1,-1,-1,-1,-1,-1],
  *                 [-1,-1,-1,-1,-1,-1],
@@ -49,15 +46,14 @@ import java.util.*;
  * You then decide to move to square 14 and must take the ladder to square 35.
  * You then decide to move to square 36, ending the game.
  * This is the lowest possible number of moves to reach the last square, so return 4.
- * Example 2:
  *
+ * Example 2:
  * Input: board = [[-1,-1],
  *                 [-1,3]]
  * Output: 1
  *
  *
  * Constraints:
- *
  * n == board.length == board[i].length
  * 2 <= n <= 20
  * grid[i][j] is either -1 or in the range [1, n^2].
@@ -68,44 +64,6 @@ import java.util.*;
  * LC909, medium
  */
 public class SnakesAndLadders {
-
-    /**
-     *
-     * @param board
-     * @return
-     */
-    public int snakesAndLaddersV3(int[][] board) {
-        int n = board.length;
-        Map<Integer, Integer> need = new HashMap<>();
-        Deque<Integer> queue = new ArrayDeque<>();
-        need.put(1, 0);
-        queue.offer(1);
-        while (!queue.isEmpty()) {
-            for (int k = queue.size(); k > 0; k--) {
-                int cur = queue.poll();
-                for (int t = cur + 1; t <= cur + 6; t++) {
-                    int x = (t - 1) / n;
-                    int y = (t - 1) % n;
-                    if (x % 2 != 0) {
-                        y = ~y;
-                    }
-                    x = ~x;
-                    int next = board[x][y];
-                    if (next > 0) {
-                        cur = next;
-                    }
-                    if (cur == n * n) {
-                        return need.get(x) + 1;
-                    }
-                    if (need.containsKey(cur)) {
-                        need.put(cur, need.get(x) + 1);
-                        queue.offer(cur);
-                    }
-                }
-            }
-        }
-        return -1;
-    }
 
 
     /**
@@ -138,7 +96,7 @@ public class SnakesAndLadders {
      *                         queue.append(next)
      *             res += 1
      *         return -1
-     *
+     * --------------------------------------------
      * @param board
      * @return
      */
