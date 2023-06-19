@@ -1,7 +1,6 @@
 package org.ict.algorithm.leetcode.breadthfirstsearch;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
+import java.util.*;
 
 /**
  * You are given an n x n integer matrix board where the cells labeled from 1 to n^2
@@ -70,10 +69,76 @@ import java.util.Deque;
  */
 public class SnakesAndLadders {
 
+    /**
+     *
+     * @param board
+     * @return
+     */
+    public int snakesAndLaddersV3(int[][] board) {
+        int n = board.length;
+        Map<Integer, Integer> need = new HashMap<>();
+        Deque<Integer> queue = new ArrayDeque<>();
+        need.put(1, 0);
+        queue.offer(1);
+        while (!queue.isEmpty()) {
+            for (int k = queue.size(); k > 0; k--) {
+                int cur = queue.poll();
+                for (int t = cur + 1; t <= cur + 6; t++) {
+                    int x = (t - 1) / n;
+                    int y = (t - 1) % n;
+                    if (x % 2 != 0) {
+                        y = ~y;
+                    }
+                    x = ~x;
+                    int next = board[x][y];
+                    if (next > 0) {
+                        cur = next;
+                    }
+                    if (cur == n * n) {
+                        return need.get(x) + 1;
+                    }
+                    if (need.containsKey(cur)) {
+                        need.put(cur, need.get(x) + 1);
+                        queue.offer(cur);
+                    }
+                }
+            }
+        }
+        return -1;
+    }
+
 
     /**
      * Understanding the following solution
      * Time Cost 6ms
+     * -------------------------------
+     * class Solution:
+     *     def snakesAndLadders(self, board: List[List[int]]) -> int:
+     *         def getPosition(cur):
+     *             x, y = (cur - 1) // n, (cur - 1) % n
+     *             if x % 2 == 1:
+     *                 y = n - 1 - y
+     *             x = n - 1 - x
+     *             return x, y
+     *         n = len(board)
+     *         queue = deque([1])
+     *         visited = {1}
+     *         res = 0
+     *         while queue:
+     *             for _ in range(len(queue)):
+     *                 cur = queue.popleft()
+     *                 if cur == n * n:
+     *                     return res
+     *                 for next in range(cur + 1, min(cur + 7, n * n + 1)):
+     *                     x, y = getPosition(next)
+     *                     if board[x][y] != -1:
+     *                         next = board[x][y]
+     *                     if next not in visited:
+     *                         visited.add(next)
+     *                         queue.append(next)
+     *             res += 1
+     *         return -1
+     *
      * @param board
      * @return
      */
@@ -85,7 +150,7 @@ public class SnakesAndLadders {
         /**
          * index-next start from 1, index-0 not used, so visited size is n * n + 1
          */
-        boolean[] visited = new boolean[n * n  + 1];
+        boolean[] visited = new boolean[n * n + 1];
         while (!queue.isEmpty()) {
             for (int k = queue.size(); k > 0; k--) {
                 int cur = queue.poll();
