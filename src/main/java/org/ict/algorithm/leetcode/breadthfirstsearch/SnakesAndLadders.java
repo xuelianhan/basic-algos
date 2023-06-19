@@ -18,13 +18,15 @@ import java.util.Deque;
  * Otherwise, you move to next.
  * The game ends when you reach the square n2.
  * A board square on row r and column c has a snake or ladder if board[r][c] != -1.
- * The destination of that snake or ladder is board[r][c]. Squares 1 and n2 do not have a snake or ladder.
+ * The destination of that snake or ladder is board[r][c].
+ * Squares 1 and n2 do not have a snake or ladder.
  *
  * Note that you only take a snake or ladder at most once per move.
  * If the destination to a snake or ladder is the start of another snake or ladder,
  * you do not follow the subsequent snake or ladder.
  *
- * For example, suppose the board is [[-1,4],[-1,3]], and on the first move, your destination square is 2.
+ * For example, suppose the board is [[-1,4],[-1,3]],
+ * and on the first move, your destination square is 2.
  * You follow the ladder to square 3, but do not follow the subsequent ladder to 4.
  * Return the least number of moves required to reach the square n2.
  * If it is not possible to reach the square, return -1.
@@ -69,13 +71,147 @@ import java.util.Deque;
 public class SnakesAndLadders {
 
 
+    /**
+     * Understanding the following solution
+     * Time Cost 6ms
+     * @param board
+     * @return
+     */
     public int snakesAndLaddersV2(int[][] board) {
-        return 0;
+        int n = board.length;
+        int res = 0;
+        Deque<Integer> queue = new ArrayDeque<>();
+        queue.offer(1);
+        /**
+         * index-next start from 1, index-0 not used, so visited size is n * n + 1
+         */
+        boolean[] visited = new boolean[n * n  + 1];
+        while (!queue.isEmpty()) {
+            for (int k = queue.size(); k > 0; k--) {
+                int cur = queue.poll();
+                if (cur == n * n) {
+                    return res;
+                }
+                for (int t = cur + 1; t <= Math.min(cur + 6, n * n); t++) {
+                    int next = getPositionV1(board, t);
+                    if (next == -1) {
+                        next = t;
+                    }
+                    if (visited[next]) {
+                        continue;
+                    }
+                    visited[next] = true;
+                    queue.offer(next);
+                }
+            }
+            res++;
+        }
+        return -1;
     }
 
 
+    /**
+     * Understanding the following solution
+     * Time Cost 5ms
+     * Time Complexity O(N^2)
+     * Space Complexity O(N)
+     * -------------------------------------
+     * class Solution {
+     * public:
+     *     int snakesAndLadders(vector<vector<int>>& board) {
+     *         int n = board.size();
+     *         int res = 0;
+     *         queue<int> q{{1}};
+     *         vector<bool> visited(n * n + 1);
+     *         while (!q.empty()) {
+     *             for (int k = q.size(); k > 0; k--) {
+     *                 int cur = q.front();
+     *                 q.pop();
+     *                 if (cur == n * n) {
+     *                     return res;
+     *                 }
+     *                 for (int i = 1; i <= 6 && cur + i <= n * n; ++i) {
+     *                     int next = getBoardValue(board, cur + i);
+     *                     if (next == -1) {
+     *                         next = cur + i;
+     *                     }
+     *                     if (visited[next]) {
+     *                         continue;
+     *                     }
+     *                     visited[next] = true;
+     *                     q.push(next);
+     *                 }
+     *             }
+     *             ++res;
+     *         }
+     *         return -1;
+     *     }
+     *
+     * private:
+     *     int getBoardValue(vector<vector<int>>& board, int cur) {
+     *         int n = board.size();
+     *         int x = (cur - 1) / n;
+     *         int y = (cur - 1) % n;
+     *         if (x % 2 == 1) {
+     *             y = n - 1 - y;
+     *         }
+     *         x = n - 1 - x;
+     *         return board[x][y];
+     *     }
+     * };
+     * @param board
+     * @return
+     */
     public int snakesAndLaddersV1(int[][] board) {
-        return 0;
+        int n = board.length;
+        int res = 0;
+        Deque<Integer> queue = new ArrayDeque<>();
+        queue.offer(1);
+        boolean[] visited = new boolean[n * n  + 1];
+        while (!queue.isEmpty()) {
+            for (int k = queue.size(); k > 0; k--) {
+                int cur = queue.poll();
+                if (cur == n * n) {
+                    return res;
+                }
+                for (int i = 1; i <= 6 && cur + i <= n * n; i++) {
+                    int next = getPositionV1(board, cur + i);
+                    /**
+                     * Choose a destination square next with a label in the range [curr + 1, min(curr + 6, n^2)]
+                     * board[i][j] is either -1 or in the range [1, n^2].
+                     * If next has a snake or ladder,
+                     * you must move to the destination of that snake or ladder.
+                     * Otherwise, you move to next.
+                     * A board square on row r and column c has a snake or ladder if board[r][c] != -1.
+                     * The destination of that snake or ladder is board[r][c].
+                     */
+                    if (next == -1) {
+                        next = cur + i;
+                    }
+                    if (visited[next]) {
+                        continue;
+                    }
+                    visited[next] = true;
+                    queue.offer(next);
+                }
+            }
+            res++;
+        }
+        return -1;
+    }
+
+    private int getPositionV1(int[][] board, int cur) {
+        int n = board.length;
+        int x = (cur - 1) / n;
+        int y = (cur - 1) % n;
+        if (x % 2 == 1) {
+            /**
+             * A trick here, alternating direction each row.
+             */
+            y = n - 1 - y;
+        }
+        x = n - 1 - x;
+        return board[x][y];
     }
 
 
@@ -101,7 +237,13 @@ public class SnakesAndLadders {
                 for (int i = 1; i <= 6 && cur + i <= n * n; i++) {
                     int[] pos = getPosition(cur + i, n);
                     /**
+                     * Choose a destination square next with a label in the range [curr + 1, min(curr + 6, n^2)]
                      * board[i][j] is either -1 or in the range [1, n^2].
+                     * If next has a snake or ladder,
+                     * you must move to the destination of that snake or ladder.
+                     * Otherwise, you move to next.
+                     * A board square on row r and column c has a snake or ladder if board[r][c] != -1.
+                     * The destination of that snake or ladder is board[r][c].
                      */
                     int next = board[pos[0]][pos[1]] == -1 ? (cur + i) : board[pos[0]][pos[1]];
                     if (visited[next]) {
@@ -133,7 +275,7 @@ public class SnakesAndLadders {
      * cur:5, x:1, y:0, x % 2==1, y=n-1-y=4-1=3, x=n-1-x=2, so cur:5 --> (2, 3)
      * cur:6, x:1, y:1, x % 2==1, y=n-1-y=4-1-1=2, x=n-1-x=4-1-1=2, so cur:6 --> (2, 2)
      * ......
-     * 
+     *
      * @param cur
      * @param n
      * @return
