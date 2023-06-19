@@ -78,6 +78,58 @@ public class NQueens {
     /**
      * Understanding the following solution
      * Time Cost 3ms
+     * -------------------------------
+     * class Solution {
+     * public:
+     *     vector<vector<string>> solveNQueens(int n) {
+     *         vector<vector<string>> res;
+     *         vector<string> board(n, string(n, '.'));
+     *
+     *         backtrack(0, board, res);
+     *
+     *         return res;
+     *     }
+     *
+     *     void backtrack(int curRow, vector<string>& board, vector<vector<string>>& res) {
+     *         int n = board.size();
+     *         if (curRow == n) {
+     *             res.push_back(board);
+     *             return;
+     *         }
+     *
+     *         for (int j = 0; j < n; j++) {
+     *             if (isValid(board, curRow, j)) {
+     *                 board[curRow][j] = 'Q';
+     *                 backtrack(curRow + 1, board, res);
+     *                 board[curRow][j] = '.';
+     *             }
+     *         }
+     *     }
+     *
+     *     bool isValid(vector<string>& board, int row, int col) {
+     *         for (int i = 0; i < row; ++i) {
+     *             if (board[i][col] == 'Q') {
+     *                 return false;
+     *             }
+     *         }
+     *
+     *         for (int i = row - 1, j = col - 1; i >= 0 && j >= 0; i--, j--) {
+     *             if (board[i][j] == 'Q') {
+     *                 return false;
+     *             }
+     *         }
+     *
+     *         for (int i = row - 1, j = col + 1; i >= 0 && j < board.size(); i--, j++) {
+     *             if (board[i][j] == 'Q') {
+     *                 return false;
+     *             }
+     *         }
+     *
+     *         return true;
+     *     }
+     * };
+     * -----------------------------------
+     *
      * @param n
      * @return
      */

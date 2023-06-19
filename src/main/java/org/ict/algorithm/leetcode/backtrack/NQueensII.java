@@ -1,5 +1,8 @@
 package org.ict.algorithm.leetcode.backtrack;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * The n-queens puzzle is the problem of placing n queens on an n x n chessboard
  * such that no two queens attack each other.
@@ -25,8 +28,81 @@ package org.ict.algorithm.leetcode.backtrack;
  */
 public class NQueensII {
 
+    public int totalNQueensV1(int n) {
+        //todo
+        return 0;
+    }
+
+    /**
+     * Understanding the following solution
+     * Time Cost 2ms
+     * @param n
+     * @return
+     */
     public int totalNQueens(int n) {
-        int res = 0;
-        return res;
+        char[][] board = new char[n][n];
+
+        for (int i = 0; i < n; i++) {
+            Arrays.fill(board[i], '.');
+        }
+        int[] res = new int[1];
+        backtrack(0, board, res);
+        return res[0];
+    }
+
+    private void backtrack(int curRow, char[][] board, int[] res) {
+        int n = board.length;
+        if (curRow == n) {
+            res[0]++;
+            return;
+        }
+        for (int j = 0; j < n; j++) {
+            if (isValid(board, curRow, j)) {
+                board[curRow][j] = 'Q';
+                backtrack(curRow + 1, board, res);
+                board[curRow][j] = '.';
+            }
+        }
+    }
+
+    private boolean isValid(char[][] board, int row, int col) {
+        /**
+         * Check the column of col
+         */
+        for (int i = 0; i < row; i++) {
+            if (board[i][col] == 'Q') {
+                return false;
+            }
+        }
+
+        /**
+         * Check the main diagonal line
+         *  to
+         *   \
+         *    \
+         *     \
+         *      from(row - 1, col - 1)
+         */
+        for (int i = row - 1, j = col - 1; i >= 0 && j >= 0; i--, j--) {
+            if (board[i][j] == 'Q') {
+                return false;
+            }
+        }
+        /**
+         * Check another diagonal line
+         *         to
+         *        /
+         *      /
+         *    /
+         *  from(row - 1, col + 1)
+         *
+         */
+        for (int i = row - 1, j = col + 1; i >= 0 && j < board.length; i--, j++) {
+            if (board[i][j] == 'Q') {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
