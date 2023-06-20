@@ -51,7 +51,6 @@ public class Flatten2DVector {
 
     /**
      * Iterator solution
-     * todo
      * --------------------------
      * class Vector2D {
      *  public:
@@ -83,16 +82,22 @@ public class Flatten2DVector {
      */
     static class Vector2DV3 {
         public Vector2DV3(int[][] vec) {
-
+            for (int[] arr : vec) {
+                for (int a : arr) {
+                    this.vec.add(a);
+                }
+            }
         }
 
         public int next() {
-            return 0;
+            return vec.iterator().next();
         }
 
         public boolean hasNext() {
-           return false;
+            return vec.iterator().hasNext();
         }
+
+        private List<Integer> vec = new ArrayList<>();
     }
 
 
