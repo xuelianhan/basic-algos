@@ -34,7 +34,7 @@ package org.ict.algorithm.leetcode.linkedlist;
  *
  * @author sniper
  * @date 2022/8/24
- * LC141, Easy
+ * LC141, Easy, frequency=7
  */
 public class LinkedListCycle {
 

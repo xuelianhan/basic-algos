@@ -47,7 +47,7 @@ import java.util.Stack;
  * In other words, performing n operations will take overall O(n) time even if one of those operations may take longer.
  * @author sniper
  * @date 17 Dec, 2022
- * LC232
+ * LC232, Easy, frequency=2
  */
 public class ImplementQueueUsingStacks {
 

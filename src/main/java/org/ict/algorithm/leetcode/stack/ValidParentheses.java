@@ -41,6 +41,7 @@ public class ValidParentheses {
     }
 
     /**
+     * Understanding the following solution
      * Time Cost 1ms
      * --------------------------
      * class Solution:

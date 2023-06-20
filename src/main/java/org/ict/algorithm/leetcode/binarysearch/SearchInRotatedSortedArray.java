@@ -114,7 +114,7 @@ public class SearchInRotatedSortedArray {
 
 
     /**
-     * understanding the following solution
+     * Understanding the following solution
      * e.g. nums:[1,3], target:1
      * lo:0, hi:1, mid:0, hi=mid=0
      * @param nums

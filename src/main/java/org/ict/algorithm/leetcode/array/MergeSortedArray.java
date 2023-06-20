@@ -49,7 +49,7 @@ package org.ict.algorithm.leetcode.array;
  * Follow up: Can you come up with an algorithm that runs in O(m + n) time?
  * @author sniper
  * @date 2022/8/17
- * LC88, Easy
+ * LC88, Easy, frequency=6
  */
 public class MergeSortedArray {
 

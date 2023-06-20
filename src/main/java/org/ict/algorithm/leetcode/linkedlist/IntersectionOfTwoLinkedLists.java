@@ -63,11 +63,13 @@ import java.util.Map;
  * Follow up: Could you write a solution that runs in O(m + n) time and use only O(1) memory?
  * @author sniper
  * @date 2022/8/23
- * LC160, Easy
+ * LC160, Easy, frequency=5
  */
 public class IntersectionOfTwoLinkedLists {
 
     /**
+     * Understanding the following solution
+     *
      * Solution provided by MyFavCat
      *
      * I found most solutions here preprocess linked lists to get the difference in len.

@@ -27,7 +27,7 @@ package org.ict.algorithm.leetcode.dynamicprogramming;
  * 0 <= nums[i] <= 10^5
  * @author sniper
  * @date 11 Oct, 2022
- * LC55
+ * LC55, Medium, frequency=8
  */
 public class JumpGame {
 

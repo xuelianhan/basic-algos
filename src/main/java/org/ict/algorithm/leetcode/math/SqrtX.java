@@ -25,7 +25,7 @@ package org.ict.algorithm.leetcode.math;
  * 0 <= x <= 231 - 1
  * @author sniper
  * @date 22 Sep, 2022
- * LC69
+ * LC69, Easy
  */
 public class SqrtX {
 
