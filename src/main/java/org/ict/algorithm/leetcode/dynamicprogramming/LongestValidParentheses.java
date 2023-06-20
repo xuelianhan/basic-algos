@@ -37,6 +37,7 @@ import java.util.Deque;
 public class LongestValidParentheses {
 
     /**
+     * Understanding the following solution
      * Two-Pointer Solution
      *
      * @param s
@@ -88,6 +89,11 @@ public class LongestValidParentheses {
         return res;
     }
 
+    /**
+     * Dynamic Programming Solution
+     * @param s
+     * @return
+     */
     public int longestValidParenthesesV3(String s) {
         int res = 0;
         int n = s.length();
