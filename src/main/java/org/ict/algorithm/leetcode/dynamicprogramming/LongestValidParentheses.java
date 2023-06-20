@@ -47,19 +47,67 @@ public class LongestValidParentheses {
     }
 
     /**
+     * Understanding the following solution
      * Stack Solution
+     * We can actually compute the longest length on the fly.
+     * ------------------------------------------------------
+     * e.g. s = ")()())"
+     * 0 1 2 3 4 5
+     * ) ( ) ( ) )
+     *
+     *
+     * @author jianchao-li
      * @param s
      * @return
      */
     public int longestValidParenthesesV1(String s) {
         int res = 0;
-        //todo
+        int n = s.length();
+        Deque<Integer> stack = new ArrayDeque<>();
+        /**
+         * Notice -1 here.
+         * Consider 2 different cases:
+         * e.g. s = "" , or s = ")()())"
+         * 1. Why do we need to push a number into the stack before for-loop?
+         * If we don't push a number into the stack before for-loop, the pop operation will throw an exception.
+         * e.g. s = "()"
+         * 2. Why this number is -1? Does other number are OK too?
+         * We need to utilize the i - stack.peek(). Considering the above case, if we push 0 into the stack,
+         * i:1 , i - stack.peek() = 1 - 0 =1. Actually the expected answer should be 2, that's why the -1 works.
+         */
+        stack.push(-1);
+        for (int i = 0; i < n; i++) {
+            if (s.charAt(i) == '(') {
+                stack.push(i);
+            } else {
+                stack.pop();
+                if (stack.isEmpty()) {
+                    stack.push(i);
+                } else {
+                    res = Math.max(res, i - stack.peek());
+                }
+            }
+        }
         return res;
     }
 
     /**
+     * Understanding the following solution
      * Stack Solution
      * Time Cost 3ms
+     * ----------------------------------------------------------
+     * e.g. s = ")()())"
+     * 0 1 2 3 4 5
+     * ) ( ) ( ) )
+     * res:0, start:0, stack:[]
+     * i:0, s[0] = ')', stack:[ ], stack is empty, start = i + 1 =1
+     * i:1, s[1] = '(', stack:[1]
+     * i:2, s[2] = ')', stack:[1], pop 1, stack:[], res = max(res, i-start+1)=max(0, 2-1+1)=2
+     * i:3, s[3] = '(', stack:[3]
+     * i:4, s[4] = ')', stack:[3], pop 3, stack:[], res = max(res, i-start+1)=max(2, 4-1+1)=4
+     * i:5, s[5] = ')', stack:[], start = i + 1 = 6, i++
+     * i:6, for-loop-end, return res:4
+     *
      * @param s
      * @return
      */
@@ -79,6 +127,7 @@ public class LongestValidParentheses {
                     if (stack.isEmpty()) {
                         res = Math.max(res, i - start + 1);
                     } else {
+                        //e.g. s = "(()"
                         res = Math.max(res, i - stack.peek());
                     }
                 }
