@@ -1,5 +1,3 @@
-2038.Remove Colored Pieces if Both Neighbors are the Same Color=9
-251.Flatten 2D Vector=9
 1466.Reorder Routes to Make All Paths Lead to the City Zero=9
 490.The Maze=9
 738.Monotone Increasing Digits=9
