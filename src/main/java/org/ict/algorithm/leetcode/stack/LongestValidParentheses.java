@@ -1,6 +1,7 @@
 package org.ict.algorithm.leetcode.stack;
 
 import java.util.ArrayDeque;
+import java.util.Arrays;
 import java.util.Deque;
 
 /**
@@ -36,6 +37,74 @@ import java.util.Deque;
 public class LongestValidParentheses {
 
     /**
+     * Two-Pointer Solution
+     *
+     * @param s
+     * @return
+     */
+    public int longestValidParenthesesV4(String s) {
+        int res = 0;
+        int l = 0;
+        int r = 0;
+        int n = s.length();
+        char[] arr = s.toCharArray();
+        /**
+         * 1st-round scanning
+         * e.g. s = "())"
+         */
+        for (int i = 0; i < n; i++) {
+            if (arr[i] == '(') {
+                l++;
+            } else {
+                r++;
+            }
+            if (l == r) {
+                res = Math.max(res, 2 * r);
+            } else if (r > l) {
+                l = 0;
+                r = 0;
+            }
+        }
+
+        /**
+         * 2nd-round scanning
+         * e.g. s = "(()"
+         */
+        l = 0;
+        r = 0;
+        for (int i = n - 1; i >= 0; i--) {
+            if (arr[i] == '(') {
+                l++;
+            } else {
+                r++;
+            }
+            if (l == r) {
+                res = Math.max(res, 2 * l);
+            } else if (l > r) {
+                l = 0;
+                r = 0;
+            }
+        }
+        return res;
+    }
+
+    public int longestValidParenthesesV3(String s) {
+        int res = 0;
+        int n = s.length();
+        int[] dp = new int[n + 1];
+        for (int i = 1; i <= n; i++) {
+            int j = i - 2 - dp[i - 1];
+            if (s.charAt(i - 1) == '(' || j < 0 || s.charAt(j) == ')') {
+                dp[i] = 0;
+            } else {
+                dp[i] = dp[i - 1] + 2 + dp[j];
+                res = Math.max(res, dp[i]);
+            }
+        }
+        return res;
+    }
+
+    /**
      * Dynamic Programming Solution
      * @author jerryrcwong
      * @see <a href="https://leetcode.com/problems/longest-valid-parentheses/solutions/14133/my-dp-o-n-solution-without-using-stack"></a>
@@ -44,9 +113,17 @@ public class LongestValidParentheses {
 
      */
     public int longestValidParenthesesV2(String s) {
-        int res = 0;
-        //todo
-        return res;
+        String s2 = ")" + s;
+        /**
+         * dp[i] := Length of the longest valid parentheses substring of s2[1..i]
+         */
+        int[] dp = new int[s2.length()];
+        for (int i = 1; i < s2.length(); i++) {
+            if (s2.charAt(i) == ')' && s2.charAt(i - dp[i - 1] - 1) == '(') {
+                dp[i] = dp[i - 1] + dp[i - dp[i - 1] - 2] + 2;
+            }
+        }
+        return Arrays.stream(dp).max().getAsInt();
     }
 
     /**
