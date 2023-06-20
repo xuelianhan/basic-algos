@@ -1,4 +1,4 @@
-package org.ict.algorithm.leetcode.dynamicprogramming;
+package org.ict.algorithm.leetcode.stack;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
