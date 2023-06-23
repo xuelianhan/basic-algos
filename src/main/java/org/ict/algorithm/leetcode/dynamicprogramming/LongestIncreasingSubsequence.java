@@ -1,9 +1,7 @@
 package org.ict.algorithm.leetcode.dynamicprogramming;
 
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * Given an integer array nums, return the length of the longest strictly increasing-subsequence
@@ -151,6 +149,7 @@ public class LongestIncreasingSubsequence {
     }
 
     /**
+     * Understanding the following solution
      * Brute-Forth Dynamic Programming Solution.
      * Time Cost 74ms
      * Time Complexity O(N^2)
