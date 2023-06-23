@@ -1,7 +1,6 @@
 package org.ict.algorithm.leetcode.backtrack;
 
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * The n-queens puzzle is the problem of placing n queens on an n x n chessboard

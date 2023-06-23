@@ -6,4 +6,6 @@ package org.ict.algorithm.leetcode.hoyoverse;
  * LC42, Hard
  */
 public class TrappingRainWater {
+
+
 }

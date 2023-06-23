@@ -1,5 +1,7 @@
 package org.ict.algorithm.leetcode.hoyoverse;
 
+import org.ict.algorithm.leetcode.linkedlist.LinkedListCycle;
+
 /**
  * Description
  * Determines if there is a ring in the given chain table.
@@ -36,10 +38,20 @@ package org.ict.algorithm.leetcode.hoyoverse;
  * @author sniper
  * @date 21 Jun 2023
  * NC4, Easy
+ * LC41, Easy
  */
 public class DetectCycleInLinkedList {
 
     public boolean hasCycle(ListNode head) {
+        ListNode fast = head;
+        ListNode slow = head;
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+            if (fast == slow) {
+                return true;
+            }
+        }
         return false;
     }
 

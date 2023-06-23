@@ -1,6 +1,8 @@
 package org.ict.algorithm.leetcode.hoyoverse;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Design the LRU (Least Recently Used) cache structure, which is sized at construction time, assuming that the size is capacity and the number of operations is n, and has the following functions.
@@ -44,7 +46,29 @@ import java.util.ArrayList;
 public class DesignLRUCache {
 
     public ArrayList<String> LRUCache(ArrayList<String> operators, ArrayList<ArrayList<Integer>> param, int capacity) {
-        // write code here
+        //todo
         return null;
+    }
+
+    static class LRUCache {
+
+        private final LinkedHashMap<Integer, Integer> cache;
+
+        public LRUCache(int capacity) {
+            cache = new LinkedHashMap<Integer, Integer>(16, 0.75f, true) {
+                @Override
+                protected boolean removeEldestEntry(Map.Entry<Integer, Integer> eldest) {
+                    return this.size() > capacity;
+                }
+            };
+        }
+
+        public int get(int key) {
+            return (cache.get(key) == null ? -1 : cache.get(key).intValue());
+        }
+
+        public void put(int key, int value) {
+            cache.put(key, value);
+        }
     }
 }
