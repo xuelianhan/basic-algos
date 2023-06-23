@@ -33,7 +33,7 @@ import java.util.Map;
  *
  * @author sniper
  * @date 08 Dec, 2022
- * LC105
+ * LC105, Medium
  */
 public class ConstructBinaryTreeByPreorderInorder {
 
@@ -45,6 +45,7 @@ public class ConstructBinaryTreeByPreorderInorder {
      * @return
      */
     public TreeNode buildTreeV3(int[] preorder, int[] inorder) {
+        //todo
         return null;
     }
 
@@ -66,18 +67,18 @@ public class ConstructBinaryTreeByPreorderInorder {
         for (int i = 0; i < n; i++) {
             indexMap.put(inorder[i], i);
         }
-        return helpV2(preorder, 0, n - 1, indexMap, preorderIndex);
+        return buildV2(preorder, 0, n - 1, indexMap, preorderIndex);
     }
 
-    public TreeNode helpV2(int[] preorder, int pStart, int pEnd, Map<Integer, Integer> indexMap, int[] preorderIndex) {
+    public TreeNode buildV2(int[] preorder, int pStart, int pEnd, Map<Integer, Integer> indexMap, int[] preorderIndex) {
         if (pStart > pEnd) {
             return null;
         }
         int val = preorder[preorderIndex[0]++];
         int i = indexMap.get(val);
         TreeNode cur = new TreeNode(val);
-        cur.left = helpV2(preorder, pStart, i - 1, indexMap, preorderIndex);
-        cur.right = helpV2(preorder, i + 1, pEnd, indexMap, preorderIndex);
+        cur.left = buildV2(preorder, pStart, i - 1, indexMap, preorderIndex);
+        cur.right = buildV2(preorder, i + 1, pEnd, indexMap, preorderIndex);
         return cur;
     }
 
@@ -98,24 +99,26 @@ public class ConstructBinaryTreeByPreorderInorder {
         for (int i = 0; i < n; i++) {
             indexMap.put(inorder[i], i);
         }
-        return helperV1(preorder, 0, n - 1, inorder, 0, n - 1, indexMap);
+        return buildV1(preorder, 0, n - 1, inorder, 0, n - 1, indexMap);
     }
 
-    public TreeNode helperV1(int[] preorder, int pStart, int pEnd, int[] inorder, int iStart, int iEnd, Map<Integer, Integer> indexMap) {
-        if (pStart > pEnd || iStart > iEnd) {
+    public TreeNode buildV1(int[] preorder, int postStart, int postEnd, int[] inorder, int inStart, int inEnd, Map<Integer, Integer> map) {
+        if (postStart > postEnd || inStart > inEnd) {
             return null;
         }
-        int i = indexMap.get(preorder[pStart]);
+        int rootVal = preorder[postStart];
+        int rootInOrderIndex = map.get(rootVal);
+        int leftSize = rootInOrderIndex - inStart;
         /**
          * preorder = [3,9,20,15,7], inorder = [9,3,15,20,7]
-         * pStart:0, i:1, iStart:0, (i - iStart) is the size of the cur's left subtree.
+         * postStart:0, rootInOrderIndex:1, inStart:0, (rootInOrderIndex - inStart) is the size of the cur's left subtree.
          * so, in preorder,
-         * left tree starts from (pStart + 1), ends at (pStart + i - iStart)
-         * right tree starts from (pStart + i - iStart) + 1, ends at pEnd.
+         * left tree starts from (postStart + 1), ends at (postStart + rootInOrderIndex - inStart)
+         * right tree starts from (postStart + rootInOrderIndex - inStart) + 1, ends at postEnd.
          */
-        TreeNode cur = new TreeNode(preorder[pStart]);
-        cur.left = helperV1(preorder, pStart + 1, pStart + i - iStart, inorder, iStart, i - 1, indexMap);
-        cur.right = helperV1(preorder, pStart + i - iStart + 1, pEnd, inorder, i + 1, iEnd, indexMap);
+        TreeNode cur = new TreeNode(rootVal);
+        cur.left = buildV1(preorder, postStart + 1, postStart + leftSize, inorder, inStart, rootInOrderIndex - 1, map);
+        cur.right = buildV1(preorder, postStart + leftSize + 1, postEnd, inorder, rootInOrderIndex + 1, inEnd, map);
         return cur;
     }
 
@@ -139,10 +142,10 @@ public class ConstructBinaryTreeByPreorderInorder {
      */
     public TreeNode buildTree(int[] preorder, int[] inorder) {
         int n = preorder.length;
-        return helper(preorder, 0, n - 1, inorder, 0, n - 1);
+        return buildV1(preorder, 0, n - 1, inorder, 0, n - 1);
     }
 
-    public TreeNode helper(int[] preorder, int pStart, int pEnd, int[] inorder, int iStart, int iEnd) {
+    public TreeNode buildV1(int[] preorder, int pStart, int pEnd, int[] inorder, int iStart, int iEnd) {
         if (pStart > pEnd || iStart > iEnd) {
             return null;
         }
@@ -162,8 +165,8 @@ public class ConstructBinaryTreeByPreorderInorder {
          *
          */
         TreeNode cur = new TreeNode(preorder[pStart]);
-        cur.left = helper(preorder, pStart + 1, pStart + i - iStart, inorder, iStart, i - 1);
-        cur.right = helper(preorder, pStart + i - iStart + 1, pEnd, inorder, i + 1, iEnd);
+        cur.left = buildV1(preorder, pStart + 1, pStart + i - iStart, inorder, iStart, i - 1);
+        cur.right = buildV1(preorder, pStart + i - iStart + 1, pEnd, inorder, i + 1, iEnd);
         return cur;
     }
 }

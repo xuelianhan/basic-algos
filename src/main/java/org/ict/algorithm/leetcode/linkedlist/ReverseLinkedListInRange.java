@@ -23,7 +23,7 @@ package org.ict.algorithm.leetcode.linkedlist;
  * Follow up: Could you do it in one pass?
  * @author sniper
  * @date 2022/8/19
- * LC92
+ * LC92, Medium
  */
 public class ReverseLinkedListInRange {
 

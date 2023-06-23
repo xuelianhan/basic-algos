@@ -63,7 +63,6 @@ public class ImplementQueueUsingStacks {
      * push 2, newStack:2,1
      * push 3, newStack:3,2,1
      *
-     *
      */
     class MyQueueV1 {
 
@@ -118,7 +117,7 @@ public class ImplementQueueUsingStacks {
 
         /**
          * Using temp stack to store the existed elements,
-         * and push the new element into the
+         * and push the new element into another stack.
          * stack:    temp:||
          * |3|
          * |2|

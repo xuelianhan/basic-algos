@@ -24,7 +24,7 @@ package org.ict.algorithm.leetcode.tree;
  *
  * @author sniper
  * @date 2021/12/2
- * LC105
+ * LC105, Medium
  */
 public class BinaryTreeFromPreorderAndInorder {
     public TreeNode buildTree(int[] preorder, int[] inorder) {

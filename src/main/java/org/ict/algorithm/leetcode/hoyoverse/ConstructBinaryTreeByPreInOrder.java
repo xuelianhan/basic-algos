@@ -1,5 +1,9 @@
 package org.ict.algorithm.leetcode.hoyoverse;
 
+
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Description
  * Given a binary tree with n nodes, reconstruct the binary tree and return its head node.
@@ -31,11 +35,34 @@ package org.ict.algorithm.leetcode.hoyoverse;
  * @author sniper
  * @date 21 Jun 2023
  * NC12, Medium
+ * LC105, Medium
  */
 public class ConstructBinaryTreeByPreInOrder {
-    public TreeNode reConstructBinaryTree (int[] preOrder, int[] vinOrder) {
-        return null;
+    public TreeNode reConstructBinaryTree (int[] preOrder, int[] inOrder) {
+        int n = preOrder.length;
+
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < n; i++) {
+            map.put(inOrder[i], i);
+        }
+
+        return build(preOrder, 0, n -1, inOrder, 0, n - 1, map);
     }
+
+    public TreeNode build(int[] preOrder, int preStart, int preEnd, int[] inOrder, int inStart, int inEnd, Map<Integer, Integer> map) {
+        if (preStart > preEnd || inStart > inEnd) {
+            return null;
+        }
+        int rootVal = preOrder[preStart];
+        int rootInOrderIndex = map.get(rootVal);
+        int leftSize = rootInOrderIndex - inStart;
+
+        TreeNode cur = new TreeNode(rootVal);
+        cur.left = build(preOrder, preStart + 1, preStart + leftSize, inOrder, inStart, rootInOrderIndex - 1, map);
+        cur.right = build(preOrder, preStart + leftSize + 1, preEnd, inOrder, rootInOrderIndex + 1, inEnd, map);
+        return cur;
+    }
+
 
     private static class TreeNode {
         int val = 0;
