@@ -76,6 +76,7 @@ public class Quick3string {
         sort(a, lo, lt - 1, d);
 
         //ASCII-table code from 0 to 127, when the d-bit equals, go to next round d+1
+        //????
         if (v >= 0) {
             StdOut.println("v:" + v + ", a[" + i + "]:" + a[i] + ", d:" + d);
             sort(a, lt, gt, d+1);
@@ -84,7 +85,6 @@ public class Quick3string {
         //
         sort(a, gt + 1, hi, d);
     }
-
 
     //sort from a[lo] to a[hi], starting at the dth character
     private static void insertion(String[] a, int lo, int hi, int d) {

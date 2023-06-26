@@ -140,5 +140,6 @@ public class Insertion extends AbstractSortHelper {
 		String[] a = StdIn.readAllStrings();
 		Insertion.sort(a);
 		StdOut.println(Arrays.toString(a));
-	}
+	}	
+
 }	
