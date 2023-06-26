@@ -77,6 +77,9 @@ public class SingleNumberII {
      * the remainder of 3 will be 0,
      * so that the corresponding bits of each number will be added up and the remainder of 3
      * will be the remaining number is the individual number.
+     * ------------------------------------------------------
+     * e.g.nums = [2,2,3,2]
+     *
      * @param nums
      * @return
      */
