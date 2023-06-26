@@ -71,6 +71,15 @@ public class SingleNumberII {
         return b;
     }
 
+    /**
+     * You can create a 32-bit number to count the number of occurrences of 1 in each bit,
+     * if a bit is 1, then if the integer occurs three times,
+     * the remainder of 3 will be 0,
+     * so that the corresponding bits of each number will be added up and the remainder of 3
+     * will be the remaining number is the individual number.
+     * @param nums
+     * @return
+     */
     public int singleNumberV1(int[] nums) {
         int res = 0;
         for (int i = 0; i < 32; i++) {
