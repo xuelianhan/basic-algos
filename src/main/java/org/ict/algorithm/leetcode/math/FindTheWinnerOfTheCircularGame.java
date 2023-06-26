@@ -55,10 +55,51 @@ package org.ict.algorithm.leetcode.math;
  */
 public class FindTheWinnerOfTheCircularGame {
 
+
     /**
+     * Understanding the following solution
      * Josephus problem
      * Time Complexity O(N)
      * Space Complexity O(1)
+     * ------------------------------------
+     * class Solution:
+     *     def findTheWinner(self, n: int, k: int) -> int:
+     *         i, res = 1, 0
+     *         while i <= n:
+     *             res = (res + k) % i
+     *             i += 1
+     *         return res + 1
+     * ---------------------------------
+     * class Solution {
+     * public:
+     *     int findTheWinner(int n, int k) {
+     *         int res = 0;
+     *         int i = 1;
+     *         while (i <= n) {
+     *             res = (res + k) % i;
+     *             i++;
+     *         }
+     *         return res + 1;
+     *     }
+     * };
+     * @param n
+     * @param k
+     * @return
+     */
+    public int findTheWinnerV2(int n, int k) {
+        int i = 1;
+        int res = 0;
+        while (i <= n) {
+            res = (res + k) % i;
+            i++;
+        }
+        return res + 1;
+    }
+
+    /**
+     * Josephus problem
+     * Time Complexity O(N)
+     * Space Complexity O(1) if you don't care the space used in recursion call stack
      * @param n
      * @param k
      * @return
@@ -101,7 +142,25 @@ public class FindTheWinnerOfTheCircularGame {
     /**
      * Josephus problem
      * Time Complexity O(N)
-     * Space Complexity O(1)
+     * Space Complexity O(1) if you don't care the space used in recursion call stack
+     * ----------------------
+     * class Solution {
+     * public:
+     *     int findTheWinner(int n, int k) {
+     *         if (n <= 1) {
+     *             return n;
+     *         }
+     *         int res = (findTheWinner(n - 1, k) + k) % n;
+     *         return res == 0 ? n : res;
+     *     }
+     * };
+     * ------------------------------------
+     * class Solution:
+     *     def findTheWinner(self, n: int, k: int) -> int:
+     *         if n <= 1:
+     *             return n
+     *         res = (self.findTheWinner(n - 1, k) + k) % n
+     *         return n if res == 0 else res
      * @param n
      * @param k
      * @return
