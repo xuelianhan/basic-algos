@@ -199,15 +199,12 @@ public class InterleavingString {
         }
 
         /**
-         * Elements not on border.
+         * Elements not on border, Two options:
+         * 1. We arrive at (i, j) from (i - 1, j)
+         * 2. We arrive at (i, j) from (i, j - 1)
          */
         for (int i = 1; i <= m; i++) {
             for (int j = 1; j <= n; j++) {
-                /**
-                 * Two options:
-                 * 1. We arrive at (i, j) from (i - 1, j)
-                 * 2. We arrive at (i, j) from (i, j - 1)
-                 */
                 boolean f1 = dp[i - 1][j] && s1.charAt(i - 1) == s3.charAt(i + j - 1);
                 boolean f2 = dp[i][j - 1] && s2.charAt(j - 1) == s3.charAt(i + j - 1);
                 dp[i][j] = (f1 || f2);
