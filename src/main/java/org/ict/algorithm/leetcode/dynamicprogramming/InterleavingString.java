@@ -51,12 +51,97 @@ public class InterleavingString {
         instance.isInterleave(s1, s2, s3);
     }
 
-    public boolean isInterleaveV3(String s1, String s2, String s3) {
+    /**
+     * Breadth-First-Search Solution
+     * @param s1
+     * @param s2
+     * @param s3
+     * @return
+     */
+    public boolean isInterleaveV5(String s1, String s2, String s3) {
+        //todo
         return false;
     }
 
-    public boolean isInterleaveV2(String s1, String s2, String s3) {
+    /**
+     * Depth-First-Search Solution
+     * @param s1
+     * @param s2
+     * @param s3
+     * @return
+     */
+    public boolean isInterleaveV4(String s1, String s2, String s3) {
+        //todo
         return false;
+    }
+
+    /**
+     * 1-Dimension Dynamic Programming.
+     * Time Cost 6ms
+     * @param s1
+     * @param s2
+     * @param s3
+     * @return
+     */
+    public boolean isInterleaveV3(String s1, String s2, String s3) {
+        int m = s1.length();
+        int n = s2.length();
+        if (m + n != s3.length()) {
+            return false;
+        }
+
+        boolean[] dp = new boolean[n + 1];
+        dp[0] = true;
+        for (int i = 0; i <= m; i++) {
+            for (int j = 0; j <= n; j++) {
+                int k = i + j - 1;
+                if (i > 0) {
+                    dp[j] &= (s1.charAt(i - 1) == s3.charAt(k));
+                }
+                if (j > 0) {
+                    dp[j] |= (s2.charAt(j - 1) == s3.charAt(k) && dp[j - 1]);
+                }
+            }
+        }
+        return dp[n];
+    }
+
+    /**
+     * 1-Dimension Dynamic Programming.
+     * Time Cost 4ms
+     * @param s1
+     * @param s2
+     * @param s3
+     * @return
+     */
+    public boolean isInterleaveV2(String s1, String s2, String s3) {
+        int m = s1.length();
+        int n = s2.length();
+        /**
+         * e.g. s1 = "a", s2 = "b", s3 = "a"
+         * != means > or <
+         */
+        if (m + n != s3.length()) {
+            return false;
+        }
+
+        boolean[] dp = new boolean[n + 1];
+        for (int i = 0; i <= m; i++) {
+            for (int j = 0; j <= n; j++) {
+                if (i == 0 && j == 0) {
+                    dp[j] = true;
+                } else if (i == 0) {
+                    dp[j] = dp[j - 1] && s2.charAt(j - 1) == s3.charAt(j - 1);
+                } else if (j == 0) {
+                    dp[j] = dp[j] && s1.charAt(i - 1) == s3.charAt(i - 1);
+                } else {
+                    boolean f1 = dp[j] && s1.charAt(i - 1) == s3.charAt(i + j - 1);
+                    boolean f2 = dp[j - 1] && s2.charAt(j - 1) == s3.charAt(i + j - 1);
+                    dp[j] = f1 || f2;
+                }
+            }
+        }
+        return dp[n];
     }
 
     /**
