@@ -40,7 +40,7 @@ import java.util.stream.Collectors;
 public class FindKPairsWithSmallestSums {
 
     /**
-     *  Understanding the following solution
+     * Understanding the following solution
      * Time Cost 38ms
      * @param nums1
      * @param nums2

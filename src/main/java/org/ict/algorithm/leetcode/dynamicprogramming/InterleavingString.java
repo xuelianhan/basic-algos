@@ -36,7 +36,6 @@ import java.util.Arrays;
  * 0 <= s3.length <= 200
  * s1, s2, and s3 consist of lowercase English letters.
  *
- *
  * Follow up: Could you solve it using only O(s2.length) additional memory space?
  * @author sniper
  * @date 27 Jun 2023
@@ -106,13 +105,9 @@ public class InterleavingString {
 
     /**
      * Understanding the following solution
+     * 2-Dimension Dynamic Programming.
      * Time Cost 4ms
      * -----------------------------------
-     * 2-Dimension Dynamic Programming.
-     * dp[i][j] indicates
-     * whether the first i characters of s2 and the first j characters of s1
-     * match the first i+j characters of s3
-     * ----------------------------------
      * DP table represents if s3 is interleaving at (i+j)-th position when s1 is at i-th position,
      * and s2 is at j-th position. 0-th position means empty string.
      *
@@ -134,13 +129,14 @@ public class InterleavingString {
      * s3: "aadbbcbcac"
      * s1: "aabcc"
      * s2: "dbbca"
-     * dp:[
-     * [T, F, F, F, F, F],
-     * [T, F, F, F, F, F],
-     * [T, T, T, T, T, F],
-     * [F, T, T, F, T, F],
-     * [F, F, T, T, T, T],
-     * [F, F, F, T, F, T]]
+     * dp:
+     *       d  b  b  c  a
+     *   [T, F, F, F, F, F],
+     * a [T, F, F, F, F, F],
+     * a [T, T, T, T, T, F],
+     * b [F, T, T, F, T, F],
+     * c [F, F, T, T, T, T],
+     * c [F, F, F, T, F, T]
      *
      * i:1, j:1
      * f1 = dp[0][1] && s1.charAt(0) == s3.charAt(1)
