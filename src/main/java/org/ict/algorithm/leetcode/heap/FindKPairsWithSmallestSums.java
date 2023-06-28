@@ -35,11 +35,59 @@ import java.util.stream.Collectors;
  * @author sniper
  * @date 24 Jun 2023
  * LC373, Medium, High Frequency, Top-150
+ * Amazon, Google, Microsoft
  */
 public class FindKPairsWithSmallestSums {
 
     /**
+     *  Understanding the following solution
+     * Time Cost 38ms
+     * @param nums1
+     * @param nums2
+     * @param k
+     * @return
+     */
+    public List<List<Integer>> kSmallestPairsV2(int[] nums1, int[] nums2, int k) {
+        int n = nums1.length;
+        int m = nums2.length;
+        List<List<Integer>> res = new ArrayList<>();
+
+        PriorityQueue<SumPair> minHeap = new PriorityQueue<>(Comparator.comparingInt(a -> a.sum));
+        minHeap.offer(new SumPair(0, 0, nums1[0] + nums2[0]));
+        while (!minHeap.isEmpty() && k > 0) {
+            SumPair pair = minHeap.poll();
+            int i = pair.i;
+            int j = pair.j;
+            res.add(Arrays.asList(nums1[i], nums2[j]));
+            k -= 1;
+
+            if (i == j) {
+                if ((i + 1) < n) {
+                    minHeap.offer(new SumPair(i + 1, j, nums1[i + 1] + nums2[j]));
+                }
+                if ((j + 1) < m) {
+                    minHeap.offer(new SumPair(i, j + 1, nums1[i] + nums2[j + 1]));
+                }
+                if ((i + 1) < n && (j + 1) < m) {
+                    minHeap.offer(new SumPair(i + 1, j + 1, nums1[i + 1] + nums2[j + 1]));
+                }
+            } else if (i > j) {
+                if ((i + 1) < n) {
+                    minHeap.offer(new SumPair(i + 1, j, nums1[i + 1] + nums2[j]));
+                }
+            } else {
+                if ((j + 1) < m) {
+                    minHeap.offer(new SumPair(i, j + 1, nums1[i] + nums2[j + 1]));
+                }
+            }
+        }
+
+        return res;
+    }
+
+    /**
      * Understanding the following solution
+     * Time Cost 40ms
      * @param nums1
      * @param nums2
      * @param k
