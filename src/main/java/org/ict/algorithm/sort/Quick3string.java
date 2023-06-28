@@ -76,7 +76,6 @@ public class Quick3string {
         sort(a, lo, lt - 1, d);
 
         //ASCII-table code from 0 to 127, when the d-bit equals, go to next round d+1
-        //????
         if (v >= 0) {
             StdOut.println("v:" + v + ", a[" + i + "]:" + a[i] + ", d:" + d);
             sort(a, lt, gt, d+1);
@@ -115,8 +114,6 @@ public class Quick3string {
         }    
         return v.length() < w.length();
     }
-
-
     // is the array sorted
     private static boolean isSorted(String[] a) {
         for (int i = 1; i < a.length; i++) {

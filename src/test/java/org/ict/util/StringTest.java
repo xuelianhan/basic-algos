@@ -30,7 +30,7 @@ public class StringTest {
 			System.out.println(i & (len - 1));// (i & (len - 1)) equal with (i % (len))
 		}
 	}
-    
+
     @Test
     public void testModulus() {
         int t = 2001;
