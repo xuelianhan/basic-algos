@@ -1,5 +1,7 @@
 package org.ict.algorithm.leetcode.dynamicprogramming;
 
+import java.util.Arrays;
+
 /**
  * Given strings s1, s2, and s3, find whether s3 is formed by an interleaving of s1 and s2.
  *
@@ -49,6 +51,14 @@ package org.ict.algorithm.leetcode.dynamicprogramming;
  */
 public class InterleavingString {
 
+    public static void main(String[] args) {
+        String s1 = "aabcc";
+        String s2 = "dbbca";
+        String s3 = "aadbbcbcac";
+        InterleavingString instance = new InterleavingString();
+        instance.isInterleave(s1, s2, s3);
+    }
+
     public boolean isInterleaveV3(String s1, String s2, String s3) {
         return false;
     }
@@ -57,17 +67,60 @@ public class InterleavingString {
         return false;
     }
 
+    /**
+     * Understanding the following solution
+     * Time Cost 4ms
+     * ---------------------------------------
+     * 2-Dimension Dynamic Programming.
+     * Similar with isInterleave
+     * @param s1
+     * @param s2
+     * @param s3
+     * @return
+     */
     public boolean isInterleaveV1(String s1, String s2, String s3) {
-        return false;
+        int m = s1.length();
+        int n = s2.length();
+        /**
+         * e.g. s1 = "a", s2 = "b", s3 = "a"
+         * != means > or <
+         */
+        if (m + n != s3.length()) {
+            return false;
+        }
+        /**
+         * dp[i][j] is true if s3[0..i + j) can be formed
+         * by the interleaving of s1[0..i) and s2[0..j)
+         */
+        boolean[][] dp = new boolean[m + 1][n + 1];
+        for (int i = 0; i <= m; i++) {
+            for (int j = 0; j <= n; j++) {
+                if (i == 0 && j == 0) {
+                    dp[i][j] = true;
+                } else if (i == 0) {
+                    dp[i][j] = dp[i][j - 1] && s2.charAt(j - 1) == s3.charAt(i + j - 1);
+                } else if (j == 0) {
+                    dp[i][j] = dp[i - 1][j] && s1.charAt(i - 1) == s3.charAt(i + j - 1);
+                } else {
+                    boolean f1 = dp[i - 1][j] && s1.charAt(i - 1) == s3.charAt(i + j - 1);
+                    boolean f2 = dp[i][j - 1] && s2.charAt(j - 1) == s3.charAt(i + j - 1);
+                    dp[i][j] = (f1 || f2);
+                }
+            }
+        }
+        return dp[m][n];
     }
 
     /**
+     * Understanding the following solution
+     * Time Cost 4ms
+     * -----------------------------------
      * 2-Dimension Dynamic Programming.
      * dp[i][j] indicates
      * whether the first i characters of s2 and the first j characters of s1
      * match the first i+j characters of s3
      * ----------------------------------
-     * DP table represents if s3 is interleaving at (i+j)th position when s1 is at i-th position,
+     * DP table represents if s3 is interleaving at (i+j)-th position when s1 is at i-th position,
      * and s2 is at j-th position. 0-th position means empty string.
      *
      * So if both s1 and s2 is currently empty, s3 is empty too,
@@ -85,13 +138,26 @@ public class InterleavingString {
      * If we arrive i,j from i, j-1,
      * then if i, j-1 is already interleaving and j and current s3 position equal, it is interleaving.
      * ----------------------------------
-     *    s1: a a b c c
-     * s2--------------------------------
-     * d
-     * b
-     * b
-     * c
-     * a
+     * s3: "aadbbcbcac"
+     * s1: "aabcc"
+     * s2: "dbbca"
+     * dp:[
+     * [T, F, F, F, F, F],
+     * [T, F, F, F, F, F],
+     * [T, T, T, T, T, F],
+     * [F, T, T, F, T, F],
+     * [F, F, T, T, T, T],
+     * [F, F, F, T, F, T]]
+     *
+     * i:1, j:1
+     * f1 = dp[0][1] && s1.charAt(0) == s3.charAt(1)
+     *    = False && 'a' == 'a'
+     *    = False
+     * f2 = dp[1][0] && s2.charAt(0) == s3.charAt(1)
+     *    = True && 'd' == 'a'
+     *    = False
+     * dp[1][1] = f1 || f2 = False || False = False
+     *
      * @author sherryxmhe
      * @see <a href="https://leetcode.com/problems/interleaving-string/solutions/31879/my-dp-solution-in-c/"></a>
      * @param s1
@@ -147,6 +213,7 @@ public class InterleavingString {
                 dp[i][j] = (f1 || f2);
             }
         }
+        System.out.println(Arrays.deepToString(dp));
         return dp[m][n];
     }
 }
