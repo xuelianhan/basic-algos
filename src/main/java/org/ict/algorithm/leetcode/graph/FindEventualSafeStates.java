@@ -44,6 +44,7 @@ public class FindEventualSafeStates {
 
     /**
      * Depth-First-Search Solution
+     * Similar with eventualSafeNodesV1 but easier to understand.
      * Time Cost 6ms
      * @param graph
      * @return
