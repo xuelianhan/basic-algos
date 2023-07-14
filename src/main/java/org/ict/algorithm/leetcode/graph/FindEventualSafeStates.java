@@ -43,6 +43,7 @@ import java.util.*;
 public class FindEventualSafeStates {
 
     /**
+     * Understanding the following solution
      * Depth-First-Search Solution
      * Similar with eventualSafeNodesV1 but easier to understand.
      * Time Cost 6ms
@@ -134,6 +135,7 @@ public class FindEventualSafeStates {
     }
 
     /**
+     * Understanding the following solution
      * Topological Sort Solution
      * Time Cost 53ms
      * @author kiranpalsingh1806
