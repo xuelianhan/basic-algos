@@ -40,6 +40,7 @@ import java.util.Arrays;
  * @author sniper
  * @date 14 Jun 2023
  * LC724, Easy, frequency=13
+ * Coupang
  */
 public class FindPivotIndex {
 

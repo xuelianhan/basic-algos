@@ -35,7 +35,8 @@ import java.util.Stack;
  *
  * @author sniper
  * @date 24 Apr, 2023
- * LC394, Medium, frequency=82
+ * LC394, Medium, frequency=82,
+ * Coupang
  */
 public class DecodeString {
 

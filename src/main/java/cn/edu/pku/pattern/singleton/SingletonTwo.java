@@ -4,7 +4,7 @@ public class SingletonTwo extends Singleton {
 
     private SingletonTwo(){}
     
-    public static Singleton getSingleton() {
+    public static final Singleton getSingleton() {
         return Holder.singleton;
     }
     
