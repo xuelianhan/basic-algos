@@ -59,6 +59,14 @@ public class PerfectPowerNumbers {
         return countPerfectPowerNumbers(1, N);
     }
 
+
+    /**
+     * Time Complexity: O(R*log(R))
+     * Auxiliary Space: O(R)
+     * @param L
+     * @param R
+     * @return
+     */
     public int countPerfectPowerNumbers(int L, int R) {
         /**
          * Iterate over all the exponents from 2 to 20
