@@ -1,6 +1,7 @@
 package org.ict.algorithm.leetcode.coupang;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -48,6 +49,10 @@ public class PerfectPowerNumbers {
         PerfectPowerNumbers instance = new PerfectPowerNumbers();
         int res = instance.countPerfectPowerNumbers(N);
         System.out.println(res);
+        /**
+         * output 8, not 9
+         */
+        System.out.println((int)(Math.pow(2, 3) + 0.5));
     }
 
     public int countPerfectPowerNumbers(int N) {
@@ -64,7 +69,14 @@ public class PerfectPowerNumbers {
          */
         List<Integer> powers = new ArrayList<>();
         powers.add(1);
-        
+
+        /**
+         * This loop will run for a maximum of sqrt(R) times
+         * a^m + b^n, where a,b >= 1, m,n >= 2
+         * because m,n >= 2, so the p starts from 2
+         * because 1 has been added into powers above, so the num starts from 2 here.
+         * because num and p are both int type, so plus 0.5 can be ignored here.
+         */
         for (int p = 2; p <= 20; p++) {
             int num = 2;
             while ((int)(Math.pow(num, p) + 0.5) < R) {
@@ -72,11 +84,12 @@ public class PerfectPowerNumbers {
                 num++;
             }
         }
+        System.out.println("powers:" + powers);
 
         /**
-         * Stores if the i can be expressed as the sum of perfect power or not
+         * Stores if the number can be expressed as the sum of perfect power or not
          */
-        int[] ok = new int[R + 2];
+        int[] ok = new int[R + 1];
         for (int i = 0; i < powers.size(); i++) {
             for (int j = 0; j < powers.size(); j++) {
                 int sum = powers.get(i) + powers.get(j);
@@ -85,6 +98,8 @@ public class PerfectPowerNumbers {
                 }
             }
         }
+        System.out.println("ok array:" + Arrays.toString(ok));
+
 
         /**
          * Find the prefix sum of the ok array.
@@ -92,6 +107,7 @@ public class PerfectPowerNumbers {
         for (int i = 1; i <= R; i++) {
             ok[i] += ok[i - 1];
         }
+        System.out.println("prefix sum array:" + Arrays.toString(ok));
 
         return ok[R] - ok[L - 1];
     }
