@@ -69,7 +69,8 @@ public class PerfectPowerNumbers {
      */
     public int countPerfectPowerNumbers(int L, int R) {
         /**
-         * Iterate over all the exponents from 2 to 20
+         * Because N can be as large as 1,000,000.
+         * So we iterate over all the exponents from 2 to 20.
          * 2^10=1024
          * 2^20=1024*1024
          * Generate all possible power of all the numbers that are less than R from 2 and store those numbers in
