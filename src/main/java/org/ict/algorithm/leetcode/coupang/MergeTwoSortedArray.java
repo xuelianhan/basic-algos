@@ -6,4 +6,5 @@ package org.ict.algorithm.leetcode.coupang;
  * LC88
  */
 public class MergeTwoSortedArray {
+
 }
