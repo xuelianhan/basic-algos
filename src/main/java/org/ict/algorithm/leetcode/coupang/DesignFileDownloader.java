@@ -11,12 +11,16 @@ import java.nio.file.StandardCopyOption;
 
 /**
  * @see <a href="https://www.baeldung.com/java-download-file"></a>
+ * @see <a href="https://github.com/eugenp/tutorials/tree/master/core-java-modules/core-java-networking-2"></a>
  * @author sniper
  * @date 21 Jul 2023
  */
 public class DesignFileDownloader {
 
 
+    public void downloadV3(String fileUrl, String fileName) {
+        //todo
+    }
 
 
     /**
@@ -32,7 +36,7 @@ public class DesignFileDownloader {
      * these methods use the zero-copy technique that reduces the number of context
      * switches between the kernel mode and user mode.
      */
-    public void download2(String fileUrl, String fileName) {
+    public void downloadV2(String fileUrl, String fileName) {
         try {
             ReadableByteChannel readableByteChannel = Channels.newChannel(new URL(fileUrl).openStream());
             FileOutputStream fileOutputStream = new FileOutputStream(fileName);
