@@ -59,6 +59,31 @@ public class MergeTwo2DArraysBySummingValues {
     }
 
     /**
+     * Time Cost 5ms
+     * @param nums1
+     * @param nums2
+     * @return
+     */
+    public int[][] mergeArraysV2(int[][] nums1, int[][] nums2) {
+        TreeMap<Integer, Integer> map = new TreeMap<>();
+        for (int[] a : nums1) {
+            map.put(a[0], a[1]);
+        }
+        for (int[] b : nums2) {
+            if (map.containsKey(b[0])) {
+                map.put(b[0], map.get(b[0]) + b[1]);
+            } else {
+                map.put(b[0], b[1]);
+            }
+        }
+        return map.entrySet()
+                .stream()
+                .map(e -> new int[]{e.getKey(), e.getValue()})
+                .toArray(int[][]::new);
+    }
+
+
+    /**
      * Time Cost 6ms
      * @param nums1
      * @param nums2
