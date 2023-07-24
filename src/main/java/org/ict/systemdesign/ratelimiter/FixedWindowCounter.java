@@ -6,6 +6,32 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
+ * Fixed window counter algorithm divides the timeline into fixed-size windows and assign a counter to each window.
+ * Each request, based on its arriving time, is mapped to a window.
+ * If the counter in the window has reached the limit, requests falling in this window should be rejected.
+ * For example, if we set the window size to 1 minute.
+ * Then the windows are [00:00, 00:01), [00:01, 00:02), ...[23:59, 00:00).
+ * Suppose the limit is 2 requests per minute:
+ * A request comes at 00:00:24 belongs to window 1, and it increases the window’s counter to 1.
+ * The next request comes at 00:00:36 also belongs to window 1 and the window’s counter becomes 2.
+ * The next request that comes at 00:00:49 is rejected because the counter has exceeded the limit.
+ * Then the request comes at 00:01:12 can be served because it belongs to window 2.
+ *
+ * 00:00          00:01           00:02
+ * |                |               |
+ * ------------------------------------------------------>
+ *    ^                    ^
+ *    |                    |
+ *  00:00:24, counter:1   00:01:12, counter:1
+ *        ^
+ *        |
+ *     00:00:36, counter:2
+ *           ^
+ *           |
+ *       00:00:49, counter:3, rejected
+ * ---------------------------------------------------------
+ *
+ * 
  * @author sniper
  * @date 24 Jul 2023
  */
@@ -21,7 +47,10 @@ public class FixedWindowCounter extends RateLimiter {
 
     @Override
     public boolean allowAccess() {
-        long windowKey = System.currentTimeMillis() / 1000 * 1000;
+        /**
+         * the window size is one minute.
+         */
+        long windowKey = System.currentTimeMillis() / 1000 * 60;
         if (!windows.containsKey(windowKey)) {
             windows.put(windowKey, new AtomicInteger(0));
             windowQueue.offer(windowKey);
