@@ -1,0 +1,58 @@
+Q1:
+// You are given a function called draw_point(x, y), which can draw a point on the screen, with location x, y
+// Please complete a function called draw_circle(x, y, r),
+// this function should draw a circle on the screen, with x,y be the center, r be the radius.
+// Note that: x y r are all positive integers
+// What if this code is running on a very simplified cpu,
+// and you can not use math function like sqrt, sin, cos, etc?
+
+public class DrawUtil {
+
+    public void drawPoint(int x, int y) {
+        // no need to implement
+    }
+
+    // (0, 0, 1)
+    // (1, 1, 1)
+    public void drawCircle(int x, int y, int r) {
+        int[] dir = new int {-1, 0, 1, 0, -1};
+        int minDistance = Integer.MAX_VALUE;
+        Map<Integer, int[]> map = new HashMap<>();
+        while (x >= -r && x <= r && y >= -r && y <= r) {
+            if (x * x + y * y == r * r) {
+                drawPoint(x, y);
+                int[] p = new int{x, y};
+                for (int i = 0; i < dir.length - 1; i++) {
+                    int nextX = x + dir[i];
+                    int nextY = y + dir[i + 1]
+                    int nextP = nextX * nextX + nextY * nextY;
+                    int abs = Math.abs(nextP - r * r);
+                    if (abs < minDistance) {
+                        minDistance = abs;
+                        map.put(minDistance, p);
+                    }
+                }
+                int[] target = map.get(minDistance);
+                drawPoint(target[0], target[1]);
+                x = target[0];
+                y = target[1];
+            }
+        }
+    }
+
+Q2:
+// You are given a huge text file, every line is one positive integer(0 ~ 2^32-1)
+// Give you bunch of machines, which are all resource limited machines,
+// every single of them do not have enough memory to hold the whole file to do a quick sort
+// Can you come up with a solution to compute the median of all these integers?
+
+[1, 1], [2, 2, 2, 2]
+1    2   expected 2
+
+1
+1
+2
+2
+2
+2
+}

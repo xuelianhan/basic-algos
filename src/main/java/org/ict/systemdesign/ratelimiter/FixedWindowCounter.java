@@ -6,9 +6,12 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Fixed window counter algorithm divides the timeline into fixed-size windows and assign a counter to each window.
- * Each request, based on its arriving time, is mapped to a window.
- * If the counter in the window has reached the limit, requests falling in this window should be rejected.
+ *
+ * Fixed window counter algorithm works as following:
+ * The algorithm divides the timeline into fixed-size windows and assign a counter for each window.
+ * Each request, based on its arriving time, is mapped to a window, and increments the counter by one.
+ * Once the counter reaches the pre-defined threshold, new requests are dropped until a new time window starts.
+ *
  * For example, if we set the window size to 1 minute.
  * Then the windows are [00:00, 00:01), [00:01, 00:02), ...[23:59, 00:00).
  * Suppose the limit is 2 requests per minute:
@@ -30,8 +33,14 @@ import java.util.concurrent.atomic.AtomicInteger;
  *           |
  *       00:00:49, counter:3, rejected
  * ---------------------------------------------------------
+ * Pros:
+ * Memory efficient
+ * Easy to understand
+ * Resetting available quota at the end of a unit time window fits certain use case.
  *
- * 
+ * Cons:
+ * Spike in traffic at the edges of a window could cause more requests than the allowed quota to go through.
+ *
  * @author sniper
  * @date 24 Jul 2023
  */
