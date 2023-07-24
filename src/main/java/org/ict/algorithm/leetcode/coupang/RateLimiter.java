@@ -20,8 +20,7 @@ package org.ict.algorithm.leetcode.coupang;
  * @author sniper
  * @date 19 Jul 2023
  */
-public class RateLimiter {
-
+public interface RateLimiter {
 
     /**
      * @param timestamp the current timestamp
@@ -30,8 +29,10 @@ public class RateLimiter {
      * @param increment whether we should increase the counter
      * @return true or false to indicate the event is limited or not
      */
-    public boolean isRateLimited(int timestamp, String event, String rate, boolean increment) {
+    default boolean isRateLimited(int timestamp, String event, String rate, boolean increment) {
         //todo
         return false;
     }
+
+    boolean allowAccess();
 }

@@ -14,7 +14,11 @@ package org.ict.algorithm.leetcode.coupang;
  */
 public class Calculator {
     public int calculate(String s) {
-        // Please refer the above related classes.
+        if (s == null || s.length() == 0) {
+            return 0;
+        }
+
+
         return 0;
     }
 }
