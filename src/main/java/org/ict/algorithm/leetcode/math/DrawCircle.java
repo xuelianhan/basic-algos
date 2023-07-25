@@ -1,13 +1,6 @@
 package org.ict.algorithm.leetcode.math;
 
-
-
-import sun.java2d.SunGraphics2D;
-
 import java.awt.*;
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * You are given a function called draw_point(x, y),
  * which can draw a point on the screen, with location x, y
@@ -31,14 +24,123 @@ public class DrawCircle {
         instance.drawCircleLineV1(0, 0, 100);
     }
 
+    public void drawCircleLineV3(int xc, int yc, int r) {
+        int x = 0;
+        int y = r;
+        double d = 1.25 - r;
+        /**
+         * Eight directions including diagonal-line
+         */
+        int[][] dirs = new int[][]{{1, 1}, {-1, 1}, {1, -1}, {-1, -1}};
+        printCircle(xc, yc, x, y, dirs);
+        while (x < y) {
+            /**
+             * For each pixel we will draw all eight pixels
+             */
+            x++;
+            /**
+             * Check for decision parameter and corresponding y, update d, x and y.
+             */
+            if (d > 0) {
+                d = d + 2 * (x - y) + 5;
+                y--;
+            } else {
+                d = d + 2 * x + 3;
+            }
+            printCircle(xc, yc, x, y, dirs);
+        }
+    }
+
     public void drawPoint(int x, int y) {
         // no need to implement
         System.out.print(".");
     }
 
+    /**
+     * We have already discussed the Mid-Point circle drawing algorithm in our previous post.
+     * In this post we will consider the Bresenham’s circle drawing algorithm.
+     *
+     * Both of these algorithms uses the key feature of circle that it is highly symmetric.
+     * So, for whole 360 degree of circle we will divide it in 8-parts each octant of 45 degree.
+     * In order to do that we will use Bresenham’s Circle Algorithm for calculation of the locations
+     * of the pixels in the first octant of 45 degrees.
+     * It assumes that the circle is centered on the origin. So for every pixel (x, y) it calculates,
+     * we draw a pixel in each of the 8 octants of the circle as shown below :
+     *
+     *
+     * circle 1
+     *
+     * Now, we will see how to calculate the next pixel location from a previously known pixel location (x, y).
+     * In Bresenham’s algorithm at any point (x, y) we have two options
+     * either to choose the next pixel in the east i.e. (x+1, y) or in the south east i.e. (x+1, y-1).
+     *
+     *
+     * circle 2
+     *
+     * And this can be decided by using the decision parameter d as:
+     *
+     *
+     * If d > 0, then (x+1, y-1) is to be chosen as the next pixel as it will be closer to the arc.
+     * else (x+1, y) is to be chosen as next pixel.
+     * Now to draw the circle for a given radius ‘r’ and centre (xc, yc)
+     * We will start from (0, r) and move in first quadrant till x=y (i.e. 45 degree).
+     * We should start from listed initial condition:
+     *
+     *
+     * d = 3 - (2 * r)
+     * x = 0
+     * y = r
+     * Now for each pixel, we will do the following operations:
+     *
+     * Set initial values of (xc, yc) and (x, y)
+     * Set decision parameter d to d = 3 – (2 * r).
+     *
+     * call drawCircle(int xc, int yc, int x, int y) function.
+     * Repeat steps 5 to 8 until x < = y
+     * Increment value of x.
+     * If d < 0, set d = d + (4*x) + 6
+     * Else, set d = d + 4 * (x – y) + 10 and decrement y by 1.
+     * call drawCircle(int xc, int yc, int x, int y) function
+     * @param xc
+     * @param yc
+     * @param r
+     */
+    public void drawCircleLineV2(int xc, int yc, int r) {
+        int x = 0;
+        int y = r;
+        int d = 3 - 2 * r;
+        /**
+         * Eight directions including diagonal-line
+         */
+        int[][] dirs = new int[][]{{1, 1}, {-1, 1}, {1, -1}, {-1, -1}};
+        printCircle(xc, yc, x, y, dirs);
+        while (y >= x) {
+            /**
+             * For each pixel we will draw all eight pixels
+             */
+            x++;
+            /**
+             * Check for decision parameter and corresponding y, update d, x and y.
+             */
+            if (d > 0) {
+                y--;
+                d = d + 4 * (x - y) + 10;
+            } else {
+                d = d + 4 * x + 6;
+            }
+            printCircle(xc, yc, x, y, dirs);
+        }
+    }
 
-    public void drawCircleLineV3(int x, int y, int r) {
-        //todo
+    private void printCircle(int xc, int yc, int x, int y, int[][] dirs) {
+        for (int i = 0; i < dirs.length; i++) {
+            int[] d = dirs[i];
+            drawPoint(xc + d[0] * x, yc + d[1] * y);
+        }
+        for (int i = 0; i < dirs.length; i++) {
+            int[] d = dirs[i];
+            drawPoint(xc + d[0] * y, yc + d[1] * x);
+        }
     }
 
     /**
@@ -50,29 +152,17 @@ public class DrawCircle {
         int y = radius;
         int x = 0;
 
-        int delta = calculateStartDelta(radius);
+        int delta = 3 - 2 * radius;
         while (y >= x) {
             drawPixelAndReflect(centerX, centerY, x, y, g);
             if (delta < 0) {
-                delta = calculateDeltaForHorizontalPixel(delta, x);
+                delta = delta + 4 * x + 6;
             } else {
-                delta = calculateDeltaForDiagonalPixel(delta, x, y);
+                delta = delta + 4 * (x - y) + 10;
                 y--;
             }
             x++;
         }
-    }
-
-    private static int calculateStartDelta(int radius) {
-        return 3 - 2 * radius;
-    }
-
-    private static int calculateDeltaForHorizontalPixel(int oldDelta, int x) {
-        return oldDelta + 4 * x + 6;
-    }
-
-    private static int calculateDeltaForDiagonalPixel(int oldDelta, int x, int y) {
-        return oldDelta + 4 * (x - y) + 10;
     }
 
     private static void drawPixelAndReflect(int centerX, int centerY, int x, int y, Graphics g) {
@@ -85,25 +175,6 @@ public class DrawCircle {
         g.drawLine(centerX - y, centerY - x, centerX - y, centerY - x);
         g.drawLine(centerX + y, centerY + x, centerX + y, centerY + x);
         g.drawLine(centerX + y, centerY - x, centerX + y, centerY - x);
-    }
-
-
-    public void drawCircleLineV2(int x, int y, int r) {
-        for (int row = x * r - r; row <= x * r + r; row++) {
-            int min = Integer.MAX_VALUE;
-            Map<Integer, int[]> map = new HashMap<>();
-            for (int col = y * r - r; col <= y * r + r; col++) {
-                int dd = (row - x) * (row - x) + (col - y) * (col - y);
-                int dxy = x * x + y * y;
-                int abs = Math.abs(dd - dxy);
-                if (abs < min) {
-                    min = abs;
-                }
-                map.put(abs, new int[] {row, col});
-            }
-            int[] point = map.get(min);
-
-        }
     }
 
 

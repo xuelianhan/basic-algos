@@ -12,6 +12,11 @@ import java.io.File;
  */
 public class FindMedianOutOf500MillionNumbers {
 
+    /**
+     * Divide and Conquer
+     * @param file
+     * @return
+     */
     public int findMedian(File file) {
         int res = 0;
         //todo
