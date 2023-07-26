@@ -10,6 +10,7 @@ import java.awt.*;
  * What if this code is running on a very simplified cpu,
  * and you can not use math function like sqrt, sin, cos, etc?
  *
+ * @see <a href="https://arcade.makecode.com/graphics-math/bresenham-circle"></a>
  * @see <a href="https://www.geeksforgeeks.org/draw-circle-without-floating-point-arithmetic/"></a>
  * @see <a href="https://codingface.com/print-a-circle-pattern-in-java/"></a>
  * @author sniper
@@ -66,7 +67,7 @@ public class DrawCircle {
      * of the pixels in the first octant of 45 degrees.
      * It assumes that the circle is centered on the origin. So for every pixel (x, y) it calculates,
      * we draw a pixel in each of the 8 octants of the circle as shown below :
-     *
+     * <img href="https://makecode.trafficmanager.cn/blob/49f2ae0d24366ba7f84cc53329afd7c3dc422bc0/static/graphics-math/bresenham-circle/decision-points.jpg">
      *
      * circle 1
      *
