@@ -145,7 +145,8 @@ public class RobotBoundedInCircle {
      * In case 2, we can think of the path that the robot moves as below.
      * So after executing the instruction at most 4 times,
      * the robot will go back to the original position.
-     * 
+     *
+     *
      * @author lee215
      * @param instructions
      * @return
@@ -163,6 +164,7 @@ public class RobotBoundedInCircle {
          * [-1, 0] * [0, 1] = 0
          * [0, 1] * [1, 0] = 0
          * [1, 0] * [0, -1] = 0
+         * [0, -1] * [-1, 0] = 0
          * We first define a 2-dementional array dirs:{{0,1}, {1,0}, {0,-1}, {-1,0}}
          * to represent north, east, south and west in order, and also treat dirs as a cyclic array.
          * (0, 1)
@@ -285,13 +287,13 @@ public class RobotBoundedInCircle {
 
     /**
      * Understanding the following solution
-     *        N
-     *        |
-     *        |
-     * W-------------E
-     *        |
-     *        |
-     *        S
+     *          N(0)
+     *          |
+     *          |
+     * W(3)-------------E(1)
+     *          |
+     *          |
+     *          S(2)
      * @param instructions
      * @return
      */
