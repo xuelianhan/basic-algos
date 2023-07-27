@@ -67,6 +67,7 @@ public class RobotBoundedInCircle {
 
 
     /**
+     *
      * object Solution {
      *     def isRobotBounded(instructions: String): Boolean = {
      *         var x = 0
@@ -117,14 +118,43 @@ public class RobotBoundedInCircle {
      *         return (x, y) == (0, 0) or (dx, dy) != (0, 1)
      * --------------------------------------------------------
      * e.g.  "GL"
-     * G: (0, 0) -> (0, 1)
-     * L: (0, 1) -> (-1, 0)
+     * G: (0, 0) -> (0, 1), face the North, the y incremented by 1 unit, the x doesn't change
+     * L: (0, 1) -> (0, 1), face the West, doesn't change the position
+     * G: (0, 1) -> (0-1, 1) -> (-1, 1), face the West, the x go forward one step
+     * L: (-1, 1) -> (-1, 1), face the South,
+     * G: (-1, 1) -> (-1, 1-1)->(-1, 0), face the South, the y go forward on step.
+     * L: (-1, 0) -> (-1, 0), face the East
+     * G: (-1, 0) -> (-1+1, 0)->(0, 0), face the East, return to the original
+     * ----------------------------
+     * e.g. "GG"
+     * G: (0, 0) -> (0, 1), face the North
+     * G: (0, 1) -> (0, 2), face the North
      *
+     * For a right turn, we can think of the directions are: north -> east -> south -> west -> north ->....
+     * Making a right turn is equivalent to moving the current direction to its next.
+     * So the new direction will be dirs[(i + 1) % 4].
+     * For a left turn, it can be treated as moving the current direction to its previous one.
+     * So the new direction will be dirs[(i-1) % 4], since we need to ensure index >= 0,
+     * so we change dirs[(i-1) % 4] to dirs[(i - 1 + 4) % 4], which is dirs[(i + 3) % 4]
+     * The second challenge is how can we determine the robot can be bounded in a circle.
+     * There are two cases where the robot will be bounded in a circle.
+     *
+     * case 1: Robot is at the original position (0,0) after finishing the instruction.
+     * case 1: Robot is not at the original position (0,0) && not facing towards north after finishing the instruction.
+     * In case 1, the robot will go back the original position every time when the instruction is executed.
+     * In case 2, we can think of the path that the robot moves as below.
+     * So after executing the instruction at most 4 times,
+     * the robot will go back to the original position.
+     * 
      * @author lee215
      * @param instructions
      * @return
      */
-    public boolean isRobotBoundedV1(String instructions) {
+    public boolean isRobotBoundedV2(String instructions) {
+        /**
+         * x and y represent the robot's current position,
+         * and idx represents the robot's current direction.
+         */
         int x = 0;
         int y = 0;
         int idx = 0;
@@ -133,8 +163,14 @@ public class RobotBoundedInCircle {
          * [-1, 0] * [0, 1] = 0
          * [0, 1] * [1, 0] = 0
          * [1, 0] * [0, -1] = 0
+         * We first define a 2-dementional array dirs:{{0,1}, {1,0}, {0,-1}, {-1,0}}
+         * to represent north, east, south and west in order, and also treat dirs as a cyclic array.
+         * (0, 1)
+         * (1, 0)
+         * (0, -1)
+         * (-1, 0)
          */
-        int[][] dirs = new int[][]{{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+        int[][] dirs = new int[][]{{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
         for (char c : instructions.toCharArray()) {
             if ('R' == c) {
                 idx = (idx + 1) % 4;
@@ -169,16 +205,56 @@ public class RobotBoundedInCircle {
      * In order to avoid negative numbers, you add a 4, then decrement it by 1, and then take the remainder of the 4.
      * Similarly, if an R instruction is encountered, idx is added by 1 and then remaindered by 4.
      * Finally, if you are still at the origin, or if the direction is not north, return true.
+     *
+     * If anyone has trouble understanding the dx, dy transform:
+     * Right is 90° and Left is -90°
+     *            ^
+     *          dy|
+     *            |
+     *            | here
+     * -------------------------->dx
+     *            |
+     *            |
+     *            |
+     *
+     * (transform 90 degrees)
+     *
+     *            ^
+     *            |
+     *            |
+     *            |
+     * -------------------------->dy
+     *            | here
+     *            |
+     *            |
+     *          -dx
+     *------------------------------
+     * Let's say the robot starts with facing up. It moves [dx, dy] by executing the instructions once.
+     * If the robot starts with facing
+     * right, it moves [dy, -dx];
+     * left, it moves [-dy, dx];
+     * down, it moves [-dx, -dy]
+     *
+     * If the robot faces right (clockwise 90 degree) after executing the instructions once,
+     * the direction sequence of executing the instructions repeatedly will be up -> right -> down -> left -> up
+     * The resulting move is [dx, dy] + [dy, -dx] + [-dx, -dy] + [-dy, dx] = [0, 0] (back to the original starting point)
+     *
+     * All other possible direction sequences:
+     * up -> left -> down -> right -> up. The resulting move is [dx, dy] + [-dy, dx] + [-dx, -dy] + [dy, -dx] = [0, 0]
+     * up -> down -> up. The resulting move is [dx, dy] + [-dx, -dy] = [0, 0]
+     * up -> up. The resulting move is [dx, dy]
+     *
+     *
      * @param instructions
      * @return
      */
-    public boolean isRobotBounded(String instructions) {
+    public boolean isRobotBoundedV1(String instructions) {
         /**
          * DIRECTION_ENUM
          */
         int idx = 0;
         int[] cur = new int[] {0, 0};
-        int[][] dirs = new int[][]{{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+        int[][] dirs = new int[][]{{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
         for (char c : instructions.toCharArray()) {
             if ('G' == c) {
                 int x = cur[0] + dirs[idx][0];
@@ -206,5 +282,68 @@ public class RobotBoundedInCircle {
         private int code;
 
     }
+
+    /**
+     * Understanding the following solution
+     *        N
+     *        |
+     *        |
+     * W-------------E
+     *        |
+     *        |
+     *        S
+     * @param instructions
+     * @return
+     */
+    public boolean isRobotBounded(String instructions) {
+        if (null == instructions || instructions.length() == 0) {
+            return false;
+        }
+        int x = 0;
+        int y = 0;
+        char direction = 'N';
+        for (char c: instructions.toCharArray()) {
+            if ('G' == c) {
+                if ('N' == direction) {
+                    y += 1;
+                } else if ('S' == direction) {
+                    y -= 1;
+                } else if ('E' == direction) {
+                    x += 1;
+                } else if ('W' == direction) {
+                    x -= 1;
+                }
+            } else if ('L' == c) {
+                if ('N' == direction) {
+                    direction = 'W';
+                } else if ('W' == direction) {
+                    direction = 'S';
+                } else if ('S' == direction) {
+                    direction = 'E';
+                } else if ('E' == direction) {
+                    direction = 'N';
+                }
+            } else if ('R' == c) {
+                if ('N' == direction) {
+                    direction = 'E';
+                } else if ('E' == direction) {
+                    direction = 'S';
+                } else if ('S' == direction) {
+                    direction = 'W';
+                } else if ('W' == direction) {
+                    direction = 'N';
+                }
+            }
+        }
+        if (x == 0 && y == 0) {
+            return true;
+        }
+        if (direction == 'N') {
+            return false;
+        }
+        return true;
+    }
+
+
 
 }
