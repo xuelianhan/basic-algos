@@ -26,7 +26,7 @@ import java.util.Deque;
  *
  * @author sniper
  * @date 2021/12/2
- * LC114
+ * LC114, Medium
  */
 public class FlattenBinaryTreeToLinkedList {
 
