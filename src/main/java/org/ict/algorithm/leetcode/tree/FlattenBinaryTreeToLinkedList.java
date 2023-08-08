@@ -2,7 +2,6 @@ package org.ict.algorithm.leetcode.tree;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
-import java.util.Stack;
 
 /**
  * Given the root of a binary tree, flatten the tree into a "linked list":
@@ -48,10 +47,72 @@ public class FlattenBinaryTreeToLinkedList {
         five.right = six;
         one.left = two;
         one.right = five;
-        flatten(one);
+
+        FlattenBinaryTreeToLinkedList instance = new FlattenBinaryTreeToLinkedList();
+        instance.flatten(one);
     }
 
+    private TreeNode prev;
+    /**
+     * Post-Order-Traversal in right-left-root order with global variable
+     * @param root
+     */
+    public void flattenV3(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+        flattenV3(root.right);
+        flattenV3(root.left);
+        root.right = prev;
+        root.left = null;
+        prev = root;
+    }
 
+    /**
+     * Post-Order-Traversal in right-left-root order without global variable
+     * @param root
+     */
+    public void flattenV2(TreeNode root) {
+        flattenV2(root, null);
+    }
+
+    private TreeNode flattenV2(TreeNode root, TreeNode prev) {
+        if (root == null) {
+            return prev;
+        }
+        prev = flattenV2(root.right, prev);
+        prev = flattenV2(root.left, prev);
+        root.right = prev;
+        root.left = null;
+        prev = root;
+        return root;
+    }
+
+    /**
+     * Time complexity for stack approach : O(n)
+     * Space complexity for stack approach : O(n)
+     * @param root
+     */
+    public void flattenV1(TreeNode root) {
+        if (null == root) {
+            return;
+        }
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        stack.push(root);
+        while (!stack.isEmpty()) {
+            TreeNode cur = stack.pop();
+            if (cur.right != null) {
+                stack.push(cur.right);
+            }
+            if (cur.left != null) {
+                stack.push(cur.left);
+            }
+            if (!stack.isEmpty()) {
+                cur.right = stack.peek();
+            }
+            cur.left = null;
+        }
+    }
 
 
     /**
@@ -92,11 +153,11 @@ public class FlattenBinaryTreeToLinkedList {
      *
      * @param root
      */
-    public static void flatten(TreeNode root) {
+    public void flatten(TreeNode root) {
         flatten(root, null);
     }
 
-    public static TreeNode flatten(TreeNode root, TreeNode prev) {
+    public TreeNode flatten(TreeNode root, TreeNode prev) {
        if (root == null) {
            System.out.print("before return:");
            System.out.println("root:" + (root == null ? null : root.val) + ", prev:" + (prev == null ? null : prev.val));
@@ -122,30 +183,4 @@ public class FlattenBinaryTreeToLinkedList {
         System.out.println("root:" + (root == null ? null : root.val) + ", prev:" + (prev == null ? null : prev.val));
     }
 
-
-    /**
-     * Time complexity for stack approach : O(n)
-     * Space complexity for stack approach : O(n)
-     * @param root
-     */
-    public  void flattenV1(TreeNode root) {
-        if (null == root) {
-            return;
-        }
-        Deque<TreeNode> stack = new ArrayDeque<>();
-        stack.push(root);
-        while (!stack.isEmpty()) {
-            TreeNode cur = stack.pop();
-            if (cur.right != null) {
-                stack.push(cur.right);
-            }
-            if (cur.left != null) {
-                stack.push(cur.left);
-            }
-            if (!stack.isEmpty()) {
-                cur.right = stack.peek();
-            }
-            cur.left = null;
-        }
-    }
 }
