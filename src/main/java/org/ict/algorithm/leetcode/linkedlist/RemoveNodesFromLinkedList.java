@@ -41,6 +41,8 @@ public class RemoveNodesFromLinkedList {
 
     /**
      * Recursion Solution
+     * Time Cost 11ms
+     *
      * e.g. 5-->2-->13-->3-->8  ===> 13-->8
      *
      * remove(5)
