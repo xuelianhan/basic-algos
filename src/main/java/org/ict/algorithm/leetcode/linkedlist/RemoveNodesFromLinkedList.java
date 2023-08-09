@@ -41,11 +41,34 @@ public class RemoveNodesFromLinkedList {
 
     /**
      * Recursion Solution
+     * e.g. 5-->2-->13-->3-->8  ===> 13-->8
+     *
+     * remove(5)
+     *   5.next = remove(2)
+     *     2.next = remove(13)
+     *       13.next = remove(3)
+     *          3.next = remove(8)
+     *          3.next = node-8
+     *          3 < 8, return node-8
+     *       13.next = node-8
+     *       13 > 8, return node-13
+     *     2.next = node-13
+     *     2 < 13, return node-13
+     *   5.next = node-13
+     *   5 < 13, return node-13
+     * return node-13
+     *
+     * @author lee215
+     * @see <a href="https://leetcode.com/problems/remove-nodes-from-linked-list/solutions/2852139/java-c-python-3-line-recursion-solution/"></a>
      * @param head
      * @return
      */
     public ListNode removeNodesV2(ListNode head) {
-        return null;
+        if (head == null || head.next == null) {
+            return head;
+        }
+        head.next = removeNodes(head.next);
+        return head.next != null && head.val < head.next.val ? head.next : head;
     }
 
 
