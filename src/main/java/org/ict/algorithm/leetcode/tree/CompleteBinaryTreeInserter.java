@@ -55,6 +55,7 @@ public class CompleteBinaryTreeInserter {
         private List<TreeNode> tree = new ArrayList<>();
 
         /**
+         * Construct Complete Binary Tree by level order.
          * new CBTInserter([1, 2]);
          *     1
          *    /

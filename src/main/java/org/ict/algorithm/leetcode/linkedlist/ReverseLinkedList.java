@@ -36,7 +36,7 @@ public class ReverseLinkedList {
      * 
      * @return
      */
-    public static ListNode reverseBetween(ListNode head, int m, int n) {
+    public ListNode reverseBetween(ListNode head, int m, int n) {
         if (m < 1 || n < 1 || (m > n)) {
             throw new IllegalArgumentException("input m and n is not satisfied condition (1 <= m <= n <= length of list)");
         }
@@ -76,7 +76,7 @@ public class ReverseLinkedList {
      * use 3 pointer: newHead, current, next
      * @param current
      */
-    public static ListNode reverse(ListNode current) {
+    public ListNode reverse(ListNode current) {
         ListNode newHead = null;
         while (current != null) {
             ListNode next = current.next;
@@ -93,7 +93,7 @@ public class ReverseLinkedList {
      * @param head
      * @return
      */
-    public static ListNode reverse2(ListNode head) {
+    public ListNode reverse2(ListNode head) {
         ListNode prev = null;
         ListNode current = head;
         ListNode next = null;
@@ -110,7 +110,7 @@ public class ReverseLinkedList {
      * recursive solution
      * @param head
      */
-    public static ListNode reverse(ListNode head, ListNode newHead) {
+    public ListNode reverse(ListNode head, ListNode newHead) {
         if (head == null) {
             return newHead;
         }
@@ -145,6 +145,7 @@ public class ReverseLinkedList {
      * 
      */
     public static void main(String[] args) {
+        ReverseLinkedList instance = new ReverseLinkedList();
         /* construct LinkedList with nodes */
         ListNode head = new ListNode(0);
         ListNode previousNode = head;
@@ -156,17 +157,17 @@ public class ReverseLinkedList {
         printList(head);
         
         /* iterative solution */
-        ListNode newHead = reverse(head);
+        ListNode newHead = instance.reverse(head);
         printList(newHead);
         
-        ListNode newHead1 = reverse2(newHead);
+        ListNode newHead1 = instance.reverse2(newHead);
         printList(newHead1);
         
         /* recursive solution */
-        ListNode newHead2 = reverse(newHead1, null);
+        ListNode newHead2 = instance.reverse(newHead1, null);
         printList(newHead2);
         
-        ListNode newHead3 = reverseBetween(newHead2, 2, 6);
+        ListNode newHead3 = instance.reverseBetween(newHead2, 2, 6);
         printList(newHead3);
     }
     
