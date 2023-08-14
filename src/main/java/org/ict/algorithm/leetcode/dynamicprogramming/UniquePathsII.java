@@ -39,7 +39,7 @@ package org.ict.algorithm.leetcode.dynamicprogramming;
  * obstacleGrid[i][j] is 0 or 1.
  * @author sniper
  * @date 31 Dec, 2022
- * LC63
+ * LC63, Medium
  */
 public class UniquePathsII {
 
@@ -47,6 +47,21 @@ public class UniquePathsII {
     /**
      * Using One-Dimension Array
      * Time Cost 0ms
+     * ------------------------------------
+     * class Solution:
+     *     def uniquePathsWithObstacles(self, obstacleGrid: List[List[int]]) -> int:
+     *         if len(obstacleGrid) == 0 or obstacleGrid[0][0] == 1:
+     *             return 0
+     *         m, n = len(obstacleGrid), len(obstacleGrid[0])
+     *         dp = [0] * n
+     *         dp[0] = 1
+     *         for i in range(m):
+     *             for j in range(n):
+     *                 if obstacleGrid[i][j]:
+     *                     dp[j] = 0
+     *                 elif j > 0:
+     *                     dp[j] += dp[j - 1]
+     *         return dp[n - 1]
      * @param obstacleGrid
      * @return
      */
@@ -73,6 +88,23 @@ public class UniquePathsII {
     /**
      * Understanding the following Solution.
      * Time Cost 0ms
+     * ---------------------------------------------------------
+     * class Solution:
+     *     def uniquePathsWithObstacles(self, obstacleGrid: List[List[int]]) -> int:
+     *         if len(obstacleGrid) == 0 or obstacleGrid[0][0] == 1:
+     *             return 0
+     *         m, n = len(obstacleGrid), len(obstacleGrid[0])
+     *         # dp[i][j] := unique paths from (0, 0) to (i - 1, j - 1)
+     *         dp = [[0] * (n + 1) for _ in range(m + 1)]
+     *         # Can also set dp[1][0] = 1
+     *         dp[0][1] = 1
+     *         for i in range(1, m + 1):
+     *             for j in range(1, n + 1):
+     *                 if obstacleGrid[i - 1][j - 1] == 0:
+     *                     dp[i][j] = dp[i - 1][j] + dp[i][j - 1]
+     *         return dp[m][n]
+     * ----------------------------------------------------------
+     *
      * @param obstacleGrid
      * @return
      */
@@ -85,9 +117,10 @@ public class UniquePathsII {
         /**
          * dp[i][j] means the number of different paths can arrive at (i - 1, j - 1)
          * so the pointer-i is in [0, m], the pointer-j is in [0, n].
-         * The state transfer equotation is same as {@link UniquePaths.java}
+         * The state transfer equation is same as {@link UniquePaths.java}
          * dp[i][j] = dp[i - 1][j] + dp[i][j - 1]
          * The only different point is that we need to skip to obstacle(grid[i][j] == 1).
+         * To handle edge case, dp size is (m + 1) X (n + 1).
          */
         int[][] dp = new int[m + 1][n + 1];
         /**
