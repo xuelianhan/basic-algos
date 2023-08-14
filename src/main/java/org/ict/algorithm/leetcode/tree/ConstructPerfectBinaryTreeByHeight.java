@@ -11,7 +11,7 @@ public class ConstructPerfectBinaryTreeByHeight {
 
     public static void main(String[] args) {
         ConstructPerfectBinaryTreeByHeight instance = new ConstructPerfectBinaryTreeByHeight();
-        TreeNode root = instance.buildV3(2);
+        TreeNodeWithParent root = instance.buildV3(3);
         System.out.println(root);
     }
 
@@ -27,18 +27,18 @@ public class ConstructPerfectBinaryTreeByHeight {
      * @param N the depth(or height) of the tree, depth(or height) start from 1
      * @return
      */
-    public TreeNode buildV3(int N) {
+    public TreeNodeWithParent buildV3(int N) {
         if (N == 0) {
             return null;
         }
         return helper(null, 0, N);
     }
 
-    private static TreeNode helper(TreeNode parent, int i, int depth) {
+    private static TreeNodeWithParent helper(TreeNodeWithParent parent, int i, int depth) {
         if (i >= Math.pow(2, depth) - 1) {
             return null;
         }
-        TreeNode node = new TreeNode(i);
+        TreeNodeWithParent node = new TreeNodeWithParent(i);
         node.parent = parent;
         node.left = helper(node, 2 * i + 1, depth);
         node.right = helper(node,2 * i + 2, depth);

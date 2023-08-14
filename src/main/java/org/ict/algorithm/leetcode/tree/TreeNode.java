@@ -6,7 +6,6 @@ package org.ict.algorithm.leetcode.tree;
  */
 public class TreeNode {
     public Integer val;
-    public TreeNode parent;
     public TreeNode left;
     public TreeNode right;
 
