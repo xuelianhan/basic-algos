@@ -11,8 +11,38 @@ public class ConstructPerfectBinaryTreeByHeight {
 
     public static void main(String[] args) {
         ConstructPerfectBinaryTreeByHeight instance = new ConstructPerfectBinaryTreeByHeight();
-        TreeNode root = instance.buildV2(3);
+        TreeNode root = instance.buildV3(2);
         System.out.println(root);
+    }
+
+    /**
+     * e.g. N = 3:
+     *          0
+     *        /   \
+     *       1     2
+     *      / \   / \
+     *     3  4  5   6
+     *
+     * Recursive construct complete binary tree with parent pointer
+     * @param N the depth(or height) of the tree, depth(or height) start from 1
+     * @return
+     */
+    public TreeNode buildV3(int N) {
+        if (N == 0) {
+            return null;
+        }
+        return helper(null, 0, N);
+    }
+
+    private static TreeNode helper(TreeNode parent, int i, int depth) {
+        if (i >= Math.pow(2, depth) - 1) {
+            return null;
+        }
+        TreeNode node = new TreeNode(i);
+        node.parent = parent;
+        node.left = helper(node, 2 * i + 1, depth);
+        node.right = helper(node,2 * i + 2, depth);
+        return node;
     }
 
     /**
