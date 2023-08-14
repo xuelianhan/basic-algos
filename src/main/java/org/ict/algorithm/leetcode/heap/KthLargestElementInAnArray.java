@@ -150,7 +150,7 @@ public class KthLargestElementInAnArray {
      *
      * Use a Min-Heap of priority queue, keep queue size to k.
      * The root of heap is the minimum of the k numbers.
-     * It's also the k'th-largest element in the heap.
+     * It's also the k-th-largest element in the heap.
      *
      * Input: nums = [3,2,1,5,6,4], k = 2
      * i:0, minHeap: 3
@@ -180,7 +180,14 @@ public class KthLargestElementInAnArray {
      *     }
      * };
      * -------------------------------------------
-     *
+     * class Solution:
+     *     def findKthLargest(self, nums: List[int], k: int) -> int:
+     *         minHeap = []
+     *         for num in nums:
+     *             heapq.heappush(minHeap, num)
+     *             if len(minHeap) > k:
+     *                 heapq.heappop(minHeap)
+     *         return minHeap[0]
      * @param nums
      * @param k
      * @return

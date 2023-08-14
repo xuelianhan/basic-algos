@@ -1,7 +1,6 @@
 package org.ict.algorithm.leetcode.design;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Design a simplified version of Twitter where users can post tweets,
@@ -58,23 +57,188 @@ public class DesignTwitter {
         twitter.getNewsFeed(1);  // User 1's news feed should return a list with 1 tweet id -> [5], since user 1 is no longer following user 2.
     }
 
+    /**
+     * Time Cost 10ms
+     */
+    static class TwitterV3 {
+        public TwitterV3() {}
+
+        public void postTweet(int userId, int tweetId) {
+            users.putIfAbsent(userId, new User(userId));
+            users.get(userId).post(tweetId, timestamp++);
+        }
+
+        /**
+         * Retrieve the 10 most recent tweet ids in the user's news feed.
+         * Each item in the news feed must be posted by users
+         * who the user followed or by the user
+         * herself.
+         * Tweets must be ordered from most recent to least recent.
+         */
+        public List<Integer> getNewsFeed(int userId) {
+            if (!users.containsKey(userId)) {
+                return new ArrayList<>();
+            }
+
+            PriorityQueue<Tweet> maxHeap = new PriorityQueue<>((a, b) -> (int)(b.timestamp - a.timestamp));
+            for (int followeeId : users.get(userId).followeeIds) {
+                Tweet head = users.get(followeeId).tweetHead;
+                if (head != null) {
+                    maxHeap.offer(head);
+                }
+            }
+
+            List<Integer> res = new ArrayList<>();
+            int i = 0;
+            while (!maxHeap.isEmpty() && i++ < 10) {
+                Tweet t = maxHeap.poll();
+                res.add(t.id);
+                if (t.next != null) {
+                    maxHeap.offer(t.next);
+                }
+            }
+            return res;
+        }
+
+        public void follow(int followerId, int followeeId) {
+            if (followerId == followeeId) {
+                return;
+            }
+            users.putIfAbsent(followerId, new User(followerId));
+            users.putIfAbsent(followeeId, new User(followeeId));
+            users.get(followerId).follow(followeeId);
+        }
+
+        public void unfollow(int followerId, int followeeId) {
+            if (followerId == followeeId) {
+                return;
+            }
+            if (users.containsKey(followerId) && users.containsKey(followeeId)) {
+                users.get(followerId).unfollow(followeeId);
+            }
+        }
+
+        private long timestamp;
+        /**
+         * {userId : User}
+         */
+        private Map<Integer, User> users = new HashMap<>();
+    }
+
+    static class Tweet {
+        private int id;
+        private long timestamp;
+
+        private Tweet next = null;
+
+        public Tweet(int id, long timestamp) {
+            this.id = id;
+            this.timestamp = timestamp;
+        }
+    }
+
+    static class User {
+        private int id;
+        private Set<Integer> followeeIds = new HashSet<>();
+        private Tweet tweetHead = null;
+
+        public User(int id) {
+            this.id = id;
+            follow(id);
+        }
+
+        public void follow(int followeeId) {
+            followeeIds.add(followeeId);
+        }
+
+        public void unfollow(int followeeId) {
+            followeeIds.remove(followeeId);
+        }
+
+        public void post(int tweetId, long timestamp) {
+            Tweet oldHead = tweetHead;
+            tweetHead = new Tweet(tweetId, timestamp);
+            tweetHead.next = oldHead;
+        }
+
+    }
+
+    /**
+     * Time Cost 11ms
+     */
     static class TwitterV2 {
         public TwitterV2() {}
 
         public void postTweet(int userId, int tweetId) {
-
+            follow(userId, userId);
+            tweets.computeIfAbsent(userId, k -> new ArrayList<>()).add(new Pair<>(time++, tweetId));
         }
 
         public List<Integer> getNewsFeed(int userId) {
-            return null;
+            PriorityQueue<Pair<Long, Integer>> maxHeap = new PriorityQueue<>((o1, o2) -> {
+                if (o1.first > o2.first) {
+                    return -1;
+                } else if (o1.first < o2.first) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            });
+
+            for (Integer id : friends.getOrDefault(userId, new HashSet<>())) {
+                for (Pair<Long, Integer> p : tweets.getOrDefault(id, new ArrayList<>())) {
+                    maxHeap.offer(p);
+                }
+            }
+
+            List<Integer> res = new ArrayList<>();
+            int i = 0;
+            while (!maxHeap.isEmpty()) {
+                Pair<Long, Integer> p = maxHeap.poll();
+                res.add(p.second);
+                if (i == 9) {
+                    return res;
+                }
+                i++;
+            }
+            return res;
         }
 
         public void follow(int followerId, int followeeId) {
-
+            friends.computeIfAbsent(followerId, k -> new HashSet<>()).add(followeeId);
         }
 
         public void unfollow(int followerId, int followeeId) {
+            if (followerId != followeeId) {
+                friends.computeIfAbsent(followerId, k -> new HashSet<>()).remove(followeeId);
+            }
+        }
 
+        private long time;
+
+        Map<Integer, Set<Integer>> friends = new HashMap<>();
+
+        Map<Integer, List<Pair<Long, Integer>>> tweets = new HashMap<>();
+    }
+
+    static class Pair<T1, T2> {
+        private T1 first;
+
+        private T2 second;
+
+        private Pair() {}
+
+        public Pair(T1 first, T2 second) {
+            this.first = first;
+            this.second = second;
+        }
+
+        public T1 getFirst() {
+            return first;
+        }
+
+        public T2 getSecond() {
+            return second;
         }
     }
 
