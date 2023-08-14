@@ -31,7 +31,7 @@ import java.util.Stack;
  *
  * Constraints:
  *
- * The number of nodes in the tree is in the range [1, 104].
+ * The number of nodes in the tree is in the range [1, 10^4].
  * -1000 <= Node.val <= 1000
  *
  * LC606

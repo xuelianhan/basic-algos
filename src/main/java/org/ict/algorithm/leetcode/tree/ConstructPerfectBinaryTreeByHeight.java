@@ -9,6 +9,35 @@ import java.util.Queue;
  */
 public class ConstructPerfectBinaryTreeByHeight {
 
+    public static void main(String[] args) {
+        ConstructPerfectBinaryTreeByHeight instance = new ConstructPerfectBinaryTreeByHeight();
+        TreeNode root = instance.buildV2(3);
+        System.out.println(root);
+    }
+
+    /**
+     * Recursive construct complete binary tree
+     * @param N the depth(or height) of the tree, depth(or height) start from 1
+     * @return
+     */
+    public TreeNode buildV2(int N) {
+        if (N == 0) {
+            return null;
+        }
+        return helper(0, N);
+    }
+
+    private static TreeNode helper(int i, int depth) {
+        if (i >= Math.pow(2, depth) - 1) {
+            return null;
+        }
+        TreeNode node = new TreeNode(i);
+        node.left = helper(2 * i + 1, depth);
+        node.right = helper(2 * i + 2, depth);
+        return node;
+    }
+
+
     /**
      * Construct Perfect binary tree.
      *          0
