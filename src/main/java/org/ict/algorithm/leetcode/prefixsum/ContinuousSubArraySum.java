@@ -80,6 +80,10 @@ public class ContinuousSubArraySum {
         Map<Integer, Integer> prefixToIndex = new HashMap<>();
         /**
          * e.g. nums = [2, 4, 3], k = 6
+         * 0 <= nums[i] <= 10^9
+         * so prefixSum is greater than or equals to zero.
+         * At first, prefixSum:0 does not exist, so its index in the array is -1 here.
+         * Notice it's -1 instead of 0, because 0 is a valid index in the array.
          */
         prefixToIndex.put(0, -1);
         for (int i = 0; i < nums.length; i++) {
