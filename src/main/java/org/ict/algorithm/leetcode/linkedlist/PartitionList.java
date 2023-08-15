@@ -214,6 +214,30 @@ public class PartitionList {
      * Understanding the following solution
      * The fundamental principles are to separate the list into 2 distinct lists
      * and link them afterwards.
+     * ---------------------------------
+     * # Definition for singly-linked list.
+     * # class ListNode:
+     * #     def __init__(self, val=0, next=None):
+     * #         self.val = val
+     * #         self.next = next
+     * class Solution:
+     *     def partition(self, head: Optional[ListNode], x: int) -> Optional[ListNode]:
+     *         smallerHead, biggerHead = ListNode(0), ListNode(0)
+     *         smaller, bigger = smallerHead, biggerHead
+     *
+     *         while head:
+     *             if head.val < x:
+     *                 smaller.next = head
+     *                 smaller = head
+     *             else:
+     *                 bigger.next = head
+     *                 bigger = head
+     *             head = head.next
+     *
+     *         bigger.next = None
+     *         smaller.next = biggerHead.next
+     *         return smallerHead.next
+     * -----------------------------------------
      * @param head
      * @param x
      * @return
