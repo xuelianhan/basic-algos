@@ -39,9 +39,9 @@ import java.util.Queue;
  * -1000 <= Node.val <= 1000
  * -1000 <= targetSum <= 1000
  * @author sniper
- * LC112
+ * LC112, Medium
  */
-public class BinaryTreePathSum {
+public class PathSum {
 
     public boolean hasPathSumV1(TreeNode root, int sum) {
         if (null == root) {
@@ -50,7 +50,8 @@ public class BinaryTreePathSum {
         if (root.left == null && root.right == null && root.val == sum) {
             return true;
         }
-        return hasPathSumV1(root.left, sum - root.val) || hasPathSumV1(root.right, sum - root.val);
+        return hasPathSumV1(root.left, sum - root.val)
+                || hasPathSumV1(root.right, sum - root.val);
     }
 
     public boolean hasPathSum(TreeNode root, int sum) {
