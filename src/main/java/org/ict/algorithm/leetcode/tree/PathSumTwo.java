@@ -1,5 +1,7 @@
 package org.ict.algorithm.leetcode.tree;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -30,12 +32,48 @@ import java.util.List;
  *
  * @author sniper
  * @date 2021/12/2
- * LC113
+ * LC113, Medium
  */
 public class PathSumTwo {
 
+    /**
+     * Backtracking Solution
+     * @param root
+     * @param targetSum
+     * @return
+     */
     public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
-        //todo
-        return null;
+        List<List<Integer>> result = new ArrayList<>();
+        backtrackV1(root, targetSum, new LinkedList<>(), result);
+        return result;
+    }
+
+    private void backtrackV1(TreeNode root, int sum, LinkedList<Integer> path, List<List<Integer>> result) {
+        if (root == null) {
+            return;
+        }
+        if (root.val == sum && root.left == null && root.right == null) {
+            path.add(root.val);
+            result.add(new ArrayList<>(path));
+            path.removeLast();
+            return;
+        }
+        path.add(root.val);
+        backtrackV1(root.left, sum - root.val, path, result);
+        backtrackV1(root.right, sum - root.val, path, result);
+        path.removeLast();
+    }
+
+    private void backtrack(TreeNode root, int sum, LinkedList<Integer> path, List<List<Integer>> result) {
+        if (root == null) {
+            return;
+        }
+        path.add(root.val);
+        if (root.val == sum && root.left == null && root.right == null) {
+            result.add(new ArrayList<>(path));
+        }
+        backtrack(root.left, sum - root.val, path, result);
+        backtrack(root.right, sum - root.val, path, result);
+        path.removeLast();
     }
 }
