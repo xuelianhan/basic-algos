@@ -3,6 +3,7 @@ package org.ict.algorithm.leetcode.tree;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 /**
  * Given the root of a binary tree and an integer targetSum,
@@ -36,8 +37,53 @@ import java.util.List;
  */
 public class PathSumTwo {
 
+
+    /**
+     * Breadth-First-Search Solution
+     * @param root
+     * @param targetSum
+     * @return
+     */
+    public List<List<Integer>> pathSumV2(TreeNode root, int targetSum) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (root == null) {
+            return result;
+        }
+        Queue<Tuple> queue = new LinkedList<>();
+        queue.offer(new Tuple(root, targetSum, new ArrayList<>()));
+        while (!queue.isEmpty()) {
+            Tuple t = queue.poll();
+            t.path.add(t.node.val);
+            if (t.sum - t.node.val == 0 && t.node.left == null && t.node.right == null) {
+                result.add(t.path);
+            }
+            if (t.node.left != null) {
+                queue.offer(new Tuple(t.node.left, t.sum - t.node.val, new ArrayList<>(t.path)));
+            }
+            if (t.node.right != null) {
+                queue.offer(new Tuple(t.node.right, t.sum - t.node.val, new ArrayList<>(t.path)));
+            }
+        }
+        return result;
+    }
+
+
+    static class Tuple {
+        TreeNode node;
+        int sum;
+
+        List<Integer> path;
+
+        public Tuple(TreeNode node, int sum, List<Integer> path) {
+            this.node = node;
+            this.sum = sum;
+            this.path = path;
+        }
+    }
+
     /**
      * Backtracking Solution
+     * Time Complexity O(N*logN)
      * @param root
      * @param targetSum
      * @return
