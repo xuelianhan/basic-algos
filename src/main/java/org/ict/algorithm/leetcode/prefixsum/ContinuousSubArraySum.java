@@ -60,7 +60,13 @@ public class ContinuousSubArraySum {
      * prefixToIndex contains key 0, lastIndex = prefixToIndex.get(0) = -1, i - lastIndex = 2 - (-1) = 3,
      * 3 > 1, return true
      * ----------------------------------
-     *
+     * e.g. nums = [2, 4, 3], k = 6
+     * prefixIndex:{0, -1}
+     * i:0, prefixSum:2, k != 0, prefixSum = 2 % 6 = 2
+     * prefixToIndex does not contain key 2, put {2, 0} into prefixToIndex, prefixToIndex:{0,-1},{2,0}
+     * i:1, prefixSum = 2 + 4 = 6, k != 0, prefixSum = 6 % 6 = 0
+     * prefixToIndex contains 0, lastIndex = prefixToIndex.get(0) = -1, i - lastIndex = 1 - (-1) = 2
+     * 2 > 1, return true
      *
      * @param nums
      * @param k
@@ -82,6 +88,8 @@ public class ContinuousSubArraySum {
                 prefixSum %= k;
             }
             if (prefixToIndex.containsKey(prefixSum)) {
+                // sub-array length is at least two,
+                // and the sum of the elements of the sub-array is a multiple of k
                 if (i - prefixToIndex.get(prefixSum) > 1) {
                     return true;
                 }
