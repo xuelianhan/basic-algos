@@ -92,8 +92,24 @@ public class PathSumTwo {
      */
     public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
         List<List<Integer>> result = new ArrayList<>();
-        backtrackV1(root, targetSum, new LinkedList<>(), result);
+        //backtrack(root, targetSum, new LinkedList<>(), result);
+        //backtrackV1(root, targetSum, new LinkedList<>(), result);
+        backtrackV2(root, targetSum, new LinkedList<>(), result);
         return result;
+    }
+
+    private void backtrackV2(TreeNode root, int sum, LinkedList<Integer> path, List<List<Integer>> result) {
+        if (root == null) {
+            return;
+        }
+        sum -= root.val;
+        path.add(root.val);
+        if (0 == sum && root.left == null && root.right == null) {
+            result.add(new ArrayList<>(path));
+        }
+        backtrackV2(root.left, sum, path, result);
+        backtrackV2(root.right, sum, path, result);
+        path.removeLast();
     }
 
     private void backtrackV1(TreeNode root, int sum, LinkedList<Integer> path, List<List<Integer>> result) {

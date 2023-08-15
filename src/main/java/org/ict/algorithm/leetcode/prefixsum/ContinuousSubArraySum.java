@@ -9,8 +9,8 @@ import java.util.Map;
  *
  * A good sub-array is a sub-array where:
  *
- * its length is at least two, and
- * the sum of the elements of the sub-array is a multiple of k.
+ * its length is at least two,
+ * and the sum of the elements of the sub-array is a multiple of k.
  * Note that:
  *
  * A sub-array is a contiguous part of the array.
@@ -49,13 +49,32 @@ public class ContinuousSubArraySum {
     /**
      * Understanding the following solution
      * Time Cost 17ms
+     * ----------------------------------
+     * e.g. nums = [23,2,4,6,7], k = 6
+     * prefixToIndex:{0,-1}
+     * i:0, prefixSum:23, k != 0, prefixSum = 23 % 6 = 5
+     * prefixToIndex does not contain key 5, put {5, 0} into prefixToIndex, prefixToIndex:{0,-1}, {5,0}
+     * i:1, prefixSum = 5 + 2 = 7, k != 0, prefixSum = 7 % 5 = 2
+     * prefixToIndex does not contain key 2, put {2,1} into prefixToIndex, prefixToIndex:{0,-1}, {5,0}, {2,1}
+     * i:2, prefixSum = 2 + 4 = 6,  k != 0 prefixSum = 6 % 6 = 0
+     * prefixToIndex contains key 0, lastIndex = prefixToIndex.get(0) = -1, i - lastIndex = 2 - (-1) = 3,
+     * 3 > 1, return true
+     * ----------------------------------
+     *
+     *
      * @param nums
      * @param k
      * @return
      */
     public boolean checkSubArraySumV1(int[] nums, int k) {
         int prefixSum = 0;
+        /**
+         * Build the mapping relation of modular number and the index of the array.
+         */
         Map<Integer, Integer> prefixToIndex = new HashMap<>();
+        /**
+         * e.g. nums = [2, 4, 3], k = 6
+         */
         prefixToIndex.put(0, -1);
         for (int i = 0; i < nums.length; i++) {
             prefixSum += nums[i];
