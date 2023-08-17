@@ -1,0 +1,57 @@
+https://tutorialcup.com/interview-experience/coupang-interview-experience.htm
+1.BFS
+2.DFS
+3.gaps between intervals.
+4.randomly picked Kth largest elements from an array
+5.Kth element Interval gap.
+6.Most efficient way to find product of array element except self
+7.Find binary tree width and architectural problem
+8.Some LeetCode looking question on Hackerrank
+9.Maximum sliding window
+10.Validity of IP address
+11.Basic Eng
+12.In order Traversal Tree Print with no recursion,
+13.Reverse linked list for every k elements with and without recursion.
+14.What is singleton pattern. Code an example of singleton. What are its use cases
+15.algorithmic question related to sparse array
+16.tree traversal in recursive and iterative
+17.design: a marketplace kind of feature on ecommerce website. Send notification to merchants
+18.write a spark job
+19.hit api on internet, get data, put it in the csv file
+20.I have two arrays. One contains even numbers and the other contains odd numbers. Which sorting algorithm would you use?
+21.What is the difference between REST and SOAP?
+22.How does garbage collection work in Java and what is heap?
+23.Difference between a thread and a process
+24.How should you detect cycles in a directed graph?
+25.Binary Search
+Hackerrank challenge
+
+------------------------------------------------------
+第一轮手写断路器，实现滑动窗口内的失败阈值统计，动态调整是否熔断
+第二轮项目架构面试，需要画图
+第三轮手写消息队列，实现生产者，消费者。消息具有ttl，过期消息必须释放并无法消费
+需要手写高并发条件下的限流器
+----------------------
+职位：高级架构师
+第一轮：应该用人部门。通过。
+第二轮，两段三小时，应该合并一起的，
+一个设计题，在线画结构图（基于上游RDS数据的实时在线报表系统设计）。
+一个代码题：写一个内存级别的文件系统。
+第三轮：两段三小时。补代码题，由于第二轮理解有问题，没有在规定时间写完。+ 应该用人部门TL面。
+----------------------------------------------------------------------------
+Java 内存模型，
+JVM 垃圾收集器，
+线程池的类型和使用，
+多线程之间的同步（例如如何先执行三个线程，完毕后再执行另外一个线程；三个线程如何按顺序执行），
+乐观锁、悲观锁，
+CAS，
+SingleThreadExecutor 和 FixThreadExecutor等于1的时候的区别,
+分布式CAP理论，
+如何判断一个链表有环，
+观察者模式，命令模式，
+HashMap、ConcurrentHashMap的原理，
+MongoDB db的介绍、索引，
+spring boot的介绍、原理，
+如何监控微服务之间的调用链（spring cloud有哪个开源项目）
+redis 有哪些数据结构。
+---------------------------

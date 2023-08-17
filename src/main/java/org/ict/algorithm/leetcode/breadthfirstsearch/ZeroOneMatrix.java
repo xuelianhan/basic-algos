@@ -1,5 +1,7 @@
 package org.ict.algorithm.leetcode.breadthfirstsearch;
 
+import java.util.Arrays;
+import java.util.Deque;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -74,8 +76,9 @@ public class ZeroOneMatrix {
 
 	/**
 	 * 1.At beginning, set cell value to Integer.MAX_VALUE(to mark unvisited cells) if it is not 0;
-	 * 2.If newly calculated distance >= current distance, then we don't need to explore that cell again.
-	 *   Beacause we need to find the nearest distance to 0-cell 
+	 * 2.If newly calculated distance >= current distance,
+	 * then we don't need to explore that cell again.
+	 * Because we need to find the nearest distance to 0-cell
 	 * 
 	 * This question is very similar with 286 Walls and Gates, same logic.
 	 * @param matrix
@@ -112,4 +115,62 @@ public class ZeroOneMatrix {
         }
         return matrix;
     }
+
+	/**
+	 * Multiple-Source BFS
+	 * ---------------------------------------
+	 * class Solution:
+	 *     def updateMatrix(self, mat: List[List[int]]) -> List[List[int]]:
+	 *         m, n = len(mat), len(mat[0])
+	 *         res = [[-1] * n for _ in range(m)]
+	 *         queue = deque()
+	 *         for i, row in enumerate(mat):
+	 *             for j, v in enumerate(row):
+	 * 				  if v == 0:
+	 * 				    res[i][j] = 0
+	 * 					queue.append((i, j))
+	 * 		  dirs = [(0, 1), (0, -1), (-1, 0), (1, 0)]
+	 * 		  while queue:
+	 * 		      i, j = queue.popleft()
+	 * 		      for a, b in in dirs:
+	 * 		          x, y = i + a, j + b
+	 * 		          if 0 <= x < m and 0 <= y < n and res[x][y] = -1:
+	 * 		              res[x][y] = res[i][j] + 1
+	 * 		              queue.append((x, y))
+	 * 		  return res
+	 *
+	 * @param matrix
+	 * @return
+	 */
+	public int[][] updateMatrix(int[][] matrix) {
+		int m = matrix.length, n = matrix[0].length;
+		int[][] res = new int[m][n];
+		for (int i = 0; i < m; i++) {
+			Arrays.fill(res[i], -1);
+		}
+		Deque<int[]> queue = new LinkedList<>();
+		for (int i = 0; i < m; i++) {
+			for (int j = 0; j < n; j++) {
+				if (matrix[i][j] == 0) {
+					res[i][j] = 0;
+					queue.offer(new int[]{i, j});
+				}
+			}
+		}
+		int[] dirs = new int[]{-1, 0, 1, 0, -1};
+		while (!queue.isEmpty()) {
+			int[] cur = queue.poll();
+			int i = cur[0];
+			int j = cur[1];
+			for (int k = 0; k < 4; k++) {
+				int x = i + dirs[k];
+				int y = j + dirs[k + 1];
+				if (x >= 0 && x < m && y >= 0 && y < n && res[x][y] == -1) {
+					res[x][y] = res[i][j] + 1;
+					queue.offer(new int[] {x, y});
+				}
+			}
+		}
+		return res;
+	}
 }
