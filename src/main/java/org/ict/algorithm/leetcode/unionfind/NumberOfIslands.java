@@ -122,6 +122,9 @@ public class NumberOfIslands {
 	}
 
 	private void dfs(char[][] grid, int i, int j) {
+		/**
+		 * grid[i][j] != '1' means grid[i][j] has been visited.
+		 */
 		if (i < 0 || j < 0 || i >= grid.length || j >= grid[0].length || grid[i][j] != '1') {
 			return;
 		}
@@ -142,6 +145,8 @@ public class NumberOfIslands {
 	 * Iterate through each of the cell and if it is an island,
 	 * do BFS to mark all adjacent islands,
 	 * then increase the counter by 1.
+	 * At here, we use grid itself as visited array, so it doesn't need
+	 * visited array anymore.
 	 * @param grid
 	 * @return
 	 */
@@ -172,6 +177,9 @@ public class NumberOfIslands {
 			for (int k = 0; k < 4; k++) {
 				int x = cur[0] + dir[k];
 				int y = cur[1] + dir[k + 1];
+				/**
+				 * grid[x][y] != '1' means grid[x][y] has been visited.
+				 */
 				if (x < 0 || y < 0 || x >= m || y >= n || grid[x][y] != '1') {
 					continue;
 				}

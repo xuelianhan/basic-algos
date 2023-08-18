@@ -34,7 +34,7 @@ import java.util.List;
  *
  * N can be as large as 1,000,000.
  *
- *
+ * @see <a href="https://oss.1p3a.com/forum/202201/10/165108eyqigyjgsemhcfqs.png"></a>
  * @see <a href="https://www.quora.com/What-is-the-algorithmic-approach-required-to-find-if-a-number-can-be-expressed-as-sum-of-two-perfect-powers-That-is-given-x-find-if-there-exists-non-negative-integers-a-b-m-n-such-that-a-m-+-b-n-x"></a>
  * @see <a href="https://www.sanfoundry.com/java-program-check-given-number-perfect-number"></a>
  * @see <a href="https://www.geeksforgeeks.org/check-if-a-number-can-be-expressed-as-sum-of-two-perfect-powers/"></a>

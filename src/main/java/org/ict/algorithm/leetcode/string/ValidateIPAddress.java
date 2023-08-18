@@ -1,5 +1,7 @@
 package org.ict.algorithm.leetcode.string;
 
+import java.util.Arrays;
+
 /**
  * Given a string queryIP,
  * return "IPv4" if IP is a valid IPv4 address,
@@ -42,7 +44,90 @@ package org.ict.algorithm.leetcode.string;
  */
 public class ValidateIPAddress {
 
+    public static void main(String[] args) {
+        String queryIP = "1.0.1.";
+        /**
+         * limit == 0:
+         * If the limit is zero then the pattern will be applied as many times as possible,
+         * the array can have any length, and trailing empty strings will be discarded.
+         * ------------------------
+         * limit < 0:
+         * If the limit is negative then the pattern will be applied as many times as possible,
+         * and the array can have any length.
+         */
+        String[] arr1 = queryIP.split("\\.");
+        String[] arr2 = queryIP.split("\\.", -1);
+        /**
+         * (Command + delete) shortcut will delete the whole line
+         * [1, 0, 1]
+         */
+        System.out.println(Arrays.toString(arr1));
+        /**
+         * [1, 0, 1, ]
+         */
+        System.out.println(Arrays.toString(arr2));
+    }
+
+    private static final String VALID_IPV6_CHARS = "0123456789abcdefABCDEF";
+
+    /**
+     * e.g. queryIp = "1.0.1.", expected "Neither"
+     * If you use split("\\."), the default limit is 0,
+     * you will get an array like this: [1, 0, 1],
+     * then "1.0.1." will be treated as normal IPv4 address.
+     * But it's not IPv4 address in fact.
+     * If you use split("\\.", -1), the limit is -1,
+     * you will get an array like this: [1, 0, 1, ],
+     * the last space will be checked, and it is not IPv4 digit,
+     * Finally you will get the right answer "Neither".
+     * @param queryIP
+     * @return
+     */
     public String validIPAddress(String queryIP) {
-        return null;
+        if (queryIP.chars().filter(c -> c == '.').count() == 3) {
+            for (String digit : queryIP.split("\\.", -1)) {
+                if (!isIPv4(digit)) {
+                    return "Neither";
+                }
+            }
+            return "IPv4";
+        }
+        if (queryIP.chars().filter(c -> c == ':').count() == 7) {
+            for (String digit : queryIP.split("\\:", -1)) {
+                if (!isIPv6(digit)) {
+                    return "Neither";
+                }
+            }
+            return "IPv6";
+        }
+        return "Neither";
+    }
+
+    private boolean isIPv4(String digit) {
+        if (digit.isEmpty() || digit.length() > 3) {
+            return false;
+        }
+        if (digit.length() > 1 && digit.charAt(0) == '0') {
+            return false;
+        }
+        for (char c : digit.toCharArray()) {
+            if (c < '0' || c > '9') {
+                return false;
+            }
+        }
+        int num = Integer.parseInt(digit);
+        return 0 <= num && num <= 255;
+    }
+
+    private boolean isIPv6(String digit) {
+        if (digit.isEmpty() || digit.length() > 4) {
+            return false;
+        }
+        for (char c : digit.toCharArray()) {
+            if (!VALID_IPV6_CHARS.contains(c + "")) {
+                return false;
+            }
+        }
+        return true;
     }
 }

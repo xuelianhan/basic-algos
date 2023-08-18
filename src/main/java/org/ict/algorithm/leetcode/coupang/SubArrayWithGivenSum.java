@@ -1,5 +1,8 @@
 package org.ict.algorithm.leetcode.coupang;
 
+import java.util.Arrays;
+import java.util.HashMap;
+
 /**
  * In the sub-array with the given sum problem,
  * we have given an array containing n positive elements.
@@ -28,5 +31,61 @@ package org.ict.algorithm.leetcode.coupang;
  * @date 15 Aug 2023
  */
 public class SubArrayWithGivenSum {
-    //todo
+
+
+    /**
+     * This code first creates a hash table to store the cumulative sums.
+     * The hash table stores the sum of all elements up to a particular index.
+     *
+     * The code then iterates over the elements in the array.
+     * For each element, the code does the following:
+     *
+     * Updates the current sum.
+     * Checks if the current sum is equal to the given sum.
+     * If it is, then the code stores the start and end indices of the subarray.
+     * Checks if the current sum is greater than the given sum.
+     * If it is, then the code removes the elements from the beginning of the array to make it equal to the given sum.
+     * Updates the hash table with the current sum.
+     * The code finally returns the subarray if it is found. Otherwise, the code returns null.
+     * @param arr
+     * @param sum
+     * @return
+     */
+    public int[] findSubarrayWithGivenSum(int[] arr, int sum) {
+        int n = arr.length;
+
+        // Create a hash table to store the cumulative sums.
+        HashMap<Integer, Integer> hashTable = new HashMap<>();
+        hashTable.put(0, -1);
+
+        int currentSum = 0;
+        int start = -1;
+        int end = -1;
+
+        for (int i = 0; i < n; i++) {
+            currentSum += arr[i];
+
+            // If the current sum is equal to the given sum, then we have found a subarray.
+            if (currentSum == sum) {
+                start = hashTable.get(currentSum - sum) + 1;
+                end = i;
+                break;
+            }
+
+            // If the current sum is greater than the given sum, then we need to remove the elements from the beginning of the array to make it equal to the given sum.
+            if (hashTable.containsKey(currentSum - sum)) {
+                start = hashTable.get(currentSum - sum) + 1;
+                end = i;
+            } else {
+                hashTable.put(currentSum, i);
+            }
+        }
+
+        if (start == -1) {
+            return null;
+        } else {
+            return Arrays.copyOfRange(arr, start, end + 1);
+        }
+    }
 }
+    

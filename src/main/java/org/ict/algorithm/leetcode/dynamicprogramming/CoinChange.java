@@ -34,7 +34,7 @@ import java.util.*;
  * 0 <= amount <= 104
  * @author sniper
  * @date 23 Nov, 2022
- * LC322
+ * LC322, Medium
  */
 public class CoinChange {
 
