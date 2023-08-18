@@ -38,11 +38,8 @@ public class DesignMessageQueue {
     }
 
     static class Message {
-
         private String id;
         private String payload;
-
-
 
         private long expirationTime;
         private long receivedTime;
