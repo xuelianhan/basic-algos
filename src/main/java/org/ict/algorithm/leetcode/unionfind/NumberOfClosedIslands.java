@@ -93,7 +93,7 @@ public class NumberOfClosedIslands {
             return 0;
         }
         /**
-         * while grid[i][j] greater than 1,
+         * while grid[i][j] greater than 0,
          * this grid[i][j] may be water, or may have been visited(marked as 2 below).
          */
         if (grid[i][j] > 0) {
