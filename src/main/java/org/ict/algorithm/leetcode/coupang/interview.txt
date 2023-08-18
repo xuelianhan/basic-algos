@@ -27,7 +27,7 @@ https://tutorialcup.com/interview-experience/coupang-interview-experience.htm
 28.找LCA of two nodes in a tree
 29.longest 1 substring(LC485)
 30.largest 1 in binary matrix(LC85)
-31.最长公共子序列;
+31.最长公共子序列(LC1143);
 32.连续区域的个数，和朋友圈差不多，并查集/dfs
 33.给一个BST，找出那个level的sum最大
 34.机器人从n*n的grid的左下角走到右上角有多少种走法‍

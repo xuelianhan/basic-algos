@@ -52,7 +52,7 @@ public class ProductOfArrayExceptSelf {
      * j:0, product:[6, 3, 2], suf:6
      * -----------------------------
      * return product:[6, 3, 2]
-     * 
+     *
      * @param nums
      * @return
      */
@@ -129,7 +129,7 @@ public class ProductOfArrayExceptSelf {
          */
         product[0] = 1;
         for (int i = 1; i < n; i++) {
-            product[i] = nums[i - 1]*product[i - 1];
+            product[i] = nums[i - 1] * product[i - 1];
         }
 
         /**

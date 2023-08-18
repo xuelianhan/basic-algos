@@ -28,7 +28,7 @@ import java.util.Set;
  * -10^9 <= nums[i] <= 10^9
  * @author sniper
  * @date 13 Jan, 2023
- * LC128, Medium
+ * LC128, Medium, frequency=9
  */
 public class LongestConsecutiveSequence {
 

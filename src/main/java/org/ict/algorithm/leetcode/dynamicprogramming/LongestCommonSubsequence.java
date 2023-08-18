@@ -36,7 +36,7 @@ package org.ict.algorithm.leetcode.dynamicprogramming;
  *
  * @author sniper
  * @date 15 Oct, 2022
- * LC1143
+ * LC1143, Medium, frequency=7
  */
 public class LongestCommonSubsequence {
 

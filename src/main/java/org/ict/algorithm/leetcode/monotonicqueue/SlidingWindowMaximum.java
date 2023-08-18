@@ -39,7 +39,7 @@ import java.util.Deque;
  *
  * @author sniper
  * @date 30 Oct, 2022
- * LC239
+ * LC239, Hard
  */
 public class SlidingWindowMaximum {
 
@@ -251,7 +251,7 @@ public class SlidingWindowMaximum {
 
         for (int i = 0; i < size; i++) {
             int max = nums[i];
-            for (int left = i + 1, right = i + k - 1;left <= right; left++) {
+            for (int left = i + 1, right = i + k - 1; left <= right; left++) {
                 if (nums[left] > max) {
                     max = nums[left];
                 }
