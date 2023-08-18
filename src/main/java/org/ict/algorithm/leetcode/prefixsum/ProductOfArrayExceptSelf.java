@@ -38,6 +38,24 @@ import java.util.Arrays;
  */
 public class ProductOfArrayExceptSelf {
 
+    /**
+     * Understanding the following solution
+     * e.g. nums = [1, 2, 3]
+     * product:[1, 1, 1]
+     * i:0, product:[1, 1, 1], pre=1
+     * j:2, product:[1, 1, 1], suf:3
+     * -----------------------------
+     * i:1, product:[1, 1, 1], pre:2
+     * j:1, product:[1, 3, 1], suf:6
+     * -----------------------------
+     * i:2, product:[1, 3, 2], pre:6
+     * j:0, product:[6, 3, 2], suf:6
+     * -----------------------------
+     * return product:[6, 3, 2]
+     * 
+     * @param nums
+     * @return
+     */
     public int[] productExceptSelfV6(int[] nums) {
         int n = nums.length;
         int[] product = new int[n];
@@ -111,7 +129,7 @@ public class ProductOfArrayExceptSelf {
          */
         product[0] = 1;
         for (int i = 1; i < n; i++) {
-            product[i] = nums[i-1]*product[i-1];
+            product[i] = nums[i - 1]*product[i - 1];
         }
 
         /**
@@ -134,9 +152,9 @@ public class ProductOfArrayExceptSelf {
         prefixProduct[0] = 1;
         suffixProduct[n - 1] = 1;
         for (int i = 1; i < n; i++) {
-            prefixProduct[i] = nums[i-1] * prefixProduct[i-1];
+            prefixProduct[i] = nums[i - 1] * prefixProduct[i - 1];
             int j = n - i - 1;
-            suffixProduct[j] = nums[j+1] * suffixProduct[j+1];
+            suffixProduct[j] = nums[j + 1] * suffixProduct[j + 1];
         }
 
         int[] product = new int[n];
@@ -164,8 +182,8 @@ public class ProductOfArrayExceptSelf {
         prefixProduct[0] = 1;
         suffixProduct[n - 1] = 1;
         for (int i = 1, j = n - i - 1; i < n && j >= 0; i++, j--) {
-            prefixProduct[i] = nums[i-1] * prefixProduct[i-1];
-            suffixProduct[j] = nums[j+1] * suffixProduct[j+1];
+            prefixProduct[i] = nums[i - 1] * prefixProduct[i - 1];
+            suffixProduct[j] = nums[j + 1] * suffixProduct[j + 1];
         }
 
         int[] product = new int[n];
@@ -237,7 +255,7 @@ public class ProductOfArrayExceptSelf {
         int[] prefixProduct = new int[n];
         prefixProduct[0] = 1;
         for (int i = 1; i < n; i++) {
-            prefixProduct[i] = nums[i-1] * prefixProduct[i-1];
+            prefixProduct[i] = nums[i - 1] * prefixProduct[i - 1];
         }
 
         /**
@@ -246,7 +264,7 @@ public class ProductOfArrayExceptSelf {
         int[] suffixProduct = new int[n];
         suffixProduct[n - 1] = 1;
         for (int i = n - 2; i >= 0; i--) {
-            suffixProduct[i] = nums[i+1] * suffixProduct[i+1];
+            suffixProduct[i] = nums[i + 1] * suffixProduct[i + 1];
         }
 
         int[] product = new int[n];

@@ -3,7 +3,7 @@ https://tutorialcup.com/interview-experience/coupang-interview-experience.htm
 2.Gaps between intervals.
 3.randomly picked Kth largest elements from an array
 4.Kth element Interval gap.
-5.Most efficient way to find product of array element except self
+5.Most efficient way to find product of array element except self(LC238)
 6.Find binary tree width
 8.Maximum sliding window(LC239)
 9.Validity of IP address(LC468)
@@ -15,15 +15,14 @@ https://tutorialcup.com/interview-experience/coupang-interview-experience.htm
 16.How should you detect cycles in a directed graph?
 17.Binary Search
 18.写一个Dungeon&Dragon的小游戏
-19.实现Skiplist
-20.leetcode518 coin change
+19.Implement a Skip list
+20.LC518.coin change
 21.merge two sorted array以及变种合并两个无限流
 22.LC20
 23.LC415
 24.Perfect Number
-https://oss.1p3a.com/forum/202201/10/165108eyqigyjgsemhcfqs.png
 25.找missing 和repeating的elements例子：1，2，2，5，6missing就是 3，4repeating就是 2
-26.word break leetcode
+26.word break
 27.Expression Add Operation(LC282)
 28.找LCA of two nodes in a tree
 29.longest 1 substring(LC485)

@@ -8,13 +8,13 @@ import java.util.PriorityQueue;
  * @author sniper
  * @date 17 Aug 2023
  */
-public class KthLargestElements {
+public class RandomlyPickKthLargestElements {
 
     /**
      * This code first creates a max-heap of size k.
-     * This ensures that the k the largest elements in the array are always in the max-heap.
-     *
-     * The code then iterates over the remaining elements in the array and adds them to the max-heap with probability (k - 1) / (n - i).
+     * This ensures that the largest k-th elements in the array are always in the max-heap.
+     * The code then iterates over the remaining elements in the array,
+     * and adds them to the max-heap with probability (k - 1) / (n - i).
      * This means that the probability of adding an element to the max-heap decreases as we move further down the array.
      *
      * The code finally returns the elements in the max-heap.
