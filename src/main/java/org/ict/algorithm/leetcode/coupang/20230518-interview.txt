@@ -2,6 +2,6 @@ Design Twitter
 Design Circuit Breaker
 Texas Card Comparator implementation.
 System Design: https://app.diagrams.net/
-Distributed Database lock
+Distributed Database lock, Availability.
 
 

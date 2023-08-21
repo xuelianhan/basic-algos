@@ -71,6 +71,8 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-orm:6.0.10" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-tx:6.0.10" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-aspects:6.0.10" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: com.mysql:mysql-connector-j:8.0.33" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: com.google.protobuf:protobuf-java:3.21.9" level="project" />
     <orderEntry type="library" name="Maven: net.javacrumbs.shedlock:shedlock-spring:5.5.0" level="project" />
     <orderEntry type="library" name="Maven: net.javacrumbs.shedlock:shedlock-core:5.5.0" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-context:6.0.10" level="project" />
