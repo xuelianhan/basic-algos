@@ -1,4 +1,4 @@
-package org.ict.algorithm.interview;
+package org.ict.algorithm.leetcode.coupang;
 
 import java.util.*;
 
@@ -39,7 +39,8 @@ public class CardCompareTest {
     public int compare(String[] arr1, String[] arr2) {
         Card c1 = convert(arr1);
         Card c2 = convert(arr2);
-
+        //todo
+        // compare rules here.
         return 0;
     }
 
