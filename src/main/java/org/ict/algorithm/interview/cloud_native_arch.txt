@@ -12,3 +12,14 @@
 7、对Three.js、Cesium.js、虚幻引擎、 VR、AR 有一定了解，有实际参与项目优先。
 所需技能：
 分布式技术、微服务架构、容器技术、Java、Spring、Git、Nacos、Jenkins、安全、漏洞、3D
+-------------------
+1.Spring-boot-starter如何做？配置文件是什么？
+2.高可用AP和CP主要的应用场景是什么，举例并说明原因
+3.分布式事务是否用过？
+4.雪花算法中有数据中心ID和节点ID，节点ID如何保证唯一性？
+5.mvn pom中多个依赖引入相同的jar的不同版本，如何排除冲突？除了DeployManagement还有其他什么办法？
+6.K8S中的Deployment和StatefulSet有啥区别？
+7.Storage Class和PVC有啥区别
+8.Redis的冷备、热备、灾备如何做?
+9.Spring Boot如何优雅停机？从系统整体说下方案。
+10.订单按用户分表，要求按商户查，查某个商户下的订单，每页20条，要求前3页数据.
