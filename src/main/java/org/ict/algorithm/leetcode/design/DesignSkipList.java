@@ -67,6 +67,8 @@ import java.util.Deque;
  * @author sniper
  * @date 21 Aug 2023
  * LC1206, Medium
+ * @see java.util.concurrent.ConcurrentSkipListMap
+ * @see java.util.concurrent.ConcurrentSkipListSet
  */
 public class DesignSkipList {
 
@@ -98,7 +100,16 @@ public class DesignSkipList {
         }
 
         /**
+         * 4 30
+         *   |
+         * 3 30------------>50---------------------->null
+         *   |              |
+         * 2 30------------>50------->70-->80-------->null
+         *   |              |         |    |
+         * 1 30-->40-->45-->50-->60-->70-->80-->90-->null
+         * -------------------------------------------------
          * Returns true if the integer target exists in the Skiplist or false otherwise.
+         * Using random function to ensure the balance of the Skiplist.
          * @param num
          */
         public void add(int num) {
@@ -158,8 +169,14 @@ public class DesignSkipList {
 
     static class Node {
         private int val;
+        /**
+         * Pointer goes right.
+         */
         private Node next;
 
+        /**
+         * Pointer goes down.
+         */
         private Node down;
 
         public Node(int val, Node next, Node down) {
