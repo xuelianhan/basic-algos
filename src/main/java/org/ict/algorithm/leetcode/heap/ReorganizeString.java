@@ -36,6 +36,9 @@ import java.util.Queue;
 public class ReorganizeString {
 
     /**
+     * Understanding the following solution
+     * Time Cost 1ms
+     *
      * No Sorting O(N):
      *
      * count letter appearance and store in hash[i]
@@ -44,6 +47,16 @@ public class ReorganizeString {
      * put the rest into the array
      *
      * e.g. s = "vvvlo"
+     * bucket[v]=3
+     * bucket[l]=1
+     * bucket[o]=1
+     * -------------
+     * res: 0,1,2,3,4
+     * res:[v, ,v, ,v]
+     * res:[v,l,v, ,v]
+     * res:[v,l,v,o,v]
+     * return "vlvov"
+     *
      * @author fangbiyi
      * @see <a href="https://leetcode.com/problems/reorganize-string/solutions/232469/java-no-sort-o-n-0ms-beat-100"></a>
      * @param s
