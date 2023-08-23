@@ -92,6 +92,9 @@ public class ReorganizeString {
             bucket[letter]--;
         }
 
+        /**
+         * Put the rest letters into the odd index.
+         */
         for (int i = 0; i < bucket.length; i++) {
             while (bucket[i] > 0) {
                 if (idx >= n) {
