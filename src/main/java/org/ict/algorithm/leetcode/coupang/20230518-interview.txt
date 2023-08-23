@@ -1,7 +1,9 @@
 Design Twitter
 Design Circuit Breaker
 Texas Card Comparator implementation.
+
 System Design: https://app.diagrams.net/
-Distributed Database lock, Availability.
+Design a Distributed Database Lock. (3 Web Server nodes, 1 Database node)
+How to assure the availability if one of the node is down?
 
 

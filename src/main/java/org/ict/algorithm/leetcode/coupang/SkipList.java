@@ -33,7 +33,6 @@ public class SkipList {
 
     public void add(int value) {
         Node node = new Node(value, maxLevel);
-
         Node current = head;
         for (int i = maxLevel - 1; i >= 0; i--) {
             while (current.forward[i] != null && current.forward[i].value < value) {
