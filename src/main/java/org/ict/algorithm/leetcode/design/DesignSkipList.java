@@ -109,7 +109,7 @@ public class DesignSkipList {
          * 1 30-->40-->45-->50-->60-->70-->80-->90-->null
          * -------------------------------------------------
          * Returns true if the integer target exists in the Skiplist or false otherwise.
-         * Using random function to ensure the balance of the Skiplist.
+         *
          * @param num
          */
         public void add(int num) {
@@ -122,6 +122,9 @@ public class DesignSkipList {
                 stack.push(node);
             }
 
+            /**
+             * Using random function to ensure the balance of the Skiplist.
+             */
             Node down = null;
             boolean shouldInsert  = true;
             while (shouldInsert && !stack.isEmpty()) {
@@ -132,7 +135,7 @@ public class DesignSkipList {
             }
 
             /**
-             * Create a topmost new level dummy pointing to existing dummy
+             * Create a topmost new level dummy pointing to existing dummy.
              */
             if (shouldInsert) {
                 dummy = new Node(-1, null, dummy);
