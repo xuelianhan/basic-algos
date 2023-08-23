@@ -109,6 +109,8 @@ public class DesignSkipList {
         }
 
         /**
+         *
+         * -------------------------------------------------
          * 4 30
          *   |
          * 3 30------------>50---------------------->null
@@ -117,8 +119,10 @@ public class DesignSkipList {
          *   |              |         |    |
          * 1 30-->40-->45-->50-->60-->70-->80-->90-->null
          * -------------------------------------------------
-         * Returns true if the integer target exists in the Skiplist or false otherwise.
          *
+         *
+         * -------------------------------------------------
+         * Returns true if the integer target exists in the Skiplist or false otherwise.
          * @param num
          */
         public void add(int num) {
