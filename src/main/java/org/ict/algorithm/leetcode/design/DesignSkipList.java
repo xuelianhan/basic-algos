@@ -72,7 +72,16 @@ import java.util.Deque;
  */
 public class DesignSkipList {
 
-    class Skiplist {
+
+    public static void main(String[] args) {
+        //DesignSkipList instance = new DesignSkipList();
+        Skiplist skiplist = new Skiplist();
+        skiplist.add(30);
+        skiplist.add(50);
+        skiplist.add(70);
+    }
+
+    static class Skiplist {
 
         private Node dummy = new Node(-1, null, null);
 
