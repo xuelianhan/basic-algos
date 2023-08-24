@@ -29,7 +29,8 @@ import java.util.Arrays;
  * 0 <= nums[i] <= 1000
  * @author sniper
  * @date 24 Aug 2023
- * LC611, Medium
+ * LC611, Medium,
+ * Amazon,
  */
 public class ValidTriangleNumber {
 
