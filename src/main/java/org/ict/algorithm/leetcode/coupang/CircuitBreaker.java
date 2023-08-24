@@ -26,6 +26,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @author sniper
  * @date 19 Jul 2023
+ * @see <a href="https://java-design-patterns.com/patterns/circuit-breaker/#explanation"></a>
  */
 public class CircuitBreaker {
     private final int failureThreshold;
