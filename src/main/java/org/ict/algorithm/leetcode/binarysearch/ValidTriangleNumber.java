@@ -36,6 +36,7 @@ public class ValidTriangleNumber {
 
 
     /**
+     * Time Cost 23ms
      * e.g. nums = [4,2,3,4]
      * Sorted: 0   1   2   3
      *         2   3   4   4
