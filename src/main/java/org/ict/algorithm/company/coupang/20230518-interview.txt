@@ -1,9 +1,22 @@
+1.First Round:
+Implement a method, it's not allowed to use sin/cos/Math.sqrt function.
+public void drawCircle(int x, int y, int r) {
+    //todo
+}
+How to find the Median number from 5billion digits.
+
+2.Second Round
 Design Twitter
 Design Circuit Breaker
+Because I have seen the above 2 problems, the Interviewer give me another problem like the following:
 Texas Card Comparator implementation.
+At last, I don't have enough time to finish this Texas Card Comparator.
 
+3.Third Round
 System Design: https://app.diagrams.net/
 Design a Distributed Database Lock. (3 Web Server nodes, 1 Database node)
-How to assure the availability if one of the node is down?
+How to assure the availability if one of the node is down? Interviewer said that I needed to consider more deep.
+
+Finally, I received the reject mail on Monday morning.
 
 

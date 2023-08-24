@@ -1,5 +1,12 @@
 package org.ict.algorithm.leetcode.randomized;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 /**
  * Given an integer array nums with possible duplicates,
  * randomly output the index of a given target number.
@@ -39,12 +46,53 @@ package org.ict.algorithm.leetcode.randomized;
  */
 public class RandomPickIndex {
 
-    public RandomPickIndex(int[] nums) {
 
+    private int[] nums;
+    private Random random = new Random();
+
+    /**
+     * list = Arrays.stream(nums).boxed().toList();
+     * @see <a href="https://stackoverflow.com/questions/1073919/how-to-convert-int-into-listinteger-in-java"></a>
+     * @param nums
+     */
+    public RandomPickIndex(int[] nums) {
+        this.nums = nums;
     }
 
+    public int pickV1(int target) {
+        int cnt = 0, res = -1;
+        for (int i = 0; i < nums.length; ++i) {
+            if (nums[i] != target) {
+                continue;
+            }
+            cnt++;
+            if (random.nextInt(cnt) == 0) {
+                res = i;
+            }
+        }
+        return res;
+    }
+
+    /**
+     * At first, we define two variables, the counter cnt and the return result res.
+     * Then traversing the entire array, if the value of the array is not equal to the target, skip;
+     * If it is equal to the target, the counter will be increased by 1,
+     * and then we will randomly generate a number within the range of [0,cnt),
+     * and if the number is 0, we will assign the res value to the i.
+     * @param target
+     * @return
+     */
     public int pick(int target) {
-        return 0;
+        int cnt = 0, res = -1;
+        for (int i = 0; i < nums.length; ++i) {
+            /**
+             * Generate random digit in range [0,cnt)
+             */
+            if (nums[i] == target && random.nextInt(++cnt) == 0) {
+                res = i;
+            }
+        }
+        return res;
     }
 
     /**
