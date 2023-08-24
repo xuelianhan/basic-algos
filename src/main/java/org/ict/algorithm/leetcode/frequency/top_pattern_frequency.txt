@@ -1,0 +1,23 @@
+see https://algo.monster/problems/stats
+-------------------------------------------
+TOPIC                  Return of investment
+-------------------------------------------
+Two Pointers           High
+Tree BFS               High
+Graph BFS              High
+Tree DFS               High
+Linked List            High
+Hash                   High
+Graph DFS              Medium
+Combinatorial DFS      Medium
+Heap                   Medium
+Binary Search          Medium
+Trie                   Medium
+Divide and Conquer     Low
+Union Find             Low
+Greedy                 Low
+Dynamic Programming    low
+-------------------------------------------
+Coding Interview Points
+Points = analysis + communication + coding + testing
+-------------------------------------------
