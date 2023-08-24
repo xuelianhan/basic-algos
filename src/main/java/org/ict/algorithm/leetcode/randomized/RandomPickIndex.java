@@ -1,11 +1,6 @@
 package org.ict.algorithm.leetcode.randomized;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * Given an integer array nums with possible duplicates,
