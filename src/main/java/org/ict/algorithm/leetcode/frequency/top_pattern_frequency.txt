@@ -21,3 +21,9 @@ Dynamic Programming    low
 Coding Interview Points Criteria
 Points = analysis + communication + coding + testing
 -------------------------------------------
+Get started on the highest ROI patterns!
+Binary search
+Breadth-first search
+Depth-first search
+Two pointers
+Priority Queue

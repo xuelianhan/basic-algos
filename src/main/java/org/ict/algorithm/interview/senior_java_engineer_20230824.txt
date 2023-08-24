@@ -9,3 +9,33 @@
 4. 有进取精神、学习精神和创新精神；
 5. 沟通协作能力强、主动性强、责任心强。
 ----------------------------------
+1.5000W手机号，实现最快的精准查找（内存足够，不能用hashset/hashmap);
+BloomFilter不精准，回答用Trie树，面试官给过了
+
+2.千万DAU网站，峰值30WQPS，实时统计当天累计访问次数最多的Top-100用户
+用Spark，或者用kafka接收消息，然后慢慢消费，统计时间窗口按分钟级，累计计算用户点击数，存到Sorted Sets
+
+3.Redis hash扩容和Java hash扩容有啥区别？
+我说了下Java的扩容，Redis hash扩容的忘了；
+4.设计一个丢骰子的对象，有n面，每面指定不同概率，实现如下方法：
+public class A {
+      private int n;
+      double[] weights;
+
+      public A(int n, double[] weights) {
+          this.n = n;
+          this.weights = weights;
+      }
+
+      public int throw() {
+          //todo
+          return 0;
+      }
+}
+5.二分查找变体，找重复数组中，最后一个出现的指定值;
+
+6.长度为n的整数数组，求最大的3个数，要求时间复杂度为O(N).
+写了一个小顶堆交差了；
+
+
+
