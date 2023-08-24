@@ -5,15 +5,15 @@ import java.util.Random;
 
 /**
  * An efficient Java program to randomly select k items from a stream of items.
- * @see https://en.wikipedia.org/wiki/Reservoir_sampling
- * @see http://www.geeksforgeeks.org/reservoir-sampling/
- * @see https://stackoverflow.com/questions/2612648/reservoir-sampling
- * @see https://leetcode.com/tag/reservoir-sampling/
+ * @see <a href="https://en.wikipedia.org/wiki/Reservoir_sampling"></a>
+ * @see <a href="http://www.geeksforgeeks.org/reservoir-sampling/"></a>
+ * @see <a href="https://stackoverflow.com/questions/2612648/reservoir-sampling"></a>
+ * @see <a href="https://leetcode.com/tag/reservoir-sampling/"></a>
  * @author Sumit Ghosh
  * 
  * Reservoir sampling is a family of randomized algorithms for randomly choosing k samples from a list of n items, 
  * where n is either a very large or unknown number. 
- * Typically n is large enough that the list doesn’t fit into main memory. 
+ * Typically, n is large enough that the list doesn’t fit into main memory.
  * For example, a list of search queries in Google and Facebook.
  * So we are given a big array (or stream) of numbers (to simplify), 
  * and we need to write an efficient function to randomly select k numbers where 1 <= k <= n. 
@@ -52,7 +52,7 @@ import java.util.Random;
  *
  *   Case2: For first k stream items, i.e., for stream[i] where 0 <= i < k
  *   The first k items are initially copied to reservoir[] and may be removed later in iterations for stream[k] to stream[n].
- *   The probability that an item from stream[0..k-1] is in final array = Probability that the item is not picked when items stream[k], stream[k+1], …. stream[n-1] are considered = [k/(k+1)] x [(k+1)/(k+2)] x [(k+2)/(k+3)] x … x [(n-1)/n] = k/n
+ *   The probability that an item from stream[0...k-1] is in final array = Probability that the item is not picked when items stream[k], stream[k+1], …. stream[n-1] are considered = [k/(k+1)] x [(k+1)/(k+2)] x [(k+2)/(k+3)] x … x [(n-1)/n] = k/n
  *   References:http://en.wikipedia.org/wiki/Reservoir_sampling
  */
 public class ReservoirSampling {
