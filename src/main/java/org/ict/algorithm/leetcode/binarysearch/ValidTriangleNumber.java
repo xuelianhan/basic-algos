@@ -41,6 +41,20 @@ public class ValidTriangleNumber {
      *         ^       ^   ^
      *         |       |   |
      *        left  right  i
+     * i:3, left:0, right:2, nums[0] + nums[2] = 2 + 4 = 6, nums[i] = 4, 6 > 4, res = 2 - 0 = 2, right--
+     *      left:0, right:1, nums[0] + nums[1] = 2 + 3 = 5, nums[i] = 4, 5 > 4, res = 2 + (1 - 0) = 3, right--
+     *      left:0, right:0, inner-while-loop ended
+     * i:2, left:0, right:1, nums[0] + nums[1] = 2 + 3 = 5, nums[i] = 4, 5 > 4, res = 3 + (1 - 0) = 4, right--
+     *      left:0, right:0, inner-while-loop ended
+     * i:1, i >= 2 not satisfied, for-loop ended
+     * return res: 4
+     *
+     *  2       4  4
+     *      3   4  4
+     *  2   3      4
+     *  2   3   4
+     *
+     *
      * @param nums
      * @return
      */
