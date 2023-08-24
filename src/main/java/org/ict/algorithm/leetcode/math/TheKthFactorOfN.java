@@ -38,13 +38,15 @@ package org.ict.algorithm.leetcode.math;
  * @author sniper
  * @date 24 Aug 2023
  * LC1492, Medium
+ * Amazon-2023-Spring
  */
 public class TheKthFactorOfN {
 
-
     /**
-     * Short Explanation:
+     * Understanding the following solution
+     * Time Cost 0ms
      *
+     * Short Explanation:
      * Let's assume n is 12. The divisors of n are: {1, 2, 3, 4, 6, 12}.
      * But now look at them from another angle:
      * 1 * 12 = 12
@@ -85,6 +87,10 @@ public class TheKthFactorOfN {
      * Otherwise, it will be floored to the first integer.
      * For example, if n is 8, the square root is 2.8 so i will be 2
      * If after all those efforts k is still bigger than zero, we return -1 after cursing.
+     * -----------------------
+     * e.g. n = 12,
+     * all factors of 12 are: [1, 2, 3, 4, 6, 12]
+     *
      * @author navid
      * @see <a href="https://leetcode.com/problems/the-kth-factor-of-n/solutions/959372/7-line-java-o-sqrt-n-time-o-1-space-not-a-typical-explanation/"></a>
      * @param n
@@ -92,11 +98,19 @@ public class TheKthFactorOfN {
      * @return
      */
     public int kthFactor(int n, int k) {
+        /**
+         * e.g. n = 12
+         * The first for-loop count 1,2,3
+         */
         for (int i = 1; i < Math.sqrt(n); i++) {
             if (n % i == 0 && --k == 0) {
                 return i;
             }
         }
+        /**
+         * e.g. n = 12
+         * The second for-loop count 4, 6, 12
+         */
         for (int i = (int)Math.sqrt(n); i >= 1; i--) {
             if (n % (n / i) == 0 && --k == 0) {
                 return n / i;
