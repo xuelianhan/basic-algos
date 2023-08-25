@@ -1,5 +1,7 @@
 package org.ict.algorithm.leetcode.array;
 
+import java.util.Random;
+
 /**
  * Given an integer array nums, design an algorithm to randomly shuffle the array.
  * All permutations of the array should be equally likely as a result of the shuffling.
@@ -37,20 +39,57 @@ package org.ict.algorithm.leetcode.array;
  * At most 104 calls in total will be made to reset and shuffle.
  * @author sniper
  * @date 21 Sep, 2022
- * LC384
+ * LC384, Medium
  */
 public class ShuffleAnArray {
 
+    private int[] nums;
+
+    private Random random = new Random();
+
     public ShuffleAnArray(int[] nums) {
-
+        this.nums = nums;
     }
 
+    /**
+     * Resets the array to its original configuration and returns it
+     * @return
+     */
     public int[] reset() {
-        return null;
+        return nums;
     }
 
+    /**
+     * Returns a random shuffling of the array
+     * @return
+     */
     public int[] shuffle() {
-        return null;
+        if (nums == null) {
+            return null;
+        }
+        int[] copy = nums.clone();
+        /**
+         * Why i starts at 1, not 0?
+         * If i starts at 0, random.nextInt(i+1) = random.nextInt(1)
+         * due to bound is exclusive, random.nextInt(1) always return 0.
+         * Tt makes no sense to call random.nextInt(1), so i starts at 1 instead of 0.
+         */
+        for (int i = 1; i < copy.length; i++) {
+            /**
+             * the next pseudorandom, uniformly distributed
+             * value between zero (inclusive) and bound (exclusive)
+             * return j: 0 <= j <= i;
+             */
+            int j = random.nextInt(i + 1);
+            swap(copy, i, j);
+        }
+        return copy;
+    }
+
+    private void swap(int[] copy, int i, int j) {
+        int t = copy[i];
+        copy[i] = copy[j];
+        copy[j] = t;
     }
 
 }

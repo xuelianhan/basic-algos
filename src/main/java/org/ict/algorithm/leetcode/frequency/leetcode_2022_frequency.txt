@@ -151,7 +151,7 @@
 383.Ransom Note=10, String, Counting
 37.Sudoku Solver=10, Backtracking
 1428.Leftmost Column with at Least a One=10, Binary Search
-419.Battleships in a Board=9
+419.Battleships in a Board=9, DFS, Array, Matrix
 2016.Maximum Difference Between Increasing Elements=9
 32.Longest Valid Parentheses=9
 224.Basic Calculator=9

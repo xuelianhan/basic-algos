@@ -31,7 +31,7 @@ import java.util.Arrays;
  * 1 <= nums[i] <= 10^3
  * @author sniper
  * @date 19 Aug, 2022
- * LC1470
+ * LC1470, Easy
  */
 public class ShuffleTheArray {
 
@@ -41,6 +41,7 @@ public class ShuffleTheArray {
         int[] res = shuffle(nums, n);
         System.out.println(Arrays.toString(res));
     }
+
 
     public static int[] shuffleV2(int[] nums, int n) {
         int[] res = new int[2 * n];
