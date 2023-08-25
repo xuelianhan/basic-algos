@@ -65,17 +65,29 @@ package org.ict.algorithm.leetcode.depthfirstsearch;
 public class TheMaze {
 
     public static void main(String[] args) {
-        //int[][] maze = {{0,0,1,0,0}, {0,0,0,0,0}, {0,0,0,1,0}, {1,1,0,1,1}, {0,0,0,0,0}};
-        //int[] start = {0, 4};
-        //int[] destination = {4, 4};
-
         int[][] maze = {{0,0,1,0,0}, {0,0,0,0,0}, {0,0,0,1,0}, {1,1,0,1,1}, {0,0,0,0,0}};
         int[] start = {0, 4};
-        int[] destination = {3, 2};
+        int[] destination = {4, 4};
+
+        //int[][] maze = {{0,0,1,0,0}, {0,0,0,0,0}, {0,0,0,1,0}, {1,1,0,1,1}, {0,0,0,0,0}};
+        //int[] start = {0, 4};
+        //int[] destination = {3, 2};
 
         TheMaze instance = new TheMaze();
-        boolean res = instance.hasPath(maze, start, destination);
+        boolean res = instance.hasPathV1(maze, start, destination);
         System.out.println(res);
+    }
+
+    /**
+     * Breadth-First-Search solution
+     * @param maze
+     * @param start
+     * @param destination
+     * @return
+     */
+    public boolean hasPathV3(int[][] maze, int[] start, int[] destination) {
+        //todo
+        return false;
     }
 
 
@@ -92,20 +104,83 @@ public class TheMaze {
     }
 
     /**
-     * Depth-First-Search solution
+     * Understanding the following solution.
+     * Depth-First-Search Solution with extra spaces.
+     *
      * @param maze
      * @param start
      * @param destination
      * @return
      */
     public boolean hasPathV1(int[][] maze, int[] start, int[] destination) {
-        //todo
+        int m = maze.length;
+        int n = maze[0].length;
+        boolean[][] visited = new boolean[m][n];
+        return dfsV1(maze, visited, start[0], start[1], destination);
+    }
+
+    private boolean dfsV1(int[][] maze, boolean[][] visited, int i, int j, int[] destination) {
+        if (i == destination[0] && j == destination[1]) {
+            return true;
+        }
+        if (visited[i][j]) {
+            return false;
+        }
+
+        visited[i][j] = true;
+        int m = maze.length;
+        int n = maze[0].length;
+        for (int k = 0; k < 4; k++) {
+            int x = i;
+            int y = j;
+            while (x >= 0 && x < m && y >= 0 && y < n && maze[x][y] == 0) {
+                x += dirs[k];
+                y += dirs[k + 1];
+            }
+
+            x -= dirs[k];
+            y -= dirs[k + 1];
+
+            if (dfsV1(maze, visited, x, y, destination)) {
+                return true;
+            }
+        }
         return false;
     }
 
     private int[] dirs = {-1, 0, 1, 0, -1};
+
     /**
-     * Depth-First-Search solution
+     * Understanding the following solution.
+     * Depth-First-Search solution without extra spaces.
+     * ------------------------------------------------------
+     * class Solution {
+     * public:
+     *     vector<vector<int>> dirs{{0,-1},{-1,0},{0,1},{1,0}};
+     *
+     *     bool hasPath(vector<vector<int>>& maze, vector<int>& start, vector<int>& destination) {
+     *         return dfs(maze, start[0], start[1], destination[0], destination[1]);
+     *     }
+     *
+     *     bool dfs(vector<vector<int>>& maze, int i, int j, int di, int dj) {
+     *         if (i == di && j == dj) return true;
+     *         bool res = false;
+     *         int m = maze.size(), n = maze[0].size();
+     *         maze[i][j] = -1;
+     *         for (auto dir : dirs) {
+     *             int x = i, y = j;
+     *             while (x >= 0 && x < m && y >= 0 && y < n && maze[x][y] != 1) {
+     *                 x += dir[0]; y += dir[1];
+     *             }
+     *             x -= dir[0]; y -= dir[1];
+     *             if (maze[x][y] != -1) {
+     *                 res |= helper(maze, x, y, di, dj);
+     *             }
+     *         }
+     *         return res;
+     *     }
+     * };
+     * ------------------------------------------------------
      *
      * @param maze
      * @param start
