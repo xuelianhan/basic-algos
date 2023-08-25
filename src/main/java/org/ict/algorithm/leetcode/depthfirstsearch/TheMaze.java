@@ -1,5 +1,8 @@
 package org.ict.algorithm.leetcode.depthfirstsearch;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
+
 /**
  * There is a ball in a maze with empty spaces (represented as 0) and walls (represented as 1).
  * The ball can go through the empty spaces by rolling up, down, left or right,
@@ -74,7 +77,7 @@ public class TheMaze {
         //int[] destination = {3, 2};
 
         TheMaze instance = new TheMaze();
-        boolean res = instance.hasPathV1(maze, start, destination);
+        boolean res = instance.hasPathV3(maze, start, destination);
         System.out.println(res);
     }
 
@@ -86,7 +89,38 @@ public class TheMaze {
      * @return
      */
     public boolean hasPathV3(int[][] maze, int[] start, int[] destination) {
-        //todo
+        int m = maze.length;
+        int n = maze[0].length;
+
+        boolean[][] visited = new boolean[m][n];
+        Deque<int[]> queue = new ArrayDeque<>();
+        queue.offer(new int[] {start[0], start[1]});
+        visited[start[0]][start[1]] = true;
+
+        while (!queue.isEmpty()) {
+            int[] p = queue.poll();
+            if (p[0] == destination[0] && p[1] == destination[1]) {
+                return true;
+            }
+
+            for (int k = 0; k < 4; k++) {
+                int x = p[0];
+                int y = p[1];
+
+                while (x >= 0 && x < m && y >= 0 && y < n && maze[x][y] == 0) {
+                    x += dirs[k];
+                    y += dirs[k + 1];
+                }
+
+                x -= dirs[k];
+                y -= dirs[k + 1];
+                if (visited[x][y]) {
+                    continue;
+                }
+                visited[x][y] = true;
+                queue.offer(new int[] {x, y});
+            }
+        }
         return false;
     }
 
@@ -99,8 +133,50 @@ public class TheMaze {
      * @return
      */
     public boolean hasPathV2(int[][] maze, int[] start, int[] destination) {
-        //todo
+        int m = maze.length;
+        int n = maze[0].length;
+
+        boolean[][] visited = new boolean[m][n];
+        Deque<Pair> queue = new ArrayDeque<>();
+        queue.offer(new Pair(start[0], start[1]));
+        visited[start[0]][start[1]] = true;
+
+        while (!queue.isEmpty()) {
+            Pair p = queue.poll();
+            if (p.left == destination[0] && p.right == destination[1]) {
+                return true;
+            }
+
+            for (int k = 0; k < 4; k++) {
+                int x = p.left;
+                int y = p.right;
+
+                while (x >= 0 && x < m && y >= 0 && y < n && maze[x][y] == 0) {
+                    x += dirs[k];
+                    y += dirs[k + 1];
+                }
+
+                x -= dirs[k];
+                y -= dirs[k + 1];
+
+                if (!visited[x][y]) {
+                    visited[x][y] = true;
+                    queue.offer(new Pair(x, y));
+                }
+            }
+        }
+
         return false;
+    }
+
+    static class Pair {
+        private int left;
+        private int right;
+
+        public Pair(int left, int right) {
+            this.left = left;
+            this.right = right;
+        }
     }
 
     /**
