@@ -17,6 +17,7 @@ BloomFilter不精准，回答用Trie树，面试官给过了
 
 3.Redis hash扩容和Java hash扩容有啥区别？
 我说了下Java的扩容，Redis hash扩容的忘了；
+
 4.Redis的ZSet如果存的数据量很大，会出现什么问题？
 我说会导致Redis网卡出口流量飙升.
 
@@ -56,6 +57,8 @@ public int search(int[] nums, int target) {
     return -1;
 }
 7.长度为n的整数数组，求最大的3个数，要求时间复杂度为O(N).
+长度为n的整数数组，求最大的2个数，要求时间复杂度为O(N).
+长度为n的整数数组，求最大的1个数，要求时间复杂度为O(N).
 写了一个小顶堆交差了；
 
 
