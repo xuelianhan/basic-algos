@@ -40,8 +40,30 @@ import java.util.stream.Collectors;
 public class XofKindInDeckOfCards {
 
 
+    /**
+     * Time Cost 10ms
+     * @param deck
+     * @return
+     */
+    public boolean hasGroupsSizeXV1(int[] deck) {
+        if (deck == null || deck.length == 1) {
+            return false;
+        }
+        Map<Integer, Integer> freq = new HashMap<>();
+        for (int i : deck) {
+            freq.put(i, freq.getOrDefault(i, 0) + 1);
+        }
+
+        int maxCommonDivisor = 0;
+        for (Map.Entry<Integer, Integer> entry : freq.entrySet()) {
+            maxCommonDivisor = gcd(entry.getValue(), maxCommonDivisor);
+        }
+        return maxCommonDivisor > 1;
+    }
+
 
     /**
+     * Time Cost 13ms
      * e.g. deck = [1], expected false.
      * e.g. deck = [1,1,2,2,2,2], expected true.
      * e.g. deck = [1,1,1,1,2,2,2,2,2,2], expected true.
