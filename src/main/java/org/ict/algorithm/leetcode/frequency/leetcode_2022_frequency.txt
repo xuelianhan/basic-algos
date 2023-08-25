@@ -163,8 +163,8 @@
 490.The Maze=9, DFS, BFS
 162.Find Peak Element=9, Binary Search
 738.Monotone Increasing Digits=9, Math
-55.Jump Game=8
-166.Fraction to Recurring Decimal=8
+55.Jump Game=8, Greedy
+166.Fraction to Recurring Decimal=8, Math, Hash Table
 353.Design Snake Game=8
 849.Maximize Distance to Closest Person=8
 1370.Increasing Decreasing String=8
@@ -181,7 +181,7 @@
 1400.Construct K Palindrome Strings=7
 981.Time Based Key-Value Store=7
 628.Maximum Product of Three Numbers=7
-45.Jump Game II=7
+45.Jump Game II=7, Greedy
 125.Valid Palindrome=7
 437.Path Sum III=7
 122.Best Time to Buy and Sell Stock II=7

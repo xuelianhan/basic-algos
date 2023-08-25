@@ -13,7 +13,7 @@ package org.ict.algorithm.leetcode.array;
  * Note:
  * You can assume that you can always reach the last index.
  * 
- * LC45
+ * LC45, Medium, frequency=7
  */
 public class JumpGameTwo {
 	

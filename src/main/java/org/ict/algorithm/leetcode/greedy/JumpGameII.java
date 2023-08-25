@@ -31,7 +31,7 @@ package org.ict.algorithm.leetcode.greedy;
  * 0 <= nums[i] <= 1000
  * @author sniper
  * @date 11 Oct, 2022
- * LC45
+ * LC45, Medium, frequency=7
  */
 public class JumpGameII {
 
