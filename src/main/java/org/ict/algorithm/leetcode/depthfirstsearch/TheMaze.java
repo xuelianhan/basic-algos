@@ -64,6 +64,21 @@ package org.ict.algorithm.leetcode.depthfirstsearch;
  */
 public class TheMaze {
 
+    public static void main(String[] args) {
+        //int[][] maze = {{0,0,1,0,0}, {0,0,0,0,0}, {0,0,0,1,0}, {1,1,0,1,1}, {0,0,0,0,0}};
+        //int[] start = {0, 4};
+        //int[] destination = {4, 4};
+
+        int[][] maze = {{0,0,1,0,0}, {0,0,0,0,0}, {0,0,0,1,0}, {1,1,0,1,1}, {0,0,0,0,0}};
+        int[] start = {0, 4};
+        int[] destination = {3, 2};
+
+        TheMaze instance = new TheMaze();
+        boolean res = instance.hasPath(maze, start, destination);
+        System.out.println(res);
+    }
+
+
     /**
      * Breadth-First-Search solution
      * @param maze
@@ -88,16 +103,55 @@ public class TheMaze {
         return false;
     }
 
+    private int[] dirs = {-1, 0, 1, 0, -1};
     /**
      * Depth-First-Search solution
+     *
      * @param maze
      * @param start
      * @param destination
      * @return
      */
     public boolean hasPath(int[][] maze, int[] start, int[] destination) {
-        //todo
-        return false;
+        return dfs(maze, start[0], start[1], destination[0], destination[1]);
+    }
+
+    private boolean dfs(int[][] maze, int i, int j, int destX, int destY) {
+        if (i == destX && j == destY) {
+            return true;
+        }
+        boolean res = false;
+        int m = maze.length;
+        int n = maze[0].length;
+        /**
+         * Marking (i, j) has been visited(using -1 here),
+         * because the original array maze[i][j] is 0 or 1.
+         */
+        maze[i][j] = -1;
+        for (int k = 0; k < 4; k++) {
+            int x = i;
+            int y = j;
+            /**
+             * Rolling the ball until hit the wall(1 means the wall)
+             */
+            while (x >= 0 && x < m && y >= 0 && y < n && maze[x][y] != 1) {
+                x += dirs[k];
+                y += dirs[k + 1];
+            }
+            /**
+             * Go back on step after above while-loop exit.
+             */
+            x -= dirs[k];
+            y -= dirs[k + 1];
+
+            /**
+             * If current (x, y) cell has not been visited, recursively access again at new position.
+             */
+            if (maze[x][y] != -1) {
+                res |= dfs(maze, x, y, destX, destY);
+            }
+        }
+        return res;
     }
 
 }

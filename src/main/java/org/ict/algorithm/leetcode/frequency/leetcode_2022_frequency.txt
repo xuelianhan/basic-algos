@@ -215,7 +215,7 @@
 281.Zigzag Iterator=6
 2133.Check if Every Row and Column Contains All Numbers=6
 706.Design HashMap=6
-1492.The kth Factor of n=6
+1492.The kth Factor of n=6, Math
 695.Max Area of Island=6
 609.Find Duplicate File in System=6
 1560.Most Visited Sector in a Circular Track=6
