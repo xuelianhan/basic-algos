@@ -85,6 +85,9 @@ public class LongestConsecutiveSequence {
          */
         int res = 0;
         for (int num : nums) {
+            /**
+             * e.g. nums = [1, 2, 0, 1]
+             */
             if (map.containsKey(num)) {
                 continue;
             }

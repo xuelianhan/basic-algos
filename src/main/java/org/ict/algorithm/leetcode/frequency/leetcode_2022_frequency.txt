@@ -160,7 +160,7 @@
 1466.Reorder Routes to Make All Paths Lead to the City Zero=9, DFS, BFS
 35.Search Insert Position=9, Binary Search, Array
 128.Longest Consecutive Sequence=9, Array, Hash Table, Union Find
-490.The Maze=9
+490.The Maze=9, DFS, BFS
 162.Find Peak Element=9
 738.Monotone Increasing Digits=9
 55.Jump Game=8
