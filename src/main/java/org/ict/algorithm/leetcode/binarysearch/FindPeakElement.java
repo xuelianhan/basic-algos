@@ -34,7 +34,7 @@ package org.ict.algorithm.leetcode.binarysearch;
  * nums[i] != nums[i + 1] for all valid i.
  * @author sniper
  * @date 16 Jan, 2023
- * LC162, Medium
+ * LC162, Medium, frequency=9
  */
 public class FindPeakElement {
 
