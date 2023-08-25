@@ -27,3 +27,5 @@ Breadth-first search
 Depth-first search
 Two pointers
 Priority Queue
+Linked List
+Hash
