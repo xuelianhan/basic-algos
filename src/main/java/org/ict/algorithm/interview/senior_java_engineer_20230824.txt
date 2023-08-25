@@ -23,7 +23,7 @@ BloomFilter不精准，回答用Trie树，面试官给过了
 5.设计一个丢骰子的对象，有n面，每面指定不同概率，实现如下方法：
 public class A {
       private int n;
-      double[] weights;
+      double[] weights;//e.g.[0.4, 0.3, 0.2, 0.1]
 
       public A(int n, double[] weights) {
           this.n = n;
