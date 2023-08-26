@@ -165,7 +165,7 @@
 738.Monotone Increasing Digits=9, Math
 55.Jump Game=8, Greedy
 166.Fraction to Recurring Decimal=8, Math, Hash Table
-353.Design Snake Game=8
+353.Design Snake Game=8, Design
 849.Maximize Distance to Closest Person=8, Array
 1370.Increasing Decreasing String=8, String
 179.Largest Number=8, Sorting
