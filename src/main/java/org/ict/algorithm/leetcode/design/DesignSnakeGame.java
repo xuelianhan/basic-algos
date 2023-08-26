@@ -301,6 +301,9 @@ public class DesignSnakeGame {
             } else {
                 ++y;
             }
+            /**
+             * Go out of bounds.
+             */
             if (x < 0 || x >= m || y < 0 || y >= n) {
                 return -1;
             }
@@ -308,13 +311,26 @@ public class DesignSnakeGame {
                 ++score;
                 ++idx;
             } else {
+                /**
+                 * Move forward:
+                 * Remove the tail with one space, then add cur index at the head.
+                 * Notice here:
+                 * The removal of the snake's tail comes before the detection of the collision with the snake's body.
+                 * See the above e.g.case.
+                 */
                 int t = queue.pollLast();
                 visited.remove(t);
             }
             int cur = getId(x, y);
+            /**
+             * The head occupies a space that its body occupies after moving.
+             */
             if (visited.contains(cur)) {
                 return -1;
             }
+            /**
+             * Add cur index at the head
+             */
             queue.offerFirst(cur);
             visited.add(cur);
             return score;
