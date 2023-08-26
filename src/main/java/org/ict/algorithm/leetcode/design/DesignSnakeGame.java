@@ -281,7 +281,16 @@ public class DesignSnakeGame {
          * move("D")
          * move("D")
          * move("U")
-         *
+         *   0 1 2
+         * 0 s
+         * 1
+         * 2 f
+         * ---------------
+         *   0 1 2
+         * 0
+         * 1 s
+         * 2 f
+         * ---------------
          * @param direction
          * @return
          */
@@ -329,7 +338,7 @@ public class DesignSnakeGame {
                 return -1;
             }
             /**
-             * Add cur index at the head
+             * Add cur index at the head(Mock the moving of head)
              */
             queue.offerFirst(cur);
             visited.add(cur);
