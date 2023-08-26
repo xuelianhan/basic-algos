@@ -1,5 +1,3 @@
-228.Summary Ranges=8
-1861.Rotating the Box=8
 158.Read N Characters Given Read4 II - Call multiple times=8
 488.Zuma Game=7
 1400.Construct K Palindrome Strings=7

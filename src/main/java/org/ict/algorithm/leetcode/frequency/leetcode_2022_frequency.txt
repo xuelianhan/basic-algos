@@ -169,10 +169,10 @@
 849.Maximize Distance to Closest Person=8, Array
 1370.Increasing Decreasing String=8, String
 179.Largest Number=8, Sorting
-228.Summary Ranges=8
+228.Summary Ranges=8, Array
 670.Maximum Swap=8, Greedy
 468.Validate IP Address=8, String
-1861.Rotating the Box=8
+1861.Rotating the Box=8, Two Pointers, Array, Matrix
 39.Combination Sum=8
 881.Boats to Save People=8
 158.Read N Characters Given Read4 II - Call multiple times=8

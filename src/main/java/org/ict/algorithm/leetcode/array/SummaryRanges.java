@@ -39,7 +39,7 @@ import java.util.List;
  * nums is sorted in ascending order.
  * @author sniper
  * @date 17 Jun 2023
- * LC228, Easy
+ * LC228, Easy, frequency=8
  */
 public class SummaryRanges {
 
