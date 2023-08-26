@@ -40,7 +40,7 @@ import java.util.Arrays;
  * queryIP consists only of English letters, digits and the characters '.' and ':'.
  * @author sniper
  * @date 17 Aug 2023
- * LC468, Medium
+ * LC468, Medium, frequency=8
  */
 public class ValidateIPAddress {
 

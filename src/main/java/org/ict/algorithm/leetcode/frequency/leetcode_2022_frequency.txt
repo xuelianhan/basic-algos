@@ -166,12 +166,12 @@
 55.Jump Game=8, Greedy
 166.Fraction to Recurring Decimal=8, Math, Hash Table
 353.Design Snake Game=8
-849.Maximize Distance to Closest Person=8
-1370.Increasing Decreasing String=8
+849.Maximize Distance to Closest Person=8, Array
+1370.Increasing Decreasing String=8, String
 179.Largest Number=8
 228.Summary Ranges=8
 670.Maximum Swap=8
-468.Validate IP Address=8
+468.Validate IP Address=8, String
 1861.Rotating the Box=8
 39.Combination Sum=8
 881.Boats to Save People=8
@@ -351,7 +351,7 @@
 518.Coin Change II=2
 145.Binary Tree Postorder Traversal=2
 268.Missing Number=2
-646.Maximum Length of Pair Chain=2
+646.Maximum Length of Pair Chain=2, Greedy
 1710.Maximum Units on a Truck=2
 1110.Delete Nodes And Return Forest=2
 6.ZigZag Conversion=2

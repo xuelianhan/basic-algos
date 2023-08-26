@@ -42,7 +42,7 @@ import java.util.Map;
  * s consists of only lowercase English letters.
  * @author sniper
  * @date 2022/8/12
- * LC1370
+ * LC1370, Easy, frequency=8
  */
 public class IncreasingDecreasingString {
 
