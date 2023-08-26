@@ -321,6 +321,7 @@ public class DesignSnakeGame {
                 ++idx;
             } else {
                 /**
+                 * If the snake cannot eat the food, then moving its tail-ass forward.
                  * Move forward:
                  * Remove the tail with one space, then add cur index at the head.
                  * Notice here:
