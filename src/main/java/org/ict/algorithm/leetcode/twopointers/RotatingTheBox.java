@@ -56,6 +56,43 @@ import java.util.Arrays;
  */
 public class RotatingTheBox {
 
+    public char[][] rotateTheBoxV2(char[][] box) {
+        int m = box.length;
+        int n = box[0].length;
+        char stone = '#';
+        char obstacle = '*';
+        char empty = '.';
+        /**
+         * Notice after rotated 90 degrees clockwise, the
+         * result matrix is n X m, not m X n
+         */
+        char[][] res = new char[n][m];
+        for (int i = 0; i < m; i++) {
+            /**
+             * Putting the initialization of k in the for-loop instead.
+             */
+            for (int j = n - 1, k = n - 1; j >= 0; j--) {
+                if (box[i][j] == obstacle) {
+                    k = j - 1;
+                }
+                if (box[i][j] == stone) {
+                    box[i][j] = empty;
+                    box[i][k] = stone;
+                    k--;
+                }
+            }
+        }
+
+        for (int i = 0; i < m; i++) {
+            for (int j = n - 1; j >= 0; j--) {
+                res[j][m - i - 1] = box[i][j];
+            }
+        }
+
+        return res;
+    }
+
+
     /**
      * Time Cost 7ms
      * @param box
@@ -129,6 +166,9 @@ public class RotatingTheBox {
                  */
                 if (box[i][j] != empty) {
                     if (box[i][j] ==  obstacle) {
+                        /**
+                         * It is guaranteed that each stone in box rests on an obstacle,
+                         */
                         k = j;
                     }
                     res[k--][m - i - 1] = box[i][j];
