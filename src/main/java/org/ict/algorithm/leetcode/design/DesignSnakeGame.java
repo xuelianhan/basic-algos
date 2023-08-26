@@ -245,7 +245,7 @@ public class DesignSnakeGame {
      *     this.q = append([]int{cur}, this.q...)
      *     this.vis[cur] = true
      *     return this.score
-     *
+     * --------------------------------------
      */
     static class SnakeGame {
         private int m;
@@ -266,12 +266,30 @@ public class DesignSnakeGame {
             m = height;
             n = width;
             this.food = food;
+            /**
+             * Start from (0, 0), index = i * n + j
+             * index:0
+             */
             queue.offer(0);
             visited.add(0);
         }
 
+        /**
+         * e.g. [[3,3,[[2,0],[0,0]]], [“D”],[“D”],[“U”]]
+         * width:3, height:3
+         * food:[[2,0],[0,0]]
+         * move("D")
+         * move("D")
+         * move("U")
+         *
+         * @param direction
+         * @return
+         */
         public int move(String direction) {
             int p = queue.peekFirst();
+            /**
+             * Convert 1D p index into 2D (i, j) coordinate
+             */
             int i = p / n, j = p % n;
             int x = i, y = j;
             if ("U".equals(direction)) {
@@ -302,6 +320,12 @@ public class DesignSnakeGame {
             return score;
         }
 
+        /**
+         * Convert 2D (i, j) coordinate into 1D index
+         * @param i
+         * @param j
+         * @return
+         */
         private int getId(int i, int j) {
             return i * n + j;
         }
