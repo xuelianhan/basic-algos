@@ -247,7 +247,7 @@ public class DesignSnakeGame {
      *     return this.score
      * --------------------------------------
      */
-    static class SnakeGame {
+    static class SnakeGameV1 {
         private int m;
         private int n;
         private int[][] food;
@@ -262,7 +262,7 @@ public class DesignSnakeGame {
         private Deque<Integer> queue = new ArrayDeque<>();
         private Set<Integer> visited = new HashSet<>();
 
-        public SnakeGame(int width, int height, int[][] food) {
+        public SnakeGameV1(int width, int height, int[][] food) {
             m = height;
             n = width;
             this.food = food;
@@ -332,7 +332,8 @@ public class DesignSnakeGame {
             }
             int cur = getId(x, y);
             /**
-             * The head occupies a space that its body occupies after moving.
+             * If the head occupies a space that its body occupies(this means that it has been visited) after moving,
+             * then return -1
              */
             if (visited.contains(cur)) {
                 return -1;
@@ -353,6 +354,88 @@ public class DesignSnakeGame {
          */
         private int getId(int i, int j) {
             return i * n + j;
+        }
+    }
+
+    
+    class SnakeGame {
+        /**
+         * Initialize your data structure here.
+         *
+         * @param width  - screen width
+         * @param height - screen height
+         * @param food   - A list of food positions E.g food = [[1,1], [1,0]] means the
+         *               first food is positioned at [1,1], the second is at [1,0].
+         */
+        public SnakeGame(int width, int height, int[][] food) {
+            this.width = width;
+            this.height = height;
+            this.food = food;
+            visited.add(getId(0, 0));
+            body.offerLast(getId(0, 0));
+        }
+
+        /**
+         * Moves the snake.
+         * @param direction - 'U' = Up, 'L' = Left, 'R' = Right, 'D' = Down
+         * @return The game's score after the move. Return -1 if game over. Game over
+         *         when snake crosses the screen boundary or bites its body.
+         */
+        public int move(String direction) {
+            // Old head's position
+            int i = body.peekFirst() / width;
+            int j = body.peekFirst() % width;
+
+            // Update head's position and check if out of bound
+            if (direction.equals("U") && --i < 0) {
+                return -1;
+            }
+            if (direction.equals("L") && --j < 0) {
+                return -1;
+            }
+            if (direction.equals("R") && ++j == width) {
+                return -1;
+            }
+            if (direction.equals("D") && ++i == height) {
+                return -1;
+            }
+
+            int newHead = getId(i, j);
+            // Case 1: eat food and increase size by 1
+            if (k < food.length && i == food[k][0] && j == food[k][1]) {
+                visited.add(newHead);
+                body.offerFirst(newHead);
+                ++k;
+                return ++score;
+            }
+
+            // Case 2: new head != old tail and eat body!
+            if (newHead != body.peekLast() && visited.contains(newHead)) {
+                return -1;
+            }
+
+            // Case 3: normal case
+            // Remove old tail first (important), then add new head
+            // Because new head may be in old tail's position
+            visited.remove(body.peekLast());
+            visited.add(newHead);
+            body.pollLast();
+            body.offerFirst(newHead);
+
+            return score;
+        }
+
+        private int width;
+        private int height;
+        private int score = 0;
+        // food's index
+        private int k = 0;
+        private int[][] food;
+        private Set<Integer> visited = new HashSet<>();
+        private Deque<Integer> body = new ArrayDeque<>(); // snake's body
+
+        private int getId(int i, int j) {
+            return i * width + j;
         }
     }
     /**
