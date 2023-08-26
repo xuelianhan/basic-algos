@@ -326,6 +326,7 @@ public class DesignSnakeGame {
                  * Notice here:
                  * The removal of the snake's tail comes before the detection of the collision with the snake's body.
                  * See the above e.g.case.
+                 * You can imagine that the snake moves its tail first, then its head can go forward.
                  */
                 int t = queue.pollLast();
                 visited.remove(t);
