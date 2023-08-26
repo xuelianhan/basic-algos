@@ -1,6 +1,7 @@
 package org.ict.algorithm.leetcode.array;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 /**
  * Description
@@ -23,6 +24,24 @@ import java.util.Arrays;
  * LC252, Easy
  */
 public class MeetingRooms {
+
+    public boolean canAttendMeetingsV2(int[][] intervals) {
+        if (intervals == null || intervals[0].length == 0) {
+            return false;
+        }
+        Arrays.sort(intervals, Comparator.comparingInt(a -> a[0]));
+        int[] prev = null;
+        for (int[] interval : intervals) {
+            if (prev == null) {
+                continue;
+            }
+            if (prev[1] > interval[0]) {
+                return false;
+            }
+            prev = interval;
+        }
+        return true;
+    }
 
     /**
      * First, give all the intervals in order,

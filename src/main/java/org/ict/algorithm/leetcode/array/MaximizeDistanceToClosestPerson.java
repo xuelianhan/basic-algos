@@ -50,11 +50,62 @@ import java.util.List;
  */
 public class MaximizeDistanceToClosestPerson {
 
-    public int maxDistToClosestV1(int[] seats) {
+    /**
+     * Two Pointers Solution
+     * Time Cost 2ms
+     * @param seats
+     * @return
+     */
+    public int maxDistToClosestV2(int[] seats) {
+        int n = seats.length;
         int res = 0;
+        int start = -1;
+
+        for (int i = 0; i < n; i++) {
+            if (seats[i] == 1) {
+                res = (start == -1 ? i : Math.max(res, (i - start) / 2));
+                start = i;
+            }
+        }
+        return Math.max(res, n - start - 1);
+    }
+
+
+    /**
+     * Two Pointers Solution:
+     * Time Cost 2ms
+     * start points at the start position of consecutive 0.
+     * i points at the current position with 1
+     *
+     * @param seats
+     * @return
+     */
+    public int maxDistToClosestV1(int[] seats) {
+        int n = seats.length;
+        int start = 0;
+        int res = 0;
+
+        for (int i = 0; i < n; ++i) {
+            if (seats[i] != 1) {
+                continue;
+            }
+            if (start == 0) {
+                res = Math.max(res, i - start);
+            } else {
+                res = Math.max(res, (i - start + 1) / 2);
+            }
+            start = i + 1;
+        }
+
+        res = Math.max(res, n - start);
         return res;
     }
 
+    /**
+     * Time Cost 6ms
+     * @param seats
+     * @return
+     */
     public int maxDistToClosest(int[] seats) {
         int n = seats.length;
         int res = 0;
@@ -68,7 +119,7 @@ public class MaximizeDistanceToClosestPerson {
             }
         }
         /**
-         * Time Cost 6ms
+         *
          * Two cases:
          *
          * 1.the first position
