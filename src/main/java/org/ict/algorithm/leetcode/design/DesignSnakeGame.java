@@ -448,8 +448,9 @@ public class DesignSnakeGame {
          */
         public int move(String direction) {
             // Old head's position
-            int i = body.peekFirst() / width;
-            int j = body.peekFirst() % width;
+            int p = body.peekFirst();
+            int i = p / width;
+            int j = p % width;
 
             // Update head's position and check if out of bound
             if (direction.equals("U") && --i < 0) {
