@@ -168,7 +168,7 @@
 353.Design Snake Game=8
 849.Maximize Distance to Closest Person=8, Array
 1370.Increasing Decreasing String=8, String
-179.Largest Number=8
+179.Largest Number=8, Sorting
 228.Summary Ranges=8
 670.Maximum Swap=8
 468.Validate IP Address=8, String

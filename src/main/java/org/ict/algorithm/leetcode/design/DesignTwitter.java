@@ -37,12 +37,13 @@ import java.util.*;
  * Constraints:
  *
  * 1 <= userId, followerId, followeeId <= 500
- * 0 <= tweetId <= 104
+ * 0 <= tweetId <= 10^4
  * All the tweets have unique IDs.
- * At most 3 * 104 calls will be made to postTweet, getNewsFeed, follow, and unfollow.
+ * At most 3 * 10^4 calls will be made to postTweet, getNewsFeed, follow, and unfollow.
  * @author sniper
  * @date 18 Sep, 2022
- * LC328, Medium
+ * LC355, Medium
+ * Coupang
  */
 public class DesignTwitter {
 

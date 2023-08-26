@@ -72,6 +72,7 @@ public class MaximizeDistanceToClosestPerson {
 
 
     /**
+     * Understanding the following solution
      * Two Pointers Solution:
      * Time Cost 2ms
      * start points at the start position of consecutive 0.

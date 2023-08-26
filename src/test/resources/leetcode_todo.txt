@@ -1,8 +1,5 @@
-738.Monotone Increasing Digits=9
 353.Design Snake Game=8
-849.Maximize Distance to Closest Person=8
 228.Summary Ranges=8
-468.Validate IP Address=8
 1861.Rotating the Box=8
 158.Read N Characters Given Read4 II - Call multiple times=8
 488.Zuma Game=7
@@ -25,7 +22,6 @@
 281.Zigzag Iterator=6
 2133.Check if Every Row and Column Contains All Numbers=6
 706.Design HashMap=6
-1492.The kth Factor of n=6
 695.Max Area of Island=6
 609.Find Duplicate File in System=6
 1560.Most Visited Sector in a Circular Track=6

@@ -37,7 +37,7 @@ package org.ict.algorithm.leetcode.math;
  * Could you solve this problem in less than O(n) complexity?
  * @author sniper
  * @date 24 Aug 2023
- * LC1492, Medium
+ * LC1492, Medium, frequency=6
  * Amazon-2023-Spring
  */
 public class TheKthFactorOfN {
