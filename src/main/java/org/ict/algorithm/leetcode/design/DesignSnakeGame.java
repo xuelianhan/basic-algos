@@ -18,15 +18,15 @@ import java.util.Set;
  * (i.e. a snake of length 4 cannot run into itself).
  *
  * Implement the SnakeGame class:
- * SnakeGame(int width, int height, int[][] food) Initializes the object with a screen of size height x width and the positions of the food.
- * int move(String direction) Returns the score of the game after applying one direction move by the snake.
+ * SnakeGame(int width, int height, int[][] food)
+ * Initializes the object with a screen of size height x width and the positions of the food.
+ *
+ * int move(String direction)
+ * Returns the score of the game after applying one direction move by the snake.
  * If the game is over, return -1.
  *
  *
  * Example 1:
- *
- *
- *
  * Input
  * ["SnakeGame", "move", "move", "move", "move", "move", "move"]
  * [[3, 2, [[1, 2], [0, 1]]], ["R"], ["D"], ["R"], ["U"], ["L"], ["U"]]
@@ -41,19 +41,16 @@ import java.util.Set;
  * snakeGame.move("L"); // return 2, snake eats the second food. No more food appears.
  * snakeGame.move("U"); // return -1, game over because snake collides with border
  *
- *
- *
- *
  * Constraints:
- *
- * 1 <= width, height <= 104
+ * 1 <= width, height <= 10^4
  * 1 <= food.length <= 50
  * food[i].length == 2
  * 0 <= ri < height
  * 0 <= ci < width
  * direction.length == 1
  * direction is 'U', 'D', 'L', or 'R'.
- * At most 104 calls will be made to move.
+ * At most 10^4 calls will be made to move.
+ *
  * @author sniper
  * @date 26 Aug 2023
  * LC353, Medium, frequency=8

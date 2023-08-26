@@ -170,7 +170,7 @@
 1370.Increasing Decreasing String=8, String
 179.Largest Number=8, Sorting
 228.Summary Ranges=8
-670.Maximum Swap=8
+670.Maximum Swap=8, Greedy
 468.Validate IP Address=8, String
 1861.Rotating the Box=8
 39.Combination Sum=8
