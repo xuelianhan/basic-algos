@@ -8,11 +8,16 @@ import java.util.Set;
 /**
  * Design a Snake game that is played on a device with screen size height x width.
  * Play the game online if you are not familiar with the game.
+ *
  * The snake is initially positioned in the top-left corner (0, 0) with a length of 1 unit.
+ *
  * You are given an array food where food[i] = (ri, ci) is the row and column position of a piece of food that the snake can eat.
+ *
  * When a snake eats a piece of food, its length and the game's score both increase by 1.
+ *
  * Each piece of food appears one by one on the screen,
  * meaning the second piece of food will not appear until the snake eats the first piece of food.
+ *
  * When a piece of food appears on the screen, it is guaranteed that it will not appear on a block occupied by the snake.
  * The game is over if the snake goes out of bounds (hits a wall) or if its head occupies a space that its body occupies after moving
  * (i.e. a snake of length 4 cannot run into itself).
@@ -98,6 +103,40 @@ public class DesignSnakeGame {
      *         self.q.appendleft((x, y))
      *         self.vis.add((x, y))
      *         return self.score
+     * ----------------------------------------
+     * class SnakeGame {
+     * public:
+     *     SnakeGame(int width, int height, vector<pair<int, int>> food) {
+     *         this->width = width;
+     *         this->height = height;
+     *         this->food = food;
+     *         score = 0;
+     *         snake.push_back({0, 0});
+     *     }
+     *
+     *     int move(string direction) {
+     *         auto head = snake.front(), tail = snake.back();
+     *         snake.pop_back();
+     *         if (direction == "U") --head.first;
+     *         else if (direction == "L") --head.second;
+     *         else if (direction == "R") ++head.second;
+     *         else if (direction == "D") ++head.first;
+     *         if (count(snake.begin(), snake.end(), head) || head.first < 0 || head.first >= height || head.second < 0 || head.second >= width) {
+     *             return -1;
+     *         }
+     *         snake.insert(snake.begin(), head);
+     *         if (!food.empty() && head == food.front()) {
+     *             food.erase(food.begin());
+     *             snake.push_back(tail);
+     *             ++score;
+     *         }
+     *         return score;
+     *     }
+     *
+     * private:
+     *     int width, height, score;
+     *     vector<pair<int, int>> food, snake;
+     * };
      * ----------------------------------------
      * class SnakeGame {
      * public:
@@ -213,6 +252,9 @@ public class DesignSnakeGame {
         private int n;
         private int[][] food;
         private int score;
+        /**
+         * food's index
+         */
         private int idx;
         /**
          *  snake's body
