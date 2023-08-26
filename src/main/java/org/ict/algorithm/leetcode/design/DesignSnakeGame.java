@@ -357,7 +357,70 @@ public class DesignSnakeGame {
         }
     }
 
-    
+
+    /**
+     * class SnakeGame {
+     *  public:
+     *    SnakeGame(int width, int height, vector<vector<int>>& food)
+     *       : width(width), height(height), food(food) {
+     *     visited.insert(getId(0, 0));
+     *     body.push_back(getId(0, 0));
+     *   }
+     *
+     *   int move(string direction) {
+     *     // Old head's position
+     *     int i = body.front() / width;
+     *     int j = body.front() % width;
+     *
+     *     // Update head's position and check if out of bound
+     *     if (direction == "U" && --i < 0)
+     *       return -1;
+     *     if (direction == "L" && --j < 0)
+     *       return -1;
+     *     if (direction == "R" && ++j == width)
+     *       return -1;
+     *     if (direction == "D" && ++i == height)
+     *       return -1;
+     *
+     *     const int newHead = getId(i, j);
+     *
+     *     // Case 1: eat food and increase size by 1
+     *     if (k < food.size() && i == food[k][0] && j == food[k][1]) {
+     *       visited.insert(newHead);
+     *       body.push_front(newHead);
+     *       ++k;
+     *       return ++score;
+     *     }
+     *
+     *     // Case 2: new head != old tail and eat body!
+     *     if (newHead != body.back() && visited.count(newHead))
+     *       return -1;
+     *
+     *     // Case 3: normal case
+     *     // Remove old tail first (important), then add new head
+     *     // Because new head may be in old tail's position
+     *     visited.erase(body.back());
+     *     visited.insert(newHead);
+     *     body.pop_back();
+     *     body.push_front(newHead);
+     *
+     *     return score;
+     *   }
+     *
+     *   private:
+     *     int width;
+     *     int height;
+     *     int score = 0;
+     *     int k = 0;  // food's index
+     *     vector<vector<int>> food;
+     *     unordered_set<int> visited;
+     *     deque<int> body;  // snake's body
+     *
+     *     int getId(int i, int j) {
+     *       return i * width + j;
+     *     }
+     * };
+     */
     class SnakeGame {
         /**
          * Initialize your data structure here.
