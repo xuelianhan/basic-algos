@@ -23,7 +23,7 @@ import java.util.Arrays;
  * 1 <= n <= 9
  * @author sniper
  * @date 19 Jun 2023
- * LC52, Hard
+ * LC52, Hard, frequency=1
  */
 public class NQueensII {
 

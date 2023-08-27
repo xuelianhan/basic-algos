@@ -243,7 +243,7 @@
 350.Intersection of Two Arrays II=4
 1567.Maximum Length of Subarray With Positive Product=4
 1996.The Number of Weak Characters in the Game=4
-165.Compare Version Numbers=4
+165.Compare Version Numbers=4, Two Pointers
 390.Elimination Game=4
 994.Rotting Oranges=4
 532.K-diff Pairs in an Array=4
@@ -431,7 +431,7 @@
 2164.Sort Even and Odd Indices Independently=1
 440.K-th Smallest in Lexicographical Order=1
 599.Minimum Index Sum of Two Lists=1
-52.N-Queens II=1
+52.N-Queens II=1, Backtrack
 2017.Grid Game=1
 2000.Reverse Prefix of Word=1
 1566.Detect Pattern of Length M Repeated K or More Times=1

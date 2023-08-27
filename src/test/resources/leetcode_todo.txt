@@ -37,7 +37,6 @@
 1402.Reducing Dishes=5
 1567.Maximum Length of Subarray With Positive Product=4
 1996.The Number of Weak Characters in the Game=4
-165.Compare Version Numbers=4
 390.Elimination Game=4
 532.K-diff Pairs in an Array=4
 1823.Find the Winner of the Circular Game=4
@@ -162,7 +161,6 @@
 629.K Inverse Pairs Array=1
 2164.Sort Even and Odd Indices Independently=1
 440.K-th Smallest in Lexicographical Order=1
-52.N-Queens II=1
 2017.Grid Game=1
 1566.Detect Pattern of Length M Repeated K or More Times=1
 2239.Find Closest Number to Zero=1
