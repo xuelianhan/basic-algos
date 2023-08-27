@@ -205,7 +205,6 @@
 966.Vowel Spellchecker=1
 1686.Stone Game VI=1
 1535.Find the Winner of an Array Game=1
-961.N-Repeated Element in Size 2N Array=1
 1716.Calculate Money in Leetcode Bank=1
 2080.Range Frequency Queries=1
 2180.Count Integers With Even Digit Sum=1
