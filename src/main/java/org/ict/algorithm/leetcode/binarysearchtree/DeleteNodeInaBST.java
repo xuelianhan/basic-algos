@@ -91,8 +91,12 @@ public class DeleteNodeInaBST {
         cur.val = temp;
     }
 
-
-
+    /**
+     * Recursive Solution for BST Node delete.
+     * @param root
+     * @param key
+     * @return
+     */
     public TreeNode deleteNode(TreeNode root, int key) {
         if (root == null) {
             return null;
