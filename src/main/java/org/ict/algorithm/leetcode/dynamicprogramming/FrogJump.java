@@ -58,6 +58,9 @@ public class FrogJump {
     /**
      * Time Cost 37ms
      * Use map to represent a mapping from the stone (not index) to the steps that can be taken from this stone.
+     * The key of the map is stone.
+     * The value is, if the frog stand on this stone, how many steps this frog can jump.
+     *
      * so this will be
      * [0,1,3,5,6,8,12,17]
      * {17=[], 0=[1], 1=[1, 2], 3=[1, 2, 3], 5=[1, 2, 3], 6=[1, 2, 3, 4], 8=[1, 2, 3, 4], 12=[3, 4, 5]}
@@ -76,6 +79,10 @@ public class FrogJump {
             return true;
         }
         int n = stones.length;
+        /**
+         * The key of the map is stone.
+         * The value is, if the frog stand on this stone, how many steps this frog can jump.
+         */
         Map<Integer, HashSet<Integer>> map = new HashMap<>(n);
         map.put(0, new HashSet<>());
         map.get(0).add(1);
@@ -83,6 +90,10 @@ public class FrogJump {
             map.put(stones[i], new HashSet<>() );
         }
 
+        /**
+         * stones is sorted in a strictly increasing order.
+         * So we start from 0 to n - 1.
+         */
         for (int i = 0; i < n - 1; i++) {
             int stone = stones[i];
             for (int step : map.get(stone)) {
