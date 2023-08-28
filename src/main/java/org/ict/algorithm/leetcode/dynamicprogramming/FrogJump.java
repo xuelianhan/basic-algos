@@ -1,5 +1,6 @@
 package org.ict.algorithm.leetcode.dynamicprogramming;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -45,17 +46,64 @@ import java.util.Map;
  */
 public class FrogJump {
 
+    /**
+     * Time Cost 50ms
+     * Jump from DP
+     * @param stones
+     * @return
+     */
     public boolean canCrossV2(int[] stones) {
-        //todo
-        return false;
-    }
-
-    public boolean canCrossV1(int[] stones) {
-        //todo
-        return false;
+        int n = stones.length;
+        /**
+         * dp[i][j] := 1 if a frog can make a size j jump from stones[i]
+         */
+        int[][] dp = new int[n][n + 1];
+        dp[0][1] = 1;
+        for (int i = 1; i < n; i++) {
+            for (int j = 0; j < i; j++) {
+                int k = stones[i] - stones[j];
+                if (k <= n && dp[j][k] == 1) {
+                    dp[i][k - 1] = 1;
+                    dp[i][k] = 1;
+                    dp[i][k + 1] = 1;
+                }
+            }
+        }
+        return Arrays.stream(dp[n - 1]).anyMatch(a -> a == 1);
     }
 
     /**
+     * Time Cost 82ms
+     * Jump to DP
+     * @param stones
+     * @return
+     */
+    public boolean canCrossV1(int[] stones) {
+        int n = stones.length;
+        /**
+         * dp[i][j] := 1 if a frog can make a size j jump to stones[i]
+         */
+        int[][] dp = new int[n][n + 1];
+        dp[0][0] = 1;
+
+        for (int i = 1; i < n; i++) {
+            for (int j = 0; j < i; j++) {
+                int k = stones[i] - stones[j];
+                if (k > n) {
+                    continue;
+                }
+                for (int x : new int[] {k - 1, k, k + 1}) {
+                    if (0 <= x && x <= n) {
+                        dp[i][k] |= dp[j][x];
+                    }
+                }
+            }
+        }
+        return Arrays.stream(dp[n - 1]).anyMatch(a -> a == 1);
+    }
+
+    /**
+     * Understanding the following solution
      * Time Cost 37ms
      * Use map to represent a mapping from the stone (not index) to the steps that can be taken from this stone.
      * The key of the map is stone.
