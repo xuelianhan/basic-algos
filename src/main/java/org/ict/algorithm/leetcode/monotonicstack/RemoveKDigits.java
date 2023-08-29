@@ -2,6 +2,7 @@ package org.ict.algorithm.leetcode.monotonicstack;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.LinkedList;
 
 /**
  * Given string num representing a non-negative integer num, and an integer k,
@@ -36,22 +37,106 @@ import java.util.Deque;
  */
 public class RemoveKDigits {
 
+    public static void main(String[] args) {
+        //String num = "1432219";
+        //int k = 3;
+
+        String num = "10200";
+        int k = 1;
+
+        RemoveKDigits instance = new RemoveKDigits();
+        String res = instance.removeKdigits(num, k);
+        System.out.println(res);
+    }
 
 
-    public String removeKdigitsV1(String num, int k) {
-        //todo
-        return null;
+    /**
+     * Understanding the following solution
+     * @param num
+     * @param k
+     * @return
+     */
+    public String removeKdigitsV2(String num, int k) {
+        if (num.length() <= k) {
+            return "0";
+        }
+
+        LinkedList<Character> stack = new LinkedList<>();
+        for (char ch : num.toCharArray()) {
+            while (k > 0 && !stack.isEmpty() && stack.peekLast() > ch) {
+                stack.pollLast();
+                k--;
+            }
+            stack.addLast(ch);
+        }
+
+        while (k > 0 && !stack.isEmpty()) {
+            stack.pollLast();
+            k--;
+        }
+
+        StringBuilder res = new StringBuilder();
+        for (char ch : stack) {
+            if (ch == '0' && res.length() == 0) {
+                continue;
+            }
+            res.append(ch);
+        }
+
+        return res.length() == 0 ? "0" : res.toString();
     }
 
     /**
+     * Understanding the following solution
+     * @param num
+     * @param k
+     * @return
+     */
+    public String removeKdigitsV1(String num, int k) {
+        if (num.length() <= k) {
+            return "0";
+        }
+
+        LinkedList<Character> stack = new LinkedList<>();
+        for (char ch : num.toCharArray()) {
+            while (k > 0 && !stack.isEmpty() && stack.peekLast() > ch) {
+                stack.pollLast();
+                k--;
+            }
+            stack.addLast(ch);
+        }
+
+        while (k > 0 && !stack.isEmpty()) {
+            stack.pollLast();
+            k--;
+        }
+
+        StringBuilder res = new StringBuilder();
+        while (!stack.isEmpty()) {
+            char ch = stack.removeFirst();
+            if (ch == '0' && res.length() == 0) {
+                continue;
+            }
+            res.append(ch);
+        }
+
+        return res.length() == 0 ? "0" : res.toString();
+    }
+
+    /**
+     * Understanding the following solution
+     * Monotonic Stack Solution
+     * Time Cost 9ms
+     *
      * Make the number on the high digit as small as possible in order to make the whole remaining number as small as possible
      * e.g. num = "1432219", k = 3
      * i:0, k:3, stack:1
      * i:1, k:3, stack:1,4
      * i:2, k:2, stack:1,3
-     * i:3, k:2, stack:1,2
-     * i:4, k:2, stack:1,2,2
-     * i:5, k:1, stack:1,1,9
+     * i:3, k:1, stack:1,2
+     * i:4, k:1, stack:1,2,2
+     * i:5, k:0, stack:1,2,1
+     * i:6, k:0, stack:1,2,1,9
      *
      * @param num
      * @param k
@@ -73,22 +158,33 @@ public class RemoveKDigits {
             stack.push(ch);
         }
 
+        /**
+         * e.g. num = "1234", k = 2
+         * so we pop 4 and 3 out of the stack, we get "12" at last.
+         */
         while (k > 0 && !stack.isEmpty()) {
             stack.pop();
             k--;
         }
 
         StringBuilder res = new StringBuilder();
-        for (char ch : stack) {
+        while (!stack.isEmpty()) {
             /**
-             * Skip the leading '0'
+             * Notice using removeLast here, not remove() or removeFirst()
+             * e.g. stack:"0200", the left side is last, the right side is first,
+             * viewing "0200" from the right side.
+             */
+            char ch = stack.removeLast();
+            /**
+             * Skip the leading '0', e.g.num = "10200", k = 1
+             * stack: "0200"
              */
             if (ch == '0' && res.length() == 0) {
                 continue;
             }
             res.append(ch);
         }
-        
+
         return res.length() == 0 ? "0" : res.toString();
     }
 }
