@@ -68,6 +68,15 @@ public class HouseRobber {
      * i:3, choose1:4, choose2:3, choose = max(3 + 5, 4) = 8
      *      choose2 = choose1 = 4, choose1 = choose = 8
      * return choose1:8
+     * ------------------------
+     *    ^        ^        ^
+     *    |        |        |
+     * choose2  choose1  nums[i]
+     * ------------------------
+     *          choose1   max
+     *             ^       ^
+     *             |       |
+     *          choose2  choose1
      *
      * @param nums
      * @return

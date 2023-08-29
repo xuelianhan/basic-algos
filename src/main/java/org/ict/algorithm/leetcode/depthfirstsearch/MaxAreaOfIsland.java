@@ -41,7 +41,7 @@ import java.util.Queue;
  * grid[i][j] is either 0 or 1.
  * @author sniper
  * @date 28 Aug 2023
- * LC695, Medium
+ * LC695, Medium, frequency=6
  */
 public class MaxAreaOfIsland {
 

@@ -40,7 +40,37 @@ package org.ict.algorithm.leetcode.dynamicprogramming;
  */
 public class HouseRobberII {
 
+    /**
+     * Now the houses are arranged in a circle.
+     * If we grab the first, we can not grab the last one, because the first and last connected.
+     * So we can only grap one of the first and last, or are not robbed.
+     * If one of the first and last are removed, we calculated the maximum value of them,
+     * and then compare the two values, the larger one is wanted.
+     * @param nums
+     * @return
+     */
     public int rob(int[] nums) {
-        return 0;
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+        if (nums.length == 1) {
+            return nums[0];
+        }
+        int n = nums.length;
+        int removeLastRes = rob(nums, 0, n - 2);
+        int removeFirstRes = rob(nums, 1, n - 1);
+        return Math.max(removeLastRes, removeFirstRes);
     }
+
+    private int rob(int[] nums, int left, int right) {
+        int choose1 = 0;
+        int choose2 = 0;
+        for (int i = left; i <= right; i++) {
+            int choose = Math.max(choose2 + nums[i], choose1);
+            choose2 = choose1;
+            choose1 = choose;
+        }
+        return choose1;
+    }
+
 }

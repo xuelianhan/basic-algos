@@ -28,7 +28,7 @@ package org.ict.algorithm.leetcode.stack;
  * s[i] is '(', ')' or '*'.
  * @author sniper
  * @date 28 Aug 2023
- * LC678, Medium
+ * LC678, Medium, frequency=3
  */
 public class ValidParenthesisString {
 
