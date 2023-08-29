@@ -37,6 +37,39 @@ public class AddTwoNumbersII {
 
     /**
      * Two Stacks + add at head Solution
+     * Time Cost 2ms
+     * @param l1
+     * @param l2
+     * @return
+     */
+    public ListNode addTwoNumbersV3(ListNode l1, ListNode l2) {
+        Deque<Integer> stack1 = new ArrayDeque<>();
+        Deque<Integer> stack2 = new ArrayDeque<>();
+        while (l1 != null) {
+            stack1.push(l1.val);
+            l1 = l1.next;
+        }
+
+        while (l2 != null) {
+            stack2.push(l2.val);
+            l2 = l2.next;
+        }
+
+        int sum = 0;
+        ListNode dummy = new ListNode(0);
+        while (!stack1.isEmpty() || !stack2.isEmpty()) {
+            sum += (stack1.isEmpty() ? 0 : stack1.pop()) + (stack2.isEmpty() ? 0 : stack2.pop());
+            dummy.val = sum % 10;
+            ListNode head = new ListNode(sum / 10);
+            head.next = dummy;
+            dummy = head;
+            sum /= 10;
+        }
+        return dummy.val == 0 ? dummy.next : dummy;
+    }
+
+    /**
+     * Two Stacks + add at head Solution
      * Time Cost 3ms
      * @param l1
      * @param l2
@@ -123,13 +156,55 @@ public class AddTwoNumbersII {
 
     /**
      * Reverse Link List Solution
+     * Time Cost 2ms
      * @param l1
      * @param l2
      * @return
      */
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        return null;
+        ListNode newL1 = reverseList(l1);
+        ListNode newL2 = reverseList(l2);
+        return addList(newL1, newL2);
     }
+
+    private ListNode addList(ListNode newL1, ListNode newL2) {
+        ListNode dummy = new ListNode(0);
+        ListNode sumNode = dummy;
+        int carry = 0;
+        while (newL1 != null || newL2 != null) {
+            int sum = (newL1 == null ? 0 : newL1.val) + (newL2 == null ? 0 : newL2.val) + carry;
+            int remainder = sum % 10;
+            carry = sum / 10;
+            ListNode newNode = new ListNode(remainder);
+            addAtHead(sumNode, newNode);
+
+            if (newL1 != null) {
+                newL1 = newL1.next;
+            }
+            if (newL2 != null) {
+                newL2 = newL2.next;
+            }
+        }
+        if (carry > 0) {
+            ListNode newNode = new ListNode(carry);
+            addAtHead(sumNode, newNode);
+        }
+        return dummy.next;
+    }
+
+    private ListNode reverseList(ListNode head) {
+        ListNode prev = null;
+        ListNode curr = head;
+        ListNode next = null;
+        while (curr != null) {
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+        return prev;
+    }
+
 
 
     private static class ListNode {
