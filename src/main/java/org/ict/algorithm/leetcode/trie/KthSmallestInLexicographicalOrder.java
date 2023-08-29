@@ -21,7 +21,7 @@ package org.ict.algorithm.leetcode.trie;
  * 1 <= k <= n <= 10^9
  * @author sniper
  * @date 28 Aug 2023
- * LC440, Hard
+ * LC440, Hard, frequency=1
  */
 public class KthSmallestInLexicographicalOrder {
 

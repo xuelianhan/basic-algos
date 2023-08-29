@@ -1,5 +1,8 @@
 package org.ict.algorithm.leetcode.linkedlist;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
+
 /**
  * You are given two non-empty linked lists representing two non-negative integers.
  * The most significant digit comes first and each of their nodes contains a single digit.
@@ -32,9 +35,102 @@ package org.ict.algorithm.leetcode.linkedlist;
  */
 public class AddTwoNumbersII {
 
+    /**
+     * Two Stacks + add at head Solution
+     * Time Cost 3ms
+     * @param l1
+     * @param l2
+     * @return
+     */
+    public ListNode addTwoNumbersV2(ListNode l1, ListNode l2) {
+        Deque<Integer> stack1 = new ArrayDeque<>();
+        Deque<Integer> stack2 = new ArrayDeque<>();
+        while (l1 != null) {
+            stack1.push(l1.val);
+            l1 = l1.next;
+        }
+
+        while (l2 != null) {
+            stack2.push(l2.val);
+            l2 = l2.next;
+        }
+
+        int carry = 0;
+        ListNode dummy = new ListNode(0);
+        ListNode sumNode = dummy;
+        while (!stack1.isEmpty() || !stack2.isEmpty()) {
+            int sum = (stack1.isEmpty() ? 0 : stack1.pop()) + (stack2.isEmpty() ? 0 : stack2.pop()) + carry;
+            int remainder = sum % 10;
+            carry = sum / 10;
+            ListNode newNode = new ListNode(remainder);
+            addAtHead(sumNode, newNode);
+        }
+        if (carry > 0) {
+            ListNode newNode = new ListNode(carry);
+            addAtHead(sumNode, newNode);
+        }
+        return dummy.next;
+    }
+
+    private void addAtHead(ListNode head, ListNode newNode) {
+        ListNode next = head.next;
+        newNode.next = next;
+        head.next = newNode;
+    }
+
+
+    /**
+     * Two Stacks + add at head Solution
+     * Time Cost 3ms
+     * @param l1
+     * @param l2
+     * @return
+     */
+    public ListNode addTwoNumbersV1(ListNode l1, ListNode l2) {
+        Deque<Integer> stack1 = new ArrayDeque<>();
+        Deque<Integer> stack2 = new ArrayDeque<>();
+        while (l1 != null) {
+            stack1.push(l1.val);
+            l1 = l1.next;
+        }
+
+        while (l2 != null) {
+            stack2.push(l2.val);
+            l2 = l2.next;
+        }
+
+        int carry = 0;
+        ListNode dummy = new ListNode(0);
+        ListNode sumNode = dummy;
+        while (!stack1.isEmpty() || !stack2.isEmpty()) {
+            int sum = (stack1.isEmpty() ? 0 : stack1.pop()) + (stack2.isEmpty() ? 0 : stack2.pop()) + carry;
+            int remainder = sum % 10;
+            carry = sum / 10;
+            ListNode newNode = new ListNode(remainder);
+            ListNode next = sumNode.next;
+            newNode.next = next;
+            sumNode.next = newNode;
+        }
+        if (carry > 0) {
+            ListNode next = sumNode.next;
+            ListNode newNode = new ListNode(carry);
+            newNode.next = next;
+            sumNode.next = newNode;
+        }
+        return dummy.next;
+    }
+
+
+    /**
+     * Reverse Link List Solution
+     * @param l1
+     * @param l2
+     * @return
+     */
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         return null;
     }
+
 
     private static class ListNode {
         int val;

@@ -56,7 +56,7 @@ package org.ict.algorithm.leetcode.design;
  * At most 2 * 10^5 calls will be made to get and put.
  * @author sniper
  * @date 28 Aug 2023
- * LC460, Hard
+ * LC460, Hard, frequency=3
  */
 public class DesignLFUCache {
     static class LFUCache {

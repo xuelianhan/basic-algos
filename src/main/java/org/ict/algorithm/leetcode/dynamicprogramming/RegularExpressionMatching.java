@@ -37,11 +37,12 @@ package org.ict.algorithm.leetcode.dynamicprogramming;
  * It is guaranteed for each appearance of the character '*', there will be a previous valid character to match.
  * @author sniper
  * @date 28 Aug 2023
- * LC10, Hard
+ * LC10, Hard, frequency=4
  */
 public class RegularExpressionMatching {
 
     public boolean isMatch(String s, String p) {
+        //todo
         return false;
     }
 }
