@@ -42,7 +42,8 @@ import java.util.Set;
  * Explanation: The endWord "cog" is not in wordList, 
  * therefore no possible transformation.
  *
- * LC126
+ * LC126, Hard
+ * Tag: Amazon
  */
 public class WordLadderTwo {
 	

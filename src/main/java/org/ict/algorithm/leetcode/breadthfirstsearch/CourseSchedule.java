@@ -27,7 +27,7 @@ import java.util.LinkedList;
  * You may assume that there are no duplicate edges in the input prerequisites.
  * --------------------------------------
  * LC207, Medium, frequency=7
- * Tag: TikTok
+ * Tag: TikTok, Amazon
  */
 public class CourseSchedule {
 	

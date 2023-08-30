@@ -41,7 +41,7 @@ import java.util.Arrays;
  * LC1644, Medium
  * Similar with {@link LowestCommonAncestorOfBT} but a little different point:
  * p and q will not always exist in the tree.
- *
+ * Amazon
  */
 public class LowestCommonAncestorOfBTII {
 

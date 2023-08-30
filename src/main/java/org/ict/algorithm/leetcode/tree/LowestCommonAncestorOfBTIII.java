@@ -49,7 +49,7 @@ import java.util.Set;
  * @date 12 Apr, 2023
  * LC1650, Medium, frequency=160
  * Similar with {@link LowestCommonAncestorOfBT} but a little different on the definition of Node.
- *
+ * Amazon
  */
 public class LowestCommonAncestorOfBTIII {
 

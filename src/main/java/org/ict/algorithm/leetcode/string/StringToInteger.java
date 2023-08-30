@@ -76,6 +76,7 @@ package org.ict.algorithm.leetcode.string;
  * @author sniper
  * @date 30 Mar, 2023
  * LC8, Medium, frequency=19
+ * Amazon
  */
 public class StringToInteger {
 

@@ -54,7 +54,8 @@ import java.util.Map;
  * Node.random is null or is pointing to some node in the linked list.
  * @author sniper
  * @date 15 Sep, 2022
- * LC138
+ * LC138, Medium
+ * Amazon
  */
 public class CopyListWithRandomPointer {
 

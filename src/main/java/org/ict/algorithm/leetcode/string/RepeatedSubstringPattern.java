@@ -36,7 +36,8 @@ package org.ict.algorithm.leetcode.string;
  *
  * @author sniper
  * @date 12 Feb, 2022
- * LC459
+ * LC459, Easy
+ * Amazon
  */
 public class RepeatedSubstringPattern {
 

@@ -30,6 +30,7 @@ import java.util.Arrays;
  * @author sniper
  * @date 09 Jan, 2023
  * LC300, Medium, High Frequency, Top-150
+ * HoYoVerse, Amazon
  */
 public class LongestIncreasingSubsequence {
 
