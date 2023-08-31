@@ -1,0 +1,26 @@
+I wanted to reach out with an opportunity (Scala Engineer) with one of our top clients.
+I noticed your skills in software development particularly with your skill sets in Scala and Rust.
+Here are some quick notes for the position itself:
+- Scala / Rust
+- API experience (RESTful API for Buy now)
+- Terraform / AWS
+- PostgreSQL DB (Core/Infra Team)
+- Linux environment
+- Full Remote
+- Basic Japanese preferred, but not mandatory.
+-----------------------------------------------
+For this job position, would you be comfortable with the following responsibilities:
+1.Knowledge of Functional Programming, Scala, and the Typelevel ecosystem
+2.Understanding of software architecture and design with the ability to align the overall service architecture
+3.Experience with building distributed systems, scalability and high throughput software
+4.Experience with maintaining and further developing existing code base
+
+Additionally, you would be able to work initially fully remotely,
+however after a month or so of working,
+the client would like for you to relocate to Japan and work remotely while being here.
+It's a great opportunity to move to Japan, explore life in Japan, and also travel as well.
+-----------------------------------------------
+It's actually a very short and fast interview process.
+First they will have a coding test,
+and then it will be followed by two other interviews by the manager and the CTO if you pass the first test round.
+-----------------------------------------------

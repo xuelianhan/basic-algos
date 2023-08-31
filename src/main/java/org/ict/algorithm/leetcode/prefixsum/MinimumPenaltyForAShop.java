@@ -107,6 +107,9 @@ public class MinimumPenaltyForAShop {
 
     /**
      * todo
+     * bug need to fix
+     * todo
+     *
      * e.g. "YNYY", expected 4, but output 1
      * Prefix Sum Solution
      * @param customers

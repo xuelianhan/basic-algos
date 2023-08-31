@@ -27,11 +27,44 @@ import java.util.*;
  */
 public class MergeIntervals {
 
-    public int[][] mergeV2(int[][] intervals) {
-        return null;
+    public static void main(String[] args) {
+        int[][] intervals = new int[][] {{1, 4}, {0, 4}};
+        MergeIntervals instance = new MergeIntervals();
+        int[][] res = instance.merge(intervals);
+        System.out.println(Arrays.deepToString(res));
     }
 
     /**
+     * Understanding the following solution
+     * Time Cost 9ms
+     * Time Complexity O(N)
+     * @param intervals
+     * @return
+     */
+    public int[][] mergeV2(int[][] intervals) {
+        Arrays.sort(intervals, Comparator.comparingInt(a -> a[0]));
+        int start = intervals[0][0];
+        int end = intervals[0][1];
+        List<int[]> ans = new ArrayList<>();
+        for (int i = 1; i < intervals.length; ++i) {
+            int curStart = intervals[i][0];
+            int curEnd = intervals[i][1];
+            if (end < curStart) {
+                ans.add(new int[] {start, end});
+                start = curStart;
+                end = curEnd;
+            } else {
+                end = Math.max(end, curEnd);
+            }
+        }
+        ans.add(new int[] {start, end});
+        return ans.toArray(new int[ans.size()][]);
+    }
+
+    /**
+     * Understanding the following solution
+     * Time Complexity O(N)
+     *
      * Time Cost 21ms
      * @param intervals
      * @return
@@ -40,7 +73,7 @@ public class MergeIntervals {
         if (intervals == null || intervals[0].length == 0) {
             return null;
         }
-        Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0]));
+        Arrays.sort(intervals, Comparator.comparingInt(a -> a[0]));
         List<int[]> list = new ArrayList<>();
         int[] newInterval = intervals[0];
         list.add(newInterval);
