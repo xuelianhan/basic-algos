@@ -51,17 +51,45 @@ public class ExtraCharactersInAString {
 
     /**
      * Bottom-Up
+     * Time Cost 74ms
+     *
+     * @author MohakHarjani
+     * @see <a href="https://leetcode.com/problems/extra-characters-in-a-string/solutions/3568666/recursion-top-down-bottom-up-explained-easy-to-understand"></a>
      * @param s
      * @param dictionary
      * @return
      */
     public int minExtraCharV1(String s, String[] dictionary) {
-        return 0;
+        Map<String, Integer> map = new HashMap<>();
+        for (String word : dictionary) {
+            map.put(word, map.getOrDefault(word, 0) + 1);
+        }
+
+        int n = s.length();
+        int[] dp = new int[n + 1];
+        for (int i = n - 1; i >= 0; i--) {
+            String curStr = "";
+            int minExtra = s.length();
+            for (int cutIdx = i; cutIdx < n; cutIdx++) {
+                /**
+                 * curStr will be a string from (i to cutIdx)
+                 */
+                curStr += s.charAt(cutIdx);
+                int currExtra = (map.containsKey(curStr)) ? 0 : curStr.length();
+                int nextExtra = dp[cutIdx + 1];
+                int totalExtra = currExtra + nextExtra;
+                minExtra = Math.min(minExtra, totalExtra);
+            }
+            dp[i] = minExtra;
+        }
+        return dp[0];
     }
 
     /**
      * Top-Down Memorization
      * Time Cost 68ms
+     * @author MohakHarjani
+     * @see <a href="https://leetcode.com/problems/extra-characters-in-a-string/solutions/3568666/recursion-top-down-bottom-up-explained-easy-to-understand"></a>
      * @param s
      * @param dictionary
      * @return
@@ -85,17 +113,17 @@ public class ExtraCharactersInAString {
             return dp[index];
         }
 
-        String currStr = "";
+        String curStr = "";
         int minExtra = s.length();
         for (int cutIdx = index; cutIdx < s.length(); cutIdx++) {
             /**
-             * currStr will be a string from (index to cutIdx)
+             * curStr will be a string from (index to cutIdx)
              */
-            currStr += s.charAt(cutIdx);
+            curStr += s.charAt(cutIdx);
             /**
              * If string not in dictionary, we have to delete as they are extra chars
              */
-            int currExtra = (map.containsKey(currStr)) ? 0 : currStr.length();
+            int currExtra = (map.containsKey(curStr)) ? 0 : curStr.length();
             int nextExtra = helper(s, map, dp, cutIdx + 1);
             int totalExtra = currExtra + nextExtra;
 
