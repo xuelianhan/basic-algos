@@ -54,6 +54,31 @@ public class TrappingRainWater {
      * left                             right
      *
      * --------------------------------------
+     *  def trap(self, height: List[int]) -> int:
+     *         left = 0
+     *         right = len(height) - 1
+     *
+     *         res = 0
+     *         maxLeft = 0
+     *         maxRight = 0
+     *         while left <= right:
+     *             if height[left] <= height[right]:
+     *                 # The left bar is lower, so we fill water in the left bar.
+     *                 if height[left] >= maxLeft:
+     *                     maxLeft = height[left]
+     *                 else:
+     *                     res += maxLeft - height[left]
+     *                 left += 1
+     *             else:
+     *                 # The right bar is lower, so we fill water in the right bar.
+     *                 if height[right] >= maxRight:
+     *                     maxRight = height[right]
+     *                 else:
+     *                     res += maxRight - height[right]
+     *                 right -= 1
+     *         return res
+     *
+     *
      * Time Complexity O(N)
      * Space Complexity O(1)
      *

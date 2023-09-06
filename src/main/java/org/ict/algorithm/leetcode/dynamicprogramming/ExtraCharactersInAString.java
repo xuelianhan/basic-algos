@@ -50,7 +50,7 @@ public class ExtraCharactersInAString {
     }
 
     /**
-     * Bottom-Up
+     * Bottom-Up Solution
      * Time Cost 74ms
      *
      * @author MohakHarjani
@@ -86,7 +86,7 @@ public class ExtraCharactersInAString {
     }
 
     /**
-     * Top-Down Memorization
+     * Top-Down Memorization Solution
      * Time Cost 68ms
      * @author MohakHarjani
      * @see <a href="https://leetcode.com/problems/extra-characters-in-a-string/solutions/3568666/recursion-top-down-bottom-up-explained-easy-to-understand"></a>

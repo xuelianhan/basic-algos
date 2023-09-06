@@ -35,7 +35,7 @@ import java.util.Stack;
  *
  * @author sniper
  * @date 24 Apr, 2023
- * LC394, Medium, frequency=82,
+ * LC394, Medium, frequency=82
  * Coupang
  */
 public class DecodeString {
@@ -60,6 +60,40 @@ public class DecodeString {
      *             else:
      *                 res += c
      *         return res
+     * -------------------------------------------
+     * impl Solution {
+     *     pub fn decode_string(s: String) -> String {
+     *         if s.is_empty() {
+     *             return "".to_string();
+     *         }
+     *
+     *         let mut num = 0;
+     *         let mut res = String::new();
+     *         let mut stack1 = Vec::new();
+     *         let mut stack2 = Vec::new();
+     *
+     *         for c in s.chars() {
+     *             if c.is_digit(10) {
+     *                 num = 10 * num + c.to_digit(10).unwrap() as i32;
+     *             } else if c == '[' {
+     *                 stack1.push(num);
+     *                 stack2.push(res.clone());
+     *                 num = 0;
+     *                 res.clear();
+     *             } else if c == ']' {
+     *                 let mut builder = String::new();
+     *                 let n = stack1.pop().unwrap();
+     *                 for _ in 0..n {
+     *                     builder.push_str(&res);
+     *                 }
+     *                 res = stack2.pop().unwrap() + &builder;
+     *             } else {
+     *                 res.push(c);
+     *             }
+     *         }
+     *         res
+     *     }
+     * }
      * -------------------------------------------
      * e.g. s = "3[a2[c]]"
      *

@@ -102,6 +102,34 @@ public class SubdomainVisitCount {
      *                     count[domain[i + 1:]] += int(num)
      *
      *         return [str(freq) + ' ' + domain for domain, freq in count.items()]
+     * ---------------------------------------------------------
+     * use std::collections::HashMap;
+     *
+     * impl Solution {
+     *     pub fn subdomain_visits(cpdomains: Vec<String>) -> Vec<String> {
+     *         let mut freq: HashMap<String, i32> = HashMap::new();
+     *
+     *         for cp_domain in cpdomains {
+     *             let space = cp_domain.find(' ').unwrap();
+     *             let num = cp_domain[0..space].parse::<i32>().unwrap();
+     *             let domain = &cp_domain[space + 1..];
+     *
+     *             for (i, c) in domain.chars().enumerate() {
+     *                 if c == '.' {
+     *                     let sub_domain = &domain[i + 1..];
+     *                     *freq.entry(sub_domain.to_string()).or_insert(0) += num;
+     *                 }
+     *             }
+     *             *freq.entry(domain.to_string()).or_insert(0) += num;
+     *         }
+     *
+     *         let mut res: Vec<String> = Vec::new();
+     *         for (key, value) in freq.iter() {
+     *             res.push(format!("{} {}", value, key));
+     *         }
+     *         res
+     *     }
+     * }
      *
      * @param cpdomains
      * @return

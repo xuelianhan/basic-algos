@@ -42,6 +42,12 @@ package org.ict.algorithm.leetcode.twopointers;
  */
 public class ValidWordAbbreviation {
 
+    /**
+     * Understanding the following solution
+     * @param word
+     * @param abbr
+     * @return
+     */
     public boolean validWordAbbreviationV3(String word, String abbr) {
         int m = word.length();
         int n = abbr.length();

@@ -1,4 +1,4 @@
-package org.ict.disruptor;
+package org.ict.archbase.disruptor;
 
 import com.lmax.disruptor.EventHandler;
 

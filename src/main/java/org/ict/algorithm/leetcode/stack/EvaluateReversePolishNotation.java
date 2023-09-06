@@ -49,6 +49,80 @@ import java.util.Deque;
 public class EvaluateReversePolishNotation {
 
 
+    /**
+     * Time Cost 6ms
+     * -----------------------------------------------
+     * class Solution:
+     *  def evalRPN(self, tokens: List[str]) -> int:
+     *         if len(tokens) == 1:
+     *             return int(tokens[0])
+     *
+     *         stack = []
+     *
+     *         for s in tokens:
+     *             if s == "+":
+     *                 number_one = stack.pop()
+     *                 number_two = stack.pop()
+     *                 stack.append(number_two + number_one)
+     *             elif s == "-":
+     *                 number_one = stack.pop()
+     *                 number_two = stack.pop()
+     *                 stack.append(number_two - number_one)
+     *             elif s == "*":
+     *                 number_one = stack.pop()
+     *                 number_two = stack.pop()
+     *                 stack.append(number_two * number_one)
+     *             elif s == "/":
+     *                 number_one = stack.pop()
+     *                 number_two = stack.pop()
+     *                 stack.append(int(number_two / number_one))
+     *             else:
+     *                 stack.append(int(s))
+     *
+     *         return stack.pop()
+     * -----------------------------------------------
+     * impl Solution {
+     *     pub fn eval_rpn(tokens: Vec<String>) -> i32 {
+     *         if tokens.len() == 1 {
+     *             return tokens[0].parse().unwrap();
+     *         }
+     *
+     *         let mut stack: Vec<i32> = Vec::new();
+     *
+     *         for s in tokens {
+     *             match &s[..] {
+     *                 "+" => {
+     *                     let number_one = stack.pop().unwrap();
+     *                     let number_two = stack.pop().unwrap();
+     *                     stack.push(number_two + number_one);
+     *                 }
+     *                 "-" => {
+     *                     let number_one = stack.pop().unwrap();
+     *                     let number_two = stack.pop().unwrap();
+     *                     stack.push(number_two - number_one);
+     *                 }
+     *                 "*" => {
+     *                     let number_one = stack.pop().unwrap();
+     *                     let number_two = stack.pop().unwrap();
+     *                     stack.push(number_two * number_one);
+     *                 }
+     *                 "/" => {
+     *                     let number_one = stack.pop().unwrap();
+     *                     let number_two = stack.pop().unwrap();
+     *                     stack.push(number_two / number_one);
+     *                 }
+     *                 _ => stack.push(s.parse().unwrap()),
+     *             }
+     *         }
+     *
+     *         stack.pop().unwrap()
+     *     }
+     * }
+     * -----------------------------------------------
+     *
+     * @param tokens
+     * @return
+     */
     public int evalRPN(String[] tokens) {
         if (tokens.length == 1) {
             return Integer.parseInt(tokens[0]);

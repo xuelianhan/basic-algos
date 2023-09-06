@@ -245,8 +245,14 @@ I know that was not very easy to understand, but all the above reasoning eventua
  * LC4, Hard, frequency=105
  *
  */
-public class MedianSortedArrays {
+public class MedianOfSortedArrays {
 
+    /**
+     * Time Cost 2ms
+     * @param nums1
+     * @param nums2
+     * @return
+     */
     public double findMedianSortedArraysV3(int[] nums1, int[] nums2) {
         int m = nums1.length;
         int n = nums2.length;
@@ -346,7 +352,7 @@ public class MedianSortedArrays {
         return findMedian();
     }
 	
-	public static double findMedianSortedArraysV1(int[] nums1, int[] nums2) {
+	public double findMedianSortedArraysV1(int[] nums1, int[] nums2) {
 		int N1 = nums1.length;
 		int N2 = nums2.length;
 		if (N1 < N2) {

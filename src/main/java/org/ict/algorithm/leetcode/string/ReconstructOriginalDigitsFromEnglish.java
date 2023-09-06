@@ -33,7 +33,7 @@ public class ReconstructOriginalDigitsFromEnglish {
 
     /**
      * Understanding the following solution
-     *
+     * --------------------------------------
      * "zero", <-- 'z'
      * "two",  <-- 'w'
      * "four", <-- 'u'
@@ -46,6 +46,63 @@ public class ReconstructOriginalDigitsFromEnglish {
      *
      * "one",  'o', 1-0-2-4
      * "nine", 'i', 9-5-6-8
+     * --------------------------------------
+     * class Solution:
+     *     def originalDigits(self, s: str) -> str:
+     *         counter = [0] * 26
+     *         for c in s:
+     *             counter[ord(c) - ord('a')] += 1
+     *
+     *         cnt = [0] * 10
+     *         cnt[0] = counter[ord('z') - ord('a')]
+     *         cnt[2] = counter[ord('w') - ord('a')]
+     *         cnt[4] = counter[ord('u') - ord('a')]
+     *         cnt[6] = counter[ord('x') - ord('a')]
+     *         cnt[8] = counter[ord('g') - ord('a')]
+     *
+     *         cnt[3] = counter[ord('h') - ord('a')] - cnt[8]
+     *         cnt[5] = counter[ord('f') - ord('a')] - cnt[4]
+     *         cnt[7] = counter[ord('s') - ord('a')] - cnt[6]
+     *
+     *         cnt[1] = counter[ord('o') - ord('a')] - cnt[0] - cnt[2] - cnt[4]
+     *         cnt[9] = counter[ord('i') - ord('a')] - cnt[5] - cnt[6] - cnt[8]
+     *
+     *         res = []
+     *         for i in range(10):
+     *             for _ in range(cnt[i]):
+     *                 res.append(str(i))
+     *         return ''.join(res)
+     * --------------------------------------
+     * impl Solution {
+     *     pub fn original_digits(s: String) -> String {
+     *         let mut counter: Vec<i32> = vec![0; 26];
+     *         for c in s.chars() {
+     *             counter[(c as u8 - b'a') as usize] += 1;
+     *         }
+     *
+     *         let mut cnt: Vec<i32> = vec![0; 10];
+     *         cnt[0] = counter[(b'z' - b'a') as usize];
+     *         cnt[2] = counter[(b'w' - b'a') as usize];
+     *         cnt[4] = counter[(b'u' - b'a') as usize];
+     *         cnt[6] = counter[(b'x' - b'a') as usize];
+     *         cnt[8] = counter[(b'g' - b'a') as usize];
+     *
+     *         cnt[3] = counter[(b'h' - b'a') as usize] - cnt[8];
+     *         cnt[5] = counter[(b'f' - b'a') as usize] - cnt[4];
+     *         cnt[7] = counter[(b's' - b'a') as usize] - cnt[6];
+     *
+     *         cnt[1] = counter[(b'o' - b'a') as usize] - cnt[0] - cnt[2] - cnt[4];
+     *         cnt[9] = counter[(b'i' - b'a') as usize] - cnt[5] - cnt[6] - cnt[8];
+     *
+     *         let mut res = String::new();
+     *         for i in 0..10 {
+     *             for _ in 0..cnt[i] {
+     *                 res.push((i as u8 + b'0') as char);
+     *             }
+     *         }
+     *         res
+     *     }
+     * }
      * @param s
      * @return
      */

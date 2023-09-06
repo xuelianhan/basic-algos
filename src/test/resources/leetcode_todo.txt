@@ -19,7 +19,6 @@
 281.Zigzag Iterator=6
 2133.Check if Every Row and Column Contains All Numbers=6
 706.Design HashMap=6
-695.Max Area of Island=6
 609.Find Duplicate File in System=6
 1560.Most Visited Sector in a Circular Track=6
 712.Minimum ASCII Delete Sum for Two Strings=6
