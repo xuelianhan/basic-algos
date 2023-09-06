@@ -1,11 +1,11 @@
-package org.ict.spring.aspect;
+package org.ict.archbase.spring.aspect;
 
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.ict.spring.lock.RedisLock;
-import org.ict.spring.util.RequestUtil;
+import org.ict.archbase.spring.lock.RedisLock;
+import org.ict.archbase.spring.util.RequestUtil;
 
 /**
  * @author sniper

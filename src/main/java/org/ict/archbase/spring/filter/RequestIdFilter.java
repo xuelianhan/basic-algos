@@ -1,8 +1,8 @@
-package org.ict.spring.filter;
+package org.ict.archbase.spring.filter;
 
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
-import org.ict.spring.util.RequestUtil;
+import org.ict.archbase.spring.util.RequestUtil;
 import org.springframework.util.StringUtils;
 
 import java.io.IOException;

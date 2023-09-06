@@ -1,6 +1,6 @@
-package org.ict.spring.service;
+package org.ict.archbase.spring.service;
 
-import org.ict.spring.aspect.RedisLockAspect;
+import org.ict.archbase.spring.aspect.RedisLockAspect;
 
 import java.time.LocalDateTime;
 

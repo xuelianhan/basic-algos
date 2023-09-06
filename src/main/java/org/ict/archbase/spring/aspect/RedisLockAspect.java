@@ -1,4 +1,4 @@
-package org.ict.spring.aspect;
+package org.ict.archbase.spring.aspect;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

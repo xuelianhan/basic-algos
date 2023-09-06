@@ -1,4 +1,4 @@
-package org.ict.spring.util;
+package org.ict.archbase.spring.util;
 
 import java.util.UUID;
 

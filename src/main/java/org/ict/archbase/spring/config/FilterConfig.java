@@ -1,13 +1,12 @@
-package org.ict.spring.config;
+package org.ict.archbase.spring.config;
 
-import org.ict.spring.filter.RequestIdFilter;
+import org.ict.archbase.spring.filter.RequestIdFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.RedisSerializer;
 
 import java.util.Collections;
 import java.util.List;
