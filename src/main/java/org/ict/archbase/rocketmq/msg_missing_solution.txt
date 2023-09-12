@@ -1,0 +1,3 @@
+1. Open the confirm-mode on producer-side;
+2. Set the persistent of msg;
+3. Close the auto-ack on consumer-side;
