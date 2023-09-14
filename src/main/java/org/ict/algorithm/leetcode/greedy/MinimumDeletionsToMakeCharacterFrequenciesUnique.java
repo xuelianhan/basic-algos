@@ -55,6 +55,63 @@ public class MinimumDeletionsToMakeCharacterFrequenciesUnique {
      * count[b]:2
      * count[c]:1
      * ------------------------------------
+     * class Solution:
+     *     def minDeletions(self, s: str) -> int:
+     *         res = 0
+     *         count = collections.Counter(s)
+     *         usedFreq = set()
+     *
+     *         for freq in count.values():
+     *             while freq > 0 and freq in usedFreq:
+     *                 freq -= 1
+     *                 res += 1
+     *             usedFreq.add(freq)
+     *
+     *         return res
+     * -----------------------------------------
+     * import scala.collection.mutable.HashSet
+     * object Solution {
+     *     def minDeletions(s: String): Int = {
+     *         var res = 0
+     *         val count = Array.ofDim[Int](26)
+     *
+     *         s.foreach(ch => count(ch - 'a') += 1)
+     *
+     *         val usedFreq = HashSet[Int]()
+     *         count.foreach { freq =>
+     *             var currentFreq = freq
+     *             while (currentFreq > 0 && usedFreq.contains(currentFreq)) {
+     *                 currentFreq -= 1
+     *                 res += 1
+     *             }
+     *             usedFreq.add(currentFreq)
+     *         }
+     *
+     *         res
+     *     }
+     * }
+     * ------------------------------------------
+     * class Solution {
+     * public:
+     *     int minDeletions(string s) {
+     *         int res = 0;
+     *         vector<int> count(26);
+     *         unordered_set<int> usedFreq;
+     *
+     *         for (const char c : s) {
+     *             count[c - 'a']++;
+     *         }
+     *
+     *
+     *         for (int freq : count) {
+     *             while (freq > 0 && !usedFreq.insert(freq).second) {
+     *                 freq--;
+     *                 res++;
+     *             }
+     *         }
+     *         return res;
+     *     }
+     * };
      * @param s
      * @return
      */

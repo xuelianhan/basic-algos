@@ -77,6 +77,58 @@ public class Candy {
      *         return res;
      *     }
      * };
+     * ------------------------------------------
+     * object Solution {
+     *     def candy(ratings: Array[Int]): Int = {
+     *         val n = ratings.length
+     *         val l = Array.fill(n)(1)
+     *         val r = Array.fill(n)(1)
+     *
+     *         for (i <- 1 until n) {
+     *             if (ratings(i) > ratings(i - 1)) {
+     *                 l(i) = l(i - 1) + 1
+     *             }
+     *         }
+     *
+     *         for (i <- n - 2 to 0 by -1) {
+     *             if (ratings(i) > ratings(i + 1)) {
+     *                 r(i) = r(i + 1) + 1
+     *             }
+     *         }
+     *
+     *         var res = 0
+     *         for (i <- 0 until n) {
+     *             res += math.max(l(i), r(i))
+     *         }
+     *         res
+     *     }
+     * }
+     * -----------------------------------------
+     * impl Solution {
+     *     pub fn candy(ratings: Vec<i32>) -> i32 {
+     *         let n = ratings.len();
+     *         let mut l = vec![1; n];
+     *         let mut r = vec![1; n];
+     *
+     *         for i in 1..n {
+     *             if ratings[i] > ratings[i - 1] {
+     *                 l[i] = l[i - 1] + 1;
+     *             }
+     *         }
+     *
+     *         for i in (0..n - 1).rev() {
+     *             if ratings[i] > ratings[i + 1] {
+     *                 r[i] = r[i + 1] + 1;
+     *             }
+     *         }
+     *
+     *         let mut res = 0;
+     *         for i in 0..n {
+     *             res += l[i].max(r[i]);
+     *         }
+     *         res
+     *     }
+     * }
      * @param ratings
      * @return
      */
