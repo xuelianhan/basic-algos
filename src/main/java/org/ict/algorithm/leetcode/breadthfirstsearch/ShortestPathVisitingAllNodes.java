@@ -31,8 +31,9 @@ import java.util.*;
  * 1 <= graph.length <= 12
  * 0 <= graph[i].length < graph.length
  * 
- * LC847
- * High Frequency:https://ac.nowcoder.com/discuss/292850
+ * LC847, Hard
+ * High Frequency
+ * @see <a href="https://ac.nowcoder.com/discuss/292850"></a>
  *
  */
 public class ShortestPathVisitingAllNodes {
@@ -50,9 +51,14 @@ public class ShortestPathVisitingAllNodes {
 
 	/**
 	 * How one will approach in 45 min interview?
-	 * Very first thing comes in undirected graph for finding shortest path is bfs. Since, bfs ensures that a node at distance k will be visited first then a node at k+1 distance. But problem given here, is slightly different. Here in the problem it is given that we can visit any node any number of time, even we can use edge more than once.
+	 * Very first thing comes in undirected graph for finding shortest path is bfs.
+	 * Since, bfs ensures that a node at distance k will be visited first then a node at k+1 distance.
+	 * But problem given here, is slightly different.
+	 * Here in the problem it is given that we can visit any node any number of time,
+	 * even we can use edge more than once.
 	 *
-	 * This means that we can't use simple bfs (in which we maintain a visited set - to avoid cycle) because in the problem we can visit a node any number of time.
+	 * This means that we can't use simple bfs (in which we maintain a visited set - to avoid cycle)
+	 * because in the problem we can visit a node any number of time.
 	 * Take an example to understand why simple bfs will not work?
 	 *
 	 * 0 -- 1
@@ -66,9 +72,13 @@ public class ShortestPathVisitingAllNodes {
 	 *
 	 * So, the point which I am trying to make here is this,
 	 *
-	 * If we apply simple bfs starting from any node(say 0) where we also keep track of visited array (Consecutively meaning we can't visit them again) it will never lead us to the solution.
-	 * On the other hand if we apply bfs from any node (say 0) and don't keep the track of visited array, it will lead to cycle [ {0}->{0,1}->{0,1,0}->{0,1,0,1} and so on]
-	 * What if there is a way, in which we can visit the same node again and still avoid cycle. lets call this type of bfs as intelligent bfs.
+	 * If we apply simple bfs starting from any node(say 0)
+	 * where we also keep track of visited array (Consecutively meaning
+	 * we can't visit them again) it will never lead us to the solution.
+	 * On the other hand if we apply bfs from any node (say 0) and don't keep the track of visited array,
+	 * it will lead to cycle [ {0}->{0,1}->{0,1,0}->{0,1,0,1} and so on]
+	 * What if there is a way, in which we can visit the same node again and still avoid cycle.
+	 * Let's call this type of bfs as intelligent bfs.
 	 * that means,
 	 *
 	 * If starting node is 0
@@ -81,41 +91,49 @@ public class ShortestPathVisitingAllNodes {
 	 * Now, lets assume that we have devised this intelligent bfs.
 	 *
 	 * Simultaneously BFS
-	 * What if we apply bfs on every node in one go. In other words, start bfs on each node simulatneously? That is, Queue for bfs will now be
+	 * What if we apply bfs on every node in one go. In other words, start bfs on each node simultaneously?
+	 * That is, Queue for bfs will now be
 	 *
 	 * [ {0},{1},{2},{3} ] -> [ {0,1} ,{0,2},{0,3}, {1,0}, {2,0}, {3,0}  ] -> [...]
-	 * where each step(which is [...] ) in bfs will contains set of nodes or path visited in bfs fashion for each of the element in previous step.
+	 * where each step(which is [...] ) in bfs will contains set of nodes or path visited in bfs fashion
+	 * for each of the element in previous step.
 	 *
-	 * The advantage (If we have that intelligent bfs) we will reach the answer fastly rather then applying bfs individually as in individual bfs we need to extend bfs unecessary for current starting node, while we would have reached to the answer earlier if we would have started using some other starting node.
+	 * The advantage (If we have that intelligent bfs) we will reach the answer quickly rather than
+	 * applying bfs individually as in individual bfs we need to extend bfs unnecessary for current starting node,
+	 * while we would have reached to the answer earlier if we had started using some other starting node.
 	 *
-	 * Intelligent bfs should be such which will able to detect if including current node will result into cycle or not.
+	 * Intelligent bfs should be such which will be able to detect if including current node will result into cycle or not.
 	 * Take an example,
 	 *
 	 * Take individual bfs starting from 0
 	 * {0}->{0,1}->{0,1,0}->Now we should not got to {0,1,0,1}.
 	 *
-	 * If you see we already visited set of nodes {0,1} while we are at 0. (bold above). So we must not include 1 again as resulting visited list will become {0,1} again.
+	 * If you see we already visited set of nodes {0,1} while we are at 0. (bold above).
+	 * So we must not include 1 again as resulting visited list will become {0,1} again.
 	 *
 	 * Take another example,
 	 * Starting from 1,
 	 *
 	 * {1}->{1,0}->{1,0,1}(We should visited this as by visiting 1 again (currently current node is 1)
 	 * this could lead to some other path which would have connected to 1 only)
-	 * but -> {1,0,1,0} (This shouldn't be visited) as by including 0 again, this is just repetition of 0 and 1 again in other words, by including 0 again resulting visited set will become {0,1} which we already visited(bold abov)
+	 * but -> {1,0,1,0} (This shouldn't be visited) as by including 0 again, this is just repetition of 0 and 1 again in other words,
+	 * by including 0 again resulting visited set will become {0,1} which we already visited(bold above)
 	 *
-	 * In nutshell, for each current head(or leading) node we must maintain a space where we can check whether we visited that set of path again or not).
+	 * In nutshell, for each current head(or leading) node w
+	 * e must maintain a space where we can check whether we visited that set of path again or not).
 	 *
-	 * Thats, why in editorial of bfs solution dist 2d matrix is used, dist[cover][head] where cover is rows and head are coloumns.
-	 * head/coloums will denote all nodes and cover/rows will denote all possible combination of set of nodes which is visited.
+	 * That's, why in editorial of bfs solution dist 2d matrix is used, dist[cover][head] where cover is rows and head are columns.
+	 * head/columns will denote all nodes and cover/rows will denote all possible combination of set of nodes which is visited.
 	 * For keep tracking of combination of nodes, bit masking is used.
 	 *
 	 * For bit masking,
 	 * [https://www.hackerearth.com/practice/algorithms/dynamic-programming/bit-masking/tutorial/]
 	 *
-	 * Each cell that is dist[i][j] represent if jth node is the leading node, then what is the path distance (min distance) we have covered if all set bits in i nodes are visited.
-	 *
-	 * So We will implements simulatneously bfs starting from each node, and keep track of distance using dist 2d matrix.
-	 * Due to simulatneously bfs over all node, whenever we encouter that i where all bits are set, that will be the answer, as it is bfs in undirected graph which ensures that a node at distance k will be visited first then a node at k+1 distance.
+	 * Each cell that is dist[i][j] represent if jth node is the leading node,
+	 * then what is the path distance (min distance) we have covered if all set bits in i nodes are visited.
+	 * So we will implement simultaneously bfs starting from each node, and keep track of distance using dist 2d matrix.
+	 * Due to simultaneously bfs over all node, whenever we encounter that i which all bits are set, that will be the answer,
+	 * as it is bfs in undirected graph which ensures that a node at distance k will be visited first then a node at k+1 distance.
 	 *
 	 * Now, read the original bfs solution given in the editorial, Things will become more clear.
 	 * @author niks_vat
@@ -123,12 +141,21 @@ public class ShortestPathVisitingAllNodes {
 	 * @return
 	 */
 	public static int shortestPathLength(int[][] graph) {
+		int n = graph.length;
+		int goal = (1 << n) - 1;
 
-		return 0;
+		int res = 0;
+		Queue<int[]> queue = new ArrayDeque<>();
+		boolean[][] seen = new boolean[n][1 << n];
+		for (int i = 0; i < n; i++) {
+			
+		}
+		return -1;
 	}
 
 
 	/**
+	 * Time Cost 31ms
 	 * Idea is to use BFS to traverse the graph.
 	 * Since all edges are weighted 1, we can use a Queue (instead of a PriorityQueue sorted by cost). 
 	 * Since all edges are weighted 1, then closer nodes will always be evaluated before farther ones.

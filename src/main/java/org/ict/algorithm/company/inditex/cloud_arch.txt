@@ -1,0 +1,30 @@
+Job Summary:
+We are looking for a talented Cloud Administrator/Architect to design, implement, manage, and optimize
+our cloud-based systems. The successful candidate will be responsible for overseeing the architecture,
+deployment, and maintenance of our cloud infrastructure, ensuring high availability, scalability, and
+security. This role requires a deep understanding of cloud technologies, strong problem-solving skills,
+and the ability to collaborate effectively with cross-functional teams.
+Key Responsibilities:
+- Design and deploy cloud infrastructure solutions that meet the company's
+ operational and security requirements.
+- Manage and maintain cloud resources, including virtual machines, storage,
+ networks, and databases, across various cloud platforms (e.g., mainly Azure).
+- Implement and optimize cloud-based applications, ensuring seamless integration
+ and performance.
+- Monitor system performance, troubleshoot issues, and implement necessary
+ fixes to ensure high availability and reliability.
+- Collaborate with development and IT teams to provide guidance on cloud
+ best practices, architecture, and solutions.
+- Ensure data security and compliance by implementing appropriate security
+ measures and protocols.
+- Document system configurations, procedures, and troubleshooting steps.
+Qualifications:
+- Proven experience as a Cloud Administrator/Architect or similar role.
+- Proficiency in Azure cloud platform
+- Experience with containerization technologies (e.g., Docker, Kubernetes) is a plus.
+- Excellent scripting and automation skills (e.g., PowerShell, Bash, Python).
+- Familiarity with DevOps practices and tools (e.g., CI/CD pipelines).
+- Strong analytical and problem-solving abilities.
+- Excellent communication and collaboration skills.
+- Relevant cloud certifications (e.g., AWS Certified Solutions Architect,
+ Azure Solutions Architect) are a plus

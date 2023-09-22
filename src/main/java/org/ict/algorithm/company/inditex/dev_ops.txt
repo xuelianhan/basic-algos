@@ -1,0 +1,21 @@
+Responsibilities:
+• Design and develop cloud solutions to meet customer needs and requirements.
+• Analyze customer requirements and develop a cloud-based solution architecture.
+• Leverage cloud services to develop efficient  data solutions.
+• Familiar with Finops Concepts.
+• Monitor and troubleshoot cloud-based applications.
+• Develop and implement quality assurance processes for cloud solutions.
+• Research new cloud technologies and best practices.
+• Collaborate with business and technical teams to ensure the successful implementation of cloud solutions.
+• Document and communicate cloud-based solutions.
+• Create product roadmaps and develop a product vision.
+• Collaborate with other departments to ensure alignment with company strategy.
+• Continuos improvement mindset
+
+Desired Skills and Experience:
+•	Cloud Devops experience Azure,AWS and GCP
+•	Experience in managing/deploying application on thousands of nodes across multiple Data platforms using configuration management tool (such as Terraform, Containers.)
+•	Expert level hands-on experience of one of the tooling language - Python, Java ,Rust
+•	Excellent troubleshooting, problem solving, critical thinking, and communication skills
+•	Good understanding of Unix/Linux based operating system. Proficient in linux, command-line tools, and general system debugging
+•	Obssesed with Monitoring , Alerting  and Observability
