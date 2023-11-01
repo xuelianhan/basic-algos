@@ -1,7 +1,9 @@
 package org.ict.algorithm.leetcode.tree;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Given the root of a binary search tree (BST) with duplicates,
@@ -40,6 +42,7 @@ import java.util.List;
  * LC501, Easy
  */
 public class FindModeInBinarySearchTree {
+
     private Integer prev;
 
     private int maxCount = 0;
@@ -48,13 +51,48 @@ public class FindModeInBinarySearchTree {
 
     private List<Integer> result = new ArrayList<>();
 
-    public int[] findMode(TreeNode root) {
+    /**
+     * Time Cost 0ms
+     * @param root
+     * @return
+     */
+    public int[] findModeV1(TreeNode root) {
         dfs(root);
         int[] res = new int[result.size()];
         for(int i = 0; i < result.size(); i++) {
             res[i] = result.get(i);
         }
         return res;
+    }
+
+    /**
+     * Time Cost 5ms
+     * @param root
+     * @return
+     */
+    public int[] findMode(TreeNode root) {
+        List<Integer> vals = new ArrayList<>();
+        int[] max = new int[1];
+        Map<Integer, Integer> freq = new HashMap<>();
+        inOrder(root, freq, max);
+        freq.forEach((k, v) -> {
+            if (v == max[0]) {
+                vals.add(k);
+            }
+        });
+        // Or using is OK too:
+        // return vals.stream().mapToInt(Integer::intValue).toArray();
+        return vals.stream().mapToInt(i -> i).toArray();
+    }
+
+    private void inOrder(TreeNode root, Map<Integer, Integer> freq, int[] max) {
+        if (root == null) {
+            return;
+        }
+        inOrder(root.left, freq, max);
+        freq.put(root.val, freq.getOrDefault(root.val, 0) + 1);
+        max[0] = Math.max(max[0], freq.get(root.val));
+        inOrder(root.right, freq, max);
     }
 
     private void dfs(TreeNode node) {
