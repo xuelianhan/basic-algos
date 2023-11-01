@@ -148,7 +148,7 @@ public class ShortestPathVisitingAllNodes {
 		Queue<int[]> queue = new ArrayDeque<>();
 		boolean[][] seen = new boolean[n][1 << n];
 		for (int i = 0; i < n; i++) {
-			
+
 		}
 		return -1;
 	}
